@@ -929,7 +929,7 @@ k0rdent can deploy child clusters on OpenStack virtual machines. Follow these st
             floating-network-id="{{ $network_id }}"
             {{- end }}
 
-            [Network]
+            [Networking]
             {{- if $network_name }}
             public-network-name="{{ $network_name }}"
             {{- end }}
