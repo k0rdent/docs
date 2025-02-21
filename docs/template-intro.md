@@ -43,7 +43,6 @@ status:
     name: cluster-api-0-0-4
     namespace: kcm-system
   config:
-    airgap: false
     config: {}
     configSecret:
       create: false
