@@ -405,7 +405,7 @@ and apply this example for AWS, or use it as a reference:
         controlPlane:
           instanceType: t3.large
         controlPlaneNumber: 1
-        publicIP: true
+        publicIP: false
         region: us-east-2
         worker:
           instanceType: t3.medium
