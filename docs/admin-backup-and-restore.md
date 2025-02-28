@@ -95,6 +95,8 @@ Before you create a manual one-off or scheduled backup, you need to perform some
     ```
     Please fill in the `credentials.txt` with your platform specific credentials.
 
+  > Note: Your IAM user must have the appropriate Velero S3 bucket access. See the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user).
+
     Then generate the necessary base64-encoded credentials using:
     ```sh
     base64 -w0 credentials.txt; echo;
@@ -135,7 +137,7 @@ Before you create a manual one-off or scheduled backup, you need to perform some
     EOF
     ```
 
-6. Create the necessary Kubernetes resources in your k0rdent cluster using the following commands:
+7. Create the necessary Kubernetes resources in your k0rdent cluster using the following commands:
 ```sh
 kubectl apply -f creds-and-backup-storage-location.yaml
 ```
@@ -144,7 +146,7 @@ then
 kubectl apply -f management.yaml
 ```
 
-7. Confirm that the previous steps were applied correctly:
+8. Confirm that the previous steps were applied correctly:
 ```sh
 kubectl get management kcm -n kcm-system -o yaml
 ```
