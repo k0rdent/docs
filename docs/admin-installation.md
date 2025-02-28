@@ -60,7 +60,7 @@ We do not recommend running k0rdent in production on a single node.  If you are 
 This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the [Create and prepare a Kubernetes cluster with k0s](#create-and-prepare-a-kubernetes-cluster-with-k0s) guide. 
 
 > NOTE:
-> While it is technically possible to run k0rdent on an existing cluster, using a fresh cluster is recommended to avoid conflicts with pre-instalked components.
+> While it is technically possible to run k0rdent on an existing cluster, using a fresh cluster is recommended to avoid conflicts with pre-installed components.
 
 The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release [here](https://github.com/k0rdent/kcm/tags), and from there you can deploy the Helm chart, as in:
 
@@ -85,7 +85,10 @@ The helm chart deploys the KCM operator and prepares the environment, and KCM th
 
 ## Confirming the deployment
 
-To understand whether installation is complete, start by making sure all pods are ready in the `kcm-system` namespace. There should be 17:
+> NOTE:
+> After running the helm install command, please wait 5 to 10 minutes for the deployment to stabilize.
+
+To understand whether installation is complete, start by making sure all pods are ready in the `kcm-system` namespace. There should be 17 pod entries:
 
 ```shell
 kubectl get pods -n kcm-system
@@ -111,14 +114,21 @@ kcm-velero-b68fd5957-fwg2l                                    1/1     Running   
 source-controller-6cd7676f7f-7kpjn                            1/1     Running   0          5m1s
 ```
 
-State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running in the `projectsveltos` namespace:
+```shell
+kubectl get pods -n kcm-system --no-headers | wc -l
+```
+```console
+17
+```
+
+State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running/completed in the `projectsveltos` namespace:
 
 ```shell
 kubectl get pods -n projectsveltos
 ```
 
 ```console
-AME                                     READY   STATUS      RESTARTS   AGE
+NAME                                     READY   STATUS      RESTARTS   AGE
 access-manager-56696cc7f-5txlb           1/1     Running     0          4m1s
 addon-controller-7c98776c79-dn9jm        1/1     Running     0          4m1s
 classifier-manager-7b85f96469-666jx      1/1     Running     0          4m1s
@@ -129,6 +139,13 @@ sc-manager-55c99d494b-c8wrl              1/1     Running     0          4m1s
 shard-controller-5ff9cd796d-tlg79        1/1     Running     0          4m1s
 sveltos-agent-manager-7467959f4f-lsnd5   1/1     Running     0          3m34s
 ```
+```shell
+kubectl get pods -n projectsveltos --no-headers | wc -l
+```
+```console
+9
+```
+
 
 If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
 
