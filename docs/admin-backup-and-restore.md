@@ -36,19 +36,17 @@ k0rdent manages the schedule and is responsible for collecting data to be includ
 
 ## Scheduled Management Backups
 
-Backups should be scheduled on a regular basis, depending on how often your k0rdent cluster undergoes changes.
+Backups should be run on a schedule consistent with the policy requirements of the environment, eg, "daily" for a production environment, "weekly" for a testing environment.
 
 ### Preparation
 
 > NOTE: The following instructions are tailored for AWS. Please adapt them to your chosen platform and storage.
 
-Before you create a manual one-off or scheduled backup, you need to perform some preparatory steps:
+Before you create a manual one-off or scheduled backup, review the steps below and update your configuration accordingly:
 
-1. Verify whether the [storage option](https://velero.io/docs/v1.15/supported-providers/) you plan to use is supported. If not supported by Velero, please consider using an alternative [storage option](https://velero.io/docs/v1.15/supported-providers/).
+1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) is already configured, please skip the next step.
 
-2. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) is already configured, please skip the next step.
-
-3. If `velero` plugins is not already been installed in your k0rdent cluster, obtain the kcm management yaml file:
+1. If no `velero` plugins have yet been installed in your k0rdent cluster, obtain the kcm management yaml file:
 
   ```sh
   kubectl get management kcm -n kcm-system -o yaml > management.yaml
@@ -76,11 +74,15 @@ Before you create a manual one-off or scheduled backup, you need to perform some
     # ...
   ```
 
-  Please consult [Velero's dockerhub repository](https://hub.docker.com/u/velero) to determine the correct `<provider-name>` and `<provider-plugin-tag>` values.
+  Please review [Velero's Docker Hub image plugin repositories](https://hub.docker.com/u/velero?page=1&search=velero-plugin)
+  to help identify the required `<provider-name>`.
+  Once the required image has been identified, select from the available tags to determine the correct
+  `<provider-plugin-tag>`. In the case of AWS, the provider-name would be `velero-plugin-for-aws`, we can
+  select from the available tags listed here: <https://hub.docker.com/r/velero/velero-plugin-for-aws/tags>
 
-4. Prepare a [storage location](https://velero.io/docs/v1.15/supported-providers/), such as an Amazon S3 bucket, to store k0rdent backups.
+1. Prepare a [storage location](https://velero.io/docs/v1.15/supported-providers/), such as an Amazon S3 bucket, to store k0rdent backups.
 
-5. Prepare a yaml file containing [`BackupStorageLocation`](https://velero.io/docs/v1.15/api-types/backupstoragelocation/)
+1. Prepare a yaml file containing [`BackupStorageLocation`](https://velero.io/docs/v1.15/api-types/backupstoragelocation/)
    object referencing a `Secret` with credentials to access the cloud storage
    (if the multiple credentials feature is supported by the plugin).
 
@@ -93,13 +95,17 @@ Before you create a manual one-off or scheduled backup, you need to perform some
     aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY
     EOF
     ```
-    Please fill in the `credentials.txt` with your platform specific credentials.
+    Please fill in the `credentials.txt` with your AWS IAM account's credentials.
 
-  > Note: Your IAM user must have the appropriate Velero S3 bucket access. See the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user).
+    > Note: The IAM user being used in this configuration will require certain permissions for the
+  appropriate Velero S3 bucket access.
+  Review the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user)
+  (reference JSON policy file named `velero-policy.json` -- take care to replace `${BUCKET}` with the
+  correct bucket name).
 
     Then generate the necessary base64-encoded credentials using:
     ```sh
-    base64 -w0 credentials.txt; echo;
+    base64 -w0 credentials.txt; echo
     ```
     Please use this base64 value in the `creds-and-backup-storage-location.yaml`, namely under the `data.cloud` field.
     ```sh
@@ -137,7 +143,7 @@ Before you create a manual one-off or scheduled backup, you need to perform some
     EOF
     ```
 
-7. Create the necessary Kubernetes resources in your k0rdent cluster using the following commands:
+1. Create the necessary Kubernetes resources in your k0rdent cluster using the following commands:
 ```sh
 kubectl apply -f creds-and-backup-storage-location.yaml
 ```
@@ -146,7 +152,7 @@ then
 kubectl apply -f management.yaml
 ```
 
-8. Confirm that the previous steps were applied correctly:
+1. Confirm that the previous steps were applied correctly:
 ```sh
 kubectl get management kcm -n kcm-system -o yaml
 ```
@@ -172,8 +178,10 @@ If the `.spec.schedule` field is not set, a [backup on demand](#management-backu
 Optionally, set the name of the `BackupStorageLocation` `.spec.backup.storageLocation`.
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
-For example, you can create a `ManagementBackup` object that backs up to the storage object created in the previous step
-every 6 minutes would look like this:
+For example, you can create a `ManagementBackup` object that backs up to the storage object
+created in the previous step every 6 hours
+(ref: [Kubernetes CronJob schedule syntax, "Vixie cron" step values](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax))
+would look like this:
 
 ```sh
 cat <<EOF > scheduled-backup.yaml
