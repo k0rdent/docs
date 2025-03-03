@@ -1797,7 +1797,7 @@ Detailed instructions for deploying k0rdent management clusters into a multi-nod
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-While it is technically possible to run k0rdent on an existing cluster, using a fresh cluster is recommended to avoid conflicts with pre-instalked components.</p>
+While it is technically possible to run k0rdent on an existing cluster, using a fresh cluster is recommended to avoid conflicts with pre-installed components.</p>
 </div>
 <p>The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release <a href="https://github.com/k0rdent/kcm/tags">here</a>, and from there you can deploy the Helm chart, as in:</p>
 <p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kcm<span class="w"> </span>oci://ghcr.io/k0rdent/kcm/charts/kcm<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--create-namespace
@@ -1818,7 +1818,12 @@ Make sure to specify the correct release version number.</p>
 </div>
 <p>The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.</p>
 <h2 id="confirming-the-deployment">Confirming the deployment<a class="headerlink" href="#confirming-the-deployment" title="Permanent link">#</a></h2>
-<p>To understand whether installation is complete, start by making sure all pods are ready in the <code>kcm-system</code> namespace. There should be 17:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+After running the helm install command, please wait 5 to 10 minutes for the deployment to stabilize.</p>
+</div>
+<p>To understand whether installation is complete, start by making sure all pods are ready in the <code>kcm-system</code> namespace. There should be 17 pod entries:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                                                          READY   STATUS    RESTARTS   AGE</span>
@@ -1840,10 +1845,14 @@ Make sure to specify the correct release version number.</p>
 <span class="go">kcm-velero-b68fd5957-fwg2l                                    1/1     Running   0          5m1s</span>
 <span class="go">source-controller-6cd7676f7f-7kpjn                            1/1     Running   0          5m1s</span>
 </code></pre></div></p>
-<p>State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running in the <code>projectsveltos</code> namespace:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">17</span>
+</code></pre></div></p>
+<p>State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running/completed in the <code>projectsveltos</code> namespace:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">AME                                     READY   STATUS      RESTARTS   AGE</span>
+<p><div class="highlight"><pre><span></span><code><span class="go">NAME                                     READY   STATUS      RESTARTS   AGE</span>
 <span class="go">access-manager-56696cc7f-5txlb           1/1     Running     0          4m1s</span>
 <span class="go">addon-controller-7c98776c79-dn9jm        1/1     Running     0          4m1s</span>
 <span class="go">classifier-manager-7b85f96469-666jx      1/1     Running     0          4m1s</span>
@@ -1854,6 +1863,10 @@ Make sure to specify the correct release version number.</p>
 <span class="go">shard-controller-5ff9cd796d-tlg79        1/1     Running     0          4m1s</span>
 <span class="go">sveltos-agent-manager-7467959f4f-lsnd5   1/1     Running     0          3m34s</span>
 </code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">9</span>
+</code></pre></div></p>
 <p>If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>classifier-manager-7b85f96469-666jx<span class="w"> </span>-n<span class="w"> </span>projectsveltos
 </code></pre></div>
