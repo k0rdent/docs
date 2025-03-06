@@ -36,47 +36,80 @@ k0rdent manages the schedule and is responsible for collecting data to be includ
 
 ## Scheduled Management Backups
 
-Backups should be scheduled on a regular basis, depending on how often information changes.
+Backups should be run on a schedule consistent with the policy requirements of the environment, eg, "daily" for a production environment, "weekly" for a testing environment.
 
 ### Preparation
 
-Before you create a scheduled backup, you need to perform a few preparatory steps:
+> NOTE: The following instructions are tailored for AWS. Please adapt them to your chosen platform and storage.
 
-1. If no `velero` plugins have been installed as suggested
-   in [Velero installation](#velero-installation),
-   install a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
-   by modifying the `Management` object:
+Before you create a manual one-off or scheduled backup, review the steps below and update your configuration accordingly:
 
-    ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
-    kind: Management
-    metadata:
-      name: kcm
-    spec:
-      # ... 
-      core:
-        kcm:
-          config:
-            velero:
-              initContainers:
-              - name: velero-plugin-for-<provider-name>
-                image: velero/velero-plugin-for-<provider-name>:<provider-plugin-tag>
-                imagePullPolicy: IfNotPresent
-                volumeMounts:
-                - mountPath: /target
-                  name: plugins
-      # ...
-    ```
+1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) is already configured, please skip the next step.
 
-1. Prepare a cloud storage location, such as an Amazon S3 bucket, to which to save backups.
+1. If no `velero` plugins have yet been installed in your k0rdent cluster, obtain the kcm management yaml file:
 
-1. Create a [`BackupStorageLocation`](https://velero.io/docs/v1.15/api-types/backupstoragelocation/)
+  ```sh
+  kubectl get management kcm -n kcm-system -o yaml > management.yaml
+  ```
+  then edit the `management.yaml` file so that the velero plugin details are filled in under `spec.core.kcm`:
+
+  ```yaml
+  apiVersion: k0rdent.mirantis.com/v1alpha1
+  kind: Management
+  metadata:
+    name: kcm
+  spec:
+    # ... 
+    core:
+      kcm:
+        config:
+          velero:
+            initContainers:
+            - name: velero-plugin-for-<provider-name>
+              image: velero/velero-plugin-for-<provider-name>:<provider-plugin-tag>
+              imagePullPolicy: IfNotPresent
+              volumeMounts:
+              - mountPath: /target
+                name: plugins
+    # ...
+  ```
+
+  Please review [Velero's Docker Hub image plugin repositories](https://hub.docker.com/u/velero?page=1&search=velero-plugin)
+  to help identify the required `<provider-name>`.
+  Once the required image has been identified, select from the available tags to determine the correct
+  `<provider-plugin-tag>`. In the case of AWS, the provider-name would be `velero-plugin-for-aws`, we can
+  select from the available tags listed here: <https://hub.docker.com/r/velero/velero-plugin-for-aws/tags>
+
+1. Prepare a [storage location](https://velero.io/docs/v1.15/supported-providers/), such as an Amazon S3 bucket, to store k0rdent backups.
+
+1. Prepare a yaml file containing [`BackupStorageLocation`](https://velero.io/docs/v1.15/api-types/backupstoragelocation/)
    object referencing a `Secret` with credentials to access the cloud storage
    (if the multiple credentials feature is supported by the plugin).
 
-    For example, if you are using Amazon S3, your `BackupStorageLocation` and the related `Secret` might look like this:
+    For example, one may create the `BackupStorageLocation` and the related `Secret` yaml for the Amazon S3 configuration as follows:
 
-    ```yaml
+    ```sh
+    cat <<EOF > credentials.txt
+    [default]
+    aws_access_key_id = EXAMPLE_ACCESS_KEY_ID
+    aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY
+    EOF
+    ```
+    Please fill in the `credentials.txt` with your AWS IAM account's credentials.
+
+    > Note: The IAM user being used in this configuration will require certain permissions for the
+  appropriate Velero S3 bucket access.
+  Review the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user)
+  (reference JSON policy file named `velero-policy.json` -- take care to replace `${BUCKET}` with the
+  correct bucket name).
+
+    Then generate the necessary base64-encoded credentials using:
+    ```sh
+    base64 -w0 credentials.txt; echo
+    ```
+    Please use this base64 value in the `creds-and-backup-storage-location.yaml`, namely under the `data.cloud` field.
+    ```sh
+    cat <<EOF > creds-and-backup-storage-location.yaml
     ---
     apiVersion: v1
     data:
@@ -84,7 +117,7 @@ Before you create a scheduled backup, you need to perform a few preparatory step
       # [default]
       # aws_access_key_id = EXAMPLE_ACCESS_KEY_ID
       # aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY
-      cloud: WW2RlZmF1bHRdCmF3c19hY2Nlc3Nfa2V5X2lkID0gRVhBTVBMRV9BQ0NFU1NfS0VZX0lECmF3c19zZWNyZXRfYWNjZXNzX2tleSA9IEVYQU1QTEVfU0VDUkVUX0FDQ0VTU19LRVkKICA=
+      cloud: BASE64_VALUE
     kind: Secret
     metadata:
       name: cloud-credentials
@@ -107,7 +140,32 @@ Before you create a scheduled backup, you need to perform a few preparatory step
       credential:
         name: cloud-credentials
         key: cloud
+    EOF
     ```
+
+1. Create the necessary Kubernetes resources in your k0rdent cluster using the following commands:
+```sh
+kubectl apply -f creds-and-backup-storage-location.yaml
+```
+then
+```sh
+kubectl apply -f management.yaml
+```
+
+1. Confirm that the previous steps were applied correctly:
+```sh
+kubectl get management kcm -n kcm-system -o yaml
+```
+The management configuration yaml should have the new velero plugin details.
+
+```sh
+kubectl get backupstoragelocation -n kcm-system
+```
+The configured storage should show up as available:
+```
+NAME     PHASE       LAST VALIDATED   AGE   DEFAULT
+aws-s3   Available   27s              2d    true
+```
 
 You can get more information on how to build these objects at the [official Velero documentation](https://velero.io/docs/v1.15/locations).
 
@@ -120,10 +178,13 @@ If the `.spec.schedule` field is not set, a [backup on demand](#management-backu
 Optionally, set the name of the `BackupStorageLocation` `.spec.backup.storageLocation`.
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
-For example, you can create a `ManagementBackup` object that backs up to the storage object created in the previous step
-every 6 minutes would look like this:
+For example, you can create a `ManagementBackup` object that backs up to the storage object
+created in the previous step every 6 hours
+(ref: [Kubernetes CronJob schedule syntax, "Vixie cron" step values](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax))
+would look like this:
 
-```yaml
+```sh
+cat <<EOF > scheduled-backup.yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ManagementBackup
 metadata:
@@ -131,6 +192,23 @@ metadata:
 spec:
   schedule: "0 */6 * * *"
   storageLocation: aws-s3
+EOF
+```
+
+Start the scheduled backup process in k0rdent:
+```sh
+kubectl apply -f scheduled-backup.yaml
+```
+
+Confirm the backup creation was successful by navigating to the appropriate storage console UI as well running:
+```sh
+kubectl get managementbackup
+```
+One should see a Completed status:
+```
+$ kubectl get managementbackup
+NAME              LASTBACKUPSTATUS   NEXTBACKUP   AGE
+example-backup    Completed                       8m
 ```
 
 ## Management Backup on Demand
@@ -139,13 +217,31 @@ To create a single backup of the existing k0rdent management cluster information
 using a YAML document and the `kubectl` CLI. The object then creates only one instance of a backup. For example you can backup
 to the location created earlier:
 
-```yaml
+```sh
+cat <<EOF > one-time-backup.yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ManagementBackup
 metadata:
   name: example-backup
 spec:
   storageLocation: aws-s3
+EOF
+```
+
+Create a one time backup of your k0rdent cluster:
+```sh
+kubectl apply -f one-time-backup.yaml
+```
+
+Confirm the backup creation was successful by navigating to the appropriate storage console UI as well running:
+```sh
+kubectl get managementbackup
+```
+One should see a Completed status:
+```
+$ kubectl get managementbackup
+NAME              LASTBACKUPSTATUS   NEXTBACKUP   AGE
+example-backup    Completed                       8m
 ```
 
 ## What's Included in the Management Backup
