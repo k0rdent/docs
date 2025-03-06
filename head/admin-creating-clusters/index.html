@@ -1745,8 +1745,8 @@ for example, this <code>ClusterTemplateChain</code>:</p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-1-0</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-1-0</span>
 </code></pre></div>
-<p>As you can see from the <code>.spec</code>, the <code>aws-standalone-co-0-1-0</code> template can be applied to a cluster that also uses
-the <code>aws-standalone-co-0-1-0</code> template, or it can be used as an upgrade from a cluster that uses <code>aws-standalone-co-0.0.2</code>.
+<p>As you can see from the <code>.spec</code>, the <code>aws-standalone-cp-0-1-0</code> template can be applied to a cluster that also uses
+the <code>aws-standalone-cp-0-1-0</code> template, or it can be used as an upgrade from a cluster that uses <code>aws-standalone-cp-0.0.2</code>.
 You wouldn't be able to use this template to update a cluster that uses any other <code>ClusterTemplate</code>.</p>
 <p>Similarly, the <code>AccessManagement</code> object must have properly configured <code>spec.accessRules</code> with a list of allowed 
 <code>ClusterTemplateChain</code> object names and their namespaces. For more information, see <a href="../template-intro/#template-life-cycle-management">Template Life Cycle Management</a>.</p>
