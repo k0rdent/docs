@@ -1622,25 +1622,62 @@
 <h2 id="how-k0rdent-works">How k0rdent works<a class="headerlink" href="#how-k0rdent-works" title="Permanent link">#</a></h2>
 <p>k0rdent has several important subsystems, notably:</p>
 <ul>
-<li><strong>KCM - k0rdent Cluster Manager</strong>: KCM wraps and manages Kubernetes Cluster API, and lets you treat clusters as
+<li><strong>KCM - k0rdent Cluster Manager</strong>: KCM wraps and manages Kubernetes Cluster API (ClusterAPI) and lets you treat clusters as
 Kubernetes objects. Within a k0rdent management cluster, you'll have a <code>ClusterDeployment</code> object that
 represents a deployed cluster, with <code>Machine</code> objects, and so on. When you create a <code>ClusterDeployment</code>,
-k0rdent deploys the cluster. When you delete it, k0rdent deletes it, and so on.</li>
-<li><strong>KSM - k0rdent Service Manager</strong>: KSM wraps and manages several interoperating open source projects such as Helm and Sveltos, which let you treat services and applications as Kubernetes objects.</li>
+k0rdent deploys the cluster, when you delete it, k0rdent deletes it, and so on.</li>
+<li><strong>KSM - k0rdent Service Manager</strong>: KSM wraps and manages several interoperating open source projects such as Helm and Sveltos, which lets you treat services and applications as Kubernetes objects.</li>
 </ul>
-<p>Together, KCM and KSM interoperate to create a complete, template-driven system for defining and managing Internal Development Platforms (IDPs) comprising suites of services, plus a cluster and its components as realized on a particular cloud or infrastructure substrate.</p>
+<p>Together, KCM and KSM interoperate to create a complete, template-driven system for defining and managing Internal Development Platforms (IDPs) made up of suites of services, plus a cluster and its components as realized on a particular cloud or infrastructure substrate.</p>
 <ul>
 <li>
 <p><strong>ClusterAPI providers</strong>: ClusterAPI uses <code>providers</code> to manage different clouds and infrastructures, including bare metal. k0rdent ships with providers for AWS, Azure, OpenStack and vSphere, and you can add additional providers in order to control other clouds or infrastructures that ClusterAPI supports.</p>
 </li>
 <li>
 <p><strong>Templates</strong>: When you create a cluster, that cluster is based on a template, which specifies all of the various information about the cluster, such as where to find images, and so on. These templates get installed into k0rdent, but they don't do anything until you reference them in a <code>ClusterDeployment</code> that represents an actual cluster.</p>
-<p><img alt="The Basic Architecture" src="../assets/k0rdent-basics-1.svg" /></p>
+<pre class="mermaid"><code>graph LR;
+    subgraph Infrastructure
+        WN1["ClusterDeployment Worker Node"]
+        CP["ClusterDeployment Managed Server Control Plane"]
+        WN2["ClusterDeployment Worker Node"]
+    end
+
+    subgraph "k0rdent Mgmnt Cluster"
+        CT["Cluster Template"]
+        P["Provider"]
+    end
+
+    CP --&gt;|Controls| WN1
+    CP --&gt;|Controls| WN2
+    CT --&gt;|Defines| CP &amp; WN1 &amp; WN2
+    P --&gt;|Provisions| Infrastructure
+</code></pre>
 <p>k0rdent can also manage these clusters, upgrading them, scaling them, or installing software and services.</p>
 </li>
 <li>
 <p><strong>Services</strong>: To add (or manage) services, you also use templates. These <code>ServiceTemplate</code> objects are like <code>ClusterTemplate</code> objects, in that you install them into the cluster, but until they're actually referenced, they don't do anything. When you reference a <code>ServiceTemplate</code> as part of a <code>ClusterDeployment</code>, k0rdent knows to install that service into that cluster.</p>
-<p><img alt="Adding an application" src="../assets/k0rdent-basics-2.svg" /></p>
+<pre class="mermaid"><code>graph TB;
+
+    subgraph "k0rdent Mgmnt Cluster"
+        ST["Service Template"]
+    end
+
+    subgraph Infrastructure
+        CP["ClusterDeployment Managed Server Control Plane"]
+
+        subgraph WN1["Worker Node"]
+        POD1[App]
+        end
+
+        subgraph WN2["Worker Node"]
+        POD2[App]
+        end
+    end
+    CP --&gt;|Controls| WN1
+    CP --&gt;|Controls| WN2
+    POD1 --&gt;|Defined By| ST
+    POD2 --&gt;|Defined By| ST
+</code></pre>
 <p>These services can be actual services, such as Nginx or Kyverno, or they can be user applications.</p>
 </li>
 </ul>
@@ -1652,17 +1689,22 @@ instance on which you are going to install Kubernetes, but how does k0rdent get 
 installed in the k0rdent management cluster. Depending on whether the target infrastructure is AWS, Azure, or something else, that
 <code>Credential</code> might reference an access key and secret, or it might reference a service provider, but all of that gets abstracted
 out by the time you get to the <code>Credential</code>, which is what you'll actually reference.</p>
-<p><img alt="Building a Credential" src="../assets/Credentials.svg" /></p>
+<pre class="mermaid"><code>graph LR;
+    Secret["Secret
+    (includes Provider-specific passwords
+    secret keys, etc.)"] --&gt; ClusterIdentity["ClusterIdentity
+    (Provider-specific)"];
+    ClusterIdentity --&gt; Credential["Credential"];</code></pre>
 <p>By abstracting everything out to create a standard <code>Credential</code> object, users never have to have access to actual credentials (lowercase "c"). This enables the administrator to keep those credentials private, and to rotate them as necessary without disturbing users or their applications. The administrator simply updates the <code>Credential</code> object and everything continues to work.</p>
 <p>You can find more information on creating these <code>Credential</code> objects in <a href="../admin-credentials/">the Credentials chapter</a>.</p>
 <h2 id="k0rdent-and-gitops">k0rdent and GitOps<a class="headerlink" href="#k0rdent-and-gitops" title="Permanent link">#</a></h2>
 <p>At its heart, k0rdent is a Kubernetes-native way to declaratively specify what should be happening in the infrastructure and
 have that maintained. In other words, if you want to, say, scale up a cluster, you would give that cluster a new
-definition that includes the additional nodes, and then k0rdent, seeing that reality doesn't match that definition,
+definition that includes the additional nodes, and then k0rdent, seeing that reality no longer the definition,
 will make it happen.</p>
-<p>In some ways that is very similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
+<p>In some ways this way of working is similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
 ensure that reality matches the definition. We can say that k0rdent is GitOps-compatible, in the sense that you can (and should) consider storing k0rdent templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of k0rdent itself.</p>
-<p>The main difference is that k0rdent's way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you can, in fact, port much of what you do with k0rdent templates and objects directly to other solution environments that leverage these standard tools.</p>
+<p>The main difference is that k0rdent's way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you could, if you needed to, port much of what you do with k0rdent templates and objects directly to other solution environments that leverage these standard tools.</p>
 <h2 id="the-k0rdent-initialization-process">The k0rdent initialization process<a class="headerlink" href="#the-k0rdent-initialization-process" title="Permanent link">#</a></h2>
 <p><img alt="k0rdent initialization process" src="../assets/kcm-initialization.png" /></p>
 <h3 id="the-process">The process<a class="headerlink" href="#the-process" title="Permanent link">#</a></h3>

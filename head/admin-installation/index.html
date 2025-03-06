@@ -708,6 +708,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create and prepare a production-grade Kubernetes cluster with EKS
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1725,6 +1734,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create and prepare a production-grade Kubernetes cluster with EKS
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1793,12 +1811,7 @@
 Detailed instructions for deploying k0rdent management clusters into a multi-node configuration and scaling them as needed are COMING SOON!</p>
 </div>
 <h2 id="install-k0rdent">Install k0rdent<a class="headerlink" href="#install-k0rdent" title="Permanent link">#</a></h2>
-<p>This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the <a href="#create-and-prepare-a-kubernetes-cluster-with-k0s">Create and prepare a Kubernetes cluster with k0s</a> guide. </p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-While it is technically possible to run k0rdent on an existing cluster, using a fresh cluster is recommended to avoid conflicts with pre-installed components.</p>
-</div>
+<p>This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the <a href="#create-and-prepare-a-kubernetes-cluster-with-k0s">Create and prepare a Kubernetes cluster with k0s</a> to create a test cluster, or <a href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks">Create and prepare a production grade Kubernetes cluster with EKS</a> to create something more substantial. </p>
 <p>The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release <a href="https://github.com/k0rdent/kcm/tags">here</a>, and from there you can deploy the Helm chart, as in:</p>
 <p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kcm<span class="w"> </span>oci://ghcr.io/k0rdent/kcm/charts/kcm<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--create-namespace
 </code></pre></div>
@@ -1976,7 +1989,189 @@ sudo<span class="w"> </span>chmod<span class="w"> </span>+r<span class="w"> </sp
 chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>get_helm.sh
 ./get_helm.sh
 </code></pre></div>
-<p>Helm will be installed into <code>/usr/local/bin/helm</code></p>
+<p>Helm will be installed into <code>/usr/local/bin/helm</code>.</p>
+</li>
+</ol>
+<h2 id="create-and-prepare-a-production-grade-kubernetes-cluster-with-eks">Create and prepare a production-grade Kubernetes cluster with EKS<a class="headerlink" href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks" title="Permanent link">#</a></h2>
+<p>Follow these steps to install and prepare an <a href="https://ca-central-1.console.aws.amazon.com/eks/clusters">Amazon EKS</a> management cluster:</p>
+<ol>
+<li>
+<p>The basic AWS tools</p>
+<p>Start by installing and configuring the Amazon tools. First download and install the <code>aws</code> tool:</p>
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;awscliv2.zip&quot;</span>
+unzip<span class="w"> </span>awscliv2.zip
+sudo<span class="w"> </span>./aws/install
+</code></pre></div>
+ Then configure it using environment variables:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_ACCESS_KEY_ID&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SECRET_ACCESS_KEY&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SESSION_TOKEN&quot;</span>
+aws<span class="w"> </span>configure
+</code></pre></div>
+ <div class="highlight"><pre><span></span><code><span class="go">AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:</span>
+<span class="go">AWS Secret Access Key [EXAMPLE_SECRET_ACCESS_KEY]:</span>
+<span class="go">Default region name [YOUR_AWS_REGION]:</span>
+<span class="go">Default output format [json]:</span>
+</code></pre></div>
+ Once <code>aws</code> is installed youc an install <code>eksctl</code>:</p>
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--silent<span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>xz<span class="w"> </span>-C<span class="w"> </span>/tmp
+sudo<span class="w"> </span>mv<span class="w"> </span>/tmp/eksctl<span class="w"> </span>/usr/local/bin
+eksctl<span class="w"> </span>version
+</code></pre></div>
+ <div class="highlight"><pre><span></span><code><span class="go">0.205.0</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Create the cluster</p>
+<p>You can use the eksctl tool to create the basic Kubernetes cluster:
+<div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>&lt;CLUSTER_NAME&gt;<span class="w"> </span><span class="se">\</span>
+--version<span class="w"> </span><span class="m">1</span>.31<span class="w"> </span><span class="se">\</span>
+--region<span class="w"> </span>&lt;YOUR_AWS_REGION&gt;<span class="w"> </span><span class="se">\</span>
+--without-nodegroup
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:26:02 [ℹ]  eksctl version 0.205.0</span>
+<span class="go">...</span>
+<span class="go">2025-03-05 22:36:14 [✔]  all EKS cluster resources for &quot;CLUSTER_NAME&quot; have been created</span>
+<span class="go">2025-03-05 22:36:15 [ℹ]  kubectl command should work with &quot;/home/username/.kube/config&quot;, try &#39;kubectl get nodes&#39;</span>
+<span class="go">2025-03-05 22:36:15 [✔]  EKS cluster &quot;CLUSTER_NAME&quot; in &quot;YOUR_AWS_REGION&quot; region is ready</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Add controllers</p>
+<p>While the cluster is now created, it doesn't actually have any nodes.  Start by adding controllers:
+<div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>nodegroup<span class="w"> </span>--cluster<span class="w"> </span>CLUSTER_NAME<span class="w"> </span><span class="se">\</span>
+--name<span class="w"> </span>CONTROLLER_NODE_GROUP<span class="w"> </span><span class="se">\</span>
+--node-type<span class="w"> </span>t3.medium<span class="w"> </span><span class="se">\</span>
+--nodes<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--nodes-min<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--nodes-max<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--node-labels<span class="w"> </span><span class="s2">&quot;role=control-plane&quot;</span><span class="w"> </span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;nickchasek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChaseK0rdentControlCluster&quot;</span>
+<span class="go">...</span>
+<span class="go">2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Install kubectl</p>
+<p>Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have <code>kubectl</code> installed. You can find the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">full install docs here</a>, or just follow these instructions:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg<span class="w"> </span><span class="c1"># allow unprivileged APT programs to read this keyring</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list<span class="w">   </span><span class="c1"># helps tools such as command-not-found to work correctly</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>kubectl
+</code></pre></div>
+</li>
+<li>
+<p>Get the KUBECONFIG</p>
+<p>You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:</p>
+<p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>eks<span class="w"> </span>update-kubeconfig<span class="w"> </span>--region<span class="w"> </span>YOUR_AWS_REGION<span class="w"> </span>--name<span class="w"> </span>CLUSTER_NAME
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:026090528175:cluster/NickChaseK0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
+</code></pre></div></p>
+</li>
+<li>
+<p>Taint controllers</p>
+<p>To prevent workloads from being scheduled on the controllers, add the <code>node-role.kubernetes.io/control-plane=true:NoSchedule</code> taint. First list
+the started nodes:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE    VERSION</span>
+<span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename2.compute.internal    Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename3.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+</code></pre></div>
+For each node, go ahead and set the taint:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>taint<span class="w"> </span>nodes<span class="w"> </span>nodename1.compute.internal<span class="w"> </span>node-role.kubernetes.io/control-plane<span class="o">=</span>true:NoSchedule
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">node/nodename1.ca-central-1.compute.internal tainted</span>
+</code></pre></div>
+Now verify the taints:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>nodes<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;Taints:&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename1.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:42 -0500</span>
+<span class="go">--</span>
+<span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename2.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:40 -0500</span>
+<span class="go">--</span>
+<span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename3.ca-central-1.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:41 -0500</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Add worker nodes</p>
+<p>Adding worker nodes is simpler than controllers:</p>
+<p><div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>nodegroup<span class="w"> </span>--cluster<span class="w"> </span>CLUSTER_NAME<span class="w"> </span><span class="se">\</span>
+--name<span class="w"> </span>WORKER_NODE_GROUP<span class="w"> </span><span class="se">\</span>
+--node-type<span class="w"> </span>t3.medium<span class="w"> </span><span class="se">\</span>
+--nodes<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+--nodes-min<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+--nodes-max<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+--node-labels<span class="w"> </span><span class="s2">&quot;role=worker&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<span class="go">...</span>
+<span class="go">2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster &quot;CLUSTER_NAME&quot;</span>
+<span class="go">2025-03-06 03:13:39 [ℹ]  checking security group configuration for all nodegroups</span>
+<span class="go">2025-03-06 03:13:39 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
+</code></pre></div>
+Verify the nodes:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE     VERSION</span>
+<span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename4.compute.internal    Ready    &lt;none&gt;   79s     v1.31.5-eks-5d632ec</span>
+<span class="go">nodename2.compute.internal    Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename5.compute.internal   Ready    &lt;none&gt;   82s     v1.31.5-eks-5d632ec</span>
+<span class="go">nodename3.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Verify pods</p>
+<p>Make sure pods will run properly by deploying a test pod:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>test-pod<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>--restart<span class="o">=</span>Never
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>NAME<span class="w">       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE<span class="w">   </span>IP<span class="w">               </span>NODE<span class="w">                                              </span>NOMINATED<span class="w"> </span>NODE<span class="w">   </span>READINESS<span class="w"> </span>GATES
+test-pod<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>15s<span class="w">   </span><span class="m">192</span>.168.76.104<span class="w">   </span>ip-192-168-68-189.ca-central-1.compute.internal<span class="w">   </span>&lt;none&gt;<span class="w">           </span>&lt;none&gt;
+</code></pre></div>
+Clean up so you can start fresh:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>test-pod
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>pod<span class="w"> </span><span class="s2">&quot;test-pod&quot;</span><span class="w"> </span>deleted
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">No resources found in default namespace.</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Install Helm</p>
+<p>Finally, the easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the <a href="https://helm.sh/docs/intro/install/">full instructions here</a>, or use these instructions:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>-o<span class="w"> </span>get_helm.sh<span class="w"> </span>https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>get_helm.sh
+./get_helm.sh
+</code></pre></div>
+<p>Helm will be installed into <code>/usr/local/bin/helm</code>.</p>
 </li>
 </ol>
 
