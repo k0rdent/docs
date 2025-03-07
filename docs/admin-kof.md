@@ -280,7 +280,9 @@ Before beginning KOF installation, you should have the following components in p
 To avoid [manual configuration of DNS records for service endpoints](#manual-dns-config) later,
 you can automate the process now using [external-dns](https://kubernetes-sigs.github.io/external-dns/latest/).
 
-For example, for AWS you should use the [Node IAM Role](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#node-iam-role)
+#### AWS
+
+For AWS you should use the [Node IAM Role](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#node-iam-role)
 or [IRSA](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-roles-for-service-accounts) methods in production.
 
 For now, however, just for the sake of this demo based on the `aws-standalone` template,
@@ -300,6 +302,32 @@ you can use the most straightforward (though less secure) [static credentials](h
       -n kof external-dns-aws-credentials \
       --from-file external-dns-aws-credentials
     ```
+
+#### Azure
+
+See [external-dns Azure documentation](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md) for the details.
+
+1. Create an Azure service principal with the DNS Zone Contributor permissions - [here is an example](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#creating-a-service-principal)
+
+2. Create **azure.json** text file containing [the service principal configuration data](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file) - here is an example:
+
+    ```
+    {
+      "tenantId": "01234abc-de56-ff78-abc1-234567890def",
+      "subscriptionId": "01234abc-de56-ff78-abc1-234567890def",
+      "resourceGroup": "MyDnsResourceGroup",
+      "aadClientId": "01234abc-de56-ff78-abc1-234567890def",
+      "aadClientSecret": "uKiuXeiwui4jo9quae9o"
+    }
+    ```
+3. Create the `external-dns--credentials` secret in the `kof` namespace:
+    ```shell
+    kubectl create namespace kof
+    kubectl create secret generic \
+      -n kof external-dns-azure-credentials \
+      --from-file azure.json
+    ```
+
 
 ### Management Cluster
 
@@ -332,6 +360,8 @@ and apply this example, or use it as a reference:
 
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
     add to the `kcm:` object in the `mothership-values.yaml` file:
+    
+    **For AWS:**
     ```yaml
       kof:
         clusterProfiles:
@@ -340,6 +370,16 @@ and apply this example, or use it as a reference:
               k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
             secrets:
               - external-dns-aws-credentials
+    ```
+    **For Azure:**
+    ```yaml
+      kof:
+        clusterProfiles:
+          kof-azure-dns-secrets:
+            matchLabels:
+              k0rdent.mirantis.com/kof-azure-dns-secrets: "true"
+            secrets:
+              - external-dns-azure-credentials
     ```
     This enables Sveltos to auto-distribute DNS secret to regional clusters.
 
@@ -385,6 +425,8 @@ and apply this example for AWS, or use it as a reference:
     * `ClusterDeployment` - regional cluster
     * `PromxyServerGroup` - for metrics
     * `GrafanaDatasource` - for logs
+
+    **AWS**
 
     ```shell
     cat >regional-cluster.yaml <<EOF
@@ -507,8 +549,153 @@ and apply this example for AWS, or use it as a reference:
     EOF
     ```
 
+    **Azure**
+    <details>
+    <summary>Click me</summary>
+    ```shell
+    REGION=westus2
+    AZURE_SUBSCRIPTION_ID=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+    TEMPLATE=azure-standalone-cp-0-1-0
+
+
+    cat >regional-cluster.yaml <<EOF
+    apiVersion: k0rdent.mirantis.com/v1alpha1
+    kind: ClusterDeployment
+    metadata:
+      name: $REGIONAL_CLUSTER_NAME
+      namespace: kcm-system
+      labels:
+        kof: storage
+    spec:
+      template: $TEMPLATE
+      credential: azure-cluster-identity-cred
+      config:
+        clusterIdentity:
+          name: azure-cluster-identity
+          namespace: kcm-system
+        subscriptionID: $AZURE_SUBSCRIPTION_ID
+        controlPlane:
+          vmSize: Standard_A4_v2
+        controlPlaneNumber: 1
+        location: $REGION
+        worker:
+          vmSize: Standard_A4_v2
+        workersNumber: 3
+        clusterLabels:
+          k0rdent.mirantis.com/kof-storage-secrets: "true"
+          k0rdent.mirantis.com/kof-azure-dns-secrets: "true"
+      serviceSpec:
+        priority: 100
+        services:
+          - name: ingress-nginx
+            namespace: ingress-nginx
+            template: ingress-nginx-4-11-3
+            values: |
+              controller:
+                service:
+                  annotations:
+                    "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
+          - name: cert-manager
+            namespace: cert-manager
+            template: cert-manager-1-16-2
+            values: |
+              cert-manager:
+                crds:
+                  enabled: true
+          - name: kof-storage
+            namespace: kof
+            template: kof-storage-0-1-1
+            values: |
+              external-dns:
+                enabled: true
+                provider:
+                  name: azure
+                extraVolumeMounts:
+                  - name: azure-config-file
+                    mountPath: /etc/kubernetes
+                    readOnly: true
+                extraVolumes:
+                  - name: azure-config-file
+                    secret:
+                      secretName: external-dns-azure-credentials
+              victoriametrics:
+                vmauth:
+                  ingress:
+                    host: vmauth.$REGIONAL_DOMAIN
+                security:
+                  username_key: username
+                  password_key: password
+                  credentials_secret_name: storage-vmuser-credentials
+              grafana:
+                ingress:
+                  host: grafana.$REGIONAL_DOMAIN
+                security:
+                  credentials_secret_name: grafana-admin-credentials
+              cert-manager:
+                email: ironreality@gmail.com
+    ---
+    apiVersion: kof.k0rdent.mirantis.com/v1alpha1
+    kind: PromxyServerGroup
+    metadata:
+      labels:
+        app.kubernetes.io/name: promxy-operator
+        k0rdent.mirantis.com/promxy-secret-name: kof-mothership-promxy-config
+      name: $REGIONAL_CLUSTER_NAME-metrics
+      namespace: kof
+    spec:
+      cluster_name: $REGIONAL_CLUSTER_NAME
+      targets:
+        - "vmauth.$REGIONAL_DOMAIN:443"
+      path_prefix: /vm/select/0/prometheus/
+      scheme: https
+      http_client:
+        dial_timeout: "5s"
+        tls_config:
+          insecure_skip_verify: true
+        basic_auth:
+          credentials_secret_name: storage-vmuser-credentials
+          username_key: username
+          password_key: password
+    ---
+    apiVersion: grafana.integreatly.org/v1beta1
+    kind: GrafanaDatasource
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+      name: $REGIONAL_CLUSTER_NAME-logs
+      namespace: kof
+    spec:
+      valuesFrom:
+        - targetPath: "basicAuthUser"
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: storage-vmuser-credentials
+        - targetPath: "secureJsonData.basicAuthPassword"
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: storage-vmuser-credentials
+      datasource:
+        name: $REGIONAL_CLUSTER_NAME
+        url: https://vmauth.$REGIONAL_DOMAIN/vls
+        access: proxy
+        isDefault: false
+        type: "victoriametrics-logs-datasource"
+        basicAuth: true
+        basicAuthUser: \${username}
+        secureJsonData:
+          basicAuthPassword: \${password}
+      instanceSelector:
+        matchLabels:
+          dashboards: grafana
+      resyncPeriod: 5m
+    EOF
+    ```
+    </details>
+
 4. The `ClusterTemplate` above provides the [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass)
-    `ebs-csi-default-sc`. If you want to use a non-default storage class,
+    (`ebs-csi-default-sc` for AWS). If you want to use a non-default storage class,
     add it to the `regional-cluster.yaml` file
     in the `ClusterDeployment.spec.serviceSpec.services[name=kof-storage].values`:
     ```yaml
@@ -554,6 +741,7 @@ and apply this example for AWS, or use it as a reference:
 
 3. Compose the `ClusterDeployment`:
 
+    **AWS**
     ```shell
     cat >child-cluster.yaml <<EOF
     apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -623,6 +811,84 @@ and apply this example for AWS, or use it as a reference:
                   endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
     EOF
     ```
+
+    **Azure**
+    <details>
+    <summary>Click me</summary>
+    ```shell
+    REGION=westus2
+    AZURE_SUBSCRIPTION_ID=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+    TEMPLATE=azure-standalone-cp-0-1-0
+
+    cat >child-cluster.yaml <<EOF
+    apiVersion: k0rdent.mirantis.com/v1alpha1
+    kind: ClusterDeployment
+    metadata:
+      name: $CHILD_CLUSTER_NAME
+      namespace: kcm-system
+      labels:
+        kof: collector
+    spec:
+      template: azure-standalone-cp-0-1-0
+      credential: azure-cluster-identity-cred
+      config:
+        clusterIdentity:
+          name: azure-cluster-identity
+          namespace: kcm-system
+        subscriptionID: $AZURE_SUBSCRIPTION_ID
+        controlPlane:
+          vmSize: Standard_A4_v2
+        controlPlaneNumber: 1
+        location: $REGION
+        worker:
+          vmSize: Standard_A4_v2
+        workersNumber: 3
+        clusterLabels:
+          k0rdent.mirantis.com/kof-storage-secrets: "true"
+      serviceSpec:
+        priority: 100
+        services:
+          - name: cert-manager
+            namespace: kof
+            template: cert-manager-1-16-2
+            values: |
+              cert-manager:
+                crds:
+                  enabled: true
+          - name: kof-operators
+            namespace: kof
+            template: kof-operators-0-1-1
+          - name: kof-collectors
+            namespace: kof
+            template: kof-collectors-0-1-1
+            values: |
+              global:
+                clusterName: $CHILD_CLUSTER_NAME
+              opencost:
+                enabled: true
+                opencost:
+                  prometheus:
+                    username_key: username
+                    password_key: password
+                    existingSecretName: storage-vmuser-credentials
+                    external:
+                      url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
+                  exporter:
+                    defaultClusterId: $CHILD_CLUSTER_NAME
+              kof:
+                logs:
+                  username_key: username
+                  password_key: password
+                  credentials_secret_name: storage-vmuser-credentials
+                  endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
+                metrics:
+                  username_key: username
+                  password_key: password
+                  credentials_secret_name: storage-vmuser-credentials
+                  endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
+    EOF
+    ```
+    </details>
 
 4. Verify and apply the `ClusterDeployment`:
     ```shell
