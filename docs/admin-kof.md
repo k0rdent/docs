@@ -309,7 +309,7 @@ See [external-dns Azure documentation](https://github.com/kubernetes-sigs/extern
 
 1. Create an Azure service principal with the DNS Zone Contributor permissions - [here is an example](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#creating-a-service-principal)
 
-2. Create **azure.json** text file containing [the service principal configuration data](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file) - here is an example:
+2. Create `azure.json` text file containing [the service principal configuration data](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file) - here is an example:
 
     ```
     {
