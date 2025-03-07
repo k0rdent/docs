@@ -320,7 +320,7 @@ See [external-dns Azure documentation](https://github.com/kubernetes-sigs/extern
       "aadClientSecret": "uKiuXeiwui4jo9quae9o"
     }
     ```
-3. Create the `external-dns--credentials` secret in the `kof` namespace:
+3. Create the `external-dns-azure-credentials` secret in the `kof` namespace:
     ```shell
     kubectl create namespace kof
     kubectl create secret generic \
