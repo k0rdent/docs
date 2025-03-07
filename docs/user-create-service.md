@@ -60,7 +60,7 @@ metadata:
 spec:
   config:
     clusterLabels: {}
-  template: aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+  template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
   credential: aws-credential
   serviceSpec:
     services:
@@ -124,7 +124,7 @@ spec:
         name: ingress-nginx
         namespace: ingress-nginx
     priority: 100
-  template: aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+  template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
 ```
 
 In the example above, the fields under `serviceSpec` are relevant to the deployment of beach-head services.

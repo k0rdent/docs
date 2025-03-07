@@ -349,20 +349,20 @@ k0rdent is now fully configured to manage Azure. To create a cluster, begin by l
 kubectl get clustertemplate -n kcm-system
 ```
 
-You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the example below, that's `azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}`):
+You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the example below, that's `azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}`):
 
 ```console
 NAMESPACE    NAME                            VALID
 kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-kcm-system   aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-kcm-system   azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+kcm-system   azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 ## Create your ClusterDeployment
@@ -376,7 +376,7 @@ metadata:
   name: my-azure-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}} # name of the clustertemplate
+  template: azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}} # name of the clustertemplate
   credential: azure-cluster-identity-cred
   config:
     clusterLabels: {}
@@ -397,7 +397,7 @@ metadata:
   name: my-azure-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+  template: azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}
   credential: azure-aks-credential
   propagateCredentials: false # Should be set to `false`
   config:

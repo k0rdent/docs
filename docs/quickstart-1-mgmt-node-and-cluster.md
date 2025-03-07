@@ -87,7 +87,7 @@ helm installed into /usr/local/bin/helm
 Now we'll install k0rdent itself into the k0s management cluster:
 
 ```shell
-helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
+helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
 
 You'll see something like the following. Ignore the warnings, since this is an ephemeral, non-production, non-shared environment:
@@ -210,15 +210,15 @@ You should see output similar to:
 ```console
 NAME                            VALID
 adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 ## Verify that KSM ServiceTemplate objects are available

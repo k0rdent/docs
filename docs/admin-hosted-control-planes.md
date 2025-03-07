@@ -73,7 +73,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
     metadata:
       name: aws-hosted-cp
     spec:
-      template: aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
       credential: aws-credential
       config:
         clusterLabels: {}
@@ -108,7 +108,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
     metadata:
       name: aws-hosted
     spec:
-      template: aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
       credential: aws-credential
       config:
         clusterLabels: {}
@@ -238,7 +238,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
     metadata:
       name: azure-hosted-cp
     spec:
-      template: azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}
       credential: azure-credential
       config:
         clusterLabels: {}
@@ -264,7 +264,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
     metadata:
       name: azure-hosted-cp
     spec:
-      template: azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}
       credential: azure-credential
       config:
         clusterLabels: {}
@@ -367,7 +367,7 @@ Follow these steps to set up a k0smotron-hosted control plane on vSphere.
     metadata:
       name: cluster-1
     spec:
-      template: vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}
       credential: vsphere-credential
       config:
         clusterLabels: {}

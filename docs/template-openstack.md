@@ -20,7 +20,7 @@ To deploy an OpenStack cluster, the following are the primary parameters in the 
     </tr>
     <tr>
       <td>.spec.template</td>
-      <td><code>openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}</code></td>
+      <td><code>openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}</code></td>
       <td>Reference to the ClusterTemplate.</td>
     </tr>
     <tr>
@@ -76,7 +76,7 @@ metadata:
   name: my-openstack-cluster-deployment
   namespace: kcm-system
 spec:
-  template: openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+  template: openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}
   credential: openstack-cluster-identity-cred
   config:
     clusterLabels: {}
