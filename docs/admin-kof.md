@@ -591,10 +591,11 @@ and apply this example for AWS, or use it as a reference:
             namespace: ingress-nginx
             template: ingress-nginx-4-11-3
             values: |
-              controller:
-                service:
-                  annotations:
-                    "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
+              ingress-nginx:
+                controller:
+                  service:
+                    annotations:
+                      service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /healthz
           - name: cert-manager
             namespace: cert-manager
             template: cert-manager-1-16-2
