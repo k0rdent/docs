@@ -268,9 +268,7 @@ KOF is deployed as a series of Helm charts at various levels.
 
 Before beginning KOF installation, you should have the following components in place:
 
-* A k0rdent management cluster - You can get instructions to create one in the [quickstart guide](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstart-1-mgmt-node-and-cluster/)
-    * To test on [macOS](https://docs.k0sproject.io/stable/system-requirements/#host-operating-system) you can install using:
-      `brew install kind && kind create cluster -n k0rdent`
+* A k0rdent management cluster - You can get instructions to create one in the [quickstart guide](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/guide-to-quickstarts/)
 * You will also need your infrastructure provider credentials, such as those shown in the [guide for AWS](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstart-2-aws/)
     * Note that you should skip the "Create your ClusterDeployment" and later sections.
 * Finally, you need access to create DNS records for service endpoints such as `kof.example.com`
@@ -286,20 +284,125 @@ or [IRSA](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutor
 For now, however, just for the sake of this demo based on the `aws-standalone` template,
 you can use the most straightforward (though less secure) [static credentials](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#static-credentials) method:
 
-1. Create an `external-dns` IAM user with [this policy](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-policy).
-2. Create an access key and `external-dns-aws-credentials` file, as in:
+1. Create an `external-dns` IAM user
+
+    Start by creating a JSON file (let's call it `policy.json`) with a [policy](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-policy) to allow external DNS updates, as in:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "route53:ChangeResourceRecordSets"
+          ],
+          "Resource": [
+            "arn:aws:route53:::hostedzone/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "route53:ListHostedZones",
+            "route53:ListResourceRecordSets",
+            "route53:ListTagsForResource"
+          ],
+          "Resource": [
+            "*"
+          ]
+        }
+      ]
+    }
+    ```
+
+    This policy allows the holder of this policy to update Route53 Resource Record Sets and Hosted Zones. (You can also 
+    only to explicit Hosted Zone IDs, but for now we'll stay general.) 
+
+    Now create the actual policy:
+
+    ```shell
+    aws iam create-policy --policy-name "AllowExternalDNSUpdates" --policy-document file://policy.json
+    ```
+
+    You'll need the ARN to assign the policy to a user, so let's retrieve that now:
+
+    ```shell
+    export POLICY_ARN=$(aws iam list-policies \
+       --query 'Policies[?PolicyName==`AllowExternalDNSUpdates`].Arn' --output text)
+    echo $POLICY_ARN
+    ```
+    ```console
+    arn:aws:iam::<FAKE_ARN_123>:policy/AllowExternalDNSUpdates
+    ```
+
+2. Create the `external-dns-aws-credentials` Secret
+
+    Start by creating a file with the actual credentials (we'll call it `external-dns-aws-credentials.yaml`) as in:
     ```
     [default]
     aws_access_key_id = <EXAMPLE_ACCESS_KEY_ID>
     aws_secret_access_key = <EXAMPLE_SECRET_ACCESS_KEY>
     ```
-3. Create the `external-dns-aws-credentials` secret in the `kof` namespace:
+    Create the `external-dns-aws-credentials` secret in the `kof` namespace:
     ```shell
     kubectl create namespace kof
     kubectl create secret generic \
       -n kof external-dns-aws-credentials \
-      --from-file external-dns-aws-credentials
+      --from-file external-dns-aws-credentials.yaml
     ```
+
+3. Attach the policy
+
+    To enable the policy, attach it to the user or role that manages your k0rdent management cluster.  For example, to get the role
+    managing an EKS cluster, you can use:
+
+    ```shell
+    aws eks describe-cluster --name <CLUSTER_NAME> --query "cluster.roleArn" --output text
+    ```
+    ```console
+    arn:aws:iam::<FAKE_ARN_123>:role/eksctl-K0rdentControlCluster-c-ServiceRole-fpaB1nDO2NKW
+    ```
+
+    Now extract the role name so you can use it for the attachment:
+
+    ```shell
+    ROLE_NAME=$(aws iam get-role --role-name $(basename arn:aws:iam::<FAKE_ARN_123>:role/eksctl-K0rdentControlCluster-c-ServiceRole-XXXXXXXXXXXX) --query "Role.RoleName" --output text)
+    echo $ROLE_NAME
+    ```console
+    eksctl-K0rdentControlCluster-c-ServiceRole-XXXXXXXXXXXX
+    ```
+    Now go ahead and attach it:
+
+    ```shell
+    aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn $POLICY_ARN
+    ```
+
+    Finally, verify the attachment:
+
+    ```shell
+    aws iam list-attached-role-policies --role-name $ROLE_NAME
+    ```
+    ```console
+    {
+        "AttachedPolicies": [
+            {
+                "PolicyName": "AllowExternalDNSUpdates",
+                "PolicyArn": "arn:aws:iam::<FAKE_ARN_123>:policy/NickChaseAllowExternalDNSUpdates"
+            },
+            {
+                "PolicyName": "AmazonEKSClusterPolicy",
+                "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+            },
+            {
+                "PolicyName": "AmazonEKSVPCResourceController",
+                "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+            }
+        ]
+    }
+    ```
+
+    As you can see, the role has been attached, so the user (and in this case, the role) now has the ability to manage DNS.
 
 ### Management Cluster
 
@@ -322,17 +425,47 @@ and apply this example, or use it as a reference:
     This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
     to make it possible to reference them from the Regional and Child `ClusterDeployments`.
 
-3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
-    but `kubectl get sc` shows no `(default)`, create it.
-    Otherwise you can use a non-default storage class in the `mothership-values.yaml` file:
+3. Decide on a storage class:
+
+    If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass), first
+    check to make sure one exists.  For example if you run:
+
+    ```shell
+    kubectl get storageclass
+    ```
+    ```console
+    NAME   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    gp2    kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d15h
+    ```
+
+    You can see in this example, that no class is marked as `(default)`, so let's go ahead and set it for this one:
+    
+    ```shell
+    kubectl patch storageclass gp2 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+    ```
+    ```console
+    storageclass.storage.k8s.io/gp2 patched
+    ```
+    ```shell
+    kubectl get storageclass
+    ```
+    ```console
+    NAME            PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    gp2 (default)   kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d15h
+    ```
+    
+    You can also use a non-defaultstorage class by defining it in the `mothership-values.yaml` file, as in:
     ```yaml
     global:
       storageClass: <EXAMPLE_STORAGE_CLASS>
     ```
 
-4. If you've applied the [DNS auto-config](#dns-auto-config) section,
-    add to the `kcm:` object in the `mothership-values.yaml` file:
+4. If you've applied the [DNS auto-config](#dns-auto-config) section, you can enable Sveltos to auto-distribute DNS secret to regional clusters
+   by adding `kof` parameters to the `kcm:` object in the `mothership-values.yaml` file, as in:
     ```yaml
+    kcm:
+      installTemplates: true
+
       kof:
         clusterProfiles:
           kof-aws-dns-secrets:
@@ -341,9 +474,8 @@ and apply this example, or use it as a reference:
             secrets:
               - external-dns-aws-credentials
     ```
-    This enables Sveltos to auto-distribute DNS secret to regional clusters.
 
-5. Two secrets are auto-created by default:
+5. Two secrets are auto-created by default when you install `kof-mothership`:
     * `storage-vmuser-credentials` is a secret used by VictoriaMetrics.
         You don't need to use it directly.
         It is auto-distributed to other clusters by the Sveltos `ClusterProfile` [here](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L25-L31).
@@ -354,6 +486,16 @@ and apply this example, or use it as a reference:
     ```shell
     helm install --wait -f mothership-values.yaml -n kof kof-mothership \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 0.1.1
+    ```
+    ```console
+    Pulled: ghcr.io/k0rdent/kof/charts/kof-mothership:0.1.1
+    Digest: sha256:478c440cf140c1d94e8a2ecdb804eb4c75960f5fa7c81b85e9e4622d256a16a7
+    NAME: kof-mothership
+    LAST DEPLOYED: Sun Mar  9 16:56:05 2025
+    NAMESPACE: kof
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
     ```
 
 7. Wait for all pods to show that they're `Running`:
