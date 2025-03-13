@@ -62,7 +62,7 @@ This section assumes that you already have a kubernetes cluster installed. If yo
 The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release [here](https://github.com/k0rdent/kcm/tags), and from there you can deploy the Helm chart, as in:
 
 ```shell
-helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
+helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
 ```console
 Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
@@ -195,15 +195,15 @@ kubectl get clustertemplate -n kcm-system
 ```console
 NAME                            VALID
 adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 Finally, make sure the `ServiceTemplate` objects are installed and valid:

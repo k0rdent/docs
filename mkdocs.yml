@@ -143,3 +143,37 @@ extra:
   docsVersionInfo:
     k0rdentVersion: 0-1-0
     k0rdentDotVersion: 0.1.0
+    ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
+    kofVersions:
+      kofVersion: 0-1-1
+      kofDotVersion: 0.1.1
+      kofStorageVersion: 0-1-1
+      kofDotStorageVersion: 0.1.1
+      kofOperatorsVersion: 0-1-1
+      kofDotOperatorsVersion: 0.1.1
+      kofCollectorsVersion: 0-1-1
+      kofDotCollectorsVersion: 0.1.1
+    providerVersions:
+      dashVersions:
+        adoptedCluster: 0-1-0
+        awsEksCluster: 0-1-0
+        awsHostedCpCluster: 0-1-0
+        awsStandaloneCpCluster: 0-1-0
+        azureAksCluster: 0-1-0
+        azureHostedCpCluster: 0-1-0
+        azureStandaloneCpCluster: 0-1-0
+        openstackStandaloneCpCluster: 0-1-0
+        vsphereHostedCpCluster: 0-1-0
+        vsphereStandaloneCpCluster: 0-1-0
+      dotVersions:
+        adoptedCluster: 0.1.0
+        awsEksCluster: 0.1.0
+        awsHostedCpCluster: 0.1.0
+        awsStandaloneCpCluster: 0.1.0
+        azureAksCluster: 0.1.0
+        azureHostedCpCluster: 0.1.0
+        azureStandaloneCpCluster: 0.1.0
+        openstackStandaloneCpCluster: 0.1.0
+        vsphereHostedCpCluster: 0.1.0
+        vsphereStandaloneCpCluster: 0.1.0
+

@@ -200,7 +200,7 @@ In the event of disaster, you can restore from a backup by doing the following:
    can also install k0rdent without them in the first place:
 
     ```bash
-    helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm \
+    helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
      --create-namespace \
      --namespace kcm-system \
@@ -491,7 +491,7 @@ k0rdent helm chart and is enabled by default. There are 2 ways of customizing th
     and propagated credentials:
 
     ```shell
-    helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm \
+    helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
      --create-namespace \
      --namespace kcm-system \

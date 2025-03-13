@@ -338,7 +338,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
         name: my-aws-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-cluster-identity-cred
       config:
         clusterLabels: {}
@@ -351,7 +351,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     > NOTE:
     > - You're giving it an arbitrary name in `.metadata.name` (`my-aws-clusterdeployment1`)
     > - You're referencing the credential you created in the previous step, `aws-cluster-identity-cred`. This enables you to set up a system where users can take advantage of having access to the credentials to the AWS account without actually having those credentials in hand.
-    > - You need to choose a template to use for the cluster, in this case `aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}`. You can get a list of available templates using:
+    > - You need to choose a template to use for the cluster, in this case `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}`. You can get a list of available templates using:
 
     ```shell
     kubectl get clustertemplate -n kcm-system
@@ -359,15 +359,15 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     ```console
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
     Apply the YAML to your management cluster:
     ```shell
@@ -688,15 +688,15 @@ Now you're ready to deploy the cluster.
     ```console
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     Create the yaml:
@@ -708,7 +708,7 @@ Now you're ready to deploy the cluster.
       name: my-azure-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}
       credential: azure-cluster-identity-cred
       config:
         location: "westus" # Select your desired Azure Location (find it via `az account list-locations -o table`)
@@ -954,15 +954,15 @@ k0rdent can deploy child clusters on OpenStack virtual machines. Follow these st
     ```console
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     The `ClusterDeployment` should look something like this:
@@ -974,7 +974,7 @@ k0rdent can deploy child clusters on OpenStack virtual machines. Follow these st
       name: my-openstack-cluster-deployment
       namespace: kcm-system
     spec:
-      template: openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}
       credential: openstack-cluster-identity-cred
       config:
         clusterLabels: {}
@@ -1265,15 +1265,15 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     ```console
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     The `ClusterDeployment` YAML file should look something like this. Make sure to replace the placeholders with your
@@ -1286,7 +1286,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
       name: my-vsphere-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}
       credential: vsphere-cluster-identity-cred
       config:
         clusterLabels: {}

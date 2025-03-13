@@ -414,7 +414,7 @@ and apply this example, or use it as a reference:
 1. Install `kof-operators` required by `kof-mothership`:
     ```shell
     helm install --wait --create-namespace -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 0.1.1
+      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 2. Create the `mothership-values.yaml` file:
@@ -485,7 +485,7 @@ and apply this example, or use it as a reference:
 6. Install `kof-mothership`:
     ```shell
     helm install --wait -f mothership-values.yaml -n kof kof-mothership \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 0.1.1
+      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
     ```console
     Pulled: ghcr.io/k0rdent/kof/charts/kof-mothership:0.1.1
@@ -520,7 +520,7 @@ and apply this example for AWS, or use it as a reference:
 2. Use the up-to-date `ClusterTemplate`, as in:
     ```shell
     kubectl get clustertemplate -n kcm-system | grep aws
-    TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+    TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     ```
 
 3. Compose the following objects:
@@ -570,7 +570,7 @@ and apply this example for AWS, or use it as a reference:
                   enabled: true
           - name: kof-storage
             namespace: kof
-            template: kof-storage-0-1-1
+            template: kof-storage-{{{ extra.docsVersionInfo.kofVersions.kofStorageVersion }}}
             values: |
               external-dns:
                 enabled: true
@@ -691,7 +691,7 @@ and apply this example for AWS, or use it as a reference:
 2. Use the up-to-date `ClusterTemplate`, as in:
     ```shell
     kubectl get clustertemplate -n kcm-system | grep aws
-    TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+    TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     ```
 
 3. Compose the `ClusterDeployment`:
@@ -734,10 +734,10 @@ and apply this example for AWS, or use it as a reference:
                   enabled: true
           - name: kof-operators
             namespace: kof
-            template: kof-operators-0-1-1
+            template: kof-operators-{{{ extra.docsVersionInfo.kofVersions.kofOperatorsVersion }}}
           - name: kof-collectors
             namespace: kof
-            template: kof-collectors-0-1-1
+            template: kof-collectors-{{{ extra.docsVersionInfo.kofVersions.kofCollectorsVersion }}}
             values: |
               global:
                 clusterName: $CHILD_CLUSTER_NAME

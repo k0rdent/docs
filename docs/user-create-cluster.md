@@ -65,21 +65,21 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     ```console
     NAMESPACE    NAME                            VALID
     kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    kcm-system   aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    kcm-system   azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    kcm-system   azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     You can then get information on the actual template by describing it, as in:
 
     ```shell
-    kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}} -n kcm-system
+    kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}} -n kcm-system
     ```
 
 3. Create a ClusterDeployment YAML Configuration
@@ -116,7 +116,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
       name: my-cluster-deployment
       namespace: kcm-system
     spec:
-      template: aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+      template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-credential
       config:
         clusterLabels: {}

@@ -69,16 +69,16 @@ Follow these steps to adopt an existing cluster:
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    aws-eks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                   true
-    aws-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}             true
-    aws-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    azure-aks-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-    azure-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
-    azure-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-    openstack-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-    vsphere-hosted-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-    vsphere-standalone-cp-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+    adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     Putting it all together, your YAML would look something like this:
