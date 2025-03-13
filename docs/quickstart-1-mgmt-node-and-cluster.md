@@ -12,6 +12,10 @@ sudo k0s install controller --single
 sudo k0s start
 ```
 
+>NOTE:
+>To test on [macOS](https://docs.k0sproject.io/stable/system-requirements/#host-operating-system) you can install using:
+>   `brew install kind && kind create cluster -n k0rdent`
+
 You can check to see if the cluster is working by leveraging kubectl (installed and configured automatically by k0s) via the k0s CLI:
 
 ```shell
