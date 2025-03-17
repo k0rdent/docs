@@ -19,7 +19,7 @@ spec:
   - name: cluster-api-provider-openstack
   - name: cluster-api-provider-vsphere
   - name: projectsveltos
-release: kcm-0-0-7
+  release: kcm-0-0-7
 ```
 
 As you can see, the `Management` object defines the providers that are available from within k0rdent. Some of these are
@@ -65,7 +65,7 @@ There are two options to override the default management configuration of k0rden
              - name: k0smotron
              - name: cluster-api-provider-aws
              - name: projectsveltos
-           release: kcm-0-0-7
+             release: kcm-0-0-7
            ```
       In the example above, the `Management` object is configured with custom registry settings for the KCM controller
       and a reduced list of providers.
