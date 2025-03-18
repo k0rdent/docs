@@ -69,7 +69,6 @@ plugins:
         - requirements.txt
   - redirects:
       redirect_maps:
-        head/index.md: next/index.md
         why-k0rdent.md: concepts/why-k0rdent.md
         k0rdent-architecture.md: concepts/k0rdent-architecture.md
         guide-to-quickstarts.md: quickstarts/guide-to-quickstarts.md
