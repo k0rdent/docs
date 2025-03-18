@@ -13,23 +13,25 @@
       
       
       
+        <link rel="prev" href="../template-openstack/">
       
-        <link rel="next" href="concepts/why-k0rdent/">
+      
+        <link rel="next" href="../../../troubleshooting/">
       
       
-      <link rel="icon" href="img/k0rdent-logo-mark-inverted.svg">
+      <link rel="icon" href="../../../img/k0rdent-logo-mark-inverted.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>Documentation</title>
+        <title>Templates for vSphere - Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-the-k0rdent-docs" class="md-skip">
+        <a href="#vsphere-cluster-template-parameters" class="md-skip">
           Skip to content
         </a>
       
@@ -98,9 +100,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+  <img src="../../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Welcome to the k0rdent docs
+              Templates for vSphere
             
           </span>
         </div>
@@ -232,9 +234,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+  <img src="../../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
 
     </a>
     Documentation
@@ -258,30 +260,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Welcome to the k0rdent docs
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -290,71 +272,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-and-history" class="md-nav__link">
-    <span class="md-ellipsis">
-      Structure and History
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#supported-providers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Supported Providers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Documentation
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -407,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="concepts/why-k0rdent/" class="md-nav__link">
+      <a href="../../../concepts/why-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -428,7 +345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="concepts/k0rdent-architecture/" class="md-nav__link">
+      <a href="../../../concepts/k0rdent-architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -501,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -522,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
+      <a href="../../../quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -543,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-2-aws/" class="md-nav__link">
+      <a href="../../../quickstarts/quickstart-2-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -564,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-2-azure/" class="md-nav__link">
+      <a href="../../../quickstarts/quickstart-2-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -626,7 +543,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/" class="md-nav__link ">
+            <a href="../../../admin/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -685,7 +602,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/" class="md-nav__link ">
+            <a href="../../../admin/installation/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -740,7 +657,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/create-mgmt-clusters/" class="md-nav__link ">
+            <a href="../../../admin/installation/create-mgmt-clusters/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -773,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/create-mgmt-clusters/mgmt-create-k0s-single/" class="md-nav__link">
+      <a href="../../../admin/installation/create-mgmt-clusters/mgmt-create-k0s-single/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -794,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/create-mgmt-clusters/mgmt-create-eks-multi/" class="md-nav__link">
+      <a href="../../../admin/installation/create-mgmt-clusters/mgmt-create-eks-multi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -823,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/install-k0rdent/" class="md-nav__link">
+      <a href="../../../admin/installation/install-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -844,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/verify-install/" class="md-nav__link">
+      <a href="../../../admin/installation/verify-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -891,7 +808,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/prepare-mgmt-cluster/" class="md-nav__link ">
+            <a href="../../../admin/installation/prepare-mgmt-cluster/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -924,7 +841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/aws/" class="md-nav__link">
+      <a href="../../../admin/installation/prepare-mgmt-cluster/aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -945,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/azure/" class="md-nav__link">
+      <a href="../../../admin/installation/prepare-mgmt-cluster/azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -966,7 +883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/openstack/" class="md-nav__link">
+      <a href="../../../admin/installation/prepare-mgmt-cluster/openstack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -987,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/vmware/" class="md-nav__link">
+      <a href="../../../admin/installation/prepare-mgmt-cluster/vmware/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1048,7 +965,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/clusters/" class="md-nav__link ">
+            <a href="../../../admin/clusters/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1081,7 +998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/deploy-cluster/" class="md-nav__link">
+      <a href="../../../admin/clusters/deploy-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1102,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/update-cluster/" class="md-nav__link">
+      <a href="../../../admin/clusters/update-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1123,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/admin-adopting-clusters/" class="md-nav__link">
+      <a href="../../../admin/clusters/admin-adopting-clusters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1174,7 +1091,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/services/" class="md-nav__link ">
+            <a href="../../../admin/services/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1207,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/services/admin-service-templates/" class="md-nav__link">
+      <a href="../../../admin/services/admin-service-templates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1228,7 +1145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/services/admin-create-multiclusterservice/" class="md-nav__link">
+      <a href="../../../admin/services/admin-create-multiclusterservice/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1281,7 +1198,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/hosted-control-plane/" class="md-nav__link ">
+            <a href="../../../admin/hosted-control-plane/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1314,7 +1231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-aws/" class="md-nav__link">
+      <a href="../../../admin/hosted-control-plane/hcp-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1335,7 +1252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-azure/" class="md-nav__link">
+      <a href="../../../admin/hosted-control-plane/hcp-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1356,7 +1273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-vmware/" class="md-nav__link">
+      <a href="../../../admin/hosted-control-plane/hcp-vmware/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1419,7 +1336,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/kof/" class="md-nav__link ">
+            <a href="../../../admin/kof/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1452,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-architecture/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1473,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-install/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1494,7 +1411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-verification/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-verification/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1515,7 +1432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-using/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-using/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1536,7 +1453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-scaling/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-scaling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1557,7 +1474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-maintainence/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-maintainence/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1578,7 +1495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-limits/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-limits/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1599,7 +1516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-version-compat/" class="md-nav__link">
+      <a href="../../../admin/kof/kof-version-compat/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1628,7 +1545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../../admin/upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1671,7 +1588,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/" class="md-nav__link ">
+            <a href="../../../admin/access/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1726,7 +1643,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/credentials/" class="md-nav__link ">
+            <a href="../../../admin/access/credentials/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1759,7 +1676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/credentials/credentials-process/" class="md-nav__link">
+      <a href="../../../admin/access/credentials/credentials-process/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1780,7 +1697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/credentials/credentials-propogation/" class="md-nav__link">
+      <a href="../../../admin/access/credentials/credentials-propogation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1831,7 +1748,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/rbac/" class="md-nav__link ">
+            <a href="../../../admin/access/rbac/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1864,7 +1781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/rbac/what-roles-do/" class="md-nav__link">
+      <a href="../../../admin/access/rbac/what-roles-do/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1885,7 +1802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/rbac/roles-summary/" class="md-nav__link">
+      <a href="../../../admin/access/rbac/roles-summary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1954,7 +1871,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/backup/" class="md-nav__link ">
+            <a href="../../../admin/backup/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1987,7 +1904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/scheduled-backups/" class="md-nav__link">
+      <a href="../../../admin/backup/scheduled-backups/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2008,7 +1925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/ondemand-backups/" class="md-nav__link">
+      <a href="../../../admin/backup/ondemand-backups/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2029,7 +1946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/whats-included/" class="md-nav__link">
+      <a href="../../../admin/backup/whats-included/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2050,7 +1967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/restore/" class="md-nav__link">
+      <a href="../../../admin/backup/restore/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2071,7 +1988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/upgrades-rollbacks/" class="md-nav__link">
+      <a href="../../../admin/backup/upgrades-rollbacks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2092,7 +2009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/caveats/" class="md-nav__link">
+      <a href="../../../admin/backup/caveats/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2113,7 +2030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/customization/" class="md-nav__link">
+      <a href="../../../admin/backup/customization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2192,7 +2109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/user-create-cluster/" class="md-nav__link">
+      <a href="../../../user/user-create-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2243,7 +2160,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="user/services/" class="md-nav__link ">
+            <a href="../../../user/services/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2276,7 +2193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/understanding-servicetemplates/" class="md-nav__link">
+      <a href="../../../user/services/understanding-servicetemplates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2297,7 +2214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/add-service-to-clusterdeployment/" class="md-nav__link">
+      <a href="../../../user/services/add-service-to-clusterdeployment/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2318,7 +2235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/beach-head/" class="md-nav__link">
+      <a href="../../../user/services/beach-head/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2339,7 +2256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/checking-status/" class="md-nav__link">
+      <a href="../../../user/services/checking-status/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2360,7 +2277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/remove-beach-head/" class="md-nav__link">
+      <a href="../../../user/services/remove-beach-head/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2381,7 +2298,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/servicetemplate-parameters/" class="md-nav__link">
+      <a href="../../../user/services/servicetemplate-parameters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2410,7 +2327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/user-enable-drift-detection/" class="md-nav__link">
+      <a href="../../../user/user-enable-drift-detection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2435,8 +2352,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -2457,11 +2376,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -2475,7 +2394,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             k0rdent Templates Reference
@@ -2489,7 +2408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-intro/" class="md-nav__link">
+      <a href="../template-intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2510,7 +2429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-predefined/" class="md-nav__link">
+      <a href="../template-predefined/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2531,7 +2450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-byo/" class="md-nav__link">
+      <a href="../template-byo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2552,7 +2471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-aws/" class="md-nav__link">
+      <a href="../template-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2573,7 +2492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-azure/" class="md-nav__link">
+      <a href="../template-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2594,7 +2513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-openstack/" class="md-nav__link">
+      <a href="../template-openstack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2612,10 +2531,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="reference/template/template-vsphere/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Templates for vSphere
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2624,6 +2563,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clusterdeployment-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      ClusterDeployment parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ClusterDeployment parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter list
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-a-clusterdeployment-cr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example of a ClusterDeployment CR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-image-and-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM Image and network
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2665,7 +2684,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="troubleshooting/" class="md-nav__link ">
+            <a href="../../../troubleshooting/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2698,7 +2717,7 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
+      <a href="../../../troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2719,7 +2738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/known-issues-eks/" class="md-nav__link">
+      <a href="../../../troubleshooting/known-issues-eks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2786,7 +2805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/glossary/" class="md-nav__link">
+      <a href="../../glossary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2857,7 +2876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-extend-mgmt/" class="md-nav__link">
+      <a href="../../../appendix/appendix-extend-mgmt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2878,7 +2897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-dryrun/" class="md-nav__link">
+      <a href="../../../appendix/appendix-dryrun/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2899,7 +2918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-providers/" class="md-nav__link">
+      <a href="../../../appendix/appendix-providers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2968,7 +2987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/k0rdent-documentation-contributors-guide/" class="md-nav__link">
+      <a href="../../../contrib/k0rdent-documentation-contributors-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2989,7 +3008,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/k0rdent-documentation-style-guide/" class="md-nav__link">
+      <a href="../../../contrib/k0rdent-documentation-style-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3037,45 +3056,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#clusterdeployment-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction
+      ClusterDeployment parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ClusterDeployment parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter list
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-a-clusterdeployment-cr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example of a ClusterDeployment CR
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#structure-and-history" class="md-nav__link">
+  <a href="#ssh" class="md-nav__link">
     <span class="md-ellipsis">
-      Structure and History
+      SSH
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#vm-resources" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      VM resources
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-providers" class="md-nav__link">
+  <a href="#vm-image-and-network" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Providers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Documentation
+      VM Image and network
     </span>
   </a>
   
@@ -3096,7 +3130,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/releaes-v0.1.0/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/releaes-v0.1.0/docs/reference/template/template-vsphere.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3105,91 +3139,285 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/releaes-v0.1.0/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/releaes-v0.1.0/docs/reference/template/template-vsphere.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="welcome-to-the-k0rdent-docs">Welcome to the k0rdent docs<a class="headerlink" href="#welcome-to-the-k0rdent-docs" title="Permanent link">#</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
-<p>k0rdent has been developed to provide a way to manage distributed infrastructure
-at massive scale leveraging kubernetes.</p>
-<p>The project is based on the premise that:</p>
+<h1 id="vsphere-cluster-template-parameters">vSphere cluster template parameters<a class="headerlink" href="#vsphere-cluster-template-parameters" title="Permanent link">#</a></h1>
+<h2 id="clusterdeployment-parameters">ClusterDeployment parameters<a class="headerlink" href="#clusterdeployment-parameters" title="Permanent link">#</a></h2>
+<p>To create a cluster deployment a number of parameters should be passed to the
+<code>ClusterDeployment</code> object.</p>
+<h3 id="parameter-list">Parameter list<a class="headerlink" href="#parameter-list" title="Permanent link">#</a></h3>
+<p>The following is the list of vSphere specific parameters that are <em>required</em>
+for successful cluster creation.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.spec.config.vsphere.server</code></td>
+<td><code>vcenter.example.com</code></td>
+<td>Address of the vSphere instance</td>
+</tr>
+<tr>
+<td><code>.spec.config.vsphere.thumbprint</code></td>
+<td><code>"00:00:00:..."</code></td>
+<td>Certificate thumbprint</td>
+</tr>
+<tr>
+<td><code>.spec.config.vsphere.datacenter</code></td>
+<td><code>DC</code></td>
+<td>Datacenter name</td>
+</tr>
+<tr>
+<td><code>.spec.config.vsphere.datastore</code></td>
+<td><code>/DC/datastore/DS</code></td>
+<td>Datastore path</td>
+</tr>
+<tr>
+<td><code>.spec.config.vsphere.resourcePool</code></td>
+<td><code>/DC/host/vCluster/Resources/ResPool</code></td>
+<td>Resource pool path</td>
+</tr>
+<tr>
+<td><code>.spec.config.vsphere.folder</code></td>
+<td><code>/DC/vm/example</code></td>
+<td>Folder path</td>
+</tr>
+<tr>
+<td><code>.spec.config.controlPlane.network</code></td>
+<td><code>/DC/network/vm_net</code></td>
+<td>Network path for <code>controlPlane</code></td>
+</tr>
+<tr>
+<td><code>.spec.config.worker.network</code></td>
+<td><code>/DC/network/vm_net</code></td>
+<td>Network path for <code>worker</code></td>
+</tr>
+<tr>
+<td><code>.spec.config.*.ssh.publicKey</code></td>
+<td><code>"ssh-ed25519 AAAA..."</code></td>
+<td>SSH public key in <code>authorized_keys</code> format</td>
+</tr>
+<tr>
+<td><code>.spec.config.*.vmTemplate</code></td>
+<td><code>/DC/vm/templates/ubuntu</code></td>
+<td>VM template image path</td>
+</tr>
+<tr>
+<td><code>.spec.config.controlPlaneEndpointIP</code></td>
+<td><code>172.16.0.10</code></td>
+<td><code>kube-vip</code> vIP which will be created for control plane endpoint</td>
+</tr>
+</tbody>
+</table>
+<p>To get the vSphere certificate thumbprint you can use the following command:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sw<span class="w"> </span>%<span class="o">{</span>certs<span class="o">}</span><span class="w"> </span>https://vcenter.example.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-sha256<span class="w"> </span>-fingerprint<span class="w"> </span>-noout<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39;=&#39;</span><span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span>
+</code></pre></div>
+<p><a href="https://github.com/vmware/govmomi/blob/main/govc/README.md"><code>govc</code></a>, a vSphere CLI, can also help to discover proper values for some of the parameters:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># vsphere.datacenter</span>
+govc<span class="w"> </span>ls
+
+<span class="c1"># vsphere.datastore</span>
+govc<span class="w"> </span>ls<span class="w"> </span>/*/datastore/*
+
+<span class="c1"># vsphere.resourcePool</span>
+govc<span class="w"> </span>ls<span class="w"> </span>/*/host/*/Resources/*
+
+<span class="c1"># vsphere.folder</span>
+govc<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/*/vm/**
+
+<span class="c1"># controlPlane.network, worker.network</span>
+govc<span class="w"> </span>ls<span class="w"> </span>/*/network/*
+
+<span class="c1"># *.vmTemplate</span>
+govc<span class="w"> </span>vm.info<span class="w"> </span>-t<span class="w"> </span><span class="s1">&#39;*&#39;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Follow official <code>govc</code> installation instructions from <a href="https://github.com/vmware/govmomi/blob/main/govc/README.md#installation">here</a>. The <code>govc</code> usage guide is <a href="https://github.com/vmware/govmomi/blob/main/govc/README.md#usage">here</a>.</p>
+<p>Minimal <code>govc</code> configuration requires setting: <code>GOVC_URL</code>, <code>GOVC_USERNAME</code>, <code>GOVC_PASSWORD</code> environment variables.</p>
+</div>
+<h2 id="example-of-a-clusterdeployment-cr">Example of a ClusterDeployment CR<a class="headerlink" href="#example-of-a-clusterdeployment-cr" title="Permanent link">#</a></h2>
+<p>With all above parameters provided your <code>ClusterDeployment</code> can look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-standalone-cp-0-1-0</span>
+<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-credential</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">vsphere</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vcenter.example.com</span>
+<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;00:00:00&quot;</span>
+<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DC&quot;</span>
+<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/datastore/DC&quot;</span>
+<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/host/vCluster/Resources/ResPool&quot;</span>
+<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/example&quot;</span>
+<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;VSPHERE_SERVER&gt;&quot;</span>
+<span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ssh</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
+<span class="w">        </span><span class="nt">publicKey</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">ssh-rsa AAA...</span>
+<span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+<span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ssh</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
+<span class="w">        </span><span class="nt">publicKey</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">ssh-rsa AAA...</span>
+<span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+</code></pre></div>
+<p>Don't forget to replace placeholder values such as <code>VSPHERE_SERVER</code> with actual values for your environment.</p>
+<h2 id="ssh">SSH<a class="headerlink" href="#ssh" title="Permanent link">#</a></h2>
+<p>Currently SSH configuration on vSphere expects that the user is already created
+before template creation. Because of that you must pass the username along with the SSH
+public key to configure SSH access.</p>
+<p>The SSH public key can be passed to <code>.spec.config.ssh.publicKey</code> (in the case of a
+hosted control plane) or <code>.spec.config.controlPlane.ssh.publicKey</code> and
+<code>.spec.config.worker.ssh.publicKey</code> (in the case of a standalone control) of the
+<code>ClusterDeployment</code> object.</p>
+<p>The SSH public key must be passed literally as a string.</p>
+<p>You can pass the username to <code>.spec.config.controlPlane.ssh.user</code>,
+<code>.spec.config.worker.ssh.user</code> or <code>.spec.config.ssh.user</code>, depending on you
+deployment model.</p>
+<h2 id="vm-resources">VM resources<a class="headerlink" href="#vm-resources" title="Permanent link">#</a></h2>
+<p>The following parameters are used to define VM resources:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.rootVolumeSize</code></td>
+<td><code>50</code></td>
+<td>Root volume size in GB (can't be less than the one defined in the image)</td>
+</tr>
+<tr>
+<td><code>.cpus</code></td>
+<td><code>2</code></td>
+<td>Number of CPUs</td>
+</tr>
+<tr>
+<td><code>.memory</code></td>
+<td><code>4096</code></td>
+<td>Memory size in MB</td>
+</tr>
+</tbody>
+</table>
+<p>The resource parameters are the same for hosted and standalone CP deployments,
+but they are positioned differently in the spec, which means that they're going to:</p>
 <ul>
-<li>Kubernetes and its ecosystem are mature and inherently stable.</li>
-<li>Large scale adoption of Kubernetes means that k0rdent can run anywhere.</li>
-<li>Community standards and open source projects ensure support and reduce adoption risk.</li>
+<li><code>.spec.config</code> in case of hosted CP deployment.</li>
+<li><code>.spec.config.controlPlane</code> in in case of standalone CP for control plane nodes.</li>
+<li><code>.spec.config.worker</code> in in case of standalone CP for worker nodes.</li>
 </ul>
-<p>The goal of the k0rdent project is to provide platform engineers with the means
-to deliver a distributed container management environment (DCME) and enable them to
-compose unique internal developer platforms (IDP) to support a diverse range
-of complex modern application workloads.</p>
-<p>Another way to think of k0rdent is as a "super control plane" designed to ensure the
-consistent provisioning and lifecycle management of kubernetes clusters and the
-services that make them useful.</p>
-<p>In short:
-Kubernetes clusters at scale, managed centrally, template driven, based on open
-community driven standards, enabling Golden Paths ... k0rdent aspires to do all of that.</p>
-<p>Whether you want to manage Kubernetes clusters on-premises, in the cloud,
-or a combination of both, k0rdent provides a consistent way to do it. With
-full life-cycle management, including provisioning, configuration, and
-maintenance, k0rdent is designed to be a repeatable and secure way to
-manage your Kubernetes clusters in a central location.</p>
-<h2 id="structure-and-history">Structure and History<a class="headerlink" href="#structure-and-history" title="Permanent link">#</a></h2>
-<p>The project has a number of components, including:</p>
+<h2 id="vm-image-and-network">VM Image and network<a class="headerlink" href="#vm-image-and-network" title="Permanent link">#</a></h2>
+<p>To provide image template path and network path the following parameters must be
+used:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.vmTemplate</code></td>
+<td><code>/DC/vm/template</code></td>
+<td>Image template path</td>
+</tr>
+<tr>
+<td><code>.network</code></td>
+<td><code>/DC/network/Net</code></td>
+<td>Network path</td>
+</tr>
+</tbody>
+</table>
+<p>As with resource parameters the position of these parameters in the
+<code>ClusterDeployment</code> depends on deployment type and these parameters are used in:</p>
 <ul>
-<li>
-<p><strong>k0rdent</strong>: the overall project</p>
+<li><code>.spec.config</code> in case of hosted CP deployment.</li>
+<li><code>.spec.config.controlPlane</code> in in case of standalone CP for control plane nodes.</li>
+<li><code>.spec.config.worker</code> in in case of standalone CP for worker nodes.</li>
+</ul>
+<h1 id="hosted-control-plane-k0smotron-deployment">Hosted control plane (k0smotron) deployment<a class="headerlink" href="#hosted-control-plane-k0smotron-deployment" title="Permanent link">#</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
-<li>
-<p><strong>k0rdent Cluster Manager (KCM)</strong></p>
-<p>Deployment and life-cycle management of Kubernetes clusters, including
-configuration, updates, and other CRUD operations.</p>
-</li>
-<li>
-<p><strong>k0rdent State Manager (KSM)</strong></p>
-<p>Installation and life-cycle management of <a href="reference/glossary/#beach-head-services">beach-head services</a>,
-policy, Kubernetes API configurations, and more.</p>
-<ul>
-<li>This is currently rolled into kcm, but may be split out in the future</li>
-<li>ksm leverages <a href="https://github.com/projectsveltos/sveltos">Project Sveltos</a>
-    for an increasing amount of functionality</li>
+<li>Management Kubernetes cluster (v1.28+) deployed on vSphere with k0rdent installed on it</li>
 </ul>
-</li>
-<li>
-<p><strong>k0rdent Observability and FinOps (KOF)</strong></p>
-<p>Cluster and beach-head services monitoring, events and log management.</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>There are a few historical names that may show up in the code and in older docs, including:</p>
-<ul>
-<li><strong>Project 2A</strong>: the original codename of k0rdent, 2A references the hexadecimal 0x2A, 
-  or 42, which encompasses our hopes for the project.</li>
-<li><strong>HMC or hmc</strong>: the original repository name for k0rdent and KCM
-  development</li>
-<li><strong>motel</strong>: the original repository and codename for KOF</li>
-</ul>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">#</a></h2>
-<p>See the <a href="quickstarts/guide-to-quickstarts/">k0rdent Quick Start Guide</a> to get started with a small deployment.</p>
-<h2 id="supported-providers">Supported Providers<a class="headerlink" href="#supported-providers" title="Permanent link">#</a></h2>
-<p>k0rdent leverages the Cluster API provider ecosystem; the following
-providers have had <code>ProviderTemplates</code> created and validated, and more are
-in the works. </p>
-<ul>
-<li><a href="admin/installation/prepare-mgmt-cluster/aws/">AWS</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/azure/">Azure</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/vmware/">vSphere</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/openstack/">OpenStack</a></li>
-</ul>
-<p>k0rdent also includes a way to add custom providers, so it's possible to integrate it with other hyperscalers, 
-or even into an existing local infrastructure.</p>
-<h2 id="development-documentation">Development Documentation<a class="headerlink" href="#development-documentation" title="Permanent link">#</a></h2>
-<p>Documentation related to the development process and developer-specific notes is
-located in the <a href="https://github.com/k0rdent/kcm/blob/main/docs/dev.md">main k0rdent repository</a>.</p>
+<p>Keep in mind that all control plane components for all managed clusters will
+reside in the management cluster, so make sure the server is robust enough to
+handle it.</p>
+<h2 id="clusterdeployment-manifest">ClusterDeployment manifest<a class="headerlink" href="#clusterdeployment-manifest" title="Permanent link">#</a></h2>
+<p>The hosted CP template has mostly identical parameters to the standalone CP, and you can
+check them in the <a href="../template-intro/">template parameters</a> section.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The vSphere provider requires the control plane endpoint IP to be specified
+before deploying the cluster. Ensure that this IP matches the IP assigned to
+the k0smotron load balancer (LB) service. Provide the control plane endpoint
+IP to the k0smotron service via an annotation accepted by your LB provider
+(such as the <code>kube-vip</code> annotation in the example below).</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-hosted-cp-0-1-0</span>
+<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-credential</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">vsphere</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vcenter.example.com</span>
+<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;00:00:00&quot;</span>
+<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DC&quot;</span>
+<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/datastore/DC&quot;</span>
+<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/host/vCluster/Resources/ResPool&quot;</span>
+<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/example&quot;</span>
+<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;VSPHERE_SERVER&gt;&quot;</span>
+<span class="w">    </span><span class="nt">ssh</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
+<span class="w">      </span><span class="nt">publicKey</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">ssh-rsa AAA...</span>
+<span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">    </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">    </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
+<span class="w">    </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+<span class="w">    </span><span class="nt">k0smotron</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">kube-vip.io/loadbalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;VSPHERE_LOADBALANCER_IP&gt;&quot;</span>
+</code></pre></div>
+<p>Don't forget to substitute placeholders such as <code>&lt;VSPHERE_SERVER&gt;</code> with actual values.</p>
 
 
 
@@ -3321,12 +3549,12 @@ located in the <a href="https://github.com/k0rdent/kcm/blob/main/docs/dev.md">ma
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.edit", "content.action.view", "navigation.path", "navigation.indexes"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.edit", "content.action.view", "navigation.path", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
-        <script src="javascripts/feedback.js"></script>
+        <script src="../../../javascripts/feedback.js"></script>
       
     
   </body>

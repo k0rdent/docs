@@ -13,23 +13,25 @@
       
       
       
+        <link rel="prev" href="../mgmt-create-k0s-single/">
       
-        <link rel="next" href="concepts/why-k0rdent/">
+      
+        <link rel="next" href="../../install-k0rdent/">
       
       
-      <link rel="icon" href="img/k0rdent-logo-mark-inverted.svg">
+      <link rel="icon" href="../../../../img/k0rdent-logo-mark-inverted.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>Documentation</title>
+        <title>Create a multinode EKS cluster - Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-the-k0rdent-docs" class="md-skip">
+        <a href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks" class="md-skip">
           Skip to content
         </a>
       
@@ -98,9 +100,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../../../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+  <img src="../../../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Welcome to the k0rdent docs
+              Create a multinode EKS cluster
             
           </span>
         </div>
@@ -232,9 +234,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+    <a href="../../../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
       
-  <img src="img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+  <img src="../../../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
 
     </a>
     Documentation
@@ -258,30 +260,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Welcome to the k0rdent docs
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -290,71 +272,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-and-history" class="md-nav__link">
-    <span class="md-ellipsis">
-      Structure and History
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#supported-providers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Supported Providers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Documentation
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -407,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="concepts/why-k0rdent/" class="md-nav__link">
+      <a href="../../../../concepts/why-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -428,7 +345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="concepts/k0rdent-architecture/" class="md-nav__link">
+      <a href="../../../../concepts/k0rdent-architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -501,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -522,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
+      <a href="../../../../quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -543,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-2-aws/" class="md-nav__link">
+      <a href="../../../../quickstarts/quickstart-2-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -564,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstarts/quickstart-2-azure/" class="md-nav__link">
+      <a href="../../../../quickstarts/quickstart-2-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -589,6 +506,8 @@
       
   
   
+    
+  
   
   
     
@@ -617,16 +536,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/" class="md-nav__link ">
+            <a href="../../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -643,7 +562,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Administrator Guide
@@ -656,6 +575,8 @@
                 
   
   
+    
+  
   
   
     
@@ -676,16 +597,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -702,7 +623,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             Installation
@@ -715,6 +636,8 @@
                 
   
   
+    
+  
   
   
     
@@ -731,16 +654,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/create-mgmt-clusters/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -757,7 +680,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2_2">
             <span class="md-nav__icon md-icon"></span>
             Creating the management cluster
@@ -773,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/create-mgmt-clusters/mgmt-create-k0s-single/" class="md-nav__link">
+      <a href="../mgmt-create-k0s-single/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -791,10 +714,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="admin/installation/create-mgmt-clusters/mgmt-create-eks-multi/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -803,6 +735,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -823,7 +756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/install-k0rdent/" class="md-nav__link">
+      <a href="../../install-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -844,7 +777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/verify-install/" class="md-nav__link">
+      <a href="../../verify-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -891,7 +824,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/installation/prepare-mgmt-cluster/" class="md-nav__link ">
+            <a href="../../prepare-mgmt-cluster/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -924,7 +857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/aws/" class="md-nav__link">
+      <a href="../../prepare-mgmt-cluster/aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -945,7 +878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/azure/" class="md-nav__link">
+      <a href="../../prepare-mgmt-cluster/azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -966,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/openstack/" class="md-nav__link">
+      <a href="../../prepare-mgmt-cluster/openstack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -987,7 +920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/installation/prepare-mgmt-cluster/vmware/" class="md-nav__link">
+      <a href="../../prepare-mgmt-cluster/vmware/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1048,7 +981,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/clusters/" class="md-nav__link ">
+            <a href="../../../clusters/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1081,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/deploy-cluster/" class="md-nav__link">
+      <a href="../../../clusters/deploy-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1102,7 +1035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/update-cluster/" class="md-nav__link">
+      <a href="../../../clusters/update-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1123,7 +1056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/clusters/admin-adopting-clusters/" class="md-nav__link">
+      <a href="../../../clusters/admin-adopting-clusters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1174,7 +1107,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/services/" class="md-nav__link ">
+            <a href="../../../services/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1207,7 +1140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/services/admin-service-templates/" class="md-nav__link">
+      <a href="../../../services/admin-service-templates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1228,7 +1161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/services/admin-create-multiclusterservice/" class="md-nav__link">
+      <a href="../../../services/admin-create-multiclusterservice/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1281,7 +1214,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/hosted-control-plane/" class="md-nav__link ">
+            <a href="../../../hosted-control-plane/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1314,7 +1247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-aws/" class="md-nav__link">
+      <a href="../../../hosted-control-plane/hcp-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1335,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-azure/" class="md-nav__link">
+      <a href="../../../hosted-control-plane/hcp-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1356,7 +1289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/hosted-control-plane/hcp-vmware/" class="md-nav__link">
+      <a href="../../../hosted-control-plane/hcp-vmware/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1419,7 +1352,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/kof/" class="md-nav__link ">
+            <a href="../../../kof/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1452,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-architecture/" class="md-nav__link">
+      <a href="../../../kof/kof-architecture/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1473,7 +1406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-install/" class="md-nav__link">
+      <a href="../../../kof/kof-install/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1494,7 +1427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-verification/" class="md-nav__link">
+      <a href="../../../kof/kof-verification/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1515,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-using/" class="md-nav__link">
+      <a href="../../../kof/kof-using/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1536,7 +1469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-scaling/" class="md-nav__link">
+      <a href="../../../kof/kof-scaling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1557,7 +1490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-maintainence/" class="md-nav__link">
+      <a href="../../../kof/kof-maintainence/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1578,7 +1511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-limits/" class="md-nav__link">
+      <a href="../../../kof/kof-limits/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1599,7 +1532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/kof/kof-version-compat/" class="md-nav__link">
+      <a href="../../../kof/kof-version-compat/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1628,7 +1561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../../upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1671,7 +1604,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/" class="md-nav__link ">
+            <a href="../../../access/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1726,7 +1659,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/credentials/" class="md-nav__link ">
+            <a href="../../../access/credentials/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1759,7 +1692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/credentials/credentials-process/" class="md-nav__link">
+      <a href="../../../access/credentials/credentials-process/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1780,7 +1713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/credentials/credentials-propogation/" class="md-nav__link">
+      <a href="../../../access/credentials/credentials-propogation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1831,7 +1764,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/access/rbac/" class="md-nav__link ">
+            <a href="../../../access/rbac/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1864,7 +1797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/rbac/what-roles-do/" class="md-nav__link">
+      <a href="../../../access/rbac/what-roles-do/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1885,7 +1818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/access/rbac/roles-summary/" class="md-nav__link">
+      <a href="../../../access/rbac/roles-summary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1954,7 +1887,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="admin/backup/" class="md-nav__link ">
+            <a href="../../../backup/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1987,7 +1920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/scheduled-backups/" class="md-nav__link">
+      <a href="../../../backup/scheduled-backups/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2008,7 +1941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/ondemand-backups/" class="md-nav__link">
+      <a href="../../../backup/ondemand-backups/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2029,7 +1962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/whats-included/" class="md-nav__link">
+      <a href="../../../backup/whats-included/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2050,7 +1983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/restore/" class="md-nav__link">
+      <a href="../../../backup/restore/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2071,7 +2004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/upgrades-rollbacks/" class="md-nav__link">
+      <a href="../../../backup/upgrades-rollbacks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2092,7 +2025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/caveats/" class="md-nav__link">
+      <a href="../../../backup/caveats/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2113,7 +2046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/backup/customization/" class="md-nav__link">
+      <a href="../../../backup/customization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2192,7 +2125,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/user-create-cluster/" class="md-nav__link">
+      <a href="../../../../user/user-create-cluster/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2243,7 +2176,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="user/services/" class="md-nav__link ">
+            <a href="../../../../user/services/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2276,7 +2209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/understanding-servicetemplates/" class="md-nav__link">
+      <a href="../../../../user/services/understanding-servicetemplates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2297,7 +2230,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/add-service-to-clusterdeployment/" class="md-nav__link">
+      <a href="../../../../user/services/add-service-to-clusterdeployment/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2318,7 +2251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/beach-head/" class="md-nav__link">
+      <a href="../../../../user/services/beach-head/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2339,7 +2272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/checking-status/" class="md-nav__link">
+      <a href="../../../../user/services/checking-status/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2360,7 +2293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/remove-beach-head/" class="md-nav__link">
+      <a href="../../../../user/services/remove-beach-head/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2381,7 +2314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/services/servicetemplate-parameters/" class="md-nav__link">
+      <a href="../../../../user/services/servicetemplate-parameters/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2410,7 +2343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user/user-enable-drift-detection/" class="md-nav__link">
+      <a href="../../../../user/user-enable-drift-detection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2489,7 +2422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../../reference/template/template-intro/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2510,7 +2443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-predefined/" class="md-nav__link">
+      <a href="../../../../reference/template/template-predefined/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2531,7 +2464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-byo/" class="md-nav__link">
+      <a href="../../../../reference/template/template-byo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2552,7 +2485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-aws/" class="md-nav__link">
+      <a href="../../../../reference/template/template-aws/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2573,7 +2506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-azure/" class="md-nav__link">
+      <a href="../../../../reference/template/template-azure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2594,7 +2527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-openstack/" class="md-nav__link">
+      <a href="../../../../reference/template/template-openstack/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2615,7 +2548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/template/template-vsphere/" class="md-nav__link">
+      <a href="../../../../reference/template/template-vsphere/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2665,7 +2598,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="troubleshooting/" class="md-nav__link ">
+            <a href="../../../../troubleshooting/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -2698,7 +2631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
+      <a href="../../../../troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2719,7 +2652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/known-issues-eks/" class="md-nav__link">
+      <a href="../../../../troubleshooting/known-issues-eks/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2786,7 +2719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/glossary/" class="md-nav__link">
+      <a href="../../../../reference/glossary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2857,7 +2790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-extend-mgmt/" class="md-nav__link">
+      <a href="../../../../appendix/appendix-extend-mgmt/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2878,7 +2811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-dryrun/" class="md-nav__link">
+      <a href="../../../../appendix/appendix-dryrun/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2899,7 +2832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="appendix/appendix-providers/" class="md-nav__link">
+      <a href="../../../../appendix/appendix-providers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2968,7 +2901,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/k0rdent-documentation-contributors-guide/" class="md-nav__link">
+      <a href="../../../../contrib/k0rdent-documentation-contributors-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2989,7 +2922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib/k0rdent-documentation-style-guide/" class="md-nav__link">
+      <a href="../../../../contrib/k0rdent-documentation-style-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3030,59 +2963,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-and-history" class="md-nav__link">
-    <span class="md-ellipsis">
-      Structure and History
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#supported-providers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Supported Providers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Documentation
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -3096,7 +2976,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/releaes-v0.1.0/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/releaes-v0.1.0/docs/admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3105,91 +2985,195 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/releaes-v0.1.0/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/releaes-v0.1.0/docs/admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="welcome-to-the-k0rdent-docs">Welcome to the k0rdent docs<a class="headerlink" href="#welcome-to-the-k0rdent-docs" title="Permanent link">#</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
-<p>k0rdent has been developed to provide a way to manage distributed infrastructure
-at massive scale leveraging kubernetes.</p>
-<p>The project is based on the premise that:</p>
-<ul>
-<li>Kubernetes and its ecosystem are mature and inherently stable.</li>
-<li>Large scale adoption of Kubernetes means that k0rdent can run anywhere.</li>
-<li>Community standards and open source projects ensure support and reduce adoption risk.</li>
-</ul>
-<p>The goal of the k0rdent project is to provide platform engineers with the means
-to deliver a distributed container management environment (DCME) and enable them to
-compose unique internal developer platforms (IDP) to support a diverse range
-of complex modern application workloads.</p>
-<p>Another way to think of k0rdent is as a "super control plane" designed to ensure the
-consistent provisioning and lifecycle management of kubernetes clusters and the
-services that make them useful.</p>
-<p>In short:
-Kubernetes clusters at scale, managed centrally, template driven, based on open
-community driven standards, enabling Golden Paths ... k0rdent aspires to do all of that.</p>
-<p>Whether you want to manage Kubernetes clusters on-premises, in the cloud,
-or a combination of both, k0rdent provides a consistent way to do it. With
-full life-cycle management, including provisioning, configuration, and
-maintenance, k0rdent is designed to be a repeatable and secure way to
-manage your Kubernetes clusters in a central location.</p>
-<h2 id="structure-and-history">Structure and History<a class="headerlink" href="#structure-and-history" title="Permanent link">#</a></h2>
-<p>The project has a number of components, including:</p>
-<ul>
+<h1 id="create-and-prepare-a-production-grade-kubernetes-cluster-with-eks">Create and prepare a production-grade Kubernetes cluster with EKS<a class="headerlink" href="#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks" title="Permanent link">#</a></h1>
+<p>Follow these steps to install and prepare an <a href="https://ca-central-1.console.aws.amazon.com/eks/clusters">Amazon EKS</a> management cluster:</p>
+<ol>
 <li>
-<p><strong>k0rdent</strong>: the overall project</p>
-<ul>
-<li>
-<p><strong>k0rdent Cluster Manager (KCM)</strong></p>
-<p>Deployment and life-cycle management of Kubernetes clusters, including
-configuration, updates, and other CRUD operations.</p>
+<p>The basic AWS tools</p>
+<p>Start by installing and configuring the Amazon tools. First download and install the <code>aws</code> tool:</p>
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;awscliv2.zip&quot;</span>
+unzip<span class="w"> </span>awscliv2.zip
+sudo<span class="w"> </span>./aws/install
+</code></pre></div>
+ Then configure it using environment variables:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_ACCESS_KEY_ID&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SECRET_ACCESS_KEY&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SESSION_TOKEN&quot;</span>
+aws<span class="w"> </span>configure
+</code></pre></div>
+ <div class="highlight"><pre><span></span><code><span class="go">AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:</span>
+<span class="go">AWS Secret Access Key [EXAMPLE_SECRET_ACCESS_KEY]:</span>
+<span class="go">Default region name [YOUR_AWS_REGION]:</span>
+<span class="go">Default output format [json]:</span>
+</code></pre></div>
+ Once <code>aws</code> is installed youc an install <code>eksctl</code>:</p>
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--silent<span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>xz<span class="w"> </span>-C<span class="w"> </span>/tmp
+sudo<span class="w"> </span>mv<span class="w"> </span>/tmp/eksctl<span class="w"> </span>/usr/local/bin
+eksctl<span class="w"> </span>version
+</code></pre></div>
+ <div class="highlight"><pre><span></span><code><span class="go">0.205.0</span>
+</code></pre></div></p>
 </li>
 <li>
-<p><strong>k0rdent State Manager (KSM)</strong></p>
-<p>Installation and life-cycle management of <a href="reference/glossary/#beach-head-services">beach-head services</a>,
-policy, Kubernetes API configurations, and more.</p>
-<ul>
-<li>This is currently rolled into kcm, but may be split out in the future</li>
-<li>ksm leverages <a href="https://github.com/projectsveltos/sveltos">Project Sveltos</a>
-    for an increasing amount of functionality</li>
-</ul>
+<p>Create the cluster</p>
+<p>You can use the eksctl tool to create the basic Kubernetes cluster:
+<div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--name<span class="w"> </span>&lt;CLUSTER_NAME&gt;<span class="w"> </span><span class="se">\</span>
+--version<span class="w"> </span><span class="m">1</span>.31<span class="w"> </span><span class="se">\</span>
+--region<span class="w"> </span>&lt;YOUR_AWS_REGION&gt;<span class="w"> </span><span class="se">\</span>
+--without-nodegroup
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:26:02 [ℹ]  eksctl version 0.205.0</span>
+<span class="go">...</span>
+<span class="go">2025-03-05 22:36:14 [✔]  all EKS cluster resources for &quot;CLUSTER_NAME&quot; have been created</span>
+<span class="go">2025-03-05 22:36:15 [ℹ]  kubectl command should work with &quot;/home/username/.kube/config&quot;, try &#39;kubectl get nodes&#39;</span>
+<span class="go">2025-03-05 22:36:15 [✔]  EKS cluster &quot;CLUSTER_NAME&quot; in &quot;YOUR_AWS_REGION&quot; region is ready</span>
+</code></pre></div></p>
 </li>
 <li>
-<p><strong>k0rdent Observability and FinOps (KOF)</strong></p>
-<p>Cluster and beach-head services monitoring, events and log management.</p>
+<p>Add controllers</p>
+<p>While the cluster is now created, it doesn't actually have any nodes.  Start by adding controllers:
+<div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>nodegroup<span class="w"> </span>--cluster<span class="w"> </span>CLUSTER_NAME<span class="w"> </span><span class="se">\</span>
+--name<span class="w"> </span>CONTROLLER_NODE_GROUP<span class="w"> </span><span class="se">\</span>
+--node-type<span class="w"> </span>t3.medium<span class="w"> </span><span class="se">\</span>
+--nodes<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--nodes-min<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--nodes-max<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+--node-labels<span class="w"> </span><span class="s2">&quot;role=control-plane&quot;</span><span class="w"> </span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;nickchasek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChaseK0rdentControlCluster&quot;</span>
+<span class="go">...</span>
+<span class="go">2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
+</code></pre></div></p>
 </li>
-</ul>
+<li>
+<p>Install kubectl</p>
+<p>Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have <code>kubectl</code> installed. You can find the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">full install docs here</a>, or just follow these instructions:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg<span class="w"> </span><span class="c1"># allow unprivileged APT programs to read this keyring</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list<span class="w">   </span><span class="c1"># helps tools such as command-not-found to work correctly</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>kubectl
+</code></pre></div>
 </li>
-</ul>
-<p>There are a few historical names that may show up in the code and in older docs, including:</p>
-<ul>
-<li><strong>Project 2A</strong>: the original codename of k0rdent, 2A references the hexadecimal 0x2A, 
-  or 42, which encompasses our hopes for the project.</li>
-<li><strong>HMC or hmc</strong>: the original repository name for k0rdent and KCM
-  development</li>
-<li><strong>motel</strong>: the original repository and codename for KOF</li>
-</ul>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">#</a></h2>
-<p>See the <a href="quickstarts/guide-to-quickstarts/">k0rdent Quick Start Guide</a> to get started with a small deployment.</p>
-<h2 id="supported-providers">Supported Providers<a class="headerlink" href="#supported-providers" title="Permanent link">#</a></h2>
-<p>k0rdent leverages the Cluster API provider ecosystem; the following
-providers have had <code>ProviderTemplates</code> created and validated, and more are
-in the works. </p>
-<ul>
-<li><a href="admin/installation/prepare-mgmt-cluster/aws/">AWS</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/azure/">Azure</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/vmware/">vSphere</a></li>
-<li><a href="admin/installation/prepare-mgmt-cluster/openstack/">OpenStack</a></li>
-</ul>
-<p>k0rdent also includes a way to add custom providers, so it's possible to integrate it with other hyperscalers, 
-or even into an existing local infrastructure.</p>
-<h2 id="development-documentation">Development Documentation<a class="headerlink" href="#development-documentation" title="Permanent link">#</a></h2>
-<p>Documentation related to the development process and developer-specific notes is
-located in the <a href="https://github.com/k0rdent/kcm/blob/main/docs/dev.md">main k0rdent repository</a>.</p>
+<li>
+<p>Get the KUBECONFIG</p>
+<p>You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:</p>
+<p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>eks<span class="w"> </span>update-kubeconfig<span class="w"> </span>--region<span class="w"> </span>YOUR_AWS_REGION<span class="w"> </span>--name<span class="w"> </span>CLUSTER_NAME
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:026090528175:cluster/NickChaseK0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
+</code></pre></div></p>
+</li>
+<li>
+<p>Taint controllers</p>
+<p>To prevent workloads from being scheduled on the controllers, add the <code>node-role.kubernetes.io/control-plane=true:NoSchedule</code> taint. First list
+the started nodes:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE    VERSION</span>
+<span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename2.compute.internal    Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename3.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.5-eks-5d632ec</span>
+</code></pre></div>
+For each node, go ahead and set the taint:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>taint<span class="w"> </span>nodes<span class="w"> </span>nodename1.compute.internal<span class="w"> </span>node-role.kubernetes.io/control-plane<span class="o">=</span>true:NoSchedule
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">node/nodename1.ca-central-1.compute.internal tainted</span>
+</code></pre></div>
+Now verify the taints:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>nodes<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;Taints:&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename1.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:42 -0500</span>
+<span class="go">--</span>
+<span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename2.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:40 -0500</span>
+<span class="go">--</span>
+<span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<span class="go">Unschedulable:      false</span>
+<span class="go">Lease:</span>
+<span class="go">HolderIdentity:  nodename3.ca-central-1.compute.internal</span>
+<span class="go">AcquireTime:     &lt;unset&gt;</span>
+<span class="go">RenewTime:       Thu, 06 Mar 2025 03:03:41 -0500</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Add worker nodes</p>
+<p>Adding worker nodes is simpler than controllers:</p>
+<p><div class="highlight"><pre><span></span><code>eksctl<span class="w"> </span>create<span class="w"> </span>nodegroup<span class="w"> </span>--cluster<span class="w"> </span>CLUSTER_NAME<span class="w"> </span><span class="se">\</span>
+--name<span class="w"> </span>WORKER_NODE_GROUP<span class="w"> </span><span class="se">\</span>
+--node-type<span class="w"> </span>t3.medium<span class="w"> </span><span class="se">\</span>
+--nodes<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+--nodes-min<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+--nodes-max<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+--node-labels<span class="w"> </span><span class="s2">&quot;role=worker&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<span class="go">...</span>
+<span class="go">2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster &quot;CLUSTER_NAME&quot;</span>
+<span class="go">2025-03-06 03:13:39 [ℹ]  checking security group configuration for all nodegroups</span>
+<span class="go">2025-03-06 03:13:39 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
+</code></pre></div>
+Verify the nodes:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE     VERSION</span>
+<span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename4.compute.internal    Ready    &lt;none&gt;   79s     v1.31.5-eks-5d632ec</span>
+<span class="go">nodename2.compute.internal    Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+<span class="go">nodename5.compute.internal   Ready    &lt;none&gt;   82s     v1.31.5-eks-5d632ec</span>
+<span class="go">nodename3.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.5-eks-5d632ec</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Verify pods</p>
+<p>Make sure pods will run properly by deploying a test pod:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>test-pod<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>--restart<span class="o">=</span>Never
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>NAME<span class="w">       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE<span class="w">   </span>IP<span class="w">               </span>NODE<span class="w">                                              </span>NOMINATED<span class="w"> </span>NODE<span class="w">   </span>READINESS<span class="w"> </span>GATES
+test-pod<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>15s<span class="w">   </span><span class="m">192</span>.168.76.104<span class="w">   </span>ip-192-168-68-189.ca-central-1.compute.internal<span class="w">   </span>&lt;none&gt;<span class="w">           </span>&lt;none&gt;
+</code></pre></div>
+Clean up so you can start fresh:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>test-pod
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>pod<span class="w"> </span><span class="s2">&quot;test-pod&quot;</span><span class="w"> </span>deleted
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">No resources found in default namespace.</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Install Helm</p>
+<p>Finally, the easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the <a href="https://helm.sh/docs/intro/install/">full instructions here</a>, or use these instructions:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>-o<span class="w"> </span>get_helm.sh<span class="w"> </span>https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>get_helm.sh
+./get_helm.sh
+</code></pre></div>
+<p>Helm will be installed into <code>/usr/local/bin/helm</code>.</p>
+</li>
+</ol>
 
 
 
@@ -3321,12 +3305,12 @@ located in the <a href="https://github.com/k0rdent/kcm/blob/main/docs/dev.md">ma
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.edit", "content.action.view", "navigation.path", "navigation.indexes"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.edit", "content.action.view", "navigation.path", "navigation.indexes"], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
-        <script src="javascripts/feedback.js"></script>
+        <script src="../../../../javascripts/feedback.js"></script>
       
     
   </body>
