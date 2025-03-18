@@ -1,0 +1,2 @@
+[mkdocs.plugins]
+ezglossary = mkdocs_ezglossary_plugin.plugin:GlossaryPlugin
