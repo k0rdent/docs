@@ -720,7 +720,6 @@ To make Grafana available, follow these steps:
     ```shell
     kubectl port-forward -n kof svc/grafana-vm-service 3000:3000
     ```
-
 3. Login to [http://127.0.0.1:3000/dashboards](http://127.0.0.1:3000/dashboards) with the username/password printed above.
 4. Open a dashboard:
 

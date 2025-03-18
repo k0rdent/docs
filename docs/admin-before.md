@@ -102,6 +102,7 @@ definition that includes the additional nodes, and then k0rdent, seeing that rea
 will make it happen.
 
 In some ways this way of working is similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
+
 ensure that reality matches the definition. We can say that k0rdent is GitOps-compatible, in the sense that you can (and should) consider storing k0rdent templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of k0rdent itself.
 
 The main difference is that k0rdent's way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you could, if you needed to, port much of what you do with k0rdent templates and objects directly to other solution environments that leverage these standard tools.

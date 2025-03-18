@@ -65,6 +65,7 @@ metadata:
   name: cluster-1
 spec:
   template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
+
   credential: aws-cred
   config:
     clusterLabels: {}
@@ -97,6 +98,7 @@ metadata:
   name: cluster-1
 spec:
   template: aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}
+
   credential: aws-cred
   config:
     clusterLabels: {}
