@@ -50,7 +50,7 @@ Export the credentials to the management node environment:
 export AWS_REGION=EXAMPLE_AWS_REGION
 export AWS_ACCESS_KEY_ID=EXAMPLE_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=EXAMPLE_SECRET_ACCESS_KEY
-export AWS_SESSION_TOKEN=EXAMPLE_SESSION_TOKEN # Optional. If you are using Multi-Factor Auth.
+export AWS_SESSION_TOKEN=EXAMPLE_SESSION_TOKEN # Optional. If you are using Single Sign On Auth.
 ```
 
 These credentials will be used both by the AWS CLI (to create your k0rdent user) and by `clusterawsadm` (to create a CloudFormation template used by CAPA within k0rdent).
