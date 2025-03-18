@@ -64,7 +64,8 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: aws-standalone-cp-0-1-0
+  template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
+
   credential: aws-cred
   config:
     clusterLabels: {}
@@ -96,7 +97,8 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: aws-eks-0-1-0
+  template: aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}
+
   credential: aws-cred
   config:
     clusterLabels: {}
@@ -181,7 +183,7 @@ kind: ClusterDeployment
 metadata:
   name: aws-hosted-cp
 spec:
-  template: aws-hosted-cp-0-1-0
+  template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
   credential: aws-credential
   config:
     clusterLabels: {}
@@ -218,7 +220,7 @@ kind: ClusterDeployment
 metadata:
   name: aws-hosted
 spec:
-  template: aws-hosted-cp-0-1-0
+  template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
   credential: aws-credential
   config:
     clusterLabels: {}

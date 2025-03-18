@@ -68,7 +68,7 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: vsphere-standalone-cp-0-1-0
+  template: vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}
   credential: vsphere-credential
   config:
     clusterLabels: {}
@@ -183,7 +183,7 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: vsphere-hosted-cp-0-1-0
+  template: vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}
   credential: vsphere-credential
   config:
     clusterLabels: {}

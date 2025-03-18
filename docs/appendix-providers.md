@@ -32,6 +32,7 @@ The `Credential` resource provides an abstraction layer by either:
 - Template processing accesses cluster objects through:
   - Built-in Sveltos variables (`Cluster`, `InfrastructureProvider`)
   - `getResource` function for additionally exposed objects (`InfrastructureProviderIdentity`, `InfrastructureProviderIdentitySecret`)
+- The object name needs to follow a predictable naming pattern, such as the `ClusterIdentity` object (referenced via `identityRef` in the `Credential` resource) name + `-resource-template` suffix. It must also be placed in same Namespace as the `ClusterIdentity` object it references
 
 ## Templating System
 
@@ -44,19 +45,23 @@ The templating system leverages:
 
 Provider-specific examples are available in `*.credentials.yaml` files [here](https://github.com/k0rdent/kcm/tree/main/config/dev).
 
-Let's take `Azure` provider as an example [azure-credentials.yaml](https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml)
+Let's take `Azure` provider as an example [azure-credentials.yaml](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/config/dev/azure-credentials.yaml)
 
- - [`ClusterIdentity`](https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml#L2-L17)
- - [`Secret`](https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml#L19-L28) (related to `ClusterIdentity`)
- - [`Credential`](https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml#L30-L41)
- - [`ConfigMap`](https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml#L43-L97)
+ - [`ClusterIdentity`](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/config/dev/azure-credentials.yaml#L2-L17)
+ - [`Secret`](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/config/dev/azure-credentials.yaml#L19-L28) (related to `ClusterIdentity`)
+ - [`Credential`](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/config/dev/azure-credentials.yaml#L30-L41)
+ - [`ConfigMap`](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/config/dev/azure-credentials.yaml#L43-L97)
+
+> NOTE:
+> These examples assume the `ConfigMap` is included in a template. To use these examples directly via `kubectl`, please replace `$$`
+> (double dollar signs) with `$` (single dollar sign)
 
 ## Provider Registration
 
-Providers are registered through YAML configuration files mounted into a [predefined path](https://github.com/k0rdent/kcm/blob/v0.1.0/templates/provider/kcm/templates/deployment.yaml#L42-L43) in the manager container at startup [using `ConfigMap`](https://github.com/k0rdent/kcm/blob/v0.1.0/templates/provider/kcm/templates/providers.yaml).
+Providers are registered through YAML configuration files mounted into a [predefined path](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/templates/provider/kcm/templates/deployment.yaml#L42-L43) in the manager container at startup [using `ConfigMap`](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/templates/provider/kcm/templates/providers.yaml).
 
 ### Examples
 
-Provider configuration examples can be found [here](https://github.com/k0rdent/kcm/tree/v0.1.0/providers)
+Provider configuration examples can be found [here](https://github.com/k0rdent/kcm/tree/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/providers)
 
-Let's take `Azure` provider as an example [azure.yml](https://github.com/k0rdent/kcm/blob/v0.1.0/providers/azure.yml), as seen, the definition is straightforward.
+Let's take `Azure` provider as an example [azure.yml](https://github.com/k0rdent/kcm/blob/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/providers/azure.yml), as seen, the definition is straightforward.

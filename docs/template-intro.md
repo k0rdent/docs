@@ -22,7 +22,7 @@ EXAMPLE: An example of a `ProviderTemplate` with its status.
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ProviderTemplate
 metadata:
-  name: cluster-api-0-1-0
+  name: cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}
 spec:
   helm:
     chartSpec:
@@ -32,7 +32,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: k0rdent-catalog
-      version: 0.1.0
+      version: {{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 status:
   capiContracts:
     v1alpha3: ""
@@ -43,7 +43,6 @@ status:
     name: cluster-api-0-0-4
     namespace: kcm-system
   config:
-    airgap: false
     config: {}
     configSecret:
       create: false
@@ -59,7 +58,7 @@ EXAMPLE: An example of a `ClusterTemplate` with its status.
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplate
 metadata:
-  name: aws-standalone-cp-0-1-0
+  name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
   namespace: kcm-system
 spec:
   helm:
@@ -70,11 +69,11 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: k0rdent-catalog
-      version: 0.1.0
+      version: {{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 status:
   chartRef:
     kind: HelmChart
-    name: aws-standalone-cp-0-1-0
+    name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     namespace: kcm-system
   config:
     bastion:
@@ -186,8 +185,8 @@ The example of `ClusterTemplate` Management:
       supportedTemplates:
         - name: aws-standalone-cp-0-0-2
           availableUpgrades:
-            - name: aws-standalone-cp-0-1-0
-        - name: aws-standalone-cp-0-1-0
+            - name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
+        - name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     ```
 
 2. Edit the `AccessManagement` object and configure the `.spec.accessRules`.
@@ -209,7 +208,7 @@ As a result, the following new objects should be created:
 
 * `ClusterTemplateChain` `default/aws`
 * `ClusterTemplate` `default/aws-standalone-cp-0-0-2`
-* `ClusterTemplate` `default/aws-standalone-cp-0-1-0` (available for the upgrade from `aws-standalone-cp-0-0-2`)
+* `ClusterTemplate` `default/aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` (available for the upgrade from `aws-standalone-cp-0-0-2`)
 
 > NOTE:
 > 1. The target `ClusterTemplate` defined as being available for the upgrade should reference the same helm chart name

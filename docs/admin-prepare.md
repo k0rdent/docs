@@ -58,6 +58,62 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
 
   	The tool recognizes the environment variables you created earlier, so there's no need to login.
 
+6. Check for available IPs
+
+    Because k0rdent has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
+    `EC2-VPC Elastic IPs` quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
+    second to the same region, you are likely to run into issues.  
+
+    You can determine how many elastic IPs are available from the command line:
+
+    ```shell
+    LIMIT=$(aws ec2 describe-account-attributes --attribute-names vpc-max-elastic-ips --query 'AccountAttributes[0].AttributeValues[0].AttributeValue' --output text)
+    USED=$(aws ec2 describe-addresses --query 'Addresses[*].PublicIp' --output text | wc -w)
+    AVAILABLE=$((LIMIT - USED))
+    echo "Available Public IPs: $AVAILABLE"
+    ```
+    ```console
+    Available Public IPs: 5
+    ```
+
+    If you have less than 3 available public IPs, you can request an increase in your quota:
+
+    ```shell
+    aws service-quotas request-service-quota-increase \
+        --service-code ec2 \
+        --quota-code L-0263D0A3 \
+        --desired-value 20
+    ```
+
+    You can check on the status of your request:
+
+    ```shell
+    aws service-quotas list-requested-service-quota-change-history \
+        --service-code ec2
+    ```
+    ```console
+    {
+        "RequestedQuotas": [
+            {
+                "Id": "EXAMPLE_ACCESS_KEY_ID",
+                "ServiceCode": "ec2",
+                "ServiceName": "Amazon Elastic Compute Cloud (Amazon EC2)",
+                "QuotaCode": "L-0263D0A3",
+                "QuotaName": "EC2-VPC Elastic IPs",
+                "DesiredValue": 20.0,
+                "Status": "PENDING",
+                "Created": "2025-02-09T02:27:01.573000-05:00",
+                "LastUpdated": "2025-02-09T02:27:01.956000-05:00",
+                "Requester": "{\"accountId\":\"EXAMPLE_ACCESS_KEY_ID\",\"callerArn\":\"arn:aws:iam::EXAMPLE_ACCESS_KEY_ID:user/nchase\"}",
+                "QuotaArn": "arn:aws:servicequotas:EXAMPLE_AWS_REGION:EXAMPLE_ACCESS_KEY_ID:ec2/L-0263D0A3",
+                "GlobalQuota": false,
+                "Unit": "None",
+                "QuotaRequestedAtLevel": "ACCOUNT"
+            }
+        ]
+    }
+    ```
+
 6. Create the IAM user. 
 
 	  The actual `user-name` parameter is arbitrary; you can specify it as anything you like:
@@ -184,6 +240,8 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     metadata:
       name: aws-cluster-identity-secret
       namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     type: Opaque
     stringData:
       AccessKeyID: EXAMPLE_ACCESS_KEY_ID
@@ -200,15 +258,18 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
 
     Create the `AWSClusterStaticIdentity` object in a file named `aws-cluster-identity.yaml`:
 
-    ```shell
+    ```yaml
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
     kind: AWSClusterStaticIdentity
     metadata:
       name: aws-cluster-identity
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     spec:
       secretRef: aws-cluster-identity-secret
       allowedNamespaces:
         selector:
-        matchLabels: {}
+          matchLabels: {}
     ```
 
     Notice that the `secretRef` references the `Secret` you created in the previous step.
@@ -219,7 +280,30 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     kubectl apply -f aws-cluster-identity.yaml  -n kcm-system
     ```
 
-11. Create the `Credential`
+11. Create the Cluster Identity resource template `ConfigMap`
+
+    Now we create Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
+
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: aws-cluster-identity-resource-template
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
+      annotations:
+        projectsveltos.io/template: "true"
+    ```
+
+    Note that `ConfigMap` is empty, this is expected, we don't need to template any object inside child cluster(s), but we can use that object in the future if need arises.
+
+    Apply the YAML to your cluster, again keeping it in the `kcm-system` namespace:
+
+    ```shell
+    kubectl apply -f aws-cluster-identity-resource-template.yaml -n kcm-system
+    ```
+
+12. Create the `Credential`
 
     Finally, create the KCM `Credential` object, making sure to reference the `AWSClusterStaticIdentity` you just created:
 
@@ -230,11 +314,11 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
       name: aws-cluster-identity-cred
       namespace: kcm-system
     spec:
-    description: "Credential Example"
-    identityRef:
-      apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
-      kind: AWSClusterStaticIdentity
-      name: aws-cluster-identity
+      description: "Credential Example"
+      identityRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+        kind: AWSClusterStaticIdentity
+        name: aws-cluster-identity
     ```
     Apply the YAML to your cluster, again keeping it in the `kcm-system` namespace:
 
@@ -242,7 +326,8 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     kubectl apply -f aws-cluster-identity-cred.yaml -n kcm-system
     ```
 
-12. Deploy a cluster
+
+13. Deploy a cluster
 
     Make sure everything is configured properly by creating a `ClusterDeployment`. Start with a YAML file specifying the `ClusterDeployment`, as in:
 
@@ -253,7 +338,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
         name: my-aws-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: aws-standalone-cp-0-1-0
+      template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-cluster-identity-cred
       config:
         clusterLabels: {}
@@ -266,23 +351,23 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     > NOTE:
     > - You're giving it an arbitrary name in `.metadata.name` (`my-aws-clusterdeployment1`)
     > - You're referencing the credential you created in the previous step, `aws-cluster-identity-cred`. This enables you to set up a system where users can take advantage of having access to the credentials to the AWS account without actually having those credentials in hand.
-    > - You need to choose a template to use for the cluster, in this case `aws-standalone-cp-0-1-0`. You can get a list of available templates using:
+    > - You need to choose a template to use for the cluster, in this case `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}`. You can get a list of available templates using:
 
     ```shell
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-0-1-0           true
-    aws-eks-0-1-0                   true
-    aws-hosted-cp-0-1-0             true
-    aws-standalone-cp-0-1-0         true
-    azure-aks-0-1-0                 true
-    azure-hosted-cp-0-1-0           true
-    azure-standalone-cp-0-1-0       true
-    openstack-standalone-cp-0-1-0   true
-    vsphere-hosted-cp-0-1-0         true
-    vsphere-standalone-cp-0-1-0     true
+    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
     Apply the YAML to your management cluster:
     ```shell
@@ -305,12 +390,12 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     KUBECONFIG="my-aws-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
     ```
 
-13. Cleanup
+14. Cleanup
 
     When you've established that it's working properly, you can delete the managed cluster and its AWS objects:
 
     ```shell
-    kubectl delete ClusterDeployment my-aws-clusterdeployment1 
+    kubectl delete clusterdeployments my-aws-clusterdeployment1 
     ```
 
 ## Azure
@@ -415,6 +500,8 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     metadata:
       name: azure-cluster-identity-secret
       namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     stringData:
       clientSecret: <SP_PASSWORD_SP_PASSWORD> # Password retrieved from the Service Principal
     type: Opaque
@@ -440,6 +527,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     metadata:
       labels:
         clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
+        k0rdent.mirantis.com/component: "kcm"
       name: azure-cluster-identity
       namespace: kcm-system
     spec:
@@ -492,9 +580,82 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
     ```
 
+10. Create the `ConfigMap` resource-template Object
+
+    Create a YAML with the specification of our resource-template and save it as
+    `azure-cluster-identity-resource-template.yaml`
+
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: azure-cluster-identity-resource-template
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
+      annotations:
+        projectsveltos.io/template: "true"
+    data:
+      configmap.yaml: |
+        {{- $cluster := .InfrastructureProvider -}}
+        {{- $identity := (getResource "InfrastructureProviderIdentity") -}}
+        {{- $secret := (getResource "InfrastructureProviderIdentitySecret") -}}
+        {{- $subnetName := "" -}}
+        {{- $securityGroupName := "" -}}
+        {{- $routeTableName := "" -}}
+        {{- range $cluster.spec.networkSpec.subnets -}}
+          {{- if eq .role "node" -}}
+            {{- $subnetName = .name -}}
+            {{- $securityGroupName = .securityGroup.name -}}
+            {{- $routeTableName = .routeTable.name -}}
+            {{- break -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $cloudConfig := dict
+          "aadClientId" $identity.spec.clientID
+          "aadClientSecret" (index $secret.data "clientSecret" | b64dec)
+          "cloud" $cluster.spec.azureEnvironment
+          "loadBalancerName" ""
+          "loadBalancerSku" "Standard"
+          "location" $cluster.spec.location
+          "maximumLoadBalancerRuleCount" 250
+          "resourceGroup" $cluster.spec.resourceGroup
+          "routeTableName" $routeTableName
+          "securityGroupName" $securityGroupName
+          "securityGroupResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup
+          "subnetName" $subnetName
+          "subscriptionId" $cluster.spec.subscriptionID
+          "tenantId" $identity.spec.tenantID
+          "useInstanceMetadata" true
+          "useManagedIdentityExtension" false
+          "vmType" "vmss"
+          "vnetName" $cluster.spec.networkSpec.vnet.name
+          "vnetResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup
+        -}}
+        ---
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: azure-cloud-provider
+          namespace: kube-system
+        type: Opaque
+        data:
+          cloud-config: {{ $cloudConfig | toJson | b64enc }}
+    ```
+    Object name needs to be exactly `azure-cluster-identity-resource-template.yaml`, `AzureClusterIdentity` object name + `-resource-template` string suffix.
+
+    Apply the YAML to your cluster:
+
+    ```shell
+    kubectl apply -f azure-cluster-identity-resource-template.yaml
+    ```
+    ```console
+    configmap/azure-cluster-identity-resource-template created
+    ```
+
 Now you're ready to deploy the cluster.
 
-10. Create a `ClusterDeployment`
+11. Create a `ClusterDeployment`
 
     To test the configuration, deploy a child cluster by following these steps:
 
@@ -526,16 +687,16 @@ Now you're ready to deploy the cluster.
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-0-1-0           true
-    aws-eks-0-1-0                   true
-    aws-hosted-cp-0-1-0             true
-    aws-standalone-cp-0-1-0         true
-    azure-aks-0-1-0                 true
-    azure-hosted-cp-0-1-0           true
-    azure-standalone-cp-0-1-0       true
-    openstack-standalone-cp-0-1-0   true
-    vsphere-hosted-cp-0-1-0         true
-    vsphere-standalone-cp-0-1-0     true
+    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     Create the yaml:
@@ -547,7 +708,7 @@ Now you're ready to deploy the cluster.
       name: my-azure-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: azure-standalone-cp-0-1-0
+      template: azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}
       credential: azure-cluster-identity-cred
       config:
         location: "westus" # Select your desired Azure Location (find it via `az account list-locations -o table`)
@@ -584,19 +745,19 @@ Now you're ready to deploy the cluster.
     KUBECONFIG="my-azure-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
     ```
 
-11. Cleanup
+12. Cleanup
 
     To clean up Azure resources, delete the child cluster by deleting the `ClusterDeployment`:
 
     ```shell
-    kubectl get ClusterDeployments -A
+    kubectl get clusterdeployments -A
     ```
     ```console
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready
     ```
     ```shell
-    kubectl delete ClusterDeployment my-azure-clusterdeployment1 -n kcm-system
+    kubectl delete clusterdeployments my-azure-clusterdeployment1 -n kcm-system
     ```
     ```console
     clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
@@ -604,7 +765,7 @@ Now you're ready to deploy the cluster.
 
 ## OpenStack
 
-k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow these steps to make it possible to deploy to OpenStack:
+k0rdent can deploy child clusters on OpenStack virtual machines. Follow these steps to configure and deploy OpenStack clusters for your users:
 
 1. Install k0rdent
 
@@ -617,7 +778,7 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
 
 3. Configure the OpenStack Application Credential
 
-    This credential should include:
+    The exported list of variables should include:
 
     ```shell
     OS_AUTH_URL
@@ -626,7 +787,7 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     OS_REGION_NAME
     OS_INTERFACE
     OS_IDENTITY_API_VERSION
-    OS_AUTH_TYPE (e.g. v3applicationcredential)
+    OS_AUTH_TYPE
     ```
 
     While it's possible to use a username and password instead of the Application Credential &mdash; adjust your YAML accordingly &mdash; an Application Credential is strongly recommended because it limits scope and improves security over a raw username/password approach.
@@ -642,6 +803,8 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     metadata:
       name: openstack-cloud-config
       namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     stringData:
       clouds.yaml: |
         clouds:
@@ -673,6 +836,8 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     metadata:
       name: openstack-cluster-identity-cred
       namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"  
     spec:
       description: "OpenStack credentials"
       identityRef:
@@ -691,7 +856,94 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     Note that `.spec.identityRef.name` must match the `Secret` you created in the previous step, and 
     `.spec.identityRef.namespace` must be the same as the one that includes the `Secret` (`kcm-system`).
 
-6. Create Your First Child Cluster
+6. Create the ConfigMap resource-template object
+
+    Create a YAML file with the specification of the resource-template and save it as `openstack-cluster-identity-resource-template.yaml`:
+
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openstack-cloud-config-resource-template
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
+      annotations:
+        projectsveltos.io/template: "true"
+    data:
+      configmap.yaml: |
+        {{- $cluster := .InfrastructureProvider -}}
+        {{- $identity := (getResource "InfrastructureProviderIdentity") -}}
+
+        {{- $clouds := fromYaml (index $identity "data" "clouds.yaml" | b64dec) -}}
+        {{- if not $clouds }}
+          {{ fail "failed to decode clouds.yaml" }}
+        {{ end -}}
+
+        {{- $openstack := index $clouds "clouds" "openstack" -}}
+
+        {{- if not (hasKey $openstack "auth") }}
+          {{ fail "auth key not found in openstack config" }}
+        {{- end }}
+        {{- $auth := index $openstack "auth" -}}
+
+        {{- $auth_url := index $auth "auth_url" -}}
+        {{- $app_cred_id := index $auth "application_credential_id" -}}
+        {{- $app_cred_name := index $auth "application_credential_name" -}}
+        {{- $app_cred_secret := index $auth "application_credential_secret" -}}
+
+        {{- $network_id := $cluster.status.externalNetwork.id -}}
+        {{- $network_name := $cluster.status.externalNetwork.name -}}
+        ---
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: openstack-cloud-config
+          namespace: kube-system
+        type: Opaque
+        stringData:
+          cloud.conf: |
+            [Global]
+            auth-url="{{ $auth_url }}"
+
+            {{- if $app_cred_id }}
+            application-credential-id="{{ $app_cred_id }}"
+            {{- end }}
+
+            {{- if $app_cred_name }}
+            application-credential-name="{{ $app_cred_name }}"
+            {{- end }}
+
+            {{- if $app_cred_secret }}
+            application-credential-secret="{{ $app_cred_secret }}"
+            {{- end }}
+
+            {{- if and (not $app_cred_id) (not $app_cred_secret) }}
+            username="{{ index $openstack "username" }}"
+            password="{{ index $openstack "password" }}"
+            {{- end }}
+            region="{{ index $openstack "region_name" }}"
+
+            [LoadBalancer]
+            {{- if $network_id }}
+            floating-network-id="{{ $network_id }}"
+            {{- end }}
+
+            [Networking]
+            {{- if $network_name }}
+            public-network-name="{{ $network_name }}"
+            {{- end }}
+    ```
+    
+    Object needs to be named `openstack-cluster-identity-resource-template.yaml`, `OpenStackClusterIdentity` object name + `-resource-template` string suffix.
+
+    Apply the YAML to your cluster:
+
+    ```shell
+    kubectl apply -f openstack-cluster-identity-resource-template.yaml
+    ```
+
+7. Create Your First Child Cluster
 
     To test the configuration, create a YAML file with the specification of your Managed Cluster and save it as
     `my-openstack-cluster-deployment.yaml`.  Note that you can see the available templates by listing them:
@@ -701,16 +953,16 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-0-1-0           true
-    aws-eks-0-1-0                   true
-    aws-hosted-cp-0-1-0             true
-    aws-standalone-cp-0-1-0         true
-    azure-aks-0-1-0                 true
-    azure-hosted-cp-0-1-0           true
-    azure-standalone-cp-0-1-0       true
-    openstack-standalone-cp-0-1-0   true
-    vsphere-hosted-cp-0-1-0         true
-    vsphere-standalone-cp-0-1-0     true
+    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     The `ClusterDeployment` should look something like this:
@@ -722,9 +974,10 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
       name: my-openstack-cluster-deployment
       namespace: kcm-system
     spec:
-      template: openstack-standalone-cp-0-1-0
+      template: openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}
       credential: openstack-cluster-identity-cred
       config:
+        clusterLabels: {}
         controlPlaneNumber: 1
         workersNumber: 1
         controlPlane:
@@ -737,9 +990,17 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
           image:
             filter:
               name: ubuntu-22.04-x86_64
-        authURL: <OS_AUTH_URL>
+        externalNetwork:
+          filter:
+            name: "public"
+        authURL: ${OS_AUTH_URL}
+        identityRef:
+          name: "openstack-cloud-config"
+          cloudName: "openstack"
+          region: ${OS_REGION_NAME}
     ```
-    You can adjust `flavor`, `image` name, and `authURL` to match your OpenStack environment. For more information about the configuration options, see the [OpenStack Template Parameters Reference](template-openstack.md).
+
+    You can adjust `flavor`, `image name`, `region name`, and `authURL` to match your OpenStack environment. For more information about the configuration options, see the [OpenStack Template Parameters Reference](template-openstack.md).
 
     Apply the YAML to your management cluster:
 
@@ -747,7 +1008,7 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     kubectl apply -f my-openstack-cluster-deployment.yaml
     ```
 
-    There will be a delay as the cluster finishes provisioning. You can follow the
+    This will trigger the provisioning process where k0rdent will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
     provisioning process:
 
     ```shell
@@ -761,19 +1022,19 @@ k0rdent is able to deploy child clusters on OpenStack virtual machines. Follow t
     KUBECONFIG="my-openstack-cluster-deployment-kubeconfig.kubeconfig" kubectl get pods -A
     ```
 
-7. Cleanup
+8. Cleanup
 
     To clean up OpenStack resources, delete the managed cluster by deleting the `ClusterDeployment`:
 
     ```shell
-    kubectl get ClusterDeployments -A
+    kubectl get clusterdeployments -A
     ```
     ```console
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-openstack-cluster-deployment   True    ClusterDeployment is ready
     ```
     ```shell
-    kubectl delete ClusterDeployment my-openstack-cluster-deployment -n kcm-system
+    kubectl delete clusterdeployments my-openstack-cluster-deployment -n kcm-system
     ```
     ```console
     clusterdeployment.k0rdent.mirantis.com "my-openstack-cluster-deployment" deleted
@@ -843,6 +1104,8 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     metadata:
       name: vsphere-cluster-identity-secret
       namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     stringData:
       username: <USERNAME>
       password: <PASSWORD>
@@ -866,6 +1129,9 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     kind: VSphereClusterIdentity
     metadata:
       name: vsphere-cluster-identity
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
     spec:
       secretName: vsphere-cluster-identity-secret
       allowedNamespaces:
@@ -898,6 +1164,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: VSphereClusterIdentity
         name: vsphere-cluster-identity
+        namespace: kcm-system
     ```
     Again, `.spec.identityRef.name` must match the `.metadata.name` of the `VSphereClusterIdentity` object you just created.
 
@@ -907,7 +1174,85 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     kubectl apply -f vsphere-cluster-identity-cred.yaml
     ```
 
-9. Create your first Cluster Deployment
+9. Create the `ConfigMap` resource-template Object
+
+    Create a YAML with the specification of our resource-template and save it as
+    `vsphere-cluster-identity-resource-template.yaml`
+
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: vsphere-cluster-identity-resource-template
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/component: "kcm"
+      annotations:
+        projectsveltos.io/template: "true"
+    data:
+      configmap.yaml: |
+        {{- $cluster := .InfrastructureProvider -}}
+        {{- $identity := (getResource "InfrastructureProviderIdentity") -}}
+        {{- $secret := (getResource "InfrastructureProviderIdentitySecret") -}}
+        ---
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: vsphere-cloud-secret
+          namespace: kube-system
+        type: Opaque
+        data:
+          {{ printf "%s.username" $cluster.spec.server }}: {{ index $secret.data "username" }}
+          {{ printf "%s.password" $cluster.spec.server }}: {{ index $secret.data "password" }}
+        ---
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: vcenter-config-secret
+          namespace: kube-system
+        type: Opaque
+        stringData:
+          csi-vsphere.conf: |
+            [Global]
+            cluster-id = "{{ $cluster.metadata.name }}"
+
+            [VirtualCenter "{{ $cluster.spec.server }}"]
+            insecure-flag = "true"
+            user = "{{ index $secret.data "username" | b64dec }}"
+            password = "{{ index $secret.data "password" | b64dec }}"
+            port = "443"
+            datacenters = ${VSPHERE_DATACENTER}
+        ---
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: cloud-config
+          namespace: kube-system
+        data:
+          vsphere.conf: |
+            global:
+              insecureFlag: true
+              port: 443
+              secretName: vsphere-cloud-secret
+              secretNamespace: kube-system
+            labels:
+              region: k8s-region
+              zone: k8s-zone
+            vcenter:
+              {{ $cluster.spec.server }}:
+                datacenters:
+                  - ${VSPHERE_DATACENTER}
+                server: {{ $cluster.spec.server }}
+    ```
+    Object name needs to be exactly `vsphere-cluster-identity-resource-template`, `VSphereClusterIdentity` object name + `-resource-template` string suffix.
+
+    Apply the YAML to your cluster:
+
+    ```shell
+    kubectl apply -f vsphere-cluster-identity-resource-template.yaml
+    ```
+
+10. Create your first Cluster Deployment
 
     Test the configuration by deploying a cluster. Create a YAML document with the specification of your Cluster Deployment and save it as `my-vsphere-clusterdeployment1.yaml`.
 
@@ -919,16 +1264,16 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-0-1-0           true
-    aws-eks-0-1-0                   true
-    aws-hosted-cp-0-1-0             true
-    aws-standalone-cp-0-1-0         true
-    azure-aks-0-1-0                 true
-    azure-hosted-cp-0-1-0           true
-    azure-standalone-cp-0-1-0       true
-    openstack-standalone-cp-0-1-0   true
-    vsphere-hosted-cp-0-1-0         true
-    vsphere-standalone-cp-0-1-0     true
+    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     The `ClusterDeployment` YAML file should look something like this. Make sure to replace the placeholders with your
@@ -941,9 +1286,12 @@ To enable users to deploy child clusers on vSphere, follow these steps:
       name: my-vsphere-clusterdeployment1
       namespace: kcm-system
     spec:
-      template: vsphere-standalone-cp-0-1-0
+      template: vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}
       credential: vsphere-cluster-identity-cred
       config:
+        clusterLabels: {}
+        controlPlaneNumber: 1
+        workersNumber: 1
         vsphere:
           server: <VSPHERE_SERVER>
           thumbprint: <VSPHERE_THUMBPRINT>
@@ -951,17 +1299,25 @@ To enable users to deploy child clusers on vSphere, follow these steps:
           datastore: <VSPHERE_DATASTORE>
           resourcePool: <VSPHERE_RESOURCEPOOL>
           folder: <VSPHERE_FOLDER>
+          username: ${VSPHERE_USER}
+          password: ${VSPHERE_PASSWORD}
         controlPlaneEndpointIP: <VSPHERE_CONTROL_PLANE_ENDPOINT>
         controlPlane:
           ssh:
             user: ubuntu
             publicKey: <VSPHERE_SSH_KEY>
+          rootVolumeSize: 50
+          cpus: 4
+          memory: 4096
           vmTemplate: <VSPHERE_VM_TEMPLATE>
           network: <VSPHERE_NETWORK>
         worker:
           ssh:
             user: ubuntu
             publicKey: <VSPHERE_SSH_KEY>
+          rootVolumeSize: 50
+          cpus: 4
+          memory: 4096
           vmTemplate: <VSPHERE_VM_TEMPLATE>
           network: <VSPHERE_NETWORK>
     ```
@@ -988,7 +1344,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     KUBECONFIG="my-vsphere-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
     ```
 
-10. Cleanup
+11. Cleanup
 
     To delete the provisioned cluster and free consumed vSphere resources run:
 

@@ -244,6 +244,80 @@ You should see output resembling this:
 credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
 ```
 
+## Create the `ConfigMap` resource-template Object
+
+Create a YAML with the specification of our resource-template and save it as
+`azure-cluster-identity-resource-template.yaml`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: azure-cluster-identity-resource-template
+  namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
+  annotations:
+    projectsveltos.io/template: "true"
+data:
+  configmap.yaml: |
+    {{- $cluster := .InfrastructureProvider -}}
+    {{- $identity := (getResource "InfrastructureProviderIdentity") -}}
+    {{- $secret := (getResource "InfrastructureProviderIdentitySecret") -}}
+    {{- $subnetName := "" -}}
+    {{- $securityGroupName := "" -}}
+    {{- $routeTableName := "" -}}
+    {{- range $cluster.spec.networkSpec.subnets -}}
+      {{- if eq .role "node" -}}
+        {{- $subnetName = .name -}}
+        {{- $securityGroupName = .securityGroup.name -}}
+        {{- $routeTableName = .routeTable.name -}}
+        {{- break -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $cloudConfig := dict
+      "aadClientId" $identity.spec.clientID
+      "aadClientSecret" (index $secret.data "clientSecret" | b64dec)
+      "cloud" $cluster.spec.azureEnvironment
+      "loadBalancerName" ""
+      "loadBalancerSku" "Standard"
+      "location" $cluster.spec.location
+      "maximumLoadBalancerRuleCount" 250
+      "resourceGroup" $cluster.spec.resourceGroup
+      "routeTableName" $routeTableName
+      "securityGroupName" $securityGroupName
+      "securityGroupResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup
+      "subnetName" $subnetName
+      "subscriptionId" $cluster.spec.subscriptionID
+      "tenantId" $identity.spec.tenantID
+      "useInstanceMetadata" true
+      "useManagedIdentityExtension" false
+      "vmType" "vmss"
+      "vnetName" $cluster.spec.networkSpec.vnet.name
+      "vnetResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup
+    -}}
+    ---
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: azure-cloud-provider
+      namespace: kube-system
+    type: Opaque
+    data:
+      cloud-config: {{ $cloudConfig | toJson | b64enc }}
+```
+
+Object name needs to be exactly `azure-cluster-identity-resource-template.yaml`, `AzureClusterIdentity` object name + `-resource-template` string suffix.
+
+Apply the YAML to your cluster:
+
+```shell
+kubectl apply -f azure-cluster-identity-resource-template.yaml
+```
+```console
+configmap/azure-cluster-identity-resource-template created
+```
+
 ## Find your location/region
 
 To determine where to deploy your cluster, you may wish to begin by listing your Azure location/regions:
@@ -275,20 +349,20 @@ k0rdent is now fully configured to manage Azure. To create a cluster, begin by l
 kubectl get clustertemplate -n kcm-system
 ```
 
-You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the example below, that's `azure-standalone-cp-0-1-0`):
+You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the example below, that's `azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}`):
 
 ```console
 NAMESPACE    NAME                            VALID
-kcm-system   adopted-cluster-0-1-0           true
-kcm-system   aws-eks-0-1-0                   true
-kcm-system   aws-hosted-cp-0-1-0             true
-kcm-system   aws-standalone-cp-0-1-0         true
-kcm-system   azure-aks-0-1-0                 true
-kcm-system   azure-hosted-cp-0-1-0           true
-kcm-system   azure-standalone-cp-0-1-0       true
-kcm-system   openstack-standalone-cp-0-1-0   true
-kcm-system   vsphere-hosted-cp-0-1-0         true
-kcm-system   vsphere-standalone-cp-0-1-0     true
+kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+kcm-system   azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 ## Create your ClusterDeployment
@@ -302,7 +376,7 @@ metadata:
   name: my-azure-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: azure-standalone-cp-0-1-0 # name of the clustertemplate
+  template: azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}} # name of the clustertemplate
   credential: azure-cluster-identity-cred
   config:
     clusterLabels: {}
@@ -323,7 +397,7 @@ metadata:
   name: my-azure-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: azure-aks-0-1-0
+  template: azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}
   credential: azure-aks-credential
   propagateCredentials: false # Should be set to `false`
   config:

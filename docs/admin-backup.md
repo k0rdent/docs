@@ -43,8 +43,9 @@ Backups should be scheduled on a regular basis, depending on how often informati
 Before you create a scheduled backup, you need to perform a few preparatory steps:
 
 1. If no `velero` plugins have been installed as suggested
-   in the [corresponding section](#velero-installation),
-   install it by modifying the `Management` object:
+   in [Velero installation](#velero-installation),
+   install a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
+   by modifying the `Management` object:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -199,7 +200,7 @@ In the event of disaster, you can restore from a backup by doing the following:
    can also install k0rdent without them in the first place:
 
     ```bash
-    helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm \
+    helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
      --create-namespace \
      --namespace kcm-system \
@@ -344,7 +345,7 @@ Automatically created backups have the
 following name template to make it easier to find them:
 the name of the `ManagementBackup` object with enabled `performOnManagementUpgrade`
 concatenates with the name of the release before the upgrade,
-for example, `example-backup-kcm-0-1-0`.
+for example, `example-backup-kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}`.
 
 Automatically created backups have the label `k0rdent.mirantis.com/release-backup`
 with the name of the release before the upgrade as its value
@@ -406,6 +407,9 @@ should be performed to restore the `kcm` to its before-the-upgrade state:
 
 The credentials stored in backups can and will get stale,
 so a proper rotation should be considered beforehand.
+
+Only plugins that [support Object Store](https://velero.io/docs/v1.15/supported-providers/)
+can be used to store backups into an object storage.
 
 All `velero` caveats and limitations are transitively implied in `k0rdent`. In particular, that
 means no backup encryption is provided until it is implemented by a `velero` plugin that supports
@@ -474,25 +478,24 @@ This section covers different topics of customization regarding backing up and r
 
 ### Velero installation
 
-The Velero helm chart is supplied with the
-[k0rdent helm chart](https://vmware-tanzu.github.io/helm-charts/)
-and is enabled by default. There are 2 ways of customizing the chart values:
+The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied with the
+k0rdent helm chart and is enabled by default. There are 2 ways of customizing the chart values:
 
 1. Install using `helm` and add corresponding parameters to the `helm install` command.
 
     > NOTE:
-    > Only a plugin is required during restoration; the other parameters
-    > are optional.
+    > Only a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
+    > is required during restoration; the other parameters are optional.
 
     For example, this command installs k0rdent via `helm install` with a configured plugin, `BackupStorageLocation`
     and propagated credentials:
 
     ```shell
-    helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm \
+    helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
      --create-namespace \
      --namespace kcm-system \
-     --set-file velero.credentials.secretContents.cloud=<FULL PATH TO FILE> \
+     --set-file velero.credentials.secretContents.cloud=<full-path-to-file> \
      --set velero.credentials.useSecret=true \
      --set velero.backupsEnabled=true \
      --set velero.configuration.backupStorageLocation[0].name=<backup-storage-location-name> \
@@ -508,8 +511,8 @@ and is enabled by default. There are 2 ways of customizing the chart values:
 1. Create or modify the existing `Management` object in the `.spec.config.kcm`.
 
     > NOTE:
-    > Only a plugin is required during restoration; the other parameters
-    > are optional.
+    > Only a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
+    > is required during restoration; the other parameters are optional.
 
     For example, this is a `Management` object with a configured plugin and enabled metrics:
 

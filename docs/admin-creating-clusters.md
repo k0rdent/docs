@@ -48,22 +48,22 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     ```
     ```console
     NAME                            VALID
-    adopted-cluster-0-1-0           true
-    aws-eks-0-1-0                   true
-    aws-hosted-cp-0-1-0             true
-    aws-standalone-cp-0-1-0         true
-    azure-aks-0-1-0                 true
-    azure-hosted-cp-0-1-0           true
-    azure-standalone-cp-0-1-0       true
-    openstack-standalone-cp-0-1-0   true
-    vsphere-hosted-cp-0-1-0         true
-    vsphere-standalone-cp-0-1-0     true
+    adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+    aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+    aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+    aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+    azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+    azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+    azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+    openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+    vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+    vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
     ```
 
     You can then get information on the actual template by describing it, as in:
 
     ```shell
-    kubectl describe clustertemplate aws-standalone-cp-0-1-0 -n kcm-system
+    kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}} -n kcm-system
     ```
 
 3. Create a ClusterDeployment YAML Configuration
@@ -99,7 +99,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
       name: my-cluster-deployment
       namespace: kcm-system
     spec:
-      template: aws-standalone-cp-0-1-0
+      template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-credential
       dryRun: false
       config:
@@ -207,18 +207,18 @@ for example, this `ClusterTemplateChain`:
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplateChain
 metadata:
-  name: aws-standalone-cp-0-1-0
+  name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
   namespace: kcm-system
 spec:
   supportedTemplates:
     - name: aws-standalone-cp-0-0-2
       availableUpgrades:
-        - name: aws-standalone-cp-0-1-0
-    - name: aws-standalone-cp-0-1-0
+        - name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
+    - name: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
 ```
 
-As you can see from the `.spec`, the `aws-standalone-co-0-1-0` template can be applied to a cluster that also uses
-the `aws-standalone-co-0-1-0` template, or it can be used as an upgrade from a cluster that uses `aws-standalone-co-0.0.2`.
+As you can see from the `.spec`, the `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` template can be applied to a cluster that also uses
+the `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` template, or it can be used as an upgrade from a cluster that uses `aws-standalone-cp-0.0.2`.
 You wouldn't be able to use this template to update a cluster that uses any other `ClusterTemplate`.
 
 Similarly, the `AccessManagement` object must have properly configured `spec.accessRules` with a list of allowed 

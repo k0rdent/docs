@@ -1,0 +1,53 @@
+name: Publish docs
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure all history and tags are fetched
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: pip
+        
+      - name: Install mkdocs and dependencies
+        run: |
+          echo "Checking if dependencies need to be installed..."
+          pip install --upgrade pip
+          pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Check and initialize gh-pages if missing
+        id: check_branch
+        run: |
+          if git ls-remote --heads origin gh-pages | grep -q gh-pages; then
+            echo "✅ gh-pages branch already exists. Proceeding with deployment with mike..."
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "🚀 gh-pages branch is missing. Will init the docs with mkdocs..."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+        
+      - name: Init docs as gh-pages is missing
+        if: steps.check_branch.outputs.exists == 'false'
+        run: mkdocs gh-deploy
+
+      - name: Deploy to main branch (head)
+        run: mike deploy head --push

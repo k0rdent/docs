@@ -55,6 +55,62 @@ export AWS_SESSION_TOKEN=EXAMPLE_SESSION_TOKEN # Optional. If you are using Mult
 
 These credentials will be used both by the AWS CLI (to create your k0rdent user) and by `clusterawsadm` (to create a CloudFormation template used by CAPA within k0rdent).
 
+## Check for available IPs
+
+Because k0rdent has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
+`EC2-VPC Elastic IPs` quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
+second to the same region, you are likely to run into issues.  
+
+You can determine how many elastic IPs are available from the command line:
+
+```shell
+LIMIT=$(aws ec2 describe-account-attributes --attribute-names vpc-max-elastic-ips --query 'AccountAttributes[0].AttributeValues[0].AttributeValue' --output text)
+USED=$(aws ec2 describe-addresses --query 'Addresses[*].PublicIp' --output text | wc -w)
+AVAILABLE=$((LIMIT - USED))
+echo "Available Public IPs: $AVAILABLE"
+```
+```console
+Available Public IPs: 5
+```
+
+If you have less than 3 available public IPs, you can request an increase in your quota:
+
+```shell
+aws service-quotas request-service-quota-increase \
+    --service-code ec2 \
+    --quota-code L-0263D0A3 \
+    --desired-value 20
+```
+
+You can check on the status of your request:
+
+```shell
+aws service-quotas list-requested-service-quota-change-history \
+    --service-code ec2
+```
+```console
+{
+    "RequestedQuotas": [
+        {
+            "Id": "EXAMPLE_ACCESS_KEY_ID",
+            "ServiceCode": "ec2",
+            "ServiceName": "Amazon Elastic Compute Cloud (Amazon EC2)",
+            "QuotaCode": "L-0263D0A3",
+            "QuotaName": "EC2-VPC Elastic IPs",
+            "DesiredValue": 20.0,
+            "Status": "PENDING",
+            "Created": "2025-02-09T02:27:01.573000-05:00",
+            "LastUpdated": "2025-02-09T02:27:01.956000-05:00",
+            "Requester": "{\"accountId\":\"EXAMPLE_ACCESS_KEY_ID\",\"callerArn\":\"arn:aws:iam::EXAMPLE_ACCESS_KEY_ID:user/nchase\"}",
+            "QuotaArn": "arn:aws:servicequotas:EXAMPLE_AWS_REGION:EXAMPLE_ACCESS_KEY_ID:ec2/L-0263D0A3",
+            "GlobalQuota": false,
+            "Unit": "None",
+            "QuotaRequestedAtLevel": "ACCOUNT"
+        }
+    ]
+}
+```
+
 ## Create the k0rdent AWS user
 
 Now we can use the AWS CLI to create a new k0rdent user:
@@ -62,9 +118,6 @@ Now we can use the AWS CLI to create a new k0rdent user:
 ```shell
  aws iam create-user --user-name k0rdentQuickstart
 ```
-
-You'll see something like what's shown below. You should save this data securely. Note the Amazon Resource Name (ARN) because we'll be using it right away:
-
 ```console
 {
     "User": {
@@ -93,14 +146,19 @@ Next, we'll attach appropriate policies to the k0rdent user. These are:
 * `controllers.cluster-api-provider-aws.sigs.k8s.io`
 * `nodes.cluster-api-provider-aws.sigs.k8s.io`
 
-We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user. In the above example of content returned from the AWS CLI on user creation (see above) that's marked with the placeholder `FAKE_ARN_123`:
-
-Given this, you can assemble and execute the following commands to implement the required policies:
+We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:
 
 ```shell
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+AWS_ARN_ID=$(aws iam get-user --user-name k0rdentQuickstart --query 'User.Arn' --output text | grep -oP '\d{12}')
+echo $AWS_ARN_ID
+```
+
+ Assemble and execute the following commands to implement the required policies:
+
+```shell
+aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
 ```
 
 We can check to see that policies were assigned:
@@ -197,7 +255,7 @@ You should see something like this. It's important to save these credentials sec
 
 ## Create IAM credentials secret on the management cluster
 
-Next, we create a `Secret' containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the `kcm-system` namespace (important: if you use another namespace, k0rdent will be unable to read the credentials). To do this, create the following YAML in a file called `aws-cluster-identity-secret.yaml':
+Next, we create a `Secret` containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the `kcm-system` namespace (important: if you use another namespace, k0rdent will be unable to read the credentials). To do this, create the following YAML in a file called `aws-cluster-identity-secret.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -307,20 +365,20 @@ k0rdent is now fully configured to manage AWS. To create a cluster, begin by lis
 kubectl get clustertemplate -n kcm-system
 ```
 
-You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's `aws-standalone-cp-0-1-0`):
+You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}`):
 
 ```console
 NAMESPACE    NAME                            VALID
-kcm-system   adopted-cluster-0-1-0           true
-kcm-system   aws-eks-0-1-0                   true
-kcm-system   aws-hosted-cp-0-1-0             true
-kcm-system   aws-standalone-cp-0-1-0         true
-kcm-system   azure-aks-0-1-0                 true
-kcm-system   azure-hosted-cp-0-1-0           true
-kcm-system   azure-standalone-cp-0-1-0       true
-kcm-system   openstack-standalone-cp-0-1-0   true
-kcm-system   vsphere-hosted-cp-0-1-0         true
-kcm-system   vsphere-standalone-cp-0-1-0     true
+kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+kcm-system   azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 ## Create your ClusterDeployment
@@ -334,7 +392,7 @@ metadata:
   name: my-aws-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: aws-standalone-cp-0-1-0
+  template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
   credential: aws-cluster-identity-cred
   config:
     clusterLabels: {}
@@ -377,13 +435,13 @@ my-aws-clusterdeployment1   True    ClusterDeployment is ready
 Now you can retrieve the cluster's `kubeconfig`:
 
 ```shell
-kubectl -n kcm-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1-kubeconfig.kubeconfig
+kubectl -n kcm-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1.kubeconfig
 ```
 
 And you can use the `kubeconfig` to see what's running on the cluster:
 
 ```shell
-KUBECONFIG="my-aws-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
+KUBECONFIG="my-aws-clusterdeployment1.kubeconfig" kubectl get pods -A
 ```
 
 ## List child clusters

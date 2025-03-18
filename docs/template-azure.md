@@ -135,7 +135,7 @@ kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp
 spec:
-  template: azure-hosted-cp-0-1-0
+  template: azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}
   credential: azure-credential
   config:
     clusterLabels: {}
@@ -158,7 +158,7 @@ kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp
 spec:
-  template: azure-hosted-cp-0-1-0
+  template: azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}
   credential: azure-credential
   config:
     clusterLabels: {}

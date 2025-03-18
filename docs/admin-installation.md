@@ -57,15 +57,15 @@ We do not recommend running k0rdent in production on a single node.  If you are 
 
 ## Install k0rdent
 
-This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the [Create and prepare a Kubernetes cluster with k0s](#create-and-prepare-a-kubernetes-cluster-with-k0s) guide.
+This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the [Create and prepare a Kubernetes cluster with k0s](#create-and-prepare-a-kubernetes-cluster-with-k0s) to create a test cluster, or [Create and prepare a production grade Kubernetes cluster with EKS](#create-and-prepare-a-production-grade-kubernetes-cluster-with-eks) to create something more substantial. 
 
 The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release [here](https://github.com/k0rdent/kcm/tags), and from there you can deploy the Helm chart, as in:
 
 ```shell
-helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm --version 0.1.0 -n kcm-system --create-namespace
+helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
 ```console
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:0.1.0
+Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: sha256:1f75e8e55c44d10381d7b539454c63b751f9a2ec6c663e2ab118d34c5a21087f
 NAME: kcm
 LAST DEPLOYED: Mon Dec  9 00:32:14 2024
@@ -82,7 +82,10 @@ The helm chart deploys the KCM operator and prepares the environment, and KCM th
 
 ## Confirming the deployment
 
-To understand whether installation is complete, start by making sure all pods are ready in the `kcm-system` namespace. There should be 15:
+> NOTE:
+> After running the helm install command, please wait 5 to 10 minutes for the deployment to stabilize.
+
+To understand whether installation is complete, start by making sure all pods are ready in the `kcm-system` namespace. There should be 17 pod entries:
 
 ```shell
 kubectl get pods -n kcm-system
@@ -108,14 +111,21 @@ kcm-velero-b68fd5957-fwg2l                                    1/1     Running   
 source-controller-6cd7676f7f-7kpjn                            1/1     Running   0          5m1s
 ```
 
-State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running in the `projectsveltos` namespace:
+```shell
+kubectl get pods -n kcm-system --no-headers | wc -l
+```
+```console
+17
+```
+
+State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running/completed in the `projectsveltos` namespace:
 
 ```shell
 kubectl get pods -n projectsveltos
 ```
 
 ```console
-AME                                     READY   STATUS      RESTARTS   AGE
+NAME                                     READY   STATUS      RESTARTS   AGE
 access-manager-56696cc7f-5txlb           1/1     Running     0          4m1s
 addon-controller-7c98776c79-dn9jm        1/1     Running     0          4m1s
 classifier-manager-7b85f96469-666jx      1/1     Running     0          4m1s
@@ -126,6 +136,13 @@ sc-manager-55c99d494b-c8wrl              1/1     Running     0          4m1s
 shard-controller-5ff9cd796d-tlg79        1/1     Running     0          4m1s
 sveltos-agent-manager-7467959f4f-lsnd5   1/1     Running     0          3m34s
 ```
+```shell
+kubectl get pods -n projectsveltos --no-headers | wc -l
+```
+```console
+9
+```
+
 
 If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
 
@@ -144,7 +161,7 @@ kubectl get Management -n kcm-system
 ```
 ```console
 NAME   READY   RELEASE     AGE
-kcm    True    kcm-0-1-0   9m
+kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 ```
 
 ## Verify the templates
@@ -157,13 +174,13 @@ kubectl get providertemplate -n kcm-system
 
 ```console
 NAME                                   VALID
-cluster-api-0-1-0                      true
-cluster-api-provider-aws-0-1-0         true
-cluster-api-provider-azure-0-1-0       true
-cluster-api-provider-openstack-0-1-0   true
-cluster-api-provider-vsphere-0-1-0     true
-k0smotron-0-1-0                        true
-kcm-0-1-0                              true
+cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                      true
+cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
+cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
+cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
+cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
+k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}                        true
+kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                              true
 projectsveltos-0-45-0                  true
 ```
 
@@ -177,16 +194,16 @@ kubectl get clustertemplate -n kcm-system
 
 ```console
 NAME                            VALID
-adopted-cluster-0-1-0           true
-aws-eks-0-1-0                   true
-aws-hosted-cp-0-1-0             true
-aws-standalone-cp-0-1-0         true
-azure-aks-0-1-0                 true
-azure-hosted-cp-0-1-0           true
-azure-standalone-cp-0-1-0       true
-openstack-standalone-cp-0-1-0   true
-vsphere-hosted-cp-0-1-0         true
-vsphere-standalone-cp-0-1-0     true
+adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
+azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
+azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
+vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
 Finally, make sure the `ServiceTemplate` objects are installed and valid:
@@ -231,11 +248,11 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
     sudo k0s kubectl get nodes
     ```
 
-    You should see a single node with a status of `Ready`, as in:
+    After 2-3 minutes you should see a single `control-plane` node with a status of `Ready`, as in:
 
     ```shell
-    NAME              STATUS   ROLES    AGE   VERSION
-    ip-172-31-29-61   Ready    <none>   46s   v1.31.2+k0s
+    NAME              STATUS   ROLES            AGE   VERSION
+    ip-172-31-29-61   Ready    control-plane    46s   v1.31.2+k0s
     ```
 
 2. Install kubectl
@@ -288,5 +305,225 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
     ./get_helm.sh
     ```
 
-    Helm will be installed into `/usr/local/bin/helm`
+    Helm will be installed into `/usr/local/bin/helm`.
 
+## Create and prepare a production-grade Kubernetes cluster with EKS
+
+Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.console.aws.amazon.com/eks/clusters) management cluster:
+
+1. The basic AWS tools
+
+     Start by installing and configuring the Amazon tools. First download and install the `aws` tool:
+
+     ```shell
+     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+     unzip awscliv2.zip
+     sudo ./aws/install
+     ```
+     Then configure it using environment variables:
+
+     ```shell
+     export AWS_ACCESS_KEY_ID="EXAMPLE_ACCESS_KEY_ID"
+     export AWS_SECRET_ACCESS_KEY="EXAMPLE_SECRET_ACCESS_KEY"
+     export AWS_SESSION_TOKEN="EXAMPLE_SESSION_TOKEN"
+     aws configure
+     ```
+     ```console
+     AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:
+     AWS Secret Access Key [EXAMPLE_SECRET_ACCESS_KEY]:
+     Default region name [YOUR_AWS_REGION]:
+     Default output format [json]:
+     ```
+     Once `aws` is installed youc an install `eksctl`:
+
+     ```shell
+     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
+     sudo mv /tmp/eksctl /usr/local/bin
+     eksctl version
+     ```
+     ```console
+     0.205.0
+     ```
+
+1. Create the cluster
+
+    You can use the eksctl tool to create the basic Kubernetes cluster:
+    ```shell
+    eksctl create cluster --name <CLUSTER_NAME> \
+    --version 1.31 \
+    --region <YOUR_AWS_REGION> \
+    --without-nodegroup
+    ```
+    ```console
+    2025-03-05 22:26:02 [ℹ]  eksctl version 0.205.0
+    ...
+    2025-03-05 22:36:14 [✔]  all EKS cluster resources for "CLUSTER_NAME" have been created
+    2025-03-05 22:36:15 [ℹ]  kubectl command should work with "/home/username/.kube/config", try 'kubectl get nodes'
+    2025-03-05 22:36:15 [✔]  EKS cluster "CLUSTER_NAME" in "YOUR_AWS_REGION" region is ready
+    ```
+
+1. Add controllers
+
+    While the cluster is now created, it doesn't actually have any nodes.  Start by adding controllers:
+    ```shell
+    eksctl create nodegroup --cluster CLUSTER_NAME \
+    --name CONTROLLER_NODE_GROUP \
+    --node-type t3.medium \
+    --nodes 3 \
+    --nodes-min 3 \
+    --nodes-max 3 \
+    --node-labels "role=control-plane" 
+    ```
+    ```console
+    2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
+    2025-03-05 22:57:18 [ℹ]  nodegroup "nickchasek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]
+    2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)
+    2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "NickChaseK0rdentControlCluster"
+    ...
+    2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates
+    ```
+
+1. Install kubectl
+
+    Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
+
+    ```shell
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
+    sudo apt-get update
+    sudo apt-get install -y kubectl
+    ```
+
+1. Get the KUBECONFIG
+
+    You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:
+
+    ```shell
+    aws eks update-kubeconfig --region YOUR_AWS_REGION --name CLUSTER_NAME
+    ```
+    ```shell
+    Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChaseK0rdentControlCluster in /home/nick/.kube/config
+    ```
+
+1. Taint controllers
+
+    To prevent workloads from being scheduled on the controllers, add the `node-role.kubernetes.io/control-plane=true:NoSchedule` taint. First list
+    the started nodes:
+
+    ```shell
+    kubectl get nodes
+    ```
+    ```console
+    NAME                                              STATUS   ROLES    AGE    VERSION
+    nodename1.compute.internal   Ready    <none>   4h1m   v1.31.5-eks-5d632ec
+    nodename2.compute.internal    Ready    <none>   4h1m   v1.31.5-eks-5d632ec
+    nodename3.compute.internal   Ready    <none>   4h1m   v1.31.5-eks-5d632ec
+    ```
+    For each node, go ahead and set the taint:
+
+    ```shell
+    kubectl taint nodes nodename1.compute.internal node-role.kubernetes.io/control-plane=true:NoSchedule
+    ```
+    ```console
+    node/nodename1.ca-central-1.compute.internal tainted
+    ```
+    Now verify the taints:
+    ```shell
+    kubectl describe nodes | grep -A 5 "Taints:"
+    ```
+    ```console
+    Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
+    Unschedulable:      false
+    Lease:
+    HolderIdentity:  nodename1.compute.internal
+    AcquireTime:     <unset>
+    RenewTime:       Thu, 06 Mar 2025 03:03:42 -0500
+    --
+    Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
+    Unschedulable:      false
+    Lease:
+    HolderIdentity:  nodename2.compute.internal
+    AcquireTime:     <unset>
+    RenewTime:       Thu, 06 Mar 2025 03:03:40 -0500
+    --
+    Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
+    Unschedulable:      false
+    Lease:
+    HolderIdentity:  nodename3.ca-central-1.compute.internal
+    AcquireTime:     <unset>
+    RenewTime:       Thu, 06 Mar 2025 03:03:41 -0500
+    ```
+
+1. Add worker nodes
+
+    Adding worker nodes is simpler than controllers:
+
+    ```shell
+    eksctl create nodegroup --cluster CLUSTER_NAME \
+    --name WORKER_NODE_GROUP \
+    --node-type t3.medium \
+    --nodes 2 \
+    --nodes-min 2 \
+    --nodes-max 5 \
+    --node-labels "role=worker"
+    ```
+    ```console
+    2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
+    ...
+    2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster "CLUSTER_NAME"
+    2025-03-06 03:13:39 [ℹ]  checking security group configuration for all nodegroups
+    2025-03-06 03:13:39 [ℹ]  all nodegroups have up-to-date cloudformation templates
+    ```
+    Verify the nodes:
+    ```shell
+    kubectl get nodes
+    ```
+    ```console
+    NAME                                              STATUS   ROLES    AGE     VERSION
+    nodename1.compute.internal   Ready    <none>   4h14m   v1.31.5-eks-5d632ec
+    nodename4.compute.internal    Ready    <none>   79s     v1.31.5-eks-5d632ec
+    nodename2.compute.internal    Ready    <none>   4h14m   v1.31.5-eks-5d632ec
+    nodename5.compute.internal   Ready    <none>   82s     v1.31.5-eks-5d632ec
+    nodename3.compute.internal   Ready    <none>   4h14m   v1.31.5-eks-5d632ec
+    ```
+
+1. Verify pods
+
+    Make sure pods will run properly by deploying a test pod:
+    ```shell
+    kubectl run test-pod --image=nginx --restart=Never
+    kubectl get pods -o wide
+    ```
+    ```shell
+    NAME       READY   STATUS    RESTARTS   AGE   IP               NODE                                              NOMINATED NODE   READINESS GATES
+    test-pod   1/1     Running   0          15s   192.168.76.104   ip-192-168-68-189.ca-central-1.compute.internal   <none>           <none>
+    ```
+    Clean up so you can start fresh:
+    ```shell
+    kubectl delete pod test-pod
+    ```
+    ```shell
+    pod "test-pod" deleted
+    ```
+    ```shell
+    kubectl get pods -o wide
+    ```
+    ```console
+    No resources found in default namespace.
+    ```
+
+1. Install Helm
+
+    Finally, the easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
+
+    ```shell
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod 700 get_helm.sh
+    ./get_helm.sh
+    ```
+
+    Helm will be installed into `/usr/local/bin/helm`.

@@ -26,6 +26,7 @@ In order to pass credentials to k0rdent so it can take action, the following has
 2. A provider-specific `ClusterIdentity` gets created. The `ClusterIdentity` references the `Secret` from step one. For example, for an AWS cluster, this object might look like this:
 
     ```yaml
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
     kind: AWSClusterStaticIdentity
     metadata:
       name: aws-cluster-identity
@@ -33,7 +34,7 @@ In order to pass credentials to k0rdent so it can take action, the following has
       secretRef: aws-cluster-identity-secret
       allowedNamespaces:
         selector:
-        matchLabels: {}
+          matchLabels: {}
     ```
 
     Notice that it references the `aws-cluster-identity-secret` we created earlier. It also specifies the namespaces in which this `ClusterIdentity` can be used. (In this case there are no restrictions.)
@@ -47,7 +48,7 @@ In order to pass credentials to k0rdent so it can take action, the following has
       name: aws-cluster-credential
       namespace: kcm-system
     spec:
-        description: "Credential Example"
+      description: "Credential Example"
       identityRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
         kind: AWSClusterStaticIdentity
@@ -64,7 +65,7 @@ In order to pass credentials to k0rdent so it can take action, the following has
         name: my-aws-clusterdeployment
       namespace: kcm-system
     spec:
-      template: aws-standalone-cp-0-1-0
+      template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-cluster-credential
         config:
         clusterLabels: {}

@@ -4,10 +4,12 @@ site_author: Mirantis, Inc.
 
 docs_dir: docs/
 repo_name: GitHub
-repo_url: https://github.com/k0rdent/kcm
+repo_url: https://github.com/k0rdent/docs
+edit_uri: "edit/release-v0.1.0/docs/"
 
 copyright:
   Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
+  -- <a href="#__consent">Change cookie settings</a>
 
 theme:
   name: "material"
@@ -15,7 +17,7 @@ theme:
   language: "en"
   custom_dir: docs/custom_theme
 
-  favicon: img/favicon-32x32.png
+  favicon: img/k0rdent-logo-mark-inverted.svg
   logo: img/k0rdent-logo-horizontal-inverted.svg
   
   palette:
@@ -32,9 +34,22 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+    - navigation.tracking   # Anchor tracking
+    - toc.follow            # Sidebar is automatically scrolled so that the active anchor is always visible
+    - search.suggest        # Search suggestions
+    - search.highlight      # Search highlights all occurrences after following the link
+    - content.action.edit
+    - content.action.view
+    - navigation.path       # Not working, for sponsors only
+    - navigation.indexes
+    # - navigation.tabs
+    # - navigation.tabs.sticky
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/feedback.js
 
 plugins:
   - search
@@ -52,14 +67,17 @@ plugins:
         - Makefile*
         - requirements_pip.txt
         - requirements.txt
+  - redirects
 
+  
 nav:
+  - Contribute: https://github.com/k0rdent/kcm
   - Welcome to the k0rdent docs: index.md
   - k0rdent concepts:
     - Why k0rdent?: why-k0rdent.md
     - k0rdent architecture: k0rdent-architecture.md
   - QuickStarts:
-    - Guide to Quickstarts: guide-to-quickstarts.md
+    - Overview: guide-to-quickstarts.md
     - Set up Management Node and Cluster: quickstart-1-mgmt-node-and-cluster.md
     - Configure and Deploy to AWS: quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstart-2-azure.md
@@ -120,6 +138,7 @@ markdown_extensions:
   - def_list
 
 extra:
+  repo_url: https://github.com/k0rdent/kcm
   generator: false
   social:
     - icon: fontawesome/brands/github
@@ -140,3 +159,55 @@ extra:
   version:
     provider: mike
     default: stable
+  analytics: 
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/heart
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/heart-broken
+          name: This page could be improved
+          data: 0
+          note: >-
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
+  docsVersionInfo:
+    k0rdentVersion: 0-1-0
+    k0rdentDotVersion: 0.1.0
+    ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
+    kofVersions:
+      kofVersion: 0-1-1
+      kofDotVersion: 0.1.1
+      kofStorageVersion: 0-1-1
+      kofDotStorageVersion: 0.1.1
+      kofOperatorsVersion: 0-1-1
+      kofDotOperatorsVersion: 0.1.1
+      kofCollectorsVersion: 0-1-1
+      kofDotCollectorsVersion: 0.1.1
+    providerVersions:
+      dashVersions:
+        adoptedCluster: 0-1-0
+        awsEksCluster: 0-1-0
+        awsHostedCpCluster: 0-1-0
+        awsStandaloneCpCluster: 0-1-0
+        azureAksCluster: 0-1-0
+        azureHostedCpCluster: 0-1-0
+        azureStandaloneCpCluster: 0-1-0
+        openstackStandaloneCpCluster: 0-1-0
+        vsphereHostedCpCluster: 0-1-0
+        vsphereStandaloneCpCluster: 0-1-0
+      dotVersions:
+        adoptedCluster: 0.1.0
+        awsEksCluster: 0.1.0
+        awsHostedCpCluster: 0.1.0
+        awsStandaloneCpCluster: 0.1.0
+        azureAksCluster: 0.1.0
+        azureHostedCpCluster: 0.1.0
+        azureStandaloneCpCluster: 0.1.0
+        openstackStandaloneCpCluster: 0.1.0
+        vsphereHostedCpCluster: 0.1.0
+        vsphereStandaloneCpCluster: 0.1.0
+
