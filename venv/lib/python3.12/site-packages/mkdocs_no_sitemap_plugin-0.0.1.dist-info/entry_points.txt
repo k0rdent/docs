@@ -1,0 +1,2 @@
+[mkdocs.plugins]
+no-sitemap = mkdocs_no_sitemap_plugin.plugin:NoSitemapPlugin
