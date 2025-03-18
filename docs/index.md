@@ -43,7 +43,7 @@ The project has a number of components, including:
 
     * **k0rdent State Manager (KSM)**
 
-        Installation and life-cycle management of [beach-head services](glossary.md#beach-head-services),
+        Installation and life-cycle management of [beach-head services](reference/glossary.md#beach-head-services),
         policy, Kubernetes API configurations, and more.
 
           * This is currently rolled into kcm, but may be split out in the future
@@ -64,7 +64,7 @@ There are a few historical names that may show up in the code and in older docs,
 
 ## Quick Start
 
-See the [k0rdent Quick Start Guide](guide-to-quickstarts.md) to get started with a small deployment.
+See the [k0rdent Quick Start Guide](quickstarts/guide-to-quickstarts.md) to get started with a small deployment.
 
 ## Supported Providers
 
@@ -72,10 +72,10 @@ k0rdent leverages the Cluster API provider ecosystem; the following
 providers have had `ProviderTemplates` created and validated, and more are
 in the works. 
 
-* [AWS](admin-prepare.md#aws)
-* [Azure](admin-prepare.md#azure)
-* [vSphere](admin-prepare.md#vsphere)
-* [OpenStack](admin-prepare.md#openstack)
+* [AWS](admin/installation/prepare-mgmt-cluster/aws.md)
+* [Azure](admin/installation/prepare-mgmt-cluster/azure.md)
+* [vSphere](admin/installation/prepare-mgmt-cluster/vmware.md)
+* [OpenStack](admin/installation/prepare-mgmt-cluster/openstack.md)
 
 k0rdent also includes a way to add custom providers, so it's possible to integrate it with other hyperscalers, 
 or even into an existing local infrastructure.

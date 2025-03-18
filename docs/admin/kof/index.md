@@ -1,0 +1,47 @@
+# K0rdent Observability and FinOps
+
+k0rdent Observability and FinOps ([kof](https://github.com/k0rdent/kof)) provides enterprise-grade observability
+and FinOps capabilities for k0rdent-managed child Kubernetes clusters.
+It enables centralized metrics, logging, and cost management
+through a unified [OpenTelemetry](https://opentelemetry.io/docs/)-based architecture.
+
+* **Observability**: KOF collects **metrics** from various sources and stores them in a time series database
+based on [Victoria Metrics](https://github.com/victoriaMetrics/VictoriaMetrics/), allowing for real-time and historical analysis.
+It includes **log management** features to aggregate, store, and analyze logs from different 
+components of the Kubernetes ecosystem. This helps in troubleshooting and understanding the behavior of applications and infrastructure.
+KOF can evaluate **alerting** rules and send notifications based on these collected metrics and logs helping to identify and respond to issues before they impact users.
+
+* **FinOps**: KOF helps with **cost management** by tracking and managing the costs associated with running applications on Kubernetes. 
+It provides insights into resource utilization and helps in optimizing costs by identifying underutilized or over-provisioned resources.
+With this information, you can **set budgets and forecast future costs** based on historical data and current 
+usage patterns. KOF enables **chargeback and showback** mechanisms, enabling organizations to attribute costs to 
+specific teams, departments, or projects, and promotes accountability and transparency in resource usage.
+
+* **Centralized Management**: KOF provides a **unified control plane** for managing Kubernetes clusters at scale, with a 
+centralized view of all clusters, making it possible to use k0rdent to manage and operate large-scale deployments.
+It also offers comprehensive **lifecycle management** capabilities, including provisioning, 
+configuration, and maintenance of Kubernetes clusters, ensuring clusters are consistently managed and adhere to best practices.
+
+* **Scalability and Performance**: KOF leverages components such as VictoriaMetrics to provide **high-performance** monitoring and analytics. 
+It can handle millions of metrics per second and provides low-latency query responses. It's also designed to **scale** horizontally, enabling it to manage large volumes of data and support growing environments. It can be deployed on-premises, in the cloud, or in hybrid environments.
+
+* **Compliance and Security**: KOF helps ensure **compliance** with organizational policies and industry standards, providing
+audit trails and reporting features to meet regulatory requirements. It includes **security** features to protect data and ensure 
+the integrity of monitoring and FinOps processes. It supports role-based access control (RBAC) and secure communication protocols.
+
+## Use Cases
+
+KOF can be used by both technical and non-technical arms of a company.
+
+* **Platform Engineering:** KOF is ideal for platform engineers who need to manage and monitor Kubernetes 
+clusters at scale. It provides the tools and insights required to ensure the reliability and performance of applications.
+* **DevOps Teams:** DevOps teams can use KOF to gain visibility into the deployment and operation of applications, 
+helping them to identify and resolve issues quickly.
+* **Finance Teams:** Finance teams can leverage KOF's FinOps capabilities to track and manage cloud spending, 
+ensuring resources are used efficiently and costs are optimized.
+
+## More Resources
+
+Once you've applied this guide and you have KOF up and running, check 
+[k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/main/docs) for advanced guides
+such as [configuring alerts](https://github.com/k0rdent/kof/blob/main/docs/alerts.md).
