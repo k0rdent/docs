@@ -67,9 +67,46 @@ plugins:
         - Makefile*
         - requirements_pip.txt
         - requirements.txt
-  - redirects
-
-  
+  - redirects:
+      redirect_maps:
+        why-k0rdent.md: concepts/why-k0rdent.md
+        k0rdent-architecture.md: concepts/k0rdent-architecture.md
+        guide-to-quickstarts.md: quickstarts/guide-to-quickstarts.md
+        quickstart-1-mgmt-node-and-cluster.md: quickstarts/quickstart-1-mgmt-node-and-cluster.md
+        quickstart-2-aws.md: quickstarts/quickstart-2-aws.md
+        quickstart-2-azure.md: quickstarts/quickstart-2-azure.md
+        admin-before.md: admin/index.md
+        admin-installation.md: admin/installation/index.md
+        admin-prepare.md: admin/installation/prepare-mgmt-cluster/index.md
+        admin-creating-clusters.md: admin/clusters/index.md
+        admin-adopting-clusters.md: admin/clusters/admin-adopting-clusters.md
+        admin-hosted-control-planes.md: admin/hosted-control-plane/index.md
+        admin-troubleshooting-aws-vpcs.md: troubleshooting/admin-troubleshooting-aws-vpcs.md
+        admin-service-templates.md: admin/services/admin-service-templates.md
+        admin-create-multiclusterservice.md: admin/services/admin-create-multiclusterservice.md
+        admin-kof.md: admin/kof/index.md
+        admin-upgrading-k0rdent.md: admin/upgrade/admin-upgrading-k0rdent.md
+        admin-credentials.md: admin/access/credentials/index.md
+        admin-rbac.md: admin/access/rbac/index.md
+        admin-backup.md: admin/backup/index.md
+        user-create-cluster.md: user/user-create-cluster.md
+        user-create-service.md: user/services/index.md 
+        user-enable-drift-detection.md: user/user-enable-drift-detection.md
+        template-intro.md: reference/template/template-intro.md
+        template-predefined.md: reference/template/template-predefined.md
+        template-byo.md: reference/template/template-byo.md
+        template-aws.md: reference/template/template-aws.md
+        template-azure.md: reference/template/template-azure.md
+        template-openstack.md: reference/template/template-openstack.md
+        template-vsphere.md: reference/template/template-vsphere.md
+        known-issues-eks.md: troubleshooting/known-issues-eks.md
+        glossary.md: reference/glossary.md
+        appendix-extend-mgmt.md: appendix/appendix-extend-mgmt.md
+        appendix-dryrun.md: appendix/appendix-dryrun.md
+        appendix-providers.md: appendix/appendix-providers.md
+        k0rdent-documentation-contributors-guide.md: contrib/k0rdent-documentation-contributors-guide.md
+        k0rdent-documentation-style-guide.md: contrib/k0rdent-documentation-style-guide.md
+ 
 nav:
   - Welcome to the k0rdent docs: index.md
   - k0rdent concepts:
