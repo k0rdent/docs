@@ -1,12 +1,12 @@
 # Roles summary
 
 > NOTE:
-> The names of the `ClusterRole` objects may have different prefixes depending on the name of the k0rdent Helm chart.
-> The `ClusterRole` object definitions below use the `kcm` prefix, which is the default name of the k0rdent Helm chart.
+> The names of the `ClusterRole` objects may have different prefixes depending on the name of the {{{ docsVersionInfo.k0rdentName }}} Helm chart.
+> The `ClusterRole` object definitions below use the `kcm` prefix, which is the default name of the {{{ docsVersionInfo.k0rdentName }}} Helm chart.
 
 ## Global Admin
 
-The `Global Admin` role provides full administrative access across all the k0rdent system.
+The `Global Admin` role provides full administrative access across all the {{{ docsVersionInfo.k0rdentName }}} system.
 
 **Name**: `kcm-global-admin-role`
 
@@ -18,7 +18,7 @@ The `Global Admin` role provides full administrative access across all the k0rde
 
 **Permissions**:
 
-1. Full access to the k0rdent API
+1. Full access to the {{{ docsVersionInfo.k0rdentName }}} API
 2. Full access to Flux Helm repositories and Helm charts
 3. Full access to Cluster API identities
 4. Full access to namespaces and secrets
@@ -27,7 +27,7 @@ The `Global Admin` role provides full administrative access across all the k0rde
 
 A user with the `Global Admin` role is authorized to perform the following actions:
 
-1. Manage the k0rdent configuration
+1. Manage the {{{ docsVersionInfo.k0rdentName }}} configuration
 2. Manage namespaces in the management cluster
 3. Manage `ProviderTemplate` objects: add new templates or remove unneeded ones
 4. Manage `ClusterTemplate` and `ServiceTemplate` objects in any namespace, including adding and removing templates
@@ -38,13 +38,13 @@ A user with the `Global Admin` role is authorized to perform the following actio
 8. Manage and deploy Services across multiple clusters in any namespace by modifying `MultiClusterService` resources
 9. Manage `ClusterDeployment` objects in any namespace
 10. Manage `Credential` and `Secret` objects in any namespace
-11. Upgrade k0rdent
-12. Uninstall k0rdent
+11. Upgrade {{{ docsVersionInfo.k0rdentName }}}
+12. Uninstall {{{ docsVersionInfo.k0rdentName }}}
 
 
 ## Global Viewer
 
-The `Global Viewer` role grants read-only access across the k0rdent system. It does not permit any modifications,
+The `Global Viewer` role grants read-only access across the {{{ docsVersionInfo.k0rdentName }}} system. It does not permit any modifications,
 including the creation of clusters.
 
 **Name**: `kcm-global-viewer-role`
@@ -56,7 +56,7 @@ including the creation of clusters.
 
 **Permissions**:
 
-1. Read access to k0rdent API
+1. Read access to {{{ docsVersionInfo.k0rdentName }}} API
 2. Read access to Flux Helm repositories and Helm charts
 3. Read access to Cluster API identities
 4. Read access to namespaces and secrets
@@ -65,7 +65,7 @@ including the creation of clusters.
 
 A user with the `Global Viewer` role is authorized to perform the following actions:
 
-1. View the k0rdent configuration
+1. View the {{{ docsVersionInfo.k0rdentName }}} configuration
 2. List namespaces available in the management cluster
 3. List and get the detailed information about available `ProviderTemplate` objects
 4. List available `ClusterTemplate` and `ServiceTemplate` objects in any namespace

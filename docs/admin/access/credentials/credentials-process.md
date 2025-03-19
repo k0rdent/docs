@@ -1,6 +1,6 @@
 # The process
 
-In order to pass credentials to k0rdent so it can take action, the following has to happen:
+In order to pass credentials to {{{ docsVersionInfo.k0rdentName }}} so it can take action, the following has to happen:
 
 1. The lead platform engineer, or whoever has access to the actual provider credentials, creates a `Secret` that includes that information. For example, for an AWS cluster, it might look like this:
 
@@ -51,7 +51,7 @@ In order to pass credentials to k0rdent so it can take action, the following has
     ```
     Notice that it references the previous `ClusterIdentity` (in this case an `AWSClusterStaticIdentity`). Also notice that you can use the `.spec.description` field to add additional text about the `Credential` so users can choose if multiple `Credential` objects are available.
 
-3. Finally, when you create a `ClusterDeployment`, you reference the `Credential` object in order to enable k0rdent to pass that information to the infrastructure provider:
+3. Finally, when you create a `ClusterDeployment`, you reference the `Credential` object in order to enable {{{ docsVersionInfo.k0rdentName }}} to pass that information to the infrastructure provider:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1alpha1

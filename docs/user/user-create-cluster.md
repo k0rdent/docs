@@ -1,6 +1,6 @@
 # Deploying a Cluster
 
-k0rdent simplifies the process of deploying and managing Kubernetes clusters across various cloud platforms through the use of `ClusterDeployment` objects, which include all of the information k0rdent needs to know in order to create the cluster you want. This `ClusterDeployment` system relies on predefined templates and credentials. 
+{{{ docsVersionInfo.k0rdentName }}} simplifies the process of deploying and managing Kubernetes clusters across various cloud platforms through the use of `ClusterDeployment` objects, which include all of the information {{{ docsVersionInfo.k0rdentName }}} needs to know in order to create the cluster you want. This `ClusterDeployment` system relies on predefined templates and credentials. 
 
 A cluster deployment typically involves:
 
@@ -12,7 +12,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
 1. Obtain the `Credential` object
 
-    k0rdent needs credentials to communicate with the infrastructure provider (for example, AWS, Azure, or vSphere). These credentials enable k0rdent to provision resources such as virtual machines, networking components, and storage.
+    {{{ docsVersionInfo.k0rdentName }}} needs credentials to communicate with the infrastructure provider (for example, AWS, Azure, or vSphere). These credentials enable {{{ docsVersionInfo.k0rdentName }}} to provision resources such as virtual machines, networking components, and storage.
 
     `Credential` objects are generally created ahead of time and made available to users. You can see all of the existing `Credential` objects by querying the management cluster:
 
@@ -51,7 +51,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
 2. Select a Template
 
-    Templates in k0rdent are predefined configurations that describe how to set up the cluster. Templates include details such as:
+    Templates in {{{ docsVersionInfo.k0rdentName }}} are predefined configurations that describe how to set up the cluster. Templates include details such as:
 
     * The number and type of control plane and worker nodes.
     * Networking settings.
@@ -130,13 +130,13 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
 4. Apply the Configuration
 
-    Once the `ClusterDeployment` configuration is ready, apply it to the k0rdent management cluster:
+    Once the `ClusterDeployment` configuration is ready, apply it to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
 
     ```shell
     kubectl apply -f clusterdeployment.yaml
     ```
 
-    This step submits your deployment request to k0rdent. 
+    This step submits your deployment request to {{{ docsVersionInfo.k0rdentName }}}. 
 
 5. Verify Deployment Status
 
@@ -150,7 +150,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
 6. Monitor Provisioning
 
-    k0rdent will now start provisioning resources (for example, VMs or networks) and setting up the cluster. To monitor this process, run:
+    {{{ docsVersionInfo.k0rdentName }}} will now start provisioning resources (for example, VMs or networks) and setting up the cluster. To monitor this process, run:
 
     ```shell
     kubectl -n <namespace> get cluster <cluster-name> -o=yaml

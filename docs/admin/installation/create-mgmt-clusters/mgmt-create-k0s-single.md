@@ -27,7 +27,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
 2. Install kubectl
 
-    Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
+    Everything you do in {{{ docsVersionInfo.k0rdentName }}} is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
 
     ```shell
     sudo apt-get update
@@ -67,7 +67,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
 4. Install Helm
 
-    The easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
+    The easiest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
 
     ```shell
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3

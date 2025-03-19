@@ -2,7 +2,7 @@
 
 | Component       | Version  | Notes                         |
 |-----------------|----------|-------------------------------|
-| k0rdent         | ≥ 0.0.7  | Required for template support |
+| {{{ docsVersionInfo.k0rdentName }}}         | ≥ 0.0.7  | Required for template support |
 | Kubernetes      | ≥ 1.32   | Earlier versions untested     |
 | OpenTelemetry   | ≥ 0.75   | Recommended minimum           |
 | VictoriaMetrics | ≥ 0.40   | Required for clustering       |

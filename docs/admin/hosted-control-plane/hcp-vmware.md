@@ -6,7 +6,7 @@ Follow these steps to set up a k0smotron-hosted control plane on vSphere.
 
     Before you start, make sure you have the following:
 
-    - A management Kubernetes cluster (Kubernetes v1.28+) deployed on vSphere with [k0rdent installed](../installation/install-k0rdent.md).
+    - A management Kubernetes cluster (Kubernetes v1.28+) deployed on vSphere with [{{{ docsVersionInfo.k0rdentName }}} installed](../installation/install-k0rdent.md).
 
     All control plane components for managed clusters will reside in the management cluster, so make sure the management 
     cluster has sufficient resources (CPU, memory, and storage) to handle these workloads.

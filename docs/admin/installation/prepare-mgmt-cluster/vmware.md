@@ -2,9 +2,9 @@
 
 To enable users to deploy child clusers on vSphere, follow these steps:
 
-1. Create a k0rdent management cluster
+1. Create a {{{ docsVersionInfo.k0rdentName }}} management cluster
 
-    Follow the instructions in [Install k0rdent](../install-k0rdent.md) to create a management cluster with k0rdent running, as well as a local install of `kubectl`.
+    Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running, as well as a local install of `kubectl`.
 
 2. Install a vSphere instance version `6.7.0` or higher.
 
@@ -50,7 +50,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
 6. vSphere Credentials
 
-    To enable k0rdent to access vSphere resources, create the appropriate credentials objects. For a full explanation of how `Credential` objects work, see the [main Credentials chapter](../../access/credentials/index.md), but for now, follow these steps:
+    To enable {{{ docsVersionInfo.k0rdentName }}} to access vSphere resources, create the appropriate credentials objects. For a full explanation of how `Credential` objects work, see the [main Credentials chapter](../../access/credentials/index.md), but for now, follow these steps:
 
     Create a `Secret` object with the username and password
 

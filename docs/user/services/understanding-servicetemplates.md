@@ -1,6 +1,6 @@
 # Understanding ServiceTemplates
 
-`ServiceTemplate` objects are meant to let k0rdent know where to find a Helm chart with instructions for installing
+`ServiceTemplate` objects are meant to let {{{ docsVersionInfo.k0rdentName }}} know where to find a Helm chart with instructions for installing
 an application. In many cases, these charts will be in a private repository.  For example, consider this template for
 installing Nginx Ingress:
 

@@ -1,4 +1,4 @@
-# Installing k0rdent Observability and FinOps
+# Installing {{{ docsVersionInfo.k0rdentName }}} Observability and FinOps
 
 KOF can be installed using Helm charts.
 
@@ -12,7 +12,7 @@ KOF is deployed as a series of Helm charts at various levels.
 - Local [VictoriaMetrics](https://victoriametrics.com/) storage for alerting rules only, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
 - [cluster-api-visualizer](https://github.com/Jont828/cluster-api-visualizer) for insight into multicluster configuration
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
-- [k0rdent](https://github.com/k0rdent) service templates to deploy other charts to regional clusters
+- [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates to deploy other charts to regional clusters
 - [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
 
 ### kof-storage
@@ -39,9 +39,9 @@ KOF is deployed as a series of Helm charts at various levels.
 
 Before beginning KOF installation, you should have the following components in place:
 
-* A k0rdent management cluster - You can get instructions to create one in the [quickstart guide](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstart-1-mgmt-node-and-cluster/)
+* A {{{ docsVersionInfo.k0rdentName }}} management cluster - You can get instructions to create one in the [quickstart guide](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstart-1-mgmt-node-and-cluster/)
     * To test on [macOS](https://docs.k0sproject.io/stable/system-requirements/#host-operating-system) you can install using:
-      `brew install kind && kind create cluster -n k0rdent`
+      `brew install kind && kind create cluster -n {{{ docsVersionInfo.k0rdentName }}}`
 * You will also need your infrastructure provider credentials, such as those shown in the [guide for AWS](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstart-2-aws/)
     * Note that you should skip the "Create your ClusterDeployment" and later sections.
 * Finally, you need access to create DNS records for service endpoints such as `kof.example.com`

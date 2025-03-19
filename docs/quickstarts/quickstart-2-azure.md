@@ -1,20 +1,20 @@
 # QuickStart 2 - Azure target environment
 
-In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable k0rdent (running on your management node) to manage clusters on Azure, and deploying a child cluster.
+In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on Azure, and deploying a child cluster.
 
-As noted in the [Guide to QuickStarts](./guide-to-quickstarts.md), you'll need administrative access to an Azure account to complete this step. If you haven't yet created a management node and installed k0rdent, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
+As noted in the [Guide to QuickStarts](./index.md), you'll need administrative access to an Azure account to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
 
-Note that if you have already done our AWS QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)) you can use the same management cluster, continuing here with steps to add the ability to manage clusters on Azure. The k0rdent management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to Azure (for example, it could be on an AWS EC2 virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of k0rdent is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.
+Note that if you have already done our AWS QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)) you can use the same management cluster, continuing here with steps to add the ability to manage clusters on Azure. The {{{ docsVersionInfo.k0rdentName }}} management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to Azure (for example, it could be on an AWS EC2 virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of {{{ docsVersionInfo.k0rdentName }}} is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.
 
 > NOTE:
-> **Cloud Security 101:** k0rdent requires _some_ but not _all_ permissions to manage Azure resources &mdash; doing so via the CAPZ (ClusterAPI for Azure) provider. 
+> **Cloud Security 101:** {{{ docsVersionInfo.k0rdentName }}} requires _some_ but not _all_ permissions to manage Azure resources &mdash; doing so via the CAPZ (ClusterAPI for Azure) provider. 
 
-A best practice for using k0rdent with Azure (this pattern is repeated with other clouds and infrastructures) is to create a new k0rdent Azure Cluster Identity and Service Principal (SP) on your account with the particular permissions k0rdent and CAPZ require.In this section, we'll create and configure those identity abstractions, and perform other steps to make required credentials accessible to k0rdent in the management node.
+A best practice for using {{{ docsVersionInfo.k0rdentName }}} with Azure (this pattern is repeated with other clouds and infrastructures) is to create a new {{{ docsVersionInfo.k0rdentName }}} Azure Cluster Identity and Service Principal (SP) on your account with the particular permissions {{{ docsVersionInfo.k0rdentName }}} and CAPZ require.In this section, we'll create and configure those identity abstractions, and perform other steps to make required credentials accessible to {{{ docsVersionInfo.k0rdentName }}} in the management node.
 
 > NOTE:
 > If you're working on a shared Azure account, please ensure that the Azure Cluster Identity and Service Principal are not already set up before creating new abstractions.
 
-Creating user identity abstractions with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with k0rdent at progressively greater scales. For more on k0rdent security best practices, please see the [Administrator Guide](../admin/index.md).
+Creating user identity abstractions with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with {{{ docsVersionInfo.k0rdentName }}} at progressively greater scales. For more on {{{ docsVersionInfo.k0rdentName }}} security best practices, please see the [Administrator Guide](../admin/index.md).
 
 ## Install the Azure CLI (az)
 
@@ -34,7 +34,7 @@ az login
 
 ## Register resource providers
 
-Azure Resource Manager uses resource providers to manage resources of all different kinds, and required providers must be registered with an Azure account before k0rdent and CAPZ can work with them.
+Azure Resource Manager uses resource providers to manage resources of all different kinds, and required providers must be registered with an Azure account before {{{ docsVersionInfo.k0rdentName }}} and CAPZ can work with them.
 
 You can list resources registered with your account using Azure CLI:
 
@@ -51,7 +51,7 @@ Microsoft.Compute                     Registered
 Microsoft.Network                     Registered
 ```
 
-You can then select from the commands below (or enter all of them) to register any unregistered resources that k0rdent and CAPZ require:
+You can then select from the commands below (or enter all of them) to register any unregistered resources that {{{ docsVersionInfo.k0rdentName }}} and CAPZ require:
 
 ```shell
 az provider register --namespace Microsoft.Compute
@@ -79,7 +79,7 @@ My Azure Subscription    SUBSCRIPTION_ID_SUBSCRIPTION_ID   TENANT_ID_TENANT_ID_T
 
 The Subcription ID is in the second column.
 
-## Create a Service Principal for k0rdent
+## Create a Service Principal for {{{ docsVersionInfo.k0rdentName }}}
 
 The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure. To create it, run the following command with the Azure CLI, replacing <subscription-id> with the ID you copied earlier.
 
@@ -136,7 +136,7 @@ type: Opaque
 ```
 -->
 
-Apply the YAML to the k0rdent management cluster using the following command:
+Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster using the following command:
 
 ```shell
 kubectl apply -f azure-cluster-identity-secret.yaml
@@ -147,7 +147,7 @@ kubectl apply -f azure-cluster-identity-secret.yaml
 > INFO:
 > Skip this step for managed (AKS) clusters.
 -->
-This object defines the credentials k0rdent and CAPZ will use to manage Azure resources. It references the `Secret` you just created above.
+This object defines the credentials {{{ docsVersionInfo.k0rdentName }}} and CAPZ will use to manage Azure resources. It references the `Secret` you just created above.
 
 Create a YAML file called `azure-cluster-identity.yaml`. Make sure that `.spec.clientSecret.name` matches the `metadata.name` in the file you created above.
 
@@ -343,7 +343,7 @@ What you'll need to insert in your ClusterDeployment is the name (center column)
 
 ## List available cluster templates
 
-k0rdent is now fully configured to manage Azure. To create a cluster, begin by listing the available ClusterTemplates provided with k0rdent:
+{{{ docsVersionInfo.k0rdentName }}} is now fully configured to manage Azure. To create a cluster, begin by listing the available ClusterTemplates provided with {{{ docsVersionInfo.k0rdentName }}}:
 
 ```shell
 kubectl get clustertemplate -n kcm-system
@@ -367,7 +367,7 @@ kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.da
 
 ## Create your ClusterDeployment
 
-Now, to deploy a cluster, create a YAML file called `my-azure-clusterdeployment1.yaml`. We'll use this to create a ClusterDeployment object in k0rdent, representing the deployed cluster. The `ClusterDeployment` identifies for k0rdent the `ClusterTemplate` you want to use for cluster creation, the identity credential object you want to create it under, plus the location/region and instance types you want to use to host control plane and worker nodes:
+Now, to deploy a cluster, create a YAML file called `my-azure-clusterdeployment1.yaml`. We'll use this to create a ClusterDeployment object in {{{ docsVersionInfo.k0rdentName }}}, representing the deployed cluster. The `ClusterDeployment` identifies for {{{ docsVersionInfo.k0rdentName }}} the `ClusterTemplate` you want to use for cluster creation, the identity credential object you want to create it under, plus the location/region and instance types you want to use to host control plane and worker nodes:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -413,7 +413,7 @@ spec:
 
 ## Apply the ClusterDeployment to deploy the cluster
 
-Finally, we'll apply the ClusterDeployment YAML (`my-azure-clusterdeployment1.yaml`) to instruct k0rdent to deploy the cluster:
+Finally, we'll apply the ClusterDeployment YAML (`my-azure-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
 ```shell
 kubectl apply -f my-azure-clusterdeployment1.yaml
@@ -470,12 +470,12 @@ clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
 
 ## Next Steps
 
-Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:
+Now that you've finished the {{{ docsVersionInfo.k0rdentName }}} QuickStart, we have some suggestions for what to do next:
 
 Check out the [Administrator Guide](../admin/index.md) ...
 
-* For a more detailed view of k0rdent setup for production
-* For details about setting up k0rdent to manage clusters on VMware and OpenStack
-* For details about using k0rdent with cloud Kubernetes distros: AWS EKS and Azure AKS
+* For a more detailed view of {{{ docsVersionInfo.k0rdentName }}} setup for production
+* For details about setting up {{{ docsVersionInfo.k0rdentName }}} to manage clusters on VMware and OpenStack
+* For details about using {{{ docsVersionInfo.k0rdentName }}} with cloud Kubernetes distros: AWS EKS and Azure AKS
 
-Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of k0rdent's key features!
+Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of {{{ docsVersionInfo.k0rdentName }}}'s key features!

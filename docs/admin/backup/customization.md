@@ -1,11 +1,11 @@
 # Customization
 
-This section covers different topics of customization regarding backing up and restoring k0rdent.
+This section covers different topics of customization regarding backing up and restoring {{{ docsVersionInfo.k0rdentName }}}.
 
 ## Velero installation
 
 The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied with the
-k0rdent helm chart and is enabled by default. There are 2 ways of customizing the chart values:
+{{{ docsVersionInfo.k0rdentName }}} helm chart and is enabled by default. There are 2 ways of customizing the chart values:
 
 1. Install using `helm` and add corresponding parameters to the `helm install` command.
 
@@ -13,7 +13,7 @@ k0rdent helm chart and is enabled by default. There are 2 ways of customizing th
     > Only a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
     > is required during restoration; the other parameters are optional.
 
-    For example, this command installs k0rdent via `helm install` with a configured plugin, `BackupStorageLocation`
+    For example, this command installs {{{ docsVersionInfo.k0rdentName }}} via `helm install` with a configured plugin, `BackupStorageLocation`
     and propagated credentials:
 
     ```shell

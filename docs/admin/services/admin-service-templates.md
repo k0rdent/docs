@@ -4,7 +4,7 @@ Deploying an application, like deploying a cluster, involves applying a template
 
 You can find more information on [Bringing Your Own Templates](../../reference/template/template-byo.md)
 in the Template Guide, but this section gives you an idea of how to create a `ServiceTemplate`
-and use it to deploy an application to a k0rdent child cluster.
+and use it to deploy an application to a {{{ docsVersionInfo.k0rdentName }}} child cluster.
 
 The basic sequence looks like this:
 
@@ -53,11 +53,11 @@ The basic sequence looks like this:
     `my-target-namespace` namespace.  It references version 4.11.3 of the `ingress-nginx` chart
     located in the `k0rdent-catalog` Helm repository.
 
-    For more information on creating templates, see the [Template Guide](../../reference/template/template-intro.md).
+    For more information on creating templates, see the [Template Guide](../../reference/template/index.md).
 
   3. Create a `ServiceTemplateChain`
 
-    To let k0rdent know where this `ServiceTemplate` can and can't be used, create a `ServiceTemplateChain` object, as in:
+    To let {{{ docsVersionInfo.k0rdentName }}} know where this `ServiceTemplate` can and can't be used, create a `ServiceTemplateChain` object, as in:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -108,7 +108,7 @@ The basic sequence looks like this:
         priority: 100
     ```
     As you can see, you're simply referencing the template in the `.spec.serviceSpec.services[].template` field of the `ClusterDeployment`
-    to tell k0rdent that you want this service to be part of this cluster.
+    to tell {{{ docsVersionInfo.k0rdentName }}} that you want this service to be part of this cluster.
 
     If you wanted to add this service to an existing cluster, you would simply patch the definition of the `ClusterDeployment`, as in:
 

@@ -1,8 +1,8 @@
-## Remove Templates shipped with k0rdent
+## Remove Templates shipped with {{{ docsVersionInfo.k0rdentName }}}
 
-If you need to limit the templates that exist in your k0rdent installation, follow the instructions below:
+If you need to limit the templates that exist in your {{{ docsVersionInfo.k0rdentName }}} installation, follow the instructions below:
 
-1. Get the list of `ProviderTemplate`, `ClusterTemplate` or `ServiceTemplate` objects shipped with k0rdent. For example,
+1. Get the list of `ProviderTemplate`, `ClusterTemplate` or `ServiceTemplate` objects shipped with {{{ docsVersionInfo.k0rdentName }}}. For example,
 for `ClusterTemplate` objects, run:
 
     ```bash

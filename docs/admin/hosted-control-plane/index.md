@@ -6,3 +6,7 @@ architecture centralizes control plane management and improves scalability by sh
 Hosted control planes are managed by [k0smotron](https://k0smotron.io/).
 
 Instructions for setting up a hosted control plane vary slighting depending on the provider.
+
+- [AWS](hcp-aws.md)
+- [Azure](hcp-azure.md)
+- [VMware](hcp-vmware.md)

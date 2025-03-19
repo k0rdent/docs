@@ -2,9 +2,9 @@
 
 Standalone clusters can be deployed on Azure instances. Follow these steps to make Azure clusters available to your users:
 
-1. Install k0rdent
+1. Install {{{ docsVersionInfo.k0rdentName }}}
 
-    Follow the instructions in [Install k0rdent](../install-k0rdent.md) to create a management cluster with k0rdent running.
+    Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running.
 
 2. The Azure CLI
 
@@ -26,7 +26,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
 4. Register resource providers
 
-    In order for k0rdent to deploy and manage clusters, it needs to be able to work with Azure resources such as 
+    In order for {{{ docsVersionInfo.k0rdentName }}} to deploy and manage clusters, it needs to be able to work with Azure resources such as 
     compute, network, and identity. Make sure the subscription you're using has the following resource providers registered:
 
     ```shell
@@ -50,11 +50,11 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 5. Find Your Subscription ID
 
     Creating a child cluster requires a structure of credentials that link to user identities on the provider system without
-    exposing the actual username and password to users. You can find more information on [k0rdent 
+    exposing the actual username and password to users. You can find more information on [{{{ docsVersionInfo.k0rdentName }}} 
     Credentials](../../access/credentials/index.md), but for Azure, this involves creating an `AzureClusterIdentity` and a 
     Service Principal (SP) to let CAPZ (Cluster API Azure) communicate with the cloud provider. 
 
-    On Azure, the lowest level of this hierarchy is the subscription, which ties to your billing information for Azure. Your Azure user must have at least one subscription for you to use it with k0rdent, so if you're working with a new
+    On Azure, the lowest level of this hierarchy is the subscription, which ties to your billing information for Azure. Your Azure user must have at least one subscription for you to use it with {{{ docsVersionInfo.k0rdentName }}}, so if you're working with a new
     account make sure to [create a new subscription with billing information](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-subscription) before you start.
 
     To get the information you need, list all your Azure subscriptions: 
@@ -149,7 +149,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created
     ```
 
-9. Create the k0rdent `Credential` Object
+9. Create the {{{ docsVersionInfo.k0rdentName }}} `Credential` Object
 
     Create the YAML for the specification of the `Credential` and save it as `azure-cluster-identity-cred.yaml`.
 
@@ -335,7 +335,7 @@ Now you're ready to deploy the cluster.
     kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-azure-clusterdeployment1 --watch
     ```
 
-    If the provisioning process continues for a more than a few minutes, check to make sure k0rdent isn't trying to
+    If the provisioning process continues for a more than a few minutes, check to make sure {{{ docsVersionInfo.k0rdentName }}} isn't trying to
     exceed your quotas. If you are near the top of your quotas, requesting an increase can "unstick" the provisioning process.
 
     After the cluster is `Ready`, you can access it via the kubeconfig:

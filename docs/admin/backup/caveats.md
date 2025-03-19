@@ -6,7 +6,7 @@ so a proper rotation should be considered beforehand.
 Only plugins that [support Object Store](https://velero.io/docs/v1.15/supported-providers/)
 can be used to store backups into an object storage.
 
-All `velero` caveats and limitations are transitively implied in `k0rdent`. In particular, that
+All `velero` caveats and limitations are transitively implied in {{{ docsVersionInfo.k0rdentName }}}. In particular, that
 means no backup encryption is provided until it is implemented by a `velero` plugin that supports
 encryption and cloud storage backups.
 

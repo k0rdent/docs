@@ -1,6 +1,6 @@
 ## Extended Management Configuration
 
-k0rdent is deployed with the following default configuration, which may vary
+{{{ docsVersionInfo.k0rdentName }}} is deployed with the following default configuration, which may vary
 depending on the release version:
 
 ```yaml
@@ -22,28 +22,28 @@ spec:
 release: kcm-0-0-7
 ```
 
-As you can see, the `Management` object defines the providers that are available from within k0rdent. Some of these are
+As you can see, the `Management` object defines the providers that are available from within {{{ docsVersionInfo.k0rdentName }}}. Some of these are
 providers directly used by the user, such as aws, azure, and so on, and others are used internally
-by k0rdent, such as Sveltos.
+by {{{ docsVersionInfo.k0rdentName }}}, such as Sveltos.
 
 To see what is included in a specific release, look at the `release.yaml` file in the tagged release.
 For example, here is the [v0.0.7 release.yaml](https://github.com/k0rdent/kcm/releases/download/v0.0.7/release.yaml).
 
 
-k0rdent allows you to customize its default configuration by modifying the spec of the `Management` object.
+{{{ docsVersionInfo.k0rdentName }}} allows you to customize its default configuration by modifying the spec of the `Management` object.
 This enables you to manage the list of providers to deploy and adjust the default settings for core components.
 
 For detailed examples and use cases, refer to [Examples and Use Cases](#examples-and-use-cases)
 
 ## Configuration Guide
 
-There are two options to override the default management configuration of k0rdent:
+There are two options to override the default management configuration of {{{ docsVersionInfo.k0rdentName }}}:
 
-1. Update the `Management` object after the k0rdent installation using `kubectl`:
+1. Update the `Management` object after the {{{ docsVersionInfo.k0rdentName }}} installation using `kubectl`:
 
     `kubectl --kubeconfig <path-to-management-kubeconfig> edit management`
 
-2. Deploy k0rdent skipping the default `Management` object creation and provide your
+2. Deploy {{{ docsVersionInfo.k0rdentName }}} skipping the default `Management` object creation and provide your
    own `Management` configuration:
 
     - Create `management.yaml` file and configure core components and providers.
@@ -70,7 +70,7 @@ There are two options to override the default management configuration of k0rden
       In the example above, the `Management` object is configured with custom registry settings for the KCM controller
       and a reduced list of providers.
 
-    - Specify `--create-management=false` controller argument and install k0rdent:
+    - Specify `--create-management=false` controller argument and install {{{ docsVersionInfo.k0rdentName }}}:
       If installing using `helm` add the following parameter to the `helm
       install` command:
 
@@ -78,7 +78,7 @@ There are two options to override the default management configuration of k0rden
         --set="controller.createManagement=false"
         ```
 
-    - Create `kcm` `Management` object after k0rdent installation:
+    - Create `kcm` `Management` object after {{{ docsVersionInfo.k0rdentName }}} installation:
 
            ```bash
            kubectl --kubeconfig <path-to-management-kubeconfig> create -f management.yaml
@@ -88,8 +88,8 @@ You can customize the default configuration options for core components by updat
 `.spec.core.<core-component-name>.config` section in the `Management` object. For example, to override the default
 settings for the KCM component, modify the `spec.core.kcm.config` section. To view the complete list of configuration
 options available for kcm, refer to:
-[KCM Configuration Options for k0rdent v0.0.7](https://github.com/k0rdent/kcm/blob/v0.0.7/templates/provider/kcm/values.yaml)
-(Replace v0.0.7 with the relevant release tag for other k0rdent versions).
+[KCM Configuration Options for {{{ docsVersionInfo.k0rdentName }}} v0.0.7](https://github.com/k0rdent/kcm/blob/v0.0.7/templates/provider/kcm/values.yaml)
+(Replace v0.0.7 with the relevant release tag for other {{{ docsVersionInfo.k0rdentName }}} versions).
 
 To customize the list of providers to deploy, update the `.spec.providers` section. You can add or remove providers
 and configure custom templates for each provider. Each provider in the list must include the `name` field
@@ -102,7 +102,7 @@ and may include the `template` and `config` fields:
 ```
 ## Examples and Use Cases
 ### Configuring a Custom OCI Registry for KCM components
-You can override the default registry settings in k0rdent by specifying the `defaultRegistryURL`, `insecureRegistry`,
+You can override the default registry settings in {{{ docsVersionInfo.k0rdentName }}} by specifying the `defaultRegistryURL`, `insecureRegistry`,
 and `registryCredsSecret` parameters under `spec.core.kcm.config.controller`:
 
 * `defaultRegistryURL`: Specifies the registry URL for downloading Helm charts representing templates. 

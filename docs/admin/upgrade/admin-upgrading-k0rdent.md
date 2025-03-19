@@ -1,6 +1,6 @@
-# Upgrading k0rdent
+# Upgrading {{{ docsVersionInfo.k0rdentName }}}
 
-Upgrading k0rdent involves making upgrades to the `Management` object. To do that, you must have the `Global Admin` role. (For detailed information about k0rdent RBAC roles and permissions, refer to the [RBAC documentation](../access/rbac/index.md).) Follow these steps to upgrade k0rdent:
+Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `Management` object. To do that, you must have the `Global Admin` role. (For detailed information about {{{ docsVersionInfo.k0rdentName }}} RBAC roles and permissions, refer to the [RBAC documentation](../access/rbac/index.md).) Follow these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
 
 1. Create a new `Release` object
 
@@ -26,7 +26,7 @@ Upgrading k0rdent involves making upgrades to the `Management` object. To do tha
         - name: k0smotron
           template: k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-azure
-          template: cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+          template: cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentsion }}}
         - name: cluster-api-provider-vsphere
           template: cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-aws
@@ -70,7 +70,7 @@ Upgrading k0rdent involves making upgrades to the `Management` object. To do tha
 
 4. Verify the Upgrade
 
-    Although the change will be made immediately, it will take some time for k0rdent to update the components it should be
+    Although the change will be made immediately, it will take some time for {{{ docsVersionInfo.k0rdentName }}} to update the components it should be
     using. Monitor the readiness of the `Management` object to ensure the upgrade was successful. For example:
 
     ```shell

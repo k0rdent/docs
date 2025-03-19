@@ -8,7 +8,7 @@ If you find that a VPC has not been deleted, you can deal with it in three diffe
 
 ## Applying ownership information on VPCs
 
-When VPCs have owner information, all AWS resources will be removed when the k0rdent EKS cluster is deleted.
+When VPCs have owner information, all AWS resources will be removed when the {{{ docsVersionInfo.k0rdentName }}} EKS cluster is deleted.
 So after provisioning an EKS cluster, the operator can go and set tags (for example, `tag:Owner`) and it will be 
 sufficient for CAPA to manage them.
 

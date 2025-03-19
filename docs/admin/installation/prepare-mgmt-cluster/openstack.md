@@ -1,10 +1,10 @@
 # OpenStack
 
-k0rdent can deploy child clusters on OpenStack virtual machines. Follow these steps to configure and deploy OpenStack clusters for your users:
+{{{ docsVersionInfo.k0rdentName }}} can deploy child clusters on OpenStack virtual machines. Follow these steps to configure and deploy OpenStack clusters for your users:
 
-1. Install k0rdent
+1. Install {{{ docsVersionInfo.k0rdentName }}}
 
-    Follow the instructions in [Install k0rdent](../install-k0rdent.md) to create a management cluster with k0rdent running.
+    Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running.
 
 2. OpenStack CLI (optional)
 
@@ -60,7 +60,7 @@ k0rdent can deploy child clusters on OpenStack virtual machines. Follow these st
     kubectl apply -f openstack-cloud-config.yaml
     ```
 
-5. Create the k0rdent Credential Object
+5. Create the {{{ docsVersionInfo.k0rdentName }}} Credential Object
 
     Next, define a `Credential` that references the `Secret` from the previous step.
     Save this as `openstack-cluster-identity-cred.yaml`:
@@ -243,7 +243,7 @@ k0rdent can deploy child clusters on OpenStack virtual machines. Follow these st
     kubectl apply -f my-openstack-cluster-deployment.yaml
     ```
 
-    This will trigger the provisioning process where k0rdent will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
+    This will trigger the provisioning process where {{{ docsVersionInfo.k0rdentName }}} will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
     provisioning process:
 
     ```shell

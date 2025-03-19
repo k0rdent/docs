@@ -1,6 +1,6 @@
 # What's Included in the Management Backup
 
-The backup includes all of k0rdent `kcm` component resources, parts of the `cert-manager`
+The backup includes all of {{{ docsVersionInfo.k0rdentName }}} `kcm` component resources, parts of the `cert-manager`
 components required for other components creation, and all the required resources
 of `CAPI` and the `ClusterDeployment`s currently in use in the management cluster.
 

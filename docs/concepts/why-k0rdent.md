@@ -1,6 +1,6 @@
-# Why k0rdent?
+# Why {{{ docsVersionInfo.k0rdentName }}}?
 
-k0rdent was developed to provide for the needs of platform engineers and the developers that they serve, as well as the application workloads that they support. 
+{{{ docsVersionInfo.k0rdentName }}} was developed to provide for the needs of platform engineers and the developers that they serve, as well as the application workloads that they support. 
 
 ## Applications and Workloads
 

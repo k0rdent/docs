@@ -1,13 +1,13 @@
 # Adopting an Existing Cluster
 
-Creating a new cluster isn't the only way to use k0rdent. Adopting an existing Kubernetes cluster enables you to 
-bring it under k0rdent's management. This process is useful when you already have a running cluster but want 
-to centralize management and leverage k0rdent's capabilities, such as unified monitoring, configuration, and automation,
+Creating a new cluster isn't the only way to use {{{ docsVersionInfo.k0rdentName }}}. Adopting an existing Kubernetes cluster enables you to 
+bring it under {{{ docsVersionInfo.k0rdentName }}}'s management. This process is useful when you already have a running cluster but want 
+to centralize management and leverage {{{ docsVersionInfo.k0rdentName }}}'s capabilities, such as unified monitoring, configuration, and automation,
 but you don't want to redeploy your cluster.
 
 ## Adopting a Cluster
 
-To adopt a cluster, k0rdent establishes communication between the management cluster (where kcm is installed) 
+To adopt a cluster, {{{ docsVersionInfo.k0rdentName }}} establishes communication between the management cluster (where kcm is installed) 
 and the target cluster. This requires proper credentials, network connectivity, and a standardized configuration. 
 
 Follow these steps to adopt an existing cluster:
@@ -18,7 +18,7 @@ Follow these steps to adopt an existing cluster:
 
     - A kubeconfig file for the cluster you want to adopt (this file provides access credentials and configuration details 
       for the cluster).
-    - A management cluster with k0rdent installed and running. See the [installation instructions](../installation/index.md) 
+    - A management cluster with {{{ docsVersionInfo.k0rdentName }}} installed and running. See the [installation instructions](../installation/index.md) 
       if you need to set it up.
     - Network connectivity between the management cluster and the cluster to be adopted (for example, ensure firewall 
       rules and VPNs allow communication).
@@ -45,7 +45,7 @@ Follow these steps to adopt an existing cluster:
 
 4. Create the `ClusterDeployment` YAML Configuration
 
-    The `ClusterDeployment` object is used to define how k0rdent should manage the adopted cluster. Create a 
+    The `ClusterDeployment` object is used to define how {{{ docsVersionInfo.k0rdentName }}} should manage the adopted cluster. Create a 
     YAML file for the `ClusterDeployment` object, as shown below:
 
     ```yaml
@@ -106,7 +106,7 @@ Follow these steps to adopt an existing cluster:
     kubectl apply -f clusterdeployment.yaml
     ```
 
-    This step submits the `ClusterDeployment` object to k0rdent, initiating the adoption process.
+    This step submits the `ClusterDeployment` object to {{{ docsVersionInfo.k0rdentName }}}, initiating the adoption process.
 
 6. Check the Status of the `ClusterDeployment` Object
 
@@ -121,14 +121,14 @@ Follow these steps to adopt an existing cluster:
 
 ## What's Happening Behind the Scenes?
 
-When you adopt a cluster, k0rdent performs several actions:
+When you adopt a cluster, {{{ docsVersionInfo.k0rdentName }}} performs several actions:
 1. It validates the credentials and configuration provided in the `ClusterDeployment` object.
 2. It ensures network connectivity between the management cluster and the adopted cluster.
-3. It registers the adopted cluster within the k0rdent system, enabling it to be monitored and managed like 
+3. It registers the adopted cluster within the {{{ docsVersionInfo.k0rdentName }}} system, enabling it to be monitored and managed like 
     any k0rdent-deployed cluster.
 
 This process doesn't change the adopted cluster's existing workloads or configurations. Instead, it enhances your 
-ability to manage the cluster through k0rdent.
+ability to manage the cluster through {{{ docsVersionInfo.k0rdentName }}}.
 
 ## Additional Tips
 - If you encounter issues, double-check that kubeconfig file you used for the adopted cluster is valid 

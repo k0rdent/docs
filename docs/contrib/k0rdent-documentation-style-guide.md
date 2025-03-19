@@ -1,12 +1,12 @@
-# k0rdent documentation style guide
+# {{{ docsVersionInfo.k0rdentName }}} documentation style guide
 
-This page gives style guidance to our Markdown, and makes some general recommendations regarding writing style for docs. It is _not_ a complete style guide. In most cases, Project k0rdent aspires to follow style recommendations adopted by the Kubernetes Project's SIG Docs group. Please see the [Kubernetes Documentation Style Guide](https://kubernetes.io/docs/contribute/style/style-guide/) for details.
+This page gives style guidance to our Markdown, and makes some general recommendations regarding writing style for docs. It is _not_ a complete style guide. In most cases, Project {{{ docsVersionInfo.k0rdentName }}} aspires to follow style recommendations adopted by the Kubernetes Project's SIG Docs group. Please see the [Kubernetes Documentation Style Guide](https://kubernetes.io/docs/contribute/style/style-guide/) for details.
 
-If you are looking for technical recommendations about how to contribute to docs, these are found in the [k0rdent Documentation Contributors Guide](k0rdent-documentation-contributors-guide.md).
+If you are looking for technical recommendations about how to contribute to docs, these are found in the [{{{ docsVersionInfo.k0rdentName }}} Documentation Contributors Guide](k0rdent-documentation-contributors-guide.md).
 
 ## Our Markdown style, theme, and extensions
 
-k0rdent docs uses:
+{{{ docsVersionInfo.k0rdentName }}} docs uses:
 
 * The [MkDocs](https://www.mkdocs.org/) static site generator.
 * The [Material theme](https://squidfunk.github.io/mkdocs-material/) for MkDocs.

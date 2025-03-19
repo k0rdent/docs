@@ -1,13 +1,13 @@
 # Updating a Single Standalone Cluster
 
-k0rdent `ClusterTemplate` objects are immutable, so the only way to change a `ClusterDeployment` is to change the template
+{{{ docsVersionInfo.k0rdentName }}} `ClusterTemplate` objects are immutable, so the only way to change a `ClusterDeployment` is to change the template
 that forms its basis. 
 
 To update the `ClusterDeployment`, modify the `.spec.template` field to use the name of the new `ClusterTemplate`. 
 This enables you to apply changes to the cluster configuration. These changes will then be applied to the actual 
 cluster. For example, if the cluster currently uses `t2.large` instances, that will be specified in its current template. 
 To change the cluster to use `t2.xlarge` instances, you would simply apply a template that references that new size; 
-k0rdent will then realize the cluster is out of sync and will attempt to remedy the situation by updating the cluster.
+{{{ docsVersionInfo.k0rdentName }}} will then realize the cluster is out of sync and will attempt to remedy the situation by updating the cluster.
 
 Follow these steps to update the `ClusterDeployment`:
 
@@ -57,7 +57,7 @@ the `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.a
 You wouldn't be able to use this template to update a cluster that uses any other `ClusterTemplate`.
 
 Similarly, the `AccessManagement` object must have properly configured `spec.accessRules` with a list of allowed 
-`ClusterTemplateChain` object names and their namespaces. For more information, see [Template Life Cycle Management](../../reference/template/template-intro.md#template-life-cycle-management).
+`ClusterTemplateChain` object names and their namespaces. For more information, see [Template Life Cycle Management](../../reference/template/index.md#template-life-cycle-management).
 
 > NOTE:  
 > Support for displaying all available Cluster Templates for updates in the `ClusterDeployment` status is planned.

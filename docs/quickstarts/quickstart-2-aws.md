@@ -1,26 +1,26 @@
 # QuickStart 2 - AWS target environment
 
-In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable k0rdent (running on your management node) to manage clusters on Amazon Web Services (AWS) and deploying our first child cluster.
+In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on Amazon Web Services (AWS) and deploying our first child cluster.
 
-As noted in the [Guide to QuickStarts](./guide-to-quickstarts.md), you'll need administrative access to an AWS account to complete this step. If you haven't yet created a management node and installed k0rdent, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
+As noted in the [Guide to QuickStarts](./index.md), you'll need administrative access to an AWS account to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
 
-Note that if you have already done our Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)) you can  use the same management cluster, continuing here with steps to add the ability to manage clusters on AWS. The k0rdent management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to AWS (for example, it could be on an Azure virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of k0rdent is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.
+Note that if you have already done our Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)) you can  use the same management cluster, continuing here with steps to add the ability to manage clusters on AWS. The {{{ docsVersionInfo.k0rdentName }}} management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to AWS (for example, it could be on an Azure virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of {{{ docsVersionInfo.k0rdentName }}} is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.
 
 > NOTE:
-> **CLOUD SECURITY 101**: k0rdent requires _some_ but not _all_ permissions
+> **CLOUD SECURITY 101**: {{{ docsVersionInfo.k0rdentName }}} requires _some_ but not _all_ permissions
 > to manage AWS &mdash; doing so via the CAPA (ClusterAPI for AWS) provider.
 
-Because k0rdent doesn't require all permissions, a best practice for using k0rdent with AWS (this pattern is repeated
-with other clouds and infrastructures) is to create a new 'k0rdent user' on your account with the particular permissions k0rdent and CAPA require. In this section, we'll create and configure IAM for that user, and perform other steps to make that k0rdent user's credentials accessible to k0rdent in the management node.
+Because {{{ docsVersionInfo.k0rdentName }}} doesn't require all permissions, a best practice for using {{{ docsVersionInfo.k0rdentName }}} with AWS (this pattern is repeated
+with other clouds and infrastructures) is to create a new 'k0rdentuser' on your account with the particular permissions {{{ docsVersionInfo.k0rdentName }}} and CAPA require. In this section, we'll create and configure IAM for that user, and perform other steps to make that {{{ docsVersionInfo.k0rdentName }}} user's credentials accessible to {{{ docsVersionInfo.k0rdentName }}} in the management node.
 
 > NOTE:
-> If you're working on a shared AWS account, please ensure that the k0rdent user is not already set up before creating a new one.
+> If you're working on a shared AWS account, please ensure that the {{{ docsVersionInfo.k0rdentName }}} user is not already set up before creating a new one.
 
-Creating a k0rdent user with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with k0rdent at progressively greater scales. For more on k0rdent security best practices, please see the [Administrator Guide](../admin/index.md).
+Creating a {{{ docsVersionInfo.k0rdentName }}} user with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with {{{ docsVersionInfo.k0rdentName }}} at progressively greater scales. For more on {{{ docsVersionInfo.k0rdentName }}} security best practices, please see the [Administrator Guide](../admin/index.md).
 
 ## Install the AWS CLI
 
-We'll use the AWS CLI to create and set IAM permissions for the k0rdent user, so we'll install it on our management node:
+We'll use the AWS CLI to create and set IAM permissions for the {{{ docsVersionInfo.k0rdentName }}} user, so we'll install it on our management node:
 
 ```shell
 sudo apt install unzip
@@ -31,7 +31,7 @@ sudo ./aws/install
 
 ## Install clusterawsadm
 
-k0rdent uses Cluster API (CAPI) to marshal clouds and infrastructures. For AWS, this means using the components from the Cluster API Provider AWS (CAPA) project. This QuickStart leverages [`clusterawsadm`](https://cluster-api-aws.sigs.k8s.io/), a CLI tool created by the CAPA project that helps with AWS-specific tasks like IAM role, policy, and credential configuration.
+{{{ docsVersionInfo.k0rdentName }}} uses Cluster API (CAPI) to marshal clouds and infrastructures. For AWS, this means using the components from the Cluster API Provider AWS (CAPA) project. This QuickStart leverages [`clusterawsadm`](https://cluster-api-aws.sigs.k8s.io/), a CLI tool created by the CAPA project that helps with AWS-specific tasks like IAM role, policy, and credential configuration.
 
 To install `clusterawsadm` on Ubuntu on x86 hardware:
 
@@ -53,11 +53,11 @@ export AWS_SECRET_ACCESS_KEY=EXAMPLE_SECRET_ACCESS_KEY
 export AWS_SESSION_TOKEN=EXAMPLE_SESSION_TOKEN # Optional. If you are using Multi-Factor Auth.
 ```
 
-These credentials will be used both by the AWS CLI (to create your k0rdent user) and by `clusterawsadm` (to create a CloudFormation template used by CAPA within k0rdent).
+These credentials will be used both by the AWS CLI (to create your {{{ docsVersionInfo.k0rdentName }}} user) and by `clusterawsadm` (to create a CloudFormation template used by CAPA within {{{ docsVersionInfo.k0rdentName }}}).
 
 ## Check for available IPs
 
-Because k0rdent has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
+Because {{{ docsVersionInfo.k0rdentName }}} has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
 `EC2-VPC Elastic IPs` quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
 second to the same region, you are likely to run into issues.  
 
@@ -111,9 +111,9 @@ aws service-quotas list-requested-service-quota-change-history \
 }
 ```
 
-## Create the k0rdent AWS user
+## Create the {{{ docsVersionInfo.k0rdentName }}} AWS user
 
-Now we can use the AWS CLI to create a new k0rdent user:
+Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} user:
 
 ```shell
  aws iam create-user --user-name k0rdentQuickstart
@@ -130,17 +130,17 @@ Now we can use the AWS CLI to create a new k0rdent user:
 }
 ```
 
-## Configure AWS IAM for k0rdent
+## Configure AWS IAM for {{{ docsVersionInfo.k0rdentName }}}
 
-Before k0rdent CAPI can manage resources on AWS, you need to use `clusterawsadm` to create a bootstrap CloudFormation stack with additional IAM policies and a service account. You do this under the administrative account credentials you earlier exported to the management node environment:
+Before {{{ docsVersionInfo.k0rdentName }}} CAPI can manage resources on AWS, you need to use `clusterawsadm` to create a bootstrap CloudFormation stack with additional IAM policies and a service account. You do this under the administrative account credentials you earlier exported to the management node environment:
 
 ```shell
 clusterawsadm bootstrap iam create-cloudformation-stack
 ```
 
-## Attach IAM policies to the k0rdent user
+## Attach IAM policies to the {{{ docsVersionInfo.k0rdentName }}} user
 
-Next, we'll attach appropriate policies to the k0rdent user. These are:
+Next, we'll attach appropriate policies to the {{{ docsVersionInfo.k0rdentName }}} user. These are:
 
 * `control-plane.cluster-api-provider-aws.sigs.k8s.io`
 * `controllers.cluster-api-provider-aws.sigs.k8s.io`
@@ -223,9 +223,9 @@ And you'll see output that looks like this (this is non-valid example text):
 }
 ```
 
-## Create AWS credentials for the k0rdent user
+## Create AWS credentials for the {{{ docsVersionInfo.k0rdentName }}} user
 
-In the AWS IAM Console, you can now create the Access Key ID and Secret Access Key for the k0rdent user and download them. You can also do this via the AWS CLI:
+In the AWS IAM Console, you can now create the Access Key ID and Secret Access Key for the {{{ docsVersionInfo.k0rdentName }}} user and download them. You can also do this via the AWS CLI:
 
 ```shell
 aws iam create-access-key --user-name k0rdentQuickstart
@@ -255,7 +255,7 @@ You should see something like this. It's important to save these credentials sec
 
 ## Create IAM credentials secret on the management cluster
 
-Next, we create a `Secret` containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the `kcm-system` namespace (important: if you use another namespace, k0rdent will be unable to read the credentials). To do this, create the following YAML in a file called `aws-cluster-identity-secret.yaml`:
+Next, we create a `Secret` containing credentials for the {{{ docsVersionInfo.k0rdentName }}} user and apply this to the management cluster running {{{ docsVersionInfo.k0rdentName }}}, in the `kcm-system` namespace (important: if you use another namespace, {{{ docsVersionInfo.k0rdentName }}} will be unable to read the credentials). To do this, create the following YAML in a file called `aws-cluster-identity-secret.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -271,7 +271,7 @@ stringData:
   SecretAccessKey: "EXAMPLE_SECRET_ACCESS_KEY"
 ```
 
-Remember: the Access Key ID and Secret Access Key are the ones you generated for the k0rdent user, `k0rdentQuickStart`.
+Remember: the Access Key ID and Secret Access Key are the ones you generated for the {{{ docsVersionInfo.k0rdentName }}} user, `k0rdentQuickStart`.
 
 Then apply this YAML to the management cluster as follows:
 
@@ -307,9 +307,9 @@ Create the object as follows:
 kubectl apply -f aws-cluster-identity.yaml  -n kcm-system
 ```
 
-## Create the k0rdent Cluster Manager credential object
+## Create the {{{ docsVersionInfo.k0rdentName }}} Cluster Manager credential object
 
-Now we create the k0rdent Cluster Manager credential object. As in prior steps, create a YAML file called `aws-cluster-identity-cred.yaml`:
+Now we create the {{{ docsVersionInfo.k0rdentName }}} Cluster Manager credential object. As in prior steps, create a YAML file called `aws-cluster-identity-cred.yaml`:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -333,9 +333,9 @@ Now apply this YAML to your management cluster:
 kubectl apply -f aws-cluster-identity-cred.yaml -n kcm-system
 ```
 
-## Create the k0rdent Cluster Identity resource template ConfigMap
+## Create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template ConfigMap
 
-Now we create the k0rdent Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
+Now we create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -359,7 +359,7 @@ kubectl apply -f aws-cluster-identity-resource-template.yaml -n kcm-system
 
 ## List available cluster templates
 
-k0rdent is now fully configured to manage AWS. To create a cluster, begin by listing the available `ClusterTemplate` objects provided with k0rdent:
+{{{ docsVersionInfo.k0rdentName }}} is now fully configured to manage AWS. To create a cluster, begin by listing the available `ClusterTemplate` objects provided with {{{ docsVersionInfo.k0rdentName }}}:
 
 ```shell
 kubectl get clustertemplate -n kcm-system
@@ -383,7 +383,7 @@ kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.da
 
 ## Create your ClusterDeployment
 
-Now, to deploy a cluster, create a YAML file called `my-aws-clusterdeployment1.yaml`. We'll use this to create a `ClusterDeployment` object in k0rdent, representing the deployed cluster. The `ClusterDeployment` identifies for k0rdent the `ClusterTemplate` you want to use for cluster creation, the identity credential object you want to create it under (that of your k0rdent user), plus the region and instance types you want to use to host control plane and worker nodes:
+Now, to deploy a cluster, create a YAML file called `my-aws-clusterdeployment1.yaml`. We'll use this to create a `ClusterDeployment` object in {{{ docsVersionInfo.k0rdentName }}}, representing the deployed cluster. The `ClusterDeployment` identifies for {{{ docsVersionInfo.k0rdentName }}} the `ClusterTemplate` you want to use for cluster creation, the identity credential object you want to create it under (that of your {{{ docsVersionInfo.k0rdentName }}} user), plus the region and instance types you want to use to host control plane and worker nodes:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -405,7 +405,7 @@ spec:
 
 ## Apply the `ClusterDeployment` to deploy the cluster
 
-Finally, we'll apply the `ClusterDeployment` YAML (`my-aws-clusterdeployment1.yaml`) to instruct k0rdent to deploy the cluster:
+Finally, we'll apply the `ClusterDeployment` YAML (`my-aws-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
 ```shell
 kubectl apply -f my-aws-clusterdeployment1.yaml
@@ -475,12 +475,12 @@ clusterdeployment.k0rdent.mirantis.com "my-aws-clusterdeployment1" deleted
 
 ## Next Steps
 
-Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:
+Now that you've finished the {{{ docsVersionInfo.k0rdentName }}} QuickStart, we have some suggestions for what to do next:
 
 Check out the [Administrator Guide](../admin/index.md) ...
 
-* For a more detailed view of k0rdent setup for production
-* For details about setting up k0rdent to manage clusters on VMware and OpenStack
-* For details about using k0rdent with cloud Kubernetes distros: AWS EKS and Azure AKS
+* For a more detailed view of {{{ docsVersionInfo.k0rdentName }}} setup for production
+* For details about setting up {{{ docsVersionInfo.k0rdentName }}} to manage clusters on VMware and OpenStack
+* For details about using {{{ docsVersionInfo.k0rdentName }}} with cloud Kubernetes distros: AWS EKS and Azure AKS
 
-Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of k0rdent's key features.
+Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of {{{ docsVersionInfo.k0rdentName }}}'s key features.

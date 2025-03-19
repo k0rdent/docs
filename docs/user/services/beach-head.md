@@ -42,7 +42,7 @@ spec:
 In the example above, the fields under `serviceSpec` are relevant to the deployment of beach-head services.
 
 > NOTE:
-> Refer to the [Template Guide](../../reference/template/template-intro.md) for more detail about these fields.
+> Refer to the [Template Guide](../../reference/template/index.md) for more detail about these fields.
 
 This example `ClusterDeployment` object deploys kyverno and ingress-nginx, as referred to by their
 service templates respectively, on the target cluster.  As before, the `ServiceTemplate` includes information on the service. For example, here is the `ServiceTemplate` for kyverno:

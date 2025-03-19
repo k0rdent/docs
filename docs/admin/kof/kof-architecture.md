@@ -37,7 +37,7 @@ To update the diagram:
     victoria-metrics-operator
     cluster-api-visualizer
     sveltos-dashboard
-    k0rdent service templates
+    {{{ docsVersionInfo.k0rdentName }}} service templates
     promxy
 
   kof-operators chart
@@ -90,7 +90,7 @@ Cloud 1..N
       sveltos-dashboard
     </div>
     <div class="o">
-      k0rdent service templates
+      {{{ docsVersionInfo.k0rdentName }}} service templates
     </div>
     <div class="o">
       promxy

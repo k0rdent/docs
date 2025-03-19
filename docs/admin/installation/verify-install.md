@@ -62,7 +62,7 @@ kubectl get pods -n projectsveltos --no-headers | wc -l
 ```
 
 
-If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
+If any of these pods are missing, simply give {{{ docsVersionInfo.k0rdentName }}} more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
 
 ```shell
 kubectl describe pod classifier-manager-7b85f96469-666jx -n projectsveltos
@@ -70,9 +70,9 @@ kubectl describe pod classifier-manager-7b85f96469-666jx -n projectsveltos
 
 As long as you're not seeing pod restarts, you just need to wait a few minutes.
 
-## Verify that k0rdent itself is ready
+## Verify that {{{ docsVersionInfo.k0rdentName }}} itself is ready
 
-The actual measure of whether k0rdent is ready is the state of the `Management` object. To check, issue this command:
+The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is the state of the `Management` object. To check, issue this command:
 
 ```shell
 kubectl get Management -n kcm-system

@@ -70,4 +70,4 @@ ingress-nginx-controller-cbcf8bf58-zhvph   1/1     Running   0          24m
 ```
 
 Youc an get more information on how to access the child cluster in the [create a cluster deployment](../../admin/clusters/deploy-cluster.md)
-chapter, and more on `ServiceTemplate` objects in the [Template Guide](../../reference/template/template-intro.md).
+chapter, and more on `ServiceTemplate` objects in the [Template Guide](../../reference/template/index.md).

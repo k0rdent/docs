@@ -7,10 +7,10 @@
 
 In the event of disaster, you can restore from a backup by doing the following:
 
-1. Create a clean k0rdent installation, including `velero` and [its plugins](./customization.md#velero-installation).
+1. Create a clean {{{ docsVersionInfo.k0rdentName }}} installation, including `velero` and [its plugins](./customization.md#velero-installation).
    Specifically, you want to **avoid** creating a `Management` object and similar objects because they
    will be part of your restored cluster. You can remove these objects after installation, but you
-   can also install k0rdent without them in the first place:
+   can also install {{{ docsVersionInfo.k0rdentName }}} without them in the first place:
 
     ```bash
     helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \

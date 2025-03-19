@@ -6,7 +6,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
 
     Before you start, make sure you have the following:
 
-    - A management Kubernetes cluster (Kubernetes v1.28+) deployed on Azure with [k0rdent installed](../installation/install-k0rdent.md).
+    - A management Kubernetes cluster (Kubernetes v1.28+) deployed on Azure with [{{{ docsVersionInfo.k0rdentName }}} installed](../installation/install-k0rdent.md).
     - A [default storage class](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) configured 
       on the management cluster to support Persistent Volumes.
 

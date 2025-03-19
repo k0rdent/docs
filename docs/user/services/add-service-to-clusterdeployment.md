@@ -22,7 +22,7 @@ spec:
     priority: 100
 ```
 As you can see, you're simply referencing the template in the `.spec.serviceSpec.services[].template` field of the `ClusterDeployment`
-to tell k0rdent that you want this service to be part of this cluster.
+to tell {{{ docsVersionInfo.k0rdentName }}} that you want this service to be part of this cluster.
 
 If you wanted to add this service to an existing cluster, you would simply patch the definition of the `ClusterDeployment`, as in:
 

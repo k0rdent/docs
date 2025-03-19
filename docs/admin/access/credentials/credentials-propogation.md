@@ -14,7 +14,7 @@ to pass all necessary credentials, but this approach has several problems:
 * Possible leaks, since credentials are copied to several `Secret` objects
   related to bootstrap data.
 
-To solve these problems in k0rdent we're using the Sveltos controller, which can
+To solve these problems in {{{ docsVersionInfo.k0rdentName }}} we're using the Sveltos controller, which can
 render the CCM template with all necessary data from the CAPI provider resources (like
 `ClusterIdentity`) and can create secrets directly on the cluster deployment.
 
@@ -58,13 +58,13 @@ Currently the Cluster API Azure (CAPZ) provider creates `azure.json` `Secret` ob
 same namespace as the `Cluster` object. By design they should be referenced in the
 `cloud-init` YAML later during bootstrap process.
 
-In k0rdent these `Secret` objects aren't used and will not be added to the
+In {{{ docsVersionInfo.k0rdentName }}} these `Secret` objects aren't used and will not be added to the
 `cloud-init`, but engineers can access them without restrictions, which is a security issue.
 
 ### OpenStack
 
 For OpenStack, CAPO relies on a `clouds.yaml` file.
-In k0rdent, you provide this file in a Kubernetes `Secret` that references OpenStack credentials
+In {{{ docsVersionInfo.k0rdentName }}}, you provide this file in a Kubernetes `Secret` that references OpenStack credentials
 (ideally application credentials for enhanced security). During reconciliation, KCM
 automatically generates the cloud-config required by OpenStack’s cloud-controller-manager.
 
@@ -96,7 +96,7 @@ type: Opaque
 ```
 ## The Credential Distribution System
 
-k0rdent provides a mechanism to distribute `Credential` objects across namespaces using the
+{{{ docsVersionInfo.k0rdentName }}} provides a mechanism to distribute `Credential` objects across namespaces using the
 `AccessManagement` object. This object defines a set of `accessRules` that determine how credentials are distributed.
 
 Each access rule specifies:
@@ -112,7 +112,7 @@ namespaces based on the `accessRules` in the `AccessManagement` spec.
 > INFO:
 > Access rules can also include `Cluster` and `Service` Template Chains (`ClusterTemplateChain` objects and
 > `ServiceTemplateChain` objects) to distribute templates to target namespaces.
-> For more details, read: [Template Life Cycle Management](../../../reference/template/template-intro.md).
+> For more details, read: [Template Life Cycle Management](../../../reference/template/index.md).
 
 ### How to Configure Credential Distribution
 

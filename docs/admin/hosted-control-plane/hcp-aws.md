@@ -6,7 +6,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
 
     Before proceeding, make sure you have the following:
 
-    * A management Kubernetes cluster (Kubernetes v1.28 or later) deployed on AWS with [k0rdent installed](../installation/install-k0rdent.md).
+    * A management Kubernetes cluster (Kubernetes v1.28 or later) deployed on AWS with [{{{ docsVersionInfo.k0rdentName }}} installed](../installation/install-k0rdent.md).
     * A [default storage class](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) configured on the management cluster to support Persistent Volumes.
     * The VPC ID where the worker nodes will be deployed.
     * The Subnet ID and Availability Zone (AZ) for the worker nodes.
@@ -55,7 +55,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
 
 3. Create the ClusterDeployment manifest
 
-    Once you've collected all the necessary data, you can create the `ClusterDeployment` manifest. This file tells k0rdent how to 
+    Once you've collected all the necessary data, you can create the `ClusterDeployment` manifest. This file tells {{{ docsVersionInfo.k0rdentName }}} how to 
     deploy and manage the hosted control plane. For example:
 
     ```yaml

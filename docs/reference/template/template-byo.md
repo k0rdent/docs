@@ -1,6 +1,6 @@
 # Bring Your Own Templates
 
-In addition to the templates that ship with k0rdent, it's possible to make your own. These might represent different types of clusters, or they may represent additional services to add to a cluster. Follow these steps:
+In addition to the templates that ship with {{{ docsVersionInfo.k0rdentName }}}, it's possible to make your own. These might represent different types of clusters, or they may represent additional services to add to a cluster. Follow these steps:
 
 ## Create a Source Object
 
@@ -79,7 +79,7 @@ The controller automatically creates the `HelmChart` object based on the chartSp
 > referencing them. The `ClusterDeployment` can't reference the Template from another namespace (the creation request will
 > be declined by the admission webhook). All `ClusterTemplate` and `ServiceTemplate` objects shipped with KCM reside in the
 > system namespace (defaults to `kcm-system`). To get the instructions on how to distribute Templates along multiple
-> namespaces, read [Template Life Cycle Management](template-intro.md#template-life-cycle-management).
+> namespaces, read [Template Life Cycle Management](index.md#template-life-cycle-management).
 
 ### Examples
 

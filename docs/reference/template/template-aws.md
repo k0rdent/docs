@@ -2,7 +2,7 @@
 
 ## AWS AMI
 
-For AWS, by default k0rdent looks up the AMI ID automatically, using the latest Amazon Linux 2 image.
+For AWS, by default {{{ docsVersionInfo.k0rdentName }}} looks up the AMI ID automatically, using the latest Amazon Linux 2 image.
 
 You can override lookup parameters to search your desired image automatically or you can
 use a specific AMI ID directly.
@@ -10,7 +10,7 @@ If both the AMI ID and lookup parameters are defined, the AMI ID will have highe
 
 ### Image lookup
 
-To configure automatic AMI lookup, k0rdent uses three parameters:
+To configure automatic AMI lookup, {{{ docsVersionInfo.k0rdentName }}} uses three parameters:
 
 * `.imageLookup.format` - Used directly as a value for the `name` filter
 (see the [describe-images filters](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html#describe-images)).

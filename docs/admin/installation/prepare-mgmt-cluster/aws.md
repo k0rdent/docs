@@ -1,14 +1,14 @@
 # AWS
 
-k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EKS clusters. In both cases, you'll need to create the relevant credentials, and to do that you'll need to configure an IAM user. Follow these steps to make it possible to deploy to AWS:
+{{{ docsVersionInfo.k0rdentName }}} can deploy managed clusters as both EC2-based Kubernetes clusters and EKS clusters. In both cases, you'll need to create the relevant credentials, and to do that you'll need to configure an IAM user. Follow these steps to make it possible to deploy to AWS:
 
-1. Install k0rdent
+1. Install {{{ docsVersionInfo.k0rdentName }}}
 
-    Follow the instructions in [Install k0rdent](../install-k0rdent.md) to create a management cluster with k0rdent running.
+    Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running.
 
 2. Install `clusterawsadm`
 
-    k0rdent uses the Cluster API (CAPI) to marshal clouds and infrastructures. For AWS, this means using the components from the Cluster API Provider AWS (CAPA) project. `clusterawsadm`, a CLI tool created by CAPA project, helps with AWS-specific tasks such as creating IAM roles and policies, as well as credential configuration. To install clusterawsadm on Ubuntu on x86 hardware, execute these commands:
+    {{{ docsVersionInfo.k0rdentName }}} uses the Cluster API (CAPI) to marshal clouds and infrastructures. For AWS, this means using the components from the Cluster API Provider AWS (CAPA) project. `clusterawsadm`, a CLI tool created by CAPA project, helps with AWS-specific tasks such as creating IAM roles and policies, as well as credential configuration. To install clusterawsadm on Ubuntu on x86 hardware, execute these commands:
 
     ```shell
     curl -LO https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/v2.7.1/clusterawsadm-linux-amd64
@@ -17,7 +17,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
 
 3. Configure AWS IAM
 
-    Next you'll need to create the IAM policies and service account k0rdent will use to take action within the AWS infrastructure. (Note that you only need to do this once.)
+    Next you'll need to create the IAM policies and service account {{{ docsVersionInfo.k0rdentName }}} will use to take action within the AWS infrastructure. (Note that you only need to do this once.)
 
     The first step is to create the IAM CloudFormation stack based on your admin user. Start by specifying the environment variables `clusterawsadm` will use as AWS credentials:
 
@@ -51,7 +51,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
 
 6. Check for available IPs
 
-    Because k0rdent has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
+    Because {{{ docsVersionInfo.k0rdentName }}} has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
     `EC2-VPC Elastic IPs` quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
     second to the same region, you are likely to run into issues.  
 
@@ -221,7 +221,7 @@ k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EK
     }
     ```
 
-9. Create the IAM Credentials `Secret` on the k0rdent Management Cluster
+9. Create the IAM Credentials `Secret` on the {{{ docsVersionInfo.k0rdentName }}} Management Cluster
 
     Create a YAML file called `aws-cluster-identity-secret.yaml` and add the following text, including the `AccessKeyId` and `SecretAccessKey` you created in the previous step:
 

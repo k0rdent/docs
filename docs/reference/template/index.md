@@ -1,6 +1,6 @@
 # The Templates system
 
-By default, k0rdent delivers a set of default `ProviderTemplate`, `ClusterTemplate` and `ServiceTemplate` objects:
+By default, {{{ docsVersionInfo.k0rdentName }}} delivers a set of default `ProviderTemplate`, `ClusterTemplate` and `ServiceTemplate` objects:
 
 * `ProviderTemplate`
    The template containing the configuration of the provider (for example, k0smotron or AWS). These are cluster-scoped.
@@ -11,7 +11,7 @@ By default, k0rdent delivers a set of default `ProviderTemplate`, `ClusterTempla
 
 All Templates are immutable, so if you want to change something about a cluster that has been deployed, you have to
 apply a whole new template. You can also build your own templates and use them for deployment along with the
-templates shipped with k0rdent.
+templates shipped with {{{ docsVersionInfo.k0rdentName }}}.
 
 ## Template Naming Convention
 
@@ -217,4 +217,9 @@ As a result, the following new objects should be created:
 > 2. The target template should not affect immutable fields or any other incompatible internal objects upgrades,
 > otherwise the upgrade will fail.
 
-
+- [Removing predefined templates](template-predefined.md)
+- [Bring-your-own (BYO) templates](template-byo.md)
+- [Templates for Amazon Web Services](template-aws.md)
+- [Templates for Azure](template-azure.md)
+- [Templates for OpenStack](template-openstack.md)
+- [Templates for vSphere](template-vsphere.md)

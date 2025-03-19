@@ -69,14 +69,14 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
     2025-03-05 22:57:18 [ℹ]  nodegroup "nickchasek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]
     2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)
-    2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "NickChaseK0rdentControlCluster"
+    2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "NickChasek0rdentControlCluster"
     ...
     2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates
     ```
 
 1. Install kubectl
 
-    Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
+    Everything you do in {{{ docsVersionInfo.k0rdentName }}} is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
 
     ```shell
     sudo apt-get update
@@ -97,7 +97,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     aws eks update-kubeconfig --region YOUR_AWS_REGION --name CLUSTER_NAME
     ```
     ```shell
-    Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChaseK0rdentControlCluster in /home/nick/.kube/config
+    Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster in /home/nick/.kube/config
     ```
 
 1. Taint controllers
@@ -209,7 +209,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
 1. Install Helm
 
-    Finally, the easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
+    Finally, the easiest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
 
     ```shell
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
