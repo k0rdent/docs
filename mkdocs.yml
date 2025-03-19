@@ -3,7 +3,7 @@ site_description: Documentation for k0rdent.
 site_author: Mirantis, Inc.
 
 docs_dir: docs/
-repo_name: GitHub
+repo_name: k0rdent/kcm
 repo_url: https://github.com/k0rdent/docs
 edit_uri: "edit/release-v0.1.0/docs/"
 
@@ -228,6 +228,7 @@ markdown_extensions:
   - def_list
 
 extra:
+  docs_repo_name: k0rdent/docs
   repo_url: https://github.com/k0rdent/kcm
   generator: false
   social:
