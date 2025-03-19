@@ -3,7 +3,7 @@ site_description: Documentation for k0rdent.
 site_author: Mirantis, Inc.
 
 docs_dir: docs/
-repo_name: k0rdent/kcm
+repo_name: GitHub
 repo_url: https://github.com/k0rdent/docs
 edit_uri: "edit/release-v0.1.0/docs/"
 
@@ -71,7 +71,7 @@ plugins:
       redirect_maps:
         why-k0rdent.md: concepts/why-k0rdent.md
         k0rdent-architecture.md: concepts/k0rdent-architecture.md
-        guide-to-quickstarts.md: quickstarts/guide-to-quickstarts.md
+        guide-to-quickstarts.md: quickstarts/index.md
         quickstart-1-mgmt-node-and-cluster.md: quickstarts/quickstart-1-mgmt-node-and-cluster.md
         quickstart-2-aws.md: quickstarts/quickstart-2-aws.md
         quickstart-2-azure.md: quickstarts/quickstart-2-azure.md
@@ -92,7 +92,7 @@ plugins:
         user-create-cluster.md: user/user-create-cluster.md
         user-create-service.md: user/services/index.md 
         user-enable-drift-detection.md: user/user-enable-drift-detection.md
-        template-intro.md: reference/template/template-intro.md
+        template-intro.md: reference/template/index.md
         template-predefined.md: reference/template/template-predefined.md
         template-byo.md: reference/template/template-byo.md
         template-aws.md: reference/template/template-aws.md
@@ -100,7 +100,7 @@ plugins:
         template-openstack.md: reference/template/template-openstack.md
         template-vsphere.md: reference/template/template-vsphere.md
         known-issues-eks.md: troubleshooting/known-issues-eks.md
-        glossary.md: reference/glossary.md
+        glossary.md: appendix/glossary.md
         appendix-extend-mgmt.md: appendix/appendix-extend-mgmt.md
         appendix-dryrun.md: appendix/appendix-dryrun.md
         appendix-providers.md: appendix/appendix-providers.md
@@ -110,10 +110,11 @@ plugins:
 nav:
   - Welcome to the k0rdent docs: index.md
   - k0rdent concepts:
+    - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
     - k0rdent architecture: concepts/k0rdent-architecture.md
   - QuickStarts:
-    - Guide to Quickstarts: quickstarts/guide-to-quickstarts.md
+    - Guide to Quickstarts: quickstarts/index.md
     - Set up Management Node and Cluster: quickstarts/quickstart-1-mgmt-node-and-cluster.md
     - Configure and Deploy to AWS: quickstarts/quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
@@ -138,7 +139,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
-    - Working with Services:
+    - Working with services:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
       - Creating multi-cluster services: admin/services/admin-create-multiclusterservice.md
@@ -178,6 +179,7 @@ nav:
       - Caveats: admin/backup/caveats.md
       - Customization: admin/backup/customization.md
   - User Guide:
+    - Overview: user/index.md
     - Creating clusters as a k0rdent user: user/user-create-cluster.md
     - Creating and adding services to clusters as a k0rdent user: 
       - Overview: user/services/index.md
@@ -189,7 +191,7 @@ nav:
       - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
     - Enabling drift detection: user/user-enable-drift-detection.md
   - k0rdent Templates Reference:
-    - Introduction to k0rdent templates: reference/template/template-intro.md
+    - Introduction to k0rdent templates: reference/template/index.md
     - Removing predefined templates: reference/template/template-predefined.md
     - Bring-your-own (BYO) templates: reference/template/template-byo.md
     - Templates for Amazon Web Services: reference/template/template-aws.md
@@ -200,13 +202,14 @@ nav:
     - Overview: troubleshooting/index.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
     - EKS: troubleshooting/known-issues-eks.md
-  - Reference:
-    - Glossary: reference/glossary.md
   - Appendix:
+    - Overview: appendix/index.md
+    - Glossary: appendix/glossary.md
     - Extended management configuration: appendix/appendix-extend-mgmt.md
     - Understanding the dry run: appendix/appendix-dryrun.md
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
   - Contributing:
+    - Overview: contrib/index.md
     - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
     - k0rdent documentation style guide: contrib/k0rdent-documentation-style-guide.md
 
@@ -266,6 +269,7 @@ extra:
             Thanks for your feedback! Help us improve this page by
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
+    k0rdentName: k0rdent
     k0rdentVersion: 0-1-0
     k0rdentDotVersion: 0.1.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
