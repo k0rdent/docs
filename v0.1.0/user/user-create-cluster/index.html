@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2483,7 +2483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2780,7 +2780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/glossary/" class="md-nav__link">
+      <a href="../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3071,7 +3071,7 @@
 
 
 <h1 id="deploying-a-cluster">Deploying a Cluster<a class="headerlink" href="#deploying-a-cluster" title="Permanent link">#</a></h1>
-<p>k0rdent simplifies the process of deploying and managing Kubernetes clusters across various cloud platforms through the use of <code>ClusterDeployment</code> objects, which include all of the information k0rdent needs to know in order to create the cluster you want. This <code>ClusterDeployment</code> system relies on predefined templates and credentials. </p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} simplifies the process of deploying and managing Kubernetes clusters across various cloud platforms through the use of <code>ClusterDeployment</code> objects, which include all of the information {{ no such element: super_collections.SuperDict object['k0rdentName'] }} needs to know in order to create the cluster you want. This <code>ClusterDeployment</code> system relies on predefined templates and credentials. </p>
 <p>A cluster deployment typically involves:</p>
 <ol>
 <li>Credentials for the infrastructure provider (such as AWS, vSphere, and so on).</li>
@@ -3082,7 +3082,7 @@
 <ol>
 <li>
 <p>Obtain the <code>Credential</code> object</p>
-<p>k0rdent needs credentials to communicate with the infrastructure provider (for example, AWS, Azure, or vSphere). These credentials enable k0rdent to provision resources such as virtual machines, networking components, and storage.</p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} needs credentials to communicate with the infrastructure provider (for example, AWS, Azure, or vSphere). These credentials enable {{ no such element: super_collections.SuperDict object['k0rdentName'] }} to provision resources such as virtual machines, networking components, and storage.</p>
 <p><code>Credential</code> objects are generally created ahead of time and made available to users. You can see all of the existing <code>Credential</code> objects by querying the management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>credentials<span class="w"> </span>-n<span class="w"> </span>accounting
 </code></pre></div>
@@ -3112,7 +3112,7 @@ follow the instructions in the <a href="../../admin/access/credentials/">Credent
 </li>
 <li>
 <p>Select a Template</p>
-<p>Templates in k0rdent are predefined configurations that describe how to set up the cluster. Templates include details such as:</p>
+<p>Templates in {{ no such element: super_collections.SuperDict object['k0rdentName'] }} are predefined configurations that describe how to set up the cluster. Templates include details such as:</p>
 <ul>
 <li>The number and type of control plane and worker nodes.</li>
 <li>Networking settings.</li>
@@ -3180,10 +3180,10 @@ Note that the <code>.spec.credential</code> value should match the <code>.metada
 </li>
 <li>
 <p>Apply the Configuration</p>
-<p>Once the <code>ClusterDeployment</code> configuration is ready, apply it to the k0rdent management cluster:</p>
+<p>Once the <code>ClusterDeployment</code> configuration is ready, apply it to the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>clusterdeployment.yaml
 </code></pre></div>
-<p>This step submits your deployment request to k0rdent. </p>
+<p>This step submits your deployment request to {{ no such element: super_collections.SuperDict object['k0rdentName'] }}. </p>
 </li>
 <li>
 <p>Verify Deployment Status</p>
@@ -3194,7 +3194,7 @@ Note that the <code>.spec.credential</code> value should match the <code>.metada
 </li>
 <li>
 <p>Monitor Provisioning</p>
-<p>k0rdent will now start provisioning resources (for example, VMs or networks) and setting up the cluster. To monitor this process, run:</p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} will now start provisioning resources (for example, VMs or networks) and setting up the cluster. To monitor this process, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>get<span class="w"> </span>cluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="o">=</span>yaml
 </code></pre></div>
 </li>

@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2446,7 +2446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2743,7 +2743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3020,7 +3020,7 @@
 <p>Deploying an application, like deploying a cluster, involves applying a template to the management cluster. Rather than a <code>ClusterTemplate</code>, however, applications are deployed using a <code>ServiceTemplate</code>.</p>
 <p>You can find more information on <a href="../../../reference/template/template-byo/">Bringing Your Own Templates</a>
 in the Template Guide, but this section gives you an idea of how to create a <code>ServiceTemplate</code>
-and use it to deploy an application to a k0rdent child cluster.</p>
+and use it to deploy an application to a {{ no such element: super_collections.SuperDict object['k0rdentName'] }} child cluster.</p>
 <p>The basic sequence looks like this:</p>
 <ol>
 <li>
@@ -3062,11 +3062,11 @@ and use it to deploy an application to a k0rdent child cluster.</p>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
 <code>my-target-namespace</code> namespace.  It references version 4.11.3 of the <code>ingress-nginx</code> chart
 located in the <code>k0rdent-catalog</code> Helm repository.</p>
-<p>For more information on creating templates, see the <a href="../../../reference/template/template-intro/">Template Guide</a>.</p>
+<p>For more information on creating templates, see the <a href="../../../reference/template/">Template Guide</a>.</p>
 </li>
 <li>
 <p>Create a <code>ServiceTemplateChain</code></p>
-<p>To let k0rdent know where this <code>ServiceTemplate</code> can and can't be used, create a <code>ServiceTemplateChain</code> object, as in:</p>
+<p>To let {{ no such element: super_collections.SuperDict object['k0rdentName'] }} know where this <code>ServiceTemplate</code> can and can't be used, create a <code>ServiceTemplateChain</code> object, as in:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplateChain</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3109,7 +3109,7 @@ when you create it, as in:</p>
 <span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
 As you can see, you're simply referencing the template in the <code>.spec.serviceSpec.services[].template</code> field of the <code>ClusterDeployment</code>
-to tell k0rdent that you want this service to be part of this cluster.</p>
+to tell {{ no such element: super_collections.SuperDict object['k0rdentName'] }} that you want this service to be part of this cluster.</p>
 <p>If you wanted to add this service to an existing cluster, you would simply patch the definition of the <code>ClusterDeployment</code>, as in:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment<span class="w"> </span>my-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>my-target-namespace<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;merge&#39;</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;services&quot;:[{&quot;template&quot;:&quot;project-ingress-nginx-4.11.3&quot;,&quot;name&quot;:&quot;ingress-nginx&quot;,&quot;namespace&quot;:&quot;my-target-namespace&quot;}]}}&#39;</span>
 </code></pre></div>

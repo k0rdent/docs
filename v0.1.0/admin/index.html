@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2434,7 +2434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/template/template-intro/" class="md-nav__link">
+      <a href="../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2731,7 +2731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/glossary/" class="md-nav__link">
+      <a href="../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2982,9 +2982,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-k0rdent-works" class="md-nav__link">
+  <a href="#how-no-such-element-super_collectionssuperdict-objectk0rdentname-works" class="md-nav__link">
     <span class="md-ellipsis">
-      How k0rdent works
+      How {{ no such element: super_collections.SuperDict object['k0rdentName'] }} works
     </span>
   </a>
   
@@ -3000,22 +3000,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#k0rdent-and-gitops" class="md-nav__link">
+  <a href="#no-such-element-super_collectionssuperdict-objectk0rdentname-and-gitops" class="md-nav__link">
     <span class="md-ellipsis">
-      k0rdent and GitOps
+      {{ no such element: super_collections.SuperDict object['k0rdentName'] }} and GitOps
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-k0rdent-initialization-process" class="md-nav__link">
+  <a href="#the-no-such-element-super_collectionssuperdict-objectk0rdentname-initialization-process" class="md-nav__link">
     <span class="md-ellipsis">
-      The k0rdent initialization process
+      The {{ no such element: super_collections.SuperDict object['k0rdentName'] }} initialization process
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="The k0rdent initialization process">
+    <nav class="md-nav" aria-label="The {{ no such element: super_collections.SuperDict object['k0rdentName'] }} initialization process">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3064,23 +3064,23 @@
 
 
 <h1 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">#</a></h1>
-<p>Before you start working with k0rdent, it helps to understand a few basics.</p>
-<h2 id="how-k0rdent-works">How k0rdent works<a class="headerlink" href="#how-k0rdent-works" title="Permanent link">#</a></h2>
-<p>k0rdent has several important subsystems, notably:</p>
+<p>Before you start working with {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, it helps to understand a few basics.</p>
+<h2 id="how-no-such-element-super_collectionssuperdict-objectk0rdentname-works">How {{ no such element: super_collections.SuperDict object['k0rdentName'] }} works<a class="headerlink" href="#how-no-such-element-super_collectionssuperdict-objectk0rdentname-works" title="Permanent link">#</a></h2>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} has several important subsystems, notably:</p>
 <ul>
 <li><strong>KCM - k0rdent Cluster Manager</strong>: KCM wraps and manages Kubernetes Cluster API (ClusterAPI) and lets you treat clusters as
-Kubernetes objects. Within a k0rdent management cluster, you'll have a <code>ClusterDeployment</code> object that
+Kubernetes objects. Within a {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management cluster, you'll have a <code>ClusterDeployment</code> object that
 represents a deployed cluster, with <code>Machine</code> objects, and so on. When you create a <code>ClusterDeployment</code>,
-k0rdent deploys the cluster, when you delete it, k0rdent deletes it, and so on.</li>
+{{ no such element: super_collections.SuperDict object['k0rdentName'] }} deploys the cluster, when you delete it, {{ no such element: super_collections.SuperDict object['k0rdentName'] }} deletes it, and so on.</li>
 <li><strong>KSM - k0rdent Service Manager</strong>: KSM wraps and manages several interoperating open source projects such as Helm and Sveltos, which lets you treat services and applications as Kubernetes objects.</li>
 </ul>
 <p>Together, KCM and KSM interoperate to create a complete, template-driven system for defining and managing Internal Development Platforms (IDPs) made up of suites of services, plus a cluster and its components as realized on a particular cloud or infrastructure substrate.</p>
 <ul>
 <li>
-<p><strong>ClusterAPI providers</strong>: ClusterAPI uses <code>providers</code> to manage different clouds and infrastructures, including bare metal. k0rdent ships with providers for AWS, Azure, OpenStack and vSphere, and you can add additional providers in order to control other clouds or infrastructures that ClusterAPI supports.</p>
+<p><strong>ClusterAPI providers</strong>: ClusterAPI uses <code>providers</code> to manage different clouds and infrastructures, including bare metal. {{ no such element: super_collections.SuperDict object['k0rdentName'] }} ships with providers for AWS, Azure, OpenStack and vSphere, and you can add additional providers in order to control other clouds or infrastructures that ClusterAPI supports.</p>
 </li>
 <li>
-<p><strong>Templates</strong>: When you create a cluster, that cluster is based on a template, which specifies all of the various information about the cluster, such as where to find images, and so on. These templates get installed into k0rdent, but they don't do anything until you reference them in a <code>ClusterDeployment</code> that represents an actual cluster.</p>
+<p><strong>Templates</strong>: When you create a cluster, that cluster is based on a template, which specifies all of the various information about the cluster, such as where to find images, and so on. These templates get installed into {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, but they don't do anything until you reference them in a <code>ClusterDeployment</code> that represents an actual cluster.</p>
 <pre class="mermaid"><code>graph LR;
     subgraph Infrastructure
         WN1["ClusterDeployment Worker Node"]
@@ -3088,7 +3088,7 @@ k0rdent deploys the cluster, when you delete it, k0rdent deletes it, and so on.<
         WN2["ClusterDeployment Worker Node"]
     end
 
-    subgraph "k0rdent Mgmnt Cluster"
+    subgraph "{{ no such element: super_collections.SuperDict object['k0rdentName'] }} Mgmnt Cluster"
         CT["Cluster Template"]
         P["Provider"]
     end
@@ -3098,13 +3098,13 @@ k0rdent deploys the cluster, when you delete it, k0rdent deletes it, and so on.<
     CT --&gt;|Defines| CP &amp; WN1 &amp; WN2
     P --&gt;|Provisions| Infrastructure
 </code></pre>
-<p>k0rdent can also manage these clusters, upgrading them, scaling them, or installing software and services.</p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} can also manage these clusters, upgrading them, scaling them, or installing software and services.</p>
 </li>
 <li>
-<p><strong>Services</strong>: To add (or manage) services, you also use templates. These <code>ServiceTemplate</code> objects are like <code>ClusterTemplate</code> objects, in that you install them into the cluster, but until they're actually referenced, they don't do anything. When you reference a <code>ServiceTemplate</code> as part of a <code>ClusterDeployment</code>, k0rdent knows to install that service into that cluster.</p>
+<p><strong>Services</strong>: To add (or manage) services, you also use templates. These <code>ServiceTemplate</code> objects are like <code>ClusterTemplate</code> objects, in that you install them into the cluster, but until they're actually referenced, they don't do anything. When you reference a <code>ServiceTemplate</code> as part of a <code>ClusterDeployment</code>, {{ no such element: super_collections.SuperDict object['k0rdentName'] }} knows to install that service into that cluster.</p>
 <pre class="mermaid"><code>graph TB;
 
-    subgraph "k0rdent Mgmnt Cluster"
+    subgraph "{{ no such element: super_collections.SuperDict object['k0rdentName'] }} Mgmnt Cluster"
         ST["Service Template"]
     end
 
@@ -3129,10 +3129,10 @@ k0rdent deploys the cluster, when you delete it, k0rdent deletes it, and so on.<
 </ul>
 <h2 id="how-credentials-work">How Credentials work<a class="headerlink" href="#how-credentials-work" title="Permanent link">#</a></h2>
 <p>Of course you can't do any of this without permissions. As a human, you can log into, say, AWS, and tell it to create a new
-instance on which you are going to install Kubernetes, but how does k0rdent get that permission? It gets it through the use of
+instance on which you are going to install Kubernetes, but how does {{ no such element: super_collections.SuperDict object['k0rdentName'] }} get that permission? It gets it through the use of
 <code>Credential</code> objects.</p>
 <p>When you create a <code>ClusterDeployment</code> or deploy an application, you include a reference to a <code>Credential</code> object that has been
-installed in the k0rdent management cluster. Depending on whether the target infrastructure is AWS, Azure, or something else, that
+installed in the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management cluster. Depending on whether the target infrastructure is AWS, Azure, or something else, that
 <code>Credential</code> might reference an access key and secret, or it might reference a service provider, but all of that gets abstracted
 out by the time you get to the <code>Credential</code>, which is what you'll actually reference.</p>
 <pre class="mermaid"><code>graph LR;
@@ -3143,18 +3143,18 @@ out by the time you get to the <code>Credential</code>, which is what you'll act
     ClusterIdentity --&gt; Credential["Credential"];</code></pre>
 <p>By abstracting everything out to create a standard <code>Credential</code> object, users never have to have access to actual credentials (lowercase "c"). This enables the administrator to keep those credentials private, and to rotate them as necessary without disturbing users or their applications. The administrator simply updates the <code>Credential</code> object and everything continues to work.</p>
 <p>You can find more information on creating these <code>Credential</code> objects in <a href="access/credentials/">the Credentials chapter</a>.</p>
-<h2 id="k0rdent-and-gitops">k0rdent and GitOps<a class="headerlink" href="#k0rdent-and-gitops" title="Permanent link">#</a></h2>
-<p>At its heart, k0rdent is a Kubernetes-native way to declaratively specify what should be happening in the infrastructure and
+<h2 id="no-such-element-super_collectionssuperdict-objectk0rdentname-and-gitops">{{ no such element: super_collections.SuperDict object['k0rdentName'] }} and GitOps<a class="headerlink" href="#no-such-element-super_collectionssuperdict-objectk0rdentname-and-gitops" title="Permanent link">#</a></h2>
+<p>At its heart, {{ no such element: super_collections.SuperDict object['k0rdentName'] }} is a Kubernetes-native way to declaratively specify what should be happening in the infrastructure and
 have that maintained. In other words, if you want to, say, scale up a cluster, you would give that cluster a new
-definition that includes the additional nodes, and then k0rdent, seeing that reality no longer the definition,
+definition that includes the additional nodes, and then {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, seeing that reality no longer the definition,
 will make it happen.</p>
 <p>In some ways this way of working is similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
-ensure that reality matches the definition. We can say that k0rdent is GitOps-compatible, in the sense that you can (and should) consider storing k0rdent templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of k0rdent itself.</p>
-<p>The main difference is that k0rdent's way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you could, if you needed to, port much of what you do with k0rdent templates and objects directly to other solution environments that leverage these standard tools.</p>
-<h2 id="the-k0rdent-initialization-process">The k0rdent initialization process<a class="headerlink" href="#the-k0rdent-initialization-process" title="Permanent link">#</a></h2>
-<p><img alt="k0rdent initialization process" src="../assets/kcm-initialization.png" /></p>
+ensure that reality matches the definition. We can say that {{ no such element: super_collections.SuperDict object['k0rdentName'] }} is GitOps-compatible, in the sense that you can (and should) consider storing {{ no such element: super_collections.SuperDict object['k0rdentName'] }} templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of {{ no such element: super_collections.SuperDict object['k0rdentName'] }} itself.</p>
+<p>The main difference is that {{ no such element: super_collections.SuperDict object['k0rdentName'] }}'s way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you could, if you needed to, port much of what you do with {{ no such element: super_collections.SuperDict object['k0rdentName'] }} templates and objects directly to other solution environments that leverage these standard tools.</p>
+<h2 id="the-no-such-element-super_collectionssuperdict-objectk0rdentname-initialization-process">The {{ no such element: super_collections.SuperDict object['k0rdentName'] }} initialization process<a class="headerlink" href="#the-no-such-element-super_collectionssuperdict-objectk0rdentname-initialization-process" title="Permanent link">#</a></h2>
+<p><img alt="{{ no such element: super_collections.SuperDict object['k0rdentName'] }} initialization process" src="../assets/kcm-initialization.png" /></p>
 <h3 id="the-process">The process<a class="headerlink" href="#the-process" title="Permanent link">#</a></h3>
-<p>The k0rdent initialization process involves tools such as Helm and FluxCD.</p>
+<p>The {{ no such element: super_collections.SuperDict object['k0rdentName'] }} initialization process involves tools such as Helm and FluxCD.</p>
 <ol>
 <li><a href="installation/install-k0rdent/"><code>helm install kcm</code></a> brings up the bootstrap components (yellow in the above diagram).</li>
 <li><code>kcm-controller-manager</code> sets up webhooks to validate its <code>CustomResource</code> objects, then cert-manager handles the webhooks’ certificates.</li>
@@ -3164,10 +3164,21 @@ ensure that reality matches the definition. We can say that k0rdent is GitOps-co
 <li><a href="https://github.com/fluxcd/flux2">Flux</a> (source-controller and helm-controller pods) reconciles the <em>HelmRelease</em> objects. In other words, it installs all the helm charts referred to in the templates.
 <strong>After this point, the deployment is completely controlled by Flux.</strong></li>
 <li><code>kcm-controller-manager</code> creates a <code>Management</code> object that refers to the above <code>Release</code> and the <code>ProviderTemplate</code> objects.
-The <code>Management</code> object represents the k0rdent management cluster as a whole.
+The <code>Management</code> object represents the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management cluster as a whole.
 The management cluster Day-2 operations (such as <a href="upgrade/admin-upgrading-k0rdent/">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
-<li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines <a href="../reference/template/template-intro/#template-life-cycle-management">access rules</a> for <code>ClusterTemplate</code>/<code>ServiceTemplate</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used along with admin-created <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects.</li>
+<li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines <a href="../reference/template/#template-life-cycle-management">access rules</a> for <code>ClusterTemplate</code>/<code>ServiceTemplate</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used along with admin-created <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects.</li>
 </ol>
+<p>This Administration Guide provides information on:</p>
+<ul>
+<li><a href="installation/">Installing and preparing {{ no such element: super_collections.SuperDict object['k0rdentName'] }} for use</a></li>
+<li><a href="clusters/">Working with clusters</a></li>
+<li><a href="services/">Working with services</a></li>
+<li><a href="hosted-control-plane/">Hosted control planes</a></li>
+<li><a href="kof/">{{ no such element: super_collections.SuperDict object['k0rdentName'] }} Observability &amp; FinOps</a></li>
+<li><a href="upgrade/admin-upgrading-k0rdent/">Upgrading {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</a></li>
+<li><a href="access/">Access Management (Credentials and RBAC)</a></li>
+<li><a href="backup/">Backup and Restore</a></li>
+</ul>
 
 
 

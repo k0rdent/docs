@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2503,7 +2503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2800,7 +2800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3109,12 +3109,12 @@
 
 
 <h1 id="adopting-an-existing-cluster">Adopting an Existing Cluster<a class="headerlink" href="#adopting-an-existing-cluster" title="Permanent link">#</a></h1>
-<p>Creating a new cluster isn't the only way to use k0rdent. Adopting an existing Kubernetes cluster enables you to 
-bring it under k0rdent's management. This process is useful when you already have a running cluster but want 
-to centralize management and leverage k0rdent's capabilities, such as unified monitoring, configuration, and automation,
+<p>Creating a new cluster isn't the only way to use {{ no such element: super_collections.SuperDict object['k0rdentName'] }}. Adopting an existing Kubernetes cluster enables you to 
+bring it under {{ no such element: super_collections.SuperDict object['k0rdentName'] }}'s management. This process is useful when you already have a running cluster but want 
+to centralize management and leverage {{ no such element: super_collections.SuperDict object['k0rdentName'] }}'s capabilities, such as unified monitoring, configuration, and automation,
 but you don't want to redeploy your cluster.</p>
 <h2 id="adopting-a-cluster">Adopting a Cluster<a class="headerlink" href="#adopting-a-cluster" title="Permanent link">#</a></h2>
-<p>To adopt a cluster, k0rdent establishes communication between the management cluster (where kcm is installed) 
+<p>To adopt a cluster, {{ no such element: super_collections.SuperDict object['k0rdentName'] }} establishes communication between the management cluster (where kcm is installed) 
 and the target cluster. This requires proper credentials, network connectivity, and a standardized configuration. </p>
 <p>Follow these steps to adopt an existing cluster:</p>
 <ol>
@@ -3124,7 +3124,7 @@ and the target cluster. This requires proper credentials, network connectivity, 
 <ul>
 <li>A kubeconfig file for the cluster you want to adopt (this file provides access credentials and configuration details 
   for the cluster).</li>
-<li>A management cluster with k0rdent installed and running. See the <a href="../../installation/">installation instructions</a> 
+<li>A management cluster with {{ no such element: super_collections.SuperDict object['k0rdentName'] }} installed and running. See the <a href="../../installation/">installation instructions</a> 
   if you need to set it up.</li>
 <li>Network connectivity between the management cluster and the cluster to be adopted (for example, ensure firewall 
   rules and VPNs allow communication).</li>
@@ -3150,7 +3150,7 @@ execute commands against the management cluster.</p>
 </li>
 <li>
 <p>Create the <code>ClusterDeployment</code> YAML Configuration</p>
-<p>The <code>ClusterDeployment</code> object is used to define how k0rdent should manage the adopted cluster. Create a 
+<p>The <code>ClusterDeployment</code> object is used to define how {{ no such element: super_collections.SuperDict object['k0rdentName'] }} should manage the adopted cluster. Create a 
 YAML file for the <code>ClusterDeployment</code> object, as shown below:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
@@ -3198,7 +3198,7 @@ YAML file for the <code>ClusterDeployment</code> object, as shown below:</p>
 <p>Once your configuration file is ready, apply it to the management cluster using <code>kubectl</code>:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>clusterdeployment.yaml
 </code></pre></div>
-<p>This step submits the <code>ClusterDeployment</code> object to k0rdent, initiating the adoption process.</p>
+<p>This step submits the <code>ClusterDeployment</code> object to {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, initiating the adoption process.</p>
 </li>
 <li>
 <p>Check the Status of the <code>ClusterDeployment</code> Object</p>
@@ -3210,13 +3210,13 @@ this information to confirm that the adoption is successful.</p>
 </li>
 </ol>
 <h2 id="whats-happening-behind-the-scenes">What's Happening Behind the Scenes?<a class="headerlink" href="#whats-happening-behind-the-scenes" title="Permanent link">#</a></h2>
-<p>When you adopt a cluster, k0rdent performs several actions:
+<p>When you adopt a cluster, {{ no such element: super_collections.SuperDict object['k0rdentName'] }} performs several actions:
 1. It validates the credentials and configuration provided in the <code>ClusterDeployment</code> object.
 2. It ensures network connectivity between the management cluster and the adopted cluster.
-3. It registers the adopted cluster within the k0rdent system, enabling it to be monitored and managed like 
+3. It registers the adopted cluster within the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} system, enabling it to be monitored and managed like 
     any k0rdent-deployed cluster.</p>
 <p>This process doesn't change the adopted cluster's existing workloads or configurations. Instead, it enhances your 
-ability to manage the cluster through k0rdent.</p>
+ability to manage the cluster through {{ no such element: super_collections.SuperDict object['k0rdentName'] }}.</p>
 <h2 id="additional-tips">Additional Tips<a class="headerlink" href="#additional-tips" title="Permanent link">#</a></h2>
 <ul>
 <li>If you encounter issues, double-check that kubeconfig file you used for the adopted cluster is valid 

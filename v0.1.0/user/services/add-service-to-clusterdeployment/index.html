@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2446,7 +2446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2743,7 +2743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3037,7 +3037,7 @@ when you create it, as in:</p>
 <span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
 As you can see, you're simply referencing the template in the <code>.spec.serviceSpec.services[].template</code> field of the <code>ClusterDeployment</code>
-to tell k0rdent that you want this service to be part of this cluster.</p>
+to tell {{ no such element: super_collections.SuperDict object['k0rdentName'] }} that you want this service to be part of this cluster.</p>
 <p>If you wanted to add this service to an existing cluster, you would simply patch the definition of the <code>ClusterDeployment</code>, as in:</p>
 <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl patch clusterdeployment my-cluster-deployment -n tenant42 --type=&#39;merge&#39; -p &#39;</span>
 <span class="l l-Scalar l-Scalar-Plain">spec</span><span class="p p-Indicator">:</span>

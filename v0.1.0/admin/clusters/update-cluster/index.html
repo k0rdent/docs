@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2446,7 +2446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2743,7 +2743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3017,13 +3017,13 @@
 
 
 <h1 id="updating-a-single-standalone-cluster">Updating a Single Standalone Cluster<a class="headerlink" href="#updating-a-single-standalone-cluster" title="Permanent link">#</a></h1>
-<p>k0rdent <code>ClusterTemplate</code> objects are immutable, so the only way to change a <code>ClusterDeployment</code> is to change the template
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} <code>ClusterTemplate</code> objects are immutable, so the only way to change a <code>ClusterDeployment</code> is to change the template
 that forms its basis. </p>
 <p>To update the <code>ClusterDeployment</code>, modify the <code>.spec.template</code> field to use the name of the new <code>ClusterTemplate</code>. 
 This enables you to apply changes to the cluster configuration. These changes will then be applied to the actual 
 cluster. For example, if the cluster currently uses <code>t2.large</code> instances, that will be specified in its current template. 
 To change the cluster to use <code>t2.xlarge</code> instances, you would simply apply a template that references that new size; 
-k0rdent will then realize the cluster is out of sync and will attempt to remedy the situation by updating the cluster.</p>
+{{ no such element: super_collections.SuperDict object['k0rdentName'] }} will then realize the cluster is out of sync and will attempt to remedy the situation by updating the cluster.</p>
 <p>Follow these steps to update the <code>ClusterDeployment</code>:</p>
 <ol>
 <li>
@@ -3063,7 +3063,7 @@ for example, this <code>ClusterTemplateChain</code>:</p>
 the <code>aws-standalone-cp-0-1-0</code> template, or it can be used as an upgrade from a cluster that uses <code>aws-standalone-cp-0.0.2</code>.
 You wouldn't be able to use this template to update a cluster that uses any other <code>ClusterTemplate</code>.</p>
 <p>Similarly, the <code>AccessManagement</code> object must have properly configured <code>spec.accessRules</code> with a list of allowed 
-<code>ClusterTemplateChain</code> object names and their namespaces. For more information, see <a href="../../../reference/template/template-intro/#template-life-cycle-management">Template Life Cycle Management</a>.</p>
+<code>ClusterTemplateChain</code> object names and their namespaces. For more information, see <a href="../../../reference/template/#template-life-cycle-management">Template Life Cycle Management</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Support for displaying all available Cluster Templates for updates in the <code>ClusterDeployment</code> status is planned.</p>

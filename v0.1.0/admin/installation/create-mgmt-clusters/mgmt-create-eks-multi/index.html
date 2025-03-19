@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2448,7 +2448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2745,7 +2745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3076,14 +3076,14 @@ eksctl<span class="w"> </span>version
 <div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
 <span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;nickchasek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
 <span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
-<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChaseK0rdentControlCluster&quot;</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChasek0rdentControlCluster&quot;</span>
 <span class="go">...</span>
 <span class="go">2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
 </code></pre></div></p>
 </li>
 <li>
 <p>Install kubectl</p>
-<p>Everything you do in k0rdent is done by creating and manipulating Kubernetes objects, so you'll need to have <code>kubectl</code> installed. You can find the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">full install docs here</a>, or just follow these instructions:</p>
+<p>Everything you do in {{ no such element: super_collections.SuperDict object['k0rdentName'] }} is done by creating and manipulating Kubernetes objects, so you'll need to have <code>kubectl</code> installed. You can find the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">full install docs here</a>, or just follow these instructions:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
 curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -3099,7 +3099,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <p>You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>eks<span class="w"> </span>update-kubeconfig<span class="w"> </span>--region<span class="w"> </span>YOUR_AWS_REGION<span class="w"> </span>--name<span class="w"> </span>CLUSTER_NAME
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:026090528175:cluster/NickChaseK0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
+<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
 </code></pre></div></p>
 </li>
 <li>
@@ -3192,7 +3192,7 @@ Clean up so you can start fresh:
 </li>
 <li>
 <p>Install Helm</p>
-<p>Finally, the easiest way to install k0rdent is through its Helm chart, so let's get Helm installed. You can find the <a href="https://helm.sh/docs/intro/install/">full instructions here</a>, or use these instructions:</p>
+<p>Finally, the easiest way to install {{ no such element: super_collections.SuperDict object['k0rdentName'] }} is through its Helm chart, so let's get Helm installed. You can find the <a href="https://helm.sh/docs/intro/install/">full instructions here</a>, or use these instructions:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>-o<span class="w"> </span>get_helm.sh<span class="w"> </span>https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>get_helm.sh
 ./get_helm.sh

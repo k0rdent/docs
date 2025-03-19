@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2448,7 +2448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2745,7 +2745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3019,11 +3019,11 @@
 
 
 <h1 id="openstack">OpenStack<a class="headerlink" href="#openstack" title="Permanent link">#</a></h1>
-<p>k0rdent can deploy child clusters on OpenStack virtual machines. Follow these steps to configure and deploy OpenStack clusters for your users:</p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} can deploy child clusters on OpenStack virtual machines. Follow these steps to configure and deploy OpenStack clusters for your users:</p>
 <ol>
 <li>
-<p>Install k0rdent</p>
-<p>Follow the instructions in <a href="../../install-k0rdent/">Install k0rdent</a> to create a management cluster with k0rdent running.</p>
+<p>Install {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</p>
+<p>Follow the instructions in <a href="../../install-k0rdent/">Install {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</a> to create a management cluster with {{ no such element: super_collections.SuperDict object['k0rdentName'] }} running.</p>
 </li>
 <li>
 <p>OpenStack CLI (optional)</p>
@@ -3072,7 +3072,7 @@ where appropriate. Save this as <code>openstack-cloud-config.yaml</code>:</p>
 </code></pre></div>
 </li>
 <li>
-<p>Create the k0rdent Credential Object</p>
+<p>Create the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} Credential Object</p>
 <p>Next, define a <code>Credential</code> that references the <code>Secret</code> from the previous step.
 Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
@@ -3231,7 +3231,7 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <p>Apply the YAML to your management cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-openstack-cluster-deployment.yaml
 </code></pre></div>
-<p>This will trigger the provisioning process where k0rdent will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
+<p>This will trigger the provisioning process where {{ no such element: super_collections.SuperDict object['k0rdentName'] }} will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
 provisioning process:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-openstack-cluster-deployment<span class="w"> </span>--watch
 </code></pre></div>

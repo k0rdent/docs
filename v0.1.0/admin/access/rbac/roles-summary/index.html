@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2523,7 +2523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2820,7 +2820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3150,11 +3150,11 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-The names of the <code>ClusterRole</code> objects may have different prefixes depending on the name of the k0rdent Helm chart.
-The <code>ClusterRole</code> object definitions below use the <code>kcm</code> prefix, which is the default name of the k0rdent Helm chart.</p>
+The names of the <code>ClusterRole</code> objects may have different prefixes depending on the name of the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} Helm chart.
+The <code>ClusterRole</code> object definitions below use the <code>kcm</code> prefix, which is the default name of the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} Helm chart.</p>
 </div>
 <h2 id="global-admin">Global Admin<a class="headerlink" href="#global-admin" title="Permanent link">#</a></h2>
-<p>The <code>Global Admin</code> role provides full administrative access across all the k0rdent system.</p>
+<p>The <code>Global Admin</code> role provides full administrative access across all the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} system.</p>
 <p><strong>Name</strong>: <code>kcm-global-admin-role</code></p>
 <p><strong>Aggregation Rule</strong>: Includes all <code>ClusterRoles</code> with the labels:</p>
 <ul>
@@ -3164,7 +3164,7 @@ The <code>ClusterRole</code> object definitions below use the <code>kcm</code> p
 </ul>
 <p><strong>Permissions</strong>:</p>
 <ol>
-<li>Full access to the k0rdent API</li>
+<li>Full access to the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} API</li>
 <li>Full access to Flux Helm repositories and Helm charts</li>
 <li>Full access to Cluster API identities</li>
 <li>Full access to namespaces and secrets</li>
@@ -3172,7 +3172,7 @@ The <code>ClusterRole</code> object definitions below use the <code>kcm</code> p
 <p><strong>Use case</strong></p>
 <p>A user with the <code>Global Admin</code> role is authorized to perform the following actions:</p>
 <ol>
-<li>Manage the k0rdent configuration</li>
+<li>Manage the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} configuration</li>
 <li>Manage namespaces in the management cluster</li>
 <li>Manage <code>ProviderTemplate</code> objects: add new templates or remove unneeded ones</li>
 <li>Manage <code>ClusterTemplate</code> and <code>ServiceTemplate</code> objects in any namespace, including adding and removing templates</li>
@@ -3183,11 +3183,11 @@ The <code>ClusterRole</code> object definitions below use the <code>kcm</code> p
 <li>Manage and deploy Services across multiple clusters in any namespace by modifying <code>MultiClusterService</code> resources</li>
 <li>Manage <code>ClusterDeployment</code> objects in any namespace</li>
 <li>Manage <code>Credential</code> and <code>Secret</code> objects in any namespace</li>
-<li>Upgrade k0rdent</li>
-<li>Uninstall k0rdent</li>
+<li>Upgrade {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</li>
+<li>Uninstall {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</li>
 </ol>
 <h2 id="global-viewer">Global Viewer<a class="headerlink" href="#global-viewer" title="Permanent link">#</a></h2>
-<p>The <code>Global Viewer</code> role grants read-only access across the k0rdent system. It does not permit any modifications,
+<p>The <code>Global Viewer</code> role grants read-only access across the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} system. It does not permit any modifications,
 including the creation of clusters.</p>
 <p><strong>Name</strong>: <code>kcm-global-viewer-role</code></p>
 <p><strong>Aggregation Rule</strong>: Includes all <code>ClusterRole</code> objects with the labels:</p>
@@ -3197,7 +3197,7 @@ including the creation of clusters.</p>
 </ul>
 <p><strong>Permissions</strong>:</p>
 <ol>
-<li>Read access to k0rdent API</li>
+<li>Read access to {{ no such element: super_collections.SuperDict object['k0rdentName'] }} API</li>
 <li>Read access to Flux Helm repositories and Helm charts</li>
 <li>Read access to Cluster API identities</li>
 <li>Read access to namespaces and secrets</li>
@@ -3205,7 +3205,7 @@ including the creation of clusters.</p>
 <p><strong>Use case</strong></p>
 <p>A user with the <code>Global Viewer</code> role is authorized to perform the following actions:</p>
 <ol>
-<li>View the k0rdent configuration</li>
+<li>View the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} configuration</li>
 <li>List namespaces available in the management cluster</li>
 <li>List and get the detailed information about available <code>ProviderTemplate</code> objects</li>
 <li>List available <code>ClusterTemplate</code> and <code>ServiceTemplate</code> objects in any namespace</li>

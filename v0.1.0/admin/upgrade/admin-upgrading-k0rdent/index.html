@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#upgrading-k0rdent" class="md-skip">
+        <a href="#upgrading-no-such-element-super_collectionssuperdict-objectk0rdentname" class="md-skip">
           Skip to content
         </a>
       
@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2444,7 +2444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2741,7 +2741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3014,8 +3014,8 @@
   
 
 
-<h1 id="upgrading-k0rdent">Upgrading k0rdent<a class="headerlink" href="#upgrading-k0rdent" title="Permanent link">#</a></h1>
-<p>Upgrading k0rdent involves making upgrades to the <code>Management</code> object. To do that, you must have the <code>Global Admin</code> role. (For detailed information about k0rdent RBAC roles and permissions, refer to the <a href="../../access/rbac/">RBAC documentation</a>.) Follow these steps to upgrade k0rdent:</p>
+<h1 id="upgrading-no-such-element-super_collectionssuperdict-objectk0rdentname">Upgrading {{ no such element: super_collections.SuperDict object['k0rdentName'] }}<a class="headerlink" href="#upgrading-no-such-element-super_collectionssuperdict-objectk0rdentname" title="Permanent link">#</a></h1>
+<p>Upgrading {{ no such element: super_collections.SuperDict object['k0rdentName'] }} involves making upgrades to the <code>Management</code> object. To do that, you must have the <code>Global Admin</code> role. (For detailed information about {{ no such element: super_collections.SuperDict object['k0rdentName'] }} RBAC roles and permissions, refer to the <a href="../../access/rbac/">RBAC documentation</a>.) Follow these steps to upgrade {{ no such element: super_collections.SuperDict object['k0rdentName'] }}:</p>
 <ol>
 <li>
 <p>Create a new <code>Release</code> object</p>
@@ -3039,7 +3039,7 @@ Kubernetes Cluster API.  For example, the v0.1.0 <code>Release</code> object loo
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron</span>
 <span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron-0-1-0</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-azure</span>
-<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-azure-0-1-0</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-azure-{{ no such element</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dict object[&#39;k0rdentsion&#39;] }}</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-vsphere</span>
 <span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-vsphere-0-1-0</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-aws</span>
@@ -3074,7 +3074,7 @@ kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.
 </li>
 <li>
 <p>Verify the Upgrade</p>
-<p>Although the change will be made immediately, it will take some time for k0rdent to update the components it should be
+<p>Although the change will be made immediately, it will take some time for {{ no such element: super_collections.SuperDict object['k0rdentName'] }} to update the components it should be
 using. Monitor the readiness of the <code>Management</code> object to ensure the upgrade was successful. For example:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm
 NAME<span class="w">   </span>READY<span class="w">   </span>RELEASE<span class="w">     </span>AGE

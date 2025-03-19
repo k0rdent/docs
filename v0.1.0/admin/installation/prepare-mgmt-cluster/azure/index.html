@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2448,7 +2448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2745,7 +2745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3022,8 +3022,8 @@
 <p>Standalone clusters can be deployed on Azure instances. Follow these steps to make Azure clusters available to your users:</p>
 <ol>
 <li>
-<p>Install k0rdent</p>
-<p>Follow the instructions in <a href="../../install-k0rdent/">Install k0rdent</a> to create a management cluster with k0rdent running.</p>
+<p>Install {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</p>
+<p>Follow the instructions in <a href="../../install-k0rdent/">Install {{ no such element: super_collections.SuperDict object['k0rdentName'] }}</a> to create a management cluster with {{ no such element: super_collections.SuperDict object['k0rdentName'] }} running.</p>
 </li>
 <li>
 <p>The Azure CLI</p>
@@ -3040,7 +3040,7 @@
 </li>
 <li>
 <p>Register resource providers</p>
-<p>In order for k0rdent to deploy and manage clusters, it needs to be able to work with Azure resources such as 
+<p>In order for {{ no such element: super_collections.SuperDict object['k0rdentName'] }} to deploy and manage clusters, it needs to be able to work with Azure resources such as 
 compute, network, and identity. Make sure the subscription you're using has the following resource providers registered:</p>
 <div class="highlight"><pre><span></span><code>Microsoft.Compute
 Microsoft.Network
@@ -3059,10 +3059,10 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 <li>
 <p>Find Your Subscription ID</p>
 <p>Creating a child cluster requires a structure of credentials that link to user identities on the provider system without
-exposing the actual username and password to users. You can find more information on <a href="../../../access/credentials/">k0rdent 
+exposing the actual username and password to users. You can find more information on <a href="../../../access/credentials/">{{ no such element: super_collections.SuperDict object['k0rdentName'] }} 
 Credentials</a>, but for Azure, this involves creating an <code>AzureClusterIdentity</code> and a 
 Service Principal (SP) to let CAPZ (Cluster API Azure) communicate with the cloud provider. </p>
-<p>On Azure, the lowest level of this hierarchy is the subscription, which ties to your billing information for Azure. Your Azure user must have at least one subscription for you to use it with k0rdent, so if you're working with a new
+<p>On Azure, the lowest level of this hierarchy is the subscription, which ties to your billing information for Azure. Your Azure user must have at least one subscription for you to use it with {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, so if you're working with a new
 account make sure to <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-subscription">create a new subscription with billing information</a> before you start.</p>
 <p>To get the information you need, list all your Azure subscriptions: </p>
 <p><div class="highlight"><pre><span></span><code>az<span class="w"> </span>account<span class="w"> </span>list<span class="w"> </span>-o<span class="w"> </span>table
@@ -3138,7 +3138,7 @@ the name of that <code>Secret</code>.</p>
 </code></pre></div></p>
 </li>
 <li>
-<p>Create the k0rdent <code>Credential</code> Object</p>
+<p>Create the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} <code>Credential</code> Object</p>
 <p>Create the YAML for the specification of the <code>Credential</code> and save it as <code>azure-cluster-identity-cred.yaml</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential</span>
@@ -3290,7 +3290,7 @@ as well as the location, credentials, and <code>subscriptionId</code>.</p>
 are provisioned and added to the cluster. You can follow the provisioning process:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
-<p>If the provisioning process continues for a more than a few minutes, check to make sure k0rdent isn't trying to
+<p>If the provisioning process continues for a more than a few minutes, check to make sure {{ no such element: super_collections.SuperDict object['k0rdentName'] }} isn't trying to
 exceed your quotas. If you are near the top of your quotas, requesting an increase can "unstick" the provisioning process.</p>
 <p>After the cluster is <code>Ready</code>, you can access it via the kubeconfig:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig.kubeconfig

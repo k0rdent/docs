@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -837,9 +837,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#verify-that-k0rdent-itself-is-ready" class="md-nav__link">
+  <a href="#verify-that-no-such-element-super_collectionssuperdict-objectk0rdentname-itself-is-ready" class="md-nav__link">
     <span class="md-ellipsis">
-      Verify that k0rdent itself is ready
+      Verify that {{ no such element: super_collections.SuperDict object['k0rdentName'] }} itself is ready
     </span>
   </a>
   
@@ -2494,7 +2494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2791,7 +2791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reference/glossary/" class="md-nav__link">
+      <a href="../../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3042,9 +3042,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#verify-that-k0rdent-itself-is-ready" class="md-nav__link">
+  <a href="#verify-that-no-such-element-super_collectionssuperdict-objectk0rdentname-itself-is-ready" class="md-nav__link">
     <span class="md-ellipsis">
-      Verify that k0rdent itself is ready
+      Verify that {{ no such element: super_collections.SuperDict object['k0rdentName'] }} itself is ready
     </span>
   </a>
   
@@ -3140,12 +3140,12 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">9</span>
 </code></pre></div></p>
-<p>If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:</p>
+<p>If any of these pods are missing, simply give {{ no such element: super_collections.SuperDict object['k0rdentName'] }} more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>classifier-manager-7b85f96469-666jx<span class="w"> </span>-n<span class="w"> </span>projectsveltos
 </code></pre></div>
 <p>As long as you're not seeing pod restarts, you just need to wait a few minutes.</p>
-<h2 id="verify-that-k0rdent-itself-is-ready">Verify that k0rdent itself is ready<a class="headerlink" href="#verify-that-k0rdent-itself-is-ready" title="Permanent link">#</a></h2>
-<p>The actual measure of whether k0rdent is ready is the state of the <code>Management</code> object. To check, issue this command:</p>
+<h2 id="verify-that-no-such-element-super_collectionssuperdict-objectk0rdentname-itself-is-ready">Verify that {{ no such element: super_collections.SuperDict object['k0rdentName'] }} itself is ready<a class="headerlink" href="#verify-that-no-such-element-super_collectionssuperdict-objectk0rdentname-itself-is-ready" title="Permanent link">#</a></h2>
+<p>The actual measure of whether {{ no such element: super_collections.SuperDict object['k0rdentName'] }} is ready is the state of the <code>Management</code> object. To check, issue this command:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>Management<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>

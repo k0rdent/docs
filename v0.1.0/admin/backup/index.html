@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#backing-up-and-restoring-a-k0rdent-management-cluster" class="md-skip">
+        <a href="#backing-up-and-restoring-a-no-such-element-super_collectionssuperdict-objectk0rdentname-management-cluster" class="md-skip">
           Skip to content
         </a>
       
@@ -444,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstarts/guide-to-quickstarts/" class="md-nav__link">
+      <a href="../../quickstarts/guide-to-quickstarts.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2436,7 +2436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/template/template-intro/" class="md-nav__link">
+      <a href="../../reference/template/template-intro.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2733,7 +2733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/glossary/" class="md-nav__link">
+      <a href="../../reference/glossary.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3032,33 +3032,42 @@
   
 
 
-<h1 id="backing-up-and-restoring-a-k0rdent-management-cluster">Backing Up and Restoring a k0rdent Management Cluster<a class="headerlink" href="#backing-up-and-restoring-a-k0rdent-management-cluster" title="Permanent link">#</a></h1>
+<h1 id="backing-up-and-restoring-a-no-such-element-super_collectionssuperdict-objectk0rdentname-management-cluster">Backing Up and Restoring a {{ no such element: super_collections.SuperDict object['k0rdentName'] }} Management Cluster<a class="headerlink" href="#backing-up-and-restoring-a-no-such-element-super_collectionssuperdict-objectk0rdentname-management-cluster" title="Permanent link">#</a></h1>
 <p>Any production system needs to provide Disaster Recovery features, and the heart of these capabilities is the ability to
-perform backup and restore operations. In this chapter we'll look at backing up and restoring k0rdent management cluster
+perform backup and restore operations. In this chapter we'll look at backing up and restoring {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management cluster
 so that in case of an emergency, you can restore your system to its previous condition or recreate it on another cluster.</p>
 <p>While it's possible to back up a Kubernetes cluster manually, it's better to build on the work
 of others. In this case we're going to leverage the <a href="https://velero.io/"><code>velero</code></a> project for backup management
-on the backend and see how it integrates with k0rdent to ensure data persistence and recovery.</p>
+on the backend and see how it integrates with {{ no such element: super_collections.SuperDict object['k0rdentName'] }} to ensure data persistence and recovery.</p>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">#</a></h2>
 <p>The primary goal of this feature is to provide a reliable and efficient way to back up and restore
-a k0rdent deployment in the event of a disaster that impacts the management cluster.
+a {{ no such element: super_collections.SuperDict object['k0rdentName'] }} deployment in the event of a disaster that impacts the management cluster.
 By using <code>velero</code> as the backup provider, we can create consistent backups across
 different cloud storage options while maintaining the integrity of critical resources.</p>
 <p>The main goal of the feature is to provide:</p>
 <ul>
-<li><strong>Management Backup:</strong> The ability to backup all configuration objects created and managed by k0rdent, including
+<li><strong>Management Backup:</strong> The ability to backup all configuration objects created and managed by {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, including
   into an offsite location.</li>
 <li><strong>Restore:</strong> The ability to create configuration objects from a specific Management Backup in order to create a management
   cluster in the same state that existed at the time of backup without (re)provisioning of cloud resources.</li>
-<li><strong>Disaster Recovery:</strong> The ability to restore k0rdent on another management cluster, plus ensuring that clusters are not
+<li><strong>Disaster Recovery:</strong> The ability to restore {{ no such element: super_collections.SuperDict object['k0rdentName'] }} on another management cluster, plus ensuring that clusters are not
   recreated or lost.</li>
-<li><strong>Rollback:</strong> The possibility to manually restore after a specific event, such as a failed k0rdent upgrade</li>
+<li><strong>Rollback:</strong> The possibility to manually restore after a specific event, such as a failed {{ no such element: super_collections.SuperDict object['k0rdentName'] }} upgrade</li>
 </ul>
 <h2 id="velero-as-provider-for-management-backups">Velero as Provider for Management Backups<a class="headerlink" href="#velero-as-provider-for-management-backups" title="Permanent link">#</a></h2>
-<p><a href="https://velero.io/"><code>Velero</code></a> is an open-source tool that simplifies backing up and restoring clusters as well as individual resources. It seamlessly integrates into the k0rdent management environment to provide robust disaster recovery capabilities.</p>
-<p>The <code>velero</code> instance is part of the Helm chart that installs k0rdent, which means that it
+<p><a href="https://velero.io/"><code>Velero</code></a> is an open-source tool that simplifies backing up and restoring clusters as well as individual resources. It seamlessly integrates into the {{ no such element: super_collections.SuperDict object['k0rdentName'] }} management environment to provide robust disaster recovery capabilities.</p>
+<p>The <code>velero</code> instance is part of the Helm chart that installs {{ no such element: super_collections.SuperDict object['k0rdentName'] }}, which means that it
 can be <a href="customization/#velero-installation">customized</a> if necessary.</p>
-<p>k0rdent manages the schedule and is responsible for collecting data to be included in a backup.</p>
+<p>{{ no such element: super_collections.SuperDict object['k0rdentName'] }} manages the schedule and is responsible for collecting data to be included in a backup.</p>
+<ul>
+<li><a href="scheduled-backups/">Scheduled Management Backups</a></li>
+<li><a href="ondemand-backups/">Management Backup on Demand</a></li>
+<li><a href="whats-included/">What's Included in a Backup</a></li>
+<li><a href="restore/">Restoring From Backup</a></li>
+<li><a href="upgrades-rollbacks/">Upgrades and Rollbacks</a></li>
+<li><a href="caveats/">Caveats</a></li>
+<li><a href="customization/">Customization</a></li>
+</ul>
 
 
 
