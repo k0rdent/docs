@@ -26,7 +26,7 @@ kubectl delete restores.velero.io -n kcm-system <restore-name>
 > Deletion of a `Restore` object deletes it from both
 > the management cluster and from cloud storage.
 
-## Delete Backups
+### Delete Backups
 
 To remove a `velero` `Backup` from the management cluster,
 delete `backups.velero.io` object(s), such as with the following command:
@@ -66,4 +66,3 @@ Optionally, delete the created `DeleteBackupRequest` object
 from the cluster after `Backup` has been deleted.
 
 For reference, follow the [official documentation](https://velero.io/docs/v1.15/backup-reference/#deleting-backups).
-

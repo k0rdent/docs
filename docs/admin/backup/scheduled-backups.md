@@ -85,7 +85,7 @@ Optionally, set the name of the `BackupStorageLocation` `.spec.backup.storageLoc
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
 For example, you can create a `ManagementBackup` object that backs up to the storage object created in the previous step
-every 6 minutes would look like this:
+at minute 0 past every 6th hour would look like this:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
