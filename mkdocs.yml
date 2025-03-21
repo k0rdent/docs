@@ -118,6 +118,7 @@ nav:
     - Set up Management Node and Cluster: quickstarts/quickstart-1-mgmt-node-and-cluster.md
     - Configure and Deploy to AWS: quickstarts/quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
+    - Configure and Deploy on any SSH-accessible Linux hosts: quickstart-2-remote.md
   - Administrator Guide:
     - Before you start: admin/index.md
     - Installation:
@@ -198,7 +199,8 @@ nav:
     - Templates for Azure: reference/template/template-azure.md
     - Templates for OpenStack: reference/template/template-openstack.md
     - Templates for vSphere: reference/template/template-vsphere.md
-  - Troubleshooting: 
+    - Templates for Remote SSH: template-remote.md
+  - Troubleshooting:
     - Overview: troubleshooting/index.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
     - EKS: troubleshooting/known-issues-eks.md
@@ -294,6 +296,7 @@ extra:
         openstackStandaloneCpCluster: 0-1-0
         vsphereHostedCpCluster: 0-1-0
         vsphereStandaloneCpCluster: 0-1-0
+        remoteCluster: 0-1-0
       dotVersions:
         adoptedCluster: 0.1.0
         awsEksCluster: 0.1.0
@@ -305,4 +308,5 @@ extra:
         openstackStandaloneCpCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
         vsphereStandaloneCpCluster: 0.1.0
+        remoteCluster: 0.1.0
 
