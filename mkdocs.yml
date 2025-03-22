@@ -134,6 +134,10 @@ nav:
         - Azure: admin/installation/prepare-mgmt-cluster/azure.md
         - OpenStack: admin/installation/prepare-mgmt-cluster/openstack.md
         - VMware: admin/installation/prepare-mgmt-cluster/vmware.md
+      - Authentication:
+        - Overview: admin/installation/auth/index.md
+        - Okta: admin/installation/auth/okta.md
+        - Entra-ID: admin/installation/auth/entra-id.md
     - Working with clusters: 
       - Overview: admin/clusters/index.md
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
