@@ -1,5 +1,8 @@
 # Upgrading {{{ docsVersionInfo.k0rdentName }}}
 
+IMPORTANT: When upgrading to K0rdent `0.2.0` follow this [instruction](upgrade-to-0-2-0.md) and perform
+additional manual steps.
+
 Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `Management` object. To do that, you must have the `Global Admin` role. (For detailed information about {{{ docsVersionInfo.k0rdentName }}} RBAC roles and permissions, refer to the [RBAC documentation](../access/rbac/index.md).) Follow these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
 
 1. Create a new `Release` object
