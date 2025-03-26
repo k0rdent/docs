@@ -76,6 +76,7 @@ in the works.
 * [Azure](admin/installation/prepare-mgmt-cluster/azure.md)
 * [vSphere](admin/installation/prepare-mgmt-cluster/vmware.md)
 * [OpenStack](admin/installation/prepare-mgmt-cluster/openstack.md)
+* [GCP](admin/installation/prepare-mgmt-cluster/gcp.md)
 
 {{{ docsVersionInfo.k0rdentName }}} also includes a way to add custom providers, so it's possible to integrate it with other hyperscalers, 
 or even into an existing local infrastructure.
