@@ -35,6 +35,18 @@ Configurations for control plane and worker nodes are specified separately under
 > Make sure `.spec.credential` references the `Credential` object.
 > The recommended minimum vCPU value for the control plane flavor is 2, while for the worker node flavor, it is 1. For detailed information, refer to the [machine-flavor CAPI docs](https://github.com/kubernetes-sigs/cluster-api-provider-openstack/blob/main/docs/book/src/clusteropenstack/configuration.md#machine-flavor).
 
+### External Network Configuration
+
+If your OpenStack cloud contains more than one network marked as external it is necessary to provide which one clusterapi should use when creating a cluster. You do this by providing `.spec.config.externlNetwork.filter.name` value with the name of your external network.
+
+### Load Balancer Configuration
+
+If your user doesn't have access to or your cloud doesn't utilize octavia load balancer it is possible to disable usage of it by specifying
+`.spec.config.apiServerLoadBalancer.enabled` as `false`.
+
+> WARNING: Disabling loadbalancer blocks usage of `LoadBalancer` type services in cluster until one is manually installed.
+
+
 ### Example ClusterDeployment
 
 ```yaml
@@ -64,9 +76,13 @@ spec:
       image:
         filter:
           name: ubuntu-22.04-x86_64
+    externalNetwork:
+      filter:
+        name: "public"
     authURL: https://my-keystone-openstack-url.com
     identityRef:
       name: openstack-cloud-config
       cloudName: openstack
       region: RegionOne
 ```
+
