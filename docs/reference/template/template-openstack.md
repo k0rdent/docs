@@ -24,12 +24,12 @@ To deploy an OpenStack cluster, the following are the primary parameters in the 
 
 Configurations for control plane and worker nodes are specified separately under `.spec.config.controlPlane` and `.spec.config.worker`:
 
-| Parameter                  | Example                | Description                        |
-|----------------------------|------------------------|------------------------------------|
-| `flavor`                   | `m1.medium`           | OpenStack flavor for the instance.|
-| `image.filter.name`        | `ubuntu-22.04-x86_64` | Name of the image.                |
-| `sshPublicKey`             | `ramesses-pk`         | Reference name for an existing SSH key.|
-| `securityGroups.filter.name`| `default`             | Security group for the instance.  |
+| Parameter                      | Example               | Description                             |
+|--------------------------------|-----------------------|-----------------------------------------|
+| `flavor`                       | `m1.medium`           | OpenStack flavor for the instance.      |
+| `image.filter.name`            | `ubuntu-22.04-x86_64` | Name of the image.                      |
+| `sshPublicKey`                 | `ramesses-pk`         | Reference name for an existing SSH key. |
+| `securityGroups[].filter.name` | `default`             | Security group for the instance.        |
 
 > NOTE:
 > Make sure `.spec.credential` references the `Credential` object.
