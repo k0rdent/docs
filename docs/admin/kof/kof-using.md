@@ -42,6 +42,10 @@ The logging interface will also be available, including:
 * Log aggregation
 * Alert correlation
 
+<video controls width="1024" style="max-width: 100%">
+  <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
+</video>
+
 ### Cost Management
 
 Finally there are the cost management features, including:

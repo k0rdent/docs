@@ -2,6 +2,11 @@
 
 The method for scaling KOF depends on the type of expansion:
 
+## You Must Construct Additional Pylons
+
+1. Change the `replicaCount` of components like `victoria-logs-single`
+    as documented in the [regional cluster](./kof-install.md#regional-cluster) section
+
 ## Regional Expansion
 
 1. Deploy a [regional cluster](./kof-install.md#regional-cluster) in the new region

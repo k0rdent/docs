@@ -22,6 +22,12 @@ KUBECONFIG=child-kubeconfig kubectl get pod -A
 ```
 Wait for all pods to show as `Running`.
 
+If the auto-configuration failed, find the reason in the logs of the `kof-operator`:
+
+```shell
+kubectl logs -n kof deploy/kof-mothership-kof-operator
+```
+
 ## Manual DNS config
 
 If you've opted out of [DNS auto-config](./kof-install.md#dns-auto-config), you will need to do the following:
@@ -29,14 +35,15 @@ If you've opted out of [DNS auto-config](./kof-install.md#dns-auto-config), you 
 1. Get the `EXTERNAL-IP` of `ingress-nginx`:
     ```shell
     KUBECONFIG=regional-kubeconfig kubectl get svc \
-      -n ingress-nginx ingress-nginx-controller
+      -n kof ingress-nginx-controller
     ```
     It should look like `REDACTED.us-east-2.elb.amazonaws.com`
 
-2. Create these DNS records of type `A`, both pointing to that `EXTERNAL-IP`:
+2. Create these DNS records of type `A`, all pointing to that `EXTERNAL-IP`:
     ```shell
-    echo vmauth.$REGIONAL_DOMAIN
     echo grafana.$REGIONAL_DOMAIN
+    echo jaeger.$REGIONAL_DOMAIN
+    echo vmauth.$REGIONAL_DOMAIN
     ```
 
 ## Sveltos
