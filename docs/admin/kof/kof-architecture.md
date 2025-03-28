@@ -45,6 +45,12 @@ To update the diagram:
     opentelemetry-operator
     prometheus-operator-crds
 
+  kof-regional chart
+    MultiClusterService
+
+  kof-child chart
+    MultiClusterService
+
 Cloud 1..N
   Region 1..M
 
@@ -108,6 +114,18 @@ Cloud 1..N
     </div>
     <div class="o">
       prometheus-operator-crds
+    </div>
+  </div>
+  <div class="o">
+    kof-regional chart
+    <div class="o">
+      MultiClusterService
+    </div>
+  </div>
+  <div class="o">
+    kof-child chart
+    <div class="o">
+      MultiClusterService
     </div>
   </div>
 </div>
@@ -203,9 +221,19 @@ KOF is deployed as a series of Helm charts at various levels.
 - Local [VictoriaMetrics](https://victoriametrics.com/) storage for alerting rules only, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
 - [cluster-api-visualizer](https://github.com/Jont828/cluster-api-visualizer) for insight into multicluster configuration
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
-- [kof-operator](https://github.com/k0rdent/kof/tree/main/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration.
-- [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates to deploy other charts to regional clusters
+- [kof-operator](https://github.com/k0rdent/kof/tree/main/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
+- [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates used by `kof-regional` and `kof-child` charts
 - [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
+
+### kof-regional
+
+- [MultiClusterService](https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
+  which configures and installs `kof-storage` and other charts to regional clusters
+
+### kof-child
+
+- [MultiClusterService](https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-child/templates/child-multi-cluster-service.yaml)
+  which configures and installs `kof-collectors` and other charts to child clusters
 
 ### kof-storage
 
@@ -216,6 +244,10 @@ KOF is deployed as a series of Helm charts at various levels.
     - [victoria-logs-single](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-single) for high-performance, cost-effective, scalable logs storage
 - Regional [Jaeger](https://www.jaegertracing.io/) tracing platform, managed by [jaeger-operator](https://github.com/jaegertracing/jaeger-operator)
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
+
+### kof-istio
+
+- Optional [Istio](https://github.com/k0rdent/kof/blob/main/docs/istio.md) support for secure connectivity between clusters
 
 ### kof-operators
 

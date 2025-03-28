@@ -9,11 +9,12 @@ Before beginning KOF installation, you should have the following components in p
       `brew install kind && kind create cluster -n {{{ docsVersionInfo.k0rdentName }}}`
 * You will also need your infrastructure provider credentials, such as those shown in the [guide for AWS](https://docs.k0rdent.io/v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/quickstarts/quickstart-2-aws/)
     * Note that you should skip the "Create your ClusterDeployment" and later sections.
-* Finally, you need access to create DNS records for service endpoints such as `kof.example.com`
+* Finally, you either need access to create DNS records for service endpoints such as `kof.example.com`,
+  or you may configure [Istio](https://github.com/k0rdent/kof/blob/main/docs/istio.md) instead.
 
 ### DNS auto-config
 
-To avoid manual configuration of DNS records for service endpoints later,
+To avoid [manual configuration of DNS records](https://docs.k0rdent.io/next/admin/kof/kof-verification/#manual-dns-config) for service endpoints later,
 you can automate the process now using [external-dns](https://kubernetes-sigs.github.io/external-dns/latest/).
 
 For example, for AWS you should use the [Node IAM Role](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#node-iam-role)
@@ -92,7 +93,16 @@ and apply this example, or use it as a reference:
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
-7. Wait for all pods to show that they're `Running`:
+7. Install [kof-regional](./kof-architecture.md/#kof-regional) and [kof-child](./kof-architecture.md/#kof-child) charts into the management cluster:
+    ```shell
+    helm install --wait -n kof kof-regional \
+      oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+
+    helm install --wait -n kof kof-child \
+      oci://ghcr.io/k0rdent/kof/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+    ```
+
+8. Wait for all pods to show that they're `Running`:
     ```shell
     kubectl get pod -n kof
     ```
@@ -173,8 +183,8 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-write-traces-endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
     ```
 
-7. The `MultiClusterService` named `kof-regional-cluster`
-    installs and configures `cert-manager`, `ingress-nginx`, and `kof-storage` charts [automatically](https://github.com/k0rdent/kof/blob/a71b0524bd86215a37efeb1e478a97279fc90846/charts/kof-mothership/templates/sveltos/regional-multi-cluster-service.yaml).
+7. The `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
+    configures and installs `cert-manager`, `ingress-nginx`, and `kof-storage` charts automatically.
     To pass any custom [values](https://github.com/k0rdent/kof/blob/main/charts/kof-storage/values.yaml) to the `kof-storage` chart
     or its subcharts like the [victoria-logs-single](https://docs.victoriametrics.com/helm/victorialogs-single/index.html#parameters),
     add them to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`, for example:
@@ -259,11 +269,21 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-regional-cluster-name: $REGIONAL_CLUSTER_NAME
     ```
 
-6. The `ClusterProfile` named `kof-child-cluster`
-    installs and configures `cert-manager`, `kof-operators`, and `kof-collectors` charts [automatically](https://github.com/k0rdent/kof/blob/a71b0524bd86215a37efeb1e478a97279fc90846/charts/kof-mothership/templates/sveltos/child-cluster-profile.yaml).
-    If you need to pass any custom [values](https://github.com/k0rdent/kof/blob/main/charts/kof-collectors/values.yaml) to the `kof-collectors` chart
-    or its subcharts like the [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md),
-    please let us know, we may include this feature in the next release.
+6. The `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-child/templates/child-multi-cluster-service.yaml)
+    configures and installs `cert-manager`, `kof-operators`, and `kof-collectors` charts automatically.
+    To pass any custom [values](https://github.com/k0rdent/kof/blob/main/charts/kof-collectors/values.yaml) to the `kof-collectors` chart
+    or its subcharts like the [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values),
+    add them to the `child-cluster.yaml` file in the `.spec.config`, for example:
+    ```yaml
+    clusterAnnotations:
+      k0rdent.mirantis.com/kof-collectors-values: |
+        opencost:
+          opencost:
+            exporter:
+              replicas: 2
+    ```
+    Note: the first `opencost` key is to reference the subchart,
+    and the second `opencost` key is part of its [values](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values).
 
 7. Verify and apply the `ClusterDeployment`:
     ```shell

@@ -26,13 +26,17 @@ To remove the demo clusters created in this section:
 ```shell
 kubectl delete --wait --cascade=foreground -f child-cluster.yaml
 kubectl delete --wait --cascade=foreground -f regional-cluster.yaml
-kubectl delete --wait promxyservergroup -n kof -l app.kubernetes.io/managed-by=kof-operator
-kubectl delete --wait grafanadatasource -n kof -l app.kubernetes.io/managed-by=kof-operator
+kubectl delete --wait promxyservergroup \
+  -n kof -l app.kubernetes.io/managed-by=kof-operator
+kubectl delete --wait grafanadatasource \
+  -n kof -l app.kubernetes.io/managed-by=kof-operator
 ```
 
 To remove KOF from the management cluster:
 
 ```shell
+helm uninstall --wait --cascade foreground -n kof kof-child
+helm uninstall --wait --cascade foreground -n kof kof-regional
 helm uninstall --wait --cascade foreground -n kof kof-mothership
 helm uninstall --wait --cascade foreground -n kof kof-operators
 kubectl delete namespace kof --wait --cascade=foreground
