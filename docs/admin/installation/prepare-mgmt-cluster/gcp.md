@@ -20,8 +20,21 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
     ```bash
     gcloud auth login
     ```
+   
+4. Enable required API for your Google Cloud project (if it wasn't previously enabled)
 
-4. Create a GCP Service Account
+    For standalone/hosted GCP clusters the `Compute Engine API` should be enabled.
+    If you plan to deploy GKE clusters, the `Kubernetes Engine API` should be enabled as well.
+
+    For example, to enable `Compute Engine API` using the Google Cloud Console (UI):
+
+    * Go to the Google Cloud Console.
+    * Select Your Project. In the top navigation bar, click on the project selector (drop-down menu). Choose the project where you want to enable the `Compute Engine API`. 
+    * Navigate to the `API Library` (click on the Navigation Menu in the upper-left corner and select `APIs & Services` → `Library`). 
+    * Search for Compute Engine API (in the API Library, type `Compute Engine API` in the search bar and press Enter).
+    * Enable the API. Click on `Compute Engine API` from the search results. Click the `Enable` button.
+
+5. Create a GCP Service Account
 
     > NOTE:
     > Skip this step if the Service Account already configured
@@ -31,7 +44,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
 
     If you have plans to deploy `GKE`, the Service Account will also need the `iam.serviceAccountTokenCreator` role.
 
-5. Generate JSON Key for the GCP Service Account
+6. Generate JSON Key for the GCP Service Account
 
     > NOTE:
     > Skip this step if you're going to use an existing key
@@ -59,7 +72,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
     }
     ```
 
-6. Create a `Secret` object
+7. Create a `Secret` object
 
     Create a `Secret` object that stores the `credentials` field under `data` section. Create a YAML file called
     `gcp-cluster-identity-secret.yaml`, as follows, inserting the base64-encoded GCP credentials
@@ -90,7 +103,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
      kubectl apply -f gcp-cluster-identity-secret.yaml
      ```
    
-7. Create the {{{ docsVersionInfo.k0rdentName }}} `Credential` Object
+8. Create the {{{ docsVersionInfo.k0rdentName }}} `Credential` Object
 
     Create a YAML with the specification of the `Credential` and save it as `gcp-cluster-identity-cred.yaml`.
     
@@ -120,7 +133,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
     credential.k0rdent.mirantis.com/gcp-cluster-identity-cred created
     ```
 
-8. Create the `ConfigMap` resource-template Object
+9. Create the `ConfigMap` resource-template Object
 
     Create a YAML with the specification of our resource-template and save it as
     `gcp-cloud-sa-resource-template.yaml`
