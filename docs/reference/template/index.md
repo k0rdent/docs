@@ -223,3 +223,4 @@ As a result, the following new objects should be created:
 - [Templates for Azure](template-azure.md)
 - [Templates for OpenStack](template-openstack.md)
 - [Templates for vSphere](template-vsphere.md)
+- [Templates for Remote](template-remote.md)
