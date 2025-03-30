@@ -1,20 +1,21 @@
-# Upgrading to K0rdent 0.2.0
+# Upgrading to {{{ docsVersionInfo.k0rdentName}}} 0.2.0
 
-In K0rdent `0.2.0`, the `k0smotron` management component has been renamed to
+In {{{ docsVersionInfo.k0rdentName}}} 0.2.0, the `k0smotron` management component has been renamed to
 `cluster-api-provider-k0sproject-k0smotron`. To safely upgrade from `0.1.0` to `0.2.0`, follow the upgrade guide
 and perform the additional manual steps outlined below:
 
+
 1. Follow [Upgrading guide](index.md) and create a new Release object (steps 1-2)
 
-2. Verify the new Release status
+3. Verify the new `Release` status
 
-   Wait for the new Release to have `status.ready: true`. You can monitor it in a lifetime using this command:
+   Wait for the new `Release` to have `status.ready: true`. You can monitor progress using this command:
 
     ```shell
     kubectl get release kcm-0-2-0 -o=jsonpath={.status.ready}
     ```
 
-    An example of the succeeded response:
+    When it succeeds, you will see:
     ```console
     true
     ```
