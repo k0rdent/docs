@@ -106,6 +106,7 @@ plugins:
         appendix-providers.md: appendix/appendix-providers.md
         k0rdent-documentation-contributors-guide.md: contrib/k0rdent-documentation-contributors-guide.md
         k0rdent-documentation-style-guide.md: contrib/k0rdent-documentation-style-guide.md
+        admin-upgrading-k0rdent.md: admin/upgrade/index.md
  
 nav:
   - Welcome to the k0rdent docs: index.md
@@ -162,7 +163,9 @@ nav:
       - Maintaining KOF: admin/kof/kof-maintainence.md
       - Resource Limits: admin/kof/kof-limits.md
       - Version Compatibility: admin/kof/kof-version-compat.md
-    - Upgrading k0rdent: admin/upgrade/admin-upgrading-k0rdent.md
+    - Upgrading k0rdent: 
+      - Overview: admin/upgrade/index.md
+      - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management: 

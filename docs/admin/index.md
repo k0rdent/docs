@@ -123,7 +123,7 @@ The {{{ docsVersionInfo.k0rdentName }}} initialization process involves tools su
 **After this point, the deployment is completely controlled by Flux.**
 1. `kcm-controller-manager` creates a `Management` object that refers to the above `Release` and the `ProviderTemplate` objects.
 The `Management` object represents the {{{ docsVersionInfo.k0rdentName }}} management cluster as a whole.
-The management cluster Day-2 operations (such as [upgrade](upgrade/admin-upgrading-k0rdent.md)) are  executed by manipulating the `Release` and `Management` objects.
+The management cluster Day-2 operations (such as [upgrade](upgrade/index.md)) are  executed by manipulating the `Release` and `Management` objects.
 1. `kcm-controller-manager` generates an empty `AccessManagement` object. `AccessManagement` defines [access rules](../reference/template/index.md#template-life-cycle-management) for `ClusterTemplate`/`ServiceTemplate` propagation across user namespaces. Further, the `AccessManagement` might be edited and used along with admin-created `ClusterTemplateChain` and `ServiceTemplateChain` objects.
 
 This Administration Guide provides information on:
@@ -133,6 +133,6 @@ This Administration Guide provides information on:
 - [Working with services](services/index.md)
 - [Hosted control planes](hosted-control-plane/index.md)
 - [{{{ docsVersionInfo.k0rdentName }}} Observability & FinOps](kof/index.md)
-- [Upgrading {{{ docsVersionInfo.k0rdentName }}}](upgrade/admin-upgrading-k0rdent.md)
+- [Upgrading {{{ docsVersionInfo.k0rdentName }}}](upgrade/index.md)
 - [Access Management (Credentials and RBAC)](access/index.md)
 - [Backup and Restore](backup/index.md)

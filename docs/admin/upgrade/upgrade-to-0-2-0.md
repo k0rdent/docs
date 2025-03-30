@@ -4,7 +4,7 @@ In K0rdent `0.2.0`, the `k0smotron` management component has been renamed to
 `cluster-api-provider-k0sproject-k0smotron`. To safely upgrade from `0.1.0` to `0.2.0`, follow the upgrade guide
 and perform the additional manual steps outlined below:
 
-1. Follow [Upgrading guide](admin-upgrading-k0rdent.md) and create a new Release object (steps 1-2)
+1. Follow [Upgrading guide](index.md) and create a new Release object (steps 1-2)
 
 2. Verify the new Release status
 
@@ -27,7 +27,7 @@ and perform the additional manual steps outlined below:
    kubectl -n kcm-system delete bootstrapproviders.operator.cluster.x-k8s.io k0sproject-k0smotron
    ```
 
-5. Instead of the step 3 from [Upgrading guide](admin-upgrading-k0rdent.md) you need to perform an edit
+5. Instead of the step 3 from [Upgrading guide](index.md) you need to perform an edit
    of the `Management` object. Run:
 
    ```shell
@@ -67,4 +67,4 @@ and perform the additional manual steps outlined below:
      release: kcm-0-2-0
    ```
 
-6. Follow [Upgrading guide](admin-upgrading-k0rdent.md) and verify the upgrade (step 4)
+6. Follow [Upgrading guide](index.md) and verify the upgrade (step 4)

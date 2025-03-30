@@ -7,7 +7,7 @@ on each `kcm` upgrade automatically.
 
 Each `ManagementBackup` with a *non-empty* `.spec.schedule` field
 can enable the automatic creation of backups before
-[upgrading](../upgrade/admin-upgrading-k0rdent.md) to a new version.
+[upgrading](../upgrade/index.md) to a new version.
 
 To enable, set the `.spec.performOnManagementUpgrade` to `true`.
 

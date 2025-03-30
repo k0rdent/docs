@@ -9,7 +9,7 @@ Backups should be run on a schedule consistent with the policy requirements of t
 
 Before you create a manual one-off or scheduled backup, review the steps below and update your configuration accordingly:
 
-1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) are already configured, please skip the next step.
+1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](./customization.md#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) are already configured, please skip the next step.
 
 1. If no `velero` plugins have yet been installed in your k0rdent cluster, start by getting the kcm management yaml file:
 
