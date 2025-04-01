@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#before-you-start" class="md-skip">
+        <a href="#administering-mirantis-k0rdent-enterprise" class="md-skip">
           Skip to content
         </a>
       
@@ -3138,7 +3138,7 @@
   
 
 
-<h1 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">#</a></h1>
+<h1 id="administering-mirantis-k0rdent-enterprise">Administering Mirantis k0rdent Enterprise<a class="headerlink" href="#administering-mirantis-k0rdent-enterprise" title="Permanent link">#</a></h1>
 <p>Before you start working with k0rdent, it helps to understand a few basics.</p>
 <h2 id="how-k0rdent-works">How k0rdent works<a class="headerlink" href="#how-k0rdent-works" title="Permanent link">#</a></h2>
 <p>k0rdent has several important subsystems, notably:</p>
@@ -3240,7 +3240,7 @@ ensure that reality matches the definition. We can say that k0rdent is GitOps-co
 <strong>After this point, the deployment is completely controlled by Flux.</strong></li>
 <li><code>kcm-controller-manager</code> creates a <code>Management</code> object that refers to the above <code>Release</code> and the <code>ProviderTemplate</code> objects.
 The <code>Management</code> object represents the k0rdent management cluster as a whole.
-The management cluster Day-2 operations (such as <a href="upgrade/admin-upgrading-k0rdent/">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
+The management cluster Day-2 operations (such as <a href="upgrade/index.md">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
 <li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines <a href="../reference/template/#template-life-cycle-management">access rules</a> for <code>ClusterTemplate</code>/<code>ServiceTemplate</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used along with admin-created <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects.</li>
 </ol>
 <p>This Administration Guide provides information on:</p>
@@ -3250,7 +3250,7 @@ The management cluster Day-2 operations (such as <a href="upgrade/admin-upgradin
 <li><a href="services/">Working with services</a></li>
 <li><a href="hosted-control-plane/">Hosted control planes</a></li>
 <li><a href="kof/">k0rdent Observability &amp; FinOps</a></li>
-<li><a href="upgrade/admin-upgrading-k0rdent/">Upgrading k0rdent</a></li>
+<li><a href="upgrade/index.md">Upgrading k0rdent</a></li>
 <li><a href="access/">Access Management (Credentials and RBAC)</a></li>
 <li><a href="backup/">Backup and Restore</a></li>
 </ul>
