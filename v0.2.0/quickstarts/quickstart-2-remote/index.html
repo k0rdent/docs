@@ -13,6 +13,10 @@
       
       
       
+        <link rel="prev" href="../quickstart-2-azure/">
+      
+      
+        <link rel="next" href="../quickstart-2-gcp/">
       
       
       <link rel="icon" href="../../img/k0rdent-logo-mark-inverted.svg">
@@ -20,7 +24,7 @@
     
     
       
-        <title>QuickStart 2 - Existing infrastructure - Documentation</title>
+        <title>Configure and Deploy w/ SSH - Documentation</title>
       
     
     
@@ -115,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              QuickStart 2 - Existing infrastructure
+              Configure and Deploy w/ SSH
             
           </span>
         </div>
@@ -263,7 +267,7 @@
         
   
   <span class="md-ellipsis">
-    Welcome to the k0rdent docs
+    Welcome to the docs
   </span>
   
 
@@ -380,6 +384,8 @@
       
   
   
+    
+  
   
   
     
@@ -395,14 +401,18 @@
       
         
       
+        
+      
+        
+      
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
@@ -424,7 +434,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             QuickStarts
@@ -444,7 +454,7 @@
         
   
   <span class="md-ellipsis">
-    Set up Management Node and Cluster
+    Setup Management Cluster
   </span>
   
 
@@ -487,6 +497,178 @@
   
   <span class="md-ellipsis">
     Configure and Deploy to Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Configure and Deploy w/ SSH
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy w/ SSH
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-secret-object-containing-the-private-ssh-key-to-access-remote-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a Secret object containing the private SSH key to access remote machines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-kcm-credential-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the KCM Credential Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-cluster-identity-resource-template-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the Cluster Identity resource template ConfigMap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-available-cluster-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      List available cluster templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-your-clusterdeployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create your ClusterDeployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-the-clusterdeployment-to-deploy-the-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apply the ClusterDeployment to deploy the management cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#obtain-the-clusters-kubeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtain the cluster's kubeconfig
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-child-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      List child clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tear-down-the-child-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tear down the child cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart-2-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to GCP
   </span>
   
 
@@ -799,6 +981,8 @@
       
         
       
+        
+      
     
     
     
@@ -870,6 +1054,27 @@
   
   <span class="md-ellipsis">
     Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
   </span>
   
 
@@ -1294,6 +1499,8 @@
       
         
       
+        
+      
     
     
     
@@ -1386,6 +1593,27 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
   </span>
   
 
@@ -1652,16 +1880,77 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../admin/upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/upgrade/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Upgrading k0rdent
   </span>
   
 
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Upgrading k0rdent
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/upgrade/upgrade-to-0-2-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v0.2.0
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2235,7 +2524,7 @@
         
   
   <span class="md-ellipsis">
-    Creating clusters as a k0rdent user
+    Creating clusters
   </span>
   
 
@@ -2286,7 +2575,7 @@
               
   
   <span class="md-ellipsis">
-    Creating and adding services to clusters as a k0rdent user
+    Adding services
   </span>
   
 
@@ -2302,7 +2591,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_3">
             <span class="md-nav__icon md-icon"></span>
-            Creating and adding services to clusters as a k0rdent user
+            Adding services
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -2495,6 +2784,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -2624,6 +2917,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/template/template-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/template/template-openstack/" class="md-nav__link">
         
   
@@ -2650,6 +2964,27 @@
   
   <span class="md-ellipsis">
     Templates for vSphere
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Remote SSH
   </span>
   
 
@@ -3266,7 +3601,7 @@ Note that the <code>ConfigMap</code> is empty. This is expected, as we don't nee
 <span class="go">kcm-system   azure-hosted-cp-0-1-0           true</span>
 <span class="go">kcm-system   azure-standalone-cp-0-1-0       true</span>
 <span class="go">kcm-system   openstack-standalone-cp-0-1-0   true</span>
-<span class="go">kcm-system   remote-cluster-{{ no such element: dict object[&#39;remoteCluster&#39;] }}     true</span>
+<span class="go">kcm-system   remote-cluster-0-1-0     true</span>
 <span class="go">kcm-system   vsphere-hosted-cp-0-1-0         true</span>
 <span class="go">kcm-system   vsphere-standalone-cp-0-1-0     true</span>
 </code></pre></div>
@@ -3286,7 +3621,7 @@ For other service types (such as <code>ClusterIP</code> or <code>NodePort</code>
 <span class="s">  name: $CLUSTER_DEPLOYMENT_NAME</span>
 <span class="s">  namespace: $KCM_SYSTEM_NS</span>
 <span class="s">spec:</span>
-<span class="s">  template: remote-cluster-{{ no such element: dict object[&#39;remoteCluster&#39;] }} # name of the clustertemplate</span>
+<span class="s">  template: remote-cluster-0-1-0 # name of the clustertemplate</span>
 <span class="s">  credential: remote-cred</span>
 <span class="s">  propagateCredentials: false</span>
 <span class="s">  config:</span>

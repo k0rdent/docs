@@ -13,6 +13,10 @@
       
       
       
+        <link rel="prev" href="../quickstart-2-remote/">
+      
+      
+        <link rel="next" href="../../admin/">
       
       
       <link rel="icon" href="../../img/k0rdent-logo-mark-inverted.svg">
@@ -20,7 +24,7 @@
     
     
       
-        <title>QuickStart 2 - GCP target environment - Documentation</title>
+        <title>Configure and Deploy to GCP - Documentation</title>
       
     
     
@@ -115,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              QuickStart 2 - GCP target environment
+              Configure and Deploy to GCP
             
           </span>
         </div>
@@ -263,7 +267,7 @@
         
   
   <span class="md-ellipsis">
-    Welcome to the k0rdent docs
+    Welcome to the docs
   </span>
   
 
@@ -380,6 +384,8 @@
       
   
   
+    
+  
   
   
     
@@ -395,14 +401,18 @@
       
         
       
+        
+      
+        
+      
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
@@ -424,7 +434,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             QuickStarts
@@ -444,7 +454,7 @@
         
   
   <span class="md-ellipsis">
-    Set up Management Node and Cluster
+    Setup Management Cluster
   </span>
   
 
@@ -491,6 +501,250 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart-2-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy w/ SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to GCP
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to GCP
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-gcloud-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Gcloud CLI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticate-in-gcp-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authenticate in GCP cloud
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-gcp-service-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a GCP Service Account
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-json-key-for-the-gcp-service-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generate JSON Key for the GCP Service Account
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-secret-object-with-the-gcp-gke-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a Secret object with the GCP (GKE) credentials
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-kcm-credential-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the KCM Credential Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-configmap-resource-template-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create the ConfigMap resource-template Object
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-your-locationregion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Find your location/region
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-find-or-create-your-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      (optional) Find or create your network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#determine-the-instance-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Determine the instance type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-available-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Find available images
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-available-cluster-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      List available cluster templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-your-clusterdeployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create your ClusterDeployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-the-clusterdeployment-to-deploy-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apply the ClusterDeployment to deploy the cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#obtain-the-clusters-kubeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Obtain the cluster's kubeconfig
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-child-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      List child clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tear-down-the-child-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tear down the child cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -799,6 +1053,8 @@
       
         
       
+        
+      
     
     
     
@@ -870,6 +1126,27 @@
   
   <span class="md-ellipsis">
     Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
   </span>
   
 
@@ -1294,6 +1571,8 @@
       
         
       
+        
+      
     
     
     
@@ -1386,6 +1665,27 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
   </span>
   
 
@@ -1652,16 +1952,77 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../admin/upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/upgrade/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Upgrading k0rdent
   </span>
   
 
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Upgrading k0rdent
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/upgrade/upgrade-to-0-2-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v0.2.0
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2235,7 +2596,7 @@
         
   
   <span class="md-ellipsis">
-    Creating clusters as a k0rdent user
+    Creating clusters
   </span>
   
 
@@ -2286,7 +2647,7 @@
               
   
   <span class="md-ellipsis">
-    Creating and adding services to clusters as a k0rdent user
+    Adding services
   </span>
   
 
@@ -2302,7 +2663,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_3">
             <span class="md-nav__icon md-icon"></span>
-            Creating and adding services to clusters as a k0rdent user
+            Adding services
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -2495,6 +2856,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -2624,6 +2989,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/template/template-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/template/template-openstack/" class="md-nav__link">
         
   
@@ -2650,6 +3036,27 @@
   
   <span class="md-ellipsis">
     Templates for vSphere
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Remote SSH
   </span>
   
 
@@ -3421,7 +3828,7 @@ Create a YAML with the specification of the secret and save it as <code>gcp-clou
 <p>k0rdent is now fully configured to manage GCP. To create a cluster, begin by listing the available ClusterTemplates provided with k0rdent:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<p>You'll see output resembling what's below. Grab the name of the GCP standalone cluster template in its present version (in the example below, that's <code>gcp-standalone-cp-{{ no such element: dict object['gcpStandaloneCpCluster'] }}</code>):</p>
+<p>You'll see output resembling what's below. Grab the name of the GCP standalone cluster template in its present version (in the example below, that's <code>gcp-standalone-cp-0-1-0</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-0-1-0           true</span>
 <span class="go">kcm-system   aws-eks-0-1-0                   true</span>
@@ -3433,7 +3840,7 @@ Create a YAML with the specification of the secret and save it as <code>gcp-clou
 <span class="go">kcm-system   openstack-standalone-cp-0-1-0   true</span>
 <span class="go">kcm-system   vsphere-hosted-cp-0-1-0         true</span>
 <span class="go">kcm-system   vsphere-standalone-cp-0-1-0     true</span>
-<span class="go">kcm-system   gcp-standalone-cp-{{ no such element: dict object[&#39;gcpStandaloneCpCluster&#39;] }}     true</span>
+<span class="go">kcm-system   gcp-standalone-cp-0-1-0     true</span>
 <span class="go">kcm-system   gcp-gke-{{ no such element: dict object[&#39;gcpGkeCpCluster&#39;] }}     true</span>
 </code></pre></div>
 <h2 id="create-your-clusterdeployment">Create your ClusterDeployment<a class="headerlink" href="#create-your-clusterdeployment" title="Permanent link">#</a></h2>
@@ -3463,7 +3870,7 @@ it.</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-gcp-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-standalone-cp-{{ no such element</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dict object[&#39;gcpStandaloneCpCluster&#39;] }}</span><span class="w"> </span><span class="c1"># name of the clustertemplate</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-standalone-cp-0-1-0</span><span class="w"> </span><span class="c1"># name of the clustertemplate</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GCP_PROJECT_NAME&quot;</span>
@@ -3488,7 +3895,7 @@ For GKE clusters, the `ClusterDeployment` looks like this:
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-gke-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-gke-{{ no such element</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dict object[&#39;gcpGkeCluster&#39;] }}</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-gke-0-1-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-credential</span>
 <span class="w">  </span><span class="nt">propagateCredentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Should be set to `false`</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
