@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url=v0.2.0/" />
-    <link rel="canonical" href="v0.2.0/" />
+    <meta charset="utf-8">
+    <title>Redirecting</title>
+    <noscript>
+      <meta http-equiv="refresh" content="1; url=v0.2.0/" />
+    </noscript>
+    <script>
+      window.location.replace(
+        "v0.2.0/" + window.location.search + window.location.hash
+      );
+    </script>
   </head>
   <body>
-    <p>Redirecting to <a href="v0.2.0/">v0.2.0/</a>...</p>
+    Redirecting to <a href="v0.2.0/">v0.2.0/</a>...
   </body>
 </html>
+
