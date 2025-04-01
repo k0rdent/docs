@@ -67,6 +67,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
       template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
       credential: aws-credential
       config:
+        managementClusterName: aws
         clusterLabels: {}
         vpcID: vpc-0a000000000000000
         region: us-west-1
@@ -102,6 +103,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
       template: aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}
       credential: aws-credential
       config:
+        managementClusterName: "{{.metadata.name}}"
         clusterLabels: {}
         vpcID: "{{.spec.network.vpc.id}}"
         region: "{{.spec.region}}"
