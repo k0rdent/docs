@@ -1,4 +1,4 @@
-name: mike build release-v0.2.0
+name: mike build release-v0.2.0 next head
 on:
   push:
     branches:
@@ -51,4 +51,4 @@ jobs:
         run: mkdocs gh-deploy
 
       - name: Deploy to release-v0.2.0 branch
-        run: mike deploy --push --update-aliases v0.2.0 head
+        run: mike deploy --push --update-aliases v0.2.0 next head
