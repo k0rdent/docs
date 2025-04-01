@@ -595,6 +595,8 @@
       
         
       
+        
+      
     
     
     
@@ -914,6 +916,111 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/auth/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_6" id="__nav_4_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
   </span>
   
 
@@ -2911,9 +3018,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
+  <a href="#configuration-examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Configuration Examples
     </span>
   </a>
   
@@ -3138,9 +3245,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
+  <a href="#configuration-examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Configuration Examples
     </span>
   </a>
   
@@ -3166,7 +3273,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/release-v0.1.0/docs/appendix/appendix-providers.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/main/docs/appendix/appendix-providers.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3175,7 +3282,7 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/release-v0.1.0/docs/appendix/appendix-providers.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/main/docs/appendix/appendix-providers.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -3203,9 +3310,11 @@
 </ol>
 <p>In both cases <code>ConfigMap</code> with template code is used to render configuration into child clusters.</p>
 <h3 id="credential-resource">Credential Resource<a class="headerlink" href="#credential-resource" title="Permanent link">#</a></h3>
-<p>The <code>Credential</code> resource provides an abstraction layer by either:
-- Referencing a <code>ClusterIdentity</code> through <code>identityRef</code>
-- Directly referencing a <code>Secret</code>, depending on the pattern used</p>
+<p>The <code>Credential</code> resource provides an abstraction layer by either:</p>
+<ul>
+<li>Referencing a <code>ClusterIdentity</code> through <code>identityRef</code></li>
+<li>Directly referencing a <code>Secret</code>, depending on the pattern used</li>
+</ul>
 <h3 id="template-configmap">Template ConfigMap<a class="headerlink" href="#template-configmap" title="Permanent link">#</a></h3>
 <ul>
 <li>Marked with <code>projectsveltos.io/template: "true"</code> annotation</li>
@@ -3216,10 +3325,12 @@
 <li>The object name needs to follow a predictable naming pattern, such as the <code>ClusterIdentity</code> object (referenced via <code>identityRef</code> in the <code>Credential</code> resource) name + <code>-resource-template</code> suffix. It must also be placed in same Namespace as the <code>ClusterIdentity</code> object it references</li>
 </ul>
 <h2 id="templating-system">Templating System<a class="headerlink" href="#templating-system" title="Permanent link">#</a></h2>
-<p>The templating system leverages:
-- <a href="https://pkg.go.dev/text/template">Golang templating</a>
-- <a href="https://masterminds.github.io/sprig">Sprig functions</a>
-- <a href="https://projectsveltos.github.io/sveltos/template/intro_template/#:~:text=Resource%20Manipulation-,functions,-Sveltos%20provides%20a">Sveltos resource manipulation functions</a></p>
+<p>The templating system leverages:</p>
+<ul>
+<li><a href="https://pkg.go.dev/text/template">Golang templating</a></li>
+<li><a href="https://masterminds.github.io/sprig">Sprig functions</a></li>
+<li><a href="https://projectsveltos.github.io/sveltos/template/intro_template/#:~:text=Resource%20Manipulation-,functions,-Sveltos%20provides%20a">Sveltos resource manipulation functions</a></li>
+</ul>
 <h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
 <p>Provider-specific examples are available in <code>*.credentials.yaml</code> files <a href="https://github.com/k0rdent/kcm/tree/main/config/dev">here</a>.</p>
 <p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.1.0/config/dev/azure-credentials.yaml">azure-credentials.yaml</a></p>
@@ -3237,7 +3348,7 @@ These examples assume the <code>ConfigMap</code> is included in a template. To u
 </div>
 <h2 id="provider-registration">Provider Registration<a class="headerlink" href="#provider-registration" title="Permanent link">#</a></h2>
 <p>Providers are registered through YAML configuration files mounted into a <a href="https://github.com/k0rdent/kcm/blob/v0.1.0/templates/provider/kcm/templates/deployment.yaml#L42-L43">predefined path</a> in the manager container at startup <a href="https://github.com/k0rdent/kcm/blob/v0.1.0/templates/provider/kcm/templates/providers.yaml">using <code>ConfigMap</code></a>.</p>
-<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">#</a></h3>
+<h3 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">#</a></h3>
 <p>Provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.1.0/providers">here</a></p>
 <p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.1.0/providers/azure.yml">azure.yml</a>, as seen, the definition is straightforward.</p>
 

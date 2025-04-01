@@ -808,6 +808,8 @@
       
         
       
+        
+      
     
     
     
@@ -1127,6 +1129,111 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/auth/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_6" id="__nav_4_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
   </span>
   
 
@@ -3346,7 +3453,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/release-v0.1.0/docs/quickstarts/quickstart-2-aws.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/main/docs/quickstarts/quickstart-2-aws.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3355,7 +3462,7 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/release-v0.1.0/docs/quickstarts/quickstart-2-aws.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/main/docs/quickstarts/quickstart-2-aws.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -3363,23 +3470,23 @@
 
 
 <h1 id="quickstart-2-aws-target-environment">QuickStart 2 - AWS target environment<a class="headerlink" href="#quickstart-2-aws-target-environment" title="Permanent link">#</a></h1>
-<p>In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable k0rdent (running on your management node) to manage clusters on Amazon Web Services (AWS) and deploying our first child cluster.</p>
+<p>In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable k0rdent (running on your management node) to manage clusters on Amazon Web Services (AWS), and we'll deploy our first child cluster.</p>
 <p>As noted in the <a href="../">Guide to QuickStarts</a>, you'll need administrative access to an AWS account to complete this step. If you haven't yet created a management node and installed k0rdent, go back to <a href="../quickstart-1-mgmt-node-and-cluster/">QuickStart 1 - Management node and cluster</a>.</p>
 <p>Note that if you have already done our Azure QuickStart (<a href="../quickstart-2-azure/">QuickStart 2 - Azure target environment</a>) you can  use the same management cluster, continuing here with steps to add the ability to manage clusters on AWS. The k0rdent management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to AWS (for example, it could be on an Azure virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of k0rdent is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
 <strong>CLOUD SECURITY 101</strong>: k0rdent requires <em>some</em> but not <em>all</em> permissions
-to manage AWS &mdash; doing so via the CAPA (ClusterAPI for AWS) provider.</p>
+to manage AWS via the CAPA (ClusterAPI for AWS) provider.</p>
 </div>
 <p>Because k0rdent doesn't require all permissions, a best practice for using k0rdent with AWS (this pattern is repeated
-with other clouds and infrastructures) is to create a new 'k0rdentuser' on your account with the particular permissions k0rdent and CAPA require. In this section, we'll create and configure IAM for that user, and perform other steps to make that k0rdent user's credentials accessible to k0rdent in the management node.</p>
+with other clouds and infrastructures) is to create a new user on your account with the particular permissions it and CAPA require. In this section, we'll create and configure IAM for that user, and perform other steps to make that k0rdent user's credentials accessible to it in the management node.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
 If you're working on a shared AWS account, please ensure that the k0rdent user is not already set up before creating a new one.</p>
 </div>
-<p>Creating a k0rdent user with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with k0rdent at progressively greater scales. For more on k0rdent security best practices, please see the <a href="../../admin/">Administrator Guide</a>.</p>
+<p>Creating a k0rdent user with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with Kubernetes at progressively greater scales. For more on k0rdent security best practices, please see the <a href="../../admin/">Administrator Guide</a>.</p>
 <h2 id="install-the-aws-cli">Install the AWS CLI<a class="headerlink" href="#install-the-aws-cli" title="Permanent link">#</a></h2>
 <p>We'll use the AWS CLI to create and set IAM permissions for the k0rdent user, so we'll install it on our management node:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>unzip
@@ -3399,7 +3506,7 @@ sudo<span class="w"> </span>install<span class="w"> </span>-o<span class="w"> </
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_REGION</span><span class="o">=</span>EXAMPLE_AWS_REGION
 <span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>EXAMPLE_ACCESS_KEY_ID
 <span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>EXAMPLE_SECRET_ACCESS_KEY
-<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span>EXAMPLE_SESSION_TOKEN<span class="w"> </span><span class="c1"># Optional. If you are using Multi-Factor Auth.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span>EXAMPLE_SESSION_TOKEN<span class="w"> </span><span class="c1"># Optional. If you are using Multi-Factor or Single Sign On Auth.</span>
 </code></pre></div>
 <p>These credentials will be used both by the AWS CLI (to create your k0rdent user) and by <code>clusterawsadm</code> (to create a CloudFormation template used by CAPA within k0rdent).</p>
 <h2 id="check-for-available-ips">Check for available IPs<a class="headerlink" href="#check-for-available-ips" title="Permanent link">#</a></h2>
@@ -3560,7 +3667,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 -->
 
 <h2 id="create-iam-credentials-secret-on-the-management-cluster">Create IAM credentials secret on the management cluster<a class="headerlink" href="#create-iam-credentials-secret-on-the-management-cluster" title="Permanent link">#</a></h2>
-<p>Next, we create a <code>Secret</code> containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the <code>kcm-system</code> namespace (important: if you use another namespace, k0rdent will be unable to read the credentials). To do this, create the following YAML in a file called <code>aws-cluster-identity-secret.yaml</code>:</p>
+<p>Next, we create a <code>Secret</code> containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the <code>kcm-system</code> namespace. Important: if you use another namespace, k0rdent will be unable to read the credentials. To do this, create the following YAML in a file called <code>aws-cluster-identity-secret.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3574,7 +3681,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <span class="w">  </span><span class="nt">SecretAccessKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;EXAMPLE_SECRET_ACCESS_KEY&quot;</span>
 </code></pre></div>
 <p>Remember: the Access Key ID and Secret Access Key are the ones you generated for the k0rdent user, <code>k0rdentQuickStart</code>.</p>
-<p>Then apply this YAML to the management cluster as follows:</p>
+<p>Apply this YAML to the management cluster as follows:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aws-cluster-identity-secret.yaml<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <h2 id="create-the-awsclusterstaticidentity-object">Create the AWSClusterStaticIdentity object<a class="headerlink" href="#create-the-awsclusterstaticidentity-object" title="Permanent link">#</a></h2>
@@ -3626,7 +3733,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
 </code></pre></div>
-<p>Note that <code>ConfigMap</code> is empty, this is expected, we don't need to template any object inside child cluster(s), but we can use that object in the future if need arises.</p>
+<p>Note that <code>ConfigMap</code> is empty. This is expected, we don't need to template any object inside child cluster(s), but we can use that object in the future if need arises.</p>
 <p>Now apply this YAML to your management cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>aws-cluster-identity-resource-template.yaml<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
@@ -3709,7 +3816,9 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <li>For details about setting up k0rdent to manage clusters on VMware and OpenStack</li>
 <li>For details about using k0rdent with cloud Kubernetes distros: AWS EKS and Azure AKS</li>
 </ul>
-<p>Or check out the <a href="https://github.com/k0rdent/demos">Demos Repository</a> for fast, makefile-driven demos of k0rdent's key features.</p>
+<!--
+Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of k0rdent's key features.
+-->
 
 
 

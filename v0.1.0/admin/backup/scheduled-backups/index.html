@@ -597,6 +597,8 @@
       
         
       
+        
+      
     
     
     
@@ -916,6 +918,111 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../installation/auth/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_6" id="__nav_4_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/auth/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/auth/entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
   </span>
   
 
@@ -3042,7 +3149,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/release-v0.1.0/docs/admin/backup/scheduled-backups.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/main/docs/admin/backup/scheduled-backups.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3051,7 +3158,7 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/release-v0.1.0/docs/admin/backup/scheduled-backups.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/main/docs/admin/backup/scheduled-backups.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -3059,15 +3166,22 @@
 
 
 <h1 id="scheduled-management-backups">Scheduled Management Backups<a class="headerlink" href="#scheduled-management-backups" title="Permanent link">#</a></h1>
-<p>Backups should be scheduled on a regular basis, depending on how often information changes.</p>
+<p>Backups should be run on a schedule consistent with the policy requirements of the environment. For example a production environment might be set for "daily" backups, while a testing environment is set for "weekly".</p>
 <h2 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">#</a></h2>
-<p>Before you create a scheduled backup, you need to perform a few preparatory steps:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following instructions are tailored for AWS. Please adapt them to your chosen platform and storage.</p>
+</div>
+<p>Before you create a manual one-off or scheduled backup, review the steps below and update your configuration accordingly:</p>
 <ol>
 <li>
-<p>If no <code>velero</code> plugins have been installed as suggested
-   in <a href="../customization/#velero-installation">Velero installation</a>,
-   install a plugin that <a href="https://velero.io/docs/v1.15/supported-providers/">supports Object Store</a>
-   by modifying the <code>Management</code> object:</p>
+<p>Verify whether the <code>velero</code> plugins have been installed as suggested in <a href="#velero-installation">Velero installation</a>. If the <code>velero</code> plugins with the desired <a href="https://velero.io/docs/v1.15/supported-providers/">storage option</a> are already configured, please skip the next step.</p>
+</li>
+<li>
+<p>If no <code>velero</code> plugins have yet been installed in your k0rdent cluster, start by getting the kcm management yaml file:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>management<span class="w"> </span>kcm<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>management.yaml
+</code></pre></div>
+then edit the <code>management.yaml</code> file so that the velero plugin details are filled in under <code>spec.core.kcm</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Management</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3079,31 +3193,48 @@
 <span class="w">      </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">velero</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">initContainers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;provider-name&gt;</span>
-<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;provider-name&gt;:&lt;provider-plugin-tag&gt;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;PROVIDER-NAME&gt;</span>
+<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;PROVIDER-NAME&gt;:&lt;PROVIDER-PLUGIN-TAG&gt;</span>
 <span class="w">            </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
 <span class="w">            </span><span class="nt">volumeMounts</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
 <span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
 <span class="w">  </span><span class="c1"># ...</span>
 </code></pre></div>
+<p>Please review <a href="https://hub.docker.com/u/velero?page=1&amp;search=velero-plugin">Velero's Docker Hub image plugin repositories</a>
+to help identify the required <code>&lt;PROVIDER-NAME&gt;</code>.
+Once the required image has been identified, select from the available tags to determine the correct
+<code>&lt;PROVIDER-PLUGIN-TAG&gt;</code>. In the case of AWS, the provider-name would be <code>velero-plugin-for-aws</code>, we can
+select from the <a href="https://hub.docker.com/r/velero/velero-plugin-for-aws/tags">available tags</a>.</p>
 </li>
 <li>
-<p>Prepare a cloud storage location, such as an Amazon S3 bucket, to which to save backups.</p>
+<p>Prepare a <a href="https://velero.io/docs/v1.15/supported-providers/">storage location</a>, such as an Amazon S3 bucket, to store k0rdent backups.</p>
 </li>
 <li>
-<p>Create a <a href="https://velero.io/docs/v1.15/api-types/backupstoragelocation/"><code>BackupStorageLocation</code></a>
+<p>Prepare a yaml file containing a <a href="https://velero.io/docs/v1.15/api-types/backupstoragelocation/"><code>BackupStorageLocation</code></a>
    object referencing a <code>Secret</code> with credentials to access the cloud storage
-   (if the multiple credentials feature is supported by the plugin).</p>
-<p>For example, if you are using Amazon S3, your <code>BackupStorageLocation</code> and the related <code>Secret</code> might look like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+   (if the multiple credentials feature is supported by the plugin). For example, you can create the <code>BackupStorageLocation</code> and the related <code>Secret</code> yaml for the Amazon S3 configuration by following these steps.</p>
+<p>First create a file called <code>credentials.txt</code> with your credentials, as in:</p>
+<div class="highlight"><pre><span></span><code><span class="go">[default]</span>
+<span class="go">aws_access_key_id = EXAMPLE_ACCESS_KEY_ID</span>
+<span class="go">aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY</span>
+</code></pre></div>
+<p>The IAM user being used in this configuration will require certain permissions for the
+  appropriate Velero S3 bucket access. Review the necessary permissions <a href="https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user">here</a>
+  (reference the JSON policy file named <code>velero-policy.json</code> -- take care to replace <code>${BUCKET}</code> with the
+  correct bucket name).</p>
+<p>Generate the necessary base64-encoded credentials using:
+  <div class="highlight"><pre><span></span><code>base64<span class="w"> </span>-w0<span class="w"> </span>credentials.txt<span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</code></pre></div></p>
+<p>Use this base64 value in the <code>data.cloud</code> field in the <code>creds-and-backup-storage-location.yaml</code> you'll create next. Also make sure to substitute the appropriate <code>REGION-NAME</code> and <code>BUCKET-NAME</code>:
+  <div class="highlight"><pre><span></span><code><span class="nn">---</span>
 <span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># base64-encoded credentials for Amazon S3 in the following format:</span>
 <span class="w">  </span><span class="c1"># [default]</span>
 <span class="w">  </span><span class="c1"># aws_access_key_id = EXAMPLE_ACCESS_KEY_ID</span>
 <span class="w">  </span><span class="c1"># aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY</span>
-<span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WW2RlZmF1bHRdCmF3c19hY2Nlc3Nfa2V5X2lkID0gRVhBTVBMRV9BQ0NFU1NfS0VZX0lECmF3c19zZWNyZXRfYWNjZXNzX2tleSA9IEVYQU1QTEVfU0VDUkVUX0FDQ0VTU19LRVkKICA=</span>
+<span class="w">  </span><span class="nt">cloud</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BASE64_VALUE&gt;</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud-credentials</span>
@@ -3117,35 +3248,66 @@
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-region-name&gt;</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;REGION-NAME&gt;</span>
 <span class="w">  </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># optional, if not set, then storage location name must always be set in ManagementBackup</span>
 <span class="w">  </span><span class="nt">objectStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-bucket-name&gt;</span>
+<span class="w">    </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BUCKET-NAME&gt;</span>
 <span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws</span>
 <span class="w">  </span><span class="nt">backupSyncPeriod</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1m</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud-credentials</span>
 <span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Create the necessary Kubernetes resources in your k0rdent cluster by applying the YAML to the management cluster:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>creds-and-backup-storage-location.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>management.yaml
+</code></pre></div></p>
+</li>
+<li>
+<p>Confirm that the previous steps were applied correctly:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>management<span class="w"> </span>kcm<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-o<span class="w"> </span>yaml
 </code></pre></div>
+    The management configuration yaml should have the new velero plugin details, as shown in step 2. </p>
+<p>Now make sure the <code>backupstoragelocation</code> shows as <code>Available</code>:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>backupstoragelocation<span class="w"> </span>-n<span class="w"> </span>kcm-system
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME     PHASE       LAST VALIDATED   AGE   DEFAULT</span>
+<span class="go">aws-s3   Available   27s              2d    true</span>
+</code></pre></div>
+You can get more information on how to build these objects at the <a href="https://velero.io/docs/v1.15/locations">official Velero documentation</a>.</p>
 </li>
 </ol>
-<p>You can get more information on how to build these objects at the <a href="https://velero.io/docs/v1.15/locations">official Velero documentation</a>.</p>
 <h2 id="create-a-management-backup">Create a Management Backup<a class="headerlink" href="#create-a-management-backup" title="Permanent link">#</a></h2>
 <p>Periodic backups are handled by a <code>ManagementBackup</code> object, which uses a <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> expression
 for its <code>.spec.schedule</code> field.
 If the <code>.spec.schedule</code> field is not set, a <a href="../ondemand-backups/#management-backup-on-demand">backup on demand</a> will be created instead.</p>
-<p>Optionally, set the name of the <code>BackupStorageLocation</code> <code>.spec.backup.storageLocation</code>.
+<p>Optionally, set the name of the <code>.spec.backup.storageLocation</code> of the <code>BackupStorageLocation</code> object.
 The default location is the <code>BackupStorageLocation</code> object with <code>.spec.default</code> set to <code>true</code>.</p>
-<p>For example, you can create a <code>ManagementBackup</code> object that backs up to the storage object created in the previous step
-at minute 0 past every 6th hour would look like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<p>For example, you can create a <code>ManagementBackup</code> object that backs up to the storage object
+created in the <a href="#preparation">preparation step</a> every 6 hours
+(ref: <a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax">Kubernetes CronJob schedule syntax, "Vixie cron" step values</a>). Create a YAML file called <code>scheduled-backup.yaml</code>:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
 <span class="w">  </span><span class="nt">storageLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-s3</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
+Start the scheduled backup process by applying the YAML to the cluster:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>scheduled-backup.yaml
+</code></pre></div>
+Confirm the backup creation was successful by navigating to the appropriate storage console UI or from the command line:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managementbackup
+</code></pre></div>
+The <code>managementbackup</code> should show as <code>Completed</code>:
+<div class="highlight"><pre><span></span><code><span class="go">NAME              LASTBACKUPSTATUS   NEXTBACKUP   AGE</span>
+<span class="go">example-backup    Completed                       8m  </span>
+</code></pre></div></p>
 
 
 

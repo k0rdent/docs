@@ -790,6 +790,8 @@
       
         
       
+        
+      
     
     
     
@@ -1109,6 +1111,111 @@
   
   <span class="md-ellipsis">
     VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/auth/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_6" id="__nav_4_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
   </span>
   
 
@@ -3310,7 +3417,7 @@
                   
 
   
-    <a href="https://github.com/k0rdent/docs/edit/release-v0.1.0/docs/quickstarts/quickstart-2-azure.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/edit/main/docs/quickstarts/quickstart-2-azure.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3319,7 +3426,7 @@
     
       
     
-    <a href="https://github.com/k0rdent/docs/raw/release-v0.1.0/docs/quickstarts/quickstart-2-azure.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/k0rdent/docs/raw/main/docs/quickstarts/quickstart-2-azure.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -3333,15 +3440,15 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-<strong>Cloud Security 101:</strong> k0rdent requires <em>some</em> but not <em>all</em> permissions to manage Azure resources &mdash; doing so via the CAPZ (ClusterAPI for Azure) provider. </p>
+<strong>Cloud Security 101:</strong> k0rdent requires <em>some</em> but not <em>all</em> permissions to manage Azure resources via the CAPZ (ClusterAPI for Azure) provider. </p>
 </div>
-<p>A best practice for using k0rdent with Azure (this pattern is repeated with other clouds and infrastructures) is to create a new k0rdent Azure Cluster Identity and Service Principal (SP) on your account with the particular permissions k0rdent and CAPZ require.In this section, we'll create and configure those identity abstractions, and perform other steps to make required credentials accessible to k0rdent in the management node.</p>
+<p>A best practice for using k0rdent with Azure (this pattern is repeated with other clouds and infrastructures) is to create a new Azure Cluster Identity and Service Principal (SP) on your account with the particular permissions k0rdent and CAPZ require. In this section, we'll create and configure those identity abstractions, and perform other steps to make required credentials accessible to k0rdent in the management node.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
 If you're working on a shared Azure account, please ensure that the Azure Cluster Identity and Service Principal are not already set up before creating new abstractions.</p>
 </div>
-<p>Creating user identity abstractions with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with k0rdent at progressively greater scales. For more on k0rdent security best practices, please see the <a href="../../admin/">Administrator Guide</a>.</p>
+<p>Creating user identity abstractions with minimal required permissions is one of several principle-of-least-privilege mechanisms used to help ensure security as organizations work with Kubernetes at progressively greater scales. For more on k0rdent security best practices, please see the <a href="../../admin/">Administrator Guide</a>.</p>
 <h2 id="install-the-azure-cli-az">Install the Azure CLI (az)<a class="headerlink" href="#install-the-azure-cli-az" title="Permanent link">#</a></h2>
 <p>The Azure CLI (az) is required to interact with Azure resources. Install it according to instructions in <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">How to install the Azure CLI</a>. For Linux/Debian (i.e., Ubuntu Server), it's one command:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sL<span class="w"> </span>https://aka.ms/InstallAzureCLIDeb<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>bash
@@ -3379,7 +3486,7 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 </code></pre></div>
 <p>The Subcription ID is in the second column.</p>
 <h2 id="create-a-service-principal-for-k0rdent">Create a Service Principal for k0rdent<a class="headerlink" href="#create-a-service-principal-for-k0rdent" title="Permanent link">#</a></h2>
-<p>The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure. To create it, run the following command with the Azure CLI, replacing <subscription-id> with the ID you copied earlier.</p>
+<p>The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure. To create it, run the following command with the Azure CLI, replacing <code>&lt;subscription-id&gt;</code> with the ID you copied earlier.</p>
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--role<span class="w"> </span>contributor<span class="w"> </span>--scopes<span class="o">=</span><span class="s2">&quot;/subscriptions/&lt;subscription-id&gt;&quot;</span>
 </code></pre></div>
 <p>You'll see output that resembles what's below:</p>
@@ -3508,7 +3615,7 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/azure-cluster-identity-cred created</span>
 </code></pre></div>
 <h2 id="create-the-configmap-resource-template-object">Create the <code>ConfigMap</code> resource-template Object<a class="headerlink" href="#create-the-configmap-resource-template-object" title="Permanent link">#</a></h2>
-<p>Create a YAML with the specification of our resource-template and save it as
+<p>Create a YAML with the specification of our resource-template (and the necessary <code>StorageClass</code>) and save it as
 <code>azure-cluster-identity-resource-template.yaml</code></p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
@@ -3565,6 +3672,19 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="w">    </span><span class="no">type: Opaque</span>
 <span class="w">    </span><span class="no">data:</span>
 <span class="w">      </span><span class="no">cloud-config: {{ $cloudConfig | toJson | b64enc }}</span>
+<span class="w">    </span><span class="no">---</span>
+<span class="w">    </span><span class="no">apiVersion: storage.k8s.io/v1</span>
+<span class="w">    </span><span class="no">kind: StorageClass</span>
+<span class="w">    </span><span class="no">metadata:</span>
+<span class="w">      </span><span class="no">name: managed-csi</span>
+<span class="w">      </span><span class="no">annotations:</span>
+<span class="w">        </span><span class="no">storageclass.kubernetes.io/is-default-class: &quot;true&quot;</span>
+<span class="w">    </span><span class="no">provisioner: disk.csi.azure.com</span>
+<span class="w">    </span><span class="no">parameters:</span>
+<span class="w">      </span><span class="no">skuName: StandardSSD_LRS</span>
+<span class="w">    </span><span class="no">reclaimPolicy: Delete</span>
+<span class="w">    </span><span class="no">volumeBindingMode: WaitForFirstConsumer</span>
+<span class="w">    </span><span class="no">allowVolumeExpansion: true</span>
 </code></pre></div>
 <p>Object name needs to be exactly <code>azure-cluster-identity-resource-template.yaml</code>, <code>AzureClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
@@ -3586,12 +3706,12 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="go">Australia East            australiaeast        (Asia Pacific) Australia East</span>
 <span class="go">. . .</span>
 </code></pre></div>
-<p>What you'll need to insert in your ClusterDeployment is the name (center column) of the region you wish to deploy to.</p>
+<p>What you'll need to insert in your <code>ClusterDeployment</code> is the name (center column) of the region to which you wish to deploy.</p>
 <h2 id="list-available-cluster-templates">List available cluster templates<a class="headerlink" href="#list-available-cluster-templates" title="Permanent link">#</a></h2>
-<p>k0rdent is now fully configured to manage Azure. To create a cluster, begin by listing the available ClusterTemplates provided with k0rdent:</p>
+<p>k0rdent is now fully configured to manage Azure. To create a cluster, begin by listing the available <code>ClusterTemplate</code> objects:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<p>You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the example below, that's <code>azure-standalone-cp-0-1-0</code>):</p>
+<p>You'll see output resembling what's below. Grab the name of the Azure standalone cluster template in its present version (in the example below, that's <code>azure-standalone-cp-0-1-0</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-0-1-0           true</span>
 <span class="go">kcm-system   aws-eks-0-1-0                   true</span>
@@ -3605,7 +3725,7 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="go">kcm-system   vsphere-standalone-cp-0-1-0     true</span>
 </code></pre></div>
 <h2 id="create-your-clusterdeployment">Create your ClusterDeployment<a class="headerlink" href="#create-your-clusterdeployment" title="Permanent link">#</a></h2>
-<p>Now, to deploy a cluster, create a YAML file called <code>my-azure-clusterdeployment1.yaml</code>. We'll use this to create a ClusterDeployment object in k0rdent, representing the deployed cluster. The <code>ClusterDeployment</code> identifies for k0rdent the <code>ClusterTemplate</code> you want to use for cluster creation, the identity credential object you want to create it under, plus the location/region and instance types you want to use to host control plane and worker nodes:</p>
+<p>Now, to deploy a cluster, create a YAML file called <code>my-azure-clusterdeployment1.yaml</code>. We'll use this to create a <code>ClusterDeployment</code> object in k0rdent, representing the deployed cluster. The <code>ClusterDeployment</code> identifies for k0rdent the <code>ClusterTemplate</code> you want to use for cluster creation, the identity credential object you want to create it under, plus the location/region and instance types you want to use to host control plane and worker nodes:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3647,7 +3767,7 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 -->
 
 <h2 id="apply-the-clusterdeployment-to-deploy-the-cluster">Apply the ClusterDeployment to deploy the cluster<a class="headerlink" href="#apply-the-clusterdeployment-to-deploy-the-cluster" title="Permanent link">#</a></h2>
-<p>Finally, we'll apply the ClusterDeployment YAML (<code>my-azure-clusterdeployment1.yaml</code>) to instruct k0rdent to deploy the cluster:</p>
+<p>Finally, we'll apply the <code>ClusterDeployment</code> YAML (<code>my-azure-clusterdeployment1.yaml</code>) to instruct k0rdent to deploy the cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-azure-clusterdeployment1.yaml
 </code></pre></div>
 <p>Kubernetes should confirm this:</p>
@@ -3657,10 +3777,10 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
-<p>Now you can retrieve the cluster's kubeconfig:</p>
+<p>Now you can retrieve the cluster's <code>kubeconfig</code>:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig.kubeconfig
 </code></pre></div>
-<p>And you can use the kubeconfig to see what's running on the cluster:</p>
+<p>And you can use the <code>kubeconfig</code> to see what's running on the cluster:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-azure-clusterdeployment1-kubeconfig.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 <h2 id="list-child-clusters">List child clusters<a class="headerlink" href="#list-child-clusters" title="Permanent link">#</a></h2>
@@ -3684,7 +3804,6 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <li>For details about setting up k0rdent to manage clusters on VMware and OpenStack</li>
 <li>For details about using k0rdent with cloud Kubernetes distros: AWS EKS and Azure AKS</li>
 </ul>
-<p>Or check out the <a href="https://github.com/k0rdent/demos">Demos Repository</a> for fast, makefile-driven demos of k0rdent's key features!</p>
 
 
 
