@@ -1557,6 +1557,84 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#helm-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helm Charts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helm Charts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kof-mothership" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-mothership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-regional" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-regional
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-child" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-child
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-istio" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-istio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-collectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-collectors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1728,7 +1806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3152,6 +3230,84 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#helm-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helm Charts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helm Charts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kof-mothership" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-mothership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-regional" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-regional
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-child" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-child
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-istio" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-istio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kof-collectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof-collectors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3215,12 +3371,18 @@ To update the diagram:
     victoria-metrics-operator
     cluster-api-visualizer
     sveltos-dashboard
+    kof-operator
     k0rdent service templates
     promxy
 
   kof-operators chart
     opentelemetry-operator
     prometheus-operator-crds
+
+  kof-regional chart
+    MultiClusterService
+  kof-child chart
+    MultiClusterService
 
 Cloud 1..N
   Region 1..M
@@ -3230,6 +3392,7 @@ Cloud 1..N
         grafana-operator
         victoria-metrics-operator
         victoria-logs-single
+        jaeger-operator
         external-dns
 
       cert-manager of grafana and vmauth
@@ -3268,6 +3431,9 @@ Cloud 1..N
       sveltos-dashboard
     </div>
     <div class="o">
+      kof-operator
+    </div>
+    <div class="o">
       k0rdent service templates
     </div>
     <div class="o">
@@ -3281,6 +3447,18 @@ Cloud 1..N
     </div>
     <div class="o">
       prometheus-operator-crds
+    </div>
+  </div>
+  <div class="o">
+    kof-regional chart
+    <div class="o">
+      MultiClusterService
+    </div>
+  </div>
+  <div class="o">
+    kof-child chart
+    <div class="o">
+      MultiClusterService
     </div>
   </div>
 </div>
@@ -3300,6 +3478,9 @@ Cloud 1..N
         </div>
         <div class="o">
           victoria-logs-single
+        </div>
+        <div class="o">
+          jaeger-operator
         </div>
         <div class="o">
           external-dns
@@ -3360,6 +3541,55 @@ Cloud 1..N
 <h2 id="low-level">Low-level<a class="headerlink" href="#low-level" title="Permanent link">#</a></h2>
 <p>At a low level, you can see how logs and traces work their way around the system.</p>
 <p><img alt="kof-architecture" src="../../../assets/kof/otel.png" /></p>
+<h2 id="helm-charts">Helm Charts<a class="headerlink" href="#helm-charts" title="Permanent link">#</a></h2>
+<p>KOF is deployed as a series of Helm charts at various levels.</p>
+<h3 id="kof-mothership">kof-mothership<a class="headerlink" href="#kof-mothership" title="Permanent link">#</a></h3>
+<ul>
+<li>Centralized <a href="https://grafana.com/">Grafana</a> dashboard, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
+<li>Local <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage for alerting rules only, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a></li>
+<li><a href="https://github.com/Jont828/cluster-api-visualizer">cluster-api-visualizer</a> for insight into multicluster configuration</li>
+<li><a href="https://projectsveltos.github.io/sveltos/">Sveltos</a> dashboard, automatic secret distribution</li>
+<li><a href="https://github.com/k0rdent/kof/tree/main/kof-operator/internal/controller">kof-operator</a> (don't confuse it with the <code>kof-operators</code> chart) for auto-configuration</li>
+<li><a href="https://github.com/k0rdent">k0rdent</a> service templates used by <code>kof-regional</code> and <code>kof-child</code> charts</li>
+<li><a href="https://github.com/jacksontj/promxy">Promxy</a> for aggregating Prometheus metrics from regional clusters</li>
+</ul>
+<h3 id="kof-regional">kof-regional<a class="headerlink" href="#kof-regional" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-regional/templates/regional-multi-cluster-service.yaml">MultiClusterService</a>
+  which configures and installs <code>kof-storage</code> and other charts to regional clusters</li>
+</ul>
+<h3 id="kof-child">kof-child<a class="headerlink" href="#kof-child" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-child/templates/child-multi-cluster-service.yaml">MultiClusterService</a>
+  which configures and installs <code>kof-collectors</code> and other charts to child clusters</li>
+</ul>
+<h3 id="kof-storage">kof-storage<a class="headerlink" href="#kof-storage" title="Permanent link">#</a></h3>
+<ul>
+<li>Regional <a href="https://grafana.com/">Grafana</a> dashboard, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
+<li>Regional <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage with main data, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a><ul>
+<li><a href="https://docs.victoriametrics.com/vmauth/">vmauth</a> entrypoint proxy for VictoriaMetrics components</li>
+<li><a href="https://docs.victoriametrics.com/operator/resources/vmcluster/">vmcluster</a> for high-available fault-tolerant version of VictoriaMetrics database</li>
+<li><a href="https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-single">victoria-logs-single</a> for high-performance, cost-effective, scalable logs storage</li>
+</ul>
+</li>
+<li>Regional <a href="https://www.jaegertracing.io/">Jaeger</a> tracing platform, managed by <a href="https://github.com/jaegertracing/jaeger-operator">jaeger-operator</a></li>
+<li><a href="https://github.com/kubernetes-sigs/external-dns">external-dns</a> to communicate with other clusters</li>
+</ul>
+<h3 id="kof-istio">kof-istio<a class="headerlink" href="#kof-istio" title="Permanent link">#</a></h3>
+<ul>
+<li>Optional <a href="https://github.com/k0rdent/kof/blob/main/docs/istio.md">Istio</a> support for secure connectivity between clusters</li>
+</ul>
+<h3 id="kof-operators">kof-operators<a class="headerlink" href="#kof-operators" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds">prometheus-operator-crds</a> required to create OpenTelemetry collectors, also required to monitor <a href="#management-cluster"><code>kof-mothership</code></a> itself</li>
+<li><a href="https://opentelemetry.io/">OpenTelemetry</a> <a href="https://opentelemetry.io/docs/collector/">collectors</a> below, managed by <a href="https://opentelemetry.io/docs/kubernetes/operator/">opentelemetry-operator</a></li>
+</ul>
+<h3 id="kof-collectors">kof-collectors<a class="headerlink" href="#kof-collectors" title="Permanent link">#</a></h3>
+<ul>
+<li><a href="https://prometheus.io/docs/guides/node-exporter/">prometheus-node-exporter</a> for hardware and OS metrics</li>
+<li><a href="https://github.com/kubernetes/kube-state-metrics">kube-state-metrics</a> for metrics about the state of Kubernetes objects</li>
+<li><a href="https://www.opencost.io/">OpenCost</a> "shines a light into the black box of Kubernetes spend"</li>
+</ul>
 
 
 

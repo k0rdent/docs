@@ -1728,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3207,9 +3207,15 @@ Make sure these are just your demo clusters and do not contain important data.</
 </div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="o">=</span>foreground<span class="w"> </span>-f<span class="w"> </span>child-cluster.yaml
 kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="o">=</span>foreground<span class="w"> </span>-f<span class="w"> </span>regional-cluster.yaml
+kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="w"> </span>promxyservergroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/managed-by<span class="o">=</span>kof-operator
+kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="w"> </span>grafanadatasource<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/managed-by<span class="o">=</span>kof-operator
 </code></pre></div>
 <p>To remove KOF from the management cluster:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child
+helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional
+helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>kof<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="o">=</span>foreground
 </code></pre></div>

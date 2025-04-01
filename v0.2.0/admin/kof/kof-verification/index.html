@@ -1719,7 +1719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3183,20 +3183,24 @@ kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w">
 <span class="w">  </span><span class="c1"># Namespaces: kof, kube-system, projectsveltos</span>
 </code></pre></div>
 Wait for all pods to show as <code>Running</code>.</p>
+<p>If the auto-configuration failed, find the reason in the logs of the <code>kof-operator</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>deploy/kof-mothership-kof-operator
+</code></pre></div>
 <h2 id="manual-dns-config">Manual DNS config<a class="headerlink" href="#manual-dns-config" title="Permanent link">#</a></h2>
 <p>If you've opted out of <a href="../kof-install/#dns-auto-config">DNS auto-config</a>, you will need to do the following:</p>
 <ol>
 <li>
 <p>Get the <code>EXTERNAL-IP</code> of <code>ingress-nginx</code>:
     <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>ingress-nginx-controller
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>ingress-nginx-controller
 </code></pre></div>
     It should look like <code>REDACTED.us-east-2.elb.amazonaws.com</code></p>
 </li>
 <li>
-<p>Create these DNS records of type <code>A</code>, both pointing to that <code>EXTERNAL-IP</code>:
-    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>vmauth.<span class="nv">$REGIONAL_DOMAIN</span>
-<span class="nb">echo</span><span class="w"> </span>grafana.<span class="nv">$REGIONAL_DOMAIN</span>
+<p>Create these DNS records of type <code>A</code>, all pointing to that <code>EXTERNAL-IP</code>:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>grafana.<span class="nv">$REGIONAL_DOMAIN</span>
+<span class="nb">echo</span><span class="w"> </span>jaeger.<span class="nv">$REGIONAL_DOMAIN</span>
+<span class="nb">echo</span><span class="w"> </span>vmauth.<span class="nv">$REGIONAL_DOMAIN</span>
 </code></pre></div></p>
 </li>
 </ol>

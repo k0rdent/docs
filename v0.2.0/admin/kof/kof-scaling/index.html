@@ -1632,6 +1632,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#you-must-construct-additional-pylons" class="md-nav__link">
+    <span class="md-ellipsis">
+      You Must Construct Additional Pylons
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1719,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="../../upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3134,6 +3143,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#you-must-construct-additional-pylons" class="md-nav__link">
+    <span class="md-ellipsis">
+      You Must Construct Additional Pylons
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3169,14 +3187,21 @@
 <p>The method for scaling KOF depends on the type of expansion:</p>
 <h2 id="regional-expansion">Regional Expansion<a class="headerlink" href="#regional-expansion" title="Permanent link">#</a></h2>
 <ol>
-<li>Deploy a <a href="../kof-install/#regional-cluster">regional cluster</a> in the new region</li>
-<li>Configure child clusters in this region to point to this regional cluster</li>
+<li>Deploy a <a href="../kof-install/#regional-cluster">regional cluster</a> in the new region.</li>
+<li>Configure child clusters in this region to point to this regional cluster.</li>
 </ol>
 <h2 id="adding-a-new-child-cluster">Adding a New Child Cluster<a class="headerlink" href="#adding-a-new-child-cluster" title="Permanent link">#</a></h2>
 <ol>
-<li>Apply templates, as in the <a href="../kof-install/#child-cluster">child cluster</a> section</li>
-<li>Verify the data flow</li>
-<li>Configure any custom dashboards</li>
+<li>Apply templates, as in the <a href="../kof-install/#child-cluster">child cluster</a> section.</li>
+<li>Verify the data flow.</li>
+<li>Configure any custom dashboards.</li>
+</ol>
+<h2 id="you-must-construct-additional-pylons">You Must Construct Additional Pylons<a class="headerlink" href="#you-must-construct-additional-pylons" title="Permanent link">#</a></h2>
+<ol>
+<li>Change the <code>replicaCount</code> of components like <code>victoria-logs-single</code>
+    as documented in the <a href="../kof-install/#regional-cluster">regional cluster</a> section.</li>
+<li>Change the <code>replicas</code> number of components like <code>opencost</code>
+    as documented in the <a href="../kof-install/#child-cluster">child cluster</a> section.</li>
 </ol>
 
 

@@ -1659,7 +1659,7 @@
   
   
     <li class="md-nav__item">
-      <a href="upgrade/admin-upgrading-k0rdent/" class="md-nav__link">
+      <a href="upgrade/admin-upgrading-k0rdent.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3240,7 +3240,7 @@ ensure that reality matches the definition. We can say that k0rdent is GitOps-co
 <strong>After this point, the deployment is completely controlled by Flux.</strong></li>
 <li><code>kcm-controller-manager</code> creates a <code>Management</code> object that refers to the above <code>Release</code> and the <code>ProviderTemplate</code> objects.
 The <code>Management</code> object represents the k0rdent management cluster as a whole.
-The management cluster Day-2 operations (such as <a href="upgrade/index.md">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
+The management cluster Day-2 operations (such as <a href="upgrade/">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
 <li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines <a href="../reference/template/#template-life-cycle-management">access rules</a> for <code>ClusterTemplate</code>/<code>ServiceTemplate</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used along with admin-created <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects.</li>
 </ol>
 <p>This Administration Guide provides information on:</p>
@@ -3250,7 +3250,7 @@ The management cluster Day-2 operations (such as <a href="upgrade/index.md">upgr
 <li><a href="services/">Working with services</a></li>
 <li><a href="hosted-control-plane/">Hosted control planes</a></li>
 <li><a href="kof/">k0rdent Observability &amp; FinOps</a></li>
-<li><a href="upgrade/index.md">Upgrading k0rdent</a></li>
+<li><a href="upgrade/">Upgrading k0rdent</a></li>
 <li><a href="access/">Access Management (Credentials and RBAC)</a></li>
 <li><a href="backup/">Backup and Restore</a></li>
 </ul>
