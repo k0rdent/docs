@@ -39,7 +39,7 @@ theme:
     - search.highlight      # Search highlights all occurrences after following the link
     - content.action.edit
     - content.action.view
-    - navigation.path       # Not working, for sponsors only
+    - navigation.path       # Not working, for sponsors only yes
     - navigation.indexes
     # - navigation.tabs
     # - navigation.tabs.sticky
