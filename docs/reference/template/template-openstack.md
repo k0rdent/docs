@@ -16,9 +16,22 @@ To deploy an OpenStack cluster, the following are the primary parameters in the 
 
 ### SSH Configuration
 
-`sshPublicKey` is the reference name for an existing SSH key configured in OpenStack.
+To access deployed machines over ssh requires two things:
 
-- **ClusterDeployment**: Specify the SSH public key using the `.spec.config.controlPlane.sshPublicKey` and `.spec.config.worker.sshPublicKey` parameters (for the standlone control plane).
+- `sshKeyName` - the reference name for an existing SSH key configured in OpenStack.
+- `bastion` - bastion host being enabled and its flavor and image specified.
+
+#### SSH keys
+
+Specify the SSH public key using the `.spec.config.controlPlane.sshKeyName` and `.spec.config.worker.sshKeyName` parameters (for the standlone control plane).
+
+#### Bastion
+
+Specify `.spec.config.bastion.enabled` to enable it as well as provide `flavor` and `image` in its spec, similarly to workers and control plane.
+
+Example `ClusterDeployment with enabled bastion can be found [below](#example-clusterdeployment).
+
+
 
 ### Machine Configuration
 
@@ -28,7 +41,7 @@ Configurations for control plane and worker nodes are specified separately under
 |--------------------------------|-----------------------|-----------------------------------------|
 | `flavor`                       | `m1.medium`           | OpenStack flavor for the instance.      |
 | `image.filter.name`            | `ubuntu-22.04-x86_64` | Name of the image.                      |
-| `sshPublicKey`                 | `ramesses-pk`         | Reference name for an existing SSH key. |
+| `sshKeyName`                   | `ramesses-pk`         | Reference name for an existing SSH key. |
 | `securityGroups[].filter.name` | `default`             | Security group for the instance.        |
 
 > NOTE:
@@ -59,19 +72,26 @@ spec:
   template: openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}
   credential: openstack-cluster-identity-cred
   config:
-    clusterLabels: {}
     clusterLabels:
       k0rdent: demo
     controlPlaneNumber: 1
     workersNumber: 1
+    bastion:
+      enabled: true
+      sshKeyName: my-public-key
+      spec:
+        flavor: m1.small
+        image:
+          filter:
+            name: ubuntu-22.04-x86_64
     controlPlane:
-      sshPublicKey: my-public-key
+      sshKeyName: bastion-public-key
       flavor: m1.medium
       image:
         filter:
           name: ubuntu-22.04-x86_64
     worker:
-      sshPublicKey: my-public-key
+      sshKeyName: bastion-public-key
       flavor: m1.medium
       image:
         filter:
@@ -85,4 +105,3 @@ spec:
       cloudName: openstack
       region: RegionOne
 ```
-
