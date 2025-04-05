@@ -9,9 +9,9 @@ helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.d
 ```
 ```console
 Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
-Digest: sha256:1f75e8e55c44d10381d7b539454c63b751f9a2ec6c663e2ab118d34c5a21087f
+Digest: sha256:c4cd3cceecbed98512515f080e0a2878118d122532d5e5d8b7ef87bcd991639d
 NAME: kcm
-LAST DEPLOYED: Mon Dec  9 00:32:14 2024
+LAST DEPLOYED: Tue Apr  1 22:19:26 2025
 NAMESPACE: kcm-system
 STATUS: deployed
 REVISION: 1

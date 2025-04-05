@@ -8,32 +8,36 @@ To understand whether installation is complete, start by making sure all pods ar
 ```shell
 kubectl get pods -n kcm-system
 ```
+
 ```console
-NAME                                                          READY   STATUS    RESTARTS   AGE
-azureserviceoperator-controller-manager-6b4dd86894-2m2wh      1/1     Running   0          57s
-capa-controller-manager-64bbcb9f8-kx6wr                       1/1     Running   0          2m3s
-capi-controller-manager-66f8998ff5-2m5m2                      1/1     Running   0          2m32s
-capo-controller-manager-588f45c7cf-lmkgz                      1/1     Running   0          50s
-capv-controller-manager-69f7fc65d8-wbqh8                      1/1     Running   0          46s
-capz-controller-manager-544845f786-q8rzn                      1/1     Running   0          57s
-helm-controller-7644c4d5c4-t6sjm                              1/1     Running   0          5m1s
-k0smotron-controller-manager-bootstrap-9fc48d76f-hppzs        2/2     Running   0          2m9s
-k0smotron-controller-manager-control-plane-7df9bc7bf-74vcs    2/2     Running   0          2m4s
-k0smotron-controller-manager-infrastructure-f7f94dd76-ppzq4   2/2     Running   0          116s
-kcm-cert-manager-895954d88-jplf6                              1/1     Running   0          5m1s
-kcm-cert-manager-cainjector-685ffdf549-qlj8m                  1/1     Running   0          5m1s
-kcm-cert-manager-webhook-59ddc6b56-8hfml                      1/1     Running   0          5m1s
-kcm-cluster-api-operator-8487958779-l9lvf                     1/1     Running   0          3m12s
-kcm-controller-manager-7998cdb69-x7kd9                        1/1     Running   0          3m12s
-kcm-velero-b68fd5957-fwg2l                                    1/1     Running   0          5m1s
-source-controller-6cd7676f7f-7kpjn                            1/1     Running   0          5m1s
+NAME                                                           READY   STATUS    RESTARTS   AGE
+azureserviceoperator-controller-manager-6b4dd86894-4dpfc       1/1     Running   0          7m15s
+capa-controller-manager-64bbcb9f8-ltj6z                        1/1     Running   0          6m58s
+capd-controller-manager-7586b6577c-6w4wq                       1/1     Running   0          7m11s
+capg-controller-manager-774958b9b9-hvxvv                       1/1     Running   0          6m54s
+capi-controller-manager-5b67d4fc7-dhk7p                        1/1     Running   0          8m49s
+capo-controller-manager-6f98bb68cd-vsc24                       1/1     Running   0          6m33s
+capv-controller-manager-69f7fc65d8-jx8s4                       1/1     Running   0          6m40s
+capz-controller-manager-5b87fdf745-mzm7x                       1/1     Running   0          7m15s
+helm-controller-746d7db585-x64ld                               1/1     Running   0          11m
+k0smotron-controller-manager-bootstrap-67dd88d848-wfrhm        2/2     Running   0          8m32s
+k0smotron-controller-manager-control-plane-657f5578d4-7vb8t    2/2     Running   0          8m24s
+k0smotron-controller-manager-infrastructure-5867d575f9-t28hp   2/2     Running   0          6m46s
+kcm-cert-manager-6979c67bc4-b6s4w                              1/1     Running   0          11m
+kcm-cert-manager-cainjector-5b97c84fdb-kdsw5                   1/1     Running   0          11m
+kcm-cert-manager-webhook-755796f599-q6727                      1/1     Running   0          11m
+kcm-cluster-api-operator-65c8f75569-rfsp2                      1/1     Running   0          9m30s
+kcm-controller-manager-68b56bff85-6fmsp                        1/1     Running   0          9m30s
+kcm-velero-67bf545995-x6784                                    1/1     Running   0          11m
+source-controller-74b597b995-kkqqw                             1/1     Running   0          11m
 ```
 
 ```shell
 kubectl get pods -n kcm-system --no-headers | wc -l
 ```
+
 ```console
-17
+20
 ```
 
 State management is handled by Project Sveltos, so you'll want to make sure that all 9 pods are running/completed in the `projectsveltos` namespace:
@@ -43,29 +47,30 @@ kubectl get pods -n projectsveltos
 ```
 
 ```console
-NAME                                     READY   STATUS      RESTARTS   AGE
-access-manager-56696cc7f-5txlb           1/1     Running     0          4m1s
-addon-controller-7c98776c79-dn9jm        1/1     Running     0          4m1s
-classifier-manager-7b85f96469-666jx      1/1     Running     0          4m1s
-event-manager-67f6db7f44-hsnnj           1/1     Running     0          4m1s
-hc-manager-6d579d675f-fgvk2              1/1     Running     0          4m1s
-register-mgmt-cluster-job-rfkdh          0/1     Completed   0          4m1s
-sc-manager-55c99d494b-c8wrl              1/1     Running     0          4m1s
-shard-controller-5ff9cd796d-tlg79        1/1     Running     0          4m1s
-sveltos-agent-manager-7467959f4f-lsnd5   1/1     Running     0          3m34s
+NAME                                      READY   STATUS    RESTARTS   AGE
+access-manager-6696df779-pnxjx            1/1     Running   0          10m
+addon-controller-6cb6c5f6df-zmfch         1/1     Running   0          10m
+classifier-manager-5b47b66fc9-5mtwl       1/1     Running   0          10m
+event-manager-564d6644b4-wr9cq            1/1     Running   0          10m
+hc-manager-7c56c59d9c-w5gds               1/1     Running   0          10m
+sc-manager-6798cd9d4d-r7z9j               1/1     Running   0          10m
+shard-controller-797965bb58-65lmp         1/1     Running   0          10m
+sveltos-agent-manager-5445f6f57c-wxw2s    1/1     Running   0          10m
+techsupport-controller-5b666d6884-jfqnp   1/1     Running   0          10m
 ```
+
 ```shell
 kubectl get pods -n projectsveltos --no-headers | wc -l
 ```
-```console
-9
-```
 
+```console
+10
+```
 
 If any of these pods are missing, simply give {{{ docsVersionInfo.k0rdentName }}} more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
 
 ```shell
-kubectl describe pod classifier-manager-7b85f96469-666jx -n projectsveltos
+kubectl describe pod classifieclassifier-manager-5b47b66fc9-5mtwl -n projectsveltos
 ```
 
 As long as you're not seeing pod restarts, you just need to wait a few minutes.
@@ -77,6 +82,7 @@ The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is th
 ```shell
 kubectl get Management -n kcm-system
 ```
+
 ```console
 NAME   READY   RELEASE     AGE
 kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
@@ -84,7 +90,7 @@ kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 
 ## Verify the templates
 
-Next verify whether the KCM templates have been successfully installed and reconciled.  Start with the `ProviderTemplate` objects:
+Next verify whether the KCM templates have been successfully installed and reconciled. Start with the `ProviderTemplate` objects:
 
 ```shell
 kubectl get providertemplate -n kcm-system
@@ -92,14 +98,16 @@ kubectl get providertemplate -n kcm-system
 
 ```console
 NAME                                   VALID
-cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                      true
-cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}                        true
-kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                              true
-projectsveltos-0-45-0                  true
+cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                                 true
+cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}                    true
+cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}                  true
+cluster-api-provider-docker-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
+cluster-api-provider-gcp-{{{ extra.docsVersionInfo.k0rdentVersion }}}                    true
+cluster-api-provider-k0sproject-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
+cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}              true
+cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}                true
+kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                                         true
+projectsveltos-0-50-0                             true
 ```
 
 Make sure that all templates are not just installed, but valid. Again, this may take a few minutes.
@@ -119,7 +127,12 @@ aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsSta
 azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
 azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
 azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
+gcp-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
+gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
 openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
 vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
 vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
@@ -140,3 +153,17 @@ ingress-nginx-4-11-3      true
 kyverno-3-2-6             true
 velero-8-1-0              true
 ```
+
+If this is a new `v0.2.0` cluster, you will get the following:
+
+```shell
+No resources found in kcm-system namespace.
+```
+
+This will require you to install the `ServiceTemplates` objects as follows:
+
+```shell
+helm upgrade --install catalog-core oci://ghcr.io/k0rdent/catalog/charts/catalog-core --version 1.0.0 -n kcm-system
+```
+
+after which you will be able to verify the `ServiceTemplate` objects as shown above.
