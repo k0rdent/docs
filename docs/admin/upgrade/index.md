@@ -29,7 +29,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
         - name: k0smotron
           template: k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-azure
-          template: cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentsion }}}
+          template: cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-vsphere
           template: cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-aws

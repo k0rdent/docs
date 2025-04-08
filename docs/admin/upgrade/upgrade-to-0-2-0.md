@@ -6,8 +6,7 @@ and perform the additional manual steps outlined below:
 
 1. Follow the [upgrading guide](index.md) and create a new `Release` object (steps 1-2).
 
-2. Verify the new `Release` status
-
+2. Verify the new `Release` status. <br><br>
    Wait for the new `Release` to have `status.ready: true`. You can monitor progress using this command:
 
     ```shell
