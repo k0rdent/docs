@@ -1,8 +1,6 @@
-# Deploy beach-head services using MultiClusterService
+# Deploy services using MultiClusterService
 
-The `MultiClusterService` object is used to deploy beach-head services on multiple matching clusters.
-These beach-head services provide capabilities, such as Kyverno or Nginx Ingress, that are accessed by
-user applications.
+The `MultiClusterService` object is used to deploy services on multiple matching clusters.
 
 ## Creation
 
@@ -18,8 +16,7 @@ spec:
     matchLabels:
       <key1>: <value1>
       <key2>: <value2>
-      . . .
- serviceSpec:
+  serviceSpec:
     services:
     - template: <servicetemplate-1-name>
       name: <release-name>
@@ -52,7 +49,7 @@ dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io
 dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
 ```
 
-The `dev-cluster-1` `ClusterDeployment` beach-head services are specified as:
+The `dev-cluster-1` `ClusterDeployment` services are specified as:
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment

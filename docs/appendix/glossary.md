@@ -63,8 +63,7 @@ updates, and other CRUD operations.
 Cluster and beach-head services monitoring, events and log management.
 
 ## k0rdent State Manager (KSM)
-Installation and life-cycle management of beach-head services, policy, Kubernetes API 
-configurations and more.
+Installation and life-cycle management of deployed services.
 
 ## Hosted Control Plane (HCP)
 An HCP is a Kubernetes control plane that runs outside of the clusters it manages. 
@@ -81,8 +80,7 @@ Kubernetes clusters. It enables Cluster API (CAPI) to provision and manage clust
 a specific infrastructure platform (e.g., AWS, Azure, VMware, OpenStack, etc.).
 
 ## Multi-Cluster Service
-The `MultiClusterService` is a custom resource used to manage deployment of beach-head 
-services across multiple clusters.
+The `MultiClusterService` is a custom resource used to manage services' deployment across multiple clusters.
 
 ## Management Cluster
 The Kubernetes cluster where {{{ docsVersionInfo.k0rdentName }}} is installed and from which all other managed 

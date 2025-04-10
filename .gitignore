@@ -5,6 +5,7 @@ venv/
 # Ignore extension folders from .vscode
 
 .vscode
+.idea
 
 # Ignore MkDocs build output
 site/

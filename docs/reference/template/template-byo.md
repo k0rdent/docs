@@ -7,15 +7,34 @@ In addition to the templates that ship with {{{ docsVersionInfo.k0rdentName }}},
 > INFO:
 > Skip this step if you're using an existing source.
 
-All templates are based on a Helm chart, so the first step is to define the source in which that Helm chart can be found.
+`ClusterTemplate` and `ProviderTemplate` are based on a Helm chart. `ServiceTemplate`, apart from Helm chart, can be also based on kustomization or raw resources.
+Regardless of the type of the resources to be deployed using template, the corresponding source object should be created.
 
 The source can be one of the following types:
+
+| **Template**       | `HelmRepository` | `Bucket` | `OCIRepository` | `ConfigMap` | `Secret` |
+|--------------------|------------------|----------|-----------------|-------------|----------|
+| `ClusterTemplate`  | V                | X        | X               | X           | X        |
+| `ProviderTemplate` | V                | X        | X               | X           | X        |
+| `ServiceTemplate`  | V                | V        | V               | V           | V        |
 
 - [HelmRepository](https://fluxcd.io/flux/components/source/helmrepositories/)
 - [GitRepository](https://fluxcd.io/flux/components/source/gitrepositories/)
 - [Bucket](https://fluxcd.io/flux/components/source/buckets/)
 
-Note that it's important to pay attention to where the source resides. Cluster-scoped `ProviderTemplate` objects must reside in the **system** namespace (`kcm-system` by default) but other template sources must reside in the same directory as the templates that will come from them.
+> INFO: 
+> `ConfigMap` and `Secret` can only be used as a source of kustomization or raw resources for `ServiceTemplate`.
+> To deploy kustomization using `ConfigMap` or `Secret` the kustomization folder must be archived in *.tar.gz and
+> then `ConfigMap` or `Secret` must be created from resulting archive:
+> ```console
+> kubectl create configmap foo --from-file=kustomization.tar.gz
+> ```
+> To deploy raw resources using `ConfigMap` or `Secret` source object must be created from raw resource files:
+> ```console
+> kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml
+> ```
+
+Note that it's important to pay attention to where the source resides. Cluster-scoped `ProviderTemplate` objects must reside in the **system** namespace (`kcm-system` by default) but other template sources must reside in the same namespace as the templates that will come from them.
 
 For example, this YAML describes a custom `Source` object of `kind` `HelmRepository`:
 
@@ -50,10 +69,11 @@ Once you have the source, you can create the actual template. This template can 
 For `ClusterTemplate` and `ServiceTemplate` objects, configure the namespace where this template should reside
 (`metadata.namespace`).
 
+For defining the Helm chart, you have three choices. You can either:
 
-For defining the Helm chart, you have two choices. You can either specify the actual helm chart definition in the `.spec.helm.chartSpec` field of the
-[HelmChartSpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.HelmChartSpec) kind, or
-you can reference and existing `HelmChart` object in `.spec.helm.chartRef`.
+1. Specify the actual Helm chart definition in the `.spec.helm.chartSpec` field of the
+   [HelmChartSpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.HelmChartSpec) kind,
+2. Reference an existing `HelmChart` object in `.spec.helm.chartRef`, or
 
 > NOTE:
 > `spec.helm.chartSpec` and `spec.helm.chartRef` are mutually exclusive.
@@ -61,12 +81,12 @@ you can reference and existing `HelmChart` object in `.spec.helm.chartRef`.
 To automatically create the `HelmChart` for the `Template`, configure the following custom helm chart parameters
 under `spec.helm.chartSpec`:
 
-| **Field**                                                                                                                                                   | **Description**                                                                                                              |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| **Field**                                                                                                                                                   | **Description**                                                                                                                     |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `sourceRef`<br/>[LocalHelmChartSourceReference](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.LocalHelmChartSourceReference) | Reference to the source object (for example, `HelmRepository`, `GitRepository`, or `Bucket`) in the same namespace as the Template. |
-| `chart`<br/>string                                                                                                                                          | The name of the Helm chart available in the source.                                                                          |
-| `version`<br/>string                                                                                                                                        | Version is the chart version semver expression. Defaults to **latest** when omitted.                                         |
-| `interval`<br/>[Kubernetes meta/v1.Duration](https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration)                                              | The frequency at which the `sourceRef` is checked for updates. Defaults to **10 minutes**.                                   |
+| `chart`<br/>string                                                                                                                                          | The name of the Helm chart available in the source.                                                                                 |
+| `version`<br/>string                                                                                                                                        | Version is the chart version semver expression. Defaults to **latest** when omitted.                                                |
+| `interval`<br/>[Kubernetes meta/v1.Duration](https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration)                                              | The frequency at which the `sourceRef` is checked for updates. Defaults to **10 minutes**.                                          |
 
 For the complete list of the `HelmChart` parameters, see:
 [HelmChartSpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.HelmChartSpec).
@@ -81,44 +101,65 @@ The controller automatically creates the `HelmChart` object based on the chartSp
 > system namespace (defaults to `kcm-system`). To get the instructions on how to distribute Templates along multiple
 > namespaces, read [Template Life Cycle Management](index.md#template-life-cycle-management).
 
-### Examples
+### Alternative Template Sources
 
-> EXAMPLE: 
-> Custom `ClusterTemplate` with the Chart Definition to Create a new HelmChart
+Aside from Helm charts, `ServiceTemplate` also supports alternative resource definitions using either Kustomize or raw resources.
+
+You can use one of the following fields in `.spec` (they are mutually exclusive):
+
+- `.spec.kustomize`
+- `.spec.resources`
+
+Each of these fields accepts a `SourceSpec`, which defines the origin of the template content. Only one can be used at a time.
+
+A `SourceSpec` includes:
+
+| **Field**          | **Description**                                                                                                                                 |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `deploymentType`   | Must be either `Local` or `Remote`. Defines whether resources will be deployed to management (local) or to managed (remote) cluster.            |
+| `localSourceRef`   | Reference to a local source (e.g., `ConfigMap`, `Secret`, `GitRepository`, `Bucket`, `OCIRepository`).                                          |
+| `remoteSourceSpec` | Configuration for a remote source. Includes support for `Git`, `Bucket`, or `OCI` repositories.                                                 |
+| `path`             | Path within the source object pointing to the manifests or kustomize config. Ignored when deploying raw resources using `ConfigMap` or `Secret` |
+
+> NOTE:
+> Fields `.spec.*.remoteSourceSpec.git`, `.spec.*.remoteSource.Spec.bucket` and `.spec.*.remoteSourceSpec.oci` are mutually exclusive.
+
+Example using `.spec.kustomize`:
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
-kind: ClusterTemplate
+kind: ServiceTemplate
 metadata:
-  name: custom-template
-  namespace: kcm-system
+   name: example-kustomization
+   namespace: kcm-system
 spec:
-  providers:
-    - bootstrap-k0sproject-k0smotron
-    - control-plane-k0sproject-k0smotron
-    - infrastructure-openstack
-  helm:
-    chartSpec:
-      chart: os-k0sproject-k0smotron
-      sourceRef:
-        kind: HelmRepository
-        name: k0rdent-catalog
+  kustomize:
+    deploymentType: Remote
+    remoteSourceSpec:
+      git:
+        url: https://github.com/example/repo
+        ref:
+          branch: main
+    path: ./overlays/dev
 ```
 
-> EXAMPLE: 
-> Custom `ClusterTemplate` Referencing an Existing HelmChart object
->
+Example using `.spec.resources`:
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
-kind: ClusterTemplate
+kind: ServiceTemplate
 metadata:
-  name: custom-template
-  namespace: kcm-system
+   name: example-resources
+   namespace: kcm-system
 spec:
-  helm:
-    chartRef:
-      kind: HelmChart
-      name: custom-chart
+  resources:
+    deploymentType: Local
+    localSourceRef:
+      kind: ConfigMap
+      name: my-configmap
+    path: ./manifests
 ```
+
+All of the above follow the same mutual exclusivity and version constraint rules as Helm.
+
 
 ## Required and exposed providers definition
 
