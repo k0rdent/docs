@@ -253,7 +253,7 @@
     After the cluster is `Ready`, you can access it via the kubeconfig, just like any other Kubernetes cluster:
 
     ```shell
-    kubectl -n kcm-system get secret my-openstack-cluster-deployment-kubeconfig -o jsonpath='{.data.value>' | base64 -d > my-openstack-cluster-deployment-kubeconfig.kubeconfig
+    kubectl -n kcm-system get secret my-openstack-cluster-deployment-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-openstack-cluster-deployment-kubeconfig.kubeconfig
     KUBECONFIG="my-openstack-cluster-deployment-kubeconfig.kubeconfig" kubectl get pods -A
     ```
 
