@@ -85,6 +85,7 @@ plugins:
         admin-troubleshooting-aws-vpcs.md: troubleshooting/admin-troubleshooting-aws-vpcs.md
         admin-service-templates.md: admin/services/admin-service-templates.md
         admin-create-multiclusterservice.md: admin/services/admin-create-multiclusterservice.md
+        admin-deploy-services-mgmt-cluster.md: admin/services/admin-deploy-services-mgmt-cluster.md
         admin-kof.md: admin/kof/index.md
         admin-upgrading-k0rdent.md: admin/upgrade/index.md
         admin-credentials.md: admin/access/credentials/index.md
@@ -152,6 +153,7 @@ nav:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
       - Creating multi-cluster services: admin/services/admin-create-multiclusterservice.md
+      - Deploying beach-head services on Management Cluster itself: admin-deploy-services-mgmt-cluster.md
     - Hosted control planes: 
       - Overview: admin/hosted-control-plane/index.md
       - AWS: admin/hosted-control-plane/hcp-aws.md
