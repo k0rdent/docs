@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploy-beach-head-services-using-multiclusterservice" class="md-skip">
+        <a href="#deploy-services-using-multiclusterservice" class="md-skip">
           Skip to content
         </a>
       
@@ -3466,10 +3466,8 @@
   
 
 
-<h1 id="deploy-beach-head-services-using-multiclusterservice">Deploy beach-head services using MultiClusterService<a class="headerlink" href="#deploy-beach-head-services-using-multiclusterservice" title="Permanent link">#</a></h1>
-<p>The <code>MultiClusterService</code> object is used to deploy beach-head services on multiple matching clusters.
-These beach-head services provide capabilities, such as Kyverno or Nginx Ingress, that are accessed by
-user applications.</p>
+<h1 id="deploy-services-using-multiclusterservice">Deploy services using MultiClusterService<a class="headerlink" href="#deploy-services-using-multiclusterservice" title="Permanent link">#</a></h1>
+<p>The <code>MultiClusterService</code> object is used to deploy services on multiple matching clusters.</p>
 <h2 id="creation">Creation<a class="headerlink" href="#creation" title="Permanent link">#</a></h2>
 <p>You can create the <code>MultiClusterService</code> object with the following YAML:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
@@ -3481,8 +3479,7 @@ user applications.</p>
 <span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">&lt;key1&gt;</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;value1&gt;</span>
 <span class="w">      </span><span class="nt">&lt;key2&gt;</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;value2&gt;</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">. . .</span>
-<span class="w w-Error"> </span><span class="nt">serviceSpec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">serviceSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;servicetemplate-1-name&gt;</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;release-name&gt;</span>
@@ -3505,7 +3502,7 @@ user applications.</p>
 <span class="go">dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
 <span class="go">dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
 </code></pre></div></p>
-<p>The <code>dev-cluster-1</code> <code>ClusterDeployment</code> beach-head services are specified as:
+<p>The <code>dev-cluster-1</code> <code>ClusterDeployment</code> services are specified as:
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
