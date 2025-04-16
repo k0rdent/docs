@@ -3765,12 +3765,10 @@ Cloud 1..N
 <h3 id="kof-storage">kof-storage<a class="headerlink" href="#kof-storage" title="Permanent link">#</a></h3>
 <ul>
 <li>Regional <a href="https://grafana.com/">Grafana</a> dashboard, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
-<li>Regional <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage with main data, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a><ul>
+<li>Regional <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage with main data, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a></li>
 <li><a href="https://docs.victoriametrics.com/vmauth/">vmauth</a> entrypoint proxy for VictoriaMetrics components</li>
 <li><a href="https://docs.victoriametrics.com/operator/resources/vmcluster/">vmcluster</a> for high-available fault-tolerant version of VictoriaMetrics database</li>
 <li><a href="https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-single">victoria-logs-single</a> for high-performance, cost-effective, scalable logs storage</li>
-</ul>
-</li>
 <li>Regional <a href="https://www.jaegertracing.io/">Jaeger</a> tracing platform, managed by <a href="https://github.com/jaegertracing/jaeger-operator">jaeger-operator</a></li>
 <li><a href="https://github.com/kubernetes-sigs/external-dns">external-dns</a> to communicate with other clusters</li>
 </ul>
@@ -3780,7 +3778,7 @@ Cloud 1..N
 </ul>
 <h3 id="kof-operators">kof-operators<a class="headerlink" href="#kof-operators" title="Permanent link">#</a></h3>
 <ul>
-<li><a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds">prometheus-operator-crds</a> required to create OpenTelemetry collectors, also required to monitor <a href="#management-cluster"><code>kof-mothership</code></a> itself</li>
+<li><a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds">prometheus-operator-crds</a> required to create OpenTelemetry collectors, also required to monitor <a href="#kof-mothership"><code>kof-mothership</code></a> itself</li>
 <li><a href="https://opentelemetry.io/">OpenTelemetry</a> <a href="https://opentelemetry.io/docs/collector/">collectors</a> below, managed by <a href="https://opentelemetry.io/docs/kubernetes/operator/">opentelemetry-operator</a></li>
 </ul>
 <h3 id="kof-collectors">kof-collectors<a class="headerlink" href="#kof-collectors" title="Permanent link">#</a></h3>
