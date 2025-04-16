@@ -2789,9 +2789,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#alternative-template-sources" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Alternative Template Sources
     </span>
   </a>
   
@@ -3381,9 +3381,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#alternative-template-sources" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Alternative Template Sources
     </span>
   </a>
   
@@ -3466,14 +3466,64 @@
 <p>
 Skip this step if you're using an existing source.</p>
 </div>
-<p>All templates are based on a Helm chart, so the first step is to define the source in which that Helm chart can be found.</p>
+<p><code>ClusterTemplate</code> and <code>ProviderTemplate</code> are based on a Helm chart. <code>ServiceTemplate</code>, apart from Helm chart, can be also based on kustomization or raw resources.
+Regardless of the type of the resources to be deployed using template, the corresponding source object should be created.</p>
 <p>The source can be one of the following types:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Template</strong></th>
+<th><code>HelmRepository</code></th>
+<th><code>Bucket</code></th>
+<th><code>OCIRepository</code></th>
+<th><code>ConfigMap</code></th>
+<th><code>Secret</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ClusterTemplate</code></td>
+<td>V</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td><code>ProviderTemplate</code></td>
+<td>V</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td><code>ServiceTemplate</code></td>
+<td>V</td>
+<td>V</td>
+<td>V</td>
+<td>V</td>
+<td>V</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li><a href="https://fluxcd.io/flux/components/source/helmrepositories/">HelmRepository</a></li>
 <li><a href="https://fluxcd.io/flux/components/source/gitrepositories/">GitRepository</a></li>
 <li><a href="https://fluxcd.io/flux/components/source/buckets/">Bucket</a></li>
 </ul>
-<p>Note that it's important to pay attention to where the source resides. Cluster-scoped <code>ProviderTemplate</code> objects must reside in the <strong>system</strong> namespace (<code>kcm-system</code> by default) but other template sources must reside in the same directory as the templates that will come from them.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><code>ConfigMap</code> and <code>Secret</code> can only be used as a source of kustomization or raw resources for <code>ServiceTemplate</code>.
+To deploy kustomization using <code>ConfigMap</code> or <code>Secret</code> the kustomization folder must be archived in *.tar.gz and
+then <code>ConfigMap</code> or <code>Secret</code> must be created from resulting archive:
+<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap foo --from-file=kustomization.tar.gz</span>
+</code></pre></div>
+To deploy raw resources using <code>ConfigMap</code> or <code>Secret</code> source object must be created from raw resource files:
+<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml</span>
+</code></pre></div></p>
+</div>
+<p>Note that it's important to pay attention to where the source resides. Cluster-scoped <code>ProviderTemplate</code> objects must reside in the <strong>system</strong> namespace (<code>kcm-system</code> by default) but other template sources must reside in the same namespace as the templates that will come from them.</p>
 <p>For example, this YAML describes a custom <code>Source</code> object of <code>kind</code> <code>HelmRepository</code>:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3504,9 +3554,12 @@ The custom <code>HelmRepository</code> must have the label
 </ul>
 <p>For <code>ClusterTemplate</code> and <code>ServiceTemplate</code> objects, configure the namespace where this template should reside
 (<code>metadata.namespace</code>).</p>
-<p>For defining the Helm chart, you have two choices. You can either specify the actual helm chart definition in the <code>.spec.helm.chartSpec</code> field of the
-<a href="https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.HelmChartSpec">HelmChartSpec</a> kind, or
-you can reference and existing <code>HelmChart</code> object in <code>.spec.helm.chartRef</code>.</p>
+<p>For defining the Helm chart, you have three choices. You can either:</p>
+<ol>
+<li>Specify the actual Helm chart definition in the <code>.spec.helm.chartSpec</code> field of the
+   <a href="https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.HelmChartSpec">HelmChartSpec</a> kind,</li>
+<li>Reference an existing <code>HelmChart</code> object in <code>.spec.helm.chartRef</code>, or</li>
+</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
@@ -3553,43 +3606,77 @@ be declined by the admission webhook). All <code>ClusterTemplate</code> and <cod
 system namespace (defaults to <code>kcm-system</code>). To get the instructions on how to distribute Templates along multiple
 namespaces, read <a href="../#template-life-cycle-management">Template Life Cycle Management</a>.</p>
 </div>
-<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
-<p>Custom <code>ClusterTemplate</code> with the Chart Definition to Create a new HelmChart
+<h3 id="alternative-template-sources">Alternative Template Sources<a class="headerlink" href="#alternative-template-sources" title="Permanent link">#</a></h3>
+<p>Aside from Helm charts, <code>ServiceTemplate</code> also supports alternative resource definitions using either Kustomize or raw resources.</p>
+<p>You can use one of the following fields in <code>.spec</code> (they are mutually exclusive):</p>
+<ul>
+<li><code>.spec.kustomize</code></li>
+<li><code>.spec.resources</code></li>
+</ul>
+<p>Each of these fields accepts a <code>SourceSpec</code>, which defines the origin of the template content. Only one can be used at a time.</p>
+<p>A <code>SourceSpec</code> includes:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Field</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploymentType</code></td>
+<td>Must be either <code>Local</code> or <code>Remote</code>. Defines whether resources will be deployed to management (local) or to managed (remote) cluster.</td>
+</tr>
+<tr>
+<td><code>localSourceRef</code></td>
+<td>Reference to a local source (e.g., <code>ConfigMap</code>, <code>Secret</code>, <code>GitRepository</code>, <code>Bucket</code>, <code>OCIRepository</code>).</td>
+</tr>
+<tr>
+<td><code>remoteSourceSpec</code></td>
+<td>Configuration for a remote source. Includes support for <code>Git</code>, <code>Bucket</code>, or <code>OCI</code> repositories.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Path within the source object pointing to the manifests or kustomize config. Ignored when deploying raw resources using <code>ConfigMap</code> or <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Fields <code>.spec.*.remoteSourceSpec.git</code>, <code>.spec.*.remoteSource.Spec.bucket</code> and <code>.spec.*.remoteSourceSpec.oci</code> are mutually exclusive.</p>
+</div>
+<p>Example using <code>.spec.kustomize</code>:
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterTemplate</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-template</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-kustomization</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bootstrap-k0sproject-k0smotron</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane-k0sproject-k0smotron</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">infrastructure-openstack</span>
-<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">chartSpec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">os-k0sproject-k0smotron</span>
-<span class="w">      </span><span class="nt">sourceRef</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-catalog</span>
+<span class="w">  </span><span class="nt">kustomize</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
+<span class="w">    </span><span class="nt">remoteSourceSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">git</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/example/repo</span>
+<span class="w">        </span><span class="nt">ref</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./overlays/dev</span>
 </code></pre></div></p>
-</div>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
-<p>Custom <code>ClusterTemplate</code> Referencing an Existing HelmChart object</p>
+<p>Example using <code>.spec.resources</code>:
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterTemplate</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-template</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-resources</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">chartRef</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-chart</span>
-</code></pre></div>
-</div>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Local</span>
+<span class="w">    </span><span class="nt">localSourceRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-configmap</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./manifests</span>
+</code></pre></div></p>
+<p>All of the above follow the same mutual exclusivity and version constraint rules as Helm.</p>
 <h2 id="required-and-exposed-providers-definition">Required and exposed providers definition<a class="headerlink" href="#required-and-exposed-providers-definition" title="Permanent link">#</a></h2>
 <p>The <code>*Template</code> object must specify the list of Cluster API providers that are either <strong>required</strong> (for
 <code>ClusterTemplates</code> and <code>ServiceTemplates</code>) or <strong>exposed</strong> (for <code>ProviderTemplates</code>). These providers include

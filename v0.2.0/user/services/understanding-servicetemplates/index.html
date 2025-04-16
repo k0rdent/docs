@@ -2485,6 +2485,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Understanding ServiceTemplates
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2494,6 +2505,52 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#helm-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helm-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kustomize-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kustomize-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-resources-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw-resources-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3261,6 +3318,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#helm-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helm-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kustomize-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kustomize-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raw-resources-based-servicetemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raw-resources-based ServiceTemplate
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3291,42 +3383,100 @@
 
 
 <h1 id="understanding-servicetemplates">Understanding ServiceTemplates<a class="headerlink" href="#understanding-servicetemplates" title="Permanent link">#</a></h1>
-<p><code>ServiceTemplate</code> objects are meant to let k0rdent know where to find a Helm chart with instructions for installing
-an application. In many cases, these charts will be in a private repository.  For example, consider this template for
-installing Nginx Ingress:</p>
+<p><code>ServiceTemplate</code> objects are a representation of the source where k0rdent can find a resource or set of resources to
+be deployed as a complete application.</p>
+<p><code>ServiceTemplate</code> supports the following types as a source:</p>
+<ul>
+<li><a href="https://fluxcd.io/flux/components/source/helmcharts/"><code>HelmChart</code></a></li>
+<li><a href="https://fluxcd.io/flux/components/source/gitrepositories/"><code>GitRespository</code></a></li>
+<li><a href="https://fluxcd.io/flux/components/source/buckets/"><code>Bucket</code></a></li>
+<li><a href="https://fluxcd.io/flux/components/source/ocirepositories/"><code>OCIRepository</code></a></li>
+<li><code>Secret</code></li>
+<li><code>ConfigMap</code></li>
+</ul>
+<h3 id="helm-based-servicetemplate">Helm-based ServiceTemplate<a class="headerlink" href="#helm-based-servicetemplate" title="Permanent link">#</a></h3>
+<p>Helm-based <code>ServiceTemplate</code> can be created in two ways:</p>
+<ul>
+<li>by defining Helm chart right in the template object</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.0</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenant42</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">chartSpec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-ingress-nginx</span>
+<span class="w">      </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.11.0</span>
-<span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
+<span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">      </span><span class="nt">sourceRef</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-demos</span>
-<span class="nn">---</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplateChain</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo-repository</span>
+</code></pre></div>
+<p>In this case the corresponding <code>HelmChart</code> object will be created by the controller.</p>
+<ul>
+<li>by referring the existing Helm chart</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.0</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenant42</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">supportedTemplates</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.0</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.10.0</span>
-<span class="w">      </span><span class="nt">availableUpgrades</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.0</span>
+<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">chartRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo-chart</span>
 </code></pre></div>
-<p>Here you see a template called <code>project-ingress-nginx-4.11.0</code> that is meant to be deployed in the <code>tenant42</code> namespace.
-The <code>.spec.helm.chartSpec</code> specifies the name of the Helm chart and where to find it, as well as the version and other 
-important information. The <code>ServiceTemplateChain</code> shows that this template is also an upgrade path from version 4.10.0.</p>
-<p>If you wanted to deploy this as an application, you would first go ahead and add the template to the cluster in which you were working, so if you were to save this YAML to a file called <code>project-ingress.yaml</code> you could run this command on the management cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>project-ingress.yaml<span class="w"> </span>-n<span class="w"> </span>tenant42
+<h3 id="kustomize-based-servicetemplate">Kustomize-based ServiceTemplate<a class="headerlink" href="#kustomize-based-servicetemplate" title="Permanent link">#</a></h3>
+<p>Kustomize-based <code>ServiceTemplate</code> can be created with either local or remote source:</p>
+<ul>
+<li>by using existing flux source object - <code>GitRepository</code>, <code>Bucket</code> or <code>OCIRepository</code> - or using existing <code>ConfigMap</code> or <code>Secret</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kustomize</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">localSourceRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bucket</span><span class="w">  </span><span class="c1"># also can be GitRepository, OCIRepository, ConfigMap or Secret</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo-bar</span>
+<span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./base&quot;</span>
 </code></pre></div>
+<p><code>ConfigMap</code> or <code>Secret</code> in this case must embed the tar-gzipped archive containing the kustomization files. This can be done by the following command, assuming the the archive was already created:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>foo-bar<span class="w"> </span>--from-file<span class="o">=</span>/path/to/kustomization/archive.tar.gz
+</code></pre></div>
+<ul>
+<li>by defining remote source right in the template object</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kustomization-app</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kustomize</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">remoteSourceSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">oci</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci://ghcr.io/org/project-x</span>
+<span class="w">        </span><span class="nt">reference</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
+<span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
+<span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+</code></pre></div>
+<p><code>.spec.kustomize.remoteSourceSpec</code> has mutual exclusive fields <code>.git</code>, <code>.bucket</code> and <code>.oci</code> which inline <code>GitRepositorySpec</code>, <code>BucketSpec</code> and <code>OCIRepositorySpec</code> respectively.</p>
+<h3 id="raw-resources-based-servicetemplate">Raw-resources-based ServiceTemplate<a class="headerlink" href="#raw-resources-based-servicetemplate" title="Permanent link">#</a></h3>
+<p>Similar to kustomize-based <code>ServiceTemplate</code>, raw-resources-based <code>ServiceTemplate</code> can be created with either local or remote source. Using the remote source has no difference with
+kustomize-based <code>ServiceTemplate</code>, however using local source slightly differ in case <code>ConfigMap</code> or <code>Secret</code> object is referred as a source:</p>
+<ul>
+<li><code>spec.resources.localSourceRef.path</code> will be ignored</li>
+<li>referred <code>ConfigMap</code> or <code>Secret</code> must contain inlined resources' definitions instead of embedding tar-gzipped archive. </li>
+</ul>
 
 
 
