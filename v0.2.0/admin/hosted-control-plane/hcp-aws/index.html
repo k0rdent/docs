@@ -3403,6 +3403,7 @@ deploy and manage the hosted control plane. For example:</p>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted-cp-0-2-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">managementClusterName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vpc-0a000000000000000</span>
 <span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-1</span>
@@ -3438,6 +3439,7 @@ inserts the appropriate values:
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted-cp-0-2-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">managementClusterName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.metadata.name}}&quot;</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.network.vpc.id}}&quot;</span>
 <span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.region}}&quot;</span>
