@@ -3516,18 +3516,18 @@ First get a list of available regions:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
  <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
-<span class="go">adopted-cluster-0-2-0           true</span>
-<span class="go">aws-eks-0-2-0                   true</span>
-<span class="go">aws-hosted-cp-0-2-0             true</span>
-<span class="go">aws-standalone-cp-0-2-0         true</span>
-<span class="go">azure-aks-0-2-0                 true</span>
-<span class="go">azure-hosted-cp-0-2-0           true</span>
-<span class="go">azure-standalone-cp-0-2-0       true</span>
-<span class="go">openstack-standalone-cp-0-2-0   true</span>
-<span class="go">vsphere-hosted-cp-0-2-0         true</span>
-<span class="go">vsphere-standalone-cp-0-2-0     true</span>
-<span class="go">gcp-standalone-cp-0-2-0     true</span>
-<span class="go">gcp-gke-0-2-0     true</span>
+<span class="go">adopted-cluster-0-3-0           true</span>
+<span class="go">aws-eks-0-3-0                   true</span>
+<span class="go">aws-hosted-cp-0-3-0             true</span>
+<span class="go">aws-standalone-cp-0-3-0         true</span>
+<span class="go">azure-aks-0-3-0                 true</span>
+<span class="go">azure-hosted-cp-0-3-0           true</span>
+<span class="go">azure-standalone-cp-0-3-0       true</span>
+<span class="go">openstack-standalone-cp-0-3-0   true</span>
+<span class="go">vsphere-hosted-cp-0-3-0         true</span>
+<span class="go">vsphere-standalone-cp-0-3-0     true</span>
+<span class="go">gcp-standalone-cp-0-3-0     true</span>
+<span class="go">gcp-gke-0-3-0     true</span>
 </code></pre></div></p>
 <p>Create the YAML for the <code>ClusterDeployment</code> and save it as my-gcp-clusterdeployment1.yaml:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
@@ -3536,7 +3536,7 @@ First get a list of available regions:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-gcp-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-standalone-cp-0-2-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-standalone-cp-0-3-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PROJECT_NAME</span><span class="w"> </span><span class="c1"># Your project name</span>

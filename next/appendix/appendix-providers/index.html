@@ -3578,12 +3578,12 @@
 </ul>
 <h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
 <p>Provider-specific examples are available in <code>*.credentials.yaml</code> files <a href="https://github.com/k0rdent/kcm/tree/main/config/dev">here</a>.</p>
-<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.2.0/config/dev/azure-credentials.yaml">azure-credentials.yaml</a></p>
+<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml">azure-credentials.yaml</a></p>
 <ul>
-<li><a href="https://github.com/k0rdent/kcm/blob/v0.2.0/config/dev/azure-credentials.yaml#L2-L17"><code>ClusterIdentity</code></a></li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v0.2.0/config/dev/azure-credentials.yaml#L19-L28"><code>Secret</code></a> (related to <code>ClusterIdentity</code>)</li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v0.2.0/config/dev/azure-credentials.yaml#L30-L41"><code>Credential</code></a></li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v0.2.0/config/dev/azure-credentials.yaml#L43-L97"><code>ConfigMap</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L2-L17"><code>ClusterIdentity</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L19-L28"><code>Secret</code></a> (related to <code>ClusterIdentity</code>)</li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L30-L41"><code>Credential</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L43-L97"><code>ConfigMap</code></a></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3592,10 +3592,10 @@ These examples assume the <code>ConfigMap</code> is included in a template. To u
 (double dollar signs) with <code>$</code> (single dollar sign)</p>
 </div>
 <h2 id="provider-registration">Provider Registration<a class="headerlink" href="#provider-registration" title="Permanent link">#</a></h2>
-<p>Providers are registered through YAML configuration files mounted into a <a href="https://github.com/k0rdent/kcm/blob/v0.2.0/templates/provider/kcm/templates/deployment.yaml#L42-L43">predefined path</a> in the manager container at startup <a href="https://github.com/k0rdent/kcm/blob/v0.2.0/templates/provider/kcm/templates/providers.yaml">using <code>ConfigMap</code></a>.</p>
+<p>Providers are registered through YAML configuration files mounted into a <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/kcm/templates/deployment.yaml#L42-L43">predefined path</a> in the manager container at startup <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/kcm/templates/providers.yaml">using <code>ConfigMap</code></a>.</p>
 <h3 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">#</a></h3>
-<p>Provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.2.0/providers">here</a></p>
-<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.2.0/providers/azure.yml">azure.yml</a>, as seen, the definition is straightforward.</p>
+<p>Provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.3.0/providers">here</a></p>
+<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/providers/azure.yml">azure.yml</a>, as seen, the definition is straightforward.</p>
 
 
 

@@ -3442,19 +3442,19 @@ follow the instructions in the <a href="../../admin/access/credentials/">Credent
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
-<span class="go">kcm-system   adopted-cluster-0-2-0           true</span>
-<span class="go">kcm-system   aws-eks-0-2-0                   true</span>
-<span class="go">kcm-system   aws-hosted-cp-0-2-0             true</span>
-<span class="go">kcm-system   aws-standalone-cp-0-2-0         true</span>
-<span class="go">kcm-system   azure-aks-0-2-0                 true</span>
-<span class="go">kcm-system   azure-hosted-cp-0-2-0           true</span>
-<span class="go">kcm-system   azure-standalone-cp-0-2-0       true</span>
-<span class="go">kcm-system   openstack-standalone-cp-0-2-0   true</span>
-<span class="go">kcm-system   vsphere-hosted-cp-0-2-0         true</span>
-<span class="go">kcm-system   vsphere-standalone-cp-0-2-0     true</span>
+<span class="go">kcm-system   adopted-cluster-0-3-0           true</span>
+<span class="go">kcm-system   aws-eks-0-3-0                   true</span>
+<span class="go">kcm-system   aws-hosted-cp-0-3-0             true</span>
+<span class="go">kcm-system   aws-standalone-cp-0-3-0         true</span>
+<span class="go">kcm-system   azure-aks-0-3-0                 true</span>
+<span class="go">kcm-system   azure-hosted-cp-0-3-0           true</span>
+<span class="go">kcm-system   azure-standalone-cp-0-3-0       true</span>
+<span class="go">kcm-system   openstack-standalone-cp-0-3-0   true</span>
+<span class="go">kcm-system   vsphere-hosted-cp-0-3-0         true</span>
+<span class="go">kcm-system   vsphere-standalone-cp-0-3-0     true</span>
 </code></pre></div></p>
 <p>You can then get information on the actual template by describing it, as in:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-0-2-0<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-0-3-0<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 </li>
 <li>
@@ -3486,7 +3486,7 @@ It includes:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-deployment</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-2-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-3-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
