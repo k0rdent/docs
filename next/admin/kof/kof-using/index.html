@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../kof-verification/">
+        <link rel="prev" href="../kof-storing/">
       
       
         <link rel="next" href="../kof-scaling/">
@@ -1532,6 +1532,8 @@
       
         
       
+        
+      
     
     
     
@@ -1637,6 +1639,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1724,6 +1747,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-to-jaeger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access to Jaeger
+    </span>
+  </a>
   
 </li>
       
@@ -3381,6 +3413,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#access-to-jaeger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access to Jaeger
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3426,15 +3467,18 @@
 </code></pre></div></p>
 </li>
 <li>
-<p>Start the Grafana dashboard:
+<p>Forward a port to the Grafana dashboard:
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/grafana-vm-service<span class="w"> </span><span class="m">3000</span>:3000
 </code></pre></div></p>
 </li>
 <li>
 <p>Login to <a href="http://127.0.0.1:3000/dashboards">http://127.0.0.1:3000/dashboards</a> with the username/password printed above.</p>
 </li>
-<li>Open a dashboard:</li>
+<li>
+<p>Open a dashboard and select any cluster:</p>
+</li>
 </ol>
+<p><img alt="collect-from-3-cluster-roles" src="../../../assets/kof/collect-from-3-cluster-roles--2025-04-17.gif" /></p>
 <p><img alt="grafana-demo" src="../../../assets/kof/grafana-2025-01-14.gif" /></p>
 <h3 id="cluster-overview">Cluster Overview<a class="headerlink" href="#cluster-overview" title="Permanent link">#</a></h3>
 <p>From here you can get an overview of the cluster, including:</p>
@@ -3464,6 +3508,51 @@
 <li>Budget monitoring</li>
 <li>Optimization recommendations</li>
 </ul>
+<h2 id="access-to-jaeger">Access to Jaeger<a class="headerlink" href="#access-to-jaeger" title="Permanent link">#</a></h2>
+<p><a href="https://www.jaegertracing.io/docs/2.5/frontend-ui/#trace-page">Jaeger UI</a> of each regional cluster can be accessed by following these steps:</p>
+<ol>
+<li>
+<p>Ensure you have the <code>regional-kubeconfig</code> file created on the <a href="../kof-verification/#verification-steps">verification step</a>.</p>
+</li>
+<li>
+<p>If you've applied the <a href="../kof-install/#istio">Istio</a> section:</p>
+<ul>
+<li>
+<p>Forward a port to the Jaeger UI:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-jaeger-query<span class="w"> </span><span class="m">16686</span>:16686
+</code></pre></div></p>
+</li>
+<li>
+<p>Open the link <a href="http://127.0.0.1:16686/search">http://127.0.0.1:16686/search</a>
+  and explore the Jaeger UI.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>If you have not applied the <a href="../kof-install/#istio">Istio</a> section:</p>
+<ul>
+<li>
+<p>Ensure you have the <code>REGIONAL_DOMAIN</code> variable set on the <a href="../kof-install/#regional-cluster">installation step</a>.</p>
+</li>
+<li>
+<p>Get the regional Jaeger username and password:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>jaeger-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;user&quot;: .data.username | @base64d,</span>
+<span class="s1">  &quot;pass&quot;: .data.password | @base64d</span>
+<span class="s1">}&#39;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Get the the Jaeger UI URL, open it,
+    and login with the username/password printed above:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>https://jaeger.<span class="nv">$REGIONAL_DOMAIN</span>
+</code></pre></div></p>
+</li>
+</ul>
+</li>
+</ol>
 
 
 

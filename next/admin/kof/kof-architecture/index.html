@@ -1532,6 +1532,8 @@
       
         
       
+        
+      
     
     
     
@@ -1769,6 +1771,27 @@
   
   <span class="md-ellipsis">
     Verifying the KOF installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
   </span>
   
 
@@ -3546,7 +3569,7 @@
 <li>the Regional layer, which includes storage to keep track of those statistics and events,</li>
 <li>and the Management layer, where you interact through the UI.</li>
 </ul>
-<pre class="mermaid"><code>flowchart TD;
+<pre class="mermaid"><code>flowchart TD
     A[Management UI, promxy] 
     A --&gt; C[Storage Region 1]
     A --&gt; D[Storage Region 2]
@@ -3578,10 +3601,16 @@ To update the diagram:
     opentelemetry-operator
     prometheus-operator-crds
 
-  kof-regional chart
-    MultiClusterService
-  kof-child chart
-    MultiClusterService
+  kof-collectors chart
+    opencost
+    kube-state-metrics
+    prometheus-node-exporter
+
+  Either kof-istio
+    Certificates
+    ClusterProfiles
+  Or kof-regional and kof-child
+    MultiClusterServices
 
 Cloud 1..N
   Region 1..M
@@ -3594,15 +3623,24 @@ Cloud 1..N
         jaeger-operator
         external-dns
 
-      cert-manager of grafana and vmauth
-      ingress-nginx
+      kof-operators chart
+        opentelemetry-operator
+        prometheus-operator-crds
+
+      kof-collectors chart
+        opencost
+        kube-state-metrics
+        prometheus-node-exporter
+
+      cert-manager
+      ingress-nginx or kof-istio
 
     <b>Child Cluster 1</b>
-      cert-manager of OTel-operator
+      cert-manager
+      Optional kof-istio
 
       kof-operators chart
         opentelemetry-operator
-          OpenTelemetryCollector
         prometheus-operator-crds
 
       kof-collectors chart
@@ -3649,15 +3687,30 @@ Cloud 1..N
     </div>
   </div>
   <div class="o">
-    kof-regional chart
+    kof-collectors chart
     <div class="o">
-      MultiClusterService
+      opencost
+    </div>
+    <div class="o">
+      kube-state-metrics
+    </div>
+    <div class="o">
+      prometheus-node-exporter
     </div>
   </div>
   <div class="o">
-    kof-child chart
+    Either kof-istio
     <div class="o">
-      MultiClusterService
+      Certificates
+    </div>
+    <div class="o">
+      ClusterProfiles
+    </div>
+  </div>
+  <div class="o">
+    Or kof-regional and kof-child
+    <div class="o">
+      MultiClusterServices
     </div>
   </div>
 </div>
@@ -3686,24 +3739,45 @@ Cloud 1..N
         </div>
       </div>
       <div class="o">
-        cert-manager of grafana and vmauth
+        kof-operators chart
+        <div class="o">
+          opentelemetry-operator
+        </div>
+        <div class="o">
+          prometheus-operator-crds
+        </div>
       </div>
       <div class="o">
-        ingress-nginx
+        kof-collectors chart
+        <div class="o">
+          opencost
+        </div>
+        <div class="o">
+          kube-state-metrics
+        </div>
+        <div class="o">
+          prometheus-node-exporter
+        </div>
+      </div>
+      <div class="o">
+        cert-manager
+      </div>
+      <div class="o">
+        ingress-nginx or kof-istio
       </div>
     </div>
     <div class="o">
       <b>Child Cluster 1</b>
       <div class="o">
-        cert-manager of OTel-operator
+        cert-manager
+      </div>
+      <div class="o">
+        Optional kof-istio
       </div>
       <div class="o">
         kof-operators chart
         <div class="o">
           opentelemetry-operator
-          <div class="o">
-            OpenTelemetryCollector
-          </div>
         </div>
         <div class="o">
           prometheus-operator-crds
@@ -3738,7 +3812,7 @@ Cloud 1..N
 </style>
 
 <h2 id="low-level">Low-level<a class="headerlink" href="#low-level" title="Permanent link">#</a></h2>
-<p>At a low level, you can see how logs and traces work their way around the system.</p>
+<p>At a low level, you can see how metrics, logs, and traces work their way around the system.</p>
 <p><img alt="kof-architecture" src="../../../assets/kof/otel.png" /></p>
 <h2 id="helm-charts">Helm Charts<a class="headerlink" href="#helm-charts" title="Permanent link">#</a></h2>
 <p>KOF is deployed as a series of Helm charts at various levels.</p>
@@ -3748,18 +3822,18 @@ Cloud 1..N
 <li>Local <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage for alerting rules only, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a></li>
 <li><a href="https://github.com/Jont828/cluster-api-visualizer">cluster-api-visualizer</a> for insight into multicluster configuration</li>
 <li><a href="https://projectsveltos.github.io/sveltos/">Sveltos</a> dashboard, automatic secret distribution</li>
-<li><a href="https://github.com/k0rdent/kof/tree/main/kof-operator/internal/controller">kof-operator</a> (don't confuse it with the <code>kof-operators</code> chart) for auto-configuration</li>
+<li><a href="https://github.com/k0rdent/kof/tree/v0.3.0/kof-operator/internal/controller">kof-operator</a> (don't confuse it with the <code>kof-operators</code> chart) for auto-configuration</li>
 <li><a href="https://github.com/k0rdent">k0rdent</a> service templates used by <code>kof-regional</code> and <code>kof-child</code> charts</li>
 <li><a href="https://github.com/jacksontj/promxy">Promxy</a> for aggregating Prometheus metrics from regional clusters</li>
 </ul>
 <h3 id="kof-regional">kof-regional<a class="headerlink" href="#kof-regional" title="Permanent link">#</a></h3>
 <ul>
-<li><a href="https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-regional/templates/regional-multi-cluster-service.yaml">MultiClusterService</a>
+<li><a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">MultiClusterService</a>
   which configures and installs <code>kof-storage</code> and other charts to regional clusters</li>
 </ul>
 <h3 id="kof-child">kof-child<a class="headerlink" href="#kof-child" title="Permanent link">#</a></h3>
 <ul>
-<li><a href="https://github.com/k0rdent/kof/blob/d0baccd068f08f0f1d95ae0a26173176d106d284/charts/kof-child/templates/child-multi-cluster-service.yaml">MultiClusterService</a>
+<li><a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">MultiClusterService</a>
   which configures and installs <code>kof-collectors</code> and other charts to child clusters</li>
 </ul>
 <h3 id="kof-storage">kof-storage<a class="headerlink" href="#kof-storage" title="Permanent link">#</a></h3>
@@ -3774,7 +3848,7 @@ Cloud 1..N
 </ul>
 <h3 id="kof-istio">kof-istio<a class="headerlink" href="#kof-istio" title="Permanent link">#</a></h3>
 <ul>
-<li>Optional <a href="https://github.com/k0rdent/kof/blob/main/docs/istio.md">Istio</a> support for secure connectivity between clusters</li>
+<li>Optional <a href="https://istio.io/">Istio</a> support for secure connectivity between clusters without external DNS</li>
 </ul>
 <h3 id="kof-operators">kof-operators<a class="headerlink" href="#kof-operators" title="Permanent link">#</a></h3>
 <ul>

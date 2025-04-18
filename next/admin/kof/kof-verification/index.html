@@ -16,7 +16,7 @@
         <link rel="prev" href="../kof-install/">
       
       
-        <link rel="next" href="../kof-using/">
+        <link rel="next" href="../kof-storing/">
       
       
       <link rel="icon" href="../../../img/k0rdent-logo-mark-inverted.svg">
@@ -1532,6 +1532,8 @@
       
         
       
+        
+      
     
     
     
@@ -1665,6 +1667,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#verification-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manual-dns-config" class="md-nav__link">
     <span class="md-ellipsis">
       Manual DNS config
@@ -1686,6 +1697,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -3316,6 +3348,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#verification-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#manual-dns-config" class="md-nav__link">
     <span class="md-ellipsis">
       Manual DNS config
@@ -3366,25 +3407,41 @@
 
 <h1 id="kof-verification">KOF Verification<a class="headerlink" href="#kof-verification" title="Permanent link">#</a></h1>
 <p>Finally, verify that KOF installed properly.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustersummaries<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span>wide
+<h2 id="verification-steps">Verification steps<a class="headerlink" href="#verification-steps" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>Wait until the value of <code>HELMCHARTS</code> and <code>POLICYREFS</code>
+    changes from <code>Provisioning</code> to <code>Provisioned</code>:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustersummaries<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>
-Wait until the value of <code>HELMCHARTS</code> changes from <code>Provisioning</code> to <code>Provisioned</code>.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-kubeconfig<span class="w"> </span><span class="se">\</span>
+    If you see the <code>Failed/Provisioning</code> loop, check status and logs:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustersummaries<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.items[].status.featureSummaries[]</span>
+<span class="s1">  | select(.status != &quot;Provisioned&quot;)&#39;</span>
+
+kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>deploy/kof-mothership-kof-operator
+</code></pre></div></p>
+</li>
+<li>
+<p>Wait for all pods in the regional and child clusters to show as <code>Running</code>
+    in the namespaces <code>kof, kube-system, projectsveltos</code>:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-kubeconfig<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.data.value<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>regional-kubeconfig
 
 kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CHILD_CLUSTER_NAME</span>-kubeconfig<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.data.value<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>child-kubeconfig
 
 <span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-A
-<span class="w">  </span><span class="c1"># Namespaces: cert-manager, ingress-nginx, kof, kube-system, projectsveltos</span>
-
 <span class="nv">KUBECONFIG</span><span class="o">=</span>child-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-A
-<span class="w">  </span><span class="c1"># Namespaces: kof, kube-system, projectsveltos</span>
-</code></pre></div>
-Wait for all pods to show as <code>Running</code>.</p>
-<p>If the auto-configuration failed, find the reason in the logs of the <code>kof-operator</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>deploy/kof-mothership-kof-operator
-</code></pre></div>
+</code></pre></div></p>
+</li>
+<li>
+<p>Wait until the value of <code>READY</code> changes to <code>True</code>
+    for all certificates in the regional cluster:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>cert<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div></p>
+</li>
+</ol>
 <h2 id="manual-dns-config">Manual DNS config<a class="headerlink" href="#manual-dns-config" title="Permanent link">#</a></h2>
 <p>If you've opted out of <a href="../kof-install/#dns-auto-config">DNS auto-config</a>, you will need to do the following:</p>
 <ol>

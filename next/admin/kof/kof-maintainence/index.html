@@ -1532,6 +1532,8 @@
       
         
       
+        
+      
     
     
     
@@ -1624,6 +1626,27 @@
   
   <span class="md-ellipsis">
     Verifying the KOF installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
   </span>
   
 
@@ -3412,7 +3435,8 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="
 <span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/managed-by<span class="o">=</span>kof-operator
 </code></pre></div>
 <p>To remove KOF from the management cluster:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio
+helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators

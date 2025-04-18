@@ -1723,6 +1723,8 @@
       
         
       
+        
+      
     
     
     
@@ -1815,6 +1817,27 @@
   
   <span class="md-ellipsis">
     Verifying the KOF installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
   </span>
   
 
@@ -3885,7 +3908,7 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="w">    </span><span class="no">volumeBindingMode: WaitForFirstConsumer</span>
 <span class="w">    </span><span class="no">allowVolumeExpansion: true</span>
 </code></pre></div>
-<p>Object name needs to be exactly <code>azure-cluster-identity-resource-template.yaml</code>, <code>AzureClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
+<p>Object name needs to be exactly <code>azure-cluster-identity-resource-template</code>, <code>AzureClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-resource-template.yaml
 </code></pre></div>
