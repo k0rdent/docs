@@ -3658,6 +3658,7 @@ namespaces, read <a href="../#template-life-cycle-management">Template Life Cycl
 <ul>
 <li><code>.spec.kustomize</code></li>
 <li><code>.spec.resources</code></li>
+<li><code>.spec.helm.chartSource</code></li>
 </ul>
 <p>Each of these fields accepts a <code>SourceSpec</code>, which defines the origin of the template content. Only one can be used at a time.</p>
 <p>A <code>SourceSpec</code> includes:</p>
@@ -3671,11 +3672,11 @@ namespaces, read <a href="../#template-life-cycle-management">Template Life Cycl
 <tbody>
 <tr>
 <td><code>deploymentType</code></td>
-<td>Must be either <code>Local</code> or <code>Remote</code>. Defines whether resources will be deployed to management (local) or to managed (remote) cluster.</td>
+<td>Must be either <code>Local</code> or <code>Remote</code>. Defines whether resources will be deployed to management (local) or to managed (remote) cluster. Ignored if defined in <code>.spec.helm.chartSource</code>.</td>
 </tr>
 <tr>
 <td><code>localSourceRef</code></td>
-<td>Reference to a local source (e.g., <code>ConfigMap</code>, <code>Secret</code>, <code>GitRepository</code>, <code>Bucket</code>, <code>OCIRepository</code>).</td>
+<td>Reference to a local source (e.g., <code>ConfigMap</code>, <code>Secret</code>, <code>GitRepository</code>, <code>Bucket</code>, <code>OCIRepository</code>). <code>ConfigMap</code> and <code>Secret</code> are not supported in <code>.spec.helm.chartSource</code>.</td>
 </tr>
 <tr>
 <td><code>remoteSourceSpec</code></td>

@@ -3461,12 +3461,7 @@ and use it to deploy an application to a k0rdent child cluster.</p>
 <li><code>ConfigMap</code></li>
 </ul>
 <h3 id="creating-helm-based-servicetemplate">Creating Helm-based ServiceTemplate<a class="headerlink" href="#creating-helm-based-servicetemplate" title="Permanent link">#</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-Only <a href="https://fluxcd.io/flux/components/source/helmrepositories/"><code>HelmRepository</code></a> support as a source for <code>HelmChart</code>.</p>
-</div>
-<p>Define the source of the Helm chart that defines the service. The source object must have the label <code>k0rdent.mirantis.com/managed: "true"</code>. For example, this YAML describes a FluxCD source object of <code>kind</code> <code>HelmRepository</code>:</p>
+<p>Before creating a <code>ServiceTemplate</code>, the source of the Helm chart that represents the service can be created. The source object must have the label <code>k0rdent.mirantis.com/managed: "true"</code>. For example, this YAML describes a FluxCD source object of <code>kind</code> <code>HelmRepository</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source.toolkit.fluxcd.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3482,8 +3477,28 @@ Only <a href="https://fluxcd.io/flux/components/source/helmrepositories/"><code>
 <span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci://ghcr.io/external-templates-repo/charts</span>
 </code></pre></div>
 <h4 id="create-the-servicetemplate">Create the <code>ServiceTemplate</code><a class="headerlink" href="#create-the-servicetemplate" title="Permanent link">#</a></h4>
-<p>A template can either define a Helm chart directly using the template's <code>spec.helm.chartSpec</code> field or reference its location using the <code>spec.helm.chartRef</code> field.</p>
-<p>For example:</p>
+<p>Helm-based <code>ServiceTemplate</code> can be created in three ways:</p>
+<ul>
+<li>by defining Helm chart right in the template object</li>
+<li>by referring the existing Helm chart</li>
+<li>by defining or referring source provided by FluxCD</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+<code>ServiceTemplate</code> can refer existing <code>HelmChart</code> object in <code>.spec.helm.chartRef</code> field if only <code>HelmChart</code> is backed by <code>HelmRepository</code> object.
+To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>.spec.helm.chartSource</code> field.</p>
+</div>
+<p>FluxCD sources supported by <code>ServiceTemplate</code> are:</p>
+<ul>
+<li><a href="https://fluxcd.io/flux/components/source/gitrepositories/"><code>GitRespository</code></a></li>
+<li><a href="https://fluxcd.io/flux/components/source/buckets/"><code>Bucket</code></a></li>
+<li><a href="https://fluxcd.io/flux/components/source/ocirepositories/"><code>OCIRepository</code></a></li>
+</ul>
+<h5 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h5>
+<ol>
+<li>Explicitly defining Helm chart</li>
+</ol>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3500,8 +3515,63 @@ Only <a href="https://fluxcd.io/flux/components/source/helmrepositories/"><code>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-catalog</span>
 </code></pre></div>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
-<code>my-target-namespace</code> namespace.  It references version 4.11.3 of the <code>ingress-nginx</code> chart
-located in the <code>k0rdent-catalog</code> Helm repository.</p>
+   <code>my-target-namespace</code> namespace.  It references version 4.11.3 of the <code>ingress-nginx</code> chart
+   located in the <code>k0rdent-catalog</code> Helm repository. The <code>HelmChart</code> object will be created by the controller.</p>
+<ol>
+<li>Referring the existing Helm chart</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.3</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-target-namespace</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">chartRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4.11.3</span>
+</code></pre></div>
+<p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
+   <code>my-target-namespace</code> namespace.  It references the existing <code>ingress-nginx-4.11.3</code> Helm chart.</p>
+<ol>
+<li>Referring existing FluxCD source</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.3</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-target-namespace</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">chartSource</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">localSourceRef</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-catalog</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./charts/ingress-nginx&quot;</span>
+</code></pre></div>
+<p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
+   <code>my-target-namespace</code> namespace.  It references the existing <code>GitRepository</code> object called 
+   <code>k0rdent-catalog</code> and the Helm chart located in the <code>charts/ingress-nginx</code> path.</p>
+<ol>
+<li>Defining Helm chart source, which can be one of types provided by FluxCD:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ingress-nginx-4.11.3</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-target-namespace</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">chartSource</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">remoteSourceSpec</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">bucket</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/path/to/charts</span>
+<span class="w">          </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./ingress-nginx&quot;</span>
+</code></pre></div>
+<p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
+   <code>my-target-namespace</code> namespace.  It defines the source of the Helm chart located in the 
+   <code>s3://bucket/path/to/charts</code> bucket and path where the Helm chart is located within the bucket.</p>
 <p>For more information on creating templates, see the <a href="../../../reference/template/">Template Guide</a>.</p>
 <h3 id="creating-kustomization-based-servicetemplate">Creating Kustomization-based ServiceTemplate<a class="headerlink" href="#creating-kustomization-based-servicetemplate" title="Permanent link">#</a></h3>
 <p>Define the source of the Kustomization that defines the service. If the source object is one of Flux source - <code>GitRepository</code>, <code>Bucket</code> or <code>OCIRepository</code> - it must
