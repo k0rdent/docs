@@ -3172,6 +3172,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-manager-settings-for-capi-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring manager settings for CAPI providers
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3409,6 +3418,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-manager-settings-for-capi-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring manager settings for CAPI providers
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3599,6 +3617,27 @@ parameters under <code>spec.core.kcm.config.image</code>: </p>
 <span class="w">          </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/my-custom-repo/kcm/controller</span>
 <span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.0.7</span>
 <span class="w">          </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+</code></pre></div>
+<h3 id="configuring-manager-settings-for-capi-providers">Configuring manager settings for CAPI providers<a class="headerlink" href="#configuring-manager-settings-for-capi-providers" title="Permanent link">#</a></h3>
+<p>Starting from K0rdent <code>v0.3.0</code>, configuring manager settings for CAPI providers is supported. You can override
+these settings by defining the <code>spec.providers[*].config.manager</code> section. The values under the <code>manager</code> section should
+follow the format described here:
+https://github.com/kubernetes-sigs/cluster-api-operator/blob/v0.18.1/api/v1alpha2/provider_types.go#L126.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is not supported for the <code>k0sproject-k0smotron</code> provider due to a bug in the CAPI Operator:
+<a href="https://github.com/kubernetes-sigs/cluster-api-operator/issues/787">CAPI operator incorrectly finds the manager container if the number of containers is &gt;1</a>.</p>
+</div>
+<p>For example, to override feature gates for the Cluster API Provider AWS, configure the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-aws</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">manager</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">featureGates</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">MachinePool</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">          </span><span class="nt">EKSEnableIAM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">          </span><span class="nt">EKSAllowAddRoles</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 
 
