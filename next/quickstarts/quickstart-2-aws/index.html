@@ -3821,15 +3821,17 @@ second to the same region, you are likely to run into issues.  </p>
 <li><code>control-plane.cluster-api-provider-aws.sigs.k8s.io</code></li>
 <li><code>controllers.cluster-api-provider-aws.sigs.k8s.io</code></li>
 <li><code>nodes.cluster-api-provider-aws.sigs.k8s.io</code></li>
+<li><code>controllers-eks.cluster-api-provider-aws.sigs.k8s.io</code></li>
 </ul>
 <p>We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">AWS_ARN_ID</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>iam<span class="w"> </span>get-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;User.Arn&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;\d{12}&#39;</span><span class="k">)</span>
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$AWS_ARN_ID</span>
 </code></pre></div>
 <p>Assemble and execute the following commands to implement the required policies:</p>
-<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
 </code></pre></div>
 <p>We can check to see that policies were assigned:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-policies<span class="w"> </span>--scope<span class="w"> </span>Local
