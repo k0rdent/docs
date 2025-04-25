@@ -150,7 +150,7 @@ Next, we'll attach appropriate policies to the {{{ docsVersionInfo.k0rdentName }
 We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:
 
 ```shell
-AWS_ARN_ID=$(aws iam get-user --user-name k0rdentQuickstart --query 'User.Arn' --output text | grep -oP '\d{12}')
+AWS_ARN_ID=$(aws iam get-user --user-name k0rdentQuickstart --query 'User.Arn' --output text | sed -E 's/.*::([0-9]+):.*/\1/')
 echo $AWS_ARN_ID
 ```
 
