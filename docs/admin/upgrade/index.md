@@ -26,8 +26,8 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
       capi:
         template: cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}
       providers:
-        - name: k0smotron
-          template: k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+        - name: cluster-api-provider-k0sproject-k0smotron
+          template: cluster-api-provider-k0sproject-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-azure
           template: cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-vsphere
@@ -36,8 +36,12 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
           template: cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: cluster-api-provider-openstack
           template: cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+        - name: cluster-api-provider-docker
+          template: cluster-api-provider-docker-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+        - name: cluster-api-provider-gcp
+          template: cluster-api-provider-gcp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: projectsveltos
-          template: projectsveltos-0-45-0
+          template: projectsveltos-0-{{{ extra.docsVersionInfo.providerVersions.dotVersions.sveltosProvider }}}-0
     ```
 
     Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:

@@ -4,7 +4,9 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
 1. Deploy a Kubernetes cluster
 
-    The first step is to create the actual cluster itself. Again, the actual distribution used for the management cluster isn't important, as long as it's a CNCF-compliant distribution. That means you can use an existing EKS cluster, or whatever is your normal corporate standard. To make things simple this guide uses [k0s](https://github.com/k0sproject/k0s/), a small, convenient, and fully-functional distribution:
+    The first step is to create the actual cluster itself. Again, the actual distribution used for the management cluster isn't important, as long as it's a CNCF-compliant distribution. That means you can use an existing EKS cluster, or whatever is your normal corporate standard. 
+
+    To make things simple this guide uses [k0s](https://github.com/k0sproject/k0s/), a small, convenient, and fully-functional distribution:
 
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh

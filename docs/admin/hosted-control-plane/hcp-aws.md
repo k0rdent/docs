@@ -83,6 +83,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
             isPublic: false
             routeTableId: xxxxxx
         instanceType: t3.medium
+        rootVolumeSize: 32
         securityGroupIDs:
           - sg-0e000000000000000
     ```
@@ -118,6 +119,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
             routeTableId: "{{ $subnet.routeTableId }}"
         {{- end }}
         instanceType: t3.medium
+        rootVolumeSize: 32
         securityGroupIDs:
           - "{{.status.networkStatus.securityGroups.node.id}}"
     ```

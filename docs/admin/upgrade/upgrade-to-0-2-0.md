@@ -57,6 +57,8 @@ and perform the additional manual steps outlined below:
       - name: projectsveltos
       - name: cluster-api-provider-aws
       - name: cluster-api-provider-azure
+      - name: cluster-api-provider-docker
+      - name: cluster-api-provider-gcp
       - name: cluster-api-provider-openstack
       - name: cluster-api-provider-vsphere
       release: kcm-0-2-0

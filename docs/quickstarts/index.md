@@ -21,7 +21,7 @@ The QuickStart shows and briefly explains the hows, whys, and wherefores of manu
 QuickStart prerequisites are simple &mdash; you'll need:
 
 * A desktop or virtual machine running a [supported version of linux](#supported-operating-systems). You'll use this machine to install a basic Kubernetes working environment, and to host a single-node k0s Kubernetes management cluster to host {{{ docsVersionInfo.k0rdentName }}} components. For simplest setup, configure this machine as follows:
-  * A minimum of 32GB RAM, 8 vCPUs, 100GB SSD (for example, AWS `t3.2xlarge` or equivalent)
+  * A minimum of 8GB RAM, 4 vCPUs, 100GB SSD (for example, AWS `t2.xlarge` or equivalent)
   * Set up for SSH access using keys (standard for cloud VMs)
   * Set up for passwordless sudo (that is, edit `/etc/sudoers` to configure your user to issue `sudo` commands without a password challenge)
   * Inbound traffic: SSH (port 22) and ping from your laptop's IP address

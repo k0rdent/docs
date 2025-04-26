@@ -132,6 +132,7 @@
     control-plane.cluster-api-provider-aws.sigs.k8s.io
     controllers.cluster-api-provider-aws.sigs.k8s.io
     nodes.cluster-api-provider-aws.sigs.k8s.io
+    controllers-eks.cluster-api-provider-aws.sigs.k8s.io
     ```
     To do that, you'll need the ARNs for each policy.  You can get them with the `list-policies` command, as in:
 
@@ -196,10 +197,10 @@
     Now you can add the policies using the `attach-user-policy` command and the ARNs you retrieved in the previous step:
 
     ```shell
-    aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
     aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
     aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
     aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
+    aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
     ```
 	
 8. Create an access key and secret
@@ -336,8 +337,10 @@
         region: us-east-2
         controlPlane:
           instanceType: t3.small
+          rootVolumeSize: 32          
         worker:
           instanceType: t3.small
+          rootVolumeSize: 32          
     ```
     > NOTE:
     > - You're giving it an arbitrary name in `.metadata.name` (`my-aws-clusterdeployment1`)

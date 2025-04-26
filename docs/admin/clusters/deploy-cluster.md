@@ -104,8 +104,10 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
         region: us-west-2
         controlPlane:
           instanceType: t3.small
+          rootVolumeSize: 32
         worker:
           instanceType: t3.small
+          rootVolumeSize: 32
     ```
     Note that the `.spec.credential` value should match the `.metadata.name` value of a created `Credential` object.
 

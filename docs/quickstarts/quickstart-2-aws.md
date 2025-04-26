@@ -145,6 +145,7 @@ Next, we'll attach appropriate policies to the {{{ docsVersionInfo.k0rdentName }
 * `control-plane.cluster-api-provider-aws.sigs.k8s.io`
 * `controllers.cluster-api-provider-aws.sigs.k8s.io`
 * `nodes.cluster-api-provider-aws.sigs.k8s.io`
+* `controllers-eks.cluster-api-provider-aws.sigs.k8s.io`
 
 We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:
 
@@ -156,9 +157,10 @@ echo $AWS_ARN_ID
  Assemble and execute the following commands to implement the required policies:
 
 ```shell
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
-aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
+aws iam attach-user-policy --user-name k0rdentUser --policy-arn arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
 ```
 
 We can check to see that policies were assigned:
@@ -399,8 +401,10 @@ spec:
     region: us-east-2
     controlPlane:
       instanceType: t3.small
+      rootVolumeSize: 32
     worker:
       instanceType: t3.small
+      rootVolumeSize: 32
 ```
 
 ## Apply the `ClusterDeployment` to deploy the cluster

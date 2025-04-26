@@ -198,7 +198,8 @@ spec:
         availabilityZone: us-west-1b
         isPublic: false
         routeTableId: xxxxxx
-    instanceType: t3.medium
+    instanceType: t3.large
+    rootVolumeSize: 32
     securityGroupIDs:
       - sg-0e000000000000000
 ```
@@ -235,7 +236,8 @@ spec:
         routeTableId: "{{ $subnet.routeTableId }}"
         zoneType: "{{ $subnet.zoneType }}"
     {{- end }}
-    instanceType: t3.medium
+    instanceType: t3.large
+    rootVolumeSize: 32
     securityGroupIDs:
       - "{{.status.networkStatus.securityGroups.node.id}}"
 ```
