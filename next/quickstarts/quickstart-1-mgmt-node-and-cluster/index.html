@@ -3574,6 +3574,14 @@
 <p>Please review the <a href="../">Guide to QuickStarts</a> for preliminaries. This QuickStart unit details setting up a single-VM environment for managing and interacting with k0rdent, and for hosting its components on a single-node local Kubernetes management cluster. Once k0rdent is installed on the management cluster, you can drive it by SSHing into the management node (<code>kubectl</code> is there and will be provisioned with the appropriate <code>kubeconfig</code>) or remotely by various means. For example, you can install the management cluster <code>kubeconfig</code> in Lens or another Kubernetes dashboard on your laptop, tunnel across from your own local <code>kubectl</code>, and so on.</p>
 <h2 id="install-a-single-node-k0s-cluster-locally-as-the-management-cluster">Install a single-node k0s cluster locally as the management cluster<a class="headerlink" href="#install-a-single-node-k0s-cluster-locally-as-the-management-cluster" title="Permanent link">#</a></h2>
 <p><a href="https://k0sproject.io">k0s Kubernetes</a> is a CNCF-certified minimal single-binary Kubernetes that installs with one command and brings along its own CLI. We're using it to quickly set up a single-node management cluster on our manager node. However, k0rdent works on any CNCF-certified Kubernetes. If you choose to use something else, we would love to hear how you set things up to work for you.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+k0s isn't supported on MacOS, but you can install a test cluster using:
+<div class="highlight"><pre><span></span><code>brew install kind &amp;&amp; kind create cluster -n k0rdent
+</code></pre></div>
+Skip ahead to <a href="#install-kubectl">Install kubectl</a>.</p>
+</div>
 <p>Download and install k0s:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://get.k0s.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh
 sudo<span class="w"> </span>k0s<span class="w"> </span>install<span class="w"> </span>controller<span class="w"> </span>--enable-worker<span class="w"> </span>--no-taints
