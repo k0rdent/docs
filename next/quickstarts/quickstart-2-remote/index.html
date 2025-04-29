@@ -3681,7 +3681,7 @@
 <p>Create a <code>Secret</code> object to securely store the private SSH key, under the key <code>value</code>, for accessing all remote machines that will be part of the cluster. Save this configuration in a YAML file named <code>remote-ssh-key-secret.yaml</code>. Ensure you replace the placeholder <code>PRIVATE_SSH_KEY_B64</code> with your base64-encoded private SSH key:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Setup Environment</span>
 <span class="nv">KEY_PATH</span><span class="o">=</span>~/.ssh/id_ed25519
-<span class="nv">PRIVATE_SSH_KEY_B64</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="nv">$KEY_PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="k">)</span>
+<span class="nv">PRIVATE_SSH_KEY_B64</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="nv">$KEY_PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="k">)</span>
 <span class="nv">SECRET_NAME</span><span class="o">=</span>remote-ssh-key
 <span class="nv">KCM_SYSTEM_NS</span><span class="o">=</span>kcm-system
 <span class="nv">CREDENTIAL_NAME</span><span class="o">=</span>remote-cred

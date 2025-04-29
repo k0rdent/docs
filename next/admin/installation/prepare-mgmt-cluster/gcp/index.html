@@ -3527,7 +3527,7 @@ and create a new key with the JSON key type.</p>
 <code>gcp-cluster-identity-secret.yaml</code>, as follows, inserting the base64-encoded GCP credentials
 (represented by the placeholder <code>GCP_B64ENCODED_CREDENTIALS</code> below) that you get on the previous step.
 To get base64 encoded credentials, run:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&lt;gcpJSONCredentialsFileName&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&lt;gcpJSONCredentialsFileName&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
