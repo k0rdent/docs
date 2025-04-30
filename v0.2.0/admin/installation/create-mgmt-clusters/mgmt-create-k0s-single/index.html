@@ -3297,7 +3297,8 @@
 <ol>
 <li>
 <p>Deploy a Kubernetes cluster</p>
-<p>The first step is to create the actual cluster itself. Again, the actual distribution used for the management cluster isn't important, as long as it's a CNCF-compliant distribution. That means you can use an existing EKS cluster, or whatever is your normal corporate standard. To make things simple this guide uses <a href="https://github.com/k0sproject/k0s/">k0s</a>, a small, convenient, and fully-functional distribution:</p>
+<p>The first step is to create the actual cluster itself. Again, the actual distribution used for the management cluster isn't important, as long as it's a CNCF-compliant distribution. That means you can use an existing EKS cluster, or whatever is your normal corporate standard. </p>
+<p>To make things simple this guide uses <a href="https://github.com/k0sproject/k0s/">k0s</a>, a small, convenient, and fully-functional distribution:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://get.k0s.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh
 sudo<span class="w"> </span>k0s<span class="w"> </span>install<span class="w"> </span>controller<span class="w"> </span>--enable-worker<span class="w"> </span>--no-taints
 sudo<span class="w"> </span>k0s<span class="w"> </span>start

@@ -3419,6 +3419,7 @@ deploy and manage the hosted control plane. For example:</p>
 <span class="w">        </span><span class="nt">isPublic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxxx</span>
 <span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.medium</span>
+<span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 <span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sg-0e000000000000000</span>
 </code></pre></div>
@@ -3454,6 +3455,7 @@ inserts the appropriate values:
 <span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.routeTableId</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.medium</span>
+<span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 <span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{{.status.networkStatus.securityGroups.node.id}}&quot;</span>
 </code></pre></div></p>
