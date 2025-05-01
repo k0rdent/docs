@@ -3937,64 +3937,32 @@ second to the same region, you are likely to run into issues.  </p>
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$AWS_ARN_ID</span>
 </code></pre></div>
 <p>Assemble and execute the following commands to implement the required policies:</p>
-<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
-aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
+aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--policy-arn<span class="w"> </span>arn:aws:iam::<span class="nv">$AWS_ARN_ID</span>:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io
 </code></pre></div>
-<p>We can check to see that policies were assigned:</p>
-<p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-policies<span class="w"> </span>--scope<span class="w"> </span>Local
+<p>We can check to see that policies were attached to the new user:</p>
+<p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-attached-user-policies<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
 </code></pre></div>
 And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;Policies&quot;: [</span>
+<span class="go">    &quot;AttachedPolicies&quot;: [</span>
 <span class="go">        {</span>
 <span class="go">            &quot;PolicyName&quot;: &quot;controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyId&quot;: &quot;ANPA22CF4NNF3VUDTMH3N&quot;,</span>
-<span class="go">            &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">            &quot;DefaultVersionId&quot;: &quot;v1&quot;,</span>
-<span class="go">            &quot;AttachmentCount&quot;: 2,</span>
-<span class="go">            &quot;PermissionsBoundaryUsageCount&quot;: 0,</span>
-<span class="go">            &quot;IsAttachable&quot;: true,</span>
-<span class="go">            &quot;CreateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;,</span>
-<span class="go">            &quot;UpdateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;</span>
-<span class="go">        },</span>
-<span class="go">        {</span>
-<span class="go">            &quot;PolicyName&quot;: &quot;nodes.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyId&quot;: &quot;ANPA22CF4NNF5TAKL44PU&quot;,</span>
-<span class="go">            &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:policy/nodes.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">            &quot;DefaultVersionId&quot;: &quot;v1&quot;,</span>
-<span class="go">            &quot;AttachmentCount&quot;: 3,</span>
-<span class="go">            &quot;PermissionsBoundaryUsageCount&quot;: 0,</span>
-<span class="go">            &quot;IsAttachable&quot;: true,</span>
-<span class="go">            &quot;CreateDate&quot;: &quot;2025-01-01T18:47:44+00:00&quot;,</span>
-<span class="go">            &quot;UpdateDate&quot;: &quot;2025-01-01T18:47:44+00:00&quot;</span>
+<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
 <span class="go">        },</span>
 <span class="go">        {</span>
 <span class="go">            &quot;PolicyName&quot;: &quot;controllers.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyId&quot;: &quot;ANPA22CF4NNFVO6OHIQOE&quot;,</span>
-<span class="go">            &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:policy/controllers.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">            &quot;DefaultVersionId&quot;: &quot;v1&quot;,</span>
-<span class="go">            &quot;AttachmentCount&quot;: 3,</span>
-<span class="go">            &quot;PermissionsBoundaryUsageCount&quot;: 0,</span>
-<span class="go">            &quot;IsAttachable&quot;: true,</span>
-<span class="go">            &quot;CreateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;,</span>
-<span class="go">            &quot;UpdateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;</span>
+<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
 <span class="go">        },</span>
 <span class="go">        {</span>
 <span class="go">            &quot;PolicyName&quot;: &quot;control-plane.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyId&quot;: &quot;ANPA22CF4NNFY4FJ3DA2E&quot;,</span>
-<span class="go">            &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">            &quot;DefaultVersionId&quot;: &quot;v1&quot;,</span>
-<span class="go">            &quot;AttachmentCount&quot;: 2,</span>
-<span class="go">            &quot;PermissionsBoundaryUsageCount&quot;: 0,</span>
-<span class="go">            &quot;IsAttachable&quot;: true,</span>
-<span class="go">            &quot;CreateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;,</span>
-<span class="go">            &quot;UpdateDate&quot;: &quot;2025-01-01T18:47:43+00:00&quot;</span>
+<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
+<span class="go">        },</span>
+<span class="go">        {</span>
+<span class="go">            &quot;PolicyName&quot;: &quot;nodes.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
+<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/nodes.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
 <span class="go">        }</span>
 <span class="go">    ]</span>
 <span class="go">}</span>
