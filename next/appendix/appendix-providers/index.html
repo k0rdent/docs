@@ -3701,10 +3701,12 @@ These examples assume the <code>ConfigMap</code> is included in a template. To u
 (double dollar signs) with <code>$</code> (single dollar sign)</p>
 </div>
 <h2 id="provider-registration">Provider Registration<a class="headerlink" href="#provider-registration" title="Permanent link">#</a></h2>
-<p>Providers are registered through YAML configuration files mounted into a <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/kcm/templates/deployment.yaml#L42-L43">predefined path</a> in the manager container at startup <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/kcm/templates/providers.yaml">using <code>ConfigMap</code></a>.</p>
+<p>Providers are registered through <code>ProviderInterface</code> CR, each <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider">provider Helm chart</a> ships with corresponding <code>ProviderInterface</code> object.</p>
+<p>Modifications to the <code>Management</code> Spec are needed to enable newly added provider.</p>
+<p>For detailed information, refer to <a href="#appendix-extend-mgmt">Extended Management Configuration</a></p>
 <h3 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">#</a></h3>
-<p>Provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.3.0/providers">here</a></p>
-<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/providers/azure.yml">azure.yml</a>, as seen, the definition is straightforward.</p>
+<p>As mentioned previously provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.3.0/providers">here</a>, look for <code>ProviderInterface</code> object inside CAPI Helm charts.</p>
+<p>Let's take the <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/cluster-api-provider-azure/templates/interface.yaml">interface.yaml</a>, as seen, the CR definitions are straightforward.</p>
 
 
 
