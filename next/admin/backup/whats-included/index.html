@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#whats-included-in-the-management-backup" class="md-skip">
+        <a href="#backing-up-k0rdent-with-velero" class="md-skip">
           Skip to content
         </a>
       
@@ -2174,6 +2174,8 @@
       
         
       
+        
+      
     
     
     
@@ -2210,6 +2212,27 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparing for Backups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -2270,6 +2293,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    What's Included in a Backup
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2279,6 +2313,199 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-velero" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Velero
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#k0rdent-backup-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      k0rdent Backup Strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-backup-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Backup Targets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Backup Targets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#child-workload-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Child / Workload Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-velero-for-the-management-cluster-hcp-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Velero for the Management Cluster (HCP Scenario)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up Velero for the Management Cluster (HCP Scenario)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-choose-backup-storage-prepare-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Choose Backup Storage &amp; Prepare Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-choose-persistent-volume-pv-backup-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Choose Persistent Volume (PV) Backup Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-velero-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Install Velero CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-install-velero-server-in-k0rdent-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Install Velero Server in k0rdent Management Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-verify-velero-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Verify Velero Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-identify-hcp-etcd-pvs-crucial-sanity-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Identify HCP etcd PVs (Crucial Sanity Check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-create-the-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 7: Create the Management Backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-schedule-regular-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 8: Schedule Regular Backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-velero-for-childworkload-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Velero for Child/Workload Clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-backed-up-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Gets Backed Up (Summary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-considerations-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important Considerations &amp; Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3416,6 +3643,188 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-velero" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Velero
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#k0rdent-backup-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      k0rdent Backup Strategy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-backup-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Backup Targets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Backup Targets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#child-workload-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Child / Workload Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-velero-for-the-management-cluster-hcp-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Velero for the Management Cluster (HCP Scenario)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up Velero for the Management Cluster (HCP Scenario)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-choose-backup-storage-prepare-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Choose Backup Storage &amp; Prepare Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-choose-persistent-volume-pv-backup-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Choose Persistent Volume (PV) Backup Method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-velero-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Install Velero CLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-install-velero-server-in-k0rdent-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Install Velero Server in k0rdent Management Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-verify-velero-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: Verify Velero Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-identify-hcp-etcd-pvs-crucial-sanity-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Identify HCP etcd PVs (Crucial Sanity Check)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-create-the-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 7: Create the Management Backup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-schedule-regular-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 8: Schedule Regular Backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-velero-for-childworkload-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Velero for Child/Workload Clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-backed-up-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Gets Backed Up (Summary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-considerations-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important Considerations &amp; Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3445,35 +3854,341 @@
   
 
 
-<h1 id="whats-included-in-the-management-backup">What's Included in the Management Backup<a class="headerlink" href="#whats-included-in-the-management-backup" title="Permanent link">#</a></h1>
-<p>The backup includes all of k0rdent <code>kcm</code> component resources, parts of the <code>cert-manager</code>
-components required for other components creation, and all the required resources
-of <code>CAPI</code> and the <code>ClusterDeployment</code>s currently in use in the management cluster.</p>
-<p>By default, objects satisfying these labels will be included in the backup:</p>
-<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name=&quot;&lt;cluster-deployment-name&gt;&quot;
-helm.toolkit.fluxcd.io/name=&quot;&lt;cluster-deployment-name&gt;&quot;
-
-cluster.x-k8s.io/provider=&quot;bootstrap-&lt;provider&gt;&quot;
-cluster.x-k8s.io/provider=&quot;control-plane-&lt;provider&gt;&quot;
-cluster.x-k8s.io/provider=&quot;infrastructure-&lt;provider&gt;&quot;
-
-cluster.x-k8s.io/provider=&quot;cluster-api&quot;
-
-controller.cert-manager.io/fao=&quot;true&quot;
-
-k0rdent.mirantis.com/component=&quot;kcm&quot;
+<h1 id="backing-up-k0rdent-with-velero">Backing up k0rdent with Velero<a class="headerlink" href="#backing-up-k0rdent-with-velero" title="Permanent link">#</a></h1>
+<p>Ensuring you can recover your k0rdent environment and the clusters it manages is vital for 
+operational resilience. This guide provides a comprehensive walkthrough for setting up Velero to back up both your k0rdent management cluster and your child/workload clusters.</p>
+<h2 id="understanding-velero">Understanding Velero<a class="headerlink" href="#understanding-velero" title="Permanent link">#</a></h2>
+<p>Velero works by:</p>
+<ol>
+<li>Querying the Kubernetes API server to capture the state of cluster resources (like Deployments, Services, Secrets, ConfigMaps, CRDs, etc.).</li>
+<li>Optionally backing up data stored in Persistent Volumes (PVs) using either storage platform snapshots (via CSI) or a file-level backup tool (like Kopia or Restic).</li>
+<li>Storing both the resource definitions and volume backups in an external object storage location (like AWS S3, Azure Blob Storage, Google Cloud Storage, or any S3-compatible provider).</li>
+</ol>
+<h2 id="k0rdent-backup-strategy">k0rdent Backup Strategy<a class="headerlink" href="#k0rdent-backup-strategy" title="Permanent link">#</a></h2>
+<p>The best backup strategy for you depends on your k0rdent architecture:</p>
+<ul>
+<li><strong>Standalone Managed Clusters:</strong> If k0rdent manages standard K0s/Kubernetes clusters, you'll need backups for the k0rdent management cluster itself <em>and</em> separate backups configured <em>within each</em> standalone child cluster.</li>
+<li><strong>Hosted Control Planes (HCP with k0smotron):</strong> This common k0rdent setup requires a layered approach:<ul>
+<li><strong>Management Cluster Backup:</strong> Protects k0rdent, K0smotron, and critically, the <em>control planes</em> (including their state stored in etcd PVs within the management cluster) of all your workload clusters. <strong>This is essential for infrastructure recovery.</strong></li>
+<li><strong>Workload Cluster Backup (Recommended):</strong> Protects the <em>application data</em> stored in PVs attached to the worker nodes of your workload clusters. <strong>This is essential for application data recovery.</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<p>Before you start, ensure you have:</p>
+<ul>
+<li><code>kubectl</code> access configured for the cluster(s) you intend to back up (Management cluster first, then Child/Workload clusters).</li>
+<li>An account with a cloud provider (AWS, Azure, GCP) or access to an S3-compatible object storage system (like MinIO).</li>
+<li>A dedicated object storage bucket/container created in your chosen storage system.</li>
+<li>Credentials (for example, access keys, service principal secrets, service account keys) that grant Velero the necessary permissions to access the object storage bucket/container.</li>
+</ul>
+<h2 id="understanding-backup-targets">Understanding Backup Targets<a class="headerlink" href="#understanding-backup-targets" title="Permanent link">#</a></h2>
+<p>It's crucial to understand what needs to be backed up in each location:</p>
+<h3 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h3>
+<p><strong>What to back up here:</strong></p>
+<ul>
+<li>k0rdent core components (<code>kcm</code>) and configuration.</li>
+<li>Management add-ons (for example, <code>cert-manager</code>).</li>
+<li>K0smotron controller and Custom Resources (<code>Cluster</code>, <code>MachinePool</code>, and so on, defining HCPs).</li>
+<li>Cluster API (CAPI) resources.</li>
+<li>Running components of Hosted Control Planes, such as API server and controller-manager pods (if any).</li>
+<li><strong>Critically:</strong> The Persistent Volumes (PVs) storing the <code>etcd</code> data for each Hosted Control Plane (HCP). These PVs physically reside on the management cluster's storage but contain the state of your workload clusters.</li>
+</ul>
+<p><strong>Purpose of this Backup:</strong> Infrastructure disaster recovery. Enables you to restore the entire k0rdent management plane, K0smotron, and the control planes of your workload clusters.</p>
+<p><strong>What's NOT Covered:</strong> Application data stored on PVs within the workload clusters.</p>
+<h3 id="child-workload-cluster">Child / Workload Cluster<a class="headerlink" href="#child-workload-cluster" title="Permanent link">#</a></h3>
+<p><strong>What to Back Up Here:</strong></p>
+<ul>
+<li><strong>Critically:</strong> Application data stored in <strong>Persistent Volumes (PVs)</strong> attached to the worker nodes of this specific cluster.</li>
+<li>Application-specific API objects (Deployments, Services, ConfigMaps, Secrets, application-specific CRs) deployed within this cluster's namespaces (provides granular restore capability).</li>
+</ul>
+<p><strong>Purpose of this Backup:</strong> Application data recovery and granular application restores. Ensures that if application data PVs are lost, you can restore the application's state.</p>
+<p><strong>What's NOT Covered:</strong> The control plane state (that's stored in the HCP etcd PVs, backed up from the management cluster in an HCP scenario).</p>
+<h2 id="setting-up-velero-for-the-management-cluster-hcp-scenario">Setting Up Velero for the Management Cluster (HCP Scenario)<a class="headerlink" href="#setting-up-velero-for-the-management-cluster-hcp-scenario" title="Permanent link">#</a></h2>
+<p>This setup protects k0rdent, K0smotron, and the control planes of your workload clusters via their HCPs.</p>
+<p><strong>Goal:</strong> Create reliable, automated backups of the management cluster including HCP etcd PVs.</p>
+<h3 id="step-1-choose-backup-storage-prepare-credentials">Step 1: Choose Backup Storage &amp; Prepare Credentials<a class="headerlink" href="#step-1-choose-backup-storage-prepare-credentials" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>Create a Bucket/Container:</strong> In your chosen cloud provider (such as AWS S3, Azure Blob, GCS) or S3-compatible storage, create a dedicated bucket/container for Velero backups (for example, <code>k0rdent-management-backups</code>). Note the bucket name and region (if applicable).</li>
+<li>
+<p><strong>Create Credentials:</strong> Velero needs permissions to write to this bucket. Create credentials according to your provider:</p>
+<ul>
+<li><strong>AWS:</strong> Create an IAM user or role with permissions allowing <code>s3:GetObject</code>, <code>s3:PutObject</code>, <code>s3:DeleteObject</code>, <code>s3:ListBucket</code>, <code>s3:GetBucketLocation</code>, etc., on the target bucket and objects. (See <a href="https://velero.io/docs/main/plugins/aws/">Velero AWS Plugin Docs</a> for exact permissions). Save the Access Key ID and Secret Access Key to a local file (e.g., <code>~/credentials-velero</code>):
+    <div class="highlight"><pre><span></span><code><span class="k">[default]</span>
+<span class="na">aws_access_key_id</span><span class="o">=</span><span class="s">YOUR_ACCESS_KEY_ID</span>
+<span class="na">aws_secret_access_key</span><span class="o">=</span><span class="s">YOUR_SECRET_ACCESS_KEY</span>
+</code></pre></div></li>
+<li><strong>Azure:</strong> Create an Azure Service Principal. Grant it the "Storage Blob Data Contributor" role on the storage account or specific container. Get the Tenant ID, Subscription ID, Client ID, and Client Secret. (See <a href="https://velero.io/docs/main/plugins/azure/">Velero Azure Plugin Docs</a> for details). Save these details to a file (e.g., <code>~/credentials-velero</code>).</li>
+<li><strong>GCP:</strong> Create a Service Account. Grant it the "Storage Admin" (<code>roles/storage.admin</code>) role. Download the service account key file (JSON format, e.g., <code>~/gcp-key.json</code>).</li>
+<li><strong>S3-Compatible:</strong> Usually uses AWS format credentials file. Check provider docs for specific endpoint/region configuration.</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-2-choose-persistent-volume-pv-backup-method">Step 2: Choose Persistent Volume (PV) Backup Method<a class="headerlink" href="#step-2-choose-persistent-volume-pv-backup-method" title="Permanent link">#</a></h3>
+<p>This is <strong>critical</strong> for backing up the HCP etcd PVs.</p>
+<ul>
+<li>
+<p><strong>Method A: CSI Volume Snapshots (Recommended)</strong></p>
+<ul>
+<li><strong>How it works:</strong> Uses the storage provider's native snapshot capabilities via the Container Storage Interface (CSI). Efficient and fast.</li>
+<li><strong>Prerequisites (Check in k0rdent Mgmt Cluster):</strong><ul>
+<li><strong>CSI Driver:</strong> A CSI driver compatible with your storage must be installed. Check with <code>kubectl get pods -n kube-system | grep csi</code>.</li>
+<li><strong>VolumeSnapshot CRDs:</strong> Kubernetes Volume Snapshot capabilities must be installed. Check with <code>kubectl get crd volumesnapshots.snapshot.storage.k8s.io</code>.</li>
+<li><strong>VolumeSnapshotClass:</strong> A <code>VolumeSnapshotClass</code> pointing to your CSI driver must exist. Check with <code>kubectl get volumesnapshotclass</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Method B: File-Based Backup (Kopia Recommended)</strong></p>
+<ul>
+<li><strong>How it works:</strong> Velero integrates with Kopia (or Restic) which runs a helper container (in a DaemonSet) on each node to copy file data directly from the volume into the backup storage location.</li>
+<li><strong>Prerequisites:</strong> Generally none, works with most volume types.</li>
+<li><strong>Considerations:</strong> Can be slower and consume more CPU/Memory/Network resources on cluster nodes during backup compared to CSI snapshots. Kopia is generally preferred over the older Restic integration.</li>
+</ul>
+</li>
+</ul>
+<h3 id="step-3-install-velero-cli">Step 3: Install Velero CLI<a class="headerlink" href="#step-3-install-velero-cli" title="Permanent link">#</a></h3>
+<p>Install the Velero command-line tool on your local machine where you run <code>kubectl</code>. Follow instructions at: <a href="https://velero.io/docs/main/basic-install/#install-the-cli">https://velero.io/docs/main/basic-install/#install-the-cli</a>
+Verify with <code>velero version</code>.</p>
+<h3 id="step-4-install-velero-server-in-k0rdent-management-cluster">Step 4: Install Velero Server in k0rdent Management Cluster<a class="headerlink" href="#step-4-install-velero-server-in-k0rdent-management-cluster" title="Permanent link">#</a></h3>
+<p>Run <code>velero install</code> targeting your k0rdent management cluster context. Adapt placeholders (<code>&lt;...&gt;</code>) carefully for the appropriate environment.</p>
+<h4 id="aws-with-csi-snapshots">AWS with CSI Snapshots<a class="headerlink" href="#aws-with-csi-snapshots" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>```shell
+velero install \
+    --provider aws \
+    --plugins velero/velero-plugin-for-aws,velero/velero-plugin-for-csi \
+    --bucket &lt;YOUR_S3_BUCKET_NAME&gt; \
+    --backup-location-config region=&lt;YOUR_BUCKET_REGION&gt; \
+    --snapshot-location-config region=&lt;YOUR_CSI_REGION&gt; \
+    --secret-file &lt;/path/to/your/credentials-velero&gt; \
+    --use-volume-snapshots=true \
+    --namespace velero # Default namespace
+```
 </code></pre></div>
-<p>An example sorted set of labels, objects satisfying these labels will
-be included in the backup:</p>
-<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name=&quot;some-cluster-deployment-name&quot;
-cluster.x-k8s.io/provider=&quot;bootstrap-k0sproject-k0smotron&quot;
-cluster.x-k8s.io/provider=&quot;cluster-api&quot;
-cluster.x-k8s.io/provider=&quot;control-plane-k0sproject-k0smotron&quot;
-cluster.x-k8s.io/provider=&quot;infrastructure-aws&quot;
-controller.cert-manager.io/fao=&quot;true&quot;
-helm.toolkit.fluxcd.io/name=&quot;some-cluster-deployment-name&quot;
-k0rdent.mirantis.com/component=&quot;kcm&quot;
+<h4 id="aws-with-kopia-file-based-backup">AWS with Kopia File-Based Backup<a class="headerlink" href="#aws-with-kopia-file-based-backup" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>```shell
+velero install \
+    --provider aws \
+    --plugins velero/velero-plugin-for-aws \
+    --bucket &lt;YOUR_S3_BUCKET_NAME&gt; \
+    --backup-location-config region=&lt;YOUR_BUCKET_REGION&gt; \
+    --secret-file &lt;/path/to/your/credentials-velero&gt; \
+    --use-volume-snapshots=false \ # Disable CSI snapshots
+    --use-kopia \ # Enable Kopia integration
+    --namespace velero
+```
 </code></pre></div>
+<h4 id="azure-with-csi-snapshots">Azure with CSI Snapshots<a class="headerlink" href="#azure-with-csi-snapshots" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>```shell
+# Ensure AZURE_CLIENT_SECRET env var is set or included in the file
+# See Azure plugin docs for credential file details
+velero install \
+    --provider azure \
+    --plugins velero/velero-plugin-for-azure,velero/velero-plugin-for-csi \
+    --bucket &lt;YOUR_BLOB_CONTAINER_NAME&gt; \
+    --secret-file &lt;/path/to/your/azure-credentials.txt&gt; \
+    --backup-location-config resourceGroup=&lt;YOUR_RG_NAME&gt;,storageAccount=&lt;YOUR_STORAGE_ACCOUNT_NAME&gt;,subscriptionId=&lt;YOUR_SUBSCRIPTION_ID&gt; \
+    --snapshot-location-config apiTimeout=5m,resourceGroup=&lt;YOUR_RG_NAME&gt;,subscriptionId=&lt;YOUR_SUBSCRIPTION_ID&gt; \
+    --use-volume-snapshots=true \
+    --namespace velero
+```
+</code></pre></div>
+<h4 id="gcp-with-csi-snapshots">GCP with CSI Snapshots<a class="headerlink" href="#gcp-with-csi-snapshots" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>```shell
+velero install \
+    --provider gcp \
+    --plugins velero/velero-plugin-for-gcp,velero/velero-plugin-for-csi \
+    --bucket &lt;YOUR_GCS_BUCKET_NAME&gt; \
+    --secret-file &lt;/path/to/your/gcp-key.json&gt; \
+    --use-volume-snapshots=true \
+    --namespace velero
+```
+</code></pre></div>
+<h4 id="key-flags-explained">Key Flags Explained:<a class="headerlink" href="#key-flags-explained" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code>* `--provider`: Your storage provider (aws, azure, gcp).
+* `--plugins`: Required Velero plugins (provider plugin is always needed, add CSI plugin if using snapshots).
+* `--bucket`: Name of your storage bucket/container.
+* `--secret-file`: Path to the credential file you created.
+* `--backup-location-config`: Provider-specific settings (e.g., region, resource group).
+* `--snapshot-location-config`: Provider-specific settings for volume snapshots (if using CSI).
+* `--use-volume-snapshots`: Set to `true` for CSI, `false` otherwise.
+* `--use-kopia` / `--use-restic`: Enable file-based PV backup.
+* `--namespace`: Kubernetes namespace to install Velero into (default `velero`).
+</code></pre></div>
+<h3 id="step-5-verify-velero-installation">Step 5: Verify Velero Installation<a class="headerlink" href="#step-5-verify-velero-installation" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p><strong>Check Pods:</strong> </p>
+<p>Ensure Velero and any helper pods (Kopia/Restic) are running:
+ <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>velero
+<span class="c1"># Expected: velero-xxxx deployment pod running.</span>
+<span class="c1"># If using Kopia/Restic: kopia-maintainer-xxxx or restic-xxxx pods (one per node) running.</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Check Locations:</strong> Verify Velero can connect to your storage:</p>
+<p><div class="highlight"><pre><span></span><code>velero<span class="w"> </span>backup-location<span class="w"> </span>get
+<span class="c1"># Should show Phase: Available</span>
+
+<span class="c1"># If using CSI:</span>
+velero<span class="w"> </span>volume-snapshot-location<span class="w"> </span>get
+<span class="c1"># Should show Phase: Available</span>
+</code></pre></div>
+3.  <strong>Troubleshooting:</strong> </p>
+<p>If locations are not available, check Velero pod logs: <code>kubectl logs deployment/velero -n velero</code>. Common issues are incorrect credentials or permissions.</p>
+</li>
+</ol>
+<h3 id="step-6-identify-hcp-etcd-pvs-crucial-sanity-check">Step 6: Identify HCP etcd PVs (Crucial Sanity Check)<a class="headerlink" href="#step-6-identify-hcp-etcd-pvs-crucial-sanity-check" title="Permanent link">#</a></h3>
+<p>While Velero (especially with CSI) often automatically discovers PVs, it's good practice to confirm the etcd PVs are eligible.</p>
+<ol>
+<li>Find the namespaces used by your HCPs (often related to your K0smotron <code>Cluster</code> resource names).</li>
+<li>
+<p>List PVCs in those namespaces:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>&lt;hcp-namespace-1&gt;
+kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>&lt;hcp-namespace-2&gt;
+<span class="c1"># ... etc.</span>
+</code></pre></div>
+</li>
+<li>
+<p>Look for PVCs associated with etcd StatefulSets (for example, <code>data-etcd-main-0</code>).</p>
+</li>
+<li>Check the <code>STORAGECLASS</code> used by these PVCs (<code>kubectl get pvc &lt;pvc-name&gt; -n &lt;hcp-namespace&gt; -o jsonpath='{.spec.storageClassName}'</code>). Ensure this StorageClass is compatible with your chosen PV backup method (has a <code>VolumeSnapshotClass</code> for CSI, or is generally accessible for Kopia/Restic).</li>
+</ol>
+<h3 id="step-7-create-the-management-backup">Step 7: Create the Management Backup<a class="headerlink" href="#step-7-create-the-management-backup" title="Permanent link">#</a></h3>
+<p>Perform an initial backup manually:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate a unique name with timestamp</span>
+<span class="nv">BACKUP_NAME</span><span class="o">=</span><span class="s2">&quot;k0rdent-mgmt-</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d-%H%M%S<span class="k">)</span><span class="s2">&quot;</span>
+
+velero<span class="w"> </span>backup<span class="w"> </span>create<span class="w"> </span><span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--include-cluster-resources<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\ </span><span class="c1"># MUST INCLUDE: Backs up CRDs, Nodes, ClusterRoles etc.</span>
+<span class="w">    </span>--include-crds<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\ </span><span class="c1"># MUST INCLUDE: Ensures CRDs (like K0smotron/CAPI) are backed up</span>
+<span class="w">    </span><span class="c1"># Optional: Specify namespaces if needed, otherwise defaults to all</span>
+<span class="w">    </span><span class="c1"># --include-namespaces velero,kube-system,&lt;hcp-namespace-1&gt;,...</span>
+<span class="w">    </span><span class="c1"># Optional but Recommended if using Kopia/Restic for *all* PVs:</span>
+<span class="w">    </span><span class="c1"># --default-volumes-to-kopia=true # Tells Velero to use Kopia for PVs unless opted out</span>
+<span class="w">    </span>--wait<span class="w"> </span><span class="c1"># Waits for the command to complete and shows final status</span>
+</code></pre></div>
+<p>When the backup is complete, be sure to verify it:</p>
+<div class="highlight"><pre><span></span><code>velero<span class="w"> </span>backup<span class="w"> </span>describe<span class="w"> </span><span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span>
+<span class="c1"># Look for Phase: Completed, check Errors/Warnings are 0.</span>
+<span class="c1"># Check for &#39;Persistent Volumes&#39; section (if using Kopia/Restic)</span>
+<span class="c1"># Check for &#39;Volume Snapshots&#39; details (if using CSI)</span>
+
+velero<span class="w"> </span>backup<span class="w"> </span>logs<span class="w"> </span><span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span>
+<span class="c1"># Look for errors or details about PV backups.</span>
+</code></pre></div>
+<h3 id="step-8-schedule-regular-backups">Step 8: Schedule Regular Backups<a class="headerlink" href="#step-8-schedule-regular-backups" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p>Automate backups using schedules:</p>
+<div class="highlight"><pre><span></span><code>velero<span class="w"> </span>schedule<span class="w"> </span>create<span class="w"> </span>k0rdent-mgmt-daily<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--schedule<span class="o">=</span><span class="s2">&quot;@daily&quot;</span><span class="w"> </span><span class="se">\ </span><span class="c1"># Or other cron expression e.g., &quot;0 3 * * *&quot; for 3 AM daily</span>
+<span class="w">    </span>--include-cluster-resources<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--include-crds<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="c1"># --default-volumes-to-kopia=true # If using Kopia for PVs</span>
+<span class="w">    </span>--ttl<span class="w"> </span>240h<span class="w"> </span><span class="c1"># Example: Retain backups for 10 days (240 hours)</span>
+<span class="w">    </span><span class="c1"># Optional: --include-namespaces, --exclude-namespaces</span>
+</code></pre></div>
+</li>
+<li>
+<p>Check schedules: </p>
+<div class="highlight"><pre><span></span><code>velero<span class="w"> </span>schedule<span class="w"> </span>get
+</code></pre></div>
+</li>
+<li>
+<p>Check backups created by schedule: </p>
+<div class="highlight"><pre><span></span><code>velero<span class="w"> </span>backup<span class="w"> </span>get
+</code></pre></div>
+</li>
+</ol>
+<h2 id="setting-up-velero-for-childworkload-clusters">Setting Up Velero for Child/Workload Clusters<a class="headerlink" href="#setting-up-velero-for-childworkload-clusters" title="Permanent link">#</a></h2>
+<p>This setup protects application data within standalone or HCP workload clusters.</p>
+<p><strong>Goal:</strong> Create reliable, automated backups of application namespaces and their Persistent Volumes within each child/workload cluster.</p>
+<p><strong>Process:</strong></p>
+<p>The process largely mirrors the Management Cluster setup (Steps 1-5, 7-8), but is performed <strong>inside each child/workload cluster</strong>:</p>
+<ol>
+<li><strong>Target the Child/Workload Cluster:</strong> Ensure your <code>kubectl</code> context points to the specific child/workload cluster you want to back up.</li>
+<li><strong>Storage &amp; Credentials:</strong> You <em>can</em> use the same backup bucket, but consider using a different prefix or subdirectory for organizational purposes (configure via <code>--backup-location-config prefix=...</code>). Use the same or different credentials file as appropriate.</li>
+<li><strong>Choose PV Method:</strong> Determine if CSI snapshots or Kopia/Restic is appropriate based on the storage and CSI setup <em>within this specific child/workload cluster</em>.</li>
+<li><strong>Install Velero CLI:</strong> Already done.</li>
+<li><strong>Install Velero Server:</strong> Run <code>velero install</code> targeting the child/workload cluster, adapting provider, plugins, bucket, credentials, PV method flags (<code>--use-volume-snapshots</code>, <code>--use-kopia</code>) based on <em>this cluster's</em> environment.</li>
+<li><strong>Verify Installation:</strong> Run <code>kubectl get pods -n velero</code>, <code>velero backup-location get</code>, etc., targeting the child/workload cluster.</li>
+<li>
+<p><strong>Create Application Backup:</strong></p>
+<div class="highlight"><pre><span></span><code>* Focus on application namespaces.
+```shell
+# Backup specific application namespace(s)
+APP_BACKUP_NAME=&quot;&lt;app-name&gt;-$(date +%Y%m%d-%H%M%S)&quot;
+velero backup create ${APP_BACKUP_NAME} \
+    --include-namespaces &lt;your-app-namespace-1&gt;,&lt;your-app-namespace-2&gt; \
+    # --default-volumes-to-kopia=true # If using Kopia for app PVs
+    --wait
+```
+* Verify the backup (`velero backup describe ...`) ensuring application PVs were captured.
+</code></pre></div>
+</li>
+<li>
+<p><strong>Schedule Application Backups:</strong>
+        <div class="highlight"><pre><span></span><code>velero<span class="w"> </span>schedule<span class="w"> </span>create<span class="w"> </span>&lt;app-name&gt;-daily<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--schedule<span class="o">=</span><span class="s2">&quot;@daily&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--include-namespaces<span class="w"> </span>&lt;your-app-namespace-1&gt;,&lt;your-app-namespace-2&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="c1"># --default-volumes-to-kopia=true # If using Kopia</span>
+<span class="w">    </span>--ttl<span class="w"> </span>168h<span class="w"> </span><span class="c1"># Example: Retain for 7 days</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>Repeat this setup process for each child/workload cluster requiring backup.</p>
+<h2 id="what-gets-backed-up-summary">What Gets Backed Up (Summary)<a class="headerlink" href="#what-gets-backed-up-summary" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p><strong>Management Cluster Backup Includes:</strong></p>
+<ul>
+<li>k0rdent state (via API objects, etcd PV if applicable).</li>
+<li>K0smotron controller &amp; CRDs.</li>
+<li>HCP definitions (CAPI CRs, K0smotron CRs like <code>Cluster</code>, <code>MachinePool</code>).</li>
+<li><strong>HCP etcd Persistent Volumes</strong> (containing workload cluster state).</li>
+<li>Other management components like parts of <code>cert-manager</code>.</li>
+<li>Potentially objects matching specific labels used by k0rdent's default configuration (see label list below).</li>
+<li><em>Excludes:</em> Application data PVs attached to workload cluster nodes.</li>
+</ul>
+<p><em>Default Labels (for API Object Selection):</em> k0rdent's configuration might prioritize API objects with these labels during backup:
+<div class="highlight"><pre><span></span><code><span class="c1"># Identifies objects belonging to a specific HCP managed by Cluster API</span>
+<span class="nt">cluster.x-k8s.io/cluster-name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;cluster-deployment-name&gt;&quot;</span>
+<span class="c1"># Identifies objects related to Flux Helm releases for the HCP</span>
+<span class="nt">helm.toolkit.fluxcd.io/name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;cluster-deployment-name&gt;&quot;</span>
+<span class="c1"># Identifies CAPI provider components (bootstrap, control plane, infrastructure)</span>
+<span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bootstrap-&lt;provider&gt;&quot;</span>
+<span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;control-plane-&lt;provider&gt;&quot;</span>
+<span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;infrastructure-&lt;provider&gt;&quot;</span>
+<span class="c1"># Identifies core CAPI components</span>
+<span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cluster-api&quot;</span>
+<span class="c1"># Identifies specific cert-manager resources</span>
+<span class="nt">controller.cert-manager.io/fao</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="c1"># Identifies k0rdent KCM components</span>
+<span class="p p-Indicator">[</span><span class="nv">k0rdent.mirantis.com/component</span><span class="p p-Indicator">]</span><span class="nt">(https://k0rdent.mirantis.com/component)</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+</code></pre></div>
+(Remember: Label selection alone is NOT enough; PV backup <strong>must</strong> be configured correctly for HCP etcd PVs).</p>
+</li>
+<li>
+<p><strong>Child/Workload Cluster Backup Includes:</strong></p>
+<ul>
+<li>API Objects within specified namespaces (Deployments, Services, ConfigMaps, Secrets, App-specific CRs).</li>
+<li><strong>Application Data Persistent Volumes</strong> associated with the included namespaces/pods.</li>
+<li><em>Excludes:</em> Control plane state (this is in the HCP etcd PVs backed up from the management cluster).</li>
+</ul>
+</li>
+</ul>
+<h2 id="important-considerations-next-steps">Important Considerations &amp; Next Steps<a class="headerlink" href="#important-considerations-next-steps" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>TEST YOUR RESTORES:</strong> Backups are only useful if they can be restored successfully. Regularly practice restoring the management cluster to a non-production environment and restoring applications in workload clusters. Use <code>velero restore create --from-backup &lt;backup-name&gt;</code>.</li>
+<li><strong>Permissions (RBAC):</strong> Velero's Service Account typically needs cluster-admin-like privileges to read all necessary resources and potentially manage snapshots or exec into pods (for Restic/Kopia). Review permissions if your cluster has strict RBAC.</li>
+<li><strong>Resource Usage:</strong> Kopia/Restic backups consume node CPU, Memory, and Network I/O. Monitor node resource usage during backups, especially on heavily loaded clusters. CSI snapshots are generally much lighter.</li>
+<li><strong>Monitoring Backups:</strong> Regularly check backup status using <code>velero backup get</code> and <code>velero schedule get</code>. Set up alerts if backups fail.</li>
+<li><strong>Security:</strong> Protect your backup storage credentials securely. Ensure your backup bucket/container has appropriate access controls (e.g., private, limited access).</li>
+<li><strong>Velero Documentation:</strong> For advanced configuration, troubleshooting, and restore procedures, consult the official Velero documentation: <a href="https://velero.io/docs/main/">https://velero.io/docs/main/</a></li>
+</ul>
+<p>By following this guide, you can establish a robust backup strategy for your k0rdent environment using Velero, significantly improving your ability to recover from failures.</p>
 
 
 
