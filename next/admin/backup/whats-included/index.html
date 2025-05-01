@@ -3859,11 +3859,9 @@
 operational resilience. This guide provides a comprehensive walkthrough for setting up Velero to back up both your k0rdent management cluster and your child/workload clusters.</p>
 <h2 id="understanding-velero">Understanding Velero<a class="headerlink" href="#understanding-velero" title="Permanent link">#</a></h2>
 <p>Velero works by:</p>
-<ol>
-<li>Querying the Kubernetes API server to capture the state of cluster resources (like Deployments, Services, Secrets, ConfigMaps, CRDs, etc.).</li>
-<li>Optionally backing up data stored in Persistent Volumes (PVs) using either storage platform snapshots (via CSI) or a file-level backup tool (like Kopia or Restic).</li>
-<li>Storing both the resource definitions and volume backups in an external object storage location (like AWS S3, Azure Blob Storage, Google Cloud Storage, or any S3-compatible provider).</li>
-</ol>
+<p>cluster.x-k8s.io/provider="bootstrap-<provider>"
+cluster.x-k8s.io/provider="control-plane-<provider>" 
+cluster.x-k8s.io/provider="infrastructure-<provider>"</p>
 <h2 id="k0rdent-backup-strategy">k0rdent Backup Strategy<a class="headerlink" href="#k0rdent-backup-strategy" title="Permanent link">#</a></h2>
 <p>The best backup strategy for you depends on your k0rdent architecture:</p>
 <ul>
