@@ -3704,6 +3704,11 @@ This document is a ongoing work in progress, and we would welcome suggestions an
 <li>The platform lead then creates a <code>Credential</code> object that references the <code>ClusterIdentity</code>.</li>
 <li>Developers reference the <code>Credential</code> object, which gives the cluster the ability to access these credentials (little “c”) without having to expose them to developers directly.</li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+To be sure credentials are not visible to developers, make sure to <a href="../../admin/access/rbac/roles-summary/#limit-credential-access">limit access</a> to the <code>kcm-system</code> namespace.</p>
+</div>
 <h2 id="tldr-conclusion">TL;DR - Conclusion<a class="headerlink" href="#tldr-conclusion" title="Permanent link">#</a></h2>
 <p>k0rdent provides a comprehensive Kubernetes lifecycle management framework through its three core components:</p>
 <ul>

@@ -2232,6 +2232,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#limit-credential-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limit credential access
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3567,6 +3576,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#limit-credential-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limit credential access
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3734,6 +3752,24 @@ including the creation of clusters.</p>
    upgrade sequences</li>
 <li>Can list and view detailed information about Flux <code>HelmRepository</code> and <code>HelmChart</code> objects</li>
 </ol>
+<h2 id="limit-credential-access">Limit credential access<a class="headerlink" href="#limit-credential-access" title="Permanent link">#</a></h2>
+<p>To ensure developers can only access secrets in the <code>kcm-system</code> namespace, create the following <code>RoleBinding</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: rbac.authorization.k8s.io/v1</span>
+<span class="s">kind: RoleBinding</span>
+<span class="s">metadata:</span>
+<span class="s">  name: namespace-viewer</span>
+<span class="s">  namespace: kcm-system</span>
+<span class="s">subjects:</span>
+<span class="s">  - kind: User</span>
+<span class="s">    name: user</span>
+<span class="s">    apiGroup: rbac.authorization.k8s.io</span>
+<span class="s">roleRef:</span>
+<span class="s">  apiGroup: rbac.authorization.k8s.io</span>
+<span class="s">  kind: ClusterRole</span>
+<span class="s">  name: kcm-namespace-viewer-role</span>
+<span class="s">EOF</span>
+</code></pre></div>
 
 
 

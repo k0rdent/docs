@@ -3728,6 +3728,17 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
     or for each child cluster later, or just use the default values.</p>
 </li>
 </ol>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>
+Currently <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+We plan to replace them with <code>MultiClusterServices</code> in <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts soon.</p>
+<p>If you selected Istio option then use <code>kof-istio</code>,<br />
+otherwise use <code>kof-regional</code> with <code>kof-child</code>,<br />
+but not all 3 charts at the same time.</p>
+</div>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the management cluster,
 look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-mothership/README.md">kof-mothership</a>
@@ -3804,6 +3815,17 @@ and apply this example, or use it as a reference:</p>
 </li>
 <li>
 <p>If you have not applied the <a href="#istio">Istio</a> section:</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>
+Currently <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+We plan to replace them with <code>MultiClusterServices</code> in <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts soon.</p>
+<p>If you selected Istio option then use <code>kof-istio</code>,<br />
+otherwise use <code>kof-regional</code> with <code>kof-child</code>,<br />
+but not all 3 charts at the same time.</p>
+</div>
 <ul>
 <li>Look through the <code>MultiClusterServices</code> in the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
     and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>
