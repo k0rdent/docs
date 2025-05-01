@@ -3871,22 +3871,23 @@ and create a new key with the JSON key type.</p>
 <code>gcp-cluster-identity-secret.yaml</code>, as follows, inserting the base64-encoded GCP credentials
 (represented by the placeholder <code>GCP_B64ENCODED_CREDENTIALS</code> below) that you get on the previous step.
 To get base64 encoded credentials, run:</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>cat<span class="w"> </span>&lt;gcpJSONCredentialsFileName&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nv">GCP_B64ENCODED_CREDENTIALS</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>&lt;gcpJSONCredentialsFileName&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="k">)</span>
 </code></pre></div>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<p><div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &gt; gcp-cluster-identity-secret.yaml &lt;&lt; EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-cloud-sa</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="err"> </span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-cloud-sa</span>
+<span class="err"> </span><span class="w"> </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="err"> </span><span class="w"> </span><span class="nt">labels</span><span class="p">:</span>
+<span class="err">   </span><span class="w"> </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
 <span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="c1"># the secret key should always equal `credentials`</span>
-<span class="w">  </span><span class="nt">credentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GCP_B64ENCODED_CREDENTIALS</span>
+<span class="err"> </span><span class="w"> </span><span class="nt">credentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${GCP_B64ENCODED_CREDENTIALS}</span>
 <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
-Create a YAML with the specification of the secret and save it as <code>gcp-cloud-sa.yaml</code>.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cloud-sa.yaml
+Apply the YAML to your cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cluster-identity-secret.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
 <div class="highlight"><pre><span></span><code><span class="go">secret/gcp-cloud-sa created</span>

@@ -3887,6 +3887,9 @@ For managed (AKS) clusters on Azure create the `Secret` with the `AZURE_CLIENT_I
 <p>Apply the YAML to the k0rdent management cluster using the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-secret.yaml
 </code></pre></div>
+<p>You should see output resembling this:</p>
+<div class="highlight"><pre><span></span><code><span class="go">secret/azure-cluster-identity-secret created</span>
+</code></pre></div>
 <h2 id="create-the-azureclusteridentity-object">Create the AzureClusterIdentity Object<a class="headerlink" href="#create-the-azureclusteridentity-object" title="Permanent link">#</a></h2>
 <!--
 > INFO:

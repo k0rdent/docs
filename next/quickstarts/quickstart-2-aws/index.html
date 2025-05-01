@@ -4010,7 +4010,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 </code></pre></div>
 <h2 id="create-the-awsclusterstaticidentity-object">Create the AWSClusterStaticIdentity object<a class="headerlink" href="#create-the-awsclusterstaticidentity-object" title="Permanent link">#</a></h2>
 <p>Next, we need to create an <code>AWSClusterStaticIdentity</code> object that uses the secret.</p>
-<p>To do this, create a YAML file named <code>aws-cluster-identity</code> as follows:</p>
+<p>To do this, create a YAML file named <code>aws-cluster-identity.yaml</code> as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">infrastructure.cluster.x-k8s.io/v1beta2</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWSClusterStaticIdentity</span>
 <span class="nt">metadata</span><span class="p">:</span>
