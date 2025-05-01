@@ -3636,16 +3636,16 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
-<span class="go">adopted-cluster-0-3-0           true</span>
-<span class="go">aws-eks-0-3-0                   true</span>
-<span class="go">aws-hosted-cp-0-3-0             true</span>
-<span class="go">aws-standalone-cp-0-3-0         true</span>
-<span class="go">azure-aks-0-3-0                 true</span>
-<span class="go">azure-hosted-cp-0-3-0           true</span>
-<span class="go">azure-standalone-cp-0-3-0       true</span>
-<span class="go">openstack-standalone-cp-0-3-0   true</span>
-<span class="go">vsphere-hosted-cp-0-3-0         true</span>
-<span class="go">vsphere-standalone-cp-0-3-0     true</span>
+<span class="go">adopted-cluster-1-0-0           true</span>
+<span class="go">aws-eks-1-0-0                   true</span>
+<span class="go">aws-hosted-cp-1-0-0             true</span>
+<span class="go">aws-standalone-cp-1-0-0         true</span>
+<span class="go">azure-aks-1-0-0                 true</span>
+<span class="go">azure-hosted-cp-1-0-0           true</span>
+<span class="go">azure-standalone-cp-1-0-0       true</span>
+<span class="go">openstack-standalone-cp-1-0-0   true</span>
+<span class="go">vsphere-hosted-cp-1-0-0         true</span>
+<span class="go">vsphere-standalone-cp-1-0-0     true</span>
 </code></pre></div></p>
 <p>The <code>ClusterDeployment</code> should look something like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
@@ -3654,7 +3654,7 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-openstack-cluster-deployment</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-standalone-cp-0-3-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-standalone-cp-1-0-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>

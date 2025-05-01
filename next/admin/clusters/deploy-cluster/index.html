@@ -3505,20 +3505,20 @@ querying the management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
-<span class="go">adopted-cluster-0-3-0           true</span>
-<span class="go">aws-eks-0-3-0                   true</span>
-<span class="go">aws-hosted-cp-0-3-0             true</span>
-<span class="go">aws-standalone-cp-0-3-0         true</span>
-<span class="go">azure-aks-0-3-0                 true</span>
-<span class="go">azure-hosted-cp-0-3-0           true</span>
-<span class="go">azure-standalone-cp-0-3-0       true</span>
-<span class="go">openstack-standalone-cp-0-3-0   true</span>
-<span class="go">remote-cluster-0-3-0   true</span>
-<span class="go">vsphere-hosted-cp-0-3-0         true</span>
-<span class="go">vsphere-standalone-cp-0-3-0     true</span>
+<span class="go">adopted-cluster-1-0-0           true</span>
+<span class="go">aws-eks-1-0-0                   true</span>
+<span class="go">aws-hosted-cp-1-0-0             true</span>
+<span class="go">aws-standalone-cp-1-0-0         true</span>
+<span class="go">azure-aks-1-0-0                 true</span>
+<span class="go">azure-hosted-cp-1-0-0           true</span>
+<span class="go">azure-standalone-cp-1-0-0       true</span>
+<span class="go">openstack-standalone-cp-1-0-0   true</span>
+<span class="go">remote-cluster-1-0-0   true</span>
+<span class="go">vsphere-hosted-cp-1-0-0         true</span>
+<span class="go">vsphere-standalone-cp-1-0-0     true</span>
 </code></pre></div></p>
 <p>You can then get information on the actual template by describing it, as in:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-0-3-0<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-1-0-0<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 </li>
 <li>
@@ -3549,7 +3549,7 @@ querying the management cluster:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-deployment</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-3-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-0</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>

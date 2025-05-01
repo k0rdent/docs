@@ -3603,22 +3603,22 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>Management<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
-<span class="go">kcm    True    kcm-0-3-0   9m</span>
+<span class="go">kcm    True    kcm-1-0-0   9m</span>
 </code></pre></div>
 <h2 id="verify-the-templates">Verify the templates<a class="headerlink" href="#verify-the-templates" title="Permanent link">#</a></h2>
 <p>Next verify whether the KCM templates have been successfully installed and reconciled. Start with the <code>ProviderTemplate</code> objects:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
-<span class="go">cluster-api-0-3-0                                 true</span>
-<span class="go">cluster-api-provider-aws-0-3-0                    true</span>
-<span class="go">cluster-api-provider-azure-0-3-0                  true</span>
-<span class="go">cluster-api-provider-docker-0-3-0                 true</span>
-<span class="go">cluster-api-provider-gcp-0-3-0                    true</span>
-<span class="go">cluster-api-provider-k0sproject-k0smotron-0-3-0   true</span>
-<span class="go">cluster-api-provider-openstack-0-3-0              true</span>
-<span class="go">cluster-api-provider-vsphere-0-3-0                true</span>
-<span class="go">kcm-0-3-0                                         true</span>
+<span class="go">cluster-api-1-0-0                                 true</span>
+<span class="go">cluster-api-provider-aws-1-0-0                    true</span>
+<span class="go">cluster-api-provider-azure-1-0-0                  true</span>
+<span class="go">cluster-api-provider-docker-1-0-0                 true</span>
+<span class="go">cluster-api-provider-gcp-1-0-0                    true</span>
+<span class="go">cluster-api-provider-k0sproject-k0smotron-1-0-0   true</span>
+<span class="go">cluster-api-provider-openstack-1-0-0              true</span>
+<span class="go">cluster-api-provider-vsphere-1-0-0                true</span>
+<span class="go">kcm-1-0-0                                         true</span>
 <span class="go">projectsveltos-0-50-0                             true</span>
 </code></pre></div>
 <p>Make sure that all templates are not just installed, but valid. Again, this may take a few minutes.</p>
@@ -3626,21 +3626,21 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
-<span class="go">adopted-cluster-0-3-0           true</span>
-<span class="go">aws-eks-0-3-0                   true</span>
-<span class="go">aws-hosted-cp-0-3-0             true</span>
-<span class="go">aws-standalone-cp-0-3-0         true</span>
-<span class="go">azure-aks-0-3-0                 true</span>
-<span class="go">azure-hosted-cp-0-3-0           true</span>
-<span class="go">azure-standalone-cp-0-3-0       true</span>
-<span class="go">docker-hosted-cp-0-3-0           true</span>
-<span class="go">gcp-gke-0-3-0                   true</span>
-<span class="go">gcp-hosted-cp-0-3-0             true</span>
-<span class="go">gcp-standalone-cp-0-3-0         true</span>
-<span class="go">openstack-standalone-cp-0-3-0   true</span>
-<span class="go">remote-cluster-0-3-0   true</span>
-<span class="go">vsphere-hosted-cp-0-3-0         true</span>
-<span class="go">vsphere-standalone-cp-0-3-0     true</span>
+<span class="go">adopted-cluster-1-0-0           true</span>
+<span class="go">aws-eks-1-0-0                   true</span>
+<span class="go">aws-hosted-cp-1-0-0             true</span>
+<span class="go">aws-standalone-cp-1-0-0         true</span>
+<span class="go">azure-aks-1-0-0                 true</span>
+<span class="go">azure-hosted-cp-1-0-0           true</span>
+<span class="go">azure-standalone-cp-1-0-0       true</span>
+<span class="go">docker-hosted-cp-1-0-0           true</span>
+<span class="go">gcp-gke-1-0-0                   true</span>
+<span class="go">gcp-hosted-cp-1-0-0             true</span>
+<span class="go">gcp-standalone-cp-1-0-0         true</span>
+<span class="go">openstack-standalone-cp-1-0-0   true</span>
+<span class="go">remote-cluster-1-0-0   true</span>
+<span class="go">vsphere-hosted-cp-1-0-0         true</span>
+<span class="go">vsphere-standalone-cp-1-0-0     true</span>
 </code></pre></div>
 <p>If this is a new <code>v0.2.0</code> cluster, you will see:</p>
 <div class="highlight"><pre><span></span><code>No<span class="w"> </span>resources<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>kcm-system<span class="w"> </span>namespace.
