@@ -2197,6 +2197,8 @@
       
         
       
+        
+      
     
     
     
@@ -2233,6 +2235,27 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparing for Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -3471,7 +3494,7 @@
 <h1 id="management-backup-on-demand">Management Backup on Demand<a class="headerlink" href="#management-backup-on-demand" title="Permanent link">#</a></h1>
 <p>To create a single backup of the existing k0rdent management cluster information, you can create a <code>ManagementBackup</code> object
 using a YAML document and the <code>kubectl</code> CLI. The object then creates only one instance of a backup. For example you can backup
-to the location created <a href="../scheduled-backups/#preparation">previously</a>. Create a YAML file called <code>one-time-backup.yaml</code>:</p>
+to the location created <a href="../prepare-backups/">previously</a>. Create a YAML file called <code>one-time-backup.yaml</code>:</p>
 <p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>
 <span class="nt">metadata</span><span class="p">:</span>

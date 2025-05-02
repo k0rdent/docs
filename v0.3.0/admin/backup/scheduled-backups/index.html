@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../prepare-backups/">
       
       
         <link rel="next" href="../ondemand-backups/">
@@ -2197,6 +2197,8 @@
       
         
       
+        
+      
     
     
     
@@ -2233,6 +2235,27 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparing for Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -3533,7 +3556,7 @@ If the <code>.spec.schedule</code> field is not set, a <a href="../ondemand-back
 <p>Optionally, set the name of the <code>.spec.backup.storageLocation</code> of the <code>BackupStorageLocation</code> object.
 The default location is the <code>BackupStorageLocation</code> object with <code>.spec.default</code> set to <code>true</code>.</p>
 <p>For example, you can create a <code>ManagementBackup</code> object that backs up to the storage object
-created in the <a href="#preparation">preparation step</a> every 6 hours
+created in the <a href="../prepare-backups/">preparation step</a> every 6 hours
 (ref: <a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax">Kubernetes CronJob schedule syntax, "Vixie cron" step values</a>). Create a YAML file called <code>scheduled-backup.yaml</code>:</p>
 <p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>

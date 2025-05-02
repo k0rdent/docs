@@ -2195,6 +2195,8 @@
       
         
       
+        
+      
     
     
     
@@ -2231,6 +2233,27 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backup/prepare-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparing for Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -3598,8 +3621,7 @@ out by the time you get to the <code>Credential</code>, which is what you'll act
 <h2 id="k0rdent-and-gitops">k0rdent and GitOps<a class="headerlink" href="#k0rdent-and-gitops" title="Permanent link">#</a></h2>
 <p>At its heart, k0rdent is a Kubernetes-native way to declaratively specify what should be happening in the infrastructure and
 have that maintained. In other words, if you want to, say, scale up a cluster, you would give that cluster a new
-definition that includes the additional nodes, and then k0rdent, seeing that reality no longer the definition,
-will make it happen.</p>
+definition that includes the additional nodes, and then k0rdent, seeing that reality no longer matches the definition, it will <a href="https://kubebyexample.com/learning-paths/operator-framework/operator-sdk-go/controller-reconcile-function">reconcile</a> the difference.</p>
 <p>In some ways this way of working is similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
 ensure that reality matches the definition. We can say that k0rdent is GitOps-compatible, in the sense that you can (and should) consider storing k0rdent templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of k0rdent itself.</p>
 <p>The main difference is that k0rdent's way of representing clusters and services is fully compliant with Kubernetes-native tools like ClusterAPI, Sveltos and Helm. So you could, if you needed to, port much of what you do with k0rdent templates and objects directly to other solution environments that leverage these standard tools.</p>
