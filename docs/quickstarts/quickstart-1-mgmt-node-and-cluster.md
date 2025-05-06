@@ -196,14 +196,17 @@ You should see output similar to:
 
 ```console
 NAME                                   VALID
-cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                      true
-cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}         true
-cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
-cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
-cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
-k0smotron-{{{ docsVersionInfo.k0rdentVersion }}}                        true
-kcm-{{{ docsVersionInfo.k0rdentVersion }}}                              true
-projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                  true
+cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
+cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
+cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAzure }}}                  true
+cluster-api-provider-docker-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderDocker }}}                 true
+cluster-api-provider-gcp-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderGcp }}}                    true
+cluster-api-provider-k0sproject-k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}   true
+cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderOpenstack }}}              true
+cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}                true
+k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}                                   true
+kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                         true
+projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                             true
 ```
 
 ## Verify that KCM ClusterTemplate objects are available
@@ -218,7 +221,7 @@ You should see output similar to:
 
 ```console
 NAME                            VALID
-adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
 aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
 aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
