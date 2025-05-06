@@ -3484,13 +3484,7 @@
 <h1 id="upgrading-k0rdent">Upgrading k0rdent<a class="headerlink" href="#upgrading-k0rdent" title="Permanent link">#</a></h1>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>When upgrading to K0rdent <code>0.2.0</code> follow this <a href="upgrade-to-0-2-0/">instruction</a> and perform
-additional manual steps.</p>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>When upgrading to K0rdent <code>0.3.0</code> follow this <a href="upgrade-to-0-3-0/">instruction</a> and perform
-additional manual steps.</p>
+<p>In some circumstances, upgrades involve additional manual steps. Be sure to check the additional instructions for upgrading to k0rdent <a href="upgrade-to-0-2-0/"><code>0.2.0</code></a> or <a href="upgrade-to-0-3-0/"><code>0.3.0</code></a>.</p>
 </div>
 <p>Upgrading k0rdent involves making upgrades to the <code>Management</code> object. To do that, you must have the <code>Global Admin</code> role. (For detailed information about k0rdent RBAC roles and permissions, refer to the <a href="../access/rbac/">RBAC documentation</a>.) Follow these steps to upgrade k0rdent:</p>
 <ol>
@@ -3528,12 +3522,14 @@ Kubernetes Cluster API.  For example, the v1.0.0 <code>Release</code> object loo
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-gcp</span>
 <span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-gcp-1-0-0</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos</span>
-<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos-0-0.50.0-0</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos-0.50.0</span>
 </code></pre></div>
 <p>Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span>v1.0.0
+<p><div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span>v1.0.0
 kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://github.com/k0rdent/kcm/releases/download/<span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span>/release.yaml
 </code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">release.k0rdent.mirantis.com/kcm-1-0-0 created</span>
+</code></pre></div></p>
 </li>
 <li>
 <p>List Available <code>Releases</code></p>
@@ -3541,8 +3537,7 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>releases
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME        AGE</span>
-<span class="go">kcm-0-0-6   71m</span>
-<span class="go">kcm-0-0-7   65m</span>
+<span class="go">kcm-0-2-0   6d9h</span>
 <span class="go">kcm-1-0-0   12m</span>
 </code></pre></div>
 </li>
@@ -3557,10 +3552,11 @@ kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.
 <p>Verify the Upgrade</p>
 <p>Although the change will be made immediately, it will take some time for k0rdent to update the components it should be
 using. Monitor the readiness of the <code>Management</code> object to ensure the upgrade was successful. For example:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm
-NAME<span class="w">   </span>READY<span class="w">   </span>RELEASE<span class="w">     </span>AGE
-kcm<span class="w">    </span>True<span class="w">    </span>kcm-1-0-0<span class="w">   </span>4m34s
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm
 </code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
+<span class="go">kcm    True    kcm-1-0-0   4m34s</span>
+</code></pre></div></p>
 </li>
 </ol>
 
