@@ -4111,18 +4111,18 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <p>k0rdent is now fully configured to manage AWS. To create a cluster, begin by listing the available <code>ClusterTemplate</code> objects provided with k0rdent:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<p>You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's <code>aws-standalone-cp-1-0-0</code>):</p>
+<p>You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's <code>aws-standalone-cp-0-2-1</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
-<span class="go">kcm-system   adopted-cluster-1-0-0           true</span>
-<span class="go">kcm-system   aws-eks-1-0-0                   true</span>
-<span class="go">kcm-system   aws-hosted-cp-1-0-0             true</span>
-<span class="go">kcm-system   aws-standalone-cp-1-0-0         true</span>
-<span class="go">kcm-system   azure-aks-1-0-0                 true</span>
-<span class="go">kcm-system   azure-hosted-cp-1-0-0           true</span>
-<span class="go">kcm-system   azure-standalone-cp-1-0-0       true</span>
-<span class="go">kcm-system   openstack-standalone-cp-1-0-0   true</span>
-<span class="go">kcm-system   vsphere-hosted-cp-1-0-0         true</span>
-<span class="go">kcm-system   vsphere-standalone-cp-1-0-0     true</span>
+<span class="go">kcm-system   adopted-cluster-0-3-0           true</span>
+<span class="go">kcm-system   aws-eks-0-2-0                   true</span>
+<span class="go">kcm-system   aws-hosted-cp-0-2-1             true</span>
+<span class="go">kcm-system   aws-standalone-cp-0-2-1         true</span>
+<span class="go">kcm-system   azure-aks-0-2-0                 true</span>
+<span class="go">kcm-system   azure-hosted-cp-0-2-2           true</span>
+<span class="go">kcm-system   azure-standalone-cp-0-2-2       true</span>
+<span class="go">kcm-system   openstack-standalone-cp-0-2-2   true</span>
+<span class="go">kcm-system   vsphere-hosted-cp-0-2-1         true</span>
+<span class="go">kcm-system   vsphere-standalone-cp-0-2-1     true</span>
 </code></pre></div>
 <h2 id="create-your-clusterdeployment">Create your ClusterDeployment<a class="headerlink" href="#create-your-clusterdeployment" title="Permanent link">#</a></h2>
 <p>Now, to deploy a cluster, create a YAML file called <code>my-aws-clusterdeployment1.yaml</code>. We'll use this to create a <code>ClusterDeployment</code> object in k0rdent, representing the deployed cluster. The <code>ClusterDeployment</code> identifies for k0rdent the <code>ClusterTemplate</code> you want to use for cluster creation, the identity credential object you want to create it under (that of your k0rdent user), plus the region and instance types you want to use to host control plane and worker nodes:</p>
@@ -4132,7 +4132,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-aws-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-0-2-1</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>

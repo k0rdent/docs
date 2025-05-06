@@ -3733,12 +3733,12 @@
 </ul>
 <h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
 <p>Provider-specific examples are available in <code>*.credentials.yaml</code> files <a href="https://github.com/k0rdent/kcm/tree/main/config/dev">here</a>.</p>
-<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v1.0.0/config/dev/azure-credentials.yaml">azure-credentials.yaml</a></p>
+<p>Let's take <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml">azure-credentials.yaml</a></p>
 <ul>
-<li><a href="https://github.com/k0rdent/kcm/blob/v1.0.0/config/dev/azure-credentials.yaml#L2-L17"><code>ClusterIdentity</code></a></li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v1.0.0/config/dev/azure-credentials.yaml#L19-L28"><code>Secret</code></a> (related to <code>ClusterIdentity</code>)</li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v1.0.0/config/dev/azure-credentials.yaml#L30-L41"><code>Credential</code></a></li>
-<li><a href="https://github.com/k0rdent/kcm/blob/v1.0.0/config/dev/azure-credentials.yaml#L43-L97"><code>ConfigMap</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L2-L17"><code>ClusterIdentity</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L19-L28"><code>Secret</code></a> (related to <code>ClusterIdentity</code>)</li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L30-L41"><code>Credential</code></a></li>
+<li><a href="https://github.com/k0rdent/kcm/blob/v0.3.0/config/dev/azure-credentials.yaml#L43-L97"><code>ConfigMap</code></a></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3747,12 +3747,12 @@ These examples assume the <code>ConfigMap</code> is included in a template. To u
 (double dollar signs) with <code>$</code> (single dollar sign)</p>
 </div>
 <h2 id="provider-registration">Provider Registration<a class="headerlink" href="#provider-registration" title="Permanent link">#</a></h2>
-<p>Providers are registered through <code>ProviderInterface</code> CR, each <a href="https://github.com/k0rdent/kcm/blob/v1.0.0/templates/provider">provider Helm chart</a> ships with corresponding <code>ProviderInterface</code> object.</p>
+<p>Providers are registered through <code>ProviderInterface</code> CR, each <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider">provider Helm chart</a> ships with corresponding <code>ProviderInterface</code> object.</p>
 <p>Modifications to the <code>Management</code> Spec are needed to enable newly added provider.</p>
 <p>For detailed information, refer to <a href="../appendix-extend-mgmt/">Extended Management Configuration</a></p>
 <h3 id="configuration-examples">Configuration Examples<a class="headerlink" href="#configuration-examples" title="Permanent link">#</a></h3>
-<p>As mentioned previously provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v1.0.0/providers">here</a>, look for <code>ProviderInterface</code> object inside CAPI Helm charts.</p>
-<p>Let's take the <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v1.0.0/templates/provider/cluster-api-provider-azure/templates/interface.yaml">interface.yaml</a>, as seen, the CR definitions are straightforward.</p>
+<p>As mentioned previously provider configuration examples can be found <a href="https://github.com/k0rdent/kcm/tree/v0.3.0/providers">here</a>, look for <code>ProviderInterface</code> object inside CAPI Helm charts.</p>
+<p>Let's take the <code>Azure</code> provider as an example <a href="https://github.com/k0rdent/kcm/blob/v0.3.0/templates/provider/cluster-api-provider-azure/templates/interface.yaml">interface.yaml</a>, as seen, the CR definitions are straightforward.</p>
 
 
 
