@@ -1,4 +1,4 @@
-# Administering Mirantis k0rdent Enterprise
+# Administering {{{ docsVersionInfo.k0rdentName }}}
 
 Before you start working with {{{ docsVersionInfo.k0rdentName }}}, it helps to understand a few basics.
 
