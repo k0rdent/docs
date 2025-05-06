@@ -3633,14 +3633,15 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
-<span class="go">cluster-api-1-0-0                                 true</span>
-<span class="go">cluster-api-provider-aws-1-0-0                    true</span>
-<span class="go">cluster-api-provider-azure-1-0-0                  true</span>
-<span class="go">cluster-api-provider-docker-1-0-0                 true</span>
-<span class="go">cluster-api-provider-gcp-1-0-0                    true</span>
-<span class="go">cluster-api-provider-k0sproject-k0smotron-1-0-0   true</span>
-<span class="go">cluster-api-provider-openstack-1-0-0              true</span>
-<span class="go">cluster-api-provider-vsphere-1-0-0                true</span>
+<span class="go">cluster-api-{{ no such element: dict object[&#39;clusterApi&#39;] }}                                 true</span>
+<span class="go">cluster-api-provider-aws-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderAws&#39;] }}                    true</span>
+<span class="go">cluster-api-provider-azure-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderAzure&#39;] }}                  true</span>
+<span class="go">cluster-api-provider-docker-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderDocker&#39;] }}                 true</span>
+<span class="go">cluster-api-provider-gcp-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderGcp&#39;] }}                    true</span>
+<span class="go">cluster-api-provider-k0sproject-k0smotron-{{ no such element: super_collections.SuperDict object[&#39;k0smotron&#39;] }}   true</span>
+<span class="go">cluster-api-provider-openstack-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderOpenstack&#39;] }}              true</span>
+<span class="go">cluster-api-provider-vsphere-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderVsphere&#39;] }}                true</span>
+<span class="go">k0smotron-{{ no such element: super_collections.SuperDict object[&#39;k0smotron&#39;] }}                                   true</span>
 <span class="go">kcm-1-0-0                                         true</span>
 <span class="go">projectsveltos-0-50-0                             true</span>
 </code></pre></div>
