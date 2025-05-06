@@ -3855,17 +3855,17 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 </code></pre></div>
 <p>You should see output similar to:</p>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
-<span class="go">cluster-api-{{ no such element: dict object[&#39;clusterApi&#39;] }}                                 true</span>
-<span class="go">cluster-api-provider-aws-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderAws&#39;] }}                    true</span>
-<span class="go">cluster-api-provider-azure-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderAzure&#39;] }}                  true</span>
-<span class="go">cluster-api-provider-docker-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderDocker&#39;] }}                 true</span>
-<span class="go">cluster-api-provider-gcp-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderGcp&#39;] }}                    true</span>
-<span class="go">cluster-api-provider-k0sproject-k0smotron-{{ no such element: super_collections.SuperDict object[&#39;k0smotron&#39;] }}   true</span>
-<span class="go">cluster-api-provider-openstack-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderOpenstack&#39;] }}              true</span>
-<span class="go">cluster-api-provider-vsphere-{{ no such element: super_collections.SuperDict object[&#39;clusterApiProviderVsphere&#39;] }}                true</span>
-<span class="go">k0smotron-{{ no such element: super_collections.SuperDict object[&#39;k0smotron&#39;] }}                                   true</span>
+<span class="go">cluster-api-0-2-2                                 true</span>
+<span class="go">cluster-api-provider-aws-0-2-3                    true</span>
+<span class="go">cluster-api-provider-azure-0-2-4                  true</span>
+<span class="go">cluster-api-provider-docker-0-2-2                 true</span>
+<span class="go">cluster-api-provider-gcp-0-2-2                    true</span>
+<span class="go">cluster-api-provider-k0sproject-k0smotron-0-2-3   true</span>
+<span class="go">cluster-api-provider-openstack-0-2-2              true</span>
+<span class="go">cluster-api-provider-vsphere-0-2-2                true</span>
+<span class="go">k0smotron-0-2-3                                   true</span>
 <span class="go">kcm-1-0-0                                         true</span>
-<span class="go">projectsveltos-0-50-0                             true</span>
+<span class="go">projectsveltos-0-52-2                             true</span>
 </code></pre></div>
 <h2 id="verify-that-kcm-clustertemplate-objects-are-available">Verify that KCM ClusterTemplate objects are available<a class="headerlink" href="#verify-that-kcm-clustertemplate-objects-are-available" title="Permanent link">#</a></h2>
 <p>CAPI also requires control plane and bootstrap (worker node) providers to construct and/or manage different Kubernetes cluster distros and variants. Again, these providers are delivered and referenced within k0rdent using templates, instantiated in the management cluster as <code>ClusterTemplate</code> objects. Before continuing, verify that default <code>ClusterTemplate</code> objects are installed and valid:</p>
@@ -3873,16 +3873,16 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 </code></pre></div>
 <p>You should see output similar to:</p>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
-<span class="go">adopted-cluster-1-0-0           true</span>
-<span class="go">aws-eks-1-0-0                   true</span>
-<span class="go">aws-hosted-cp-1-0-0             true</span>
-<span class="go">aws-standalone-cp-1-0-0         true</span>
-<span class="go">azure-aks-1-0-0                 true</span>
-<span class="go">azure-hosted-cp-1-0-0           true</span>
-<span class="go">azure-standalone-cp-1-0-0       true</span>
-<span class="go">openstack-standalone-cp-1-0-0   true</span>
-<span class="go">vsphere-hosted-cp-1-0-0         true</span>
-<span class="go">vsphere-standalone-cp-1-0-0     true</span>
+<span class="go">adopted-cluster-0-2-0           true</span>
+<span class="go">aws-eks-0-2-0                   true</span>
+<span class="go">aws-hosted-cp-0-2-1             true</span>
+<span class="go">aws-standalone-cp-0-2-1         true</span>
+<span class="go">azure-aks-0-2-0                 true</span>
+<span class="go">azure-hosted-cp-0-2-2           true</span>
+<span class="go">azure-standalone-cp-0-2-2       true</span>
+<span class="go">openstack-standalone-cp-0-2-2   true</span>
+<span class="go">vsphere-hosted-cp-0-2-1         true</span>
+<span class="go">vsphere-standalone-cp-0-2-1     true</span>
 </code></pre></div>
 <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Your QuickStart management node is now complete, and k0rdent is installed and operational. Next, it's time to select <a href="../quickstart-2-aws/">AWS</a>, <a href="../quickstart-2-azure/">Azure</a>, <a href="../quickstart-2-gcp/">GCP</a>, or <a href="../quickstart-2-remote/">Remote SSH Servers</a> as an environment for hosting managed clusters.</p>

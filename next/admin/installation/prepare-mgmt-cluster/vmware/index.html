@@ -3682,15 +3682,15 @@ Object name needs to be exactly <code>vsphere-cluster-identity-resource-template
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-0-0           true</span>
-<span class="go">aws-eks-1-0-0                   true</span>
-<span class="go">aws-hosted-cp-1-0-0             true</span>
-<span class="go">aws-standalone-cp-1-0-0         true</span>
-<span class="go">azure-aks-1-0-0                 true</span>
-<span class="go">azure-hosted-cp-1-0-0           true</span>
-<span class="go">azure-standalone-cp-1-0-0       true</span>
-<span class="go">openstack-standalone-cp-1-0-0   true</span>
-<span class="go">vsphere-hosted-cp-1-0-0         true</span>
-<span class="go">vsphere-standalone-cp-1-0-0     true</span>
+<span class="go">aws-eks-0-2-0                   true</span>
+<span class="go">aws-hosted-cp-0-2-1             true</span>
+<span class="go">aws-standalone-cp-0-2-1         true</span>
+<span class="go">azure-aks-0-2-0                 true</span>
+<span class="go">azure-hosted-cp-0-2-2           true</span>
+<span class="go">azure-standalone-cp-0-2-2       true</span>
+<span class="go">openstack-standalone-cp-0-2-2   true</span>
+<span class="go">vsphere-hosted-cp-0-2-1         true</span>
+<span class="go">vsphere-standalone-cp-0-2-1     true</span>
 </code></pre></div></p>
 <p>The <code>ClusterDeployment</code> YAML file should look something like this. Make sure to replace the placeholders with your
 specific information:</p>
@@ -3700,7 +3700,7 @@ specific information:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-vsphere-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-standalone-cp-1-0-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-standalone-cp-0-2-1</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
