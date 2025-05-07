@@ -30,7 +30,7 @@ jobs:
       - name: Fetch versions.yml from main
         run: |
           git fetch origin main
-          git show origin/main:versions.yml > /tmp/versions.yml
+          git show origin/main:versions.yml > versions.yml
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,15 +45,6 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-
-      - name: Fetch latest gh-pages and stay on it
-        run: |
-          git fetch origin gh-pages
-          git checkout gh-pages || git checkout -b gh-pages
-          git reset --hard origin/gh-pages
-
-      - name: Restore versions.yml after checkout
-        run: cp /tmp/versions.yml .
 
       - name: Deploy docs using mike
         run: |
