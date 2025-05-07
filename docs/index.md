@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 6
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 7
 
 ## Introduction
 

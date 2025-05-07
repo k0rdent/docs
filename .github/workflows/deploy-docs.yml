@@ -24,42 +24,46 @@ jobs:
           BRANCH="${GITHUB_REF##*/}"
           echo "Branch: $BRANCH"
 
-          # Match strictly: release-vX.Y.Z
           if [[ "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "✔️ Valid release branch: $BRANCH"
-            echo "version=${BRANCH#release-v}" >> $GITHUB_OUTPUT
+            echo "valid=true" >> $GITHUB_OUTPUT
           else
             echo "❌ Not a valid release branch. Skipping deploy."
-            exit 1
+            echo "valid=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Fetch versions.yml from main
+        if: steps.validate.outputs.valid == 'true'
         run: |
           git fetch origin main
           git show origin/main:versions.yml > versions.yml
 
       - name: Set up Python
+        if: steps.validate.outputs.valid == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
+        if: steps.validate.outputs.valid == 'true'
         run: |
           pip install -r requirements.txt
 
       - name: Configure Git user
+        if: steps.validate.outputs.valid == 'true'
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Fetch latest gh-pages
+      - name: Fetch latest gh-pages and stay on it
+        if: steps.validate.outputs.valid == 'true'
         run: |
           git fetch origin gh-pages
           git checkout gh-pages || git checkout -b gh-pages
           git reset --hard origin/gh-pages
-          git checkout ${{ github.ref_name }}
 
       - name: Deploy docs using mike
+        if: steps.validate.outputs.valid == 'true'
         run: |
           python3 <<EOF
           import yaml
@@ -90,5 +94,6 @@ jobs:
           EOF
 
       - name: Push to gh-pages
+        if: steps.validate.outputs.valid == 'true'
         run: |
           git push origin gh-pages
