@@ -24,13 +24,17 @@ jobs:
           echo "Branch: $BRANCH"
           if [[ ! "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "❌ Not a release branch. Exiting."
-            exit 1
+            exit 0
           fi
 
       - name: Fetch versions.yml from main
         run: |
+          set -e
           git fetch origin main
-          git show origin/main:versions.yml > versions.yml
+          git show origin/main:versions.yml > versions.yml || {
+            echo "❌ Could not fetch versions.yml from main"
+            exit 1
+          }
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -46,7 +50,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Deploy docs using mike
+      - name: Deploy current version docs using mike
         run: |
           python3 <<EOF
           import yaml
@@ -55,30 +59,34 @@ jobs:
 
           assert os.path.exists("versions.yml"), "versions.yml is missing!"
 
-          with open('versions.yml', 'r') as f:
-              data = yaml.safe_load(f)
+          with open("versions.yml", "r") as f:
+              versions = yaml.safe_load(f).get("versions", [])
 
-          versions = data.get('versions', [])
           if not versions:
-              raise SystemExit("No versions defined")
+              raise SystemExit("No versions defined in versions.yml")
 
-          subprocess.run(["mike", "delete", "--all"], check=True)
+          branch = os.environ.get("GITHUB_REF", "").split("/")[-1]         # e.g., release-v0.3.0
+          target_version = branch.replace("release-v", "")                 # e.g., 0.3.0
 
-          for entry in versions:
-              version = entry['version']
-              title = entry.get('title', version)
-              aliases = entry.get('aliases', [])
-              is_default = entry.get('default', False)
+          matched = [v for v in versions if v["version"] == target_version]
+          if not matched:
+              raise SystemExit(f"Version {target_version} not found in versions.yml")
 
-              cmd = ["mike", "deploy", f"{version}@{title}"] + aliases
-              print(f"Deploying: {' '.join(cmd)}")
-              subprocess.run(cmd, check=True)
+          entry = matched[0]
+          version = entry["version"]
+          title = entry.get("title", version)
+          aliases = entry.get("aliases", [])
+          is_default = entry.get("default", False)
 
-              if is_default:
-                  print(f"Setting {version} as default")
-                  subprocess.run(["mike", "set-default", version], check=True)
+          deploy_cmd = ["mike", "deploy", f"{version}@{title}"] + aliases + ["--push"]
+          print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
+          result = subprocess.run(deploy_cmd, check=True, capture_output=True, text=True)
+          print(result.stdout)
+          print(result.stderr)
+
+          if is_default:
+              print(f"⭐ Setting {version} as default")
+              result = subprocess.run(["mike", "set-default", version, "--push"], check=True, capture_output=True, text=True)
+              print(result.stdout)
+              print(result.stderr)
           EOF
-
-      - name: Push to gh-pages
-        run: |
-          git push origin gh-pages
