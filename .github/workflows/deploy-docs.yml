@@ -80,13 +80,16 @@ jobs:
 
           deploy_cmd = ["mike", "deploy", f"{version}@{title}"] + aliases + ["--push"]
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
-          result = subprocess.run(deploy_cmd, check=True, capture_output=True, text=True)
-          print(result.stdout)
-          print(result.stderr)
+          deploy_result = subprocess.run(deploy_cmd, capture_output=True, text=True)
+          print(deploy_result.stdout)
+          print(deploy_result.stderr)
+
+          print("📋 Currently deployed versions (mike list):")
+          subprocess.run(["mike", "list"], check=True)
 
           if is_default:
               print(f"⭐ Setting {version} as default")
-              result = subprocess.run(["mike", "set-default", version, "--push"], check=True, capture_output=True, text=True)
+              result = subprocess.run(["mike", "set-default", version, "--push"], capture_output=True, text=True)
               print(result.stdout)
               print(result.stderr)
           EOF
