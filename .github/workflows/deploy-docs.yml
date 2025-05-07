@@ -1,0 +1,94 @@
+name: centralized deploy of versioned docs
+
+on:
+  push:
+    branches:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate branch name
+        id: validate
+        run: |
+          BRANCH="${GITHUB_REF##*/}"
+          echo "Branch: $BRANCH"
+
+          # Match strictly: release-vX.Y.Z
+          if [[ "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "✔️ Valid release branch: $BRANCH"
+            echo "version=${BRANCH#release-v}" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Not a valid release branch. Skipping deploy."
+            exit 1
+          fi
+
+      - name: Fetch versions.yml from main
+        run: |
+          git fetch origin main
+          git show origin/main:versions.yml > versions.yml
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure Git user
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Fetch latest gh-pages
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages || git checkout -b gh-pages
+          git reset --hard origin/gh-pages
+          git checkout ${{ github.ref_name }}
+
+      - name: Deploy docs using mike
+        run: |
+          python3 <<EOF
+          import yaml
+          import subprocess
+
+          with open('versions.yml', 'r') as f:
+              data = yaml.safe_load(f)
+
+          versions = data.get('versions', [])
+          if not versions:
+              raise SystemExit("No versions defined")
+
+          subprocess.run(["mike", "delete", "--all"], check=True)
+
+          for entry in versions:
+              version = entry['version']
+              title = entry.get('title', version)
+              aliases = entry.get('aliases', [])
+              is_default = entry.get('default', False)
+
+              cmd = ["mike", "deploy", f"{version}@{title}"] + aliases
+              print(f"Deploying: {' '.join(cmd)}")
+              subprocess.run(cmd, check=True)
+
+              if is_default:
+                  print(f"Setting {version} as default")
+                  subprocess.run(["mike", "set-default", version], check=True)
+          EOF
+
+      - name: Push to gh-pages
+        run: |
+          git push origin gh-pages
