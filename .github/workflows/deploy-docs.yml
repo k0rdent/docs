@@ -78,7 +78,10 @@ jobs:
           aliases = entry.get("aliases", [])
           is_default = entry.get("default", False)
 
-          deploy_cmd = ["mike", "deploy", f"{version}@{title}"] + aliases + ["--push"]
+          deploy_cmd = ["mike", "deploy", version, "--push", "--update-aliases"] + aliases
+          if title != version:
+              deploy_cmd += ["--title", title]
+
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
           deploy_result = subprocess.run(deploy_cmd, capture_output=True, text=True)
           print(deploy_result.stdout)
