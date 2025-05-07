@@ -30,7 +30,7 @@ jobs:
       - name: Fetch versions.yml from main
         run: |
           git fetch origin main
-          git show origin/main:versions.yml > versions.yml
+          git show origin/main:versions.yml > /tmp/versions.yml
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -51,6 +51,9 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages || git checkout -b gh-pages
           git reset --hard origin/gh-pages
+
+      - name: Restore versions.yml after checkout
+        run: cp /tmp/versions.yml .
 
       - name: Deploy docs using mike
         run: |
