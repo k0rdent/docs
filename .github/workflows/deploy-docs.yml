@@ -12,65 +12,54 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    outputs:
-      valid: ${{ steps.validate.outputs.valid }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Validate branch name and set output
-        id: validate
+      - name: Exit if not a release branch
         run: |
           BRANCH="${GITHUB_REF##*/}"
           echo "Branch: $BRANCH"
-
-          if [[ "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "✔️ Valid release branch: $BRANCH"
-            echo "valid=true" >> $GITHUB_OUTPUT
-          else
-            echo "❌ Not a valid release branch. Skipping deploy."
-            echo "valid=false" >> $GITHUB_OUTPUT
+          if [[ ! "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Not a release branch. Exiting."
+            exit 1
           fi
 
       - name: Fetch versions.yml from main
-        if: steps.validate.outputs.valid == 'true'
         run: |
           git fetch origin main
           git show origin/main:versions.yml > versions.yml
 
       - name: Set up Python
-        if: steps.validate.outputs.valid == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        if: steps.validate.outputs.valid == 'true'
         run: |
           pip install -r requirements.txt
 
       - name: Configure Git user
-        if: steps.validate.outputs.valid == 'true'
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Fetch latest gh-pages and stay on it
-        if: steps.validate.outputs.valid == 'true'
         run: |
           git fetch origin gh-pages
           git checkout gh-pages || git checkout -b gh-pages
           git reset --hard origin/gh-pages
 
       - name: Deploy docs using mike
-        if: steps.validate.outputs.valid == 'true'
         run: |
           python3 <<EOF
           import yaml
           import subprocess
+          import os
+
+          assert os.path.exists("versions.yml"), "versions.yml is missing!"
 
           with open('versions.yml', 'r') as f:
               data = yaml.safe_load(f)
@@ -97,6 +86,5 @@ jobs:
           EOF
 
       - name: Push to gh-pages
-        if: steps.validate.outputs.valid == 'true'
         run: |
           git push origin gh-pages
