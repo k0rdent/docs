@@ -24,12 +24,11 @@ jobs:
           echo "Branch: $BRANCH"
           if [[ ! "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "❌ Not a release branch. Exiting."
-            exit 0
+            exit 78
           fi
 
       - name: Fetch versions.yml from main
         run: |
-          set -e
           git fetch origin main
           git show origin/main:versions.yml > versions.yml || {
             echo "❌ Could not fetch versions.yml from main"
@@ -42,13 +41,12 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-      - name: Configure Git user
+      - name: Configure Git Credentials
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy current version docs using mike
         run: |
@@ -57,20 +55,21 @@ jobs:
           import subprocess
           import os
 
-          assert os.path.exists("versions.yml"), "versions.yml is missing!"
+          if not os.path.exists("versions.yml"):
+              raise SystemExit("❌ versions.yml is missing!")
 
           with open("versions.yml", "r") as f:
               versions = yaml.safe_load(f).get("versions", [])
 
           if not versions:
-              raise SystemExit("No versions defined in versions.yml")
+              raise SystemExit("❌ No versions defined in versions.yml")
 
-          branch = os.environ.get("GITHUB_REF", "").split("/")[-1]         # e.g., release-v0.3.0
-          target_version = branch.replace("release-v", "")                 # e.g., 0.3.0
-
+          branch = os.environ.get("GITHUB_REF", "").split("/")[-1]
+          target_version = branch.replace("release-v", "")
           matched = [v for v in versions if v["version"] == target_version]
+
           if not matched:
-              raise SystemExit(f"Version {target_version} not found in versions.yml")
+              raise SystemExit(f"❌ Version {target_version} not found in versions.yml")
 
           entry = matched[0]
           version = entry["version"]
@@ -83,16 +82,16 @@ jobs:
               deploy_cmd += ["--title", title]
 
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
-          deploy_result = subprocess.run(deploy_cmd, capture_output=True, text=True)
-          print(deploy_result.stdout)
-          print(deploy_result.stderr)
+          result = subprocess.run(deploy_cmd, capture_output=True, text=True)
+          print(result.stdout)
+          print(result.stderr)
 
-          print("📋 Currently deployed versions (mike list):")
+          print("📋 Versions deployed:")
           subprocess.run(["mike", "list"], check=True)
 
           if is_default:
-              print(f"⭐ Setting {version} as default")
-              result = subprocess.run(["mike", "set-default", version, "--push"], capture_output=True, text=True)
+              print(f"⭐ Setting {title} as default")
+              result = subprocess.run(["mike", "set-default", title, "--push"], capture_output=True, text=True)
               print(result.stdout)
               print(result.stderr)
           EOF
