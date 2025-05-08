@@ -308,7 +308,7 @@ extra:
       kofDotCollectorsVersion: 0.2.0
     providerVersions:
       dashVersions:
-        clusterApi: 0-2-2 
+        clusterApi: 0-2-2
         clusterApiProviderAws: 0-2-3
         clusterApiProviderAzure: 0-2-4
         clusterApiProviderDocker: 0-2-2
