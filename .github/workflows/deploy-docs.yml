@@ -73,14 +73,11 @@ jobs:
 
           entry = matched[0]
           version = entry["version"]
-          title = entry.get("title", version)
           aliases = entry.get("aliases", [])
           is_default = entry.get("default", False)
 
-          deploy_cmd = ["mike", "deploy", version]
-          if title != version:
-              deploy_cmd += ["--title", title]
-          deploy_cmd += ["--push", "--update-aliases"] + aliases
+          # Compose command: mike deploy --push --update-aliases <version> [aliases...]
+          deploy_cmd = ["mike", "deploy", "--push", "--update-aliases", f"v{version}"] + aliases
 
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
           result = subprocess.run(deploy_cmd, capture_output=True, text=True)
@@ -91,8 +88,8 @@ jobs:
           subprocess.run(["mike", "list"], check=True)
 
           if is_default:
-              print(f"⭐ Setting {title} as default")
-              result = subprocess.run(["mike", "set-default", title, "--push"], capture_output=True, text=True)
+              print(f"⭐ Setting v{version} as default")
+              result = subprocess.run(["mike", "set-default", f"v{version}", "--push"], capture_output=True, text=True)
               print(result.stdout)
               print(result.stderr)
           EOF
