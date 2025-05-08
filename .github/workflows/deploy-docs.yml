@@ -24,7 +24,7 @@ jobs:
           echo "Branch: $BRANCH"
           if [[ ! "$BRANCH" =~ ^release-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "❌ Not a release branch. Exiting."
-            exit 78
+            exit 0
           fi
 
       - name: Fetch versions.yml from main
@@ -77,16 +77,17 @@ jobs:
           aliases = entry.get("aliases", [])
           is_default = entry.get("default", False)
 
-          deploy_cmd = ["mike", "deploy", version, "--push", "--update-aliases"] + aliases
+          deploy_cmd = ["mike", "deploy", version]
           if title != version:
               deploy_cmd += ["--title", title]
+          deploy_cmd += ["--push", "--update-aliases"] + aliases
 
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
           result = subprocess.run(deploy_cmd, capture_output=True, text=True)
           print(result.stdout)
           print(result.stderr)
 
-          print("📋 Versions deployed:")
+          print("📋 Versions deployed (mike list):")
           subprocess.run(["mike", "list"], check=True)
 
           if is_default:
