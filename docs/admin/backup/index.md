@@ -33,6 +33,7 @@ can be [customized](./customization.md#velero-installation) if necessary.
 
 {{{ docsVersionInfo.k0rdentName }}} manages the schedule and is responsible for collecting data to be included in a backup.
 
+- [Preparing for Backups](prepare-backups.md)
 - [Scheduled Management Backups](scheduled-backups.md)
 - [Management Backup on Demand](ondemand-backups.md)
 - [What's Included in a Backup](whats-included.md)

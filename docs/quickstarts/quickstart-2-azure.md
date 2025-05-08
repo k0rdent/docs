@@ -142,6 +142,12 @@ Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster usi
 kubectl apply -f azure-cluster-identity-secret.yaml
 ```
 
+You should see output resembling this:
+
+```console
+secret/azure-cluster-identity-secret created
+```
+
 ## Create the AzureClusterIdentity Object
 <!--
 > INFO:

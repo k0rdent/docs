@@ -1,4 +1,4 @@
-# Administering Mirantis k0rdent Enterprise
+# Administering {{{ docsVersionInfo.k0rdentName }}}
 
 Before you start working with {{{ docsVersionInfo.k0rdentName }}}, it helps to understand a few basics.
 
@@ -98,8 +98,7 @@ You can find more information on creating these `Credential` objects in [the Cre
 
 At its heart, {{{ docsVersionInfo.k0rdentName }}} is a Kubernetes-native way to declaratively specify what should be happening in the infrastructure and
 have that maintained. In other words, if you want to, say, scale up a cluster, you would give that cluster a new
-definition that includes the additional nodes, and then {{{ docsVersionInfo.k0rdentName }}}, seeing that reality no longer the definition,
-will make it happen.
+definition that includes the additional nodes, and then {{{ docsVersionInfo.k0rdentName }}}, seeing that reality no longer matches the definition, it will [reconcile](https://kubebyexample.com/learning-paths/operator-framework/operator-sdk-go/controller-reconcile-function) the difference.
 
 In some ways this way of working is similar to GitOps, in which you commit definitions and tools such as Flux or ArgoCD
 ensure that reality matches the definition. We can say that {{{ docsVersionInfo.k0rdentName }}} is GitOps-compatible, in the sense that you can (and should) consider storing {{{ docsVersionInfo.k0rdentName }}} templates and YAML object definitions in Git repos, and can (and may want to) use GitOps tools like ArgoCD to modify and manage them upstream of {{{ docsVersionInfo.k0rdentName }}} itself.

@@ -12,7 +12,7 @@ Optionally, set the name of the `.spec.backup.storageLocation` of the `BackupSto
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
 For example, you can create a `ManagementBackup` object that backs up to the storage object
-created in the [preparation step](#preparation) every 6 hours
+created in the [preparation step](./prepare-backups.md) every 6 hours
 (ref: [Kubernetes CronJob schedule syntax, "Vixie cron" step values](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax)). Create a YAML file called `scheduled-backup.yaml`:
 
 ```yaml

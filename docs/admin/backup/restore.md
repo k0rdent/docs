@@ -27,7 +27,7 @@ In the event of disaster, you can restore from a backup by doing the following:
      --set velero.initContainers[0].volumeMounts[0].name=plugins
     ```
 
-1. Create the `BackupStorageLocation`/`Secret` objects that were created during the [preparation stage](./scheduled-backups.md#preparation)
+1. Create the `BackupStorageLocation`/`Secret` objects that were created during the [preparation stage](./prepare-backups.md)
    of creating a backup (preferably the same depending on a plugin).
 
 1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/v1.15/api-types/restore/) object.

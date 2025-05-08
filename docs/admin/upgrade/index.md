@@ -1,10 +1,6 @@
 # Upgrading {{{ docsVersionInfo.k0rdentName }}}
 
-IMPORTANT: When upgrading to K0rdent `0.2.0` follow this [instruction](upgrade-to-0-2-0.md) and perform
-additional manual steps.
-
-IMPORTANT: When upgrading to K0rdent `0.3.0` follow this [instruction](upgrade-to-0-3-0.md) and perform
-additional manual steps.
+> IMPORTANT: In some circumstances, upgrades involve additional manual steps. Be sure to check the additional instructions for upgrading to {{{ docsVersionInfo.k0rdentName }}} [`0.2.0`](upgrade-to-0-2-0.md) or [`0.3.0`](upgrade-to-0-3-0.md).
 
 Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `Management` object. To do that, you must have the `Global Admin` role. (For detailed information about {{{ docsVersionInfo.k0rdentName }}} RBAC roles and permissions, refer to the [RBAC documentation](../access/rbac/index.md).) Follow these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
 
@@ -44,7 +40,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
         - name: cluster-api-provider-gcp
           template: cluster-api-provider-gcp-{{{ extra.docsVersionInfo.k0rdentVersion }}}
         - name: projectsveltos
-          template: projectsveltos-0-{{{ extra.docsVersionInfo.providerVersions.dotVersions.sveltosProvider }}}-0
+          template: projectsveltos-{{{ extra.docsVersionInfo.providerVersions.dotVersions.sveltosProvider }}}
     ```
 
     Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:
@@ -52,6 +48,9 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     ```shell
     VERSION=v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
     kubectl create -f https://github.com/k0rdent/kcm/releases/download/${VERSION}/release.yaml
+    ```
+    ```console
+    release.k0rdent.mirantis.com/kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}} created
     ```
 
 2. List Available `Releases`
@@ -64,8 +63,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     ```console
     NAME        AGE
-    kcm-0-0-6   71m
-    kcm-0-0-7   65m
+    kcm-0-2-0   6d9h
     kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   12m
     ```
 
@@ -85,6 +83,8 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     ```shell
     kubectl get managements.k0rdent.mirantis.com kcm
+    ```
+    ```console
     NAME   READY   RELEASE     AGE
     kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   4m34s
     ```

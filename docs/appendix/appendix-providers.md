@@ -64,7 +64,7 @@ Providers are registered through `ProviderInterface` CR, each [provider Helm cha
 
 Modifications to the `Management` Spec are needed to enable newly added provider.
 
-For detailed information, refer to [Extended Management Configuration](#appendix-extend-mgmt)
+For detailed information, refer to [Extended Management Configuration](./appendix-extend-mgmt.md)
 
 ### Configuration Examples
 

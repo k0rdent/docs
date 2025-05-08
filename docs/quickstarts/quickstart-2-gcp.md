@@ -80,26 +80,27 @@ Create a `Secret` object that stores the `credentials` field under `data` sectio
 To get base64 encoded credentials, run:
 
 ```bash
-    cat <gcpJSONCredentialsFileName> | base64 -w 0
+    GCP_B64ENCODED_CREDENTIALS=$(cat <gcpJSONCredentialsFileName> | base64 -w 0)
 ```
 
 ```yaml
+cat > gcp-cluster-identity-secret.yaml << EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: gcp-cloud-sa
-  namespace: kcm-system
-  labels:
-    k0rdent.mirantis.com/component: "kcm"
+  name: gcp-cloud-sa
+  namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 data:
-  # the secret key should always equal `credentials`
-  credentials: GCP_B64ENCODED_CREDENTIALS
+  credentials: ${GCP_B64ENCODED_CREDENTIALS}
 type: Opaque
+EOF
 ```
-Create a YAML with the specification of the secret and save it as `gcp-cloud-sa.yaml`.
+Apply the YAML to your cluster:
 
 ```shell
-kubectl apply -f gcp-cloud-sa.yaml
+kubectl apply -f gcp-cluster-identity-secret.yaml
 ```
 
 You should see output resembling this:

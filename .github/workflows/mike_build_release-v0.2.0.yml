@@ -57,7 +57,6 @@ jobs:
           git reset --hard origin/gh-pages
           git checkout release-v0.2.0
 
-      - name: Deploy v0.2.0
-        run: |
-          mike deploy --update-aliases v0.2.0 latest stable --push
-          mike set-default v0.2.0 --push
+      - name: Deploy v0.2.0 docs from release-v0.2.0
+        run: mike deploy v0.2.0 --push
+ 

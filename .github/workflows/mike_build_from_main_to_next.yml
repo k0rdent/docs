@@ -1,4 +1,4 @@
-name: Deploy preview docs from main to next and head (keep v0.2.0 default)
+name: Deploy preview docs from main to next and head
 on:
   push:
     branches:

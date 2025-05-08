@@ -98,16 +98,17 @@ kubectl get providertemplate -n kcm-system
 
 ```console
 NAME                                   VALID
-cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                                 true
-cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}                    true
-cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}                  true
-cluster-api-provider-docker-{{{ extra.docsVersionInfo.k0rdentVersion }}}                 true
-cluster-api-provider-gcp-{{{ extra.docsVersionInfo.k0rdentVersion }}}                    true
-cluster-api-provider-k0sproject-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}              true
-cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}                true
-kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                                         true
-projectsveltos-0-50-0                             true
+cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
+cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
+cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAzure }}}                  true
+cluster-api-provider-docker-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderDocker }}}                 true
+cluster-api-provider-gcp-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderGcp }}}                    true
+cluster-api-provider-k0sproject-k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}   true
+cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderOpenstack }}}              true
+cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}                true
+k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}                                   true
+kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                         true
+projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                             true
 ```
 
 Make sure that all templates are not just installed, but valid. Again, this may take a few minutes.

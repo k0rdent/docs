@@ -187,6 +187,7 @@ nav:
         - Role Definitions: admin/access/rbac/roles-summary.md
     - Backup and Restore:
       - Overview: admin/backup/index.md
+      - Preparing for Backup: admin/backup/prepare-backups.md
       - Scheduled Management Backups: admin/backup/scheduled-backups.md
       - Management Backup on Demand: admin/backup/ondemand-backups.md
       - What's Included in a Backup: admin/backup/whats-included.md
@@ -297,14 +298,14 @@ extra:
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:c4cd3cceecbed98512515f080e0a2878118d122532d5e5d8b7ef87bcd991639d
     kofVersions:
-      kofVersion: 0-3-0
-      kofDotVersion: 0.3.0
-      kofStorageVersion: 0-3-0
-      kofDotStorageVersion: 0.3.0
-      kofOperatorsVersion: 0-3-0
-      kofDotOperatorsVersion: 0.3.0
-      kofCollectorsVersion: 0-3-0
-      kofDotCollectorsVersion: 0.3.0
+      kofVersion: 0-2-0
+      kofDotVersion: 0.2.0
+      kofStorageVersion: 0-2-0
+      kofDotStorageVersion: 0.2.0
+      kofOperatorsVersion: 0-2-0
+      kofDotOperatorsVersion: 0.2.0
+      kofCollectorsVersion: 0-2-0
+      kofDotCollectorsVersion: 0.2.0
     providerVersions:
       dashVersions:
         clusterApi: 0-2-2
@@ -358,7 +359,7 @@ extra:
         sveltosProvider: 0.52.2
     servicesVersions:
       dashVersions:
-        certManager: 1-16-2  
+        certManager: 1-17-1  
         externalSecrets: 0-11-0
         ingressNginx: 4-11-3   
         kyverno: 3-2-6       

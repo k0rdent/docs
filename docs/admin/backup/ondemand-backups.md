@@ -2,7 +2,7 @@
 
 To create a single backup of the existing {{{ docsVersionInfo.k0rdentName }}} management cluster information, you can create a `ManagementBackup` object
 using a YAML document and the `kubectl` CLI. The object then creates only one instance of a backup. For example you can backup
-to the location created [previously](./scheduled-backups.md#preparation). Create a YAML file called `one-time-backup.yaml`:
+to the location created [previously](./prepare-backups.md). Create a YAML file called `one-time-backup.yaml`:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1alpha1
