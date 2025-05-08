@@ -25,7 +25,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
      Default region name [YOUR_AWS_REGION]:
      Default output format [json]:
      ```
-     Once `aws` is installed youc an install `eksctl`:
+     Once `aws` is installed you can install `eksctl`:
 
      ```shell
      curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
