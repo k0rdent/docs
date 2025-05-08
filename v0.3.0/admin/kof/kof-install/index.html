@@ -3723,7 +3723,7 @@ and <a href="../kof-verification/#manual-dns-config">Manual DNS config</a> later
 apply these steps to enable the <a href="https://istio.io/">Istio</a> service mesh:</p>
 <ol>
 <li>
-<p>Check the overview in the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/docs/istio.md">kof/docs/istio.md</a>
+<p>Check the overview in the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/docs/istio.md">kof/docs/istio.md</a>
     and this video:</p>
 <p><video controls width="1024" style="max-width: 100%">
   <source src="../../../assets/kof/kof-istio.mp4" type="video/mp4" />
@@ -3739,10 +3739,10 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 <p>Install the <code>kof-istio</code> chart to the management cluster:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.3.0
 </code></pre></div>
-    You may want to <a href="https://github.com/k0rdent/kof/blob/v0.2.0/docs/collectors.md#example">customize the collectors</a>
-    by passing values to the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>
+    You may want to <a href="https://github.com/k0rdent/kof/blob/v0.3.0/docs/collectors.md#example">customize the collectors</a>
+    by passing values to the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>
     profile for all child clusters at once now,
     or for each child cluster later. You can also opt for using the default values.</p>
 </li>
@@ -3750,24 +3750,24 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>
-Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
-In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
+Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
 <p>If you selected the Istio option, use <code>kof-istio</code>. 
 Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use all 3 charts at the same time.</p>
 </div>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the management cluster,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-mothership/README.md">kof-mothership</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-operators/values.yaml">kof-operators</a> charts,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-mothership/README.md">kof-mothership</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-operators/values.yaml">kof-operators</a> charts,
 and apply this example, or use it as a reference:</p>
 <ol>
 <li>
 <p>Install <code>kof-operators</code> as required by <code>kof-mothership</code>:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.3.0
 </code></pre></div></p>
 </li>
 <li>
@@ -3814,16 +3814,16 @@ and apply this example, or use it as a reference:</p>
 <ul>
 <li><code>storage-vmuser-credentials</code> is a secret used by VictoriaMetrics.
     You don't need to use it directly.
-    It is auto-distributed to other clusters by <code>clusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-mothership/values.yaml">here</a>.</li>
+    It is auto-distributed to other clusters by <code>clusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-mothership/values.yaml">here</a>.</li>
 <li><code>grafana-admin-credentials</code> is a secret that we will use in the <a href="../kof-using/#access-to-grafana">Grafana</a> section.
-    It is auto-created <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-mothership/templates/grafana/secret.yaml">here</a>.</li>
+    It is auto-created <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-mothership/templates/grafana/secret.yaml">here</a>.</li>
 </ul>
 </li>
 <li>
 <p>Install <code>kof-mothership</code>:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.3.0
 </code></pre></div></p>
 </li>
 <li>
@@ -3836,27 +3836,27 @@ and apply this example, or use it as a reference:</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>
-Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
-In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
+Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
 <p>If you selected the Istio option, use <code>kof-istio</code>. 
 Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use all 3 charts at the same time.</p>
 </div>
 <ul>
-<li>Look through the <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
-    and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>
+<li>Look through the <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+    and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>
 <li>If your regional clusters already have <code>ingress-nginx</code> and <code>cert-manager</code> services,
     you can ask the <code>kof-regional</code> chart to not install them by setting Helm values
     <code>ingress-nginx.enabled</code> and <code>cert-manager.enabled</code> to <code>false</code>.</li>
-<li>You may want to <a href="https://github.com/k0rdent/kof/blob/v0.2.0/docs/collectors.md#example">customize collectors</a>
+<li>You may want to <a href="https://github.com/k0rdent/kof/blob/v0.3.0/docs/collectors.md#example">customize collectors</a>
     for all child clusters at once now, or for each child cluster later, or just use the default values.</li>
 <li>Install these charts into the management cluster with default or custom values:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.3.0
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-child<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-child<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.3.0
 </code></pre></div></li>
 </ul>
 </li>
@@ -3868,7 +3868,7 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 </ol>
 <h2 id="regional-cluster">Regional Cluster<a class="headerlink" href="#regional-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the regional cluster,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-storage/values.yaml">kof-storage</a> chart,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-storage/values.yaml">kof-storage</a> chart,
 and apply this example for AWS, or use it as a reference:</p>
 <ol>
 <li>
@@ -4000,7 +4000,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 </code></pre></div></p>
 </li>
 <li>
-<p>The <code>kof-operator</code> creates and configures <code>PromxyServerGroup</code> and <code>GrafanaDatasource</code> <a href="https://github.com/k0rdent/kof/blob/v0.2.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">automatically</a>.
+<p>The <code>kof-operator</code> creates and configures <code>PromxyServerGroup</code> and <code>GrafanaDatasource</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">automatically</a>.
     It uses the endpoints listed below by default.
     If you want to disable the built-in metrics, logs, and traces to use your own existing instances instead,
     add custom endpoints to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>:
@@ -4012,9 +4012,9 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 </code></pre></div></p>
 </li>
 <li>
-<p>The <code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional-cluster</a>
+<p>The <code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional-cluster</a>
     configures and installs <code>cert-manager</code>, <code>ingress-nginx</code>, <code>kof-storage</code>, <code>kof-operators</code>, and <code>kof-collectors</code> charts automatically.
-    To pass any custom <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-storage/values.yaml">values</a> to the <code>kof-storage</code> chart
+    To pass any custom <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-storage/values.yaml">values</a> to the <code>kof-storage</code> chart
     or its subcharts, such as <a href="https://docs.victoriametrics.com/helm/victorialogs-single/index.html#parameters">victoria-logs-single</a>,
     add them to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>, for example:
     <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -4039,8 +4039,8 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 </ol>
 <h2 id="child-cluster">Child Cluster<a class="headerlink" href="#child-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the actual cluster to be monitored,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-operators/values.yaml">kof-operators</a>
-and <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-collectors/values.yaml">kof-collectors</a> charts,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-operators/values.yaml">kof-operators</a>
+and <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-collectors/values.yaml">kof-collectors</a> charts,
 and apply this example for AWS, or use it as a reference:</p>
 <ol>
 <li>
@@ -4129,7 +4129,7 @@ with this line:
     If you add them, please copy <code>.metadata.labels</code> as well.</p>
 </li>
 <li>
-<p>The <code>kof-operator</code> <a href="https://github.com/k0rdent/kof/blob/v0.2.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">discovers</a>
+<p>The <code>kof-operator</code> <a href="https://github.com/k0rdent/kof/blob/v0.3.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">discovers</a>
     the regional cluster by the location of the child cluster.
     If you have more than one regional cluster in the same AWS region / Azure location / etc.,
     and you want to connect the child cluster to specific regional cluster,
@@ -4138,9 +4138,9 @@ with this line:
 </code></pre></div></p>
 </li>
 <li>
-<p>The <code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child-cluster</a>
+<p>The <code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child-cluster</a>
     configures and installs <code>cert-manager</code>, <code>kof-operators</code>, and <code>kof-collectors</code> charts automatically.
-    To pass any custom <a href="https://github.com/k0rdent/kof/blob/v0.2.0/charts/kof-collectors/values.yaml">values</a> to the <code>kof-collectors</code> chart
+    To pass any custom <a href="https://github.com/k0rdent/kof/blob/v0.3.0/charts/kof-collectors/values.yaml">values</a> to the <code>kof-collectors</code> chart
     or its subcharts, such as <a href="https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values">opencost</a>,
     add them to the <code>child-cluster.yaml</code> file in the <code>.spec.config</code>. For example:
     <div class="highlight"><pre><span></span><code><span class="nt">clusterAnnotations</span><span class="p">:</span>
