@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 trace 1
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 CLARIFIED
 
 ## Introduction
 
