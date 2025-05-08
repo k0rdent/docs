@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 CLARIFIED 2
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs release-v0.3.0 HORROR
 
 ## Introduction
 
