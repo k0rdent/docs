@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
@@ -29,6 +31,7 @@ jobs:
 
       - name: Fetch versions.yml from main
         run: |
+          set -e
           git fetch origin main
           git show origin/main:versions.yml > versions.yml || {
             echo "❌ Could not fetch versions.yml from main"
@@ -41,12 +44,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Configure Git Credentials
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          pip install -r requirements.txt
+
+      - name: Configure Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy current version docs using mike
         run: |
@@ -55,41 +59,44 @@ jobs:
           import subprocess
           import os
 
-          if not os.path.exists("versions.yml"):
-              raise SystemExit("❌ versions.yml is missing!")
+          assert os.path.exists("versions.yml"), "versions.yml is missing!"
 
           with open("versions.yml", "r") as f:
               versions = yaml.safe_load(f).get("versions", [])
 
           if not versions:
-              raise SystemExit("❌ No versions defined in versions.yml")
+              raise SystemExit("No versions defined in versions.yml")
 
           branch = os.environ.get("GITHUB_REF", "").split("/")[-1]
           target_version = branch.replace("release-v", "")
-          matched = [v for v in versions if v["version"] == target_version]
 
+          matched = [v for v in versions if v["version"] == target_version]
           if not matched:
-              raise SystemExit(f"❌ Version {target_version} not found in versions.yml")
+              raise SystemExit(f"Version {target_version} not found in versions.yml")
 
           entry = matched[0]
           version = entry["version"]
+          title = entry.get("title", version)
           aliases = entry.get("aliases", [])
           is_default = entry.get("default", False)
 
-          # Compose command: mike deploy --push --update-aliases <version> [aliases...]
-          deploy_cmd = ["mike", "deploy", "--push", "--update-aliases", f"v{version}"] + aliases
-
+          deploy_cmd = ["mike", "deploy", "--push", "--update-aliases", title] + aliases
           print(f"🚀 Deploying: {' '.join(deploy_cmd)}")
-          result = subprocess.run(deploy_cmd, capture_output=True, text=True)
-          print(result.stdout)
-          print(result.stderr)
+          deploy_result = subprocess.run(deploy_cmd, capture_output=True, text=True)
+          print(deploy_result.stdout)
+          print(deploy_result.stderr)
 
-          print("📋 Versions deployed (mike list):")
+          print("📋 Currently deployed versions (mike list):")
           subprocess.run(["mike", "list"], check=True)
 
           if is_default:
-              print(f"⭐ Setting v{version} as default")
-              result = subprocess.run(["mike", "set-default", f"v{version}", "--push"], capture_output=True, text=True)
+              print(f"⭐ Setting {title} as default")
+              result = subprocess.run(["mike", "set-default", title, "--push"], capture_output=True, text=True)
               print(result.stdout)
               print(result.stderr)
           EOF
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
