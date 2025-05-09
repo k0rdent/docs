@@ -149,6 +149,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
+      - IP Address Management (IPAM): admin/clusters/cluster-ipam.md
     - Working with services:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md

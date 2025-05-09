@@ -7,3 +7,4 @@ infrastructure choices.  You can also "adopt" Kubernetes clusters created outsid
 - [Deploying standalone clusters](deploy-cluster.md)
 - [Updating standalone clusters](update-cluster.md)
 - [Adopting clusters](admin-adopting-clusters.md)
+- [IP Address Management (IPAM)](admin-adopting-clusters.md)
