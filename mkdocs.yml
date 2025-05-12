@@ -112,6 +112,7 @@ plugins:
  
 nav:
   - Welcome to the docs: index.md
+  - Release Notes v1.0.0: releaseNotes.md
   - k0rdent concepts:
     - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
