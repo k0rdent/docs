@@ -1257,6 +1257,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    IP Address Management (IPAM)
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1266,6 +1277,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-a-cluster-with-ipam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying a Cluster with IPAM
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3485,6 +3524,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-a-cluster-with-ipam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying a Cluster with IPAM
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3520,8 +3576,8 @@
 <ul>
 <li>Control plane nodes</li>
 <li>Worker nodes</li>
-<li>Cluster-internal networks (e.g., pod/service networks)</li>
-<li>External-facing resources (e.g., load balancers, ingress)</li>
+<li>Cluster-internal networks (for example, pod/service networks)</li>
+<li>External-facing resources (for example, load balancers, ingress)</li>
 </ul>
 <p>Administrators can define address ranges using either CIDR blocks or explicit IP lists, allowing for:</p>
 <ul>
@@ -3529,19 +3585,20 @@
 <li>Seamless integration with existing network topologies</li>
 <li>Fine-grained control in multi-tenant or segmented environments</li>
 </ul>
-<hr />
-<h1 id="deploying-a-cluster-with-ipam">Deploying a Cluster with IPAM<a class="headerlink" href="#deploying-a-cluster-with-ipam" title="Permanent link">#</a></h1>
+<h2 id="deploying-a-cluster-with-ipam">Deploying a Cluster with IPAM<a class="headerlink" href="#deploying-a-cluster-with-ipam" title="Permanent link">#</a></h2>
 <p>Follow these steps to configure IPAM in your cluster deployment.</p>
-<h2 id="1-prerequisites">1. Prerequisites<a class="headerlink" href="#1-prerequisites" title="Permanent link">#</a></h2>
-<p>Ensure the following before configuring IPAM:</p>
+<ol>
+<li>
+<p>Prerequisites</p>
+<p>Before configuring IPAM ensure a valid, unused IP space is available (CIDR or static IP list). The reserved space must accommodate:</p>
 <ul>
-<li>A valid, unused IP space is available (CIDR or static IP list).</li>
-<li>The reserved space must accommodate:</li>
 <li>One IP per control plane node</li>
 <li>One IP per worker node</li>
 </ul>
-<h2 id="2-define-a-clusteripamclaim">2. Define a <code>ClusterIPAMClaim</code><a class="headerlink" href="#2-define-a-clusteripamclaim" title="Permanent link">#</a></h2>
-<p>Use the <code>ClusterIPAMClaim</code> resource to reserve IP address space required for the cluster. Each network segment—node, cluster, and external—can be defined using either a <code>cidr</code> or a static list of <code>ipaddresses</code>.</p>
+</li>
+<li>
+<p>Define a <code>ClusterIPAMClaim</code></p>
+<p>Use the <code>ClusterIPAMClaim</code> resource to reserve IP address space required for the cluster. Each network segment—node, cluster, and external—can be defined using either a <code>cidr</code> or a static list of <code>ipaddresses</code>. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIPAMClaim</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3560,18 +3617,20 @@
 <span class="w">    </span><span class="nt">cidr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cidr&gt;</span>
 <span class="w">  </span><span class="nt">clusterDeploymentRef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cluster-name&gt;</span>
 </code></pre></div>
-<blockquote>
-<p>💡 The <code>clusterDeploymentRef</code> field links this claim to a specific <code>ClusterDeployment</code>, ensuring IPs are reserved before the cluster is provisioned.</p>
-</blockquote>
-<h3 id="apply-the-clusteripamclaim">Apply the <code>ClusterIPAMClaim</code><a class="headerlink" href="#apply-the-clusteripamclaim" title="Permanent link">#</a></h3>
+<p>The <code>clusterDeploymentRef</code> field links this claim to a specific <code>ClusterDeployment</code>, ensuring IPs are reserved before the cluster is provisioned.</p>
+</li>
+<li>
+<p>Apply the <code>ClusterIPAMClaim</code></p>
 <p>To submit the claim, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>&lt;cluster-ipam-claim-file&gt;.yaml
 </code></pre></div>
 <p>You can confirm the claim was created with:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusteripamclaim<span class="w"> </span>&lt;claim-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h2 id="3-alternative-inline-ipam-in-clusterdeployment">3. (Alternative) Inline IPAM in <code>ClusterDeployment</code><a class="headerlink" href="#3-alternative-inline-ipam-in-clusterdeployment" title="Permanent link">#</a></h2>
-<p>Alternatively, define IPAM directly in the <code>ClusterDeployment</code> resource:</p>
+</li>
+<li>
+<p>(Alternative) Inline IPAM in <code>ClusterDeployment</code></p>
+<p>You can also define IPAM directly in the <code>ClusterDeployment</code> resource:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3595,12 +3654,15 @@
 <span class="w">    </span><span class="nt">externalNetwork</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">cidr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cidr&gt;</span>
 </code></pre></div>
-<h2 id="4-deploy-the-cluster">4. Deploy the Cluster<a class="headerlink" href="#4-deploy-the-cluster" title="Permanent link">#</a></h2>
+</li>
+<li>
+<p>Deploy the Cluster</p>
 <p>To deploy the cluster with IPAM configured:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>&lt;cluster-deployment-file&gt;.yaml
 </code></pre></div>
 <p>The specified IPAM settings will be used to allocate IP addresses during provisioning.</p>
-<hr />
+</li>
+</ol>
 
 
 
