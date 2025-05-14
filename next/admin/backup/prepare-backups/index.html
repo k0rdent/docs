@@ -3628,19 +3628,6 @@ select from the <a href="https://hub.docker.com/r/velero/velero-plugin-for-aws/t
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-If you're using EKS, the "user" is actually a role. If you get an error such as 
-<div class="highlight"><pre><span></span><code><span class="go">AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: &quot;arn:aws:s3:::nick-chase-backup-bucket&quot; because no identity-based policy allows the s3:ListBucket action</span>
-</code></pre></div>
-You an extract the role from the message (in this example, it's the <code>assumed-role</code>) and create the policy. For example:
-<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>put-user-policy
---role-name<span class="w"> </span>eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A
---policy-name<span class="w"> </span>velero
---policy-document<span class="w"> </span>file://velero-policy.json
-</code></pre></div></p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
 If you're using EKS, the "user" is actually a role. If you get an error such as...</p>
 <div class="highlight"><pre><span></span><code>AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: &quot;arn:aws:s3:::nick-chase-backup-bucket&quot; because no identity-based policy allows the s3:ListBucket action
 </code></pre></div>
