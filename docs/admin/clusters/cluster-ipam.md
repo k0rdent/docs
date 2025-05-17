@@ -1,106 +1,173 @@
+
 # IP Address Management (IPAM)
 
-{{{ docsVersionInfo.k0rdentName }}} provides a flexible IP Address Management (IPAM) system that enables deterministic allocation of IP addresses throughout the cluster lifecycle.
+`{{{ docsVersionInfo.k0rdentName }}}` provides a flexible IP Address Management (IPAM) system that enables deterministic allocation of IP addresses throughout the cluster lifecycle.
+> ⚠️ At the moment **only node network supported**
+With IPAM enabled, IP addresses can be assigned to both worker and control plane nodes.
 
-With IPAM enabled, IP addresses can be assigned to critical components such as:
-
-- Control plane nodes
-- Worker nodes
-- Cluster-internal networks (for example, pod/service networks)
-- External-facing resources (for example, load balancers, ingress)
-
-Administrators can define address ranges using either CIDR blocks or explicit IP lists, allowing for:
+Administrators can define address ranges using either CIDR blocks or explicit IP lists, enabling:
 
 - Predictable, conflict-free assignments
 - Seamless integration with existing network topologies
 - Fine-grained control in multi-tenant or segmented environments
 
-## Deploying a Cluster with IPAM
+---
 
-Follow these steps to configure IPAM in your cluster deployment.
+# Deploying a Cluster with IPAM
 
-1. Prerequisites
+Follow these steps to configure IPAM for your cluster deployment.
 
-    Before configuring IPAM ensure a valid, unused IP space is available (CIDR or static IP list). The reserved space must accommodate:
+## 1. Prerequisites
 
-    - One IP per control plane node
-    - One IP per worker node
+Ensure the following before configuring IPAM:
 
-2. Define a `ClusterIPAMClaim`
+- A valid, unused IP space is available (CIDR or static IP list).
+- The reserved space must accommodate:
+  - One IP per control plane node
+  - One IP per worker node
 
-    Use the `ClusterIPAMClaim` resource to reserve IP address space required for the cluster. Each network segment—node, cluster, and external—can be defined using either a `cidr` or a static list of `ipaddresses`. For example:
+## 2. Define IPAM configuration
 
-    ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
-    kind: ClusterIPAMClaim
-    metadata:
-      name: <claim-name>
-      namespace: <namespace>
+### Option 1: Use mutual references in `ClusterDeployment` and `ClusterIPAMClaim`
+
+#### Define a `ClusterIPAMClaim`
+
+The `ClusterIPAMClaim` resource reserves the required IP address space for the cluster. Node network segment can be defined using either a `cidr` or a static list of `ipAddresses`.
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ClusterIPAMClaim
+metadata:
+  name: <claim-name>
+  namespace: <namespace>
+spec:
+  provider: <provider-name>
+  nodeNetwork:
+    cidr: <cidr>
+    # ipAddresses:
+    # - <ip-1>
+    # - <ip-2>
+  cluster: <cluster-name>
+```
+
+> ⚠️ The `cluster` field in `ClusterIPAMClaim` is immutable once set.
+> 
+> 💡 The `cluster` field links the claim to a specific `ClusterDeployment`, ensuring IPs are reserved before provisioning begins.
+
+#### Apply the `ClusterIPAMClaim`
+
+To create the claim:
+
+```bash
+kubectl apply -f <cluster-ipam-claim-file>.yaml
+```
+
+To verify the claim:
+
+```bash
+kubectl get clusteripamclaim <claim-name> -n <namespace>
+```
+
+### Example Output
+``` yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ClusterIPAMClaim
+metadata:
+  name: <claim-name>
+  namespace: <namespace>
+spec:
+  cluster: <cluster-name>
+  clusterIPAMRef: <claim-name>
+  nodeNetwork:
+    cidr: <cidr>
+    # ipAddresses:
+    # - <ip-1>
+    # - <ip-2>
+  provider: <provider-name>
+status:
+  bound: true
+```
+
+- ```.spec.clusterIPAMRef```: Indicates that the child ClusterIPAM object was successfully created, if this field is set.
+
+- ```.status.bound```: If true, it means the child ClusterIPAM was successfully reconciled and the defined addresses were allocated.
+
+#### Define a `ClusterDeployment`
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ClusterDeployment
+metadata:
+  name: <cluster-name>
+  namespace: <namespace>
+spec:
+  template: <template-name>
+  credential: <provider-credential-name>
+  dryRun: <"true" | "false">  # Optional; defaults to "false"
+  config:
+    <cluster-configuration>
+  ipamClaim:
+    ref: <claim-name>
+```
+
+### Option 2: Use inline IPAM configuration in `ClusterDeployment`
+
+IPAM configuration can be defined inline within the `ClusterDeployment` resource:
+
+#### Define a `ClusterDeployment`
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ClusterDeployment
+metadata:
+  name: <cluster-name>
+  namespace: <namespace>
+spec:
+  template: <template-name>
+  credential: <provider-credential-name>
+  dryRun: <"true" | "false">  # Optional; defaults to "false"
+  config:
+    <cluster-configuration>
+  ipamClaim:
     spec:
       provider: <provider-name>
       nodeNetwork:
         cidr: <cidr>
-        # ipaddresses:
+        # ipAddresses:
         # - <ip-1>
         # - <ip-2>
-      clusterNetwork:
-        cidr: <cidr>
-      externalNetwork:
-        cidr: <cidr>
-      clusterDeploymentRef: <cluster-name>
-    ```
+```
 
-    The `clusterDeploymentRef` field links this claim to a specific `ClusterDeployment`, ensuring IPs are reserved before the cluster is provisioned.
+#### Apply the `ClusterDeployment`:
 
-4. Apply the `ClusterIPAMClaim`
+```bash
+kubectl apply -f <cluster-deployment-file>.yaml
+```
 
-    To submit the claim, run:
+## 4. Verify IPAM
+The specified IPAM settings will be used to allocate IP addresses during provisioning. Keep in mind, that cluster provisioning will not proceed until IPAM resources ready and addresses allocated.
 
-    ```bash
-    kubectl apply -f <cluster-ipam-claim-file>.yaml
-    ```
+To inspect the resulting `ClusterIPAM` resource:
 
-    You can confirm the claim was created with:
+```bash
+kubectl get -n <namespace> ClusterIPAM <claim-name>
+```
 
-    ```bash
-    kubectl get clusteripamclaim <claim-name> -n <namespace>
-    ```
+### Example Output
 
-5. (Alternative) Inline IPAM in `ClusterDeployment`
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ClusterIPAM
+metadata:
+  name: <cluster-ipam-name>
+  namespace: <namespace>
+spec:
+  provider: <provider-name>
+  clusterIPAMClaimRefs: <cluster-ipam-claim-name>
+status:
+  phase: Bound
+  providerData:
+    <provider data>
+```
 
-    You can also define IPAM directly in the `ClusterDeployment` resource:
-
-    ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
-    kind: ClusterDeployment
-    metadata:
-      name: <cluster-name>
-      namespace: <kcm-system-namespace>
-    spec:
-      template: <template-name>
-      credential: <provider-credential-name>
-      dryRun: <"true" | "false">  # Optional; defaults to "false"
-      config:
-        <cluster-configuration>
-      ipam:
-        provider: <provider-name>
-        nodeNetwork:
-          cidr: <cidr>
-          # ipaddresses:
-          # - <ip-1>
-          # - <ip-2>
-        clusterNetwork:
-          cidr: <cidr>
-        externalNetwork:
-          cidr: <cidr>
-    ```
-
-5. Deploy the Cluster
-
-    To deploy the cluster with IPAM configured:
-
-    ```bash
-    kubectl apply -f <cluster-deployment-file>.yaml
-    ```
-
-    The specified IPAM settings will be used to allocate IP addresses during provisioning.
+---
