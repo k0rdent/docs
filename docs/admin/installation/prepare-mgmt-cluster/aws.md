@@ -327,7 +327,7 @@
     apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterDeployment
     metadata:
-        name: my-aws-clusterdeployment1
+      name: my-aws-clusterdeployment1
       namespace: kcm-system
     spec:
       template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}

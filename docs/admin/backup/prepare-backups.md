@@ -58,9 +58,20 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       ```
 
       The IAM user being used in this configuration will require certain permissions for the
-      appropriate Velero S3 bucket access. Review the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user)
-      (reference the JSON policy file named `velero-policy.json` -- take care to replace `${BUCKET}` with the
-      correct bucket name).
+      appropriate Velero S3 bucket access. Review the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user). Reference the JSON policy file named `velero-policy.json` and take care to replace `${BUCKET}` with the correct bucket name).
+
+      > NOTE:
+      > If you're using EKS, the "user" is actually a role. If you get an error such as 
+      > ```console
+      > AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nick-chase-backup-bucket" because no identity-based policy allows the s3:ListBucket action
+      > ```
+      > You an extract the role from the message (in this example, it's the `assumed-role`) and create the policy. For example:
+      > ```shell
+      > aws iam put-role-policy
+      > --role-name eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A
+      > --policy-name velero
+      > --policy-document file://velero-policy.json
+      > ```
 
       Generate the necessary base64-encoded credentials using:
       ```sh
@@ -99,7 +110,6 @@ Before you create a manual one-off or scheduled backup, review the steps below a
         credential:
           name: cloud-credentials
           key: cloud
-      EOF
       ```
 
 1. Create the necessary Kubernetes resources in your k0rdent cluster by applying the YAML to the management cluster:

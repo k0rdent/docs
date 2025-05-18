@@ -55,7 +55,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
 2. List Available `Releases`
 
-    Once you've created the new `Release` you need to update the `Management` object to use it. Start by viewing all available `Release`s:
+    Once you've created the new `Release` you need to update the `Management` object to use it. Start by viewing all available `Release` objects:
 
     ```shell
     kubectl get releases
