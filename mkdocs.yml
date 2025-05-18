@@ -149,6 +149,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
+      - IP Address Management (IPAM): admin/clusters/cluster-ipam.md      
     - Working with services:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
@@ -296,16 +297,17 @@ extra:
     k0rdentVersion: 0-3-0
     k0rdentDotVersion: 0.3.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
-    k0rdentDigestValue: sha256:c4cd3cceecbed98512515f080e0a2878118d122532d5e5d8b7ef87bcd991639d
+    k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
+    k0rdentDigestDate: Fri May  2 08:42:36 2025
     kofVersions:
-      kofVersion: 0-2-0
-      kofDotVersion: 0.2.0
-      kofStorageVersion: 0-2-0
-      kofDotStorageVersion: 0.2.0
-      kofOperatorsVersion: 0-2-0
-      kofDotOperatorsVersion: 0.2.0
-      kofCollectorsVersion: 0-2-0
-      kofDotCollectorsVersion: 0.2.0
+      kofVersion: 0-3-0
+      kofDotVersion: 0.3.0
+      kofStorageVersion: 0-3-0
+      kofDotStorageVersion: 0.3.0
+      kofOperatorsVersion: 0-3-0
+      kofDotOperatorsVersion: 0.3.0
+      kofCollectorsVersion: 0-3-0
+      kofDotCollectorsVersion: 0.3.0
     providerVersions:
       dashVersions:
         clusterApi: 0-2-2
