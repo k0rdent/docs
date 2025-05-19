@@ -71,6 +71,11 @@ jobs:
             echo "gh-pages branch already exists."
           fi
 
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Run mike deploy
         run: |
           mike deploy --push --update-aliases --allow-empty \
