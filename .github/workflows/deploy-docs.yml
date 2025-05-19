@@ -1,0 +1,115 @@
+name: Deploy docs
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Early checkout to read versions.yml
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Exit if versions.yml is missing
+        run: |
+          if [ ! -f versions.yml ]; then
+            echo "versions.yml not found. Exiting."
+            exit 0
+          fi
+
+      - name: Parse versions.yml for this branch
+        id: vars
+        run: |
+          python3 <<EOF
+          import os, sys, yaml
+
+          branch = os.environ["GITHUB_REF_NAME"]
+          with open("versions.yml") as f:
+              data = yaml.safe_load(f)
+
+          match = next((v for v in data["versions"] if v["branch"] == branch), None)
+          if not match:
+              print(f"::notice:: No match for branch {branch}. Exiting.")
+              sys.exit(0)
+
+          for key in ("version", "title", "aliases"):
+              if key not in match:
+                  print(f"::error:: Missing key '{key}' in entry for branch {branch}")
+                  sys.exit(1)
+
+          print(f"::set-output name=version::{match['version']}")
+          print(f"::set-output name=title::{match['title']}")
+          print(f"::set-output name=aliases::{ ' '.join(match['aliases']) }")
+          print(f"::set-output name=default::{match.get('default', False)}")
+          EOF
+
+      - name: Set up Python and install requirements
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Remove /site directory
+        run: rm -rf site/
+
+      - name: Checkout branch content
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Ensure gh-pages branch exists
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null; then
+            echo "gh-pages branch not found. Initializing with dummy version."
+            mike deploy --push --update-aliases --allow-empty dummy
+            mike delete --push dummy
+          else
+            echo "gh-pages branch already exists."
+          fi
+
+      - name: Run mike deploy
+        run: |
+          mike deploy --push --update-aliases --allow-empty \
+            "${{ steps.vars.outputs.title }}" \
+            ${{ steps.vars.outputs.aliases }}
+
+          if [ "${{ steps.vars.outputs.default }}" == "true" ]; then
+            mike set-default --push "${{ steps.vars.outputs.title }}"
+          fi
+
+      - name: Check GitHub Pages publishing config
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          repo="${{ github.repository }}"
+          config=$(curl -s -H "Authorization: token $GH_TOKEN" https://api.github.com/repos/$repo/pages)
+
+          branch=$(echo "$config" | jq -r '.source.branch')
+          path=$(echo "$config" | jq -r '.source.path')
+
+          if [ "$branch" != "gh-pages" ] || [ "$path" != "/" ]; then
+            echo "::warning title=GitHub Pages not configured::GitHub Pages is NOT configured to publish from gh-pages /"
+            echo "### ⚠️ GitHub Pages Not Publishing" >> $GITHUB_STEP_SUMMARY
+            echo "**GitHub Pages is not configured** to publish from \`gh-pages\` at root." >> $GITHUB_STEP_SUMMARY
+            echo "Visit **Settings → Pages** and choose the 'gh-pages' branch and '/' folder to enable publishing." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Check if mike default version is set
+        run: |
+          git fetch origin gh-pages
+          git worktree add gh-temp gh-pages
+
+          default=$(jq -r '.[] | select(.default==true)' gh-temp/.versions.json)
+
+          if [ -z "$default" ]; then
+            echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
+            echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
+            echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
+            echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          rm -rf gh-temp
