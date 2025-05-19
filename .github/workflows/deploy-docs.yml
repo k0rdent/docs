@@ -79,6 +79,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Fetch gh-pages branch
+        run: |
+          git fetch origin gh-pages:gh-pages
+
       - name: Run mike deploy
         run: |
           mike deploy --push --update-aliases --allow-empty \
