@@ -10,16 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Early checkout to read versions.yml
+      - name: Checkout this branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Exit if versions.yml is missing
+      - name: Fetch versions.yml from main
         run: |
-          if [ ! -f versions.yml ]; then
-            echo "versions.yml not found. Exiting."
-            exit 0
+          git fetch origin main
+          if git ls-tree -r origin/main --name-only | grep -q '^versions.yml$'; then
+            git checkout origin/main -- versions.yml
+          else
+            echo "versions.yml not found in main. Exiting."
+            exit 1
           fi
 
       - name: Parse versions.yml for this branch
@@ -71,6 +74,15 @@ jobs:
             echo "gh-pages branch already exists."
           fi
 
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch gh-pages branch
+        run: |
+          git fetch origin gh-pages:gh-pages
+
       - name: Run mike deploy
         run: |
           mike deploy --push --update-aliases --allow-empty \
@@ -103,13 +115,18 @@ jobs:
           git fetch origin gh-pages
           git worktree add gh-temp gh-pages
 
-          default=$(jq -r '.[] | select(.default==true)' gh-temp/.versions.json)
-
-          if [ -z "$default" ]; then
-            echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
-            echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
-            echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
-            echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
+          if [ ! -f gh-temp/.versions.json ]; then
+            echo "::warning title=Missing mike metadata::No .versions.json file found in gh-pages. Default version may not be set."
+            echo "### ⚠️ No Version Metadata" >> $GITHUB_STEP_SUMMARY
+            echo "The file \`.versions.json\` does not exist yet on \`gh-pages\`. This usually happens after the first deploy." >> $GITHUB_STEP_SUMMARY
+          else
+            default=$(jq -r '.[] | select(.default==true)' gh-temp/.versions.json)
+            if [ -z "$default" ]; then
+              echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
+              echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
+              echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
+              echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
+            fi
           fi
 
           rm -rf gh-temp
