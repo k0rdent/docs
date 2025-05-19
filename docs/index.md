@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs (checking release-v0.1.0)
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs
 
 ## Introduction
 
