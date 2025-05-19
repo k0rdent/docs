@@ -10,16 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Early checkout to read versions.yml
+      - name: Checkout this branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Exit if versions.yml is missing
+      - name: Fetch versions.yml from main
         run: |
-          if [ ! -f versions.yml ]; then
-            echo "versions.yml not found. Exiting."
-            exit 0
+          git fetch origin main
+          if git ls-tree -r origin/main --name-only | grep -q '^versions.yml$'; then
+            git checkout origin/main -- versions.yml
+          else
+            echo "versions.yml not found in main. Exiting."
+            exit 1
           fi
 
       - name: Parse versions.yml for this branch
