@@ -101,21 +101,22 @@ jobs:
         run: |
           git fetch origin gh-pages:gh-pages
 
-      - name: Retitle version for mike
-        run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
-
-      - name: Set aliases for mike
-        run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
-
-      - name: Set default version (if applicable)
-        if: ${{ steps.vars.outputs.default == 'true' }}
-        run: mike set-default "${{ steps.vars.outputs.version }}"
-
       - name: Deploy site with mike
         run: |
           mike deploy --push --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
+
+      - name: Retitle version for mike
+        if: ${{ steps.vars.outputs.version != '' }}
+        run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
+        
+      - name: Set aliases for mike
+        run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+
+      - name: Set default version (if applicable)
+        if: ${{ steps.vars.outputs.default == 'true' }}
+        run: mike set-default --push "${{ steps.vars.outputs.version }}"
 
       - name: Check GitHub Pages publishing config
         env:
