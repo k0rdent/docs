@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs HUGE FUCKING CHANGE
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs EVEN HUGER CHANGE
 
 ## Introduction
 

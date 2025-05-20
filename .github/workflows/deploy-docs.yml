@@ -106,14 +106,14 @@ jobs:
           mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
           mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
 
+          if [ "${{ steps.vars.outputs.default }}" == "true" ]; then
+            mike set-default "${{ steps.vars.outputs.version }}"
+          fi
+
           mike deploy --push --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
-
-          if [ "${{ steps.vars.outputs.default }}" == "true" ]; then
-            mike set-default --push "${{ steps.vars.outputs.version }}"
-          fi
-
+  
       - name: Check GitHub Pages publishing config
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
