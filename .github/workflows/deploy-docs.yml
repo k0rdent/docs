@@ -103,6 +103,9 @@ jobs:
 
       - name: Run mike deploy
         run: |
+          mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
+          mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+
           mike deploy --push --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
@@ -130,21 +133,17 @@ jobs:
 
       - name: Check if mike default version is set
         run: |
-          git fetch origin gh-pages
-          git worktree add gh-temp gh-pages
-
-          if [ ! -f gh-temp/.versions.json ]; then
-            echo "::warning title=Missing mike metadata::No .versions.json file found in gh-pages. Default version may not be set."
+          curl -sf -o versions.json https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.versions.json || {
+            echo "::warning title=Missing mike metadata::No .versions.json file found in gh-pages branch."
             echo "### ⚠️ No Version Metadata" >> $GITHUB_STEP_SUMMARY
-            echo "The file \`.versions.json\` does not exist yet on \`gh-pages\`. This usually happens after the first deploy." >> $GITHUB_STEP_SUMMARY
-          else
-            default=$(jq -r '.[] | select(.default==true)' gh-temp/.versions.json)
-            if [ -z "$default" ]; then
-              echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
-              echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
-              echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
-              echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
-            fi
-          fi
+            exit 0
+          }
 
-          rm -rf gh-temp
+          default=$(jq -r '.[] | select(.default==true)' versions.json)
+
+          if [ -z "$default" ]; then
+            echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
+            echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
+            echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
+            echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
+          fi
