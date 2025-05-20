@@ -91,11 +91,11 @@ jobs:
       - name: Run mike deploy
         run: |
           mike deploy --push --update-aliases --allow-empty \
-            "${{ steps.vars.outputs.title }}" \
+            "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
 
           if [ "${{ steps.vars.outputs.default }}" == "true" ]; then
-            mike set-default --push "${{ steps.vars.outputs.title }}"
+            mike set-default --push "${{ steps.vars.outputs.version }}"
           fi
 
       - name: Check GitHub Pages publishing config
