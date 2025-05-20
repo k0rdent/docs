@@ -37,6 +37,8 @@ jobs:
           import os, sys, yaml
 
           branch = os.environ["GITHUB_REF_NAME"]
+          print(f"::group::Parsing versions.yml for branch '{branch}'")
+
           with open("versions.yml") as f:
               data = yaml.safe_load(f)
 
@@ -50,10 +52,21 @@ jobs:
                   print(f"::error:: Missing key '{key}' in entry for branch {branch}")
                   sys.exit(1)
 
-          print(f"::set-output name=version::{match['version']}")
-          print(f"::set-output name=title::{match['title']}")
-          print(f"::set-output name=aliases::{ ' '.join(match['aliases']) }")
-          print(f"::set-output name=default::{match.get('default', False)}")
+          version = match["version"]
+          title = match["title"]
+          aliases = match["aliases"]
+          default = 'true' if match.get('default', False) else 'false'
+
+          print(f"version: {version}")
+          print(f"title: {title}")
+          print(f"aliases: {aliases}")
+          print(f"default: {default}")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as ghout:
+              ghout.write(f"version={version}\n")
+              ghout.write(f"title={title}\n")
+              ghout.write(f"aliases={' '.join(aliases)}\n")
+              ghout.write(f"default={default}\n")
           EOF
 
       - name: Set up Python and install requirements
@@ -69,6 +82,11 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Ensure gh-pages branch exists
         run: |
           if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null; then
@@ -79,24 +97,25 @@ jobs:
             echo "gh-pages branch already exists."
           fi
 
-      - name: Configure git identity
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Fetch gh-pages branch
         run: |
           git fetch origin gh-pages:gh-pages
 
-      - name: Run mike deploy
+      - name: Retitle version for mike
+        run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
+
+      - name: Set aliases for mike
+        run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+
+      - name: Set default version (if applicable)
+        if: ${{ steps.vars.outputs.default == 'true' }}
+        run: mike set-default "${{ steps.vars.outputs.version }}"
+
+      - name: Deploy site with mike
         run: |
           mike deploy --push --update-aliases --allow-empty \
-            "${{ steps.vars.outputs.title }}" \
+            "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
-
-          if [ "${{ steps.vars.outputs.default }}" == "true" ]; then
-            mike set-default --push "${{ steps.vars.outputs.title }}"
-          fi
 
       - name: Check GitHub Pages publishing config
         env:
@@ -117,21 +136,17 @@ jobs:
 
       - name: Check if mike default version is set
         run: |
-          git fetch origin gh-pages
-          git worktree add gh-temp gh-pages
-
-          if [ ! -f gh-temp/.versions.json ]; then
-            echo "::warning title=Missing mike metadata::No .versions.json file found in gh-pages. Default version may not be set."
+          curl -sf -o versions.json https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/versions.json || {
+            echo "::warning title=Missing mike metadata::No versions.json file found in gh-pages branch."
             echo "### ⚠️ No Version Metadata" >> $GITHUB_STEP_SUMMARY
-            echo "The file \`.versions.json\` does not exist yet on \`gh-pages\`. This usually happens after the first deploy." >> $GITHUB_STEP_SUMMARY
-          else
-            default=$(jq -r '.[] | select(.default==true)' gh-temp/.versions.json)
-            if [ -z "$default" ]; then
-              echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
-              echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
-              echo "No version is marked as the default in \`.versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
-              echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
-            fi
-          fi
+            exit 0
+          }
 
-          rm -rf gh-temp
+          default=$(jq -r '.[] | select(.default==true)' versions.json)
+
+          if [ -z "$default" ]; then
+            echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
+            echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
+            echo "No version is marked as the default in \`versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
+            echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
+          fi
