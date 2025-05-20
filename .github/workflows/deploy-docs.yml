@@ -101,9 +101,9 @@ jobs:
         run: |
           git fetch origin gh-pages:gh-pages
 
-      - name: Deploy site with mike
+      - name: Deploy site with mike (no push yet)
         run: |
-          mike deploy --push --update-aliases --allow-empty \
+          mike deploy --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
 
@@ -112,11 +112,19 @@ jobs:
         run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
 
       - name: Set aliases for mike
-        run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+        run: |
+          if [ -z "${{ steps.vars.outputs.aliases }}" ]; then
+            mike alias "${{ steps.vars.outputs.version }}"
+          else
+            mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+          fi
 
       - name: Set default version (if applicable)
         if: ${{ steps.vars.outputs.default == 'true' }}
-        run: mike set-default --push "${{ steps.vars.outputs.version }}"
+        run: mike set-default "${{ steps.vars.outputs.version }}"
+
+      - name: Push all changes to gh-pages
+        run: git push origin gh-pages
 
       - name: Check GitHub Pages publishing config
         env:
