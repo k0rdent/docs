@@ -133,7 +133,7 @@ jobs:
 
       - name: Check if mike default version is set
         run: |
-          curl -sf -o versions.json https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.versions.json || {
+          curl -sf -o versions.json https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/versions.json || {
             echo "::warning title=Missing mike metadata::No .versions.json file found in gh-pages branch."
             echo "### ⚠️ No Version Metadata" >> $GITHUB_STEP_SUMMARY
             exit 0
