@@ -110,7 +110,7 @@ jobs:
       - name: Retitle version for mike
         if: ${{ steps.vars.outputs.version != '' }}
         run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
-        
+
       - name: Set aliases for mike
         run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
 
