@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs FIX OKAY YES?
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs final 1
 
 ## Introduction
 

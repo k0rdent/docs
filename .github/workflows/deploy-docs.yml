@@ -55,7 +55,7 @@ jobs:
           version = match["version"]
           title = match["title"]
           aliases = match["aliases"]
-          default = match.get("default", False)
+          default = 'true' if match.get('default', False) else 'false'
 
           print(f"version: {version}")
           print(f"title: {title}")
@@ -66,7 +66,7 @@ jobs:
               ghout.write(f"version={version}\n")
               ghout.write(f"title={title}\n")
               ghout.write(f"aliases={' '.join(aliases)}\n")
-              ghout.write(f"default={'true' if default else 'false'}\n")
+              ghout.write(f"default={default}\n")
           EOF
 
       - name: Set up Python and install requirements
