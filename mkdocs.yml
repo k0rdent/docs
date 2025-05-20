@@ -5,10 +5,10 @@ site_author: Mirantis, Inc.
 docs_dir: docs/
 repo_name: k0rdent/kcm
 repo_url: https://github.com/k0rdent/kcm
-edit_uri: https://github.com/k0rdent/docs/edit/main/docs/
+edit_uri: https://github.com/k0rdent/docs/edit/release-v0.1.0/docs/
 
 copyright:
-  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>. 
+  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
 
 theme:
   name: "material"
@@ -290,7 +290,7 @@ extra:
           name: This page could be improved
           data: 0
           note: >-
-            Thanks for your feedback! Help us improve this page by
+            Thanks for your feedback! Please help us improve this page by
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
