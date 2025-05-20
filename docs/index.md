@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs X
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs XY
 
 ## Introduction
 
