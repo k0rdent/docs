@@ -50,10 +50,11 @@ jobs:
                   print(f"::error:: Missing key '{key}' in entry for branch {branch}")
                   sys.exit(1)
 
-          print(f"::set-output name=version::{match['version']}")
-          print(f"::set-output name=title::{match['title']}")
-          print(f"::set-output name=aliases::{ ' '.join(match['aliases']) }")
-          print(f"::set-output name=default::{match.get('default', False)}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as ghout:
+              ghout.write(f"version={match['version']}\n")
+              ghout.write(f"title={match['title']}\n")
+              ghout.write(f"aliases={' '.join(match['aliases'])}\n")
+              ghout.write(f"default={match.get('default', False)}\n")
           EOF
 
       - name: Set up Python and install requirements
