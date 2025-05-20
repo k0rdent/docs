@@ -37,6 +37,8 @@ jobs:
           import os, sys, yaml
 
           branch = os.environ["GITHUB_REF_NAME"]
+          print(f"::group::Parsing versions.yml for branch '{branch}'")
+
           with open("versions.yml") as f:
               data = yaml.safe_load(f)
 
@@ -50,11 +52,21 @@ jobs:
                   print(f"::error:: Missing key '{key}' in entry for branch {branch}")
                   sys.exit(1)
 
+          version = match["version"]
+          title = match["title"]
+          aliases = match["aliases"]
+          default = match.get("default", False)
+
+          print(f"version: {version}")
+          print(f"title: {title}")
+          print(f"aliases: {aliases}")
+          print(f"default: {default}")
+
           with open(os.environ["GITHUB_OUTPUT"], "a") as ghout:
-              ghout.write(f"version={match['version']}\n")
-              ghout.write(f"title={match['title']}\n")
-              ghout.write(f"aliases={' '.join(match['aliases'])}\n")
-              ghout.write(f"default={match.get('default', False)}\n")
+              ghout.write(f"version={version}\n")
+              ghout.write(f"title={title}\n")
+              ghout.write(f"aliases={' '.join(aliases)}\n")
+              ghout.write(f"default={'true' if default else 'false'}\n")
           EOF
 
       - name: Set up Python and install requirements
