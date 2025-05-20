@@ -69,6 +69,11 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Ensure gh-pages branch exists
         run: |
           if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null; then
@@ -78,11 +83,6 @@ jobs:
           else
             echo "gh-pages branch already exists."
           fi
-
-      - name: Configure git identity
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Fetch gh-pages branch
         run: |
