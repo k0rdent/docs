@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs final 1
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs VISIBLE CHANGE 1
 
 ## Introduction
 
