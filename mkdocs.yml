@@ -294,8 +294,8 @@ extra:
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
-    k0rdentVersion: 1-0-0-rc1
-    k0rdentDotVersion: 1.0.0-rc1
+    k0rdentVersion: 1-0-0
+    k0rdentDotVersion: 1.0.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:14d3f0f36a183759931626886b4742e1c96bf3ecfd8d5d9268ca1ef5db3f553c
     k0rdentDigestDate: Sun May 18 22:44:13 2025
