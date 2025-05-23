@@ -128,7 +128,7 @@ This GA release of the full k0rdent OSS platform includes:
 -   In high-latency networks, IPAM reconciliation can be delayed.
 -   Velero restore across cloud providers may require exclusion of specific resources (see docs).
     
-## Release Metadata
+## Release Metadata 
 
 | Key                   | Value                              |
 | --------------------- | ---------------------------------- |
