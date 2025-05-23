@@ -97,8 +97,9 @@ jobs:
       - name: Fetch gh-pages branch
         run: git fetch origin gh-pages:gh-pages
 
-      - name: Commit updated build_date.md
+      - name: Create/update timestamp file
         run: |
+          echo "Built: $(date)" > docs/build_date.md
           git add docs/build_date.md
           git commit -m "Update build timestamp" || echo "No changes to commit"
       
