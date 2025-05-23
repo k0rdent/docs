@@ -1,3 +1,1 @@
-Trigger a rebuild
-Trigger another rebuild
-Trigger yet another rebuild
+rebuild release-v1.0.0
