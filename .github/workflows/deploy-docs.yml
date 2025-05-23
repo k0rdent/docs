@@ -97,9 +97,15 @@ jobs:
       - name: Fetch gh-pages branch
         run: git fetch origin gh-pages:gh-pages
 
+      - name: Force change in release branch /docs
+        run: |
+          echo "Built: $(date)" > docs/.buildinfo
+          git add docs/.buildinfo
+          git commit -m "Trigger rebuild with updated .buildinfo" || echo "Nothing to commit"
+      
       - name: Deploy site with mike (no push yet)
         run: |
-          mike deploy --rebuild --update-aliases --allow-empty \
+          mike deploy --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
 
