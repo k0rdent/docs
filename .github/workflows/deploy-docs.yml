@@ -74,13 +74,11 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Remove /site directory
-        run: rm -rf site/
-
       - name: Checkout branch content
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
 
       - name: Configure git identity
         run: |
@@ -97,57 +95,43 @@ jobs:
             echo "gh-pages branch already exists."
           fi
 
-      - name: Fetch gh-pages branch
+      - name: Deploy site with mike (no push yet)
         run: |
-          git fetch origin gh-pages:gh-pages
-
-      - name: Deploy site with mike
-        run: |
-          mike deploy --push --update-aliases --allow-empty \
+          mike deploy --update-aliases --allow-empty \
             "${{ steps.vars.outputs.version }}" \
             ${{ steps.vars.outputs.aliases }}
 
+      - name: Make dummy change in gh-pages to enable retitle commit
+        run: |
+          mkdir -p .meta
+          echo "build: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" > .meta/last-build.txt
+          git add .meta/last-build.txt
+
       - name: Retitle version for mike
-        if: ${{ steps.vars.outputs.version != '' }}
         run: mike retitle "${{ steps.vars.outputs.version }}" "${{ steps.vars.outputs.title }}"
-        
+
       - name: Set aliases for mike
-        run: mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+        run: |
+          if [ -z "${{ steps.vars.outputs.aliases }}" ]; then
+            mike alias "${{ steps.vars.outputs.version }}"
+          else
+            mike alias "${{ steps.vars.outputs.version }}" ${{ steps.vars.outputs.aliases }}
+          fi
 
       - name: Set default version (if applicable)
         if: ${{ steps.vars.outputs.default == 'true' }}
-        run: mike set-default --push "${{ steps.vars.outputs.version }}"
+        run: mike set-default "${{ steps.vars.outputs.version }}"
 
-      - name: Check GitHub Pages publishing config
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push to gh-pages
         run: |
-          repo="${{ github.repository }}"
-          config=$(curl -s -H "Authorization: token $GH_TOKEN" https://api.github.com/repos/$repo/pages)
+          git commit -am "Update version metadata and trigger deploy" || echo "No changes to commit"
+          git push origin gh-pages
 
-          branch=$(echo "$config" | jq -r '.source.branch')
-          path=$(echo "$config" | jq -r '.source.path')
-
-          if [ "$branch" != "gh-pages" ] || [ "$path" != "/" ]; then
-            echo "::warning title=GitHub Pages not configured::GitHub Pages is NOT configured to publish from gh-pages /"
-            echo "### ⚠️ GitHub Pages Not Publishing" >> $GITHUB_STEP_SUMMARY
-            echo "**GitHub Pages is not configured** to publish from \`gh-pages\` at root." >> $GITHUB_STEP_SUMMARY
-            echo "Visit **Settings → Pages** and choose the 'gh-pages' branch and '/' folder to enable publishing." >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: Check if mike default version is set
+      - name: Final reminder
         run: |
-          curl -sf -o versions.json https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/versions.json || {
-            echo "::warning title=Missing mike metadata::No versions.json file found in gh-pages branch."
-            echo "### ⚠️ No Version Metadata" >> $GITHUB_STEP_SUMMARY
-            exit 0
-          }
-
-          default=$(jq -r '.[] | select(.default==true)' versions.json)
-
-          if [ -z "$default" ]; then
-            echo "::warning title=No mike default set::No default version set in mike metadata. Root URL will return 404."
-            echo "### ⚠️ No Default Version Set" >> $GITHUB_STEP_SUMMARY
-            echo "No version is marked as the default in \`versions.json\`. Root site URL will 404." >> $GITHUB_STEP_SUMMARY
-            echo "Set a default with: \`mike set-default --push <version>\`." >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "⚠️ If you've deleted and rebuilt the gh-pages branch:"
+          echo "➡️  Re-enable GitHub Pages publishing under repo → Settings → Pages"
+          echo
+          echo "⚠️ If no default version is set in versions.json:"
+          echo "➡️  The site will 404 at its root URL. Set one using:"
+          echo "    mike set-default <version> && git push origin gh-pages"
