@@ -1,0 +1,3799 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for k0rdent.">
+      
+      
+        <meta name="author" content="Mirantis, Inc.">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../k0rdent-documentation-style-guide/">
+      
+      
+      <link rel="icon" href="../../img/k0rdent-logo-mark-inverted.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>k0rdent documentation contributor's guide - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#k0rdent-documentation-contributors-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+      
+  <img src="../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              k0rdent documentation contributor's guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    k0rdent/kcm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+      
+  <img src="../../img/k0rdent-logo-horizontal-inverted.svg" alt="logo">
+
+    </a>
+    Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    k0rdent/kcm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to the docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../concepts/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent concepts
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/why-k0rdent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Why k0rdent?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/k0rdent-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../quickstarts/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    QuickStarts
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            QuickStarts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Management Cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-2-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-2-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-2-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy w/ SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-2-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Administrator Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Administrator Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Installation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/create-mgmt-clusters/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Creating the management cluster
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Creating the management cluster
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/create-mgmt-clusters/mgmt-create-k0s-single/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create a single node k0s cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/create-mgmt-clusters/mgmt-create-eks-multi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create a multinode EKS cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/install-k0rdent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install k0rdent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/verify-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verify the k0rdent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/prepare-mgmt-cluster/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Prepare k0rdent to create child clusters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_5" id="__nav_4_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Prepare k0rdent to create child clusters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/prepare-mgmt-cluster/vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/installation/auth/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_6" id="__nav_4_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/installation/auth/entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/clusters/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Working with clusters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Working with clusters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/clusters/deploy-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying standalone clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/clusters/update-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Updating standalone clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/clusters/admin-adopting-clusters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adopting clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/services/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Working with services
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Working with services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/services/admin-service-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using and creating service templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/services/admin-create-multiclusterservice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Creating multi-cluster services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/hosted-control-plane/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Hosted control planes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Hosted control planes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/hosted-control-plane/hcp-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/kof/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Observability & FinOps
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Observability & FinOps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-verification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verifying the KOF installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-using/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scaling KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-maintainence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maintaining KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-limits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/kof/kof-version-compat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version Compatibility
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/upgrade/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Upgrading k0rdent
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Upgrading k0rdent
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/upgrade/upgrade-to-0-2-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v0.2.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/access/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Access Management
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            Access Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/access/credentials/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Credentials Management
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8_2" id="__nav_4_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Credentials Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/access/credentials/credentials-process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Credentials Process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/access/credentials/credentials-propogation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Credential Propogation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/access/rbac/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Role Based Access Control (RBAC)
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8_3" id="__nav_4_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Role Based Access Control (RBAC)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/access/rbac/what-roles-do/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Roles Do
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/access/rbac/roles-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../admin/backup/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Backup and Restore
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_9">
+            <span class="md-nav__icon md-icon"></span>
+            Backup and Restore
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/scheduled-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Management Backups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/ondemand-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Management Backup on Demand
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/whats-included/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What's Included in a Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/restore/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Restoring From Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/upgrades-rollbacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrades and Rollbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/caveats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Caveats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/backup/customization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../user/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/user-create-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Creating clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../user/services/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Adding services
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Adding services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/understanding-servicetemplates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Understanding ServiceTemplates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/add-service-to-clusterdeployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding a Service to a ClusterDeployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/beach-head/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Beach Head Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/checking-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Checking Status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/remove-beach-head/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remove Beach Head Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/services/servicetemplate-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ServiceTemplate Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/user-enable-drift-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling drift detection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/template/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Templates Reference
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Templates Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-predefined/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Removing predefined templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-byo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bring-your-own (BYO) templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Amazon Web Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-vsphere/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for vSphere
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Remote SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../troubleshooting/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Troubleshooting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS VPCs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/known-issues-eks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EKS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../appendix/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Appendix
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/appendix-extend-mgmt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extended management configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/appendix-dryrun/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Understanding the dry run
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/appendix-providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloud provider credentials management in CAPI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    k0rdent documentation contributor's guide
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent documentation contributor's guide
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-are-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs are built
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-are-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs are written
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-is-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs is structured
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raising-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raising issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-to-k0rdent-docs-simplest-way-use-githubs-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing to k0rdent docs - simplest way: use GitHub's webUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-regular-contributions-use-git-on-the-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Making regular contributions - use Git on the desktop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-mkdocs-to-view-k0rdent-docs-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install MkDocs to view k0rdent docs locally
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-mkdocs-in-a-container-to-view-k0rdent-docs-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run MkDocs in a container to view k0rdent docs locally
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../k0rdent-documentation-style-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent documentation style guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-are-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs are built
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-are-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs are written
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-k0rdent-docs-is-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      How k0rdent docs is structured
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raising-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raising issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-to-k0rdent-docs-simplest-way-use-githubs-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing to k0rdent docs - simplest way: use GitHub's webUI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-regular-contributions-use-git-on-the-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Making regular contributions - use Git on the desktop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-mkdocs-to-view-k0rdent-docs-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install MkDocs to view k0rdent docs locally
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-mkdocs-in-a-container-to-view-k0rdent-docs-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run MkDocs in a container to view k0rdent docs locally
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/k0rdent/docs/edit/main/docs/contrib/k0rdent-documentation-contributors-guide.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/k0rdent/docs/raw/main/docs/contrib/k0rdent-documentation-contributors-guide.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="k0rdent-documentation-contributors-guide">k0rdent documentation contributors' guide<a class="headerlink" href="#k0rdent-documentation-contributors-guide" title="Permanent link">#</a></h1>
+<p>k0rdent documentation is growing rapidly, and community members are very welcome to contribute by filing pull requests against documents in this repository. Thank you for your interest in k0rdent!</p>
+<p>This page gives technical guidance for contributing to k0rdent documentation. The <a href="../k0rdent-documentation-style-guide/">k0rdent documentation style guide</a> details our markdown style and provides general recommendations for writing style.</p>
+<h2 id="how-k0rdent-docs-are-built">How k0rdent docs are built<a class="headerlink" href="#how-k0rdent-docs-are-built" title="Permanent link">#</a></h2>
+<p>k0rdent documentation is built from Markdown (.md) documents using the <a href="https://www.mkdocs.org/">MkDocs</a> static site generator with the <a href="https://squidfunk.github.io/mkdocs-material/">Material</a> theme. We use several MkDocs extensions and plugins for rendering glossary items, admonitions (e.g., Note, Tip, Warning, etc.) and other special kinds of content.</p>
+<p>Below you'll find <a href="#install-mkdocs-to-view-k0rdent-docs-locally">instructions for setting up MkDocs locally</a> to dynamically build and serve the k0rdent documentation from your local clone of the docs repository. This is handy for reviewing the rendered look and feel of changes and additions before filing a pull request.</p>
+<h2 id="how-k0rdent-docs-are-written">How k0rdent docs are written<a class="headerlink" href="#how-k0rdent-docs-are-written" title="Permanent link">#</a></h2>
+<p>k0rdent documentation is written mostly in <a href="https://commonmark.org/">CommonMark</a> as adopted by GitHub, with a few CommonMark-compatible markdown enhancements used by MkDocs, the Material theme, and extensions (see below) to enable more-readable rendering of code, glossary items, images, and admonitions (e.g., NOTE:, TIP:, WARNING:, etc.). The <a href="../k0rdent-documentation-style-guide/">k0rdent documentation style guide</a> details our markdown style, along with those extensions.</p>
+<h2 id="how-k0rdent-docs-is-structured">How k0rdent docs is structured<a class="headerlink" href="#how-k0rdent-docs-is-structured" title="Permanent link">#</a></h2>
+<p>The structure of k0rdent/docs is shown below:</p>
+<div class="highlight"><pre><span></span><code><span class="go">docs                                                # repository containing folder /docs</span>
+<span class="go">├── docs                                            # subdirectory for /docs, containing further subdirectories for assets, images, theme, etc.</span>
+<span class="go">│   ├── assets                                      # illustrations for docs</span>
+<span class="go">│   ├── css                                         # css stylesheets</span>
+<span class="go">│   ├── custom_theme                                # Material theme customizations</span>
+<span class="go">│   ├── img                                         # site imagery (logos, icons, etc.)</span>
+<span class="go">│   ├── stylesheets                                 # extra CSS stylesheets</span>
+<span class="go">│   ├── index.md                                    # default homepage of the docs site</span>
+<span class="go">│   ├── LICENSE                                     # k0rdent docs license (CC-BY-4.0)</span>
+<span class="go">│   ├── (documentation-files.md)                    # actual docs pages (markdown documents)</span>
+<span class="go">├── mkdocs.yml                                      # main configuration file for mkdocs, specifies site navigation and table of contents</span>
+<span class="go">├── requirements.txt                                # mkdocs requirements (for installation with pip for building docs locally - see below)</span>
+<span class="go">├── Dockerfile                                      # Dockerfile for building a container to serve docs interactively</span>
+<span class="go">├── .gitignore                                      # Things to ignore when people push</span>
+<span class="go">└── .github                                         # Special GitHub features, including allowed-patterns.yml for placeholders replacing secrets</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The k0rdent documentation repository is called <code>docs</code> and cloning the repo will create a containing directory called <code>docs</code>.
+This directory itself contains a subdirectory <code>/docs</code> which contains Markdown (.md) doc files and related subdirectories like
+/assets, /img, etc. Do not confuse toplevel docs with subdirectory /docs.</p>
+</div>
+<h2 id="raising-issues">Raising issues<a class="headerlink" href="#raising-issues" title="Permanent link">#</a></h2>
+<p>If you find issues (errors, omissions, etc.) with k0rdent documentation, we would be very grateful if you would notify us by <a href="https://github.com/k0rdent/docs/issues">creating an issue</a>.</p>
+<h2 id="contributing-to-k0rdent-docs-simplest-way-use-githubs-webui">Contributing to k0rdent docs - simplest way: use GitHub's webUI<a class="headerlink" href="#contributing-to-k0rdent-docs-simplest-way-use-githubs-webui" title="Permanent link">#</a></h2>
+<p>For making small corrections to k0rdent docs, the simplest tool is GitHub's website. You will need a personal (free) or business GitHub account.</p>
+<ol>
+<li>Familiarize yourself with the <a href="#how-k0rdent-docs-is-structured">structure of the <code>k0rdent/docs</code> repo</a>.</li>
+<li>Figure out where the doc you want to update lives, or where a new doc you create might need to live.</li>
+<li>Visit the k0rdent/docs repo itself. Search for <code>k0rdent/docs</code> or click the following link: (<a href="https://github.com/k0rdent/docs">https://github.com/k0rdent/docs</a>)</li>
+<li>To propose changes to existing docs: On k0rdent/docs, edit the doc you want to change, using the pencil icon (Edit) button in the upper right of GitHub's webUI. This will create a fork of k0rdent/docs in your own account's workspace (if you don't already have your own fork) and create a new feature branch, from which your proposed update will be submitted to k0rdent/docs as a pull request (PR).</li>
+<li>To create new docs (or propose changes to existing docs): Create a fork of k0rdent/docs in your own account workspace using the Fork button in the upper right of k0rdent/docs. Navigate to the directory in which you want to create your new doc (or go to the directory in which the doc you want to edit lives). Click Add File&gt;Create New File to add a new blank doc, upload an image or other file, or find and edit the doc you want to change.</li>
+<li>When your edit(s) are complete, click Commit Changes in the upper right.</li>
+<li>Write a descriptive commit message so project k0rdent docs maintainers understand your proposed addition or change.</li>
+<li>Click Propose Change.</li>
+<li>On the next screen, compare your change with content originally there.</li>
+<li>Click Create Pull Request.</li>
+</ol>
+<p>Maintainers will see your pull request and may request discussion or suggest further changes, or they may merge your change. You'll be notified via GitHub either way.</p>
+<h2 id="making-regular-contributions-use-git-on-the-desktop">Making regular contributions - use Git on the desktop<a class="headerlink" href="#making-regular-contributions-use-git-on-the-desktop" title="Permanent link">#</a></h2>
+<p>For making regular or at-scale contributions to k0rdent documentation, we recommend using a standard open source workflow as follows:</p>
+<ol>
+<li>Create a fork of k0rdent/docs in your own GitHub workspace.</li>
+<li>Clone your fork to your desktop using git.</li>
+<li>Set origin remotes (fetch, push) to your fork.</li>
+<li>Set upstream remotes (fetch, push) to k0rdent/docs (main)</li>
+</ol>
+<p>Then, when getting ready to work:</p>
+<ol>
+<li>Update your local main from upstream and update main on your fork on GitHub:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>fetch<span class="w"> </span>upstream<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>upstream<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+<ol>
+<li>Create a new feature branch for each intended commit, to isolate your changes:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my-feature-branch<span class="w"> </span>main
+</code></pre></div>
+<ol>
+<li>As needed, particularly if you work on a change for a long time, periodically update your feature branch from upstream main to avoid later conflicts:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>my-feature-branch<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>upstream<span class="w"> </span>main
+</code></pre></div>
+<ol>
+<li>When finished editing, add and commit changes:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;My changes&quot;</span>
+</code></pre></div>
+<ol>
+<li>Pre-emptively update once more before pushing:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>upstream<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>upstream/main
+</code></pre></div>
+<ol>
+<li>Push your feature branch to your fork on GitHub:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>my-feature-branch
+</code></pre></div>
+<p>This will cause Git to display a confirmation message containing a link you can follow to submit a pull request on GitHub, from your feature branch to k0rdent/docs (main).</p>
+<ol>
+<li>Follow the link. Compare changes. Write an informative pull request title and extended description. And submit your Pull Request. Thank you in advance!</li>
+</ol>
+<h2 id="install-mkdocs-to-view-k0rdent-docs-locally">Install MkDocs to view k0rdent docs locally<a class="headerlink" href="#install-mkdocs-to-view-k0rdent-docs-locally" title="Permanent link">#</a></h2>
+<p>When making docs contributions or edits, it can be very helpful to run MkDocs on your desktop, so you can see your additions and changes as they will be rendered online.</p>
+<p>MkDocs can be run on almost any contemporary Linux environment, desktop or server, inside a container, or on MacOS, Windows, or WSL. It requires recent (in k0rdent's case, 3.9+) versions of Python and pip. So this should work in whatever desktop environment you use: alongside Git and your Markdown editor or IDE.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+k0rdent's MkDocs environment requires Python 3.9+ and a corresponding version of pip. </p>
+</div>
+<p>Assuming you have a machine (desktop, laptop, VM) for editing with recent (Python 3.9+) versions of Python and pip:</p>
+<ol>
+<li>
+<p>Begin by creating a fork of k0rdent/docs on GitHub, and clone your fork to your machine. See <a href="#making-regular-contributions-use-git-on-the-desktop">Making regular contributions - use Git on the desktop</a></p>
+</li>
+<li>
+<p>Switch into the cloned project directory on your machine:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>docs
+</code></pre></div>
+<ol>
+<li>Create a venv into which to install MkDocs and dependencies, saved in the /docs repo in a file called <code>requirements.txt</code>.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</code></pre></div>
+<p>Your terminal should now show <code>(venv)</code> in the prompt. This will create a local /venv folder in your copy of the repo, which the
+   .gitignore already in your clone will instruct GitHub to ignore when you make commits and file pull requests. </p>
+<ol>
+<li>
+<p>Install MkDocs and dependencies in the venv, using <code>requirements.txt</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The file <code>requirements.txt</code> is in the toplevel containing folder (called <code>docs</code>) &mdash; not in the <code>/docs</code> subfolder
+within the toplevel directory.</p>
+</div>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>
+</code></pre></div>
+<p>Once you've done this, you can execute MkDocs to dynamically build and serve docs locally on localhost (<code>http://127.0.0.1:8000</code>):</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<p>Then just visit localhost (<code>http://127.0.0.1:8000</code>) in a browser to view and navigate the docs.</p>
+<h2 id="run-mkdocs-in-a-container-to-view-k0rdent-docs-locally">Run MkDocs in a container to view k0rdent docs locally<a class="headerlink" href="#run-mkdocs-in-a-container-to-view-k0rdent-docs-locally" title="Permanent link">#</a></h2>
+<p>If you prefer, you can also run MkDocs in a container on your machine to view k0rdent docs locally. This is another way of keeping the MkDocs environment isolated and easily removable.</p>
+<p>We've put a Dockerfile in the toplevel directory of the repo to help with this. Here's what's in that Dockerfile:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use the official MkDocs Material image</span>
+FROM<span class="w"> </span>squidfunk/mkdocs-material:latest
+
+<span class="c1"># Set the working directory</span>
+WORKDIR<span class="w"> </span>/docs
+
+<span class="c1"># Copy and install dependencies</span>
+COPY<span class="w"> </span>requirements.txt<span class="w"> </span>.
+RUN<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Copy MkDocs files</span>
+COPY<span class="w"> </span>mkdocs.yml<span class="w"> </span>.
+
+<span class="c1"># Expose the MkDocs server port</span>
+EXPOSE<span class="w"> </span><span class="m">8000</span>
+</code></pre></div>
+<p>As you can see, we're using the official MkDocs Material base image. The Dockerfile creates a working directory called /docs, installs requirements.txt with pip, copies in the mkdocs.yml configuration file, and exposes port 8000 so the container can be accessed as localhost on your machine.</p>
+<ol>
+<li>You'll need Docker installed on your machine. Follow instructions <a href="https://docs.docker.com/engine/install/">here</a></li>
+<li>Go to the toplevel directory of the repo, where the Dockerfile and mkdocs.yml reside.</li>
+<li>Build the container, tagging it with the name <code>mk-local</code>.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile<span class="w"> </span>-t<span class="w"> </span>mk-local
+</code></pre></div>
+<ol>
+<li>Then use git to (optionally create and/or) checkout the branch you'll be working in, since this is the branch you want MkDocs to render from.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my-working-branch<span class="w">       </span><span class="c1"># create and checkout new working branch, or ...</span>
+git<span class="w"> </span>checkout<span class="w"> </span>my-working-branch<span class="w">          </span><span class="c1"># checkout existing working branch</span>
+</code></pre></div>
+<ol>
+<li>Open a new terminal (so you can stop the container within this terminal window by pressing CTRL-C later), then run the container like this:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/docs<span class="w"> </span>mk-local
+</code></pre></div>
+<p>This ensures that the container is removed when you're finished with it, that it launches as interactive and with a TTY, that the container's port 8000 is mapped to port 8000 on your local machine (enabling you to view the container on localhost - <code>http://127.0.0.1:8000</code>), and it mounts your current directory (the toplevel of the repo) as /docs inside the container. This lets MkDocs see your local copy of the repo to render and serve it to the browser, and refreshes each time you make a change.</p>
+<p>Just visit the container on <code>http://127.0.0.1:8000</code> to view the docs.</p>
+<ol>
+<li>When you want to stop the container, press CTRL+C inside the terminal window used to start it. Alternatively, you can stop the container from any terminal as follows:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w">                       </span><span class="c1"># find the container ID, then ...</span>
+docker<span class="w"> </span>stop<span class="w"> </span>&lt;container-id&gt;<span class="w">      </span><span class="c1"># stop the container</span>
+</code></pre></div>
+<p>Because we started the container with the --rm flag, it will be removed from Docker Engine when it stops. Restart by once again entering:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/docs<span class="w"> </span>mk-local
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this page helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c.67 0 1.32.12 1.94.33L13 9.35l-4 5zM16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35l-1-7 4.5-5-2.65-5.08C13.87 3.47 15.17 3 16.5 3"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              Thanks for your feedback!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/k0rdent/kcm" target="_blank" rel="noopener" title="k0rdent on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://x.com/k0rdent" target="_blank" rel="noopener" title="k0rdent on X" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://bsky.app/profile/k0rdent.bsky.social" target="_blank" rel="noopener" title="k0rdent on BlueSky" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2 42.1-31.6 110.3-56 110.3 21.8 0 15.5-8.9 130.5-14.1 149.2-18.2 64.8-84.4 81.4-143.3 71.3C456 322 482.2 380 425.6 438c-107.4 110.2-154.3-27.6-166.3-62.9-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8c-12 35.3-59 173.1-166.3 62.9-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1 10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.youtube.com/channel/UChXQ6kbvjnAtdZAQpl7Fo4A" target="_blank" rel="noopener" title="k0rdent on YouTube" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305m-317.51 213.508V175.185l142.739 81.205z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/company/k0rdent/" target="_blank" rel="noopener" title="k0rdent on LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.edit", "content.action.view", "navigation.path", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../../javascripts/feedback.js"></script>
+      
+    
+  </body>
+</html>
