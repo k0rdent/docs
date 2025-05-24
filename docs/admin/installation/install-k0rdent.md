@@ -23,3 +23,10 @@ TEST SUITE: None
 
 The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.
 
+## Cleanup: Uninstall {{{ docsVersionInfo.k0rdentName }}}
+
+And of course when you need to clean up, you can use helm as well:
+
+```shell
+helm uninstall kcm -n kcm-system
+```
