@@ -2,7 +2,7 @@
 ## Introduction
 
 {{{ docsVersionInfo.k0rdentName }}} has been developed to provide a way to manage distributed infrastructure
-at massive scale, leveraging kubernetes.
+at massive scale leveraging kubernetes.
 
 The project is based on the premise that:
 
