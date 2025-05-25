@@ -806,6 +806,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Install k0rdent
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -815,6 +826,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup-uninstall-k0rdent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleanup: Uninstall k0rdent
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3505,6 +3544,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup-uninstall-k0rdent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleanup: Uninstall k0rdent
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -3554,6 +3610,10 @@
 Make sure to specify the correct release version number.</p>
 </div>
 <p>The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.</p>
+<h2 id="cleanup-uninstall-k0rdent">Cleanup: Uninstall k0rdent<a class="headerlink" href="#cleanup-uninstall-k0rdent" title="Permanent link">#</a></h2>
+<p>And of course when you need to clean up, you can use helm as well:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>kcm<span class="w"> </span>-n<span class="w"> </span>kcm-system
+</code></pre></div>
 
 
 
