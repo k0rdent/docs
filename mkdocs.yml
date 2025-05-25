@@ -176,6 +176,7 @@ nav:
       - Overview: admin/upgrade/index.md
       - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
       - Upgrade to v0.3.0: admin/upgrade/upgrade-to-0-3-0.md
+      - Upgrade to v1.0.0: admin/upgrade/upgrade-to-1-0-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management: 
