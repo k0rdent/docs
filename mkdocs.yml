@@ -315,21 +315,21 @@ extra:
         clusterApiProviderIpam: 0-3-0
         clusterApiProviderInfoblox: 0-3-0
         k0smotron: 0-3-0
-        adoptedCluster: 0-2-0
-        awsEksCluster: 0-2-0
-        awsHostedCpCluster: 0-2-1
-        awsStandaloneCpCluster: 0-2-1
-        azureAksCluster: 0-2-0
-        azureHostedCpCluster: 0-2-2
-        azureStandaloneCpCluster: 0-2-2
-        dockerHostedCpCluster: 0-2-0
-        gcpGkeCluster: 0-2-0
-        gcpHostedCpCluster: 0-2-1
-        gcpStandaloneCpCluster: 0-2-1
-        openstackStandaloneCpCluster: 0-2-2
-        remoteCluster: 0-2-1
-        vsphereHostedCpCluster: 0-2-1
-        vsphereStandaloneCpCluster: 0-2-1
+        adoptedCluster: 1-0-0
+        awsEksCluster: 1-0-0
+        awsHostedCpCluster: 1-0-0
+        awsStandaloneCpCluster: 1-0-0
+        azureAksCluster: 1-0-0
+        azureHostedCpCluster: 1-0-0
+        azureStandaloneCpCluster: 1-0-0
+        dockerHostedCpCluster: 1-0-0
+        gcpGkeCluster: 1-0-0
+        gcpHostedCpCluster: 1-0-0
+        gcpStandaloneCpCluster: 1-0-0
+        openstackStandaloneCpCluster: 1-0-0
+        remoteCluster: 1-0-0
+        vsphereHostedCpCluster: 1-0-0
+        vsphereStandaloneCpCluster: 1-0-0
         sveltosProvider: 0-54-4
       dotVersions:
         clusterApi: 0.3.0
@@ -342,21 +342,21 @@ extra:
         clusterApiProviderIpam: 0.3.0
         clusterApiProviderInfoblox: 0.3.0
         k0smotron: 0.3.0
-        adoptedCluster: 0.2.0
-        awsEksCluster: 0.2.0
-        awsHostedCpCluster: 0.2.1
-        awsStandaloneCpCluster: 0.2.1
-        azureAksCluster: 0.2.0
-        azureHostedCpCluster: 0.2.2
-        azureStandaloneCpCluster: 0.2.2 
-        dockerHostedCpCluster: 0.2.0
-        gcpGkeCluster: 0.2.0
-        gcpHostedCpCluster: 0.2.1
-        gcpStandaloneCpCluster: 0.2.1
-        openstackStandaloneCpCluster: 0.2.2
-        remoteCluster: 0.2.1
-        vsphereHostedCpCluster: 0.2.1
-        vsphereStandaloneCpCluster: 0.2.1
+        adoptedCluster: 1.0.0
+        awsEksCluster: 1.0.0
+        awsHostedCpCluster: 1.0.0
+        awsStandaloneCpCluster: 1.0.0
+        azureAksCluster: 1.0.0
+        azureHostedCpCluster: 1.0.0
+        azureStandaloneCpCluster: 1.0.0
+        dockerHostedCpCluster: 1.0.0
+        gcpGkeCluster: 1.0.0
+        gcpHostedCpCluster: 1.0.0
+        gcpStandaloneCpCluster: 1.0.0
+        openstackStandaloneCpCluster: 1.0.0
+        remoteCluster: 1.0.0
+        vsphereHostedCpCluster: 1.0.0
+        vsphereStandaloneCpCluster: 1.0.0
         sveltosProvider: 0.54.4
     servicesVersions:
       dashVersions:
