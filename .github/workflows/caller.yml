@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-shared:
-    uses: ./.github/workflows/deploy-docs.yml
+    uses: jjainschigg-r/k0rdent-oss-docs/.github/workflows/deploy-docs.yml@main
     with:
       branch: ${{ github.ref_name }}
