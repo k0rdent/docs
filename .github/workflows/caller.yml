@@ -5,6 +5,11 @@ on:
     branches:
       - '**'  # Trigger on push to any branch
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  
 jobs:
   call-shared:
     uses: k0rdent/docs/.github/workflows/deploy-docs.yml@main
