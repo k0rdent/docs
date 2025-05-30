@@ -5,6 +5,8 @@
 
 > WARNING: At the moment **only node network is supported**
 
+> WARNING: Currently unsupported on ARM64 architectures
+
 With IPAM enabled, IP addresses can be assigned to both worker and control plane nodes.
 
 Administrators can define address ranges using either CIDR blocks or explicit IP lists, enabling:
