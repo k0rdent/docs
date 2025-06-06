@@ -25,8 +25,24 @@ The helm chart deploys the KCM operator and prepares the environment, and KCM th
 
 ## Cleanup: Uninstall {{{ docsVersionInfo.k0rdentName }}}
 
-And of course when you need to clean up, you can use helm as well:
+And of course when you need to clean up, you can use helm as well. Follow these steps:
 
-```shell
-helm uninstall kcm -n kcm-system
-```
+1. Remove any `ClusterDeployment` objects in the cluster.
+
+2. Delete the `Management` object:
+
+    ```shell
+    kubectl delete management.k0rdent kcm
+    ```
+
+3. Remove the kcm Helm release:
+
+    ```shell
+    helm uninstall kcm -n kcm-system
+    ```
+
+4. Finally, remove the kcm-system namespace:
+
+    ```shell
+    kubectl delete ns kcm-system
+    ```

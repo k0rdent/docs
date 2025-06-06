@@ -3,7 +3,9 @@
 
 `{{{ docsVersionInfo.k0rdentName }}}` provides a flexible IP Address Management (IPAM) system that enables deterministic allocation of IP addresses throughout the cluster lifecycle.
 
-> WARNING: At the moment **only node network is supported**
+> WARNING: At the moment **only node network is supported**.
+
+> WARNING: IPAM is currently unsupported on ARM64 architectures. 
 
 With IPAM enabled, IP addresses can be assigned to both worker and control plane nodes.
 
