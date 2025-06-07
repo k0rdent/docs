@@ -130,6 +130,7 @@ nav:
       - Creating the management cluster:
         - Overview: admin/installation/create-mgmt-clusters/index.md
         - Create a single node k0s cluster: admin/installation/create-mgmt-clusters/mgmt-create-k0s-single.md
+        - Create a multi-node k0s cluster: admin/installation/create-mgmt-clusters/mgmt-create-k0s-multi.md
         - Create a multinode EKS cluster: admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md
       - Install k0rdent: admin/installation/install-k0rdent.md
       - Verify the k0rdent installation: admin/installation/verify-install.md
