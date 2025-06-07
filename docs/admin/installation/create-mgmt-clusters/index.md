@@ -8,5 +8,6 @@ The type of cluster you create for as a {{{ docsVersionInfo.k0rdentName }}} mana
 In a production environment, you will always want to ensure that your management cluster is backed up. There are a few caveats and things you need to take into account when backing up {{{ docsVersionInfo.k0rdentName }}}. More info can be found in the guide at [use Velero as a backup provider](../../backup/index.md).
 
 - [Create a single node k0s cluster](./mgmt-create-k0s-single.md)
+- [Create a multi-node k0s cluster](./mgmt-create-k0s-multi.md)
 - [Create a multinode EKS cluster](./mgmt-create-eks-multi.md)
   
