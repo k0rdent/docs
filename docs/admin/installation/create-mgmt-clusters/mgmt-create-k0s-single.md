@@ -6,7 +6,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     The first step is to create the actual cluster itself. Again, the actual distribution used for the management cluster isn't important, as long as it's a CNCF-compliant distribution. That means you can use an existing EKS cluster, or whatever is your normal corporate standard. 
 
-    To make things simple this guide uses [k0s](https://github.com/k0sproject/k0s/), a small, convenient, and fully-functional distribution:
+    To make things simple this guide uses [k0s](https://github.com/k0sproject/k0s/), a small, convenient, and fully-functional distribution. For more granular instructions, including those for creating a cluster accessible from a different server, see the [k0s multi-node instructions](mgmt-create-k0s-multi.md):
 
     ```shell
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
@@ -79,3 +79,12 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     Helm will be installed into `/usr/local/bin/helm`.
 
+## Access your cluster from another machine
+
+To use a tool like Lens or to access the cluster from another machine, copy the `KUBECONFIG`, which is located at:
+
+```console
+/var/lib/k0s/pki/admin.conf
+```
+
+to your target machine.  Note that to access the cluster from an external machine you must replace `localhost` in the `KUBECONFIG` with the host IP address or hostname for your controller. Make sure to use the address you added to the `sans` field, and also that port `6443` is accessible.
