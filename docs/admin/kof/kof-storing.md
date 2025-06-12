@@ -137,7 +137,7 @@ For now, however, just for the sake of this demo, you can use the most straightf
 (though less secure) static credentials method:
 
 1. Create AWS IAM user with access to CloudWatch Logs,
-    e.g. by allowing `"Action": "logs:*"` in the inline policy.
+    for example, with `"Action": "logs:*"` allowed in the inline policy.
 
 2. Create access key and save it to the `cloudwatch-credentials` file:
     ```

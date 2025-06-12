@@ -37,18 +37,19 @@ helping them to identify and resolve issues quickly.
 * **Finance Teams:** Finance teams can leverage KOF's FinOps capabilities to track and manage cloud spending, 
 ensuring resources are used efficiently and costs are optimized.
 
-## More Resources
+## Guides
 
-Once you've applied this guide and you have KOF up and running, check 
-[k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs) for advanced guides
-such as [configuring alerts](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/alerts.md),
-or get started with the basic documentation:
+Get started with the basic documentation:
 
 - [Architecture](kof-architecture.md)
 - [Installing KOF](kof-install.md)
 - [Verifying the KOF installation](kof-verification.md)
+- [Storing KOF data](kof-storing.md)
 - [Using KOF](kof-using.md)
+- [KOF Alerts](kof-alerts.md)
 - [Scaling KOF](kof-scaling.md)
 - [Maintaining KOF](kof-maintainence.md)
-- [Resource Limits](kof-limits.md)
-- [Version Compatibility](kof-version-compat.md)
+
+Once you have KOF up and running,
+check [k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs)
+for advanced guides.

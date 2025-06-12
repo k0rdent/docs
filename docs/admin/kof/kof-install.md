@@ -137,6 +137,10 @@ and apply this example, or use it as a reference:
       storageClass: <EXAMPLE_STORAGE_CLASS>
     ```
 
+    If `kubectl get sc` shows nothing
+    or just `kubernetes.io/no-provisioner` in the `PROVISIONER` column,
+    apply [OpenEBS](https://docs.k0sproject.io/stable/examples/openebs/) or similar.
+
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
     add its information to the `kcm:` object in the `mothership-values.yaml` file.
 
