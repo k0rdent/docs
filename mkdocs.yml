@@ -49,6 +49,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/feedback.js
+  - javascripts/plausible.js
 
 plugins:
   - search
