@@ -156,24 +156,3 @@ A user with the `Namespace Viewer` role has the following permissions in the nam
    upgrade sequences
 4. Can list and view detailed information about Flux `HelmRepository` and `HelmChart` objects
 
-## Limit credential access
-
-To ensure developers can only access secrets in the `kcm-system` namespace, create the following `RoleBinding`:
-
-```shell
-kubectl apply -f - <<EOF
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: namespace-viewer
-  namespace: kcm-system
-subjects:
-  - kind: User
-    name: user
-    apiGroup: rbac.authorization.k8s.io
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: kcm-namespace-viewer-role
-EOF
-```
