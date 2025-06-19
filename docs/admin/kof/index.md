@@ -12,7 +12,9 @@ components of the Kubernetes ecosystem. This helps in troubleshooting and unders
 KOF can evaluate **alerting** rules and send notifications based on these collected metrics and logs helping to identify and respond to issues before they impact users.
 
 * **FinOps**: KOF helps with **cost management** by tracking and managing the costs associated with running applications on Kubernetes. 
-It provides insights into resource utilization and helps in optimizing costs by identifying underutilized or over-provisioned resources.
+It provides insights into resource utilization and helps in optimizing costs by identifying underutilized or over-provisioned resources. With this information, you can **set budgets and forecast future costs** based on historical data and current 
+usage patterns. KOF enables **chargeback and showback** mechanisms, enabling organizations to attribute costs to 
+specific teams, departments, or projects, and promotes accountability and transparency in resource usage.
 
 * **Centralized Management**: KOF provides a **unified control plane** for managing Kubernetes clusters at scale, with a 
 centralized view of all clusters, making it possible to use {{{ docsVersionInfo.k0rdentName }}} to manage and operate large-scale deployments.
