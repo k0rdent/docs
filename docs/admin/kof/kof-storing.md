@@ -42,7 +42,15 @@ To apply this option:
       enabled: true
     ```
 
-2. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
+2. If you want to use a non-default storage class, add to the `storage-values.yaml` file:
+    ```yaml
+    victoria-logs-cluster:
+      vlstorage:
+        persistentVolume:
+          storageClassName: <EXAMPLE_STORAGE_CLASS>
+    ```
+
+3. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
     ```shell
     helm upgrade -i --reset-values --wait -n kof kof-storage \
       -f storage-values.yaml \
@@ -137,7 +145,7 @@ For now, however, just for the sake of this demo, you can use the most straightf
 (though less secure) static credentials method:
 
 1. Create AWS IAM user with access to CloudWatch Logs,
-    e.g. by allowing `"Action": "logs:*"` in the inline policy.
+    for example, with `"Action": "logs:*"` allowed in the inline policy.
 
 2. Create access key and save it to the `cloudwatch-credentials` file:
     ```
