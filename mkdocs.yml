@@ -231,6 +231,7 @@ nav:
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
     - EKS: troubleshooting/known-issues-eks.md
     - GCP: troubleshooting/known-issues-gcp.md
+    - Custom CA Certificates: troubleshooting/known-issues-custom-ca.md
   - Appendix:
     - Overview: appendix/index.md
     - Glossary: appendix/glossary.md
