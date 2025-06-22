@@ -3,9 +3,13 @@
 
 `{{{ docsVersionInfo.k0rdentName }}}` provides a flexible IP Address Management (IPAM) system that enables deterministic allocation of IP addresses throughout the cluster lifecycle.
 
-> WARNING: At the moment **only node network is supported**.
-
-> WARNING: IPAM is currently unsupported on ARM64 architectures. 
+> WARNING: 
+>
+> Keep in mind the following about IPAM support:
+>
+> - At the moment **only node network is supported**.
+> - IPAM is currently unsupported on ARM64 architectures.
+> - IPAM has only been tested on VMware VSphere. Support for other providers will be added in the future.
 
 With IPAM enabled, IP addresses can be assigned to both worker and control plane nodes.
 
@@ -39,6 +43,9 @@ To use mutual references, follow these steps:
 1. Define a `ClusterIPAMClaim`
 
     The `ClusterIPAMClaim` resource reserves the required IP address space for the cluster. The node network segment can be defined using either a `cidr` or a static list of `ipAddresses`.
+
+    > NOTE:
+    > The value for `provider` must be `in-cluster` or `ipam-infoblox`.
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
