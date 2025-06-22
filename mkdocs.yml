@@ -211,6 +211,7 @@ nav:
       - Checking Status: user/services/checking-status.md
       - Remove Beach Head Services: user/services/remove-beach-head.md
       - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
+      - Upgrading Deployed Services: user/services/service-upgrade.md
     - Enabling drift detection: user/user-enable-drift-detection.md
   - Reference:
     - Overview: reference/index.md
