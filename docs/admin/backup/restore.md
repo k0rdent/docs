@@ -26,7 +26,36 @@ In the event of disaster, you can restore from a backup by doing the following:
      --set velero.initContainers[0].volumeMounts[0].mountPath=/target \
      --set velero.initContainers[0].volumeMounts[0].name=plugins
     ```
+2. At the time of this writing, an upstream Velero bug means that you will need to create a `ConfigMap` adding labels to the Velero image so it can be referenced properly. First determine the image in use:
 
+    ```shell
+    kubect get deploy -lcomponent=velero -n kcm-system -o yaml | yq .spec.template.spec.containers[0].image
+    ```
+    ```console
+    registry.mirantis.com/k0rdent-enterprise/velero/velero:v1.16.0
+    ```
+
+3. Next create the `ConfigMap`. For example, add the following to a file called `velero-configmap.yaml`:
+
+    ```yaml
+    apiVersion: v1
+    data:
+      image: <image-from-above>
+    kind: ConfigMap
+    metadata:
+      labels:
+        velero.io/plugin-config: true
+        velero.io/pod-volume-restore: RestoreItemAction
+      name: velero-config
+      namespace: kcm-system
+    ```
+
+    Add it to the management cluster:
+
+    ```shell
+    kubectl apply -n kcm-system -f velero-configmap.yaml
+    ```
+    
 1. Create the `BackupStorageLocation`/`Secret` objects that were created during the [preparation stage](./prepare-backups.md)
    of creating a backup (preferably the same depending on a plugin).
 

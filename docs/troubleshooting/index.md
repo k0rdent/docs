@@ -6,3 +6,4 @@ things run smoothly.
 - [Inspecting k0rdent events](events.md)
 - [AWS VPCs](admin-troubleshooting-aws-vpcs.md)
 - [EKS](known-issues-eks.md)
+- [GCP](known-issues-gcp.md)
