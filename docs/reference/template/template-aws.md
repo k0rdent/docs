@@ -54,7 +54,7 @@ The same SSH key will be used for all machines and a bastion host, or jump box. 
 To enable the bastion, set the `.spec.config.bastion.enabled` option in the
 `ClusterDeployment` object to `true`.
 
-You can get a full list of the bastion configuration options in the [CAPA docs](https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta1.Bastion).
+You can get a full list of the bastion configuration options in the [CAPA docs](https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Bastion).
 
 The resulting `ClusterDeployment` might look something like this:
 
@@ -105,3 +105,16 @@ spec:
     workersNumber: 1
 ...
 ```
+
+## Non-root volumes
+
+To configure options for non-root storage volumes, set the corresponding
+fields in the `ClusterDeployment` responsible for these settings, which depend on the template in use:
+
+| Template | Section(s) |
+| --- | --- |
+| `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` | `.spec.controlPlane.nonRootVolumes`,`.spec.worker.nonRootVolumes` |
+| `aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}` | `.spec.nonRootVolumes` |
+| `aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}` | `.spec.worker.nonRootVolumes` |
+
+The `nonRootVolumes` field is **a list** of [Volumes](https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Volume).
