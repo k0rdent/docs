@@ -38,7 +38,7 @@ In the event of disaster, you can restore from a backup by doing the following:
     kind: Restore
     metadata:
       name: <restore-name>
-      namespace: <your-namespace>
+      namespace: kcm-system
     spec:
       backupName: <backup-name>
       existingResourcePolicy: update
