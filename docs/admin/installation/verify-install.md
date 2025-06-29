@@ -128,41 +128,25 @@ aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsSta
 azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
 azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
 azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
-docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
+docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}          true
 gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
 gcp-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
 gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
 openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
-remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}            true
 vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
 vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
-If this is a new `v0.2.0` cluster, you will see:
+## Verify {{{ docsVersionInfo.k0rdentName }}} status
+
+The final test of whether {{{ docsVersionInfo.k0rdentName }}} installation is installed is making sure the
+status of the `Management` object itself is `True`:
 
 ```shell
-No resources found in kcm-system namespace.
+kubectl get management -n kcm-system
 ```
-
-You can then install the `ServiceTemplates` objects as follows:
-
-```shell
-helm upgrade --install catalog-core oci://ghcr.io/k0rdent/catalog/charts/catalog-core --version 1.0.0 -n kcm-system
-```
-
-Finally, make sure the `ServiceTemplate` objects are installed and valid:
-
-```shell
-kubectl get servicetemplate -n kcm-system
-```
-
 ```console
-NAME                      VALID
-cert-manager-1-16-2       true
-dex-0-19-1                true
-external-secrets-0-11-0   true
-ingress-nginx-4-11-0      true
-ingress-nginx-4-11-3      true
-kyverno-3-2-6             true
-velero-8-1-0              true
+NAME   READY   RELEASE         AGE
+kcm    True    kcm-1-1-0-rc1   18m
 ```
