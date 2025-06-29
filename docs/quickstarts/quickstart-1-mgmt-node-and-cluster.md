@@ -2,7 +2,12 @@
 
 Please review the [Guide to QuickStarts](index.md) for preliminaries. This QuickStart unit details setting up a single-VM environment for managing and interacting with {{{ docsVersionInfo.k0rdentName }}}, and for hosting its components on a single-node local Kubernetes management cluster. Once {{{ docsVersionInfo.k0rdentName }}} is installed on the management cluster, you can drive it by SSHing into the management node (`kubectl` is there and will be provisioned with the appropriate `kubeconfig`) or remotely by various means. For example, you can install the management cluster `kubeconfig` in Lens or another Kubernetes dashboard on your laptop, tunnel across from your own local `kubectl`, and so on.
 
-## Install a single-node k0s cluster locally as the management cluster
+## Install a Kubernetes cluster as the management cluster
+
+The {{{ docsVersionInfo.k0rdentName }}} management cluster is a plain Kubernetes cluster; you can use any CNCF-certified 
+distribution to create it. For example, we have documented creating a [single-node k0s cluster](../admin/installation/create-mgmt-clusters/mgmt-create-k0s-single.md), a [multi-node k0s cluster](../admin/installation/create-mgmt-clusters/mgmt-create-k0s-multi.md), 
+and an [AWS EKS multi-node cluster](../admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md) to use as your management cluster. The instructions on this page explain the single-node k0s process,
+but feel free to deploy one of the other configurations, then move on to configuring and creating a child cluster on your chosen architecture.
 
 [k0s Kubernetes](https://k0sproject.io) is a CNCF-certified minimal single-binary Kubernetes that installs with one command and brings along its own CLI. We're using it to quickly set up a single-node management cluster on our manager node. However, {{{ docsVersionInfo.k0rdentName }}} works on any CNCF-certified Kubernetes. If you choose to use something else, we would love to hear how you set things up to work for you.
 
