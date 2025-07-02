@@ -1,6 +1,0 @@
-main
-release-v1.1.1
-release-v1.0.0
-release-v0.3.0
-release-v0.2.0
-release-v0.1.0
