@@ -30,6 +30,18 @@ In the event of disaster, you can restore from a backup by doing the following:
 1. Create the `BackupStorageLocation`/`Secret` objects that were created during the [preparation stage](./prepare-backups.md)
    of creating a backup (preferably the same depending on a plugin).
 
+1. Apply the workaround to avoid failure during the restoration.
+   [Related known issue: Velero #9023](https://github.com/vmware-tanzu/velero/issues/9023).
+
+    The fix is to "rename" the `velero` deployment via creation a new one and delete the old one:
+
+    ```bash
+    kubectl get deploy -n kcm-system kcm-velero -o yaml | \
+    yq '(.metadata.name = "velero") | del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp)' | \
+    kubectl apply -f - && \
+    kubectl delete deploy -n kcm-system kcm-velero
+    ```
+
 1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/v1.15/api-types/restore/) object.
    Note that it is important to set the `.spec.existingResourcePolicy` field value to `update`:
 
@@ -47,53 +59,6 @@ In the event of disaster, you can restore from a backup by doing the following:
     ```
 
 1. Wait until the `Restore` status is `Completed` and all `kcm` components are up and running.
-
-## If the Restore fails
-
-At the time of this writing, there is a mis-match between what {{{ docsVersionInfo.k0rdentName }}} expects 
-   and the objects `velero` provides, which may result in a `PartiallyFailed` result. A fix for this problem 
-   is coming soon, but in the meantime, you will need to rename the `kcm-velero` `Deployment` to `velero`.  
-   
-   Follow these steps:
-
-1. Export the YAML for the object, then delete it:
-
-    ```shell
-    kubectl -n kcm-system get deployment kcm-velero -o yaml > velero-deployment.yaml
-    kubectl delete -n kcm-system deployment kcm-velero
-    ```
-    ```console
-    deployment.apps "kcm-velero" deleted
-    ```
-
-2. Edit the `velero-deployment.yaml` file to change `metadata.name` from `kcm-velero` to `velero`:
-
-    ```yaml
-    ...
-        component: velero
-        helm.sh/chart: velero-9.1.2
-      name: velero
-      namespace: kcm-system
-      resourceVersion: "1653"
-    ...
-    ```
-
-3. Recreate the `Deployment` with the new name:
-
-    ```shell
-    kubectl apply -n kcm-system -f velero-deployment.yaml
-    ```
-    ```console
-    deployment.apps/velero created
-    ```
-    
-4. Delete the failed `Restore`:
-
-    ```shell
-    kubectl delete restore -n <your-namespace> <restore-name>
-    ```
-
-5. Recreate the `Restore` object as before. It should now complete successfully.
 
 ## Caveats
 
