@@ -1217,15 +1217,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#5-cluster-management-with-kind-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Cluster Management with KinD (Example)
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1274,13 +1265,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuring-kubernetes-cli" class="md-nav__link">
+  <a href="#configuring-the-kubernetes-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring Kubernetes CLI
+      Configuring the Kubernetes CLI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuring Kubernetes CLI">
+    <nav class="md-nav" aria-label="Configuring the Kubernetes CLI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4117,15 +4108,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#5-cluster-management-with-kind-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Cluster Management with KinD (Example)
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -4174,13 +4156,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuring-kubernetes-cli" class="md-nav__link">
+  <a href="#configuring-the-kubernetes-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring Kubernetes CLI
+      Configuring the Kubernetes CLI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuring Kubernetes CLI">
+    <nav class="md-nav" aria-label="Configuring the Kubernetes CLI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4274,14 +4256,14 @@
 
 
 <h1 id="kubernetes-oidc-authentication-setup-guide-for-okta">Kubernetes OIDC Authentication Setup Guide for Okta<a class="headerlink" href="#kubernetes-oidc-authentication-setup-guide-for-okta" title="Permanent link">#</a></h1>
-<p>This setion explains how to configure k0rdent to use Okta as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any Kubernetes environment that meets the minimum requirements for k0rdent.</p>
+<p>This section explains how to configure k0rdent to use Okta as an OIDC provider for authentication. While the examples use k0s for demonstration purposes, the concepts and procedures are fully applicable to any Kubernetes environment that meets the minimum requirements for k0rdent.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <p>Before you begin, ensure that your environment meets the following prerequisites.</p>
 <h3 id="1-required-software">1. Required Software<a class="headerlink" href="#1-required-software" title="Permanent link">#</a></h3>
 <p>Make sure your development machine has the following installed:</p>
 <ul>
 <li><strong><a href="https://docs.docker.com/">Docker</a>:</strong> Container runtime to build and run containerized applications.</li>
-<li><strong>k0rdent Management Cluster:</strong> Although KinD is used in this guide, you may use any k0rdent management cluster (for example, <a href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>, <a href="https://microk8s.io/">MicroK8s</a>, or a cloud-based cluster) that supports deploying k0rdent.</li>
+<li><strong>k0rdent Management Cluster:</strong> Although k0s is used in this guide, you may use any <a href="../../create-mgmt-clusters/">k0rdent management cluster</a> (for example, <a href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>, <a href="https://microk8s.io/">MicroK8s</a>, or a cloud-based cluster) that supports deploying k0rdent.</li>
 <li><strong><a href="https://helm.sh/">Helm</a>:</strong> A package manager for Kubernetes to install and manage applications. </li>
 <li><strong><a href="https://www.gnu.org/software/coreutils/">Coreutils</a>:</strong> Standard UNIX utilities for various file operations. </li>
 <li><strong><a href="https://stedolan.github.io/jq/">jq</a>:</strong> A lightweight and flexible command-line JSON processor. </li>
@@ -4300,11 +4282,11 @@
 </li>
 <li>
 <p><strong>Obtain Okta Credentials:</strong><br />
-  After setting up your Okta account, note the following:</p>
+  After setting up your Okta account and application, note the following:</p>
 </li>
 <li>Your <strong>Okta Domain</strong> (for example, <code>https://your-okta-domain.okta.com</code>)</li>
 <li>The <strong>Authorization Server</strong> URL (typically something like <code>https://your-okta-domain.okta.com/oauth2/default</code>)</li>
-<li>The <strong>Client ID</strong> generated when you register your Kubernetes application in Okta</li>
+<li>The <strong>Client ID</strong> and <strong>Client Secret</strong> generated when you register your Kubernetes application in Okta</li>
 <li>Any additional scopes or API keys as required by your integration</li>
 </ul>
 <h2 id="installation-steps">Installation Steps<a class="headerlink" href="#installation-steps" title="Permanent link">#</a></h2>
@@ -4312,7 +4294,7 @@
 <h3 id="1-install-krew-kubectl-plugin-manager">1. Install Krew (Kubectl Plugin Manager)<a class="headerlink" href="#1-install-krew-kubectl-plugin-manager" title="Permanent link">#</a></h3>
 <p>Krew is a package manager for kubectl plugins. Installing it ensures you can manage the OIDC login plugin easily.</p>
 <p>You can install Krew by running the following command in your terminal. This script detects your OS and architecture, downloads the latest Krew release, extracts it, and installs it:</p>
-<div class="highlight"><pre><span></span><code><span class="o">(</span>
+<p><div class="highlight"><pre><span></span><code><span class="o">(</span>
 <span class="w">  </span><span class="nb">set</span><span class="w"> </span>-x<span class="p">;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
 <span class="w">  </span><span class="nv">OS</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>uname<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;[:upper:]&#39;</span><span class="w"> </span><span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
 <span class="w">  </span><span class="nv">ARCH</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/x86_64/amd64/&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/\(arm\)\(64\)\?.*/\1\2/&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/aarch64$/arm64/&#39;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
@@ -4322,6 +4304,9 @@
 <span class="w">  </span>./<span class="s2">&quot;</span><span class="si">${</span><span class="nv">KREW</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>install<span class="w"> </span>krew
 <span class="o">)</span>
 </code></pre></div>
+Add <code>krew</code> to your path:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">KREW_ROOT</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.krew</span><span class="si">}</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</code></pre></div></p>
 <p>For additional details, troubleshooting tips, and instructions for Windows installations, see the official <a href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/">Krew Installation Guide</a>.</p>
 <h3 id="2-install-the-oidc-login-plugin">2. Install the OIDC Login Plugin<a class="headerlink" href="#2-install-the-oidc-login-plugin" title="Permanent link">#</a></h3>
 <p>The OIDC login plugin for kubectl simplifies the process of obtaining and refreshing tokens from your Okta instance.</p>
@@ -4329,14 +4314,14 @@
 kubectl<span class="w"> </span>krew<span class="w"> </span>install<span class="w"> </span>oidc-login
 </code></pre></div>
 <h3 id="3-create-the-structured-authentication-configuration">3. Create the Structured Authentication Configuration<a class="headerlink" href="#3-create-the-structured-authentication-configuration" title="Permanent link">#</a></h3>
-<p>This configuration file tells your Kubernetes API server how to validate JWT tokens issued by Okta. Create a file named <code>authentication-config.yaml</code> with the following content:</p>
+<p>This configuration file tells your Kubernetes API server how to validate JWT tokens issued by Okta. Create a file on the controller called <code>authentication-config.yaml</code> with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiserver.config.k8s.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AuthenticationConfiguration</span>
 <span class="nt">jwt</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">issuer</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://trial-***.okta.com/oauth2/***&quot;</span>
+<span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;YOUR_OKTA_DOMAIN&gt;&quot;</span>
 <span class="w">      </span><span class="nt">audiences</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0oa***697</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;YOUR_OKTA_CLIENT_ID&gt;</span>
 <span class="w">    </span><span class="nt">claimMappings</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">username</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">claim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">email</span>
@@ -4361,51 +4346,37 @@ kubectl<span class="w"> </span>krew<span class="w"> </span>install<span class="w
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expression</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;user.groups.all(group,</span><span class="nv"> </span><span class="s">!group.startsWith(&#39;system:&#39;))&quot;</span>
 <span class="w">        </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;groups</span><span class="nv"> </span><span class="s">cannot</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">reserved</span><span class="nv"> </span><span class="s">system:</span><span class="nv"> </span><span class="s">prefix&quot;</span>
 </code></pre></div>
-<blockquote>
-<p><strong>Note:</strong> Replace placeholder values (e.g., <code>trial-***</code>, <code>0oa***697</code>) with the actual values from your Okta configuration.</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Remember to replace placeholder values with the actual values from your Okta configuration.</p>
+</div>
 <h3 id="4-configure-your-kubernetes-cluster">4. Configure Your Kubernetes Cluster<a class="headerlink" href="#4-configure-your-kubernetes-cluster" title="Permanent link">#</a></h3>
-<p>Below is an example KinD cluster configuration that mounts the authentication configuration file. Adapt these instructions if you are using another Kubernetes system.</p>
-<h4 id="create-the-kind-cluster-configuration">Create the KinD Cluster Configuration<a class="headerlink" href="#create-the-kind-cluster-configuration" title="Permanent link">#</a></h4>
-<p>Create a file named <code>kind-config.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kind.x-k8s.io/v1alpha4</span>
-<span class="nt">featureGates</span><span class="p">:</span>
-<span class="w">  </span><span class="s">&quot;StructuredAuthenticationConfiguration&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="nt">nodes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
-<span class="w">    </span><span class="nt">kubeadmConfigPatches</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">        </span><span class="no">kind: ClusterConfiguration</span>
-<span class="w">        </span><span class="no">apiServer:</span>
-<span class="w">          </span><span class="no">extraArgs:</span>
-<span class="w">            </span><span class="no">authentication-config: /etc/kubernetes/authentication-config.yaml</span>
-<span class="w">          </span><span class="no">extraVolumes:</span>
-<span class="w">            </span><span class="no">- name: authentication-config</span>
-<span class="w">              </span><span class="no">hostPath: /etc/kubernetes/authentication-config.yaml</span>
-<span class="w">              </span><span class="no">mountPath: /etc/kubernetes/authentication-config.yaml</span>
-<span class="w">              </span><span class="no">readOnly: true</span>
-<span class="w">              </span><span class="no">pathType: File</span>
-<span class="w">    </span><span class="nt">extraMounts</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./authentication-config.yaml</span>
-<span class="w">        </span><span class="nt">containerPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/kubernetes/authentication-config.yaml</span>
+<p>Edit your k0s config (<code>/etc/k0s/config.yaml</code>) to tell the API server to load your auth config and enable the feature gate:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">api</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># enable the StructuredAuthenticationConfiguration feature</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--feature-gates=StructuredAuthenticationConfiguration=true</span>
+<span class="w">      </span><span class="c1"># point to your auth config file</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--authentication-config=/etc/k0s/authentication-config.yaml</span>
+<span class="w">    </span><span class="nt">extraVolumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth-config</span>
+<span class="w">        </span><span class="nt">hostPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/k0s/authentication-config.yaml</span>
+<span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/k0s/authentication-config.yaml</span>
 <span class="w">        </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">File</span>
+</code></pre></div>
+<p>Then:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ensure your auth file is in place</span>
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/k0s
+sudo<span class="w"> </span>cp<span class="w"> </span>authentication-config.yaml<span class="w"> </span>/etc/k0s/authentication-config.yaml
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/k0s/authentication-config.yaml
+
+<span class="c1"># restart k0s so the API server picks up the new flags</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>k0scontroller
 </code></pre></div>
 <p>For other Kubernetes distributions, the concept remains the same—you need to configure your API server to load the <code>authentication-config.yaml</code> file. Check your cluster’s documentation for mounting configuration files and setting extra API server arguments.</p>
-<h3 id="5-cluster-management-with-kind-example">5. Cluster Management with KinD (Example)<a class="headerlink" href="#5-cluster-management-with-kind-example" title="Permanent link">#</a></h3>
-<p>If you are using KinD, execute the following commands. Otherwise, adjust these steps to match your Kubernetes provider’s procedures.</p>
-<h4 id="create-the-kind-cluster">Create the KinD Cluster<a class="headerlink" href="#create-the-kind-cluster" title="Permanent link">#</a></h4>
-<div class="highlight"><pre><span></span><code>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--verbosity<span class="w"> </span><span class="m">99</span><span class="w"> </span>--config<span class="w"> </span>kind-config.yaml<span class="w"> </span>--retain
-</code></pre></div>
-<h4 id="retrieve-api-server-pod-information">Retrieve API Server Pod Information<a class="headerlink" href="#retrieve-api-server-pod-information" title="Permanent link">#</a></h4>
-<p>To inspect the API server configuration, use:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>kube-apiserver-<span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].metadata.name}&#39;</span><span class="k">)</span>
-</code></pre></div>
-<h4 id="debugging-the-control-plane">Debugging the Control Plane<a class="headerlink" href="#debugging-the-control-plane" title="Permanent link">#</a></h4>
-<p>For troubleshooting, you can view logs and container status:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>kind-control-plane<span class="w"> </span>ls<span class="w"> </span>/var/log/containers/
-docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>kind-control-plane<span class="w"> </span>crictl<span class="w"> </span>ps
-</code></pre></div>
 <h2 id="rbac-configuration">RBAC Configuration<a class="headerlink" href="#rbac-configuration" title="Permanent link">#</a></h2>
 <p>For k0rdent to work properly with OIDC-authenticated users, configure RBAC policies. Below is a sample RoleBinding configuration that grants permissions to a specific group.</p>
 <p>Create a file named <code>rolebinding.yaml</code>:</p>
@@ -4416,7 +4387,7 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">subjects</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Group</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-ns-viewer</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-ns-viewer</span><span class="w"> </span><span class="c1"># Must match the Okta group claim</span>
 <span class="w">    </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
 <span class="nt">roleRef</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
@@ -4430,8 +4401,8 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 <h3 id="obtaining-an-okta-oidc-token">Obtaining an Okta OIDC Token<a class="headerlink" href="#obtaining-an-okta-oidc-token" title="Permanent link">#</a></h3>
 <p>Use the <code>kubectl oidc-login</code> plugin to retrieve a token from your Okta instance. The token is used for authenticating with your Kubernetes API server.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">K8S_TOKEN</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>oidc-login<span class="w"> </span>get-token<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--oidc-issuer-url<span class="o">=</span>https://trial-***.okta.com/oauth2/***<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--oidc-client-id<span class="o">=</span>0oa***697<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--oidc-issuer-url<span class="o">=</span>&lt;YOUR_OKTA_DOMAIN&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--oidc-client-id<span class="o">=</span>&lt;YOUR_OKTA_CLIENT_ID&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--listen-address<span class="o">=</span><span class="m">127</span>.0.0.1:8000<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--skip-open-browser<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--oidc-extra-scope<span class="o">=</span>email<span class="w"> </span><span class="se">\</span>
@@ -4446,38 +4417,59 @@ docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </spa
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>--token<span class="o">=</span><span class="nv">$K8S_TOKEN</span><span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-v<span class="o">=</span><span class="m">9</span>
 </code></pre></div>
 <hr />
-<h2 id="configuring-kubernetes-cli">Configuring Kubernetes CLI<a class="headerlink" href="#configuring-kubernetes-cli" title="Permanent link">#</a></h2>
+<h2 id="configuring-the-kubernetes-cli">Configuring the Kubernetes CLI<a class="headerlink" href="#configuring-the-kubernetes-cli" title="Permanent link">#</a></h2>
 <p>After obtaining your token, update your kubectl configuration to use these OIDC credentials.</p>
 <h3 id="1-set-user-credentials">1. Set User Credentials<a class="headerlink" href="#1-set-user-credentials" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-credentials<span class="w"> </span>user<span class="w"> </span>--token<span class="o">=</span><span class="nv">$K8S_TOKEN</span>
 </code></pre></div>
 <h3 id="2-create-a-new-context">2. Create a New Context<a class="headerlink" href="#2-create-a-new-context" title="Permanent link">#</a></h3>
-<p>Set up a context that references your cluster and the new user credentials. For KinD, you might use:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>user<span class="w"> </span>--cluster<span class="o">=</span><span class="s2">&quot;kind-</span><span class="k">$(</span>kind<span class="w"> </span>get<span class="w"> </span>clusters<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>--user<span class="o">=</span>user<span class="w"> </span>--namespace<span class="o">=</span>kcm-system
+<p>In your <code>~/.kube/config</code>, add:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">users</span><span class="p">:</span>
+<span class="nn">...</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">okta-user</span>
+<span class="w">  </span><span class="nt">user</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">exec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client.authentication.k8s.io/v1beta1</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubectl</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc-login</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-token</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-issuer-url=&lt;YOUR_OKTA_DOMAIN&gt;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-client-id=&lt;YOUR_OKTA_CLIENT_ID&gt;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-client-secret=&lt;YOUR_OKTA_CLIENT_SECRET&gt;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-extra-scope=email</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-extra-scope=groups</span>
 </code></pre></div>
-<p>For other Kubernetes clusters, replace the cluster name appropriately.</p>
+<p>Also add a new context referencing that user, as in:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">contexts</span><span class="p">:</span>
+<span class="nn">...</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">okta@k0s</span><span class="w">        </span>
+<span class="w">  </span><span class="nt">context</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0s</span>
+<span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">okta-user</span>
+</code></pre></div>
 <h3 id="3-verify-access">3. Verify Access<a class="headerlink" href="#3-verify-access" title="Permanent link">#</a></h3>
 <p>Confirm that your OIDC credentials provide the necessary access:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>--context<span class="o">=</span>user<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>namespaces
-kubectl<span class="w"> </span>--context<span class="o">=</span>user<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span>kcm-system
-kubectl<span class="w"> </span>--context<span class="o">=</span>user<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>--context<span class="o">=</span>okta@k0s<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>namespaces
+kubectl<span class="w"> </span>--context<span class="o">=</span>okta@k0s<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span>kcm-system
+kubectl<span class="w"> </span>--context<span class="o">=</span>okta@k0s<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <h3 id="4-switch-contexts">4. Switch Contexts<a class="headerlink" href="#4-switch-contexts" title="Permanent link">#</a></h3>
 <p>Switch to the OIDC context when needed:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>user
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>okta@k0s
 </code></pre></div>
-<p>To revert to your default context, use the standard context name (for example, the KinD default):</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span><span class="s2">&quot;kind-</span><span class="k">$(</span>kind<span class="w"> </span>get<span class="w"> </span>clusters<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span><span class="s2">&quot;</span>
+<p>To revert to your default context, use the standard context name:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>Default
 </code></pre></div>
 <h3 id="5-view-kubeconfig-details">5. View Kubeconfig Details<a class="headerlink" href="#5-view-kubeconfig-details" title="Permanent link">#</a></h3>
 <p>Inspect your current kubeconfig to confirm the setup:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--context<span class="o">=</span>user
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--context<span class="o">=</span>okta@k0s<span class="w"> </span>
 </code></pre></div>
 <h3 id="6-debug-inspect-api-server-logs">6. [DEBUG] Inspect API Server Logs<a class="headerlink" href="#6-debug-inspect-api-server-logs" title="Permanent link">#</a></h3>
 <p>For further troubleshooting, review the API server logs:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>--context<span class="o">=</span><span class="s2">&quot;kind-</span><span class="k">$(</span>kind<span class="w"> </span>get<span class="w"> </span>clusters<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>kube-apiserver-kind-control-plane<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>authentication.go
+<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>-u<span class="w"> </span>k0scontroller<span class="w"> </span>-f
 </code></pre></div>
-<p>By following these instructions, you will have a fully functional OIDC authentication system integrated with your Kubernetes cluster, regardless of whether you’re using KinD or another deployment environment.</p>
+<p>By following these instructions, you will have a fully functional OIDC authentication system integrated with your Kubernetes cluster, regardless of whether you’re using k0s or another deployment environment.</p>
 
 
 
