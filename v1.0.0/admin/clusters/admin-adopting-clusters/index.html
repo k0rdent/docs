@@ -1314,6 +1314,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#self-adopting-the-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Adopting the Management Cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-tips" class="md-nav__link">
     <span class="md-ellipsis">
       Additional Tips
@@ -3702,6 +3711,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#self-adopting-the-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Adopting the Management Cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-tips" class="md-nav__link">
     <span class="md-ellipsis">
       Additional Tips
@@ -3855,6 +3873,125 @@ this information to confirm that the adoption is successful.</p>
     any k0rdent-deployed cluster.</p>
 <p>This process doesn't change the adopted cluster's existing workloads or configurations. Instead, it enhances your 
 ability to manage the cluster through k0rdent.</p>
+<h2 id="self-adopting-the-management-cluster">Self-Adopting the Management Cluster<a class="headerlink" href="#self-adopting-the-management-cluster" title="Permanent link">#</a></h2>
+<p>k0rdent makes it easy to manage Kubernetes clusters, but it only manages
+child clusters represented by a <code>ClusterDeployment</code>. So in order for k0rdent
+to manage itself, you must adopt the management cluster. Fortunately, because you're using the target
+cluster's <code>kubeconfig</code>, this is pretty straightforward.</p>
+<p>For example, adopting a k0s-based management cluster might look like this:</p>
+<ol>
+<li>
+<p>Get the IP address of the control plane:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME             STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME</span>
+<span class="go">ip-172-31-8-77   Ready    control-plane   9d    v1.33.2+k0s   172.31.8.77   &lt;none&gt;        Ubuntu 24.04.2 LTS   6.8.0-1029-aws   containerd://1.7.27</span>
+</code></pre></div></p>
+<p>Because the cluster will be accessing itself, the <code>INTERNAL-IP</code> (in this example, <code>172.21.8.77</code>), is sufficient.</p>
+</li>
+<li>
+<p>Edit the <code>kubeconfig</code>:</p>
+<p>Make sure that the <code>kubeconfig</code> file references the IP address, rather than <code>localhost</code>.  You can do this by
+editing the file directly:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">clusters</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cluster</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">certificate-authority-data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LS0tLS1CR...tLQo=</span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://172.21.8.77:6443</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="nt">contexts</span><span class="p">:</span>
+<span class="nn">...</span>
+</code></pre></div>
+</li>
+<li>
+<p>Get the base64-encoded <code>kubeconfig</code>:</p>
+<p><div class="highlight"><pre><span></span><code>base64<span class="w"> </span>/path/to/kubeconfig
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv</span>
+<span class="go">cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VSQlJF</span>
+<span class="go">...</span>
+<span class="go">dFZjVlphZVVWWlUyMDVlRFF4UVVoMlpYSnhWVGxvQ2kwdExTMHRSVTVFSUZKVFFTQlFVa2xXUVZS</span>
+<span class="go">RklFdEZXUzB0TFMwdENnPT0K</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Create the <code>Credential</code> to access the cluster:</p>
+<p>Create a file with the <code>Secret</code> and <code>Credential</code> objects, such as <code>adopt-creds.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-adopt-cluster-kubeconfig</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BASE64_KUBECONFIG&gt;</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-adopt-cluster-credential</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Credential</span><span class="nv"> </span><span class="s">For</span><span class="nv"> </span><span class="s">Self</span><span class="nv"> </span><span class="s">Adoption</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Management</span><span class="nv"> </span><span class="s">Cluster&quot;</span>
+<span class="w">  </span><span class="nt">identityRef</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-adopt-cluster-kubeconfig</span>
+<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+</code></pre></div>
+<p>Make sure to remove the line feeds from the encoded <code>kubeconfig</code>.</p>
+</li>
+<li>
+<p>Add the credential objects:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>adopt-creds.yaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">secret/self-adopt-cluster-kubeconfig created</span>
+<span class="go">credential.k0rdent.mirantis.com/self-adopt-cluster-credential created</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Define the <code>ClusterDeployment</code>:</p>
+<p>First determine the <code>ClusterTemplate</code>:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterTemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<span class="go">adopted-cluster-0-2-0           true</span>
+<span class="go">adopted-cluster-1-0-0           true</span>
+<span class="go">adopted-cluster-1-0-1           true</span>
+<span class="go">aws-eks-0-2-0                   true</span>
+<span class="go">...</span>
+</code></pre></div></p>
+<p>Create the definition file, such as <code>self-adopt-cluster.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-adopted-mgmt</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adopted-cluster-1-0-1</span>
+<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-adopt-cluster-credential</span>
+<span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</code></pre></div>
+</li>
+<li>
+<p>Add the <code>ClusterDeployment</code>:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>self-adopt-cluster.yaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/self-adopted-mgmt created</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Verify the <code>ClusterDeployment</code>:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployment<span class="w"> </span>-A
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                READY   SERVICES   TEMPLATE                MESSAGES          AGE</span>
+<span class="go">kcm-system   self-adopted-mgmt   True    0/0        adopted-cluster-1-0-1   Object is ready   14s</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>Now you can manage the k0rdent management cluster just as you'd manage 
+any other child cluster.</p>
 <h2 id="additional-tips">Additional Tips<a class="headerlink" href="#additional-tips" title="Permanent link">#</a></h2>
 <ul>
 <li>If you encounter issues, double-check that kubeconfig file you used for the adopted cluster is valid 
