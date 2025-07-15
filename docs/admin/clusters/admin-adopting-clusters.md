@@ -135,6 +135,149 @@ When you adopt a cluster, {{{ docsVersionInfo.k0rdentName }}} performs several a
 This process doesn't change the adopted cluster's existing workloads or configurations. Instead, it enhances your 
 ability to manage the cluster through {{{ docsVersionInfo.k0rdentName }}}.
 
+## Self-Adopting the Management Cluster
+
+{{{ docsVersionInfo.k0rdentName }}} makes it easy to manage Kubernetes clusters, but it only manages
+child clusters represented by a `ClusterDeployment`. So in order for {{{ docsVersionInfo.k0rdentName }}}
+to manage itself, you must adopt the management cluster. Fortunately, because you're using the target
+cluster's `kubeconfig`, this is pretty straightforward.
+
+For example, adopting a k0s-based management cluster might look like this:
+
+1. Get the IP address of the control plane:
+
+    ```shell
+    kubectl get nodes -o wide
+    ```
+    ```console
+    NAME             STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+    ip-172-31-8-77   Ready    control-plane   9d    v1.33.2+k0s   172.31.8.77   <none>        Ubuntu 24.04.2 LTS   6.8.0-1029-aws   containerd://1.7.27
+    ```
+
+    Because the cluster will be accessing itself, the `INTERNAL-IP` (in this example, `172.21.8.77`), is sufficient.
+
+2. Edit the `kubeconfig`:
+
+    Make sure that the `kubeconfig` file references the IP address, rather than `localhost`.  You can do this by
+    editing the file directly:
+
+    ```yaml
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data: LS0tLS1CR...tLQo=
+        server: https://172.21.8.77:6443
+      name: local
+    contexts:
+    ...
+    ```
+
+3. Get the base64-encoded `kubeconfig`:
+
+    ```shell
+    base64 /path/to/kubeconfig
+    ```
+    ```console
+    YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv
+    cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VSQlJF
+    ...
+    dFZjVlphZVVWWlUyMDVlRFF4UVVoMlpYSnhWVGxvQ2kwdExTMHRSVTVFSUZKVFFTQlFVa2xXUVZS
+    RklFdEZXUzB0TFMwdENnPT0K
+    ```
+
+4. Create the `Credential` to access the cluster:
+
+    Create a file with the `Secret` and `Credential` objects, such as `adopt-creds.yaml`:
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: self-adopt-cluster-kubeconfig
+      namespace: kcm-system
+    type: Opaque
+    data:
+      value: <BASE64_KUBECONFIG>
+    ---
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: Credential
+    metadata:
+      name: self-adopt-cluster-credential
+      namespace: kcm-system
+    spec:
+      description: "Credential For Self Adoption of Management Cluster"
+      identityRef:
+        apiVersion: v1
+        kind: Secret
+        name: self-adopt-cluster-kubeconfig
+        namespace: kcm-system
+    ```
+
+    Make sure to remove the line feeds from the encoded `kubeconfig`.
+
+4. Add the credential objects:
+
+    ```shell
+    kubectl apply -f adopt-creds.yaml
+    ```
+    ```console
+    secret/self-adopt-cluster-kubeconfig created
+    credential.k0rdent.mirantis.com/self-adopt-cluster-credential created
+    ```
+    
+5. Define the `ClusterDeployment`:
+
+    First determine the `ClusterTemplate`:
+
+    ```shell
+    kubectl get ClusterTemplate -n kcm-system
+    ```
+    ```console
+    NAME                            VALID
+    adopted-cluster-0-2-0           true
+    adopted-cluster-1-0-0           true
+    adopted-cluster-1-0-1           true
+    aws-eks-0-2-0                   true
+    ...
+    ```
+
+    Create the definition file, such as `self-adopt-cluster.yaml`:
+
+    ```yaml
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: ClusterDeployment
+    metadata:
+      name: self-adopted-mgmt
+      namespace: kcm-system
+    spec:
+      template: adopted-cluster-1-0-1
+      credential: self-adopt-cluster-credential
+      dryRun: False
+      config: {}
+    ```
+    
+6. Add the `ClusterDeployment`:
+
+    ```shell
+    kubectl apply -f self-adopt-cluster.yaml
+    ```
+    ```console
+    clusterdeployment.k0rdent.mirantis.com/self-adopted-mgmt created
+    ```
+
+7. Verify the `ClusterDeployment`:
+
+    ```shell
+    kubectl get clusterdeployment -A
+    ```
+    ```console
+    NAMESPACE    NAME                READY   SERVICES   TEMPLATE                MESSAGES          AGE
+    kcm-system   self-adopted-mgmt   True    0/0        adopted-cluster-1-0-1   Object is ready   14s
+    ```
+
+Now you can manage the {{{ docsVersionInfo.k0rdentName }}} management cluster just as you'd manage 
+any other child cluster.
+
 ## Additional Tips
 - If you encounter issues, double-check that kubeconfig file you used for the adopted cluster is valid 
   and matches the cluster you're trying to adopt.
