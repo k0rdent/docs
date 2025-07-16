@@ -14,7 +14,7 @@ To deploy a cluster using {{{ docsVersionInfo.k0rdentName}}} on any SSH accessib
 
 ### Machines Parameters
 
-* `machines[].address` (string): The IP address of the remote machine. Example: `"10.130.0.237"`.
+* `machines[].address` (string): Address is the IP address or DNS name of the remote machine. Examples: `"10.130.0.237"`, `"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`, `"some-hostname"`.
 * `machines[].port` (number): The SSH port of the remote machine. Default is 22. Example: `22`.
 * `machines[].user` (string): The user name for SSH login. Default is root. Example: `"root"`.
 * `machines[].useSudo` (boolean): Whether or not to use sudo for running commands on the remote machine. Example: `false`.
