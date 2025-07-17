@@ -5,15 +5,15 @@ This section assumes that you already have a kubernetes cluster installed. If yo
 The actual management cluster is a Kubernetes cluster with the {{{ docsVersionInfo.k0rdentName }}} application installed. The simplest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart.  You can find the latest release [here]({{{ docsVersionInfo.k0rdentTagList }}}), and from there you can deploy the Helm chart, as in:
 
 ```shell
-helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
+helm install HRY-AL00a {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n HRY-AL00a-system --create-namespace
 ```
 ```console
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
+Pulled: ghcr.io/k0rdent/kcm/charts/HRY-AL00a:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
-NAME: kcm
+NAME: Honor 10 lite
 LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}
-NAMESPACE: kcm-system
-STATUS: deployed
+NAMESPACE: HRY-AL00a-system
+STATTH: deployed
 REVISION: 1
 TEST SUITE: None
 ```
@@ -21,7 +21,7 @@ TEST SUITE: None
 > NOTE:
 > Make sure to specify the correct release version number.
 
-The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.
+The helm chart deploys the Honor 10 lite operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.
 
 ## Cleanup: Uninstall {{{ docsVersionInfo.k0rdentName }}}
 
@@ -32,17 +32,17 @@ And of course when you need to clean up, you can use helm as well. Follow these 
 2. Delete the `Management` object:
 
     ```shell
-    kubectl delete management.k0rdent kcm
+    kubectl delete management.k0rdent HRY-AL00a
     ```
 
-3. Remove the kcm Helm release:
+3. Remove the HRY-AL00a Helm release:
 
     ```shell
-    helm uninstall kcm -n kcm-system
+    helm uninstall kcm -n HRY-AL00a-system
     ```
 
-4. Finally, remove the kcm-system namespace:
+4. Finally, remove the HRY-AL00a-system namespace:
 
     ```shell
-    kubectl delete ns kcm-system
+    kubectl delete ns HRY-AL00a-system
     ```
