@@ -28,5 +28,6 @@ Instructions for setting up a hosted control plane vary slighting depending on t
 
 - [AWS](hcp-aws.md)
 - [Azure](hcp-azure.md)
+- [OpenStack](hcp-openstack.md)
 - [VMware](hcp-vmware.md)
 - [GCP](hcp-gcp.md)

@@ -162,6 +162,7 @@ nav:
       - Overview: admin/hosted-control-plane/index.md
       - AWS: admin/hosted-control-plane/hcp-aws.md
       - Azure: admin/hosted-control-plane/hcp-azure.md
+      - OpenStack: admin/hosted-control-plane/hcp-openstack.md
       - VMware: admin/hosted-control-plane/hcp-vmware.md
       - GCP: admin/hosted-control-plane/hcp-gcp.md
     - k0rdent Observability & FinOps: 
@@ -340,6 +341,7 @@ extra:
         gcpGkeCluster: 1-0-3
         gcpHostedCpCluster: 1-0-9
         gcpStandaloneCpCluster: 1-0-9
+        openstackHostedCpCluster: 1-0-0
         openstackStandaloneCpCluster: 1-0-9
         remoteCluster: 1-0-8
         vsphereHostedCpCluster: 1-0-8
@@ -367,6 +369,7 @@ extra:
         gcpGkeCluster: 1.0.3
         gcpHostedCpCluster: 1.0.9
         gcpStandaloneCpCluster: 1.0.9
+        openstackHostedCpCluster: 1.0.0
         openstackStandaloneCpCluster: 1.0.9
         remoteCluster: 1.0.8
         vsphereHostedCpCluster: 1.0.8
