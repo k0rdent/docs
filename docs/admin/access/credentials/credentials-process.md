@@ -71,7 +71,7 @@ In order to pass credentials to {{{ docsVersionInfo.k0rdentName }}} so it can ta
         instanceType: t3.small
     ```
 
-    As you can see, the user doesn't have to pass anything but the name of the `Credential` in order to deploy the cluster. So all an administrator has to do is add these `Credential`objects to the system and make them available. Note also that the `Credential` has to be available in the `ClusterDeployment`s namespace. (See [Cloud provider credentials propagation](./credentials-propogation.md) for more information on how that works. )
+    As you can see, the user doesn't have to pass anything but the name of the `Credential` in order to deploy the cluster. So all an administrator has to do is add these `Credential`objects to the system and make them available. Note also that the `Credential` has to be available in the `ClusterDeployment`s namespace. (See [Cloud provider credentials propagation](./credentials-propagation.md) for more information on how that works. )
     
 4. Optionally, certain credentials MAY be propagated to the `ClusterDeployment` after it is created.
 
