@@ -6,7 +6,7 @@ be deployed as a complete application.
 `ServiceTemplate` supports the following types as a source:
 
 - [`HelmChart`](https://fluxcd.io/flux/components/source/helmcharts/)
-- [`GitRespository`](https://fluxcd.io/flux/components/source/gitrepositories/)
+- [`GitRepository`](https://fluxcd.io/flux/components/source/gitrepositories/)
 - [`Bucket`](https://fluxcd.io/flux/components/source/buckets/)
 - [`OCIRepository`](https://fluxcd.io/flux/components/source/ocirepositories/)
 - `Secret`
