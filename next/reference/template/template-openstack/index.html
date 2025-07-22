@@ -1438,6 +1438,8 @@
       
         
       
+        
+      
     
     
     
@@ -1509,6 +1511,27 @@
   
   <span class="md-ellipsis">
     Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/hosted-control-plane/hcp-openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenStack
   </span>
   
 
@@ -3233,9 +3256,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuring-some-of-k0s-k0smotron-parameters" class="md-nav__link">
+  <a href="#configuring-some-of-k0s-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring some of k0s, k0smotron parameters
+      Configuring some of k0s parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hosted-clusterdeployment-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hosted ClusterDeployment parameters
     </span>
   </a>
   
@@ -3948,9 +3980,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuring-some-of-k0s-k0smotron-parameters" class="md-nav__link">
+  <a href="#configuring-some-of-k0s-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuring some of k0s, k0smotron parameters
+      Configuring some of k0s parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hosted-clusterdeployment-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hosted ClusterDeployment parameters
     </span>
   </a>
   
@@ -4057,12 +4098,14 @@
 <li><code>bastion</code> - bastion host being enabled and its flavor and image specified.</li>
 </ul>
 <h4 id="ssh-keys">SSH keys<a class="headerlink" href="#ssh-keys" title="Permanent link">#</a></h4>
-<p>Specify the SSH public key using the <code>.spec.config.controlPlane.sshKeyName</code> and <code>.spec.config.worker.sshKeyName</code> parameters (for the standalone control plane).</p>
+<p>Specify the SSH public key using the <code>.spec.config.controlPlane.sshKeyName</code> and <code>.spec.config.worker.sshKeyName</code> parameters (for the standalone control plane)
+or <code>spec.config.sshKeyName</code> parameter (for the hosted control plane).</p>
 <h4 id="bastion">Bastion<a class="headerlink" href="#bastion" title="Permanent link">#</a></h4>
 <p>Specify <code>.spec.config.bastion.enabled</code> to enable it as well as provide <code>sshKeyName</code>, <code>flavor</code> and <code>image</code> in <code>.spec.config.bastion.spec</code>, similarly to workers and control plane.</p>
 <p>Example `ClusterDeployment with enabled bastion can be found <a href="#example-clusterdeployment">below</a>.</p>
 <h3 id="machine-configuration">Machine Configuration<a class="headerlink" href="#machine-configuration" title="Permanent link">#</a></h3>
-<p>Configurations for control plane and worker nodes are specified separately under <code>.spec.config.controlPlane</code> and <code>.spec.config.worker</code>:</p>
+<p>Configurations for control plane and worker nodes are specified separately under <code>.spec.config.controlPlane</code> and <code>.spec.config.worker</code>
+for standalone control plane or under <code>spec.config</code> for hosted control plane.</p>
 <table>
 <thead>
 <tr>
@@ -4104,20 +4147,77 @@ The recommended minimum vCPU value for the control plane flavor is 2, while for 
 <p>If your OpenStack cloud contains more than one network marked as external it is necessary to provide which one clusterapi should use when creating a cluster. You do this by providing <code>.spec.config.externlNetwork.filter.name</code> value with the name of your external network.</p>
 <h3 id="load-balancer-configuration">Load Balancer Configuration<a class="headerlink" href="#load-balancer-configuration" title="Permanent link">#</a></h3>
 <p>If your user doesn't have access to or your cloud doesn't utilize octavia load balancer it is possible to disable usage of it by specifying
-<code>.spec.config.apiServerLoadBalancer.enabled</code> as <code>false</code>.</p>
+<code>.spec.config.apiServerLoadBalancer.enabled</code> as <code>false</code> (for standalone control plane only).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Disabling loadbalancer blocks usage of <code>LoadBalancer</code> type services in cluster until one is manually installed.</p>
 </div>
-<h3 id="configuring-some-of-k0s-k0smotron-parameters">Configuring some of k0s, k0smotron parameters<a class="headerlink" href="#configuring-some-of-k0s-k0smotron-parameters" title="Permanent link">#</a></h3>
+<h3 id="configuring-some-of-k0s-parameters">Configuring some of k0s parameters<a class="headerlink" href="#configuring-some-of-k0s-parameters" title="Permanent link">#</a></h3>
 <ul>
 <li><code>k0s.arch</code> (string): Defines K0s Arch in its download URL. Available if <a href="../../../appendix/appendix-extend-mgmt/#configuring-a-global-k0s-url">global.k0sURL</a>
    is set. Possible values: <code>"amd64"</code> (default), <code>"arm64"</code>, <code>"arm"</code>.</li>
-<li><code>k0s.cpArgs</code> (array of strings): A list of extra arguments to be passed to k0s controller.
+<li><code>k0s.cpArgs</code> (array of strings): A list of extra arguments to be passed to k0s controller. For standalone control plane only.
    See: <a href="https://docs.k0sproject.io/stable/cli/k0s_controller">https://docs.k0sproject.io/stable/cli/k0s_controller</a>.</li>
 <li><code>k0s.workerArgs</code> (array of strings): A list of extra arguments for configuring the k0s worker node. See: <a href="https://docs.k0sproject.io/stable/cli/k0s_worker">https://docs.k0sproject.io/stable/cli/k0s_worker</a>.</li>
 </ul>
+<h3 id="hosted-clusterdeployment-parameters">Hosted ClusterDeployment parameters<a class="headerlink" href="#hosted-clusterdeployment-parameters" title="Permanent link">#</a></h3>
+<h4 id="network-configuration">Network configuration<a class="headerlink" href="#network-configuration" title="Permanent link">#</a></h4>
+<p>The following parameters under <code>spec.config</code> are specific to the hosted cluster deployment:</p>
+<ul>
+<li>
+<p><code>network.filter</code> (object): Specifies a query to select an OpenStack network. The value of <a href="https://cluster-api-openstack.sigs.k8s.io/api/v1beta1/api#infrastructure.cluster.x-k8s.io/v1beta1.NetworkFilter">NetworkFilter</a> type. Required.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-network-name</span>
+</code></pre></div>
+</li>
+<li>
+<p><code>subnets[].filter</code> (array): Specifies a query to select an OpenStack subnet. The value of <a href="https://cluster-api-openstack.sigs.k8s.io/api/v1beta1/api#infrastructure.cluster.x-k8s.io/v1beta1.SubnetFilter">SubnetFilter</a> type. Required.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">subnets</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-subnet-name</span>
+</code></pre></div>
+</li>
+<li>
+<p><code>router.filter</code> (object): Specifies a query to select an OpenStack router. The value of <a href="https://cluster-api-openstack.sigs.k8s.io/api/v1beta1/api#infrastructure.cluster.x-k8s.io/v1beta1.RouterFilter">RouterFilter</a> type. Required.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">router</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-router-name</span>
+</code></pre></div>
+</li>
+<li>
+<p><code>ports[].network.filter</code> (object): Specifies a query to select an OpenStack network. The value of <a href="https://cluster-api-openstack.sigs.k8s.io/api/v1beta1/api#infrastructure.cluster.x-k8s.io/v1beta1.NetworkFilter">NetworkFilter</a> type. Required.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">network</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-network-name</span>
+</code></pre></div>
+</li>
+<li>
+<p><code>managedSecurityGroups</code> (object): Defines the desired state of security groups and rules for the cluster. When not
+  defined, security groups will not be created. The value of <a href="https://cluster-api-openstack.sigs.k8s.io/api/v1beta1/api#infrastructure.cluster.x-k8s.io/v1beta1.ManagedSecurityGroups">ManagedSecurityGroups</a> type.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">managedSecurityGroups</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">allowAllInClusterTraffic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div></p>
+</li>
+</ul>
+<h4 id="k0smotron-parameters">K0smotron Parameters<a class="headerlink" href="#k0smotron-parameters" title="Permanent link">#</a></h4>
+<p>Available for the hosted cluster template only.</p>
+<ul>
+<li><code>k0smotron.service.type</code> (string): An ingress method for a service. One of: <code>ClusterIP</code>, <code>NodePort</code>, <code>LoadBalancer</code>. Defaults to: <code>LoadBalancer</code>.</li>
+<li><code>k0smotron.service.apiPort</code> (number): The Kubernetes API port. If empty, K0smotron will pick it automatically.</li>
+<li><code>k0smotron.service.konnectivityPort</code> (number): The Konnectivity port. If empty, K0smotron will pick it automatically.</li>
+<li><code>k0smotron.controllerPlaneFlags</code> (array of strings): The <code>controllerPlaneFlags</code> parameter enables you to configure additional flags for the k0s control plane
+  and to override existing flags. The default flags are kept unless they are explicitly overriden. Flags with arguments must be specified as a single
+  string, such as <code>--some-flag=argument</code>.</li>
+</ul>
 <h3 id="example-clusterdeployment">Example ClusterDeployment<a class="headerlink" href="#example-clusterdeployment" title="Permanent link">#</a></h3>
+<p>The standalone <code>ClusterDeployment</code> may look like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4159,6 +4259,59 @@ The recommended minimum vCPU value for the control plane flavor is 2, while for 
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-cloud-config</span>
 <span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack</span>
 <span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RegionOne</span>
+</code></pre></div>
+<p>The hosted <code>ClusterDeployment</code> may look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-openstack-hosted-deployment</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-hosted-cp-1-0-0</span>
+<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-cluster-identity-cred</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">k0rdent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo</span>
+<span class="w">    </span><span class="nt">workersNumber</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">    </span><span class="nt">bastion</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-ssh-key</span>
+<span class="w">        </span><span class="nt">flavor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">m1.medium</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-22.04-x86_64</span>
+<span class="w">    </span><span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-ssh-key</span>
+<span class="w">    </span><span class="nt">flavor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">m1.medium</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-22.04-x86_64</span>
+<span class="w">    </span><span class="nt">externalNetwork</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
+<span class="w">    </span><span class="nt">identityRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack-cloud-config&quot;</span>
+<span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack&quot;</span>
+<span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RegionOne</span>
+
+<span class="w">    </span><span class="nt">managedSecurityGroups</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">allowAllInClusterTraffic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">network</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-network-name</span>
+<span class="w">    </span><span class="nt">router</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-router-name</span>
+<span class="w">    </span><span class="nt">subnets</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-subnet-name</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">network</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-network-name</span>
+<span class="w">    </span><span class="nt">securityGroups</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filter</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-security-group-name</span>
 </code></pre></div>
 
 
