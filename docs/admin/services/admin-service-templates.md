@@ -9,7 +9,7 @@ and use it to deploy an application to a {{{ docsVersionInfo.k0rdentName }}} chi
 `ServiceTemplate` supports the following types as a source:
 
 - [`HelmChart`](https://fluxcd.io/flux/components/source/helmcharts/)
-- [`GitRespository`](https://fluxcd.io/flux/components/source/gitrepositories/)
+- [`GitRepository`](https://fluxcd.io/flux/components/source/gitrepositories/)
 - [`Bucket`](https://fluxcd.io/flux/components/source/buckets/)
 - [`OCIRepository`](https://fluxcd.io/flux/components/source/ocirepositories/)
 - `Secret`
@@ -49,7 +49,7 @@ Helm-based `ServiceTemplate` can be created in three ways:
 
 FluxCD sources supported by `ServiceTemplate` are:
 
-- [`GitRespository`](https://fluxcd.io/flux/components/source/gitrepositories/)
+- [`GitRepository`](https://fluxcd.io/flux/components/source/gitrepositories/)
 - [`Bucket`](https://fluxcd.io/flux/components/source/buckets/)
 - [`OCIRepository`](https://fluxcd.io/flux/components/source/ocirepositories/)
 
