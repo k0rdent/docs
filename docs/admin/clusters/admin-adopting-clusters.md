@@ -127,6 +127,7 @@ Follow these steps to adopt an existing cluster:
 ## What's Happening Behind the Scenes?
 
 When you adopt a cluster, {{{ docsVersionInfo.k0rdentName }}} performs several actions:
+
 1. It validates the credentials and configuration provided in the `ClusterDeployment` object.
 2. It ensures network connectivity between the management cluster and the adopted cluster.
 3. It registers the adopted cluster within the {{{ docsVersionInfo.k0rdentName }}} system, enabling it to be monitored and managed like 
