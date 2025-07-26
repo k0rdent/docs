@@ -33,7 +33,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
      eksctl version
      ```
      ```console
-     0.205.0
+     0.211.0
      ```
 
 1. Create the cluster
@@ -46,7 +46,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     --without-nodegroup
     ```
     ```console
-    2025-03-05 22:26:02 [ℹ]  eksctl version 0.205.0
+    2025-03-05 22:26:02 [ℹ]  eksctl version 0.211.0
     ...
     2025-03-05 22:36:14 [✔]  all EKS cluster resources for "CLUSTER_NAME" have been created
     2025-03-05 22:36:15 [ℹ]  kubectl command should work with "/home/username/.kube/config", try 'kubectl get nodes'
@@ -57,8 +57,8 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
     While the cluster is now created, it doesn't actually have any nodes.  Start by adding controllers:
     ```shell
-    eksctl create nodegroup --cluster CLUSTER_NAME \
-    --name CONTROLLER_NODE_GROUP \
+    eksctl create nodegroup --cluster <CLUSTER_NAME> \
+    --name <CONTROLLER_NODE_GROUP> \
     --node-type t3.medium \
     --nodes 3 \
     --nodes-min 3 \
@@ -94,7 +94,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:
 
     ```shell
-    aws eks update-kubeconfig --region YOUR_AWS_REGION --name CLUSTER_NAME
+    aws eks update-kubeconfig --region <YOUR_AWS_REGION> --name <CLUSTER_NAME>
     ```
     ```shell
     Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster in /home/nick/.kube/config
@@ -110,9 +110,9 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```
     ```console
     NAME                                              STATUS   ROLES    AGE    VERSION
-    nodename1.compute.internal   Ready    <none>   4h1m   v1.31.5-eks-5d632ec
-    nodename2.compute.internal    Ready    <none>   4h1m   v1.31.5-eks-5d632ec
-    nodename3.compute.internal   Ready    <none>   4h1m   v1.31.5-eks-5d632ec
+    nodename1.compute.internal   Ready    <none>   4h1m   v1.31.7-eks-5d632ec
+    nodename2.compute.internal   Ready    <none>   4h1m   v1.31.7-eks-5d632ec
+    nodename3.compute.internal   Ready    <none>   4h1m   v1.31.7-eks-5d632ec
     ```
     For each node, go ahead and set the taint:
 
@@ -132,21 +132,21 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     Lease:
     HolderIdentity:  nodename1.compute.internal
     AcquireTime:     <unset>
-    RenewTime:       Thu, 06 Mar 2025 03:03:42 -0500
+    RenewTime:       Fri, 25 Jul 2025 21:16:56 -0500
     --
     Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
     Unschedulable:      false
     Lease:
     HolderIdentity:  nodename2.compute.internal
     AcquireTime:     <unset>
-    RenewTime:       Thu, 06 Mar 2025 03:03:40 -0500
+    RenewTime:       Fri, 25 Jul 2025 21:16:56 -0500
     --
     Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
     Unschedulable:      false
     Lease:
     HolderIdentity:  nodename3.ca-central-1.compute.internal
     AcquireTime:     <unset>
-    RenewTime:       Thu, 06 Mar 2025 03:03:41 -0500
+    RenewTime:       Fri, 25 Jul 2025 21:16:56 -0500
     ```
 
 1. Add worker nodes
@@ -154,11 +154,11 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     Adding worker nodes is simpler than controllers:
 
     ```shell
-    eksctl create nodegroup --cluster CLUSTER_NAME \
-    --name WORKER_NODE_GROUP \
+    eksctl create nodegroup --cluster <CLUSTER_NAME> \
+    --name <WORKER_NODE_GROUP> \
     --node-type t3.medium \
-    --nodes 2 \
-    --nodes-min 2 \
+    --nodes 3 \
+    --nodes-min 3 \
     --nodes-max 5 \
     --node-labels "role=worker"
     ```
@@ -175,11 +175,12 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```
     ```console
     NAME                                              STATUS   ROLES    AGE     VERSION
-    nodename1.compute.internal   Ready    <none>   4h14m   v1.31.5-eks-5d632ec
-    nodename4.compute.internal    Ready    <none>   79s     v1.31.5-eks-5d632ec
-    nodename2.compute.internal    Ready    <none>   4h14m   v1.31.5-eks-5d632ec
-    nodename5.compute.internal   Ready    <none>   82s     v1.31.5-eks-5d632ec
-    nodename3.compute.internal   Ready    <none>   4h14m   v1.31.5-eks-5d632ec
+    nodename1.compute.internal   Ready    <none>   4h14m   v1.31.7-eks-5d632ec
+    nodename4.compute.internal   Ready    <none>   79s     v1.31.7-eks-5d632ec
+    nodename2.compute.internal   Ready    <none>   4h14m   v1.31.7-eks-5d632ec
+    nodename5.compute.internal   Ready    <none>   82s     v1.31.7-eks-5d632ec
+    nodename3.compute.internal   Ready    <none>   4h14m   v1.31.7-eks-5d632ec
+    nodename6.compute.internal   Ready    <none>   4h14m   v1.31.7-eks-5d632ec
     ```
 
 1. Verify pods
