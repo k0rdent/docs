@@ -100,6 +100,17 @@ To apply this option:
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
+        env:
+          - name: KOF_VM_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: storage-vmuser-credentials
+          - name: KOF_VM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: storage-vmuser-credentials
         config:
           processors:
             resource/k8sclustername:
@@ -110,16 +121,33 @@ To apply this option:
                 - action: insert
                   key: k8s.cluster.namespace
                   value: kcm-system
+          extensions:
+            basicauth/metrics:
+              client_auth:
+                username: ${env:KOF_VM_USER}
+                password: ${env:KOF_VM_PASSWORD}
+            basicauth/logs:
+              client_auth:
+                username: ${env:KOF_VM_USER}
+                password: ${env:KOF_VM_PASSWORD}                  
           exporters:
             prometheusremotewrite:
               endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
+              auth:
+                authenticator: basicauth/metrics              
               external_labels:
                 cluster: mothership
                 clusterNamespace: kcm-system
+              auth:
+                authenticator: basicauth/logs                
             otlphttp/logs:
               logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
             otlphttp/traces:
               endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+          service:
+            extensions:
+              - basicauth/metrics
+              - basicauth/logs              
     opencost:
       opencost:
         prometheus:
