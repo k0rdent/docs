@@ -137,11 +137,11 @@ To apply this option:
                 authenticator: basicauth/metrics              
               external_labels:
                 cluster: mothership
-                clusterNamespace: kcm-system
-              auth:
-                authenticator: basicauth/logs                
+                clusterNamespace: kcm-system              
             otlphttp/logs:
               logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
+              auth:
+                authenticator: basicauth/logs  
             otlphttp/traces:
               endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
           service:
