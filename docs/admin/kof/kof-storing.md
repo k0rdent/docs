@@ -111,6 +111,16 @@ To apply this option:
               secretKeyRef:
                 key: password
                 name: storage-vmuser-credentials
+          - name: KOF_JAEGER_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: jaeger-credentials
+          - name: KOF_JAEGER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: jaeger-credentials
         config:
           processors:
             resource/k8sclustername:
@@ -129,7 +139,11 @@ To apply this option:
             basicauth/logs:
               client_auth:
                 username: ${env:KOF_VM_USER}
-                password: ${env:KOF_VM_PASSWORD}                  
+                password: ${env:KOF_VM_PASSWORD}
+            basicauth/traces:
+              client_auth:
+                username: ${env:KOF_JAEGER_USER}
+                password: ${env:KOF_JAEGER_PASSWORD}
           exporters:
             prometheusremotewrite:
               endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
@@ -144,10 +158,13 @@ To apply this option:
                 authenticator: basicauth/logs  
             otlphttp/traces:
               endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+              auth:
+                authenticator: basicauth/traces
           service:
             extensions:
               - basicauth/metrics
-              - basicauth/logs              
+              - basicauth/logs
+              - basicauth/traces
     opencost:
       opencost:
         prometheus:
