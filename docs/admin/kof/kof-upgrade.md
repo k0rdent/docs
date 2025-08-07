@@ -11,6 +11,28 @@
     * Replace `job="integrations/kubernetes/cadvisor"` with `job="kubelet", metrics_path="/metrics/cadvisor"`.
     * Replace `job="prometheus-node-exporter"` with `job="node-exporter"`.
 
+Also:
+
+* To upgrade from `cert-manager-1-16-4` to `cert-manager-v1-16-4`
+    please apply this patch to management cluster:
+    ```shell
+    kubectl apply -f - <<EOF
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: ServiceTemplateChain
+    metadata:
+      name: patch-cert-manager-v1-16-4-from-1-16-4
+      namespace: kcm-system
+      annotations:
+        helm.sh/resource-policy: keep
+    spec:
+      supportedTemplates:
+        - name: cert-manager-v1-16-4
+        - name: cert-manager-1-16-4
+          availableUpgrades:
+            - name: cert-manager-v1-16-4
+    EOF
+    ```
+
 ## Upgrade to v1.1.0
 
 * After you `helm upgrade` the `kof-mothership` chart, please run the following:

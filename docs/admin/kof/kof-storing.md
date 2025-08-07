@@ -52,6 +52,8 @@ To apply this option:
 
 2. Create the `collectors-values.yaml` file:
     ```yaml
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
@@ -97,6 +99,8 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
@@ -194,6 +198,8 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     kof:
       basic_auth: false
     opentelemetry-kube-stack:
@@ -263,6 +269,8 @@ For now, however, just for the sake of this demo, you can use the most straightf
 4. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
