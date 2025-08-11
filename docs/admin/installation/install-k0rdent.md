@@ -46,3 +46,4 @@ And of course when you need to clean up, you can use helm as well. Follow these 
     ```shell
     kubectl delete ns kcm-system
     ```
+
