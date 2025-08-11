@@ -53,7 +53,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     To enable {{{ docsVersionInfo.k0rdentName }}} to access vSphere resources, create the appropriate credentials objects. For a full explanation of how `Credential` objects work, see the [main Credentials chapter](../../access/credentials/index.md), but for now, follow these steps:
 
     Create a `Secret` object with the username and password.
-    
+
     > WARNING:
     > The `username` parameter should be set to the vCenter username along with the domain name.
     > For example, `userName@domainName`. If you don't specify the domain name for active directory users,
@@ -86,7 +86,6 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     The `VSphereClusterIdentity` object defines the credentials CAPV will use to manage vSphere resources.
 
     Save the `VSphereClusterIdentity` YAML into a file named `vsphere-cluster-identity.yaml`:
-
 
     ```yaml
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
