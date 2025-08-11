@@ -54,6 +54,11 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Create a `Secret` object with the username and password
 
+    > WARNING:
+    > The `username` parameter should be set to the vCenter username along with the domain name.
+    > For example, `userName@domainName`. If you don't specify the domain name for active directory users,
+    > the vSphere Container Storage Plug-in will not function properly.
+
     The `Secret` stores the username and password for your vSphere instance. Save the `Secret` YAML in a file named `vsphere-cluster-identity-secret.yaml`:
 
     ```yaml
