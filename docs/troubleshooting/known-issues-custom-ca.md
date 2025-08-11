@@ -2,6 +2,9 @@
 
 [Related issue: KCM #1612](https://github.com/k0rdent/kcm/issues/1612)
 
+> NOTE:
+> The issue is resolved in k0s versions `v1.32.6+k0s.0`, `v1.33.2+k0s.0`.
+
 When deploying Hosted ClusterDeployments on a management cluster configured with a custom container registry, and
 the registry uses a certificate signed by an unknown certificate authority, Helm extensions (e.g., CCM or CSI
 drivers) may fail to install.
