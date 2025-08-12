@@ -119,12 +119,12 @@ To apply this option:
             valueFrom:
               secretKeyRef:
                 key: username
-                name: jaeger-credentials
+                name: jaeger-admin-credentials
           - name: KOF_JAEGER_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: jaeger-credentials
+                name: jaeger-admin-credentials
         config:
           processors:
             resource/k8sclustername:
