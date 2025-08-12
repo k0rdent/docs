@@ -52,6 +52,8 @@ To apply this option:
 
 2. Create the `collectors-values.yaml` file:
     ```yaml
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
@@ -97,6 +99,8 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
@@ -111,6 +115,16 @@ To apply this option:
               secretKeyRef:
                 key: password
                 name: storage-vmuser-credentials
+          - name: KOF_JAEGER_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: jaeger-credentials
+          - name: KOF_JAEGER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: jaeger-credentials
         config:
           processors:
             resource/k8sclustername:
@@ -129,7 +143,11 @@ To apply this option:
             basicauth/logs:
               client_auth:
                 username: ${env:KOF_VM_USER}
-                password: ${env:KOF_VM_PASSWORD}                  
+                password: ${env:KOF_VM_PASSWORD}
+            basicauth/traces:
+              client_auth:
+                username: ${env:KOF_JAEGER_USER}
+                password: ${env:KOF_JAEGER_PASSWORD}
           exporters:
             prometheusremotewrite:
               endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
@@ -144,10 +162,13 @@ To apply this option:
                 authenticator: basicauth/logs  
             otlphttp/traces:
               endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+              auth:
+                authenticator: basicauth/traces
           service:
             extensions:
               - basicauth/metrics
-              - basicauth/logs              
+              - basicauth/logs
+              - basicauth/traces
     opencost:
       opencost:
         prometheus:
@@ -177,6 +198,8 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     kof:
       basic_auth: false
     opentelemetry-kube-stack:
@@ -246,6 +269,8 @@ For now, however, just for the sake of this demo, you can use the most straightf
 4. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
       defaultCRConfig:
