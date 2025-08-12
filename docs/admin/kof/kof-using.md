@@ -89,7 +89,7 @@ Finally there are the cost management features, including:
     * Get the regional Jaeger username and password:
         ```shell
         KUBECONFIG=regional-kubeconfig kubectl get secret \
-          -n kof jaeger-credentials -o yaml | yq '{
+          -n kof jaeger-admin-credentials -o yaml | yq '{
           "user": .data.username | @base64d,
           "pass": .data.password | @base64d
         }'
@@ -169,3 +169,4 @@ You can access the KOF UI by following these steps:
 The KOF UI also allows you to monitor internal telemetry from OpenTelemetry collectors, enabling comprehensive observability of their health and performance.
 
 ![kof-ui-collectors-metrics](../../assets/kof/ui_collectors_metrics.gif)
+

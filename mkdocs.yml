@@ -322,7 +322,7 @@ extra:
     k0rdentDigestDate: Thu Jul 31 18:36:23 2025
     k0rdentTagList: https://github.com/k0rdent/kcm/tags
     kofVersions:
-      kofDotVersion: 1.2.0
+      kofDotVersion: 1.2.1
     providerVersions:
       dashVersions:
         clusterApi: 1-0-5

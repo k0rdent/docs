@@ -119,12 +119,12 @@ To apply this option:
             valueFrom:
               secretKeyRef:
                 key: username
-                name: jaeger-credentials
+                name: jaeger-admin-credentials
           - name: KOF_JAEGER_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: jaeger-credentials
+                name: jaeger-admin-credentials
         config:
           processors:
             resource/k8sclustername:
@@ -157,7 +157,7 @@ To apply this option:
                 cluster: mothership
                 clusterNamespace: kcm-system              
             otlphttp/logs:
-              logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
+              logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
               auth:
                 authenticator: basicauth/logs  
             otlphttp/traces:
@@ -222,7 +222,7 @@ To apply this option:
                 cluster: mothership
                 clusterNamespace: kcm-system
             otlphttp/logs:
-              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs:9428/insert/opentelemetry/v1/logs
+              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
             otlphttp/traces:
               endpoint: http://$REGIONAL_CLUSTER_NAME-jaeger-collector:4318
     opencost:
