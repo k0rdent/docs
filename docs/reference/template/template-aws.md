@@ -128,3 +128,23 @@ fields in the `ClusterDeployment` responsible for these settings, which depend o
 | `aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}` | `.spec.worker.nonRootVolumes` |
 
 The `nonRootVolumes` field is **a list** of [Volumes](https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Volume).
+
+## Setting the `managementClusterName` parameter for Hosted Control Plane clusters
+
+The `managementClusterName` parameter is **required** for hosted control plane clusters.
+It should match the `<cluster-id>` from the `kubernetes.io/cluster/<cluster-id> = owned` tag on existing AWS network
+resources:
+
+### Management Cluster Deployed on EKS
+
+* If deployed using k0rdent (`aws-eks` template), the EKS cluster name defaults to:
+  `<namespace>_<clusterdeploymentname>-cp`, or to the value of `eksClusterName` if explicitly set.
+
+* If deployed separately (using `eksctl` or manually via the AWS console), the `<cluster-id>` is typically the
+**EKS cluster name**.
+
+### Management Cluster is EC2-Based (Self-Managed)
+
+* If deployed using k0rdent (`aws-standalone-cp` template), use the **name of the ClusterDeployment** object.
+
+* If created with Cluster API Provider AWS, use the value of `spec.clusterName` from the Cluster object.

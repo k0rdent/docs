@@ -95,10 +95,11 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
     > NOTE:  
     > The example above uses the `us-west-1` region, but you should use the region of your VPC.
 
-4. Generate the `ClusterDeployment` Manifest
+    Alternatively, you can generate the `ClusterDeployment` manifest.
 
-    To simplify the creation of a `ClusterDeployment` manifest, you can use the following template, which dynamically
-    inserts the appropriate values:
+    If the management cluster you prepared in the first step was deployed using k0rdent or the CAPI AWS provider,
+    you can simplify the creation of a `ClusterDeployment` manifest, and use the following template, which
+    dynamically inserts the appropriate values:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
@@ -134,6 +135,16 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
     ```shell
     kubectl get awscluster <cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
     ```
+
+    Or if the management cluster is deployed on EKS, use the following command:
+
+    ```shell
+    kubectl get awsmanagedcontrolplane <cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
+    ```
+
+    > NOTE:
+    > For EKS management clusters, update the `spec.config.managementClusterName` parameter as described in
+    > [Setting the managementClusterName parameter](../../reference/template/template-aws.md#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters).
 
 5. Apply the `ClusterTemplate`
 
