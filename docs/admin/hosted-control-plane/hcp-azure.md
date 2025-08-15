@@ -90,10 +90,11 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
           securityGroupName: mgmt-cluster-node-nsg
     ```
 
-4. Generate the `ClusterDeployment` Manifest
+    Alternatively, you can generate the `ClusterDeployment` manifest.
 
-    To simplify the creation of a `ClusterDeployment` manifest, you can use the following template, which dynamically inserts
-    the appropriate values:
+    If the management cluster you prepared in the first step was deployed using k0rdent or the CAPI AWS provider,
+    you can simplify the creation of a `ClusterDeployment` manifest, and use the following template, which
+    dynamically inserts the appropriate values:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
