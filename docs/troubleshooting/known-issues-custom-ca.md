@@ -69,3 +69,71 @@ kubectl patch statefulset kmc-<CLUSTER_DEPLOYMENT_NAME> \
     }
   ]'
 ```
+
+# KCM Installation Fails with Custom Registry Using Redirects: TLS Certificate Mismatch
+
+> NOTE:
+> This issue is automatically handled starting from K0rdent v1.3.0.
+
+When installing KCM with a custom registry that uses a custom CA and supports redirects, installation may fail due to
+a known Flux bug: [certSecretRef does not handle redirects](https://github.com/fluxcd/flux2/issues/5477).
+
+The error typically looks like:
+
+```bash
+x509: certificate is valid for a, not b
+```
+
+**Workaround**
+
+Until K0rdent v1.3.0 (or if you cannot upgrade), you can apply the following steps manually:
+
+1. Mount the Registry CA Certificate into Flux Source Controller
+
+Ensure the secret with your registry CA is present in the system namespace (`kcm-system` by default), as configured
+by the `registryCertSecret` parameter. Then patch the `source-controller` Deployment:
+
+```bash
+kubectl patch deployment source-controller \
+  -n kcm-system \
+  --type='json' \
+  -p='[
+    {
+      "op": "add",
+      "path": "/spec/template/spec/volumes/-",
+      "value": {
+        "name": "registry-ca",
+        "secret": {
+          "secretName": "<REGISTRY_SECRET_NAME>",
+          "items": [
+            {
+              "key": "ca.crt",
+              "path": "registry-ca.pem"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "add",
+      "path": "/spec/template/spec/containers/0/volumeMounts/-",
+      "value": {
+        "name": "registry-ca",
+        "mountPath": "/etc/ssl/certs/registry-ca.pem",
+        "subPath": "registry-ca.pem",
+        "readOnly": true
+      }
+    }
+  ]'
+```
+
+2. Remove `certSecretRef` from the HelmRepository
+
+Patch the `kcm-templates` HelmRepository to remove the `certSecretRef` field:
+
+```bash
+kubectl patch helmrepository kcm-templates \
+  -n kcm-system \
+  --type=json \
+  -p='[{"op": "remove", "path": "/spec/certSecretRef"}]'
+```
