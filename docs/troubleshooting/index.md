@@ -8,3 +8,4 @@ things run smoothly.
 - [EKS](known-issues-eks.md)
 - [GCP](known-issues-gcp.md)
 - [Custom CA Certificates](known-issues-custom-ca.md)
+- [ClusterCtl Issues](known-issues-clusterctl.md)

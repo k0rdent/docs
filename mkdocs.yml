@@ -241,6 +241,7 @@ nav:
     - EKS: troubleshooting/known-issues-eks.md
     - GCP: troubleshooting/known-issues-gcp.md
     - Custom CA Certificates: troubleshooting/known-issues-custom-ca.md
+    - Clusterctl Issues: troubleshooting/known-issues-clusterctl.md
   - Appendix:
     - Overview: appendix/index.md
     - Glossary: appendix/glossary.md
