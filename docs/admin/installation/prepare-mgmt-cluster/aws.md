@@ -33,8 +33,8 @@
   	Now use `clusterawsadm` to create the IAM CloudFormation stack:
 
     ```shell
-	  clusterawsadm bootstrap iam create-cloudformation-stack
-	  ```
+	clusterawsadm bootstrap iam create-cloudformation-stack
+	```
 	
 5. Install the AWS CLI
  
@@ -391,3 +391,4 @@
     ```shell
     kubectl delete clusterdeployments my-aws-clusterdeployment1 
     ```
+
