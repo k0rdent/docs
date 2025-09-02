@@ -131,12 +131,14 @@ and apply this example, or use it as a reference:
       oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
-2. Create the `mothership-values.yaml` file:
+2. Create an empty `mothership-values.yaml` file.
+
+    If you have not applied the [Istio](#istio) section, add to this file:
     ```yaml
     kcm:
       installTemplates: true
     ```
-    This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
+    This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-collectors`,
     making it possible to reference them from the regional and child `MultiClusterService` objects.
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
@@ -218,12 +220,7 @@ and apply this example, or use it as a reference:
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
-    If you're upgrading KOF from an earlier version, please also apply the [Upgrading KOF](./kof-upgrade.md) guide.
-
-7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
-    ```shell
-    kubectl get svctmpl -A
-    ```
+7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
 8. If you have not applied the [Istio](#istio) section:
 
@@ -236,6 +233,10 @@ and apply this example, or use it as a reference:
     > If you selected the Istio option, use `kof-istio`. 
     > Otherwise use `kof-regional` with `kof-child`.  Do not use all 3 charts at the same time.
 
+    * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
+        ```shell
+        kubectl get svctmpl -A
+        ```
     * Look through the `MultiClusterService` objects in the [kof-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
         and [kof-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml) charts.
     * If your regional clusters already have `ingress-nginx` and `cert-manager` services,
@@ -482,8 +483,11 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-http-config: '{"dial_timeout": "10s", "tls_config": {"insecure_skip_verify": true}}'
     ```
 
-10. The `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
-    configures and installs `cert-manager`, `ingress-nginx`, `kof-storage`, `kof-operators`, and `kof-collectors` charts automatically.
+10. Either `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
+    or `ClusterProfiles` named [kof-istio-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-regional-cluster-profile.yaml)
+    and [kof-istio-network](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/child-cluster-profiles.yaml)
+    configure and install `cert-manager`, `ingress-nginx`, `istio/gateway`, `kof-istio`, `kof-operators`, `kof-storage`, and `kof-collectors` charts automatically.
+
     To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml) to the `kof-storage` chart
     or its subcharts, such as [victoria-logs-cluster](https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters),
     add them to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`. For example:
@@ -640,8 +644,11 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-regional-cluster-namespace: kcm-system
     ```
 
-7. The `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
-    configures and installs `cert-manager`, `kof-operators`, and `kof-collectors` charts automatically.
+7. Either `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
+    or `ClusterProfiles` named [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml)
+    and [kof-istio-network](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/child-cluster-profiles.yaml)
+    configure and install `cert-manager`, `kof-istio`, `kof-operators`, and `kof-collectors` charts automatically.
+
     To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/values.yaml) to the `kof-collectors` chart
     or its subcharts, such as [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values),
     add them to the `child-cluster.yaml` file in the `.spec.config`. For example:
