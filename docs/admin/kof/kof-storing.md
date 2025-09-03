@@ -138,16 +138,16 @@ To apply this option:
           extensions:
             basicauth/metrics:
               client_auth:
-                username: ${env:KOF_VM_USER}
-                password: ${env:KOF_VM_PASSWORD}
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
             basicauth/logs:
               client_auth:
-                username: ${env:KOF_VM_USER}
-                password: ${env:KOF_VM_PASSWORD}
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
             basicauth/traces:
               client_auth:
-                username: ${env:KOF_JAEGER_USER}
-                password: ${env:KOF_JAEGER_PASSWORD}
+                username: \${env:KOF_JAEGER_USER}
+                password: \${env:KOF_JAEGER_PASSWORD}
           exporters:
             prometheusremotewrite:
               endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
