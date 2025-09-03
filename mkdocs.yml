@@ -231,6 +231,7 @@ nav:
       - Introduction to k0rdent templates: reference/template/index.md
       - Removing predefined templates: reference/template/template-predefined.md
       - Bring-your-own (BYO) templates: reference/template/template-byo.md
+      - Creating a Custom ClusterTemplate: reference/template/template-create-cluster.md
       - Templates for Amazon Web Services: reference/template/template-aws.md
       - Templates for Azure: reference/template/template-azure.md
       - Templates for GCP: reference/template/template-gcp.md
