@@ -32,23 +32,24 @@ To update the diagram:
 * Please preserve custom `max-width: 30em;` in the end.
 
 <b>Management Cluster</b>
-  kof-mothership chart
-    grafana-operator
-    victoria-metrics-operator
-    cluster-api-visualizer
-    sveltos-dashboard
-    kof-operator
-    {{{ docsVersionInfo.k0rdentName }}} service templates
-    promxy
-
   kof-operators chart
+    grafana-operator
     opentelemetry-operator
     prometheus-operator-crds
 
+  kof-mothership chart
+    victoria-metrics-operator
+    cluster-api-visualizer
+    sveltos-dashboard
+    dex
+    {{{ docsVersionInfo.k0rdentName }}} service templates
+    kof-dashboards
+    kof-operator
+    promxy
+
   kof-collectors chart
     opencost
-    kube-state-metrics
-    prometheus-node-exporter
+    opentelemetry-kube-stack
 
   Either kof-istio
     Certificates
@@ -60,37 +61,44 @@ Cloud 1..N
   Region 1..M
 
     <b>Regional Cluster</b>
-      kof-storage chart
-        grafana-operator
-        victoria-metrics-operator
-        victoria-logs-single
-        jaeger-operator
-        external-dns
-
       kof-operators chart
+        grafana-operator
         opentelemetry-operator
         prometheus-operator-crds
 
+      kof-storage chart
+        victoria-metrics-operator
+        victoria-logs-cluster
+        external-dns
+        jaeger-operator
+        dex
+        kof-dashboards
+
       kof-collectors chart
         opencost
-        kube-state-metrics
-        prometheus-node-exporter
+        opentelemetry-kube-stack
 
       cert-manager
-      ingress-nginx or kof-istio
+      ingress-nginx
+      istio/gateway
+
+      kof-istio chart
+        cert-manager-istio-csr
+        istio/base
+        istiod
 
     <b>Child Cluster 1</b>
       cert-manager
       Optional kof-istio
 
       kof-operators chart
+        Disabled grafana-operator
         opentelemetry-operator
         prometheus-operator-crds
 
       kof-collectors chart
         opencost
-        kube-state-metrics
-        prometheus-node-exporter
+        opentelemetry-kube-stack
 
       observed objects
 -->
@@ -98,10 +106,19 @@ Cloud 1..N
 <div class="o">
   <b>Management Cluster</b>
   <div class="o">
-    kof-mothership chart
+    kof-operators chart
     <div class="o">
       grafana-operator
     </div>
+    <div class="o">
+      opentelemetry-operator
+    </div>
+    <div class="o">
+      prometheus-operator-crds
+    </div>
+  </div>
+  <div class="o">
+    kof-mothership chart
     <div class="o">
       victoria-metrics-operator
     </div>
@@ -112,22 +129,19 @@ Cloud 1..N
       sveltos-dashboard
     </div>
     <div class="o">
-      kof-operator
+      dex
     </div>
     <div class="o">
       {{{ docsVersionInfo.k0rdentName }}} service templates
     </div>
     <div class="o">
+      kof-dashboards
+    </div>
+    <div class="o">
+      kof-operator
+    </div>
+    <div class="o">
       promxy
-    </div>
-  </div>
-  <div class="o">
-    kof-operators chart
-    <div class="o">
-      opentelemetry-operator
-    </div>
-    <div class="o">
-      prometheus-operator-crds
     </div>
   </div>
   <div class="o">
@@ -136,10 +150,7 @@ Cloud 1..N
       opencost
     </div>
     <div class="o">
-      kube-state-metrics
-    </div>
-    <div class="o">
-      prometheus-node-exporter
+      opentelemetry-kube-stack
     </div>
   </div>
   <div class="o">
@@ -165,25 +176,10 @@ Cloud 1..N
     <div class="o">
       <b>Regional Cluster</b>
       <div class="o">
-        kof-storage chart
+        kof-operators chart
         <div class="o">
           grafana-operator
         </div>
-        <div class="o">
-          victoria-metrics-operator
-        </div>
-        <div class="o">
-          victoria-logs-single
-        </div>
-        <div class="o">
-          jaeger-operator
-        </div>
-        <div class="o">
-          external-dns
-        </div>
-      </div>
-      <div class="o">
-        kof-operators chart
         <div class="o">
           opentelemetry-operator
         </div>
@@ -192,22 +188,55 @@ Cloud 1..N
         </div>
       </div>
       <div class="o">
+        kof-storage chart
+        <div class="o">
+          victoria-metrics-operator
+        </div>
+        <div class="o">
+          victoria-logs-cluster
+        </div>
+        <div class="o">
+          external-dns
+        </div>
+        <div class="o">
+          jaeger-operator
+        </div>
+        <div class="o">
+          dex
+        </div>
+        <div class="o">
+          kof-dashboards
+        </div>
+      </div>
+      <div class="o">
         kof-collectors chart
         <div class="o">
           opencost
         </div>
         <div class="o">
-          kube-state-metrics
-        </div>
-        <div class="o">
-          prometheus-node-exporter
+          opentelemetry-kube-stack
         </div>
       </div>
       <div class="o">
         cert-manager
       </div>
       <div class="o">
-        ingress-nginx or kof-istio
+        ingress-nginx
+      </div>
+      <div class="o">
+        istio/gateway
+      </div>
+      <div class="o">
+        kof-istio chart
+        <div class="o">
+          cert-manager-istio-csr
+        </div>
+        <div class="o">
+          istio/base
+        </div>
+        <div class="o">
+          istiod
+        </div>
       </div>
     </div>
     <div class="o">
@@ -221,6 +250,9 @@ Cloud 1..N
       <div class="o">
         kof-operators chart
         <div class="o">
+          Disabled grafana-operator
+        </div>
+        <div class="o">
           opentelemetry-operator
         </div>
         <div class="o">
@@ -233,10 +265,7 @@ Cloud 1..N
           opencost
         </div>
         <div class="o">
-          kube-state-metrics
-        </div>
-        <div class="o">
-          prometheus-node-exporter
+          opentelemetry-kube-stack
         </div>
       </div>
       <div class="o">
@@ -259,14 +288,21 @@ Cloud 1..N
 
 KOF is deployed as a series of Helm charts at various levels.
 
+### kof-operators
+
+- [Grafana](https://grafana.com/) dashboards platform, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
+- [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
+- [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors, also required to monitor [`kof-mothership`](#kof-mothership) itself
+
 ### kof-mothership
 
-- Centralized [Grafana](https://grafana.com/) dashboard, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
 - Local [VictoriaMetrics](https://victoriametrics.com/) storage for alerting rules only, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
 - [cluster-api-visualizer](https://github.com/Jont828/cluster-api-visualizer) for insight into multicluster configuration
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
-- [kof-operator](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
+- [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
 - [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates used by `kof-regional` and `kof-child` charts
+- [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
+- [kof-operator](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
 - [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
 
 ### kof-regional
@@ -279,27 +315,22 @@ KOF is deployed as a series of Helm charts at various levels.
 - [MultiClusterService](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
   which configures and installs `kof-collectors` and other charts to child clusters
 
-### kof-storage
-
-- Regional [Grafana](https://grafana.com/) dashboard, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
-- Regional [VictoriaMetrics](https://victoriametrics.com/) storage with main data, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
-  - [vmauth](https://docs.victoriametrics.com/vmauth/) entrypoint proxy for VictoriaMetrics components
-  - [vmcluster](https://docs.victoriametrics.com/operator/resources/vmcluster/) for high-available fault-tolerant version of VictoriaMetrics database
-  - [victoria-logs-single](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-single) for high-performance, cost-effective, scalable logs storage
-- Regional [Jaeger](https://www.jaegertracing.io/) tracing platform, managed by [jaeger-operator](https://github.com/jaegertracing/jaeger-operator)
-- [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
-
 ### kof-istio
 
 - Optional [Istio](https://istio.io/) support for secure connectivity between clusters without external DNS
 
-### kof-operators
+### kof-storage
 
-- [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors, also required to monitor [`kof-mothership`](#kof-mothership) itself
-- [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
+- Regional [VictoriaMetrics](https://victoriametrics.com/) storage with main data, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
+  - [vmauth](https://docs.victoriametrics.com/vmauth/) entrypoint proxy for VictoriaMetrics components
+  - [vmcluster](https://docs.victoriametrics.com/operator/resources/vmcluster/) for high-available fault-tolerant version of VictoriaMetrics database
+  - [victoria-logs-cluster](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-cluster) for high-performance, cost-effective, scalable logs storage
+- [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
+- [Jaeger](https://www.jaegertracing.io/) tracing platform, managed by [jaeger-operator](https://github.com/jaegertracing/jaeger-operator)
+- [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
+- [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
 
 ### kof-collectors
 
-- [prometheus-node-exporter](https://prometheus.io/docs/guides/node-exporter/) for hardware and OS metrics
-- [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) for metrics about the state of Kubernetes objects
+- [opentelemetry-kube-stack](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-kube-stack) for hardware, OS, and Kubernetes metrics
 - [OpenCost](https://www.opencost.io/) "shines a light into the black box of Kubernetes spend"
