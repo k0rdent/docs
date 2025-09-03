@@ -174,8 +174,6 @@ Then push it to your OCI registry:
 helm push my-custom-template-0.1.0.tgz oci://registry.example.com/templates
 ```
 
-You may also need to make the chart public.
-
 ## Connecting the Chart to {{{ docsVersionInfo.k0rdentName }}}
 
 {{{ docsVersionInfo.k0rdentName }}} does not fetch charts directly. Instead, it relies on FluxCD Source objects. You must define a `HelmRepository`, `GitRepository`, or `Bucket` that points to your chart location, and you must label it so that {{{ docsVersionInfo.k0rdentName }}} will recognize it.
@@ -194,6 +192,8 @@ spec:
   url: oci://registry.example.com/templates
   type: oci
   interval: 10m
+  secretRef:
+    name: my-repo-secret
 ```
 
 ## Creating the ClusterTemplate Resource
