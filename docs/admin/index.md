@@ -129,7 +129,7 @@ This Administration Guide provides information on:
 
 - [Installing and preparing {{{ docsVersionInfo.k0rdentName }}} for use](installation/index.md)
 - [Working with clusters](clusters/index.md)
-- [Working with services](services/index.md)
+- [Working with services](ksm/index.md)
 - [Hosted control planes](hosted-control-plane/index.md)
 - [{{{ docsVersionInfo.k0rdentName }}} Observability & FinOps](kof/index.md)
 - [Upgrading {{{ docsVersionInfo.k0rdentName }}}](upgrade/index.md)

@@ -84,7 +84,6 @@ plugins:
         admin-adopting-clusters.md: admin/clusters/admin-adopting-clusters.md
         admin-hosted-control-planes.md: admin/hosted-control-plane/index.md
         admin-troubleshooting-aws-vpcs.md: troubleshooting/admin-troubleshooting-aws-vpcs.md
-        admin-service-templates.md: admin/services/admin-service-templates.md
         ksm-service-templates.md: admin/ksm/ksm-service-templates.md
         ksm-multiclusterservice.md: admin/ksm/ksm-multiclusterservice.md
         ksm-self-management.md: admin/ksm/ksm-self-management.md
