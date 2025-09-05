@@ -17,7 +17,7 @@ etcd, and controllers) run as pods inside the management cluster instead of sepa
 architecture centralizes control plane management and improves scalability by sharing resources in the management cluster.
 Need more controllers? Spin up another pod. Need fewer controllers? Remove some pods.
 
-It's important to remember that if a child cluster's control plan goes down, workloads will continue on
+It's important to remember that if a child cluster's control plane goes down, workloads will continue on
 indefinitely, but you won't be able to manage the cluster. So be sure to [back up your management cluster](../backup/index.md) after
 deploying important child clusters!
 
