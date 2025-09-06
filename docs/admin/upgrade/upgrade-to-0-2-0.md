@@ -10,13 +10,13 @@ and perform the additional manual steps outlined below:
 
     Wait for the new `Release` to have `status.ready: true`:
 
-    ```shell
+    ```bash
     kubectl wait --for=jsonpath='{.status.ready}=true' release/kcm-0-2-0
     ```
 
 1. Manually delete the `k0smotron` providers (replace `kcm-system` with your system namespace):
 
-    ```shell
+    ```bash
     kubectl -n kcm-system delete infrastructureproviders.operator.cluster.x-k8s.io k0sproject-k0smotron
     kubectl -n kcm-system delete controlplaneproviders.operator.cluster.x-k8s.io k0sproject-k0smotron
     kubectl -n kcm-system delete bootstrapproviders.operator.cluster.x-k8s.io k0sproject-k0smotron
@@ -25,7 +25,7 @@ and perform the additional manual steps outlined below:
 1. Instead of the step 3 from [Upgrading guide](index.md) you need to edit
    the `Management` object. Run:
 
-    ```shell
+    ```bash
     kubectl edit managements.k0rdent.mirantis.com kcm
     ```
 
@@ -34,7 +34,7 @@ and perform the additional manual steps outlined below:
     * Set `spec.release` to `kcm-0-2-0`
     * In `spec.providers` rename the `k0smotron` provider to `cluster-api-provider-k0sproject-k0smotron`:
 
-    ```shell
+    ```bash
     providers:
     - name: cluster-api-provider-k0sproject-k0smotron
     ```

@@ -10,7 +10,7 @@ Follow these steps to install and prepare a multinode [k0s kubernetes](https://k
 
     Run the k0s download script to download the latest stable version of k0s and make it executable from `/usr/bin/k0s`:
 
-    ```shell
+    ```bash
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
     ```
 
@@ -19,7 +19,7 @@ Follow these steps to install and prepare a multinode [k0s kubernetes](https://k
     > NOTE:
     > Depending on your configuration, you may need to execute these commands as root rather than using `sudo`. If so, executing `sudo su` will be sufficient. Don't forget to exit the root user afterwards!
 
-    ```shell
+    ```bash
     mkdir -p /etc/k0s
     k0s config create > /etc/k0s/k0s.yaml
     ```
@@ -51,14 +51,14 @@ Follow these steps to install and prepare a multinode [k0s kubernetes](https://k
 
 4. Install the controller:
 
-    ```shell
+    ```bash
     sudo k0s install controller -c /etc/k0s/k0s.yaml
     sudo k0s start
     ```
 
     The k0s process acts as a "supervisor" for all of the control plane components. In moments the control plane will be up and running, but because of the k0s architecture, you won't see any nodes running, because only worker nodes show up, and we haven't created any yet. You can, however, use the k0s-installed `kubectl` to make sure the cluster is up and running by looking for existing namespaces:
 
-    ```shell
+    ```bash
     sudo k0s kubectl get namespaces
     ```
     ```console
@@ -80,7 +80,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
 
     To get a worker token, run the following command on newly created existing controller node:
 
-    ```shell
+    ```bash
     sudo k0s token create --role=worker > token-file
     ```
 
@@ -88,7 +88,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
 
     For enhanced security, set an expiration time for the token:
 
-    ```shell
+    ```bash
     sudo k0s token create --role=worker --expiry=100h > token-file
     ```
 
@@ -96,7 +96,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
 
     Start by instantiating the new node and downloading k0s, as before:
 
-    ```shell
+    ```bash
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
     ```
 
@@ -109,7 +109,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
     > NOTE:
     > Don't forget to use the actual path to your token file.
 
-    ```shell
+    ```bash
     sudo k0s install worker --token-file /path/to/token/file/token-file
     sudo k0s start
     ```
@@ -118,7 +118,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
 
     Now you can check the status of the node by going **to the controller** and once again checking for nodes. After a minute or two, you'll see the new node in a `Ready` state:
 
-    ```shell
+    ```bash
     sudo k0s kubectl get nodes
     ```
     ```console
@@ -137,7 +137,7 @@ To create a join token for the new controller, follow these steps.
 
 2. Run the following command on an existing controller:
 
-    ```shell
+    ```bash
     sudo k0s token create --role=controller --expiry=1h > controller-token-file
     ```
 
@@ -145,20 +145,20 @@ To create a join token for the new controller, follow these steps.
 
 4. As before, download and install k0s in the new controller:
 
-    ```shell
+    ```bash
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
     ```
 
 3. On the new controller, run:
 
-    ```shell
+    ```bash
     sudo k0s install controller --token-file /path/to/token/file -c /etc/k0s/k0s.yaml
     sudo k0s start
     ```
 
 4. This time, check k0s status by running this command on the new controller:
 
-    ```shell
+    ```bash
     sudo k0s status
     ```
     ```console
@@ -173,7 +173,7 @@ To create a join token for the new controller, follow these steps.
 
 Use the Kubernetes 'kubectl' command-line tool that comes with k0s binary to deploy your application or check your node status:
 
-```shell
+```bash
 sudo k0s kubectl get nodes
 ```
 ```console
@@ -183,7 +183,7 @@ k0s    Ready    <none>   4m6s   v1.33.1+k0s
 
 You can also install `kubectl` directly. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
 
-```shell
+```bash
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg

@@ -15,7 +15,7 @@
 
     The exported list of variables should include:
 
-    ```shell
+    ```bash
     OS_AUTH_URL
     OS_APPLICATION_CREDENTIAL_ID
     OS_APPLICATION_CREDENTIAL_SECRET
@@ -56,7 +56,7 @@
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f openstack-cloud-config.yaml
     ```
 
@@ -84,7 +84,7 @@
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f openstack-cluster-identity-cred.yaml
     ```
 
@@ -174,7 +174,7 @@
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f openstack-cluster-identity-resource-template.yaml
     ```
 
@@ -183,7 +183,7 @@
     To test the configuration, create a YAML file with the specification of your Managed Cluster and save it as
     `my-openstack-cluster-deployment.yaml`.  Note that you can see the available templates by listing them:
 
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
@@ -245,20 +245,20 @@
 
     Apply the YAML to your management cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f my-openstack-cluster-deployment.yaml
     ```
 
     This will trigger the provisioning process where {{{ docsVersionInfo.k0rdentName }}} will create a bunch of OpenStack resources such as OpenStackCluster, OpenStackMachineTemplate, OpenStackMachineDeployment, etc. You can follow the
     provisioning process:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-openstack-cluster-deployment --watch
     ```
 
     After the cluster is `Ready`, you can access it via the kubeconfig, just like any other Kubernetes cluster:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get secret my-openstack-cluster-deployment-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-openstack-cluster-deployment-kubeconfig.kubeconfig
     KUBECONFIG="my-openstack-cluster-deployment-kubeconfig.kubeconfig" kubectl get pods -A
     ```
@@ -267,14 +267,14 @@
 
     To clean up OpenStack resources, delete the managed cluster by deleting the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployments -A
     ```
     ```console
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-openstack-cluster-deployment   True    ClusterDeployment is ready
     ```
-    ```shell
+    ```bash
     kubectl delete clusterdeployments my-openstack-cluster-deployment -n kcm-system
     ```
     ```console

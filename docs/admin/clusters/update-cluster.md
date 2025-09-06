@@ -15,7 +15,7 @@ Follow these steps to update the `ClusterDeployment`:
 
     Run the following command, replacing the placeholders with the appropriate values:
 
-    ```shell
+    ```bash
     kubectl patch clusterdeployment.kcm <cluster-name> -n <namespace> --patch '{"spec":{"template":"<new-template-name>"}}' --type=merge
     ```
 
@@ -23,7 +23,7 @@ Follow these steps to update the `ClusterDeployment`:
 
     After applying the patch, verify the status of the `ClusterDeployment` object:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployment.kcm <cluster-name> -n <namespace>
     ```
 
@@ -31,7 +31,7 @@ Follow these steps to update the `ClusterDeployment`:
 
     For more details, use the `-o=yaml` option to check the `.status.conditions` field:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployment.kcm <cluster-name> -n <namespace> -o=yaml
     ```
 

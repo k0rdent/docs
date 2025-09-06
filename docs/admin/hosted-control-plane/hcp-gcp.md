@@ -39,6 +39,6 @@ Follow these steps to set up a k0smotron-hosted control plane on Google Cloud:
 
     Apply the `ClusterDeployment` manifest to the management cluster, as in:
 
-    ```shell
+    ```bash
     kubectl apply -f clusterdeployment.yaml -n kcm-system
     ```

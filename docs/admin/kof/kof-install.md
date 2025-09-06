@@ -36,7 +36,7 @@ you can use the most straightforward (though less secure) [static credentials](h
     aws_secret_access_key = <EXAMPLE_SECRET_ACCESS_KEY>
     ```
 3. Create the `external-dns-aws-credentials` secret in the `kof` namespace:
-    ```shell
+    ```bash
     kubectl create namespace kof
     kubectl create secret generic \
       -n kof external-dns-aws-credentials \
@@ -61,7 +61,7 @@ To enable DNS auto-config on Azure, use DNS Zone Contributor.
     ```
 
 3. Create the `external-dns-azure-credentials` secret in the `kof` namespace:
-    ```shell
+    ```bash
     kubectl create namespace kof
     kubectl create secret generic \
       -n kof external-dns-azure-credentials \
@@ -92,13 +92,13 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     </video>
 
 2. Create and label the `kof` namespace to allow Istio to inject its sidecars:
-    ```shell
+    ```bash
     kubectl create namespace kof
     kubectl label namespace kof istio-injection=enabled
     ```
 
 3. Install the `kof-istio` chart to the management cluster:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n istio-system kof-istio \
       oci://ghcr.io/k0rdent/kof/charts/kof-istio --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -125,7 +125,7 @@ and [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionIn
 and apply this example, or use it as a reference:
 
 1. Install `kof-operators` as required by `kof-mothership`:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
       oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -214,7 +214,7 @@ and apply this example, or use it as a reference:
     ```
 
 6. Install `kof-mothership`:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f mothership-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -234,7 +234,7 @@ and apply this example, or use it as a reference:
     > Otherwise use `kof-regional` with `kof-child`.  Do not use all 3 charts at the same time.
 
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
-        ```shell
+        ```bash
         kubectl get svctmpl -A
         ```
     * Look through the `MultiClusterService` objects in the [kof-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
@@ -248,7 +248,7 @@ and apply this example, or use it as a reference:
         you may set the OpenStack-specific values described in step 10 of the [Regional Cluster](#regional-cluster) section
         as a values file with `storage:` key passed to `kof-regional` chart here.
     * Install these charts into the management cluster with default or custom values:
-        ```shell
+        ```bash
         helm upgrade -i --reset-values --wait -n kof kof-regional \
           oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
 
@@ -257,12 +257,12 @@ and apply this example, or use it as a reference:
         ```
     * As a temporary workaround for the [Reconciling MultiClusterService](https://github.com/k0rdent/kcm/issues/1914) issue
         please restart `kcm-controller-manager`:
-        ```shell
+        ```bash
         kubectl rollout restart -n kcm-system deploy/kcm-controller-manager
         ```
 
 9. Wait for all pods to show that they're `Running`:
-    ```shell
+    ```bash
     kubectl get pod -n kof
     ```
 
@@ -275,7 +275,7 @@ look through the default values of the [kof-storage](https://github.com/k0rdent/
 and apply this example for AWS, or use it as a reference:
 
 1. Set your KOF variables using your own values:
-    ```shell
+    ```bash
     REGION=us-east-2
     REGIONAL_CLUSTER_NAME=aws-$REGION
     ADMIN_EMAIL=$(git config user.email)
@@ -284,13 +284,13 @@ and apply this example for AWS, or use it as a reference:
 
     If you have not applied the [Istio](#istio) section,
     set the `REGIONAL_DOMAIN` too, using your own domain:
-    ```shell
+    ```bash
     REGIONAL_DOMAIN=$REGIONAL_CLUSTER_NAME.kof.example.com
     echo "$REGIONAL_DOMAIN"
     ```
 
 2. Use the up-to-date `ClusterTemplate`, as in:
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system | grep aws
     TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     ```
@@ -299,7 +299,7 @@ and apply this example for AWS, or use it as a reference:
 
     For AWS:
 
-    ```shell
+    ```bash
     cat >regional-cluster.yaml <<EOF
     apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterDeployment
@@ -331,7 +331,7 @@ and apply this example for AWS, or use it as a reference:
 
     For Azure:
 
-    ```shell
+    ```bash
     AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
     echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"
 
@@ -445,7 +445,7 @@ and apply this example for AWS, or use it as a reference:
     If you want to skip creation of the regional cluster completely,
     but still let child clusters discover your custom endpoints,
     you may create a regional `ConfigMap` instead of a regional `ClusterDeployment`:
-    ```shell
+    ```bash
     cat >regional-configmap.yaml <<EOF
     apiVersion: v1
     kind: ConfigMap
@@ -519,14 +519,14 @@ and apply this example for AWS, or use it as a reference:
     ```
 
 11. Verify and apply the Regional `ClusterDeployment`:
-    ```shell
+    ```bash
     cat regional-cluster.yaml
 
     kubectl apply -f regional-cluster.yaml
     ```
 
 12. Watch how the cluster is deployed until all values of `READY` are `True`:
-    ```shell
+    ```bash
     clusterctl describe cluster -n kcm-system $REGIONAL_CLUSTER_NAME \
       --show-conditions all
     ```
@@ -540,13 +540,13 @@ and apply this example for AWS, or use it as a reference:
 
 1. Ensure you still have the variables set in the [Regional Cluster](#regional-cluster) section,
     and set your own value for the `CHILD_CLUSTER_NAME` variable:
-    ```shell
+    ```bash
     CHILD_CLUSTER_NAME=$REGIONAL_CLUSTER_NAME-child1
     echo "$CHILD_CLUSTER_NAME"
     ```
 
 2. Use the up-to-date `ClusterTemplate`, as in:
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system | grep aws
     TEMPLATE=aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
     ```
@@ -555,7 +555,7 @@ and apply this example for AWS, or use it as a reference:
 
     For AWS:
 
-    ```shell
+    ```bash
     cat >child-cluster.yaml <<EOF
     apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterDeployment
@@ -584,7 +584,7 @@ and apply this example for AWS, or use it as a reference:
 
     For Azure:
 
-    ```shell
+    ```bash
     AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
     echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"
 
@@ -664,14 +664,14 @@ and apply this example for AWS, or use it as a reference:
     and the second `opencost` key is part of its [values](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values).
 
 8. Verify and apply the `ClusterDeployment`:
-    ```shell
+    ```bash
     cat child-cluster.yaml
 
     kubectl apply -f child-cluster.yaml
     ```
 
 9. Watch while the cluster is deployed until all values of `READY` are `True`:
-    ```shell
+    ```bash
     clusterctl describe cluster -n kcm-system $CHILD_CLUSTER_NAME \
       --show-conditions all
     ```

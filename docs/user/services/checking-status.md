@@ -51,7 +51,7 @@ status:
 Based on the information above both kyverno and ingress-nginx are installed in their respective namespaces on the target cluster.
 You can check to see for yourself:
 
-```shell
+```bash
 kubectl get pod -n kyverno
 ```
 ```console
@@ -61,7 +61,7 @@ kyverno-background-controller-65f9fd5859-tm2wm   1/1     Running   0          2m
 kyverno-cleanup-controller-848b4c579d-ljrj5      1/1     Running   0          2m39s
 kyverno-reports-controller-6f59fb8cd6-s8jc8      1/1     Running   0          2m39s
 ```
-```shell
+```bash
 kubectl get pod -n ingress-nginx 
 ```
 ```console

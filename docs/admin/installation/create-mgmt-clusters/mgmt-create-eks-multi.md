@@ -6,14 +6,14 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
      Start by installing and configuring the Amazon tools. First download and install the `aws` tool:
 
-     ```shell
+     ```bash
      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
      unzip awscliv2.zip
      sudo ./aws/install
      ```
      Then configure it using environment variables:
 
-     ```shell
+     ```bash
      export AWS_ACCESS_KEY_ID="EXAMPLE_ACCESS_KEY_ID"
      export AWS_SECRET_ACCESS_KEY="EXAMPLE_SECRET_ACCESS_KEY"
      export AWS_SESSION_TOKEN="EXAMPLE_SESSION_TOKEN"
@@ -27,7 +27,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
      ```
      Once `aws` is installed you can install `eksctl`:
 
-     ```shell
+     ```bash
      curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
      sudo mv /tmp/eksctl /usr/local/bin
      eksctl version
@@ -39,7 +39,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 1. Create the cluster
 
     You can use the eksctl tool to create the basic Kubernetes cluster:
-    ```shell
+    ```bash
     eksctl create cluster --name <CLUSTER_NAME> \
     --version 1.31 \
     --region <YOUR_AWS_REGION> \
@@ -56,7 +56,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 1. Add controllers
 
     While the cluster is now created, it doesn't actually have any nodes.  Start by adding controllers:
-    ```shell
+    ```bash
     eksctl create nodegroup --cluster <CLUSTER_NAME> \
     --name <CONTROLLER_NODE_GROUP> \
     --node-type t3.medium \
@@ -78,7 +78,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
     Everything you do in {{{ docsVersionInfo.k0rdentName }}} is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
 
-    ```shell
+    ```bash
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -93,10 +93,10 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
     You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:
 
-    ```shell
+    ```bash
     aws eks update-kubeconfig --region <YOUR_AWS_REGION> --name <CLUSTER_NAME>
     ```
-    ```shell
+    ```bash
     Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster in /home/nick/.kube/config
     ```
 
@@ -105,7 +105,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     To prevent workloads from being scheduled on the controllers, add the `node-role.kubernetes.io/control-plane=true:NoSchedule` taint. First list
     the started nodes:
 
-    ```shell
+    ```bash
     kubectl get nodes
     ```
     ```console
@@ -116,14 +116,14 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```
     For each node, go ahead and set the taint:
 
-    ```shell
+    ```bash
     kubectl taint nodes nodename1.compute.internal node-role.kubernetes.io/control-plane=true:NoSchedule
     ```
     ```console
     node/nodename1.ca-central-1.compute.internal tainted
     ```
     Now verify the taints:
-    ```shell
+    ```bash
     kubectl describe nodes | grep -A 5 "Taints:"
     ```
     ```console
@@ -153,7 +153,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
     Adding worker nodes is simpler than controllers:
 
-    ```shell
+    ```bash
     eksctl create nodegroup --cluster <CLUSTER_NAME> \
     --name <WORKER_NODE_GROUP> \
     --node-type t3.medium \
@@ -170,7 +170,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     2025-03-06 03:13:39 [ℹ]  all nodegroups have up-to-date cloudformation templates
     ```
     Verify the nodes:
-    ```shell
+    ```bash
     kubectl get nodes
     ```
     ```console
@@ -186,22 +186,22 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 1. Verify pods
 
     Make sure pods will run properly by deploying a test pod:
-    ```shell
+    ```bash
     kubectl run test-pod --image=nginx --restart=Never
     kubectl get pods -o wide
     ```
-    ```shell
+    ```bash
     NAME       READY   STATUS    RESTARTS   AGE   IP               NODE                                              NOMINATED NODE   READINESS GATES
     test-pod   1/1     Running   0          15s   192.168.76.104   ip-192-168-68-189.ca-central-1.compute.internal   <none>           <none>
     ```
     Clean up so you can start fresh:
-    ```shell
+    ```bash
     kubectl delete pod test-pod
     ```
-    ```shell
+    ```bash
     pod "test-pod" deleted
     ```
-    ```shell
+    ```bash
     kubectl get pods -o wide
     ```
     ```console
@@ -212,7 +212,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
 
     Finally, the easiest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
 
-    ```shell
+    ```bash
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
     chmod 700 get_helm.sh
     ./get_helm.sh

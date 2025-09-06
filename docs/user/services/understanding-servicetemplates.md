@@ -119,7 +119,7 @@ Kustomize-based `ServiceTemplate` can be created with either local or remote sou
 
   `ConfigMap` or `Secret` in this case must embed the tar-gzipped archive containing the kustomization files. This can be done by the following command, assuming the the archive was already created:
 
-  ```shell
+  ```bash
   kubectl create configmap foo-bar --from-file=/path/to/kustomization/archive.tar.gz
   ```
 

@@ -11,7 +11,7 @@ drivers) may fail to install.
 
 You may encounter an error similar to the following in the logs of the hosted cluster controller pods:
 
-```shell
+```bash
 can''t locate chart `oci://172.19.125.101:5001/charts/vsphere-csi-driver-0.0.3`:
 failed to do request: Head "https://172.19.125.101:5001/v2/charts/vsphere-csi-driver/manifests/0.0.3":
 tls: failed to verify certificate: x509: certificate signed by unknown authority

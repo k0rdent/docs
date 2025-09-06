@@ -95,7 +95,7 @@ EOF
 ```
 Apply the YAML to your cluster:
 
-```shell
+```bash
 kubectl apply -f gcp-cluster-identity-secret.yaml
 ```
 
@@ -125,7 +125,7 @@ spec:
     namespace: kcm-system
 ```
 
-```shell
+```bash
 kubectl apply -f gcp-credential.yaml
 ```
 
@@ -168,7 +168,7 @@ Object name needs to be exactly `gcp-cloud-sa-resource-template` (credentials `S
 
 Apply the YAML to your cluster:
 
-```shell
+```bash
 kubectl apply -f gcp-cloud-sa-resource-template.yaml
 ```
 ```console
@@ -179,7 +179,7 @@ configmap/gcp-cloud-sa-resource-template created
 
 To determine where to deploy your cluster, you may wish to begin by listing your GCP regions:
 
-```shell
+```bash
 gcloud compute regions list
 ```
 
@@ -241,7 +241,7 @@ Replace `REGION` with the region you'd like your cluster to live.
 
 {{{ docsVersionInfo.k0rdentName }}} is now fully configured to manage GCP. To create a cluster, begin by listing the available ClusterTemplates provided with {{{ docsVersionInfo.k0rdentName }}}:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system
 ```
 
@@ -332,7 +332,7 @@ spec:
 ## Apply the ClusterDeployment to deploy the cluster
 Finally, we'll apply the ClusterDeployment YAML (`my-gcp-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
-```shell
+```bash
 kubectl apply -f my-gcp-clusterdeployment1.yaml
 ```
 
@@ -344,7 +344,7 @@ clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created
 
 There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:
 
-```shell
+```bash
 kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-gcp-clusterdeployment1 --watch
 ```
 
@@ -352,13 +352,13 @@ kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-gcp-clusterd
 
 Now you can retrieve the cluster's kubeconfig:
 
-```shell
+```bash
 kubectl -n kcm-system get secret my-gcp-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-gcp-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 And you can use the kubeconfig to see what's running on the cluster:
 
-```shell
+```bash
 KUBECONFIG="my-gcp-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```
 
@@ -366,7 +366,7 @@ KUBECONFIG="my-gcp-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 
 To verify the presence of the child cluster, list the available `ClusterDeployment` objects:
 
-```shell
+```bash
 kubectl get ClusterDeployments -A
 ```
 ```console
@@ -378,7 +378,7 @@ kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready
 
 To tear down the child cluster, delete the `ClusterDeployment`:
 
-```shell
+```bash
 kubectl delete ClusterDeployment my-gcp-clusterdeployment1 -n kcm-system
 ```
 ```console

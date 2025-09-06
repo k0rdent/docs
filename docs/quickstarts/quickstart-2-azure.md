@@ -20,7 +20,7 @@ Creating user identity abstractions with minimal required permissions is one of 
 
 The Azure CLI (az) is required to interact with Azure resources. Install it according to instructions in [How to install the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli). For Linux/Debian (i.e., Ubuntu Server), it's one command:
 
-```shell
+```bash
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
@@ -28,7 +28,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 Run the az login command to authenticate your session with Azure.
 
-```shell
+```bash
 az login
 ```
 
@@ -38,7 +38,7 @@ Azure Resource Manager uses resource providers to manage resources of all differ
 
 You can list resources registered with your account using Azure CLI:
 
-```shell
+```bash
 az provider list --query "[?registrationState=='Registered']" --output table
 ```
 
@@ -53,7 +53,7 @@ Microsoft.Network                     Registered
 
 You can then select from the commands below (or enter all of them) to register any unregistered resources that {{{ docsVersionInfo.k0rdentName }}} and CAPZ require:
 
-```shell
+```bash
 az provider register --namespace Microsoft.Compute
 az provider register --namespace Microsoft.Network
 az provider register --namespace Microsoft.ContainerService
@@ -65,7 +65,7 @@ az provider register --namespace Microsoft.Authorization
 
 Use the following command to list Azure subscriptions and their IDs:
 
-```shell
+```bash
 az account list -o table
 ```
 
@@ -83,7 +83,7 @@ The Subcription ID is in the second column.
 
 The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure. To create it, run the following command with the Azure CLI, replacing `<subscription-id>` with the ID you copied earlier.
 
-```shell
+```bash
 az ad sp create-for-rbac --role contributor --scopes="/subscriptions/<subscription-id>"
 ```
 
@@ -138,7 +138,7 @@ type: Opaque
 
 Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster using the following command:
 
-```shell
+```bash
 kubectl apply -f azure-cluster-identity-secret.yaml
 ```
 
@@ -178,7 +178,7 @@ spec:
 
 Apply the YAML to your cluster:
 
-```shell
+```bash
 kubectl apply -f azure-cluster-identity.yaml
 ```
 
@@ -240,7 +240,7 @@ metadata:
 -->
 Apply the YAML to your cluster:
 
-```shell
+```bash
 kubectl apply -f azure-cluster-identity-cred.yaml
 ```
 
@@ -330,7 +330,7 @@ Object name needs to be exactly `azure-cluster-identity-resource-template`, `Azu
 
 Apply the YAML to your cluster:
 
-```shell
+```bash
 kubectl apply -f azure-cluster-identity-resource-template.yaml
 ```
 ```console
@@ -341,7 +341,7 @@ configmap/azure-cluster-identity-resource-template created
 
 To determine where to deploy your cluster, you may wish to begin by listing your Azure location/regions:
 
-```shell
+```bash
 az account list-locations -o table
 ```
 
@@ -364,7 +364,7 @@ What you'll need to insert in your `ClusterDeployment` is the name (center colum
 
 {{{ docsVersionInfo.k0rdentName }}} is now fully configured to manage Azure. To create a cluster, begin by listing the available `ClusterTemplate` objects:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system
 ```
 
@@ -439,7 +439,7 @@ spec:
 
 Finally, we'll apply the `ClusterDeployment` YAML (`my-azure-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
-```shell
+```bash
 kubectl apply -f my-azure-clusterdeployment1.yaml
 ```
 
@@ -451,7 +451,7 @@ clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created
 
 There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:
 
-```shell
+```bash
 kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-azure-clusterdeployment1 --watch
 ```
 
@@ -459,13 +459,13 @@ kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-azure-cluste
 
 Now you can retrieve the cluster's `kubeconfig`:
 
-```shell
+```bash
 kubectl -n kcm-system get secret my-azure-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-azure-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 And you can use the `kubeconfig` to see what's running on the cluster:
 
-```shell
+```bash
 KUBECONFIG="my-azure-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```
 
@@ -473,7 +473,7 @@ KUBECONFIG="my-azure-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods 
 
 To verify the presence of the child cluster, list the available `ClusterDeployment` objects:
 
-```shell
+```bash
 kubectl get ClusterDeployments -A
 ```
 ```console
@@ -485,7 +485,7 @@ kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready
 
 To tear down the child cluster, delete the `ClusterDeployment`:
 
-```shell
+```bash
 kubectl delete ClusterDeployment my-azure-clusterdeployment1 -n kcm-system
 ```
 ```console

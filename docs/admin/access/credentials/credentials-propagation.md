@@ -78,7 +78,7 @@ The kubeconfig file for the cluster should be contained in the value key of the 
 a secret that contains the kubeconfig for an adopted cluster. To create this secret, first create or obtain a kubeconfig file 
 for the cluster that is being adopted and then run the following command to base64 encode it:
 
-```shell
+```bash
 cat kubeconfig | base64 -w 0
 ```
 

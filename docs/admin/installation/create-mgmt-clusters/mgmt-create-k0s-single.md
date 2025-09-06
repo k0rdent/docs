@@ -8,7 +8,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     To make things simple this guide uses [k0s](https://github.com/k0sproject/k0s/), a small, convenient, and fully-functional distribution. For more granular instructions, including those for creating a cluster accessible from a different server, see the [k0s multi-node instructions](mgmt-create-k0s-multi.md):
 
-    ```shell
+    ```bash
     curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
     sudo k0s install controller --enable-worker --no-taints
     sudo k0s start
@@ -16,13 +16,13 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     k0s includes its own preconfigured version of `kubectl` so make sure the cluster is running:
 
-    ```shell
+    ```bash
     sudo k0s kubectl get nodes
     ```
 
     After 2-3 minutes you should see a single `control-plane` node with a status of `Ready`, as in:
 
-    ```shell
+    ```bash
     NAME              STATUS   ROLES            AGE   VERSION
     ip-172-31-29-61   Ready    control-plane    46s   v1.31.2+k0s
     ```
@@ -31,7 +31,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     Everything you do in {{{ docsVersionInfo.k0rdentName }}} is done by creating and manipulating Kubernetes objects, so you'll need to have `kubectl` installed. You can find the [full install docs here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/), or just follow these instructions:
 
-    ```shell
+    ```bash
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -46,7 +46,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     In order to access the management cluster you will, of course, need the kubeconfig. Again, if you're using another Kubernetes distribution follow those instructions to get the kubeconfig, but for k0s, the process involves simply copying the existing file and adding it to an environment variable so `kubectl` knows where to find it.
 
-    ```shell
+    ```bash
     sudo cp /var/lib/k0s/pki/admin.conf KUBECONFIG
     sudo chmod +r KUBECONFIG
     export KUBECONFIG=./KUBECONFIG
@@ -54,7 +54,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     Now you should be able to use the non-k0s `kubectl` to see the status of the cluster:
 
-    ```shell
+    ```bash
     kubectl get nodes
     ```
 
@@ -71,7 +71,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     The easiest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart, so let's get Helm installed. You can find the [full instructions here](https://helm.sh/docs/intro/install/), or use these instructions:
 
-    ```shell
+    ```bash
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
     chmod 700 get_helm.sh
     ./get_helm.sh

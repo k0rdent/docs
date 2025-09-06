@@ -109,7 +109,7 @@ Please use these guides to apply advanced routing options:
 To access the Alertmanager UI:
 
 1. In the management cluster, forward the alertmanager port:
-    ```shell
+    ```bash
     kubectl port-forward -n kof svc/vmalertmanager-cluster 9093:9093
     ```
 
@@ -151,7 +151,7 @@ The Prometheus UI looks like this:
 
 To enable Promxy Prometheus UI, please run this command in the management cluster:
 
-```shell
+```bash
 kubectl port-forward -n kof svc/kof-mothership-promxy 8082:8082
 ```
 
@@ -259,7 +259,7 @@ If you've [selected to store](./kof-storing.md) KOF data of the management clust
 in the same management cluster, then:
 
 1. Copy the generated mothership recording rules from the output `ConfigMap` to a YAML file:
-    ```shell
+    ```bash
     kubectl get cm -n kof kof-record-vmrules-mothership -o yaml \
     | yq -r .data.values > vmrules.yaml
     ```

@@ -73,13 +73,13 @@ To use mutual references, follow these steps:
 
     To create the claim:
 
-    ```shell
+    ```bash
     kubectl apply -f <cluster-ipam-claim-file>.yaml
     ```
 
     To verify the claim:
 
-    ```shell
+    ```bash
     kubectl get clusteripamclaim <claim-name> -n <namespace>
     ```
     ``` yaml
@@ -160,7 +160,7 @@ The IPAM configuration can also be defined inline within the `ClusterDeployment`
 
 2. Apply the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl apply -f <cluster-deployment-file>.yaml
     ```
 
@@ -170,7 +170,7 @@ The IPAM configuration can also be defined inline within the `ClusterDeployment`
 
     To inspect the resulting `ClusterIPAM` resource:
 
-    ```shell
+    ```bash
     kubectl get -n <namespace> ClusterIPAM <claim-name>
     ```
     ```yaml

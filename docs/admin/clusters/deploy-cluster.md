@@ -18,7 +18,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     new one be sure what you're looking for doesn't already exist. You can see all of the existing `Credential` objects by 
     querying the management cluster:
 
-    ```shell
+    ```bash
     kubectl get credentials --all-namespaces
     ```
 
@@ -39,7 +39,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     Templates act as a blueprint for creating a cluster. To see the list of available templates, use the following command:
 
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
@@ -63,7 +63,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     You can then get information on the actual template by describing it, as in:
 
-    ```shell
+    ```bash
     kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}} -n kcm-system
     ```
 
@@ -119,7 +119,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     Once the `ClusterDeployment` configuration is ready, apply it to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f clusterdeployment.yaml
     ```
 
@@ -129,7 +129,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     After submitting the configuration, verify that the `ClusterDeployment` object has been created successfully:
 
-    ```shell
+    ```bash
     kubectl -n <namespace> get clusterdeployment.kcm <cluster-name> -o=yaml
     ```
 
@@ -139,14 +139,14 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     {{{ docsVersionInfo.k0rdentName }}} will now start provisioning resources (for example, VMs and networks) and setting up the cluster. To monitor this process, run:
 
-    ```shell
+    ```bash
     kubectl -n <namespace> get cluster <cluster-name> -o=yaml
     ```
 
     > TIP:  
     > For a detailed view of the provisioning process, use the `clusterctl describe` command (note that this requires the [`clusterctl`](https://github.com/kubernetes-sigs/cluster-api/releases) CLI):
 
-    ```shell
+    ```bash
     clusterctl describe cluster <cluster-name> -n <namespace> --show-conditions all
     ```
 
@@ -154,12 +154,12 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     When provisioning is complete, retrieve the kubeconfig file for the new cluster. This file enables you to interact with the cluster using `kubectl`:
 
-    ```shell
+    ```bash
     kubectl get secret -n <namespace> <cluster-name>-kubeconfig -o=jsonpath={.data.value} | base64 -d > kubeconfig
     ```
     You can then use this file to access the cluster, as in:
 
-    ```shell
+    ```bash
     export KUBECONFIG=kubeconfig
     kubectl get pods -A
     ```

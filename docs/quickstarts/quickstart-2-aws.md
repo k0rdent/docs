@@ -22,7 +22,7 @@ Creating a {{{ docsVersionInfo.k0rdentName }}} user with minimal required permis
 
 We'll use the AWS CLI to create and set IAM permissions for the {{{ docsVersionInfo.k0rdentName }}} user, so we'll install it on our management node:
 
-```shell
+```bash
 sudo apt install unzip
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
 unzip awscliv2.zip 
@@ -35,7 +35,7 @@ sudo ./aws/install
 
 To install `clusterawsadm` on Ubuntu on x86 hardware:
 
-```shell
+```bash
 curl -LO https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/v2.7.1/clusterawsadm-linux-amd64
 sudo install -o root -g root -m 0755 clusterawsadm-linux-amd64 /usr/local/bin/clusterawsadm
 ```
@@ -46,7 +46,7 @@ You should have these already, preserved somewhere safe. If not, you can visit t
 
 Export the credentials to the management node environment:
 
-```shell
+```bash
 export AWS_REGION=EXAMPLE_AWS_REGION
 export AWS_ACCESS_KEY_ID=EXAMPLE_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=EXAMPLE_SECRET_ACCESS_KEY
@@ -63,7 +63,7 @@ second to the same region, you are likely to run into issues.
 
 You can determine how many elastic IPs are available from the command line:
 
-```shell
+```bash
 LIMIT=$(aws ec2 describe-account-attributes --attribute-names vpc-max-elastic-ips --query 'AccountAttributes[0].AttributeValues[0].AttributeValue' --output text)
 USED=$(aws ec2 describe-addresses --query 'Addresses[*].PublicIp' --output text | wc -w)
 AVAILABLE=$((LIMIT - USED))
@@ -75,7 +75,7 @@ Available Public IPs: 5
 
 If you have less than 3 available public IPs, you can request an increase in your quota:
 
-```shell
+```bash
 aws service-quotas request-service-quota-increase \
     --service-code ec2 \
     --quota-code L-0263D0A3 \
@@ -84,7 +84,7 @@ aws service-quotas request-service-quota-increase \
 
 You can check on the status of your request:
 
-```shell
+```bash
 aws service-quotas list-requested-service-quota-change-history \
     --service-code ec2
 ```
@@ -115,7 +115,7 @@ aws service-quotas list-requested-service-quota-change-history \
 
 Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} user:
 
-```shell
+```bash
  aws iam create-user --user-name k0rdentQuickstart
 ```
 ```console
@@ -134,7 +134,7 @@ Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} u
 
 Before {{{ docsVersionInfo.k0rdentName }}} CAPI can manage resources on AWS, you need to use `clusterawsadm` to create a bootstrap CloudFormation stack with additional IAM policies and a service account. You do this under the administrative account credentials you earlier exported to the management node environment:
 
-```shell
+```bash
 clusterawsadm bootstrap iam create-cloudformation-stack
 ```
 
@@ -149,14 +149,14 @@ Next, we'll attach appropriate policies to the {{{ docsVersionInfo.k0rdentName }
 
 We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:
 
-```shell
+```bash
 AWS_ARN_ID=$(aws iam get-user --user-name k0rdentQuickstart --query 'User.Arn' --output text | sed -E 's/.*::([0-9]+):.*/\1/')
 echo $AWS_ARN_ID
 ```
 
  Assemble and execute the following commands to implement the required policies:
 
-```shell
+```bash
 aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io
 aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io
 aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:iam::$AWS_ARN_ID:policy/nodes.cluster-api-provider-aws.sigs.k8s.io
@@ -165,7 +165,7 @@ aws iam attach-user-policy --user-name k0rdentQuickstart --policy-arn arn:aws:ia
 
 We can check to see that policies were attached to the new user:
 
-```shell
+```bash
 aws iam list-attached-user-policies --user-name k0rdentQuickstart
 
 ```
@@ -198,7 +198,7 @@ And you'll see output that looks like this (this is non-valid example text):
 
 In the AWS IAM Console, you can now create the Access Key ID and Secret Access Key for the {{{ docsVersionInfo.k0rdentName }}} user and download them. You can also do this via the AWS CLI:
 
-```shell
+```bash
 aws iam create-access-key --user-name k0rdentQuickstart
 ```
 
@@ -246,7 +246,7 @@ Remember: the Access Key ID and Secret Access Key are the ones you generated for
 
 Apply this YAML to the management cluster as follows:
 
-```shell
+```bash
 kubectl apply -f aws-cluster-identity-secret.yaml -n kcm-system
 ```
 
@@ -274,7 +274,7 @@ Note that the `spec.secretRef` is the same as the `metadata.name` of the secret 
 
 Create the object as follows:
 
-```shell
+```bash
 kubectl apply -f aws-cluster-identity.yaml  -n kcm-system
 ```
 
@@ -300,7 +300,7 @@ Note that `.spec.identityRef.kind` must be `AWSClusterStaticIdentity` and `.spec
 
 Now apply this YAML to your management cluster:
 
-```shell
+```bash
 kubectl apply -f aws-cluster-identity-cred.yaml -n kcm-system
 ```
 
@@ -324,7 +324,7 @@ Note that `ConfigMap` is empty. This is expected, we don't need to template any 
 
 Now apply this YAML to your management cluster:
 
-```shell
+```bash
 kubectl apply -f aws-cluster-identity-resource-template.yaml -n kcm-system
 ```
 
@@ -332,7 +332,7 @@ kubectl apply -f aws-cluster-identity-resource-template.yaml -n kcm-system
 
 {{{ docsVersionInfo.k0rdentName }}} is now fully configured to manage AWS. To create a cluster, begin by listing the available `ClusterTemplate` objects provided with {{{ docsVersionInfo.k0rdentName }}}:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system
 ```
 
@@ -385,7 +385,7 @@ spec:
 
 Finally, we'll apply the `ClusterDeployment` YAML (`my-aws-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
-```shell
+```bash
 kubectl apply -f my-aws-clusterdeployment1.yaml
 ```
 
@@ -397,7 +397,7 @@ clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created
 
 There will be a delay as the cluster finishes provisioning. You can watch the provisioning process with the following command:
 
-```shell
+```bash
 kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterdeployment1 --watch
 ```
 
@@ -412,13 +412,13 @@ my-aws-clusterdeployment1   True    ClusterDeployment is ready
 
 Now you can retrieve the cluster's `kubeconfig`:
 
-```shell
+```bash
 kubectl -n kcm-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1.kubeconfig
 ```
 
 And you can use the `kubeconfig` to see what's running on the cluster:
 
-```shell
+```bash
 KUBECONFIG="my-aws-clusterdeployment1.kubeconfig" kubectl get pods -A
 ```
 
@@ -426,7 +426,7 @@ KUBECONFIG="my-aws-clusterdeployment1.kubeconfig" kubectl get pods -A
 
 To verify the presence of the child cluster, list the available `ClusterDeployment` objects:
 
-```shell
+```bash
 kubectl get ClusterDeployments -A
 ```
 
@@ -441,7 +441,7 @@ kcm-system   my-aws-clusterdeployment1   True    ClusterDeployment is ready
 
 To tear down the child cluster, delete the `ClusterDeployment`:
 
-```shell
+```bash
 kubectl delete ClusterDeployment my-aws-clusterdeployment1 -n kcm-system
 ```
 

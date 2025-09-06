@@ -23,14 +23,14 @@ To remove the demo clusters created in this section:
 > WARNING:
 > Make sure these are just your demo clusters and do not contain important data.
 
-```shell
+```bash
 kubectl delete --wait --cascade=foreground -f child-cluster.yaml
 kubectl delete --wait --cascade=foreground -f regional-cluster.yaml
 ```
 
 To remove KOF from the management cluster:
 
-```shell
+```bash
 helm uninstall --wait --cascade foreground -n istio-system kof-istio
 helm uninstall --wait --cascade foreground -n kof kof-child
 helm uninstall --wait --cascade foreground -n kof kof-regional

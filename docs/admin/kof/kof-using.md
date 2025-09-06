@@ -8,7 +8,7 @@ To make Grafana available, start with these steps:
 
 1. Get the Grafana username and password:
 
-    ```shell
+    ```bash
     kubectl get secret -n kof grafana-admin-credentials -o yaml | yq '{
       "user": .data.GF_SECURITY_ADMIN_USER | @base64d,
       "pass": .data.GF_SECURITY_ADMIN_PASSWORD | @base64d
@@ -17,7 +17,7 @@ To make Grafana available, start with these steps:
 
 2. Forward a port to the Grafana dashboard:
 
-    ```shell
+    ```bash
     kubectl port-forward -n kof svc/grafana-vm-service 3000:3000
     ```
 
@@ -77,7 +77,7 @@ Finally there are the cost management features, including:
 
     * Forward a port to the Jaeger UI:
 
-        ```shell
+        ```bash
         KUBECONFIG=regional-kubeconfig kubectl port-forward \
           -n kof svc/kof-storage-jaeger-query 16686:16686
         ```
@@ -91,7 +91,7 @@ Finally there are the cost management features, including:
 
     * Get the regional Jaeger username and password:
 
-        ```shell
+        ```bash
         KUBECONFIG=regional-kubeconfig kubectl get secret \
           -n kof jaeger-admin-credentials -o yaml | yq '{
           "user": .data.username | @base64d,
@@ -102,7 +102,7 @@ Finally there are the cost management features, including:
     * Get the the Jaeger UI URL, open it,
         and login with the username/password printed above:
 
-        ```shell
+        ```bash
         echo https://jaeger.$REGIONAL_DOMAIN
         ```
 
@@ -161,7 +161,7 @@ You can access the KOF UI by following these steps:
 
 1. Forward a port to the KOF UI:
 
-    ```shell
+    ```bash
     kubectl port-forward -n kof deploy/kof-mothership-kof-operator 9090:9090
     ```
 

@@ -5,7 +5,7 @@
 
 To understand whether installation is complete, start by making sure all pods are ready in the `kcm-system` namespace. There should be 20 pod entries:
 
-```shell
+```bash
 kubectl get pods -n kcm-system
 ```
 
@@ -32,7 +32,7 @@ kcm-velero-67bf545995-x6784                                    1/1     Running  
 source-controller-74b597b995-kkqqw                             1/1     Running   0          11m
 ```
 
-```shell
+```bash
 kubectl get pods -n kcm-system --no-headers | wc -l
 ```
 
@@ -42,7 +42,7 @@ kubectl get pods -n kcm-system --no-headers | wc -l
 
 State management is handled by Project Sveltos, so you'll want to make sure that all 10 pods are running/completed in the `projectsveltos` namespace:
 
-```shell
+```bash
 kubectl get pods -n projectsveltos
 ```
 
@@ -59,7 +59,7 @@ sveltos-agent-manager-5445f6f57c-wxw2s    1/1     Running   0          10m
 techsupport-controller-5b666d6884-jfqnp   1/1     Running   0          10m
 ```
 
-```shell
+```bash
 kubectl get pods -n projectsveltos --no-headers | wc -l
 ```
 
@@ -69,7 +69,7 @@ kubectl get pods -n projectsveltos --no-headers | wc -l
 
 If any of these pods are missing, simply give {{{ docsVersionInfo.k0rdentName }}} more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:
 
-```shell
+```bash
 kubectl describe pod classifieclassifier-manager-5b47b66fc9-5mtwl -n projectsveltos
 ```
 
@@ -79,7 +79,7 @@ As long as you're not seeing pod restarts, you just need to wait a few minutes.
 
 The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is the state of the `Management` object. To check, issue this command:
 
-```shell
+```bash
 kubectl get Management -n kcm-system
 ```
 
@@ -92,7 +92,7 @@ kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 
 Next verify whether the KCM templates have been successfully installed and reconciled. Start with the `ProviderTemplate` objects:
 
-```shell
+```bash
 kubectl get providertemplate -n kcm-system
 ```
 
@@ -115,7 +115,7 @@ Make sure that all templates are not just installed, but valid. Again, this may 
 
 You'll also want to make sure the `ClusterTemplate` objects are installed and valid:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system
 ```
 
@@ -143,7 +143,7 @@ vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vs
 The final test of whether {{{ docsVersionInfo.k0rdentName }}} installation is installed is making sure the
 status of the `Management` object itself is `True`:
 
-```shell
+```bash
 kubectl get management -n kcm-system
 ```
 ```console

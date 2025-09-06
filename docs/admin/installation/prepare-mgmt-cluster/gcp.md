@@ -102,7 +102,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
 
      You can then apply the YAML to your cluster:
 
-     ```shell
+     ```bash
      kubectl apply -f gcp-cluster-identity-secret.yaml
      ```
 
@@ -126,7 +126,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
         namespace: kcm-system
     ```
 
-    ```shell
+    ```bash
     kubectl apply -f gcp-cluster-identity-cred.yaml
     ```
 
@@ -169,7 +169,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f gcp-cloud-sa-resource-template.yaml
     ```
     ```console
@@ -183,7 +183,7 @@ Now you're ready to deploy the cluster.
     To test the configuration, deploy a child cluster by following these steps:
     First get a list of available regions:
 
-    ```shell
+    ```bash
     gcloud compute regions list
     ```
     
@@ -206,7 +206,7 @@ Now you're ready to deploy the cluster.
 
      You can see the available templates by listing them:
 
-     ```shell
+     ```bash
      kubectl get clustertemplate -n kcm-system
      ```
      ```console
@@ -253,7 +253,7 @@ Now you're ready to deploy the cluster.
 
      Apply the YAML to your management cluster:
 
-     ```shell
+     ```bash
      kubectl apply -f my-gcp-clusterdeployment1.yaml
      ```
      ```console
@@ -263,13 +263,13 @@ Now you're ready to deploy the cluster.
      Note that although the `ClusterDeployment` object has been created, there will be a delay as actual GCP instances
      are provisioned and added to the cluster. You can follow the provisioning process:
 
-     ```shell
+     ```bash
      kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-gcp-clusterdeployment1 --watch
      ```
 
      After the cluster is `Ready`, you can access it via the kubeconfig:
 
-     ```shell
+     ```bash
      kubectl -n kcm-system get secret my-gcp-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-gcp-clusterdeployment1-kubeconfig.kubeconfig
      KUBECONFIG="my-gcp-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
      ```
@@ -278,14 +278,14 @@ Now you're ready to deploy the cluster.
 
     To clean up GCP resources, delete the child cluster by deleting the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployments -A
     ```
     ```console
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready
     ```
-    ```shell
+    ```bash
     kubectl delete clusterdeployments my-gcp-clusterdeployment1 -n kcm-system
     ```
     ```console

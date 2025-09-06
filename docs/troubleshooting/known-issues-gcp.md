@@ -5,7 +5,7 @@
 When deleting a GCP cluster, the process can become stuck during the VPC deletion phase. The following error may
 appear in the `cluster-api-provider-gcp` logs:
 
-```shell
+```bash
 E0505 13:33:29.573486       1 controller.go:324] "Reconciler error" err="googleapi:
 Error 400: RESOURCE_IN_USE_BY_ANOTHER_RESOURCE - The network resource 'projects/k0rdent-dev/global/networks/network-name'
 is already being used by 'projects/k0rdent-dev/global/routes/kubernetes-f85faa80-9d44-4a73-a679-97aa072ecb4e'"

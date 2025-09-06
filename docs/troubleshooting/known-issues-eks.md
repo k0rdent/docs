@@ -5,7 +5,7 @@
 The deployment of the EKS cluster is stuck waiting for the machines to be provisioned. The `MachineDeployment`
 resource is showing the following conditions:
 
-```shell
+```bash
 Type: MachineSetReady
 Status: False
 Reason: PreflightCheckFailed

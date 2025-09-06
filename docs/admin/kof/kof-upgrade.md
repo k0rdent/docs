@@ -5,7 +5,7 @@
 * If you are not using [Istio](kof-install.md#istio),
     then on the step 8 of the [Management Cluster](kof-install.md#management-cluster) upgrade
     please apply this temporary workaround for the [Reconciling MultiClusterService](https://github.com/k0rdent/kcm/issues/1914) issue:
-    ```shell
+    ```bash
     kubectl rollout restart -n kcm-system deploy/kcm-controller-manager
     ```
 
@@ -24,7 +24,7 @@ Also:
 
 * To upgrade from `cert-manager-1-16-4` to `cert-manager-v1-16-4`
     please apply this patch to management cluster:
-    ```shell
+    ```bash
     kubectl apply -f - <<EOF
     apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ServiceTemplateChain
@@ -45,13 +45,13 @@ Also:
 ## Upgrade to v1.1.0
 
 * After you `helm upgrade` the `kof-mothership` chart, please run the following:
-    ```shell
+    ```bash
     kubectl apply --server-side --force-conflicts \
     -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
     ```
 * After you get `regional-kubeconfig` file on the [KOF Verification](./kof-verification.md) step,
   please run the following for each regional cluster:
-    ```shell
+    ```bash
     KUBECONFIG=regional-kubeconfig kubectl apply --server-side --force-conflicts \
     -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
     ```

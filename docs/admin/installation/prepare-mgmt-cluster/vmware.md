@@ -14,7 +14,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     to manipulate vSphere resources. The user should have the following 
     required privileges:
 
-    ```shell
+    ```bash
     Virtual machine: Full permissions are required
     Network: Assign network is sufficient
     Datastore: The user should be able to manipulate virtual machine files and metadata
@@ -77,7 +77,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f vsphere-cluster-identity-secret.yaml
     ```
 
@@ -107,7 +107,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f vsphere-cluster-identity.yaml
     ```
 
@@ -133,7 +133,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f vsphere-cluster-identity-cred.yaml
     ```
 
@@ -211,7 +211,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f vsphere-cluster-identity-resource-template.yaml
     ```
 
@@ -222,7 +222,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     You can get a list of available templates:
 
 
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
@@ -289,20 +289,20 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     Apply the YAML to your management cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f my-vsphere-clusterdeployment1.yaml
     ```
 
     There will be a delay as the cluster finishes provisioning. Follow the
     provisioning process with the following command:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-vsphere-clusterdeployment1 --watch
     ```
 
     After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get secret my-vsphere-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-vsphere-clusterdeployment1-kubeconfig.kubeconfig
     KUBECONFIG="my-vsphere-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
     ```
@@ -311,6 +311,6 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     To delete the provisioned cluster and free consumed vSphere resources run:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system delete cluster my-vsphere-clusterdeployment1
     ```

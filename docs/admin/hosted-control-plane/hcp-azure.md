@@ -24,43 +24,43 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
 
     Location:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{.spec.location}}'
     ```
 
     Subscription ID:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{.spec.subscriptionID}}'
     ```
 
     Resource Group:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{.spec.resourceGroup}}'
     ```
 
     VNet Name:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{.spec.networkSpec.vnet.name}}'
     ```
 
     Subnet Name:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSpec.subnets 1).name}}'
     ```
 
     Route Table Name:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSpec.subnets 1).routeTable.name}}'
     ```
 
     Security Group Name:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSpec.subnets 1).securityGroup.name}}'
     ```
 
@@ -119,7 +119,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
 
     Save this YAML as `clusterdeployment.yaml.tpl` and render the manifest with the following command:
 
-    ```shell
+    ```bash
     kubectl get azurecluster <management-cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
     ```
 
@@ -127,7 +127,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
 
     To actually create the cluster, apply the `ClusterDeployment` manifest to the management cluster, as in:
 
-    ```shell
+    ```bash
     kubectl apply clusterdeployment.yaml -n kcm-system
     ```
 
@@ -138,7 +138,7 @@ Follow these steps to set up a k0smotron-hosted control plane on Azure:
 
     Use the following command to set the `AzureCluster` object status to `Ready`:
 
-    ```shell
+    ```bash
     kubectl patch azurecluster <cluster-name> --type=merge --subresource status --patch '{"status": {"ready": true}}'
     ```
 
@@ -150,7 +150,7 @@ Due to these same k0smotron limitations, you **must** take some manual steps in 
 
     To prevent the `AzureCluster` object from being deleted too early, add a custom finalizer:
 
-    ```shell
+    ```bash
     kubectl patch azurecluster <cluster-name> --type=merge --patch '{"metadata": {"finalizers": ["manual"]}}'
     ```
 
@@ -162,7 +162,7 @@ Due to these same k0smotron limitations, you **must** take some manual steps in 
 
     If any `AzureMachines` are left orphaned, delete their finalizers manually after confirming no VMs remain in Azure. Use this command to remove the finalizer:
 
-    ```shell
+    ```bash
     kubectl patch azuremachine <machine-name> --type=merge --patch '{"metadata": {"finalizers": []}}'
     ```
 
@@ -170,6 +170,6 @@ Due to these same k0smotron limitations, you **must** take some manual steps in 
 
     If Azure admission controls prevent updates to orphaned objects, you must disable the associated `MutatingWebhookConfiguration` by deleting it:
 
-    ```shell
+    ```bash
     kubectl delete mutatingwebhookconfiguration <webhook-name>
     ```

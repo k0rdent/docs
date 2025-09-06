@@ -55,7 +55,7 @@ spec:
 > If no `templateChain` is specified for the service, the service cannot be upgraded because no path is availble.
 > If you try to change the service template, in the logs, you'll see an error message such as:
 >
-> ```shell
+> ```bash
 > service ingress-nginx/ingress-nginx can't be upgraded from ingress-nginx-4-11-3 to ingress-nginx-4-11-5
 > ```
 

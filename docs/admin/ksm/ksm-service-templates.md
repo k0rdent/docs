@@ -167,7 +167,7 @@ Aside from flux sources, local `ConfigMap` or `Secret` object can be used as a s
 from one in above, except the `.spec.kustomize.localSourceRef.kind` which should be set to respective object type. However, to use `ConfigMap` or `Secret` as a source, they must
 embed archive with kustomization. After the archive was created, this can be done by executing the following command:
 
-```shell
+```bash
 kubectl create configmap kustomization-source --from-file=/path/to/kustomization.tar.gz
 ```
 
@@ -217,7 +217,7 @@ data:
 
 To create such `ConfigMap` the following command can be used:
 
-```shell
+```bash
 kubectl --namespace project-x create configmap project-cm --from-file=/path/to/namespace.yaml
 ```
 
@@ -283,7 +283,7 @@ important information. The `ServiceTempateChain` shows that this template is als
 If you wanted to deploy this as an application, you would first go ahead and add it to the cluster in which you were
 working, so if you were to save this YAML to a file called `project-ingress.yaml` you could run this command on the management cluster:
 
- ```shell
+ ```bash
  kubectl apply -f project-ingress.yaml -n my-target-namespace
  ```
 
@@ -315,7 +315,7 @@ to tell {{{ docsVersionInfo.k0rdentName }}} that you want this service to be par
 
 If you wanted to add this service to an existing cluster, you would simply patch the definition of the `ClusterDeployment`, as in:
 
- ```shell
+ ```bash
  kubectl patch clusterdeployment my-cluster-deployment -n my-target-namespace --type='merge' -p '{"spec":{"serviceSpec":{"services":[{"template":"project-ingress-nginx-4.11.3","name":"ingress-nginx","namespace":"my-target-namespace"}]}}}'
  ```
 For more information on creating and using `ServiceTemplate` objects, see the [User Guide](../../user/services/index.md).

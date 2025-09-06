@@ -16,7 +16,7 @@ The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied
     For example, this command installs {{{ docsVersionInfo.k0rdentName }}} via `helm install` with a configured plugin, `BackupStorageLocation`
     and propagated credentials:
 
-    ```shell
+    ```bash
     helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
      --create-namespace \

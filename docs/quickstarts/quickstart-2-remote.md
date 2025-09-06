@@ -22,7 +22,7 @@ Before proceeding, make sure your management cluster meets the following require
 
 Create a `Secret` object to securely store the private SSH key, under the key `value`, for accessing all remote machines that will be part of the cluster. Start by setting the following environment variables, for example by adding them to an `.env` file and sourcing it. (Make sure to either update the `KEY_PATH` to point to the keyfile or enter the directly under `PRIVATE_SSH-KEY_B64`.)
 
-```shell
+```bash
 # Setup Environment
 KEY_PATH=~/.ssh/id_ed25519
 PRIVATE_SSH_KEY_B64=$(cat $KEY_PATH | base64 -w 0)
@@ -37,7 +37,7 @@ MACHINE_1_ADDRESS=127.0.0.2
 
 Now create the `remote-ssh-key-secret.yaml` file:
 
-```shell
+```bash
 cat > remote-ssh-key-secret.yaml << EOF
 apiVersion: v1
 data:
@@ -53,7 +53,7 @@ EOF
 ```
 
 Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
-```shell
+```bash
 kubectl apply -f remote-ssh-key-secret.yaml
 ```
 ```console
@@ -66,7 +66,7 @@ Create a YAML file with the specification of our credential and save it as `remo
 
 Note that `.spec.name` must match `.metadata.name` of the `Secret` object created in the previous step.
 
-```shell
+```bash
 cat > remote-cred.yaml << EOF
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: Credential
@@ -83,7 +83,7 @@ EOF
 ```
 
 Apply the YAML to your cluster:
-```shell
+```bash
 kubectl apply -f remote-cred.yaml
 ```
 ```console
@@ -94,7 +94,7 @@ credential.k0rdent.mirantis.com/remote-cred created
 
 Now we create the {{{ docsVersionInfo.k0rdentName }}} `ClusterIdentity` resource template `ConfigMap`. As in prior steps, create a YAML file called `remote-ssh-key-resource-template.yaml`:
 
-```shell
+```bash
 cat > remote-ssh-key-resource-template.yaml << EOF
 apiVersion: v1
 kind: ConfigMap
@@ -111,7 +111,7 @@ Note that the `ConfigMap` doesn't have any values, only metadata. This is expect
 
 Now apply this YAML to your management cluster:
 
-```shell
+```bash
 kubectl apply -f remote-ssh-key-resource-template.yaml -n kcm-system
 ```
 
@@ -119,7 +119,7 @@ kubectl apply -f remote-ssh-key-resource-template.yaml -n kcm-system
 
 To create a remote cluster, begin by listing the available `ClusterTemplate` objects provided with {{{ docsVersionInfo.k0rdentName}}}:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system
 ```
 
@@ -153,7 +153,7 @@ To deploy a cluster, create a YAML file called `my-remote-clusterdeployment1.yam
 > Also, the service type should be correctly configured. If using the `LoadBalancer` service type, ensure the appropriate cloud provider is installed on the management cluster.
 > For other service types (such as `ClusterIP` or `NodePort`), verify that the management cluster network is accessible from the host machines to allow virtual machines to connect to the API server.
 
-```shell
+```bash
 cat > my-remote-clusterdeployment1.yaml << EOF
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
@@ -182,7 +182,7 @@ EOF
 
 Finally, we'll apply the `ClusterDeployment` YAML (`my-remote-clusterdeployment1.yaml`) to instruct {{{ docsVersionInfo.k0rdentName }}} to deploy the cluster:
 
-```shell
+```bash
 kubectl apply -f my-remote-clusterdeployment1.yaml
 ```
 
@@ -194,13 +194,13 @@ clusterdeployment.k0rdent.mirantis.com/my-remote-clusterdeployment1 created
 
 There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:
 
-```shell
+```bash
 kubectl -n kcm-system get clusters.cluster.x-k8s.io my-remote-clusterdeployment1 --watch
 ```
 
 To verify that the remote machines were successfuly provisioned, run:
 
-```shell
+```bash
 kubectl -n kcm-system get remotemachines.infrastructure.cluster.x-k8s.io -l helm.toolkit.fluxcd.io/name=my-remote-clusterdeployment1 -o=jsonpath={.items[*].status}
 ```
 
@@ -216,13 +216,13 @@ If there is any error, the output will contain an error message.
 
 Now you can retrieve the cluster's kubeconfig:
 
-```shell
+```bash
 kubectl -n kcm-system get secret my-remote-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-remote-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 And you can use the kubeconfig to see what's running on the cluster:
 
-```shell
+```bash
 KUBECONFIG="my-remote-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```
 
@@ -230,7 +230,7 @@ KUBECONFIG="my-remote-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods
 
 To verify the presence of the child cluster, list the available `ClusterDeployment` objects on the management cluster:
 
-```shell
+```bash
 kubectl get ClusterDeployments -A
 ```
 ```console
@@ -242,7 +242,7 @@ kcm-system   my-remote-clusterdeployment1   True    ClusterDeployment is ready
 
 To tear down the child cluster, delete the `ClusterDeployment` from the management cluster:
 
-```shell
+```bash
 kubectl delete ClusterDeployment my-remote-clusterdeployment1 -n kcm-system
 ```
 ```console

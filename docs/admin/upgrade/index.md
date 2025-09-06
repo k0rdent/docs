@@ -49,7 +49,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:
 
-    ```shell
+    ```bash
     VERSION=v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
     kubectl create -f https://github.com/k0rdent/kcm/releases/download/${VERSION}/release.yaml
     ```
@@ -61,7 +61,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     Once you've created the new `Release` you need to update the `Management` object to use it. Start by viewing all available `Release`s:
 
-    ```shell
+    ```bash
     kubectl get releases
     ```
 
@@ -75,7 +75,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     Update the `spec.release` field in the `Management` object to point to the new release. Replace `<release-name>` with the name of your desired release:
 
-    ```shell
+    ```bash
     RELEASE_NAME=kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}
     kubectl patch managements.k0rdent.mirantis.com kcm --patch "{\"spec\":{\"release\":\"${RELEASE_NAME}\"}}" --type=merge
     ```
@@ -85,7 +85,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     Although the change will be made immediately, it will take some time for {{{ docsVersionInfo.k0rdentName }}} to update the components it should be
     using. Monitor the readiness of the `Management` object to ensure the upgrade was successful. For example:
 
-    ```shell
+    ```bash
     kubectl get managements.k0rdent.mirantis.com kcm
     ```
     ```console

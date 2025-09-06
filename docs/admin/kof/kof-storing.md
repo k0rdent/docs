@@ -75,7 +75,7 @@ To apply this option:
     ```
 
 3. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-storage \
       -f storage-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-storage --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -97,7 +97,7 @@ It assumes that:
 To apply this option:
 
 1. Create the `collectors-values.yaml` file:
-    ```shell
+    ```bash
     cat >collectors-values.yaml <<EOF
     kcm:
       monitoring: true
@@ -178,7 +178,7 @@ To apply this option:
     ```
 
 2. Install the `kof-collectors` chart to the management cluster:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -196,7 +196,7 @@ It assumes that:
 To apply this option:
 
 1. Create the `collectors-values.yaml` file:
-    ```shell
+    ```bash
     cat >collectors-values.yaml <<EOF
     kcm:
       monitoring: true
@@ -235,7 +235,7 @@ To apply this option:
     ```
 
 2. Install the `kof-collectors` chart to the management cluster:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
@@ -261,13 +261,13 @@ For now, however, just for the sake of this demo, you can use the most straightf
     ```
 
 3. Create the `cloudwatch-credentials` secret:
-    ```shell
+    ```bash
     kubectl create secret generic -n kof cloudwatch-credentials \
       --from-env-file=cloudwatch-credentials
     ```
 
 4. Create the `collectors-values.yaml` file:
-    ```shell
+    ```bash
     cat >collectors-values.yaml <<EOF
     kcm:
       monitoring: true
@@ -319,19 +319,19 @@ For now, however, just for the sake of this demo, you can use the most straightf
     ```
 
 5. Install the `kof-collectors` chart to the management cluster:
-    ```shell
+    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 6. Configure AWS CLI with the same access key, for verification:
-    ```shell
+    ```bash
     aws configure
     ```
 
 7. Verify that the management cluster logs are stored in the CloudWatch:
-    ```shell
+    ```bash
     aws logs get-log-events \
       --region us-east-2 \
       --log-group-name management \

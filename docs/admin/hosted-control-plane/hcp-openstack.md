@@ -29,19 +29,19 @@ Follow these steps to set up a k0smotron-hosted control plane on OpenStack:
 
     Retrieve the network name:
 
-    ```shell
+    ```bash
     kubectl -n <cluster-namespace> get openstackcluster <cluster-name> -o go-template='{{.status.network.name}}'
     ```
 
     Retrieve the subnet name:
 
-    ```shell
+    ```bash
     kubectl -n <cluster-namespace> get openstackcluster <cluster-name> -o go-template='{{(index .status.network.subnets 0).name}}'
     ```
 
     Retrieve the router name:
 
-    ```shell
+    ```bash
     kubectl -n <cluster-namespace> get openstackcluster <cluster-name> -o go-template='{{.status.router.name}}'
     ```
 
@@ -143,7 +143,7 @@ Follow these steps to set up a k0smotron-hosted control plane on OpenStack:
 
     Save this template as `clusterdeployment.yaml.tpl`, then generate your manifest using the following command:
 
-    ```shell
+    ```bash
     kubectl -n <cluster-namespace> get openstackcluster <cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
     ```
 
@@ -151,6 +151,6 @@ Follow these steps to set up a k0smotron-hosted control plane on OpenStack:
 
     Nothing actually happens until you apply the `ClusterDeployment` manifest to create a new cluster deployment:
 
-    ```shell
+    ```bash
     kubectl apply -f clusterdeployment.yaml -n kcm-system
     ```

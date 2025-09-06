@@ -28,7 +28,7 @@ to `kcm-system` namespace objects to just `Credential` objects.
 The `kcm-credentials-viewer-role` `ClusterRole` provides read-only access to `Credential` objects, 
 and nothing else:
 
-```shell
+```bash
 kubectl describe clusterrole kcm-credentials-viewer-role
 ```
 ```console
@@ -50,7 +50,7 @@ So to assign these limited privileges to a developer, create the
 following `RoleBinding`, which defines what they can do in the referenced namespace
 (in this case, `kcm-system`).
 
-```shell
+```bash
 kubectl apply -f - <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -106,10 +106,10 @@ roleRef:
 This `ClusterRole` enables the user to create clusters but limits their ability to add 
 new `ServiceTemplate` objects:
 
-```shell
+```bash
 kubectl describe clusterrole kcm-namespace-editor-role -n kcm-system
 ```
-```console
+```console 
 Name:         kcm-namespace-editor-role
 Labels:       app.kubernetes.io/managed-by=Helm
               helm.toolkit.fluxcd.io/name=kcm

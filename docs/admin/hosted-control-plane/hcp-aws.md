@@ -26,31 +26,31 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
 
     Retrieve the VPC ID:
 
-    ```shell
+    ```bash
     kubectl get awscluster <cluster-name> -o go-template='{{.spec.network.vpc.id}}'
     ```
 
     Retrieve Subnet ID:
 
-    ```shell
+    ```bash
     kubectl get awscluster <cluster-name> -o go-template='{{(index .spec.network.subnets 0).resourceID}}'
     ```
 
     Retrieve Availability Zone:
 
-    ```shell
+    ```bash
     kubectl get awscluster <cluster-name> -o go-template='{{(index .spec.network.subnets 0).availabilityZone}}'
     ```
 
     Retrieve Security Group:
 
-    ```shell
+    ```bash
     kubectl get awscluster <cluster-name> -o go-template='{{.status.networkStatus.securityGroups.node.id}}'
     ```
 
     Retrieve AMI ID:
 
-    ```shell
+    ```bash
     kubectl get awsmachinetemplate <cluster-name>-worker-mt -o go-template='{{.spec.template.spec.ami.id}}'
     ```
 
@@ -132,13 +132,13 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
 
     Save this template as `clusterdeployment.yaml.tpl`, then generate your manifest using the following command:
 
-    ```shell
+    ```bash
     kubectl get awscluster <cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
     ```
 
     Or if the management cluster is deployed on EKS, use the following command:
 
-    ```shell
+    ```bash
     kubectl get awsmanagedcontrolplane <cluster-name> -o go-template="$(cat clusterdeployment.yaml.tpl)" > clusterdeployment.yaml
     ```
 
@@ -150,7 +150,7 @@ Follow these steps to set up a k0smotron-hosted control plane on AWS:
 
     Nothing actually happens until you apply the `ClusterDeployment` manifest to create a new cluster deployment:
 
-    ```shell
+    ```bash
     kubectl apply -f clusterdeployment.yaml -n kcm-system
     ```
 
@@ -166,7 +166,7 @@ Here are some additional tips to help with deployment:
 
     If you're using a custom repository, run the following commands with the appropriate `kubeconfig`:
 
-    ```shell
+    ```bash
     KUBECONFIG=kubeconfig IMG="ghcr.io/k0rdent/kcm/controller-ci:v0.0.1-179-ga5bdf29" REGISTRY_REPO="oci://ghcr.io/k0rdent/kcm/charts-ci" make dev-apply
     KUBECONFIG=kubeconfig make dev-templates
     ```
@@ -175,7 +175,7 @@ Here are some additional tips to help with deployment:
 
     To scale up the `MachineDeployment`, manually mark the infrastructure as ready:
 
-    ```shell
+    ```bash
     kubectl patch AWSCluster <hosted-cluster-name> --type=merge --subresource status --patch '{"status": {"ready": true}}' -n kcm-system
     ```
 

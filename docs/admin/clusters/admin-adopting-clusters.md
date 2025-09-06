@@ -39,7 +39,7 @@ Follow these steps to adopt an existing cluster:
 
     For example:
 
-    ```shell
+    ```bash
     export KUBECONFIG=/path/to/management-cluster-kubeconfig
     ```
 
@@ -66,7 +66,7 @@ Follow these steps to adopt an existing cluster:
 
     You can also get a list of the available templates with:
 
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
@@ -107,7 +107,7 @@ Follow these steps to adopt an existing cluster:
 
     Once your configuration file is ready, apply it to the management cluster using `kubectl`:
 
-    ```shell
+    ```bash
     kubectl apply -f clusterdeployment.yaml
     ```
 
@@ -117,7 +117,7 @@ Follow these steps to adopt an existing cluster:
 
     To ensure the adoption process is progressing as expected, check the status of the `ClusterDeployment` object:
 
-    ```shell
+    ```bash
     kubectl -n <namespace> get clusterdeployment.kcm <cluster-name> -o=yaml
     ```
 
@@ -147,7 +147,7 @@ For example, adopting a k0s-based management cluster might look like this:
 
 1. Get the IP address of the control plane:
 
-    ```shell
+    ```bash
     kubectl get nodes -o wide
     ```
     ```console
@@ -175,7 +175,7 @@ For example, adopting a k0s-based management cluster might look like this:
 
 3. Get the base64-encoded `kubeconfig`:
 
-    ```shell
+    ```bash
     base64 /path/to/kubeconfig
     ```
     ```console
@@ -218,7 +218,7 @@ For example, adopting a k0s-based management cluster might look like this:
 
 4. Add the credential objects:
 
-    ```shell
+    ```bash
     kubectl apply -f adopt-creds.yaml
     ```
     ```console
@@ -230,7 +230,7 @@ For example, adopting a k0s-based management cluster might look like this:
 
     First determine the `ClusterTemplate`:
 
-    ```shell
+    ```bash
     kubectl get ClusterTemplate -n kcm-system
     ```
     ```console
@@ -259,7 +259,7 @@ For example, adopting a k0s-based management cluster might look like this:
     
 6. Add the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl apply -f self-adopt-cluster.yaml
     ```
     ```console
@@ -268,7 +268,7 @@ For example, adopting a k0s-based management cluster might look like this:
 
 7. Verify the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployment -A
     ```
     ```console

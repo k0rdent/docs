@@ -30,7 +30,7 @@ Consider the following example where two clusters have been deployed using `Clus
 
 Command:
 
-```shell
+```bash
 kubectl get clusterdeployments.k0rdent.mirantis.com -n kcm-system
 ```
 ```console
@@ -40,7 +40,7 @@ dev-cluster-2   True    ClusterDeployment is ready
 ```
 
 Command:
-```shell
+```bash
  kubectl get cluster -n kcm-system --show-labels
 ```
 ```console

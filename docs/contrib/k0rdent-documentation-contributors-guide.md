@@ -75,37 +75,37 @@ Then, when getting ready to work:
 
 5. Update your local main from upstream and update main on your fork on GitHub:
 
-```shell  
+```bash  
 git checkout main && git fetch upstream && git pull upstream main && git push origin main
 ```
 
 6. Create a new feature branch for each intended commit, to isolate your changes:
 
-```shell
+```bash
 git checkout -b my-feature-branch main
 ```
 
 7. As needed, particularly if you work on a change for a long time, periodically update your feature branch from upstream main to avoid later conflicts:
    
-```shell
+```bash
 git checkout my-feature-branch && git pull --rebase upstream main
 ```
 
 8. When finished editing, add and commit changes:
 
-```shell
+```bash
 git add . && git commit -m "My changes"
 ```
 
 9. Pre-emptively update once more before pushing:
 
-```shell
+```bash
 git fetch upstream && git rebase upstream/main
 ```
 
 10. Push your feature branch to your fork on GitHub:
 
-```shell
+```bash
 git push origin my-feature-branch
 ```
 
@@ -128,13 +128,13 @@ Assuming you have a machine (desktop, laptop, VM) for editing with recent (Pytho
 
 2. Switch into the cloned project directory on your machine:
    
-```shell
+```bash
 cd docs
 ```
 
 3. Create a venv into which to install MkDocs and dependencies, saved in the /docs repo in a file called `requirements.txt`.
 
-```shell
+```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
@@ -148,13 +148,13 @@ source venv/bin/activate
     > The file `requirements.txt` is in the toplevel containing folder (called `docs`) &mdash; not in the `/docs` subfolder
     > within the toplevel directory.
    
-```shell
+```bash
 pip install -r requirements.txt 
 ```
 
 Once you've done this, you can execute MkDocs to dynamically build and serve docs locally on localhost (`http://127.0.0.1:8000`):
 
-```shell
+```bash
 python3 mkdocs serve
 ```
 
@@ -166,7 +166,7 @@ If you prefer, you can also run MkDocs in a container on your machine to view {{
 
 We've put a Dockerfile in the toplevel directory of the repo to help with this. Here's what's in that Dockerfile:
 
-```shell
+```bash
 # Use the official MkDocs Material image
 FROM squidfunk/mkdocs-material:latest
 
@@ -190,20 +190,20 @@ As you can see, we're using the official MkDocs Material base image. The Dockerf
 2. Go to the toplevel directory of the repo, where the Dockerfile and mkdocs.yml reside.
 3. Build the container, tagging it with the name `mk-local`.
 
-```shell
+```bash
 docker build -f Dockerfile -t mk-local
 ```
 
 4. Then use git to (optionally create and/or) checkout the branch you'll be working in, since this is the branch you want MkDocs to render from.
 
-```shell
+```bash
 git checkout -b my-working-branch       # create and checkout new working branch, or ...
 git checkout my-working-branch          # checkout existing working branch
 ```
 
 5. Open a new terminal (so you can stop the container within this terminal window by pressing CTRL-C later), then run the container like this:
 
-```shell
+```bash
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mk-local
 ```
 
@@ -213,14 +213,14 @@ Just visit the container on `http://127.0.0.1:8000` to view the docs.
 
 6. When you want to stop the container, press CTRL+C inside the terminal window used to start it. Alternatively, you can stop the container from any terminal as follows:
 
-```shell
+```bash
 docker ps                       # find the container ID, then ...
 docker stop <container-id>      # stop the container
 ```
 
 Because we started the container with the --rm flag, it will be removed from Docker Engine when it stops. Restart by once again entering:
 
-```shell
+```bash
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mk-local
 ```
 

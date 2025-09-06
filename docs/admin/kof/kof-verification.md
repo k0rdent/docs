@@ -6,11 +6,11 @@ Finally, verify that KOF installed properly.
 
 1. Wait until the value of `HELMCHARTS` and `POLICYREFS`
     changes from `Provisioning` to `Provisioned`:
-    ```shell
+    ```bash
     kubectl get clustersummaries -A -o wide
     ```
     If you see the `Failed/Provisioning` loop, check status and logs:
-    ```shell
+    ```bash
     kubectl get clustersummaries -A -o yaml \
       | yq '.items[].status.featureSummaries[]
       | select(.status != "Provisioned")'
@@ -22,14 +22,14 @@ Finally, verify that KOF installed properly.
     If you are not using [Istio](kof-install.md#istio),
     please ensure you've applied [this workaround](kof-upgrade.md/#upgrade-to-v130)
     by checking that `Reconciling MultiClusterService` is logged every 10 seconds, more than 3 times:
-    ```shell
+    ```bash
     kubectl logs -n kcm-system deploy/kcm-controller-manager -f \
       | grep 'Reconciling MultiClusterService'
     ```
 
 2. Wait for all pods in the regional and child clusters to show as `Running`
     in the namespaces `kof, kube-system, projectsveltos`:
-    ```shell
+    ```bash
     kubectl get secret -n kcm-system $REGIONAL_CLUSTER_NAME-kubeconfig \
       -o=jsonpath={.data.value} | base64 -d > regional-kubeconfig
 
@@ -42,7 +42,7 @@ Finally, verify that KOF installed properly.
 
 3. Wait until the value of `READY` changes to `True`
     for all certificates in each cluster:
-    ```shell
+    ```bash
     KUBECONFIG=regional-kubeconfig kubectl get cert -A
     KUBECONFIG=child-kubeconfig kubectl get cert -A
     ```
@@ -53,14 +53,14 @@ If you've opted out of [DNS auto-config](./kof-install.md#dns-auto-config)
 and [Istio](./kof-install.md#istio), you will need to do the following:
 
 1. Get the `EXTERNAL-IP` of `ingress-nginx`:
-    ```shell
+    ```bash
     KUBECONFIG=regional-kubeconfig kubectl get svc \
       -n kof ingress-nginx-controller
     ```
     It should look like `REDACTED.us-east-2.elb.amazonaws.com`
 
 2. Create these DNS records of type `A`, all pointing to that `EXTERNAL-IP`:
-    ```shell
+    ```bash
     echo grafana.$REGIONAL_DOMAIN
     echo jaeger.$REGIONAL_DOMAIN
     echo vmauth.$REGIONAL_DOMAIN
@@ -73,7 +73,7 @@ to verify secrets have been auto-distributed to the required clusters:
 
 1. Start by preparing the system:
 
-    ```shell
+    ```bash
     kubectl create sa platform-admin
     kubectl create clusterrolebinding platform-admin-access \
       --clusterrole cluster-admin --serviceaccount default:platform-admin

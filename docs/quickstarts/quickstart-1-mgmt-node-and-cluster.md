@@ -20,7 +20,7 @@ but feel free to deploy one of the other configurations, then move on to configu
 
 Download and install k0s:
 
-```shell
+```bash
 curl --proto '=https' --tlsv1.2 -sSf https://get.k0s.sh | sudo sh
 sudo k0s install controller --enable-worker --no-taints
 sudo k0s start
@@ -28,7 +28,7 @@ sudo k0s start
 
 You can check to see if the cluster is working by leveraging `kubectl` (installed and configured automatically by k0s) via the k0s CLI:
 
-```shell
+```bash
 sudo k0s kubectl get nodes
 ```
 
@@ -43,7 +43,7 @@ ip-172-31-29-61   Ready    <none>   46s   v1.31.2+k0s
 
 k0s installs a compatible `kubectl` and makes it accessible via its own client. But to make your environment easier to configure, we advise installing `kubectl` the normal way on the manager node and using it to control the local k0s management cluster:
 
-```shell
+```bash
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -58,7 +58,7 @@ sudo apt-get install -y kubectl
 
 On startup, k0s stores the administrator's `kubeconfig` in a local directory, making it easy to access:
 
-```shell
+```bash
 sudo cp /var/lib/k0s/pki/admin.conf KUBECONFIG
 sudo chmod +r KUBECONFIG
 export KUBECONFIG=./KUBECONFIG
@@ -66,7 +66,7 @@ export KUBECONFIG=./KUBECONFIG
 
 At this point, your newly-installed `kubectl` should be able to interoperate with the k0s management cluster with administrative privileges. Test to see that the cluster is ready (this usually takes about one minute):
 
-```shell
+```bash
 kubectl get nodes
 ```
 
@@ -81,7 +81,7 @@ ip-172-31-29-61   Ready    control-plane   25m   v1.31.2+k0s
 
 The Helm Kubernetes package manager is used to install {{{ docsVersionInfo.k0rdentName }}} services. We'll install Helm as follows:
 
-```shell
+```bash
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
@@ -100,7 +100,7 @@ helm installed into /usr/local/bin/helm
 
 Now we'll install {{{ docsVersionInfo.k0rdentName }}} itself into the k0s management cluster:
 
-```shell
+```bash
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
 ```console
@@ -120,7 +120,7 @@ TEST SUITE: None
 
 One fundamental {{{ docsVersionInfo.k0rdentName }}} subsystem, k0rdent Cluster Manager (KCM), handles cluster lifecycle management on clouds and infrastructures. For example, it helps you configure and compose clusters and manages infrastructure via Cluster API (CAPI). Before continuing, check that the KCM pods are ready:
 
-```shell
+```bash
 kubectl get pods -n kcm-system   # check pods in the kcm-system namespace
 ```
 
@@ -151,7 +151,7 @@ Pods reported in states other than Running should become ready momentarily.
 
 The other fundamental {{{ docsVersionInfo.k0rdentName }}} subsystem, k0rdent State Manager (KSM), handles services configuration and lifecycle management on clusters. This utilizes the [projectsveltos](https://github.com/projectsveltos) Kubernetes Add-On Controller and other open source projects. Before continuing, check that the KSM pods are ready:
 
-```shell
+```bash
 kubectl get pods -n projectsveltos   # check pods in the projectsveltos namespace
 ```
 
@@ -176,7 +176,7 @@ If you have fewer pods than shown above, just wait 5 minutes or so for all the p
 
 The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is the state of the `Management` object. To check, issue this command:
 
-```shell
+```bash
 kubectl get Management -n kcm-system
 ```
 ```console
@@ -188,7 +188,7 @@ kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 
 {{{ docsVersionInfo.k0rdentName }}} KCM leverages CAPI to manage Kubernetes cluster assembly and host infrastructure. CAPI requires infrastructure providers for different clouds and infrastructure types. These are delivered and referenced within {{{ docsVersionInfo.k0rdentName }}} using templates, instantiated in the management cluster as objects. Before continuing, verify that the default provider template objects are installed and verified. Other templates are also stored as provider templates in this namespace (for example, the templates that determine setup of KCM itself and other parts of the {{{ docsVersionInfo.k0rdentName }}} system, such as projectsveltos, which is a component of {{{ docsVersionInfo.k0rdentName }}} State Manager (KSM, see below)) as well as the k0smotron subsystem, which enables creation and lifecycle management of managed clusters that use Kubernetes-hosted control planes (such as control planes as pods):
 
-```shell
+```bash
 kubectl get providertemplate -n kcm-system   # list providertemplate objects in the kcm-system namespace
 ```
 
@@ -215,7 +215,7 @@ projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider
 
 CAPI also requires control plane and bootstrap (worker node) providers to construct and/or manage different Kubernetes cluster distros and variants. Again, these providers are delivered and referenced within {{{ docsVersionInfo.k0rdentName }}} using templates, instantiated in the management cluster as `ClusterTemplate` objects. Before continuing, verify that default `ClusterTemplate` objects are installed and valid:
 
-```shell
+```bash
 kubectl get clustertemplate -n kcm-system   # list clustertemplate objects in the kcm-system namespace
 ```
 

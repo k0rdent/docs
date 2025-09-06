@@ -10,7 +10,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     The Azure CLI (`az`) is required to interact with Azure resources. You can install it on Ubuntu as follows:
 
-    ```shell
+    ```bash
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
     ```
 
@@ -18,7 +18,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     Run the `az login` command to authenticate your session with Azure:
 
-    ```shell
+    ```bash
     az login
     ```
 
@@ -29,7 +29,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     In order for {{{ docsVersionInfo.k0rdentName }}} to deploy and manage clusters, it needs to be able to work with Azure resources such as 
     compute, network, and identity. Make sure the subscription you're using has the following resource providers registered:
 
-    ```shell
+    ```bash
     Microsoft.Compute
     Microsoft.Network
     Microsoft.ContainerService
@@ -39,7 +39,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     To register these providers, run the following commands in the Azure CLI:
 
-    ```shell
+    ```bash
     az provider register --namespace Microsoft.Compute
     az provider register --namespace Microsoft.Network
     az provider register --namespace Microsoft.ContainerService
@@ -59,7 +59,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     To get the information you need, list all your Azure subscriptions: 
 
-    ```shell
+    ```bash
     az account list -o table
     ```
     ```console
@@ -75,7 +75,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure.
     Create the Service Principal, making sure to replace <SUBSCRIPTION_ID_SUBSCRIPTION_ID> with the `SubscriptionId` from step 1.
 
-    ```shell
+    ```bash
     az ad sp create-for-rbac --role contributor --scopes="/subscriptions/<SUBSCRIPTION_ID_SUBSCRIPTION_ID>"
     ```
     ```console
@@ -109,7 +109,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     You can then apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f azure-cluster-identity-secret.yaml
     ```
 
@@ -142,7 +142,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f azure-cluster-identity.yaml
     ```
     ```console
@@ -173,7 +173,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f azure-cluster-identity-cred.yaml
     ```
     ```console
@@ -246,7 +246,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     Apply the YAML to your cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f azure-cluster-identity-resource-template.yaml
     ```
     ```console
@@ -261,7 +261,7 @@ Now you're ready to deploy the cluster.
 
     First get a list of available locations/regions:
 
-    ```shell
+    ```bash
     az account list-locations -o table
     ```
     ```console
@@ -282,7 +282,7 @@ Now you're ready to deploy the cluster.
 
     You can see the available templates by listing them:
 
-    ```shell
+    ```bash
     kubectl get clustertemplate -n kcm-system
     ```
     ```console
@@ -321,7 +321,7 @@ Now you're ready to deploy the cluster.
 
     Apply the YAML to your management cluster:
 
-    ```shell
+    ```bash
     kubectl apply -f my-azure-clusterdeployment1.yaml
     ```
     ```console
@@ -331,7 +331,7 @@ Now you're ready to deploy the cluster.
     Note that although the `ClusterDeployment` object has been created, there will be a delay as actual Azure instances
     are provisioned and added to the cluster. You can follow the provisioning process:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-azure-clusterdeployment1 --watch
     ```
 
@@ -340,7 +340,7 @@ Now you're ready to deploy the cluster.
 
     After the cluster is `Ready`, you can access it via the kubeconfig:
 
-    ```shell
+    ```bash
     kubectl -n kcm-system get secret my-azure-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-azure-clusterdeployment1-kubeconfig.kubeconfig
     KUBECONFIG="my-azure-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
     ```
@@ -349,14 +349,14 @@ Now you're ready to deploy the cluster.
 
     To clean up Azure resources, delete the child cluster by deleting the `ClusterDeployment`:
 
-    ```shell
+    ```bash
     kubectl get clusterdeployments -A
     ```
     ```console
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready
     ```
-    ```shell
+    ```bash
     kubectl delete clusterdeployments my-azure-clusterdeployment1 -n kcm-system
     ```
     ```console

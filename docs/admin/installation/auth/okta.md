@@ -56,7 +56,7 @@ You can install Krew by running the following command in your terminal. This scr
 )
 ```
 Add `krew` to your path:
-```shell
+```bash
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 ```
 
@@ -133,7 +133,7 @@ spec:
 
 Then:
 
-```shell
+```bash
 # ensure your auth file is in place
 sudo mkdir -p /etc/k0s
 sudo cp authentication-config.yaml /etc/k0s/authentication-config.yaml

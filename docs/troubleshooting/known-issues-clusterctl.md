@@ -2,7 +2,7 @@
 
 When using `clusterctl` to work with child cluster objects, you may run into the following error:
 
-```shell
+```bash
 clusterctl describe cluster kubevirt-demo
 ```
 ```output
