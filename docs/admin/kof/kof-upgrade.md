@@ -1,5 +1,29 @@
 # Upgrading KOF
 
+## Upgrade to any version
+
+* Open the latest version of the [Installing KOF](kof-install.md) guide.
+* Make sure you see the expected new version in the top navigation bar.
+* Go to the directory with YAML files created the last time you've applied the guide.
+* Create their backup copies:
+    ```shell
+    for file in *.yaml; do cp $file $file.bak; done
+    ```
+* If you don't have such files, you may get them like this:
+    ```shell
+    helm get values -n kof kof-mothership -o yaml > mothership-values.yaml.bak
+    ```
+* Ideally, [create a backup](../backup/index.md) of everything including VictoriaMetrics/Logs data volumes.
+* Apply the guide step by step, but:
+    * Skip unchanged credentials like `external-dns-aws-credentials`.
+    * Verify how YAML files have changed with `diff -u $file.bak $file` before using them.
+    * Run all `helm upgrade` commands with the new `--version` and files as documented.
+* Do the same for other [KOF guides](index.md#guides).
+* Apply each relevant "Upgrade to" section of this page from older to newer.
+    * For example, if you're upgrading from v1.1.0 to v1.3.1,
+    * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
+    * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
+
 ## Upgrade to v1.3.0
 
 * If you are not using [Istio](kof-install.md#istio),
