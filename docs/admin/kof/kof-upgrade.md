@@ -20,7 +20,7 @@
     * Run all `helm upgrade` commands with the new `--version` and files as documented.
 * Do the same for other [KOF guides](index.md#guides).
 * Apply each relevant "Upgrade to" section of this page from older to newer.
-    * For example, if you're upgrading from v1.1.0 to v1.3.1,
+    * For example, if you're upgrading from v1.1.0 to v1.3.0,
     * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
     * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
 
