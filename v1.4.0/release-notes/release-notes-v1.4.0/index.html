@@ -4765,13 +4765,13 @@
 <li>
 <p><strong>KOF</strong>:</p>
 </li>
-<li>Because of <code>PromxyServerGroup</code> CRD is moved to the <code>templates</code> directory for
+<li>
+<p>Because of <code>PromxyServerGroup</code> CRD is moved to the <code>templates</code> directory for
     more flexible updates you must use the <code>--take-ownership</code> flag while
-    upgrading <code>kof-mothership</code> to <code>1.4.0</code>. For example:<div class="highlight"><pre><span></span><code>```bash
-    helm upgrade --take-ownership \
-      --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.4.0
-```
+    upgrading <code>kof-mothership</code> to <code>1.4.0</code>. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>helm<span class="w"> </span>upgrade<span class="w"> </span>--take-ownership<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.4.0
 </code></pre></div>
 </li>
 </ul>
