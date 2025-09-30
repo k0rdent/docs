@@ -55,11 +55,11 @@
     more flexible updates you must use the `--take-ownership` flag while
     upgrading `kof-mothership` to `1.4.0`. For example:
 
-	    ```bash
-			helm upgrade --take-ownership \
-              --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
-              oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.4.0
-		```
+	```bash
+		helm upgrade --take-ownership \
+		  --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
+		  oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.4.0
+	```
 
 ---
 
