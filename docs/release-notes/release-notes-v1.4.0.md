@@ -44,16 +44,16 @@
 ## Upgrade Notes
 
 - **KCM**:
-  - Due to CAPA upgrade to `v2.9.1` use of the empty selector in the
-    `.spec.allowedNamespaces` in the cluster identity resources (such as
-    `AWSClusterStaticIdentity`) is no longer valid and may cause `Namespace is
-    not permitted` error. To mitigate that change the value to the empty object
-    like so: `.spec.allowedNamespaces: {}` (ref: [#2022](https://github.com/k0rdent/kcm/issues/2022)).
+	- Due to CAPA upgrade to `v2.9.1` use of the empty selector in the
+	`.spec.allowedNamespaces` in the cluster identity resources (such as
+	`AWSClusterStaticIdentity`) is no longer valid and may cause `Namespace is
+	not permitted` error. To mitigate that change the value to the empty object
+	like so: `.spec.allowedNamespaces: {}` (ref: [#2022](https://github.com/k0rdent/kcm/issues/2022)).
 
 - **KOF**:
-  - Because of `PromxyServerGroup` CRD is moved to the `templates` directory for
-    more flexible updates you must use the `--take-ownership` flag while
-    upgrading `kof-mothership` to `1.4.0`. For example:
+	- Because of `PromxyServerGroup` CRD is moved to the `templates` directory for
+	more flexible updates you must use the `--take-ownership` flag while
+	upgrading `kof-mothership` to `1.4.0`. For example:
 
 	```bash
 		helm upgrade --take-ownership \
