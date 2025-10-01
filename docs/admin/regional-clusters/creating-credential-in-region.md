@@ -60,9 +60,7 @@ with the cloud. This should be done using the regional cluster kubeconfig so the
        k0rdent.mirantis.com/component: "kcm"
    spec:
      secretRef: aws-cluster-identity-secret
-     allowedNamespaces:
-       selector:
-         matchLabels: {}
+     allowedNamespaces: {}
    ```
 
    Notice that the `secretRef` references the `Secret` you created in the previous step.
