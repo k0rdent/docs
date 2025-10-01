@@ -21,7 +21,7 @@ The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied
      --version <version> \
      --create-namespace \
      --namespace kcm-system \
-     --set-file velero.credentials.secretContents.cloud=<full-path-to-file> \
+     --set-file regional.velero.credentials.secretContents.cloud=<full-path-to-file> \
      --set regional.velero.credentials.useSecret=true \
      --set regional.velero.backupsEnabled=true \
      --set regional.velero.configuration.backupStorageLocation[0].name=<backup-storage-location-name> \
