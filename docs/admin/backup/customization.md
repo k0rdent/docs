@@ -52,20 +52,21 @@ The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied
       core:
         kcm:
           config:
-            velero:
-              initContainers:
-              - name: velero-plugin-for-<provider-name>
-                image: velero/velero-plugin-for-<provider-name>:<provider-plugin-tag>
-                imagePullPolicy: IfNotPresent
-                volumeMounts:
-                - mountPath: /target
-                  name: plugins
-              metrics:
-                enabled: true
+            regional:
+              velero:
+                initContainers:
+                - name: velero-plugin-for-<provider-name>
+                  image: velero/velero-plugin-for-<provider-name>:<provider-plugin-tag>
+                  imagePullPolicy: IfNotPresent
+                  volumeMounts:
+                  - mountPath: /target
+                    name: plugins
+                metrics:
+                  enabled: true
       # ...
     ```
 
-To fully disable `velero`, set the `velero.enabled` parameter to `false`.
+To fully disable `velero`, set the `regional.velero.enabled` parameter to `false`.
 
 ## Schedule Expression Format
 
