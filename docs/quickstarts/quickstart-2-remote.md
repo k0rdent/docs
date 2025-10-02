@@ -123,7 +123,7 @@ To create a remote cluster, begin by listing the available `ClusterTemplate` obj
 kubectl get clustertemplate -n kcm-system
 ```
 
-You'll see output resembling the following. Make note of the name of the Remote Cluster template in its present version (in the example below, that's `remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}`):
+You'll see output resembling the following. Make note of the name of the Remote Cluster template in its present version (in the example below, that's `remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.remoteCluster }}}`):
 
 ```console
 NAMESPACE    NAME                            VALID
@@ -138,8 +138,9 @@ kcm-system   docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVer
 kcm-system   gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpGkeCluster }}}                   true
 kcm-system   gcp-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpHostedCpCluster }}}             true
 kcm-system   gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpStandaloneCpCluster }}}         true
+kcm-system   openstack-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}       true
 kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
-kcm-system   remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}            true
+kcm-system   remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.remoteCluster }}}            true
 kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
 kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
