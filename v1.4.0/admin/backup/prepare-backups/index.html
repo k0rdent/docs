@@ -4567,14 +4567,15 @@ The following instructions are tailored for AWS. Please adapt them to your chose
 <span class="w">  </span><span class="nt">core</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">velero</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">initContainers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;PROVIDER-NAME&gt;</span>
-<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;PROVIDER-NAME&gt;:&lt;PROVIDER-PLUGIN-TAG&gt;</span>
-<span class="w">            </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">            </span><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
-<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
+<span class="w">        </span><span class="nt">regional</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">velero</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">initContainers</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;PROVIDER-NAME&gt;</span>
+<span class="w">              </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;PROVIDER-NAME&gt;:&lt;PROVIDER-PLUGIN-TAG&gt;</span>
+<span class="w">              </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">              </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
 <span class="w">  </span><span class="c1"># ...</span>
 </code></pre></div>
 <p>Please review <a href="https://hub.docker.com/u/velero?page=1&amp;search=velero-plugin">Velero's Docker Hub image plugin repositories</a>

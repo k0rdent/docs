@@ -4628,21 +4628,22 @@ is required during restoration; the other parameters are optional.</p>
 <span class="w">  </span><span class="nt">core</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">velero</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">initContainers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;provider-name&gt;</span>
-<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;provider-name&gt;:&lt;provider-plugin-tag&gt;</span>
-<span class="w">            </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-<span class="w">            </span><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
-<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
-<span class="w">          </span><span class="nt">metrics</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">regional</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">velero</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">initContainers</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;provider-name&gt;</span>
+<span class="w">              </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;provider-name&gt;:&lt;provider-plugin-tag&gt;</span>
+<span class="w">              </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">              </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
+<span class="w">            </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="c1"># ...</span>
 </code></pre></div>
 </li>
 </ol>
-<p>To fully disable <code>velero</code>, set the <code>velero.enabled</code> parameter to <code>false</code>.</p>
+<p>To fully disable <code>velero</code>, set the <code>regional.velero.enabled</code> parameter to <code>false</code>.</p>
 <h2 id="schedule-expression-format">Schedule Expression Format<a class="headerlink" href="#schedule-expression-format" title="Permanent link">#</a></h2>
 <p>The <code>ManagementBackup</code> <code>.spec.schedule</code> field accepts a correct
 <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> expression,
