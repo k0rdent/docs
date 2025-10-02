@@ -27,14 +27,15 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       core:
         kcm:
           config:
-            velero:
-              initContainers:
-              - name: velero-plugin-for-<PROVIDER-NAME>
-                image: velero/velero-plugin-for-<PROVIDER-NAME>:<PROVIDER-PLUGIN-TAG>
-                imagePullPolicy: IfNotPresent
-                volumeMounts:
-                - mountPath: /target
-                  name: plugins
+            regional:
+              velero:
+                initContainers:
+                - name: velero-plugin-for-<PROVIDER-NAME>
+                  image: velero/velero-plugin-for-<PROVIDER-NAME>:<PROVIDER-PLUGIN-TAG>
+                  imagePullPolicy: IfNotPresent
+                  volumeMounts:
+                  - mountPath: /target
+                    name: plugins
       # ...
     ```
 
