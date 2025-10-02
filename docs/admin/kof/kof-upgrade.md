@@ -49,6 +49,7 @@ Before upgrading any helm chart:
     then update your resources accordingly to the [new values under "spec"](https://github.com/k0rdent/kof/blob/v1.3.0/charts/kof-mothership/values.yaml#L167).
 
 * If you have customized VMCluster/VMAlert resources using "k0rdent.mirantis.com/kof-storage-values" cluster annotation, then keep old and put new values firstly to reconcile new clusterdeployment configuration on the current release, only then run helm charts upgrade. After regional clusters have new kof-storage helm chart installed, you can remove old values from cluster annotation.
+* If you have set `storage` values of `kof-regional` chart, update them in the same way.
 
 * If you are not using [Istio](kof-install.md#istio),
     then on the step 8 of the [Management Cluster](kof-install.md#management-cluster) upgrade
