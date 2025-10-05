@@ -34,7 +34,7 @@ Confirm the backup creation was successful by navigating to the appropriate stor
 kubectl get managementbackup
 ```
 The `managementbackup` should show as `Completed`:
-```console
+```console { .no-copy }
 NAME              LASTBACKUPSTATUS   NEXTBACKUP   AGE
 example-backup    Completed                       8m  
 ```

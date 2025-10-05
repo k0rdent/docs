@@ -19,7 +19,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
      export AWS_SESSION_TOKEN="EXAMPLE_SESSION_TOKEN"
      aws configure
      ```
-     ```console
+     ```console { .no-copy }
      AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:
      AWS Secret Access Key [EXAMPLE_SECRET_ACCESS_KEY]:
      Default region name [YOUR_AWS_REGION]:
@@ -32,7 +32,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
      sudo mv /tmp/eksctl /usr/local/bin
      eksctl version
      ```
-     ```console
+     ```console { .no-copy }
      0.211.0
      ```
 
@@ -45,7 +45,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     --region <YOUR_AWS_REGION> \
     --without-nodegroup
     ```
-    ```console
+    ```console { .no-copy }
     2025-03-05 22:26:02 [ℹ]  eksctl version 0.211.0
     ...
     2025-03-05 22:36:14 [✔]  all EKS cluster resources for "CLUSTER_NAME" have been created
@@ -65,7 +65,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     --nodes-max 3 \
     --node-labels "role=control-plane" 
     ```
-    ```console
+    ```console { .no-copy }
     2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
     2025-03-05 22:57:18 [ℹ]  nodegroup "nickchasek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]
     2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)
@@ -108,7 +108,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```bash
     kubectl get nodes
     ```
-    ```console
+    ```console { .no-copy }
     NAME                                              STATUS   ROLES    AGE    VERSION
     nodename1.compute.internal   Ready    <none>   4h1m   v1.31.7-eks-5d632ec
     nodename2.compute.internal   Ready    <none>   4h1m   v1.31.7-eks-5d632ec
@@ -119,14 +119,14 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```bash
     kubectl taint nodes nodename1.compute.internal node-role.kubernetes.io/control-plane=true:NoSchedule
     ```
-    ```console
+    ```console { .no-copy }
     node/nodename1.ca-central-1.compute.internal tainted
     ```
     Now verify the taints:
     ```bash
     kubectl describe nodes | grep -A 5 "Taints:"
     ```
-    ```console
+    ```console { .no-copy }
     Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule
     Unschedulable:      false
     Lease:
@@ -162,7 +162,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     --nodes-max 5 \
     --node-labels "role=worker"
     ```
-    ```console
+    ```console { .no-copy }
     2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
     ...
     2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster "CLUSTER_NAME"
@@ -173,7 +173,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```bash
     kubectl get nodes
     ```
-    ```console
+    ```console { .no-copy }
     NAME                                              STATUS   ROLES    AGE     VERSION
     nodename1.compute.internal   Ready    <none>   4h14m   v1.31.7-eks-5d632ec
     nodename4.compute.internal   Ready    <none>   79s     v1.31.7-eks-5d632ec
@@ -204,7 +204,7 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```bash
     kubectl get pods -o wide
     ```
-    ```console
+    ```console { .no-copy }
     No resources found in default namespace.
     ```
 

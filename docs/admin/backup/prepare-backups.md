@@ -53,7 +53,7 @@ Before you create a manual one-off or scheduled backup, review the steps below a
 
       First create a file called `credentials.txt` with your credentials, as in:
 
-      ```console
+      ```console { .no-copy }
       [default]
       aws_access_key_id = EXAMPLE_ACCESS_KEY_ID
       aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY
@@ -140,7 +140,7 @@ Before you create a manual one-off or scheduled backup, review the steps below a
     kubectl get backupstoragelocation -n kcm-system
     ```
 
-    ```console
+    ```console { .no-copy }
     NAME     PHASE       LAST VALIDATED   AGE   DEFAULT
     aws-s3   Available   27s              2d    true
     ```

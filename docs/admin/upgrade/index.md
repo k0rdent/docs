@@ -53,7 +53,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     VERSION=v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
     kubectl create -f https://github.com/k0rdent/kcm/releases/download/${VERSION}/release.yaml
     ```
-    ```console
+    ```console { .no-copy }
     release.k0rdent.mirantis.com/kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}} created
     ```
 
@@ -65,7 +65,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     kubectl get releases
     ```
 
-    ```console
+    ```console { .no-copy }
     NAME        AGE
     kcm-0-2-0   6d9h
     kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   12m
@@ -88,7 +88,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     ```bash
     kubectl get managements.k0rdent.mirantis.com kcm
     ```
-    ```console
+    ```console { .no-copy }
     NAME   READY   RELEASE     AGE
     kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   4m34s
     ```

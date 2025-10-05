@@ -54,7 +54,7 @@ You can check to see for yourself:
 ```bash
 kubectl get pod -n kyverno
 ```
-```console
+```console { .no-copy }
 NAME                                             READY   STATUS    RESTARTS   AGE
 kyverno-admission-controller-96c5d48b4-sg5ts     1/1     Running   0          2m39s
 kyverno-background-controller-65f9fd5859-tm2wm   1/1     Running   0          2m39s
@@ -64,7 +64,7 @@ kyverno-reports-controller-6f59fb8cd6-s8jc8      1/1     Running   0          2m
 ```bash
 kubectl get pod -n ingress-nginx 
 ```
-```console
+```console { .no-copy }
 NAME                                       READY   STATUS    RESTARTS   AGE
 ingress-nginx-controller-cbcf8bf58-zhvph   1/1     Running   0          24m
 ```

@@ -186,7 +186,7 @@
     ```bash
     kubectl get clustertemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -270,13 +270,13 @@
     ```bash
     kubectl get clusterdeployments -A
     ```
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-openstack-cluster-deployment   True    ClusterDeployment is ready
     ```
     ```bash
     kubectl delete clusterdeployments my-openstack-cluster-deployment -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-openstack-cluster-deployment" deleted
     ```

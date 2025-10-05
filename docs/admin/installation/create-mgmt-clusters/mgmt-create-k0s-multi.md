@@ -61,7 +61,7 @@ Follow these steps to install and prepare a multinode [k0s kubernetes](https://k
     ```bash
     sudo k0s kubectl get namespaces
     ```
-    ```console
+    ```console { .no-copy }
     NAME              STATUS   AGE
     default           Active   5m15s
     k0s-autopilot     Active   5m11s
@@ -121,7 +121,7 @@ Once the contoller is up, you can add a worker node by creating a "join token" a
     ```bash
     sudo k0s kubectl get nodes
     ```
-    ```console
+    ```console { .no-copy }
     NAME              STATUS     ROLES    AGE     VERSION
     ip-172-31-9-107   Ready      <none>   3m39s   v1.33.1+k0s
     ```
@@ -161,7 +161,7 @@ To create a join token for the new controller, follow these steps.
     ```bash
     sudo k0s status
     ```
-    ```console
+    ```console { .no-copy }
     Version: v1.33.1+k0s.1
     Process ID: 1489
     Role: controller
@@ -176,7 +176,7 @@ Use the Kubernetes 'kubectl' command-line tool that comes with k0s binary to dep
 ```bash
 sudo k0s kubectl get nodes
 ```
-```console
+```console { .no-copy }
 NAME   STATUS   ROLES    AGE    VERSION
 k0s    Ready    <none>   4m6s   v1.33.1+k0s
 ```
@@ -196,7 +196,7 @@ sudo apt-get install -y kubectl
 
 To use `kubectl` directly or to access the cluster from another machine, copy the `KUBECONFIG`, which is located on the controllers at:
 
-```console
+```console { .no-copy }
 /var/lib/k0s/pki/admin.conf
 ```
 

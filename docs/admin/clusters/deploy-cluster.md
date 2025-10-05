@@ -48,7 +48,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     kubectl get clustertemplate -n kcm-system
     ```
 
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
