@@ -2,6 +2,72 @@
 
 {{{ docsVersionInfo.k0rdentName }}} can deploy managed clusters as both EC2-based Kubernetes clusters and EKS clusters. In both cases, you'll need to create the relevant credentials, and to do that you'll need to configure an IAM user. Follow these steps to make it possible to deploy to AWS:
 
+## Test user creation
+
+Part of this process involves creating a user, which is sometimes forbidden by organizational policies. Fortunately once the user is created you don't need to do it again, so if you're not sure, either contact your administrator or run this test.
+
+1. Configure AWS IAM
+
+    Start by specifying the environment variables the AWS CLI will use:
+
+    ```bash
+    export AWS_REGION=<EXAMPLE_AWS_REGION>
+    export AWS_ACCESS_KEY_ID=<EXAMPLE_ACCESS_KEY_ID>
+    export AWS_SECRET_ACCESS_KEY=<EXAMPLE_SECRET_ACCESS_KEY>
+    export AWS_SESSION_TOKEN=<YOUR_SESSION_TOKEN> # Optional. If you are using Multi-Factor Auth.
+    ```
+
+2. Install the AWS CLI
+ 
+	  If you haven't already, install the `aws` CLI tool:
+
+    ```bash
+    sudo apt install unzip
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
+    unzip awscliv2.zip 
+    sudo ./aws/install
+    ```
+
+  	The tool recognizes the environment variables you created earlier, so there's no need to login.
+
+3. Create and delete a test user
+
+    There are ways test the permissions assigned to your user, but the only way to ensure there are no policies preventing you from creating a user is to actually do it.  Execute these commands:
+
+    ```bash
+    aws iam create-user --user-name test-delete-me
+    aws iam delete-user --user-name test-delete-me
+    ```
+
+    If your account can create a user, you'll see output such as:
+
+    ```console  { .no-copy }
+    {
+        "User": {
+            "Path": "/",
+            "UserName": "test-delete-me",
+            "UserId": "EXAMPLE_USER_ID",
+            "Arn": "arn:aws:iam::FAKE_ARN_123:user/test-delete-me",
+            "CreateDate": "2025-10-05T17:02:36+00:00"
+        }
+    }
+    ```
+
+    Note that you will NOT see any indication that the user has been deleted, even though it has. You can make sure by running:
+
+    ```bash 
+    aws iam get-user --user-name test-delete-me
+    ```
+    ```console { .no-copy }
+    An error occurred (NoSuchEntity) when calling the GetUser operation: The user with name test-delete-me cannot be found.
+    ```
+
+If you are unable to create a user, contact your administrator to request the user creation. (You should also show them this page to make sure you won't run into other issues.)
+
+## Configure the system for AWS child clusters
+
+Now go ahead and prepare the cluster.
+
 1. Install {{{ docsVersionInfo.k0rdentName }}}
 
     Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running.
@@ -33,8 +99,8 @@
   	Now use `clusterawsadm` to create the IAM CloudFormation stack:
 
     ```bash
-	clusterawsadm bootstrap iam create-cloudformation-stack
-	```
+	  clusterawsadm bootstrap iam create-cloudformation-stack
+	  ```
 	
 5. Install the AWS CLI
  
