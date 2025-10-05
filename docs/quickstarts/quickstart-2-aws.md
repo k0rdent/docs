@@ -55,6 +55,27 @@ export AWS_SESSION_TOKEN=EXAMPLE_SESSION_TOKEN # Optional. If you are using Mult
 
 These credentials will be used both by the AWS CLI (to create your {{{ docsVersionInfo.k0rdentName }}} user) and by `clusterawsadm` (to create a CloudFormation template used by CAPA within {{{ docsVersionInfo.k0rdentName }}}).
 
+## Create the {{{ docsVersionInfo.k0rdentName }}} AWS user
+
+Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} user:
+
+```bash
+ aws iam create-user --user-name k0rdentQuickstart
+```
+```console
+{
+    "User": {
+        "Path": "/",
+        "UserName": "k0rdentQuickstart",
+        "UserId": "EXAMPLE_USER_ID",
+        "Arn": "arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart",
+        "CreateDate": "2025-01-18T08:15:27+00:00"
+    }
+}
+```
+
+If you don't have permissions to create the user, ask your administrator for assistance. Once the user is created, you won't have to do it again. You can also show them this page to make sure you won't run into any other issues.
+
 ## Check for available IPs
 
 Because {{{ docsVersionInfo.k0rdentName }}} has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
@@ -108,25 +129,6 @@ aws service-quotas list-requested-service-quota-change-history \
             "QuotaRequestedAtLevel": "ACCOUNT"
         }
     ]
-}
-```
-
-## Create the {{{ docsVersionInfo.k0rdentName }}} AWS user
-
-Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} user:
-
-```bash
- aws iam create-user --user-name k0rdentQuickstart
-```
-```console
-{
-    "User": {
-        "Path": "/",
-        "UserName": "k0rdentQuickstart",
-        "UserId": "EXAMPLE_USER_ID",
-        "Arn": "arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart",
-        "CreateDate": "2025-01-18T08:15:27+00:00"
-    }
 }
 ```
 
