@@ -936,6 +936,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -945,6 +956,43 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test user creation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-system-for-aws-child-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure the system for AWS child clusters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -4458,6 +4506,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test user creation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-system-for-aws-child-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure the system for AWS child clusters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -4489,6 +4563,55 @@
 
 <h1 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">#</a></h1>
 <p>k0rdent can deploy managed clusters as both EC2-based Kubernetes clusters and EKS clusters. In both cases, you'll need to create the relevant credentials, and to do that you'll need to configure an IAM user. Follow these steps to make it possible to deploy to AWS:</p>
+<h2 id="test-user-creation">Test user creation<a class="headerlink" href="#test-user-creation" title="Permanent link">#</a></h2>
+<p>Part of this process involves creating a user, which is sometimes forbidden by organizational policies. Fortunately once the user is created you don't need to do it again, so if you're not sure, either contact your administrator or run this test.</p>
+<ol>
+<li>
+<p>Configure AWS IAM</p>
+<p>Start by specifying the environment variables the AWS CLI will use:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_REGION</span><span class="o">=</span>&lt;EXAMPLE_AWS_REGION&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>&lt;EXAMPLE_ACCESS_KEY_ID&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>&lt;EXAMPLE_SECRET_ACCESS_KEY&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span>&lt;YOUR_SESSION_TOKEN&gt;<span class="w"> </span><span class="c1"># Optional. If you are using Multi-Factor Auth.</span>
+</code></pre></div>
+</li>
+<li>
+<p>Install the AWS CLI</p>
+<p>If you haven't already, install the <code>aws</code> CLI tool:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>unzip
+curl<span class="w"> </span><span class="s2">&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;awscliv2.zip&quot;</span><span class="w"> </span>
+unzip<span class="w"> </span>awscliv2.zip<span class="w"> </span>
+sudo<span class="w"> </span>./aws/install
+</code></pre></div>
+<p>The tool recognizes the environment variables you created earlier, so there's no need to login.</p>
+</li>
+<li>
+<p>Create and delete a test user</p>
+<p>There are ways test the permissions assigned to your user, but the only way to ensure there are no policies preventing you from creating a user is to actually do it.  Execute these commands:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>test-delete-me
+aws<span class="w"> </span>iam<span class="w"> </span>delete-user<span class="w"> </span>--user-name<span class="w"> </span>test-delete-me
+</code></pre></div>
+<p>If your account can create a user, you'll see output such as:</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
+<span class="go">    &quot;User&quot;: {</span>
+<span class="go">        &quot;Path&quot;: &quot;/&quot;,</span>
+<span class="go">        &quot;UserName&quot;: &quot;test-delete-me&quot;,</span>
+<span class="go">        &quot;UserId&quot;: &quot;EXAMPLE_USER_ID&quot;,</span>
+<span class="go">        &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:user/test-delete-me&quot;,</span>
+<span class="go">        &quot;CreateDate&quot;: &quot;2025-10-05T17:02:36+00:00&quot;</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</code></pre></div>
+<p>Note that you will NOT see any indication that the user has been deleted, even though it has. You can make sure by running:</p>
+<p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>get-user<span class="w"> </span>--user-name<span class="w"> </span>test-delete-me
+</code></pre></div>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">An error occurred (NoSuchEntity) when calling the GetUser operation: The user with name test-delete-me cannot be found.</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>If you are unable to create a user, contact your administrator to request the user creation. (You should also show them this page to make sure you won't run into other issues.)</p>
+<h2 id="configure-the-system-for-aws-child-clusters">Configure the system for AWS child clusters<a class="headerlink" href="#configure-the-system-for-aws-child-clusters" title="Permanent link">#</a></h2>
+<p>Now go ahead and prepare the cluster.</p>
 <ol>
 <li>
 <p>Install k0rdent</p>
@@ -4514,8 +4637,8 @@ sudo<span class="w"> </span>install<span class="w"> </span>-o<span class="w"> </
 <li>
 <p>Create the IAM CloudFormation stack</p>
 <p>Now use <code>clusterawsadm</code> to create the IAM CloudFormation stack:</p>
-<div class="highlight"><pre><span></span><code>clusterawsadm<span class="w"> </span>bootstrap<span class="w"> </span>iam<span class="w"> </span>create-cloudformation-stack
-</code></pre></div>
+<p><code>bash
+  clusterawsadm bootstrap iam create-cloudformation-stack</code></p>
 </li>
 <li>
 <p>Install the AWS CLI</p>
