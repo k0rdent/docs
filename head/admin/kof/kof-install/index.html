@@ -4811,10 +4811,10 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 <p class="admonition-title">Notice</p>
 <p>
 Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.
 In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
 and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
-<p>If you selected the Istio option, use <code>kof-istio</code>. 
+<p>If you selected the Istio option, use <code>kof-istio</code>.
 Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use all 3 charts at the same time.</p>
 </div>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
@@ -4840,10 +4840,11 @@ This enables installation of <code>ServiceTemplates</code> such as <code>cert-ma
 making it possible to reference them from the regional and child <code>MultiClusterService</code> objects.</p>
 </li>
 <li>
+<p>Check requirements to the <a href="../kof-storing/#storage-class-requirements-for-victoriametrics-cluster">storage class</a>.</p>
 <p>If you want to use a <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass">default storage class</a>,
-    but <code>kubectl get sc</code> shows no <code>(default)</code>, create it.
-    Otherwise you can use a non-default storage class in the <code>mothership-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
+but <code>kubectl get sc</code> shows no <code>(default)</code>, create it.
+Otherwise you can use a non-default storage class in the <code>mothership-values.yaml</code> file:
+<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
 </code></pre></div></p>
 <p>If <code>kubectl get sc</code> shows nothing
@@ -4914,10 +4915,10 @@ enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml
 <p class="admonition-title">Notice</p>
 <p>
 Currently the <code>kof-istio</code> chart uses <code>ClusterProfiles</code> <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-regional-cluster-profile.yaml">kof-istio-regional</a>
-and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.<br />
+and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>.
 In the future, however, the KOF team plans to replace them with <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
 and <a href="https://github.com/k0rdent/kof/blob/v1.4.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</p>
-<p>If you selected the Istio option, use <code>kof-istio</code>. 
+<p>If you selected the Istio option, use <code>kof-istio</code>.
 Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use all 3 charts at the same time.</p>
 </div>
 <ul>
