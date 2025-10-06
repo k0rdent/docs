@@ -4857,7 +4857,7 @@ If you're working on a shared Azure account, please ensure that the Azure Cluste
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>provider<span class="w"> </span>list<span class="w"> </span>--query<span class="w"> </span><span class="s2">&quot;[?registrationState==&#39;Registered&#39;]&quot;</span><span class="w"> </span>--output<span class="w"> </span>table
 </code></pre></div>
 <p>And see a listing like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">Namespace                             RegistrationState</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Namespace                             RegistrationState</span>
 <span class="go">-----------------------------------   -----------------</span>
 <span class="go">Microsoft.Compute                     Registered</span>
 <span class="go">Microsoft.Network                     Registered</span>
@@ -4874,7 +4874,7 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>account<span class="w"> </span>list<span class="w"> </span>-o<span class="w"> </span>table
 </code></pre></div>
 <p>The output will look like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">Name                     SubscriptionId                    TenantId</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Name                     SubscriptionId                    TenantId</span>
 <span class="go">-----------------------  -------------------------------   -----------------------------</span>
 <span class="go">My Azure Subscription    SUBSCRIPTION_ID_SUBSCRIPTION_ID   TENANT_ID_TENANT_ID_TENANT_ID</span>
 </code></pre></div>
@@ -4884,7 +4884,7 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--role<span class="w"> </span>contributor<span class="w"> </span>--scopes<span class="o">=</span><span class="s2">&quot;/subscriptions/&lt;subscription-id&gt;&quot;</span>
 </code></pre></div>
 <p>You'll see output that resembles what's below:</p>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go"> &quot;appId&quot;: &quot;SP_APP_ID_SP_APP_ID&quot;,</span>
 <span class="go"> &quot;displayName&quot;: &quot;azure-cli-2024-10-24-17-36-47&quot;,</span>
 <span class="go"> &quot;password&quot;: &quot;SP_PASSWORD_SP_PASSWORD&quot;,</span>
@@ -4928,7 +4928,7 @@ For managed (AKS) clusters on Azure create the `Secret` with the `AZURE_CLIENT_I
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-secret.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">secret/azure-cluster-identity-secret created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">secret/azure-cluster-identity-secret created</span>
 </code></pre></div>
 <h2 id="create-the-azureclusteridentity-object">Create the AzureClusterIdentity Object<a class="headerlink" href="#create-the-azureclusteridentity-object" title="Permanent link">#</a></h2>
 <!--
@@ -4958,7 +4958,7 @@ For managed (AKS) clusters on Azure create the `Secret` with the `AZURE_CLIENT_I
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created</span>
 </code></pre></div>
 <h2 id="create-the-kcm-credential-object">Create the KCM Credential Object<a class="headerlink" href="#create-the-kcm-credential-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our credential and save it as <code>azure-cluster-identity-cred.yaml</code>.</p>
@@ -5009,7 +5009,7 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-cred.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/azure-cluster-identity-cred created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/azure-cluster-identity-cred created</span>
 </code></pre></div>
 <h2 id="create-the-configmap-resource-template-object">Create the <code>ConfigMap</code> resource-template Object<a class="headerlink" href="#create-the-configmap-resource-template-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our resource-template (and the necessary <code>StorageClass</code>) and save it as
@@ -5087,14 +5087,14 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-resource-template.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">configmap/azure-cluster-identity-resource-template created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">configmap/azure-cluster-identity-resource-template created</span>
 </code></pre></div></p>
 <h2 id="find-your-locationregion">Find your location/region<a class="headerlink" href="#find-your-locationregion" title="Permanent link">#</a></h2>
 <p>To determine where to deploy your cluster, you may wish to begin by listing your Azure location/regions:</p>
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>account<span class="w"> </span>list-locations<span class="w"> </span>-o<span class="w"> </span>table
 </code></pre></div>
 <p>You'll see output like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">DisplayName               Name                 RegionalDisplayName</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">DisplayName               Name                 RegionalDisplayName</span>
 <span class="go">------------------------  -------------------  -------------------------------------</span>
 <span class="go">East US                   eastus               (US) East US</span>
 <span class="go">South Central US          southcentralus       (US) South Central US</span>
@@ -5109,7 +5109,7 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see output resembling what's below. Grab the name of the Azure standalone cluster template in its present version (in the example below, that's <code>azure-standalone-cp-1-0-13</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-1           true</span>
 <span class="go">kcm-system   aws-eks-1-0-3                   true</span>
 <span class="go">kcm-system   aws-hosted-cp-1-0-14             true</span>
@@ -5173,7 +5173,7 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-azure-clusterdeployment1.yaml
 </code></pre></div>
 <p>Kubernetes should confirm this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created</span>
 </code></pre></div>
 <p>There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>--watch
@@ -5189,14 +5189,14 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <p>To verify the presence of the child cluster, list the available <code>ClusterDeployment</code> objects:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterDeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div></p>
 <h2 id="tear-down-the-child-cluster">Tear down the child cluster<a class="headerlink" href="#tear-down-the-child-cluster" title="Permanent link">#</a></h2>
 <p>To tear down the child cluster, delete the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-azure-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-azure-clusterdeployment1&quot; deleted</span>
 </code></pre></div></p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:</p>

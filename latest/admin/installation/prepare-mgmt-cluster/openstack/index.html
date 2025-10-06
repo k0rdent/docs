@@ -4652,7 +4652,7 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <code>my-openstack-cluster-deployment.yaml</code>.  Note that you can see the available templates by listing them:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-4-0           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4722,12 +4722,12 @@ provisioning process:</p>
 <p>To clean up OpenStack resources, delete the managed cluster by deleting the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-openstack-cluster-deployment   True    ClusterDeployment is ready</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-openstack-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-openstack-cluster-deployment&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-openstack-cluster-deployment&quot; deleted</span>
 </code></pre></div></p>
 </li>
 </ol>

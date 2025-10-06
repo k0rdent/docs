@@ -4592,7 +4592,7 @@ select from the <a href="https://hub.docker.com/r/velero/velero-plugin-for-aws/t
    object referencing a <code>Secret</code> with credentials to access the cloud storage
    (if the multiple credentials feature is supported by the plugin). For example, you can create the <code>BackupStorageLocation</code> and the related <code>Secret</code> yaml for the Amazon S3 configuration by following these steps.</p>
 <p>First create a file called <code>credentials.txt</code> with your credentials, as in:</p>
-<div class="highlight"><pre><span></span><code><span class="go">[default]</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">[default]</span>
 <span class="go">aws_access_key_id = EXAMPLE_ACCESS_KEY_ID</span>
 <span class="go">aws_secret_access_key = EXAMPLE_SECRET_ACCESS_KEY</span>
 </code></pre></div>
@@ -4661,7 +4661,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 <p>Now make sure the <code>backupstoragelocation</code> shows as <code>Available</code>:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>backupstoragelocation<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME     PHASE       LAST VALIDATED   AGE   DEFAULT</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME     PHASE       LAST VALIDATED   AGE   DEFAULT</span>
 <span class="go">aws-s3   Available   27s              2d    true</span>
 </code></pre></div>
 </li>

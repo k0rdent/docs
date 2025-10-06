@@ -4586,7 +4586,7 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <p>To understand whether installation is complete, start by making sure all pods are ready in the <code>kcm-system</code> namespace. There should be 21 pod entries:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                                           READY   STATUS    RESTARTS   AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                                           READY   STATUS    RESTARTS   AGE</span>
 <span class="go">azureserviceoperator-controller-manager-6b4dd86894-4dpfc       1/1     Running   0          7m15s</span>
 <span class="go">capa-controller-manager-64bbcb9f8-ltj6z                        1/1     Running   0          6m58s</span>
 <span class="go">capd-controller-manager-7586b6577c-6w4wq                       1/1     Running   0          7m11s</span>
@@ -4609,12 +4609,12 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">21</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">21</span>
 </code></pre></div>
 <p>State management is handled by Project Sveltos, so you'll want to make sure that all 10 pods are running/completed in the <code>projectsveltos</code> namespace:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                      READY   STATUS    RESTARTS   AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                      READY   STATUS    RESTARTS   AGE</span>
 <span class="go">access-manager-6696df779-pnxjx            1/1     Running   0          10m</span>
 <span class="go">addon-controller-6cb6c5f6df-zmfch         1/1     Running   0          10m</span>
 <span class="go">classifier-manager-5b47b66fc9-5mtwl       1/1     Running   0          10m</span>
@@ -4627,7 +4627,7 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">9</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">9</span>
 </code></pre></div>
 <p>If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>classifieclassifier-manager-5b47b66fc9-5mtwl<span class="w"> </span>-n<span class="w"> </span>projectsveltos
@@ -4637,14 +4637,14 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <p>The actual measure of whether k0rdent is ready is the state of the <code>Management</code> object. To check, issue this command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>Management<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
 <span class="go">kcm    True    kcm-1-4-0   9m</span>
 </code></pre></div>
 <h2 id="verify-the-templates">Verify the templates<a class="headerlink" href="#verify-the-templates" title="Permanent link">#</a></h2>
 <p>Next verify whether the KCM templates have been successfully installed and reconciled. Start with the <code>ProviderTemplate</code> objects:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
 <span class="go">cluster-api-1-0-6                                 true</span>
 <span class="go">cluster-api-provider-aws-1-0-6                    true</span>
 <span class="go">cluster-api-provider-azure-1-0-7                  true</span>
@@ -4664,7 +4664,7 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <p>You'll also want to make sure the <code>ClusterTemplate</code> objects are installed and valid:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                             VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                             VALID</span>
 <span class="go">adopted-cluster-1-0-6            true</span>
 <span class="go">aws-eks-1-0-3                    true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4687,7 +4687,7 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 status of the <code>Management</code> object itself is <code>True</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>management<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE         AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE         AGE</span>
 <span class="go">kcm    True    kcm-1-4-0   18m</span>
 </code></pre></div></p>
 

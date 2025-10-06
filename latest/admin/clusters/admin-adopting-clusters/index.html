@@ -4655,7 +4655,7 @@ YAML file for the <code>ClusterDeployment</code> object, as shown below:</p>
 <p>You can also get a list of the available templates with:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-0-1           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4722,7 +4722,7 @@ cluster's <code>kubeconfig</code>, this is pretty straightforward.</p>
 <p>Get the IP address of the control plane:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME             STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME             STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME</span>
 <span class="go">ip-172-31-8-77   Ready    control-plane   9d    v1.33.2+k0s   172.31.8.77   &lt;none&gt;        Ubuntu 24.04.2 LTS   6.8.0-1029-aws   containerd://1.7.27</span>
 </code></pre></div></p>
 <p>Because the cluster will be accessing itself, the <code>INTERNAL-IP</code> (in this example, <code>172.21.8.77</code>), is sufficient.</p>
@@ -4745,7 +4745,7 @@ editing the file directly:</p>
 <p>Get the base64-encoded <code>kubeconfig</code>:</p>
 <p><div class="highlight"><pre><span></span><code>base64<span class="w"> </span>/path/to/kubeconfig
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv</span>
 <span class="go">cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VSQlJF</span>
 <span class="go">...</span>
 <span class="go">dFZjVlphZVVWWlUyMDVlRFF4UVVoMlpYSnhWVGxvQ2kwdExTMHRSVTVFSUZKVFFTQlFVa2xXUVZS</span>
@@ -4783,7 +4783,7 @@ editing the file directly:</p>
 <p>Add the credential objects:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>adopt-creds.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">secret/self-adopt-cluster-kubeconfig created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">secret/self-adopt-cluster-kubeconfig created</span>
 <span class="go">credential.k0rdent.mirantis.com/self-adopt-cluster-credential created</span>
 </code></pre></div></p>
 </li>
@@ -4792,7 +4792,7 @@ editing the file directly:</p>
 <p>First determine the <code>ClusterTemplate</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterTemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-0-2-0           true</span>
 <span class="go">adopted-cluster-1-0-0           true</span>
 <span class="go">adopted-cluster-1-0-1           true</span>
@@ -4816,14 +4816,14 @@ editing the file directly:</p>
 <p>Add the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>self-adopt-cluster.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/self-adopted-mgmt created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/self-adopted-mgmt created</span>
 </code></pre></div></p>
 </li>
 <li>
 <p>Verify the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployment<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                READY   SERVICES   TEMPLATE                MESSAGES          AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                READY   SERVICES   TEMPLATE                MESSAGES          AGE</span>
 <span class="go">kcm-system   self-adopted-mgmt   True    0/0        adopted-cluster-1-0-1   Object is ready   14s</span>
 </code></pre></div></p>
 </li>

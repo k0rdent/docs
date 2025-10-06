@@ -4526,7 +4526,7 @@ Kubernetes Cluster API.  For example, the v1.4.0 <code>Release</code> object loo
 <p><div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span>v1.4.0
 kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://github.com/k0rdent/kcm/releases/download/<span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span>/release.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">release.k0rdent.mirantis.com/kcm-1-4-0 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">release.k0rdent.mirantis.com/kcm-1-4-0 created</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4534,7 +4534,7 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 <p>Once you've created the new <code>Release</code> you need to update the <code>Management</code> object to use it. Start by viewing all available <code>Release</code>s:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>releases
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME        AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME        AGE</span>
 <span class="go">kcm-0-2-0   6d9h</span>
 <span class="go">kcm-1-4-0   12m</span>
 </code></pre></div>
@@ -4552,7 +4552,7 @@ kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.
 using. Monitor the readiness of the <code>Management</code> object to ensure the upgrade was successful. For example:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
 <span class="go">kcm    True    kcm-1-4-0   4m34s</span>
 </code></pre></div></p>
 </li>

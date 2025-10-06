@@ -4715,10 +4715,10 @@ Regardless of the type of the resources to be deployed using template, the corre
 <code>ConfigMap</code> and <code>Secret</code> can only be used as a source of kustomization or raw resources for <code>ServiceTemplate</code>.
 To deploy kustomization using <code>ConfigMap</code> or <code>Secret</code> the kustomization folder must be archived in *.tar.gz and
 then <code>ConfigMap</code> or <code>Secret</code> must be created from resulting archive:</p>
-<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap foo --from-file=kustomization.tar.gz</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">kubectl create configmap foo --from-file=kustomization.tar.gz</span>
 </code></pre></div>
 <p>To deploy raw resources using <code>ConfigMap</code> or <code>Secret</code> source object must be created from raw resource files:</p>
-<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml</span>
 </code></pre></div>
 </div>
 <p>Note that it's important to pay attention to where the source resides. Cluster-scoped <code>ProviderTemplate</code> objects must reside in the <strong>system</strong> namespace (<code>kcm-system</code> by default) but other template sources must reside in the same namespace as the templates that will come from them.</p>

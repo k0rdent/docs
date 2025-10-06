@@ -4666,7 +4666,7 @@ re-deploy the spec to the target cluster.</p>
 <p>Set <code>.spec.serviceSpec.syncMode=Continuous</code> in the <code>ClusterDeployment</code> or <code>MultiClusterService</code> object to enable drift detection and correction. Sveltos will then automatically deploy the drift-detection-manager on the targeted clusters:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                      READY   UP-TO-DATE   AVAILABLE   AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                      READY   UP-TO-DATE   AVAILABLE   AGE</span>
 <span class="go">drift-detection-manager   1/1     1            1           152m</span>
 <span class="go">sveltos-agent-manager     1/1     1            1           152m</span>
 </code></pre></div></p>
@@ -4696,7 +4696,7 @@ In the following example, the "ingress-nginx/ingress-nginx-controller" deploymen
 <p>If we manually remove the <code>app.kubernetes.io/managed-by=Helm</code> label, we can observe that the drift is not corrected as can be seen in the following watch output.</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>ingress-nginx-controller<span class="w"> </span>--show-labels<span class="w"> </span>-w
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                       READY   UP-TO-DATE   AVAILABLE   AGE     LABELS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                       READY   UP-TO-DATE   AVAILABLE   AGE     LABELS</span>
 <span class="go">ingress-nginx-controller   3/3     3            3           3h58m   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx,app.kubernetes.io/version=1.11.0,helm.sh/chart=ingress-nginx-4.11.0</span>
 <span class="go">ingress-nginx-controller   3/3     3            3           3h59m   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx,app.kubernetes.io/version=1.11.0,helm.sh/chart=ingress-nginx-4.11.0</span>
 </code></pre></div></p>
