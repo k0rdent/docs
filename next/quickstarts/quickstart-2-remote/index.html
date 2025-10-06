@@ -4747,7 +4747,7 @@
 <p>Apply the YAML to the k0rdent management cluster:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>remote-ssh-key-secret.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">secret/remote-ssh-key created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">secret/remote-ssh-key created</span>
 </code></pre></div></p>
 <h2 id="create-the-kcm-credential-object">Create the KCM Credential Object<a class="headerlink" href="#create-the-kcm-credential-object" title="Permanent link">#</a></h2>
 <p>Create a YAML file with the specification of our credential and save it as <code>remote-cred.yaml</code>.</p>
@@ -4769,7 +4769,7 @@
 <p>Apply the YAML to your cluster:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>remote-cred.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/remote-cred created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/remote-cred created</span>
 </code></pre></div></p>
 <h2 id="create-the-cluster-identity-resource-template-configmap">Create the Cluster Identity resource template ConfigMap<a class="headerlink" href="#create-the-cluster-identity-resource-template-configmap" title="Permanent link">#</a></h2>
 <p>Now we create the k0rdent <code>ClusterIdentity</code> resource template <code>ConfigMap</code>. As in prior steps, create a YAML file called <code>remote-ssh-key-resource-template.yaml</code>:</p>
@@ -4794,7 +4794,7 @@ Note that the <code>ConfigMap</code> doesn't have any values, only metadata. Thi
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see output resembling the following. Make note of the name of the Remote Cluster template in its present version (in the example below, that's <code>remote-cluster-1-0-14</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-1           true</span>
 <span class="go">kcm-system   aws-eks-1-0-3                   true</span>
 <span class="go">kcm-system   aws-hosted-cp-1-0-14             true</span>
@@ -4849,7 +4849,7 @@ For other service types (such as <code>ClusterIP</code> or <code>NodePort</code>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-remote-clusterdeployment1.yaml
 </code></pre></div>
 <p>Kubernetes should confirm the creation:</p>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-remote-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-remote-clusterdeployment1 created</span>
 </code></pre></div>
 <p>There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusters.cluster.x-k8s.io<span class="w"> </span>my-remote-clusterdeployment1<span class="w"> </span>--watch
@@ -4858,7 +4858,7 @@ For other service types (such as <code>ClusterIP</code> or <code>NodePort</code>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>remotemachines.infrastructure.cluster.x-k8s.io<span class="w"> </span>-l<span class="w"> </span>helm.toolkit.fluxcd.io/name<span class="o">=</span>my-remote-clusterdeployment1<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.items<span class="o">[</span>*<span class="o">]</span>.status<span class="o">}</span>
 </code></pre></div>
 <p>If the machines were provisioned, the output of this command will be similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="go">{&quot;ready&quot;:true}{&quot;ready&quot;:true}</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{&quot;ready&quot;:true}{&quot;ready&quot;:true}</span>
 </code></pre></div>
 <p>If there is any error, the output will contain an error message.</p>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
@@ -4872,14 +4872,14 @@ For other service types (such as <code>ClusterIP</code> or <code>NodePort</code>
 <p>To verify the presence of the child cluster, list the available <code>ClusterDeployment</code> objects on the management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterDeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-remote-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div></p>
 <h2 id="tear-down-the-child-cluster">Tear down the child cluster<a class="headerlink" href="#tear-down-the-child-cluster" title="Permanent link">#</a></h2>
 <p>To tear down the child cluster, delete the <code>ClusterDeployment</code> from the management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-remote-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-remote-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-remote-clusterdeployment1&quot; deleted</span>
 </code></pre></div></p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the QuickStart, we have some suggestions for what to do next:</p>

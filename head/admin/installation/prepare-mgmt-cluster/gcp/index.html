@@ -4604,7 +4604,7 @@ To get base64 encoded credentials, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cluster-identity-cred.yaml
 </code></pre></div>
 <p>You should see output of:</p>
-<div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/gcp-cluster-identity-cred created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/gcp-cluster-identity-cred created</span>
 </code></pre></div>
 </li>
 <li>
@@ -4637,7 +4637,7 @@ To get base64 encoded credentials, run:</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cloud-sa-resource-template.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">configmap/gcp-cloud-sa-resource-template created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">configmap/gcp-cloud-sa-resource-template created</span>
 </code></pre></div></p>
 </li>
 </ol>
@@ -4650,7 +4650,7 @@ First get a list of available regions:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>regions<span class="w"> </span>list
 </code></pre></div>
 <p>You'll see output like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE</span>
 <span class="go">africa-south1            0/300   0/102400  0/575      0/175               UP</span>
 <span class="go">asia-east1               0/3000  0/102400  0/575      0/175               UP</span>
 <span class="go">asia-east2               0/1500  0/102400  0/575      0/175               UP</span>
@@ -4664,7 +4664,7 @@ First get a list of available regions:</p>
 <p>You can see the available templates by listing them:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
- <div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+ <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-4-0           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4704,7 +4704,7 @@ First get a list of available regions:</p>
 <p>Apply the YAML to your management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-gcp-clusterdeployment1.yaml
 </code></pre></div>
- <div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created</span>
+ <div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created</span>
 </code></pre></div></p>
 <p>Note that although the <code>ClusterDeployment</code> object has been created, there will be a delay as actual GCP instances
  are provisioned and added to the cluster. You can follow the provisioning process:</p>
@@ -4720,12 +4720,12 @@ First get a list of available regions:</p>
 <p>To clean up GCP resources, delete the child cluster by deleting the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-gcp-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-gcp-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-gcp-clusterdeployment1&quot; deleted</span>
 </code></pre></div></p>
 </li>
 </ol>

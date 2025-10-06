@@ -4536,7 +4536,7 @@ account make sure to <a href="https://learn.microsoft.com/en-us/azure/cost-manag
 <p>To get the information you need, list all your Azure subscriptions: </p>
 <p><div class="highlight"><pre><span></span><code>az<span class="w"> </span>account<span class="w"> </span>list<span class="w"> </span>-o<span class="w"> </span>table
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Name                     SubscriptionId                        TenantId</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Name                     SubscriptionId                        TenantId</span>
 <span class="go">-----------------------  -------------------------------------  --------------------------------</span>
 <span class="go">My Azure Subscription    SUBSCRIPTION_ID_SUBSCRIPTION_ID        TENANT_ID_TENANT_ID_TENANT_ID</span>
 </code></pre></div></p>
@@ -4548,7 +4548,7 @@ account make sure to <a href="https://learn.microsoft.com/en-us/azure/cost-manag
 Create the Service Principal, making sure to replace <SUBSCRIPTION_ID_SUBSCRIPTION_ID> with the <code>SubscriptionId</code> from step 1.</p>
 <p><div class="highlight"><pre><span></span><code>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--role<span class="w"> </span>contributor<span class="w"> </span>--scopes<span class="o">=</span><span class="s2">&quot;/subscriptions/&lt;SUBSCRIPTION_ID_SUBSCRIPTION_ID&gt;&quot;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">&quot;appId&quot;: &quot;SP_APP_ID_SP_APP_ID&quot;,</span>
 <span class="go">&quot;displayName&quot;: &quot;azure-cli-2024-10-24-17-36-47&quot;,</span>
 <span class="go">&quot;password&quot;: &quot;SP_PASSWORD_SP_PASSWORD&quot;,</span>
@@ -4603,7 +4603,7 @@ the name of that <code>Secret</code>.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4627,7 +4627,7 @@ the name of that <code>Secret</code>.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-cred.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/azure-cluster-identity-cred created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/azure-cluster-identity-cred created</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4694,7 +4694,7 @@ Object name needs to be exactly <code>azure-cluster-identity-resource-template.y
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-resource-template.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">configmap/azure-cluster-identity-resource-template created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">configmap/azure-cluster-identity-resource-template created</span>
 </code></pre></div></p>
 </li>
 </ol>
@@ -4706,7 +4706,7 @@ Object name needs to be exactly <code>azure-cluster-identity-resource-template.y
 <p>First get a list of available locations/regions:</p>
 <p><div class="highlight"><pre><span></span><code>az<span class="w"> </span>account<span class="w"> </span>list-locations<span class="w"> </span>-o<span class="w"> </span>table
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">DisplayName               Name                 RegionalDisplayName</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">DisplayName               Name                 RegionalDisplayName</span>
 <span class="go">------------------------  -------------------  -------------------------------------</span>
 <span class="go">East US                   eastus               (US) East US</span>
 <span class="go">South Central US          southcentralus       (US) South Central US</span>
@@ -4721,7 +4721,7 @@ as well as the location, credentials, and <code>subscriptionId</code>.</p>
 <p>You can see the available templates by listing them:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-4-0           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4753,7 +4753,7 @@ as well as the location, credentials, and <code>subscriptionId</code>.</p>
 <p>Apply the YAML to your management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-azure-clusterdeployment1.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created</span>
 </code></pre></div></p>
 <p>Note that although the <code>ClusterDeployment</code> object has been created, there will be a delay as actual Azure instances
 are provisioned and added to the cluster. You can follow the provisioning process:</p>
@@ -4771,12 +4771,12 @@ exceed your quotas. If you are near the top of your quotas, requesting an increa
 <p>To clean up Azure resources, delete the child cluster by deleting the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-azure-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-azure-clusterdeployment1&quot; deleted</span>
 </code></pre></div></p>
 </li>
 </ol>

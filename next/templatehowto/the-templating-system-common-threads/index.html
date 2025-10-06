@@ -4806,10 +4806,10 @@
 <li>A <code>Secret</code> is a Kubernetes-native object that can also hold kustomizations or raw manifests, such as a <code>Secret</code> created from <code>kustomization.tar.gz</code> or from files like <code>deployment.yaml</code> and <code>namespace.yaml</code>.</li>
 </ul>
 <p>To deploy a kustomization, archive the folder as <code>.tar.gz</code> and create a <code>ConfigMap</code> or <code>Secret</code> from the archive:</p>
-<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap foo --from-file=kustomization.tar.gz</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">kubectl create configmap foo --from-file=kustomization.tar.gz</span>
 </code></pre></div>
 <p>To deploy raw resources, create a <code>ConfigMap</code> or <code>Secret</code> from the resource files:</p>
-<div class="highlight"><pre><span></span><code><span class="go">kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml</span>
 </code></pre></div>
 <p>Supported sources:</p>
 <table>

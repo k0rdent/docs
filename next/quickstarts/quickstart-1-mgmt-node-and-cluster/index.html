@@ -4744,7 +4744,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k0s<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
 <p>You should see something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME              STATUS   ROLES    AGE   VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME              STATUS   ROLES    AGE   VERSION</span>
 <span class="go">ip-172-31-29-61   Ready    &lt;none&gt;   46s   v1.31.2+k0s</span>
 </code></pre></div>
 <h2 id="install-kubectl">Install kubectl<a class="headerlink" href="#install-kubectl" title="Permanent link">#</a></h2>
@@ -4768,7 +4768,7 @@ sudo<span class="w"> </span>chmod<span class="w"> </span>+r<span class="w"> </sp
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
 <p>You should see something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME              STATUS   ROLES           AGE   VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME              STATUS   ROLES           AGE   VERSION</span>
 <span class="go">ip-172-31-29-61   Ready    control-plane   25m   v1.31.2+k0s</span>
 </code></pre></div>
 <h2 id="install-helm">Install Helm<a class="headerlink" href="#install-helm" title="Permanent link">#</a></h2>
@@ -4778,7 +4778,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 ./get_helm.sh
 </code></pre></div>
 <p>Issuing these commands should produce something very much like the following output:</p>
-<div class="highlight"><pre><span></span><code><span class="go">Downloading https://get.helm.sh/helm-v3.16.3-linux-amd64.tar.gz</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Downloading https://get.helm.sh/helm-v3.16.3-linux-amd64.tar.gz</span>
 <span class="go">Verifying checksum... Done.</span>
 <span class="go">Preparing to install helm into /usr/local/bin</span>
 <span class="go">helm installed into /usr/local/bin/helm</span>
@@ -4787,7 +4787,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <p>Now we'll install k0rdent itself into the k0s management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kcm<span class="w"> </span>oci://ghcr.io/k0rdent/kcm/charts/kcm<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.4.0<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--create-namespace
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Pulled: ghcr.io/k0rdent/kcm/charts/kcm:1.4.0</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Pulled: ghcr.io/k0rdent/kcm/charts/kcm:1.4.0</span>
 <span class="go">Digest: sha256:6c7b320c3919f66705a89a9276c4605407201fd4d067006374f2417dc15c3648</span>
 <span class="go">NAME: kcm</span>
 <span class="go">LAST DEPLOYED: Tue Sep 30 12:54:32 2025</span>
@@ -4802,7 +4802,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w">   </span><span class="c1"># check pods in the kcm-system namespace</span>
 </code></pre></div>
 <p>You should see something like:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                                           READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                                           READY   STATUS</span>
 <span class="go">azureserviceoperator-controller-manager-86d566cdbc-rqkt9       1/1     Running</span>
 <span class="go">capa-controller-manager-7cd699df45-28hth                       1/1     Running</span>
 <span class="go">capi-controller-manager-6bc5fc5f88-hd8pv                       1/1     Running</span>
@@ -4825,7 +4825,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w">   </span><span class="c1"># check pods in the projectsveltos namespace</span>
 </code></pre></div>
 <p>You should see something like:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                     READY   STATUS    RESTARTS   AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                     READY   STATUS    RESTARTS   AGE</span>
 <span class="go">access-manager-cd49cffc9-c4q97           1/1     Running   0          16m</span>
 <span class="go">addon-controller-64c7f69796-whw25        1/1     Running   0          16m</span>
 <span class="go">classifier-manager-574c9d794d-j8852      1/1     Running   0          16m</span>
@@ -4841,7 +4841,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <p>The actual measure of whether k0rdent is ready is the state of the <code>Management</code> object. To check, issue this command:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>Management<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
 <span class="go">kcm    True    kcm-1-4-0   9m</span>
 </code></pre></div></p>
 <h2 id="verify-that-kcm-provider-and-related-templates-are-available">Verify that KCM provider and related templates are available<a class="headerlink" href="#verify-that-kcm-provider-and-related-templates-are-available" title="Permanent link">#</a></h2>
@@ -4849,7 +4849,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w">   </span><span class="c1"># list providertemplate objects in the kcm-system namespace</span>
 </code></pre></div>
 <p>You should see output similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
 <span class="go">cluster-api-1-0-6                                 true</span>
 <span class="go">cluster-api-provider-aws-1-0-6                    true</span>
 <span class="go">cluster-api-provider-azure-1-0-7                  true</span>
@@ -4869,7 +4869,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>g
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w">   </span><span class="c1"># list clustertemplate objects in the kcm-system namespace</span>
 </code></pre></div>
 <p>You should see output similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-0-1           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>

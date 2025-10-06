@@ -4650,7 +4650,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <p>The k0s process acts as a "supervisor" for all of the control plane components. In moments the control plane will be up and running, but because of the k0s architecture, you won't see any nodes running, because only worker nodes show up, and we haven't created any yet. You can, however, use the k0s-installed <code>kubectl</code> to make sure the cluster is up and running by looking for existing namespaces:</p>
 <p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k0s<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>namespaces
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME              STATUS   AGE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME              STATUS   AGE</span>
 <span class="go">default           Active   5m15s</span>
 <span class="go">k0s-autopilot     Active   5m11s</span>
 <span class="go">kube-node-lease   Active   5m15s</span>
@@ -4699,7 +4699,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <p>Now you can check the status of the node by going <strong>to the controller</strong> and once again checking for nodes. After a minute or two, you'll see the new node in a <code>Ready</code> state:</p>
 <p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k0s<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME              STATUS     ROLES    AGE     VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME              STATUS     ROLES    AGE     VERSION</span>
 <span class="go">ip-172-31-9-107   Ready      &lt;none&gt;   3m39s   v1.33.1+k0s</span>
 </code></pre></div></p>
 </li>
@@ -4732,7 +4732,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <p>This time, check k0s status by running this command on the new controller:</p>
 <p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k0s<span class="w"> </span>status
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Version: v1.33.1+k0s.1</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Version: v1.33.1+k0s.1</span>
 <span class="go">Process ID: 1489</span>
 <span class="go">Role: controller</span>
 <span class="go">Workloads: false</span>
@@ -4744,7 +4744,7 @@ sudo<span class="w"> </span>k0s<span class="w"> </span>start
 <p>Use the Kubernetes 'kubectl' command-line tool that comes with k0s binary to deploy your application or check your node status:</p>
 <p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>k0s<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME   STATUS   ROLES    AGE    VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   STATUS   ROLES    AGE    VERSION</span>
 <span class="go">k0s    Ready    &lt;none&gt;   4m6s   v1.33.1+k0s</span>
 </code></pre></div></p>
 <p>You can also install <code>kubectl</code> directly. You can find the <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">full install docs here</a>, or just follow these instructions:</p>
@@ -4758,7 +4758,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>kubectl
 </code></pre></div>
 <p>To use <code>kubectl</code> directly or to access the cluster from another machine, copy the <code>KUBECONFIG</code>, which is located on the controllers at:</p>
-<div class="highlight"><pre><span></span><code><span class="go">/var/lib/k0s/pki/admin.conf</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">/var/lib/k0s/pki/admin.conf</span>
 </code></pre></div>
 <p>to your target machine.  Note that to access the cluster from an external machine you must replace <code>localhost</code> in the <code>KUBECONFIG</code> with the host IP address or hostname for your controller. Make sure to use the address you added to the <code>sans</code> field, and also that port <code>6443</code> is accessible.</p>
 

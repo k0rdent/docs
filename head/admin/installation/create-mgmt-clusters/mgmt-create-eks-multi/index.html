@@ -4503,7 +4503,7 @@ sudo<span class="w"> </span>./aws/install
 <span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SESSION_TOKEN&quot;</span>
 aws<span class="w"> </span>configure
 </code></pre></div>
- <div class="highlight"><pre><span></span><code><span class="go">AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:</span>
+ <div class="no-copy highlight"><pre><span></span><code><span class="go">AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:</span>
 <span class="go">AWS Secret Access Key [EXAMPLE_SECRET_ACCESS_KEY]:</span>
 <span class="go">Default region name [YOUR_AWS_REGION]:</span>
 <span class="go">Default output format [json]:</span>
@@ -4513,7 +4513,7 @@ aws<span class="w"> </span>configure
 sudo<span class="w"> </span>mv<span class="w"> </span>/tmp/eksctl<span class="w"> </span>/usr/local/bin
 eksctl<span class="w"> </span>version
 </code></pre></div>
- <div class="highlight"><pre><span></span><code><span class="go">0.211.0</span>
+ <div class="no-copy highlight"><pre><span></span><code><span class="go">0.211.0</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4524,7 +4524,7 @@ eksctl<span class="w"> </span>version
 --region<span class="w"> </span>&lt;YOUR_AWS_REGION&gt;<span class="w"> </span><span class="se">\</span>
 --without-nodegroup
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:26:02 [ℹ]  eksctl version 0.211.0</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-05 22:26:02 [ℹ]  eksctl version 0.211.0</span>
 <span class="go">...</span>
 <span class="go">2025-03-05 22:36:14 [✔]  all EKS cluster resources for &quot;CLUSTER_NAME&quot; have been created</span>
 <span class="go">2025-03-05 22:36:15 [ℹ]  kubectl command should work with &quot;/home/username/.kube/config&quot;, try &#39;kubectl get nodes&#39;</span>
@@ -4542,7 +4542,7 @@ eksctl<span class="w"> </span>version
 --nodes-max<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 --node-labels<span class="w"> </span><span class="s2">&quot;role=control-plane&quot;</span><span class="w"> </span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
 <span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;nickchasek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
 <span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
 <span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChasek0rdentControlCluster&quot;</span>
@@ -4577,7 +4577,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 the started nodes:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE    VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE    VERSION</span>
 <span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.7-eks-5d632ec</span>
 <span class="go">nodename2.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.7-eks-5d632ec</span>
 <span class="go">nodename3.compute.internal   Ready    &lt;none&gt;   4h1m   v1.31.7-eks-5d632ec</span>
@@ -4585,12 +4585,12 @@ the started nodes:</p>
 For each node, go ahead and set the taint:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>taint<span class="w"> </span>nodes<span class="w"> </span>nodename1.compute.internal<span class="w"> </span>node-role.kubernetes.io/control-plane<span class="o">=</span>true:NoSchedule
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">node/nodename1.ca-central-1.compute.internal tainted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">node/nodename1.ca-central-1.compute.internal tainted</span>
 </code></pre></div>
 Now verify the taints:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>nodes<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;Taints:&quot;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
 <span class="go">Unschedulable:      false</span>
 <span class="go">Lease:</span>
 <span class="go">HolderIdentity:  nodename1.compute.internal</span>
@@ -4623,7 +4623,7 @@ Now verify the taints:
 --nodes-max<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
 --node-labels<span class="w"> </span><span class="s2">&quot;role=worker&quot;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
 <span class="go">...</span>
 <span class="go">2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster &quot;CLUSTER_NAME&quot;</span>
 <span class="go">2025-03-06 03:13:39 [ℹ]  checking security group configuration for all nodegroups</span>
@@ -4632,7 +4632,7 @@ Now verify the taints:
 Verify the nodes:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE     VERSION</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                              STATUS   ROLES    AGE     VERSION</span>
 <span class="go">nodename1.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.7-eks-5d632ec</span>
 <span class="go">nodename4.compute.internal   Ready    &lt;none&gt;   79s     v1.31.7-eks-5d632ec</span>
 <span class="go">nodename2.compute.internal   Ready    &lt;none&gt;   4h14m   v1.31.7-eks-5d632ec</span>
@@ -4657,7 +4657,7 @@ Clean up so you can start fresh:
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">No resources found in default namespace.</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">No resources found in default namespace.</span>
 </code></pre></div></p>
 </li>
 <li>

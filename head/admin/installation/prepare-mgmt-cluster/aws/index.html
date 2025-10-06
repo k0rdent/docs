@@ -4538,7 +4538,7 @@ second to the same region, you are likely to run into issues.  </p>
 <span class="nv">AVAILABLE</span><span class="o">=</span><span class="k">$((</span><span class="nv">LIMIT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">USED</span><span class="k">))</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Available Public IPs: </span><span class="nv">$AVAILABLE</span><span class="s2">&quot;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Available Public IPs: 5</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Available Public IPs: 5</span>
 </code></pre></div></p>
 <p>If you have less than 3 available public IPs, you can request an increase in your quota:</p>
 <div class="highlight"><pre><span></span><code>aws<span class="w"> </span>service-quotas<span class="w"> </span>request-service-quota-increase<span class="w"> </span><span class="se">\</span>
@@ -4550,7 +4550,7 @@ second to the same region, you are likely to run into issues.  </p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>service-quotas<span class="w"> </span>list-requested-service-quota-change-history<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--service-code<span class="w"> </span>ec2
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">    &quot;RequestedQuotas&quot;: [</span>
 <span class="go">        {</span>
 <span class="go">            &quot;Id&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
@@ -4577,7 +4577,7 @@ second to the same region, you are likely to run into issues.  </p>
 <p>The actual <code>user-name</code> parameter is arbitrary; you can specify it as anything you like:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">  &quot;User&quot;: {</span>
 <span class="go">    &quot;Path&quot;: &quot;/&quot;,</span>
 <span class="go">    &quot;UserName&quot;: &quot;k0rdentUser&quot;,</span>
@@ -4599,7 +4599,7 @@ controllers-eks.cluster-api-provider-aws.sigs.k8s.io
 To do that, you'll need the ARNs for each policy.  You can get them with the <code>list-policies</code> command, as in:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-policies<span class="w"> </span>--scope<span class="w"> </span>Local
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">  &quot;Policies&quot;: [</span>
 <span class="go">    {</span>
 <span class="go">      &quot;PolicyName&quot;: &quot;controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
@@ -4664,7 +4664,7 @@ aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span cl
 <p>To access AWS as this new user, you'll need to create an access key:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>create-access-key<span class="w"> </span>--user-name<span class="w"> </span>k0rdentUser<span class="w"> </span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">  &quot;AccessKey&quot;: {</span>
 <span class="go">    &quot;UserName&quot;: &quot;k0rdentUser&quot;,</span>
 <span class="go">    &quot;AccessKeyId&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
@@ -4782,7 +4782,7 @@ Apply the YAML to your cluster, again keeping it in the <code>kcm-system</code> 
 </div>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-4-0           true</span>
 <span class="go">aws-eks-1-0-3                   true</span>
 <span class="go">aws-hosted-cp-1-0-14             true</span>
@@ -4797,12 +4797,12 @@ Apply the YAML to your cluster, again keeping it in the <code>kcm-system</code> 
 Apply the YAML to your management cluster:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-aws-clusterdeployment1.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created</span>
 </code></pre></div>
 As before, there will be a delay as the cluster finishes provisioning. Follow the provisioning process with:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-aws-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                        READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                        READY   STATUS</span>
 <span class="go">my-aws-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div>
 When the cluster is <code>Ready</code>, you can access it via the kubeconfig, as in:

@@ -4716,14 +4716,14 @@
 <p>Command:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments.k0rdent.mirantis.com<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME             READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME             READY   STATUS</span>
 <span class="go">dev-cluster-1   True    ClusterDeployment is ready</span>
 <span class="go">dev-cluster-2   True    ClusterDeployment is ready</span>
 </code></pre></div></p>
 <p>Command:
 <div class="highlight"><pre><span></span><code><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>cluster<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--show-labels
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS</span>
 <span class="go">dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
 <span class="go">dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
 </code></pre></div></p>

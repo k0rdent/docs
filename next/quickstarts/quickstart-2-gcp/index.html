@@ -4924,7 +4924,7 @@ Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cluster-identity-secret.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">secret/gcp-cloud-sa created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">secret/gcp-cloud-sa created</span>
 </code></pre></div>
 <h2 id="create-the-kcm-credential-object">Create the KCM Credential Object<a class="headerlink" href="#create-the-kcm-credential-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our credential and save it as <code>gcp-credential.yaml</code>.</p>
@@ -4944,7 +4944,7 @@ Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-credential.yaml
 </code></pre></div>
 <p>You should see output resembling this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/gcp-credential created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">credential.k0rdent.mirantis.com/gcp-credential created</span>
 </code></pre></div>
 <h2 id="create-the-configmap-resource-template-object">Create the <code>ConfigMap</code> resource-template Object<a class="headerlink" href="#create-the-configmap-resource-template-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our resource-template and save it as
@@ -4975,14 +4975,14 @@ Apply the YAML to your cluster:</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cloud-sa-resource-template.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">configmap/gcp-cloud-sa-resource-template created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">configmap/gcp-cloud-sa-resource-template created</span>
 </code></pre></div></p>
 <h2 id="find-your-locationregion">Find your location/region<a class="headerlink" href="#find-your-locationregion" title="Permanent link">#</a></h2>
 <p>To determine where to deploy your cluster, you may wish to begin by listing your GCP regions:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>regions<span class="w"> </span>list
 </code></pre></div>
 <p>You'll see output like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE</span>
 <span class="go">africa-south1            0/300   0/102400  0/575      0/175               UP</span>
 <span class="go">asia-east1               0/3000  0/102400  0/575      0/175               UP</span>
 <span class="go">asia-east2               0/1500  0/102400  0/575      0/175               UP</span>
@@ -5005,7 +5005,7 @@ Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>images<span class="w"> </span>list<span class="w"> </span>--uri
 </code></pre></div>
 <p>You'll see output like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-arm64-v20250311</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-arm64-v20250311</span>
 <span class="go">https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-v20250311</span>
 <span class="go">https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-105-17412-535-84</span>
 <span class="go">https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-109-17800-436-79</span>
@@ -5019,7 +5019,7 @@ Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see output resembling what's below. Grab the name of the GCP standalone cluster template in its present version (in the example below, that's <code>gcp-standalone-cp-1-0-14</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-1           true</span>
 <span class="go">kcm-system   aws-eks-1-0-3                   true</span>
 <span class="go">kcm-system   aws-hosted-cp-1-0-14             true</span>
@@ -5104,7 +5104,7 @@ For GKE clusters, the `ClusterDeployment` looks like this:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-gcp-clusterdeployment1.yaml
 </code></pre></div>
 <p>Kubernetes should confirm this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created</span>
 </code></pre></div>
 <p>There will be a delay as the cluster finishes provisioning. Follow the provisioning process with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-gcp-clusterdeployment1<span class="w"> </span>--watch
@@ -5120,14 +5120,14 @@ For GKE clusters, the `ClusterDeployment` looks like this:
 <p>To verify the presence of the child cluster, list the available <code>ClusterDeployment</code> objects:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterDeployments<span class="w"> </span>-A
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div></p>
 <h2 id="tear-down-the-child-cluster">Tear down the child cluster<a class="headerlink" href="#tear-down-the-child-cluster" title="Permanent link">#</a></h2>
 <p>To tear down the child cluster, delete the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-gcp-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-gcp-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-gcp-clusterdeployment1&quot; deleted</span>
 </code></pre></div></p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:</p>

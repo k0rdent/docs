@@ -4913,7 +4913,7 @@ second to the same region, you are likely to run into issues.  </p>
 <span class="nv">AVAILABLE</span><span class="o">=</span><span class="k">$((</span><span class="nv">LIMIT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">USED</span><span class="k">))</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Available Public IPs: </span><span class="nv">$AVAILABLE</span><span class="s2">&quot;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Available Public IPs: 5</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">Available Public IPs: 5</span>
 </code></pre></div></p>
 <p>If you have less than 3 available public IPs, you can request an increase in your quota:</p>
 <div class="highlight"><pre><span></span><code>aws<span class="w"> </span>service-quotas<span class="w"> </span>request-service-quota-increase<span class="w"> </span><span class="se">\</span>
@@ -4925,7 +4925,7 @@ second to the same region, you are likely to run into issues.  </p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>service-quotas<span class="w"> </span>list-requested-service-quota-change-history<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--service-code<span class="w"> </span>ec2
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">    &quot;RequestedQuotas&quot;: [</span>
 <span class="go">        {</span>
 <span class="go">            &quot;Id&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
@@ -4950,7 +4950,7 @@ second to the same region, you are likely to run into issues.  </p>
 <p>Now we can use the AWS CLI to create a new k0rdent user:</p>
 <p><div class="highlight"><pre><span></span><code><span class="w"> </span>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">    &quot;User&quot;: {</span>
 <span class="go">        &quot;Path&quot;: &quot;/&quot;,</span>
 <span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
@@ -4986,7 +4986,7 @@ aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span cl
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-attached-user-policies<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
 </code></pre></div>
 And you'll see output that looks like this (this is non-valid example text):</p>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">    &quot;AttachedPolicies&quot;: [</span>
 <span class="go">        {</span>
 <span class="go">            &quot;PolicyName&quot;: &quot;controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
@@ -5012,7 +5012,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>create-access-key<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
 </code></pre></div>
 <p>You should see something like this. It's important to save these credentials securely somewhere other than the management node, since the management node may end up being ephemeral. Again, this is non-valid example text:</p>
-<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
 <span class="go">    &quot;AccessKey&quot;: {</span>
 <span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
 <span class="go">        &quot;AccessKeyId&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
@@ -5106,7 +5106,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's <code>aws-standalone-cp-1-0-14</code>):</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-1           true</span>
 <span class="go">kcm-system   aws-eks-1-0-3                   true</span>
 <span class="go">kcm-system   aws-hosted-cp-1-0-14             true</span>
@@ -5148,13 +5148,13 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-aws-clusterdeployment1.yaml
 </code></pre></div>
 <p>Kubernetes should confirm this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created</span>
 </code></pre></div>
 <p>There will be a delay as the cluster finishes provisioning. You can watch the provisioning process with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-aws-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
 <p>In a short while, you'll see output such as:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                        READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                        READY   STATUS</span>
 <span class="go">my-aws-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
@@ -5169,7 +5169,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ClusterDeployments<span class="w"> </span>-A
 </code></pre></div>
 <p>You'll see output something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                        READY   STATUS</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                        READY   STATUS</span>
 <span class="go">kcm-system   my-aws-clusterdeployment1   True    ClusterDeployment is ready</span>
 </code></pre></div>
 <h2 id="tear-down-the-child-cluster">Tear down the child cluster<a class="headerlink" href="#tear-down-the-child-cluster" title="Permanent link">#</a></h2>
@@ -5177,7 +5177,7 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-aws-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see confirmation like this:</p>
-<div class="highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-aws-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-aws-clusterdeployment1&quot; deleted</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:</p>
