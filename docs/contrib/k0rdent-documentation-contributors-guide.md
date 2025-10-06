@@ -18,7 +18,7 @@ Below you'll find [instructions for setting up MkDocs locally](#install-mkdocs-t
 
 The structure of {{{ docsVersionInfo.k0rdentName }}}/docs is shown below:
 
-```console
+```console { .no-copy }
 docs                                                # repository containing folder /docs
 ├── docs                                            # subdirectory for /docs, containing further subdirectories for assets, images, theme, etc.
 │   ├── assets                                      # illustrations for docs

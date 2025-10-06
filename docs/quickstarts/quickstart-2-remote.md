@@ -56,7 +56,7 @@ Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
 ```bash
 kubectl apply -f remote-ssh-key-secret.yaml
 ```
-```console
+```console { .no-copy }
 secret/remote-ssh-key created
 ```
 
@@ -86,7 +86,7 @@ Apply the YAML to your cluster:
 ```bash
 kubectl apply -f remote-cred.yaml
 ```
-```console
+```console { .no-copy }
 credential.k0rdent.mirantis.com/remote-cred created
 ```
 
@@ -125,7 +125,7 @@ kubectl get clustertemplate -n kcm-system
 
 You'll see output resembling the following. Make note of the name of the Remote Cluster template in its present version (in the example below, that's `remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.remoteCluster }}}`):
 
-```console
+```console { .no-copy }
 NAMESPACE    NAME                            VALID
 kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -189,7 +189,7 @@ kubectl apply -f my-remote-clusterdeployment1.yaml
 
 Kubernetes should confirm the creation:
 
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com/my-remote-clusterdeployment1 created
 ```
 
@@ -207,7 +207,7 @@ kubectl -n kcm-system get remotemachines.infrastructure.cluster.x-k8s.io -l helm
 
 If the machines were provisioned, the output of this command will be similar to:
 
-```console
+```console { .no-copy }
 {"ready":true}{"ready":true}
 ```
 
@@ -234,7 +234,7 @@ To verify the presence of the child cluster, list the available `ClusterDeployme
 ```bash
 kubectl get ClusterDeployments -A
 ```
-```console
+```console { .no-copy }
 NAMESPACE    NAME                          READY   STATUS
 kcm-system   my-remote-clusterdeployment1   True    ClusterDeployment is ready
 ```
@@ -246,7 +246,7 @@ To tear down the child cluster, delete the `ClusterDeployment` from the manageme
 ```bash
 kubectl delete ClusterDeployment my-remote-clusterdeployment1 -n kcm-system
 ```
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com "my-remote-clusterdeployment1" deleted
 ```
 

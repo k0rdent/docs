@@ -63,7 +63,7 @@
     AVAILABLE=$((LIMIT - USED))
     echo "Available Public IPs: $AVAILABLE"
     ```
-    ```console
+    ```console { .no-copy }
     Available Public IPs: 5
     ```
 
@@ -82,7 +82,7 @@
     aws service-quotas list-requested-service-quota-change-history \
         --service-code ec2
     ```
-    ```console
+    ```console { .no-copy }
     {
         "RequestedQuotas": [
             {
@@ -112,7 +112,7 @@
     ```bash
     aws iam create-user --user-name k0rdentUser
     ```
-    ```console
+    ```console { .no-copy }
     {
       "User": {
         "Path": "/",
@@ -139,7 +139,7 @@
     ```bash
     aws iam list-policies --scope Local
     ```
-    ```console
+    ```console { .no-copy }
     {
       "Policies": [
         {
@@ -210,7 +210,7 @@
     ```bash
     aws iam create-access-key --user-name k0rdentUser 
     ```
-    ```console
+    ```console { .no-copy }
     {
       "AccessKey": {
         "UserName": "k0rdentUser",
@@ -348,7 +348,7 @@
     ```bash
     kubectl get clustertemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -365,14 +365,14 @@
     ```bash
     kubectl apply -f my-aws-clusterdeployment1.yaml
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created
     ```
     As before, there will be a delay as the cluster finishes provisioning. Follow the provisioning process with:
     ```bash
     kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterdeployment1 --watch
     ```
-    ```console
+    ```console { .no-copy }
     NAME                        READY   STATUS
     my-aws-clusterdeployment1   True    ClusterDeployment is ready
     ```

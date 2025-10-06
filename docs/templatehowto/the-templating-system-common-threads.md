@@ -19,13 +19,13 @@ If you don't have one already, start by creating a **source object**. These obje
 
 To deploy a kustomization, archive the folder as `.tar.gz` and create a `ConfigMap` or `Secret` from the archive:
 
-```console
+```console { .no-copy }
 kubectl create configmap foo --from-file=kustomization.tar.gz
 ```
 
 To deploy raw resources, create a `ConfigMap` or `Secret` from the resource files:
 
-```console
+```console { .no-copy }
 kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml
 ```
 

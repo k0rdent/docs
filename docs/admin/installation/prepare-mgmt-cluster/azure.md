@@ -62,7 +62,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     ```bash
     az account list -o table
     ```
-    ```console
+    ```console { .no-copy }
     Name                     SubscriptionId                        TenantId
     -----------------------  -------------------------------------  --------------------------------
     My Azure Subscription    SUBSCRIPTION_ID_SUBSCRIPTION_ID        TENANT_ID_TENANT_ID_TENANT_ID
@@ -78,7 +78,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     ```bash
     az ad sp create-for-rbac --role contributor --scopes="/subscriptions/<SUBSCRIPTION_ID_SUBSCRIPTION_ID>"
     ```
-    ```console
+    ```console { .no-copy }
     {
     "appId": "SP_APP_ID_SP_APP_ID",
     "displayName": "azure-cli-2024-10-24-17-36-47",
@@ -145,7 +145,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     ```bash
     kubectl apply -f azure-cluster-identity.yaml
     ```
-    ```console
+    ```console { .no-copy }
     azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created
     ```
 
@@ -176,7 +176,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     ```bash
     kubectl apply -f azure-cluster-identity-cred.yaml
     ```
-    ```console
+    ```console { .no-copy }
     credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
     ```
 
@@ -249,7 +249,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     ```bash
     kubectl apply -f azure-cluster-identity-resource-template.yaml
     ```
-    ```console
+    ```console { .no-copy }
     configmap/azure-cluster-identity-resource-template created
     ```
 
@@ -264,7 +264,7 @@ Now you're ready to deploy the cluster.
     ```bash
     az account list-locations -o table
     ```
-    ```console
+    ```console { .no-copy }
     DisplayName               Name                 RegionalDisplayName
     ------------------------  -------------------  -------------------------------------
     East US                   eastus               (US) East US
@@ -285,7 +285,7 @@ Now you're ready to deploy the cluster.
     ```bash
     kubectl get clustertemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -324,7 +324,7 @@ Now you're ready to deploy the cluster.
     ```bash
     kubectl apply -f my-azure-clusterdeployment1.yaml
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created
     ```
 
@@ -352,13 +352,13 @@ Now you're ready to deploy the cluster.
     ```bash
     kubectl get clusterdeployments -A
     ```
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready
     ```
     ```bash
     kubectl delete clusterdeployments my-azure-clusterdeployment1 -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
     ```

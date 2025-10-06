@@ -33,7 +33,7 @@ Command:
 ```bash
 kubectl get clusterdeployments.k0rdent.mirantis.com -n kcm-system
 ```
-```console
+```console { .no-copy }
 NAME             READY   STATUS
 dev-cluster-1   True    ClusterDeployment is ready
 dev-cluster-2   True    ClusterDeployment is ready
@@ -43,7 +43,7 @@ Command:
 ```bash
  kubectl get cluster -n kcm-system --show-labels
 ```
-```console
+```console { .no-copy }
 NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS
 dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
 dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present

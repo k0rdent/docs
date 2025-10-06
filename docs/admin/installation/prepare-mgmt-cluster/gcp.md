@@ -132,7 +132,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
 
     You should see output of:
 
-    ```console
+    ```console { .no-copy }
     credential.k0rdent.mirantis.com/gcp-cluster-identity-cred created
     ```
 
@@ -172,7 +172,7 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
     ```bash
     kubectl apply -f gcp-cloud-sa-resource-template.yaml
     ```
-    ```console
+    ```console { .no-copy }
     configmap/gcp-cloud-sa-resource-template created
     ```
 
@@ -189,7 +189,7 @@ Now you're ready to deploy the cluster.
     
     You'll see output like this:
 
-    ```console
+    ```console { .no-copy }
     NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE
     africa-south1            0/300   0/102400  0/575      0/175               UP
     asia-east1               0/3000  0/102400  0/575      0/175               UP
@@ -209,7 +209,7 @@ Now you're ready to deploy the cluster.
      ```bash
      kubectl get clustertemplate -n kcm-system
      ```
-     ```console
+     ```console { .no-copy }
      NAME                            VALID
      adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
      aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -256,7 +256,7 @@ Now you're ready to deploy the cluster.
      ```bash
      kubectl apply -f my-gcp-clusterdeployment1.yaml
      ```
-     ```console
+     ```console { .no-copy }
      clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created
      ```
 
@@ -281,13 +281,13 @@ Now you're ready to deploy the cluster.
     ```bash
     kubectl get clusterdeployments -A
     ```
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                          READY   STATUS
     kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready
     ```
     ```bash
     kubectl delete clusterdeployments my-gcp-clusterdeployment1 -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-gcp-clusterdeployment1" deleted
     ```

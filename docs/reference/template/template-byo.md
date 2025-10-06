@@ -27,13 +27,13 @@ The source can be one of the following types:
 > To deploy kustomization using `ConfigMap` or `Secret` the kustomization folder must be archived in *.tar.gz and
 > then `ConfigMap` or `Secret` must be created from resulting archive:
 >
-> ```console
+> ```console { .no-copy }
 > kubectl create configmap foo --from-file=kustomization.tar.gz
 > ```
 >
 > To deploy raw resources using `ConfigMap` or `Secret` source object must be created from raw resource files:
 >
-> ```console
+> ```console { .no-copy }
 > kubectl create configmap bar --from-file=namespace.yaml --from-file=deployment.yaml
 > ```
 

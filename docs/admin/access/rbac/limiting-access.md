@@ -31,7 +31,7 @@ and nothing else:
 ```bash
 kubectl describe clusterrole kcm-credentials-viewer-role
 ```
-```console
+```console { .no-copy }
 Name:         kcm-credentials-viewer-role
 Labels:       app.kubernetes.io/managed-by=Helm
               helm.toolkit.fluxcd.io/name=kcm
@@ -109,7 +109,7 @@ new `ServiceTemplate` objects:
 ```bash
 kubectl describe clusterrole kcm-namespace-editor-role -n kcm-system
 ```
-```console
+```console { .no-copy }
 Name:         kcm-namespace-editor-role
 Labels:       app.kubernetes.io/managed-by=Helm
               helm.toolkit.fluxcd.io/name=kcm

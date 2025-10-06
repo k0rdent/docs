@@ -69,7 +69,7 @@ USED=$(aws ec2 describe-addresses --query 'Addresses[*].PublicIp' --output text 
 AVAILABLE=$((LIMIT - USED))
 echo "Available Public IPs: $AVAILABLE"
 ```
-```console
+```console { .no-copy }
 Available Public IPs: 5
 ```
 
@@ -88,7 +88,7 @@ You can check on the status of your request:
 aws service-quotas list-requested-service-quota-change-history \
     --service-code ec2
 ```
-```console
+```console { .no-copy }
 {
     "RequestedQuotas": [
         {
@@ -118,7 +118,7 @@ Now we can use the AWS CLI to create a new {{{ docsVersionInfo.k0rdentName }}} u
 ```bash
  aws iam create-user --user-name k0rdentQuickstart
 ```
-```console
+```console { .no-copy }
 {
     "User": {
         "Path": "/",
@@ -171,7 +171,7 @@ aws iam list-attached-user-policies --user-name k0rdentQuickstart
 ```
 And you'll see output that looks like this (this is non-valid example text):
 
-```console
+```console { .no-copy }
 {
     "AttachedPolicies": [
         {
@@ -204,7 +204,7 @@ aws iam create-access-key --user-name k0rdentQuickstart
 
 You should see something like this. It's important to save these credentials securely somewhere other than the management node, since the management node may end up being ephemeral. Again, this is non-valid example text:
 
-```console
+```console { .no-copy }
 {
     "AccessKey": {
         "UserName": "k0rdentQuickstart",
@@ -336,7 +336,7 @@ kubectl get clustertemplate -n kcm-system
 
 You'll see output resembling what's below. Grab the name of the AWS standalone cluster template in its present version (in the below example, that's `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}`):
 
-```console
+```console { .no-copy }
 NAMESPACE    NAME                            VALID
 kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -389,7 +389,7 @@ kubectl apply -f my-aws-clusterdeployment1.yaml
 
 Kubernetes should confirm this:
 
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com/my-aws-clusterdeployment1 created
 ```
 
@@ -401,7 +401,7 @@ kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterd
 
 In a short while, you'll see output such as:
 
-```console
+```console { .no-copy }
 NAME                        READY   STATUS
 my-aws-clusterdeployment1   True    ClusterDeployment is ready
 ```
@@ -430,7 +430,7 @@ kubectl get ClusterDeployments -A
 
 You'll see output something like this:
 
-```console
+```console { .no-copy }
 NAMESPACE    NAME                        READY   STATUS
 kcm-system   my-aws-clusterdeployment1   True    ClusterDeployment is ready
 ```
@@ -445,7 +445,7 @@ kubectl delete ClusterDeployment my-aws-clusterdeployment1 -n kcm-system
 
 You'll see confirmation like this:
 
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com "my-aws-clusterdeployment1" deleted
 ```
 

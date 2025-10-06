@@ -60,7 +60,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
     Again, you should see the single k0s node, but by this time it should have had its role assigned, as in:
 
-    ```console
+    ```console { .no-copy }
     NAME              STATUS   ROLES           AGE   VERSION
     ip-172-31-29-61   Ready    control-plane   25m   v1.31.2+k0s
     ```
@@ -83,7 +83,7 @@ Follow these steps to install and prepare a [k0s kubernetes](https://k0sproject.
 
 To use a tool like Lens or to access the cluster from another machine, copy the `KUBECONFIG`, which is located at:
 
-```console
+```console { .no-copy }
 /var/lib/k0s/pki/admin.conf
 ```
 

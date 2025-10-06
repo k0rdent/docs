@@ -64,7 +64,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     kubectl get clustertemplate -n kcm-system
     ```
 
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                            VALID
     kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
     kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
