@@ -544,18 +544,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#check-for-available-ips" class="md-nav__link">
+  <a href="#create-the-k0rdent-aws-user" class="md-nav__link">
     <span class="md-ellipsis">
-      Check for available IPs
+      Create the k0rdent AWS user
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-k0rdent-aws-user" class="md-nav__link">
+  <a href="#check-for-available-ips" class="md-nav__link">
     <span class="md-ellipsis">
-      Create the k0rdent AWS user
+      Check for available IPs
     </span>
   </a>
   
@@ -4689,18 +4689,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#check-for-available-ips" class="md-nav__link">
+  <a href="#create-the-k0rdent-aws-user" class="md-nav__link">
     <span class="md-ellipsis">
-      Check for available IPs
+      Create the k0rdent AWS user
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-k0rdent-aws-user" class="md-nav__link">
+  <a href="#check-for-available-ips" class="md-nav__link">
     <span class="md-ellipsis">
-      Create the k0rdent AWS user
+      Check for available IPs
     </span>
   </a>
   
@@ -4903,6 +4903,21 @@ sudo<span class="w"> </span>install<span class="w"> </span>-o<span class="w"> </
 <span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span>EXAMPLE_SESSION_TOKEN<span class="w"> </span><span class="c1"># Optional. If you are using Multi-Factor or Single Sign On Auth.</span>
 </code></pre></div>
 <p>These credentials will be used both by the AWS CLI (to create your k0rdent user) and by <code>clusterawsadm</code> (to create a CloudFormation template used by CAPA within k0rdent).</p>
+<h2 id="create-the-k0rdent-aws-user">Create the k0rdent AWS user<a class="headerlink" href="#create-the-k0rdent-aws-user" title="Permanent link">#</a></h2>
+<p>Now we can use the AWS CLI to create a new k0rdent user:</p>
+<p><div class="highlight"><pre><span></span><code><span class="w"> </span>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">{</span>
+<span class="go">    &quot;User&quot;: {</span>
+<span class="go">        &quot;Path&quot;: &quot;/&quot;,</span>
+<span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
+<span class="go">        &quot;UserId&quot;: &quot;EXAMPLE_USER_ID&quot;,</span>
+<span class="go">        &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart&quot;,</span>
+<span class="go">        &quot;CreateDate&quot;: &quot;2025-01-18T08:15:27+00:00&quot;</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</code></pre></div></p>
+<p>If you don't have permissions to create the user, ask your administrator for assistance. Once the user is created, you won't have to do it again. You can also show them this page to make sure you won't run into any other issues.</p>
 <h2 id="check-for-available-ips">Check for available IPs<a class="headerlink" href="#check-for-available-ips" title="Permanent link">#</a></h2>
 <p>Because k0rdent has 3 availablilty zone NAT gateways, each cluster needs 3 public IPs. Unfortunately, the default
 <code>EC2-VPC Elastic IPs</code> quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
@@ -4944,20 +4959,6 @@ second to the same region, you are likely to run into issues.  </p>
 <span class="go">            &quot;QuotaRequestedAtLevel&quot;: &quot;ACCOUNT&quot;</span>
 <span class="go">        }</span>
 <span class="go">    ]</span>
-<span class="go">}</span>
-</code></pre></div></p>
-<h2 id="create-the-k0rdent-aws-user">Create the k0rdent AWS user<a class="headerlink" href="#create-the-k0rdent-aws-user" title="Permanent link">#</a></h2>
-<p>Now we can use the AWS CLI to create a new k0rdent user:</p>
-<p><div class="highlight"><pre><span></span><code><span class="w"> </span>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
-</code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;User&quot;: {</span>
-<span class="go">        &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
-<span class="go">        &quot;UserId&quot;: &quot;EXAMPLE_USER_ID&quot;,</span>
-<span class="go">        &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart&quot;,</span>
-<span class="go">        &quot;CreateDate&quot;: &quot;2025-01-18T08:15:27+00:00&quot;</span>
-<span class="go">    }</span>
 <span class="go">}</span>
 </code></pre></div></p>
 <h2 id="configure-aws-iam-for-k0rdent">Configure AWS IAM for k0rdent<a class="headerlink" href="#configure-aws-iam-for-k0rdent" title="Permanent link">#</a></h2>
