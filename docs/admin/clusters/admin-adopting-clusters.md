@@ -69,7 +69,7 @@ Follow these steps to adopt an existing cluster:
     ```bash
     kubectl get clustertemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -150,7 +150,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     kubectl get nodes -o wide
     ```
-    ```console
+    ```console { .no-copy }
     NAME             STATUS   ROLES           AGE   VERSION       INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
     ip-172-31-8-77   Ready    control-plane   9d    v1.33.2+k0s   172.31.8.77   <none>        Ubuntu 24.04.2 LTS   6.8.0-1029-aws   containerd://1.7.27
     ```
@@ -178,7 +178,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     base64 /path/to/kubeconfig
     ```
-    ```console
+    ```console { .no-copy }
     YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv
     cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VSQlJF
     ...
@@ -221,7 +221,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     kubectl apply -f adopt-creds.yaml
     ```
-    ```console
+    ```console { .no-copy }
     secret/self-adopt-cluster-kubeconfig created
     credential.k0rdent.mirantis.com/self-adopt-cluster-credential created
     ```
@@ -233,7 +233,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     kubectl get ClusterTemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-0-2-0           true
     adopted-cluster-1-0-0           true
@@ -262,7 +262,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     kubectl apply -f self-adopt-cluster.yaml
     ```
-    ```console
+    ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com/self-adopted-mgmt created
     ```
 
@@ -271,7 +271,7 @@ For example, adopting a k0s-based management cluster might look like this:
     ```bash
     kubectl get clusterdeployment -A
     ```
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                READY   SERVICES   TEMPLATE                MESSAGES          AGE
     kcm-system   self-adopted-mgmt   True    0/0        adopted-cluster-1-0-1   Object is ready   14s
     ```

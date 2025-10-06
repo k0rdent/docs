@@ -225,7 +225,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     ```bash
     kubectl get clustertemplate -n kcm-system
     ```
-    ```console
+    ```console { .no-copy }
     NAME                            VALID
     adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
     aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true

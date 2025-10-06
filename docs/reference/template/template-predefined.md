@@ -9,7 +9,7 @@ for `ClusterTemplate` objects, run:
     kubectl get clustertemplates -n kcm-system -l helm.toolkit.fluxcd.io/name=kcm-templates
     ```
 
-    ```console
+    ```console { .no-copy }
     NAMESPACE    NAME                            VALID
     kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
     kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true

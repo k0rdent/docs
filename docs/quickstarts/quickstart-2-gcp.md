@@ -101,7 +101,7 @@ kubectl apply -f gcp-cluster-identity-secret.yaml
 
 You should see output resembling this:
 
-```console
+```console { .no-copy }
 secret/gcp-cloud-sa created
 ```
 
@@ -131,7 +131,7 @@ kubectl apply -f gcp-credential.yaml
 
 You should see output resembling this:
 
-```console
+```console { .no-copy }
 credential.k0rdent.mirantis.com/gcp-credential created
 ```
 
@@ -171,7 +171,7 @@ Apply the YAML to your cluster:
 ```bash
 kubectl apply -f gcp-cloud-sa-resource-template.yaml
 ```
-```console
+```console { .no-copy }
 configmap/gcp-cloud-sa-resource-template created
 ```
 
@@ -185,7 +185,7 @@ gcloud compute regions list
 
 You'll see output like this:
 
-```console
+```console { .no-copy }
 NAME                     CPUS    DISKS_GB  ADDRESSES  RESERVED_ADDRESSES  STATUS  TURNDOWN_DATE
 africa-south1            0/300   0/102400  0/575      0/175               UP
 asia-east1               0/3000  0/102400  0/575      0/175               UP
@@ -224,7 +224,7 @@ gcloud compute images list --uri
 
 You'll see output like this:
 
-```console
+```console { .no-copy }
 https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-arm64-v20250311
 https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-v20250311
 https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-105-17412-535-84
@@ -247,7 +247,7 @@ kubectl get clustertemplate -n kcm-system
 
 You'll see output resembling what's below. Grab the name of the GCP standalone cluster template in its present version (in the example below, that's `gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpStandaloneCpCluster }}}`):
 
-```console
+```console { .no-copy }
 NAMESPACE    NAME                            VALID
 kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -338,7 +338,7 @@ kubectl apply -f my-gcp-clusterdeployment1.yaml
 
 Kubernetes should confirm this:
 
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com/my-gcp-clusterdeployment1 created
 ```
 
@@ -369,7 +369,7 @@ To verify the presence of the child cluster, list the available `ClusterDeployme
 ```bash
 kubectl get ClusterDeployments -A
 ```
-```console
+```console { .no-copy }
 NAMESPACE    NAME                          READY   STATUS
 kcm-system   my-gcp-clusterdeployment1   True    ClusterDeployment is ready
 ```
@@ -381,7 +381,7 @@ To tear down the child cluster, delete the `ClusterDeployment`:
 ```bash
 kubectl delete ClusterDeployment my-gcp-clusterdeployment1 -n kcm-system
 ```
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com "my-gcp-clusterdeployment1" deleted
 ```
 

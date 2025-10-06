@@ -16,7 +16,7 @@ Set `.spec.serviceSpec.syncMode=Continuous` in the `ClusterDeployment` or `Multi
 ```sh
 kubectl -n projectsveltos get deployments.apps 
 ```
-```console
+```console { .no-copy }
 NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
 drift-detection-manager   1/1     1            1           152m
 sveltos-agent-manager     1/1     1            1           152m
@@ -54,7 +54,7 @@ If we manually remove the `app.kubernetes.io/managed-by=Helm` label, we can obse
 ```sh
 kubectl -n ingress-nginx get deployments.apps ingress-nginx-controller --show-labels -w
 ```
-```console
+```console { .no-copy }
 NAME                       READY   UP-TO-DATE   AVAILABLE   AGE     LABELS
 ingress-nginx-controller   3/3     3            3           3h58m   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx,app.kubernetes.io/version=1.11.0,helm.sh/chart=ingress-nginx-4.11.0
 ingress-nginx-controller   3/3     3            3           3h59m   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx,app.kubernetes.io/version=1.11.0,helm.sh/chart=ingress-nginx-4.11.0

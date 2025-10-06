@@ -44,6 +44,13 @@
 
 ## Upgrade to v1.3.0
 
+Before upgrading any helm chart:
+* If you have customized [VMCluster or VMAlert resources](https://github.com/k0rdent/kof/blob/v1.2.1/charts/kof-mothership/values.yaml#L169)
+    then update your resources accordingly to the [new values under "spec"](https://github.com/k0rdent/kof/blob/v1.3.0/charts/kof-mothership/values.yaml#L167).
+
+* If you have customized VMCluster/VMAlert resources using the "k0rdent.mirantis.com/kof-storage-values" cluster annotation, then keep the old but put new values first to reconcile the new `ClusterDeployment` configuration on the current release, **then** run the helm charts upgrade. After regional clusters have the new `kof-storage` helm chart installed, you can remove old values from the cluster annotation.
+* If you have set `storage` values of the `kof-regional` chart, update them in the same way.
+
 * If you are not using [Istio](kof-install.md#istio),
     then on the step 8 of the [Management Cluster](kof-install.md#management-cluster) upgrade
     please apply this temporary workaround for the [Reconciling MultiClusterService](https://github.com/k0rdent/kcm/issues/1914) issue:

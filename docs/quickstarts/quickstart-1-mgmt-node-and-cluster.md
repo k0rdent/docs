@@ -34,7 +34,7 @@ sudo k0s kubectl get nodes
 
 You should see something like this:
 
-```console
+```console { .no-copy }
 NAME              STATUS   ROLES    AGE   VERSION
 ip-172-31-29-61   Ready    <none>   46s   v1.31.2+k0s
 ```
@@ -72,7 +72,7 @@ kubectl get nodes
 
 You should see something like this:
 
-```console
+```console { .no-copy }
 NAME              STATUS   ROLES           AGE   VERSION
 ip-172-31-29-61   Ready    control-plane   25m   v1.31.2+k0s
 ```
@@ -89,7 +89,7 @@ chmod 700 get_helm.sh
 
 Issuing these commands should produce something very much like the following output:
 
-```console
+```console { .no-copy }
 Downloading https://get.helm.sh/helm-v3.16.3-linux-amd64.tar.gz
 Verifying checksum... Done.
 Preparing to install helm into /usr/local/bin
@@ -103,7 +103,7 @@ Now we'll install {{{ docsVersionInfo.k0rdentName }}} itself into the k0s manage
 ```bash
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
-```console
+```console { .no-copy }
 Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
@@ -126,7 +126,7 @@ kubectl get pods -n kcm-system   # check pods in the kcm-system namespace
 
 You should see something like:
 
-```console
+```console { .no-copy }
 NAME                                                           READY   STATUS
 azureserviceoperator-controller-manager-86d566cdbc-rqkt9       1/1     Running
 capa-controller-manager-7cd699df45-28hth                       1/1     Running
@@ -157,7 +157,7 @@ kubectl get pods -n projectsveltos   # check pods in the projectsveltos namespac
 
 You should see something like:
 
-```console
+```console { .no-copy }
 NAME                                     READY   STATUS    RESTARTS   AGE
 access-manager-cd49cffc9-c4q97           1/1     Running   0          16m
 addon-controller-64c7f69796-whw25        1/1     Running   0          16m
@@ -179,7 +179,7 @@ The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is th
 ```bash
 kubectl get Management -n kcm-system
 ```
-```console
+```console { .no-copy }
 NAME   READY   RELEASE     AGE
 kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 ```
@@ -194,7 +194,7 @@ kubectl get providertemplate -n kcm-system   # list providertemplate objects in 
 
 You should see output similar to:
 
-```console
+```console { .no-copy }
 NAME                                   VALID
 cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
 cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
@@ -221,7 +221,7 @@ kubectl get clustertemplate -n kcm-system   # list clustertemplate objects in th
 
 You should see output similar to:
 
-```console
+```console { .no-copy }
 NAME                            VALID
 adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true

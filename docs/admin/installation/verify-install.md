@@ -9,7 +9,7 @@ To understand whether installation is complete, start by making sure all pods ar
 kubectl get pods -n kcm-system
 ```
 
-```console
+```console { .no-copy }
 NAME                                                           READY   STATUS    RESTARTS   AGE
 azureserviceoperator-controller-manager-6b4dd86894-4dpfc       1/1     Running   0          7m15s
 capa-controller-manager-64bbcb9f8-ltj6z                        1/1     Running   0          6m58s
@@ -36,7 +36,7 @@ source-controller-74b597b995-kkqqw                             1/1     Running  
 kubectl get pods -n kcm-system --no-headers | wc -l
 ```
 
-```console
+```console { .no-copy }
 21
 ```
 
@@ -46,7 +46,7 @@ State management is handled by Project Sveltos, so you'll want to make sure that
 kubectl get pods -n projectsveltos
 ```
 
-```console
+```console { .no-copy }
 NAME                                      READY   STATUS    RESTARTS   AGE
 access-manager-6696df779-pnxjx            1/1     Running   0          10m
 addon-controller-6cb6c5f6df-zmfch         1/1     Running   0          10m
@@ -63,7 +63,7 @@ techsupport-controller-5b666d6884-jfqnp   1/1     Running   0          10m
 kubectl get pods -n projectsveltos --no-headers | wc -l
 ```
 
-```console
+```console { .no-copy }
 9
 ```
 
@@ -83,7 +83,7 @@ The actual measure of whether {{{ docsVersionInfo.k0rdentName }}} is ready is th
 kubectl get Management -n kcm-system
 ```
 
-```console
+```console { .no-copy }
 NAME   READY   RELEASE     AGE
 kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   9m
 ```
@@ -95,7 +95,7 @@ Next verify whether the KCM templates have been successfully installed and recon
 ```bash
 kubectl get providertemplate -n kcm-system
 ```
-```console
+```console { .no-copy }
 NAME                                   VALID
 cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
 cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
@@ -120,7 +120,7 @@ You'll also want to make sure the `ClusterTemplate` objects are installed and va
 ```bash
 kubectl get clustertemplate -n kcm-system
 ```
-```console
+```console { .no-copy }
 NAME                             VALID
 adopted-cluster-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApi }}}            true
 aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                    true
@@ -148,7 +148,7 @@ status of the `Management` object itself is `True`:
 ```bash
 kubectl get management -n kcm-system
 ```
-```console
+```console { .no-copy }
 NAME   READY   RELEASE         AGE
 kcm    True    kcm-{{{ docsVersionInfo.k0rdentVersion}}}   18m
 ```

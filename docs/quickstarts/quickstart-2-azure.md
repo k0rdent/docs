@@ -44,7 +44,7 @@ az provider list --query "[?registrationState=='Registered']" --output table
 
 And see a listing like this:
 
-```console
+```console { .no-copy }
 Namespace                             RegistrationState
 -----------------------------------   -----------------
 Microsoft.Compute                     Registered
@@ -71,7 +71,7 @@ az account list -o table
 
 The output will look like this:
 
-```console
+```console { .no-copy }
 Name                     SubscriptionId                    TenantId
 -----------------------  -------------------------------   -----------------------------
 My Azure Subscription    SUBSCRIPTION_ID_SUBSCRIPTION_ID   TENANT_ID_TENANT_ID_TENANT_ID
@@ -89,7 +89,7 @@ az ad sp create-for-rbac --role contributor --scopes="/subscriptions/<subscripti
 
 You'll see output that resembles what's below:
 
-```console
+```console { .no-copy }
 {
  "appId": "SP_APP_ID_SP_APP_ID",
  "displayName": "azure-cli-2024-10-24-17-36-47",
@@ -144,7 +144,7 @@ kubectl apply -f azure-cluster-identity-secret.yaml
 
 You should see output resembling this:
 
-```console
+```console { .no-copy }
 secret/azure-cluster-identity-secret created
 ```
 
@@ -184,7 +184,7 @@ kubectl apply -f azure-cluster-identity.yaml
 
 You should see output resembling this:
 
-```console
+```console { .no-copy }
 azureclusteridentity.infrastructure.cluster.x-k8s.io/azure-cluster-identity created
 ```
 
@@ -246,7 +246,7 @@ kubectl apply -f azure-cluster-identity-cred.yaml
 
 You should see output resembling this:
 
-```console
+```console { .no-copy }
 credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
 ```
 
@@ -333,7 +333,7 @@ Apply the YAML to your cluster:
 ```bash
 kubectl apply -f azure-cluster-identity-resource-template.yaml
 ```
-```console
+```console { .no-copy }
 configmap/azure-cluster-identity-resource-template created
 ```
 
@@ -347,7 +347,7 @@ az account list-locations -o table
 
 You'll see output like this:
 
-```console
+```console { .no-copy }
 DisplayName               Name                 RegionalDisplayName
 ------------------------  -------------------  -------------------------------------
 East US                   eastus               (US) East US
@@ -370,7 +370,7 @@ kubectl get clustertemplate -n kcm-system
 
 You'll see output resembling what's below. Grab the name of the Azure standalone cluster template in its present version (in the example below, that's `azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}`):
 
-```console
+```console { .no-copy }
 NAMESPACE    NAME                            VALID
 kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
@@ -445,7 +445,7 @@ kubectl apply -f my-azure-clusterdeployment1.yaml
 
 Kubernetes should confirm this:
 
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com/my-azure-clusterdeployment1 created
 ```
 
@@ -476,7 +476,7 @@ To verify the presence of the child cluster, list the available `ClusterDeployme
 ```bash
 kubectl get ClusterDeployments -A
 ```
-```console
+```console { .no-copy }
 NAMESPACE    NAME                          READY   STATUS
 kcm-system   my-azure-clusterdeployment1   True    ClusterDeployment is ready
 ```
@@ -488,7 +488,7 @@ To tear down the child cluster, delete the `ClusterDeployment`:
 ```bash
 kubectl delete ClusterDeployment my-azure-clusterdeployment1 -n kcm-system
 ```
-```console
+```console { .no-copy }
 clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
 ```
 

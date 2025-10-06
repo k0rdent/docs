@@ -7,7 +7,7 @@ The actual management cluster is a Kubernetes cluster with the {{{ docsVersionIn
 ```bash
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
-```console
+```console { .no-copy }
 Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
