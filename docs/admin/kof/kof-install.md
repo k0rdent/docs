@@ -159,11 +159,11 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
 
 > NOTICE:
 > Currently the `kof-istio` chart uses `ClusterProfiles` [kof-istio-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-regional-cluster-profile.yaml)
-> and [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml).  
+> and [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml).
 > In the future, however, the KOF team plans to replace them with `MultiClusterService` objects in the [kof-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
 > and [kof-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml) charts.
 >
-> If you selected the Istio option, use `kof-istio`. 
+> If you selected the Istio option, use `kof-istio`.
 > Otherwise use `kof-regional` with `kof-child`.  Do not use all 3 charts at the same time.
 
 ## Management Cluster
@@ -190,7 +190,9 @@ and apply this example, or use it as a reference:
     This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-collectors`,
     making it possible to reference them from the regional and child `MultiClusterService` objects.
 
-3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
+3. Check requirements to the [storage class](./kof-storing.md#storage-class-requirements-for-victoriametrics-cluster).
+
+    If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
     Otherwise you can use a non-default storage class in the `mothership-values.yaml` file:
     ```yaml
@@ -275,11 +277,11 @@ and apply this example, or use it as a reference:
 
     > NOTICE:
     > Currently the `kof-istio` chart uses `ClusterProfiles` [kof-istio-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-regional-cluster-profile.yaml)
-    > and [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml).  
+    > and [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml).
     > In the future, however, the KOF team plans to replace them with `MultiClusterService` objects in the [kof-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
     > and [kof-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml) charts.
     >
-    > If you selected the Istio option, use `kof-istio`. 
+    > If you selected the Istio option, use `kof-istio`.
     > Otherwise use `kof-regional` with `kof-child`.  Do not use all 3 charts at the same time.
 
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
@@ -719,4 +721,3 @@ and apply this example for AWS, or use it as a reference:
     clusterctl describe cluster -n kcm-system $CHILD_CLUSTER_NAME \
       --show-conditions all
     ```
-
