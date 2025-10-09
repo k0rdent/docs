@@ -176,19 +176,6 @@ nav:
       - OpenStack: admin/hosted-control-plane/hcp-openstack.md
       - VMware: admin/hosted-control-plane/hcp-vmware.md
       - GCP: admin/hosted-control-plane/hcp-gcp.md
-    - k0rdent Observability & FinOps: 
-      - Overview: admin/kof/index.md
-      - Architecture: admin/kof/kof-architecture.md
-      - Installing KOF: admin/kof/kof-install.md
-      - Upgrading KOF: admin/kof/kof-upgrade.md
-      - Verifying the KOF installation: admin/kof/kof-verification.md
-      - Storing KOF data: admin/kof/kof-storing.md
-      - Using KOF: admin/kof/kof-using.md
-      - KOF Alerts: admin/kof/kof-alerts.md
-      - Scaling KOF: admin/kof/kof-scaling.md
-      - Maintaining KOF: admin/kof/kof-maintainence.md
-      - Resource Limits: admin/kof/kof-limits.md
-      - Version Compatibility: admin/kof/kof-version-compat.md
     - Upgrading k0rdent: 
       - Overview: admin/upgrade/index.md
       - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
@@ -219,6 +206,19 @@ nav:
       - Upgrades and Rollbacks: admin/backup/upgrades-rollbacks.md
       - Caveats: admin/backup/caveats.md
       - Customization: admin/backup/customization.md
+  - k0rdent Observability & FinOps: 
+    - Overview: admin/kof/index.md
+    - Architecture: admin/kof/kof-architecture.md
+    - Installing KOF: admin/kof/kof-install.md
+    - Upgrading KOF: admin/kof/kof-upgrade.md
+    - Verifying the KOF installation: admin/kof/kof-verification.md
+    - Storing KOF data: admin/kof/kof-storing.md
+    - Using KOF: admin/kof/kof-using.md
+    - KOF Alerts: admin/kof/kof-alerts.md
+    - Scaling KOF: admin/kof/kof-scaling.md
+    - Maintaining KOF: admin/kof/kof-maintainence.md
+    - Resource Limits: admin/kof/kof-limits.md
+    - Version Compatibility: admin/kof/kof-version-compat.md
   - Template How-To:
     - Overview: templatehowto/index.md
     - The Templating System: templatehowto/the-templating-system-common-threads.md
