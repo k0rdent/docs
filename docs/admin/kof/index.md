@@ -4,9 +4,9 @@ Running multiple clusters means you end up wrestling with half a dozen monitorin
 
 ## KOF makes sure every cluster is observable and accountable for cost
 
-{{{ docsVersionInfo.k0rdentName }}} estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In sthese kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).  
+{{{ docsVersionInfo.k0rdentName }}} estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In sthese kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).
 
-KOF gives {{{ docsVersionInfo.k0rdentName }}} platform engineering teams the ability to guarantee that observability and cost management are deployed with every cluster they create, and then keep them consistent and automatically lifecycle-managed. 
+KOF gives {{{ docsVersionInfo.k0rdentName }}} platform engineering teams the ability to guarantee that observability and cost management are deployed with every cluster they create, and then keep them consistent and automatically lifecycle-managed.
 
 ## Without KOF you would be forced to integrate and maintain multiple systems
 
@@ -16,7 +16,7 @@ KOF is optional, but if you were to build this yourself, you would need to selec
 
 - **Cross-cluster aggregation.** To query estate-wide, you need to build federation or remote-write topologies. These can work, but are fragile and add operational overhead. (See [Prometheus federation](https://prometheus.io/docs/prometheus/latest/federation/).)
 
-- **Retention and placement.** You need to plan where long-term metrics and logs live (per-cluster, regional, or dedicated) and engineer routing, storage, and query paths. 
+- **Retention and placement.** You need to plan where long-term metrics and logs live (per-cluster, regional, or dedicated) and engineer routing, storage, and query paths.
 
 - **Access, identity, and network.** SSO, RBAC, mTLS, and inter-cluster routing must be implemented and maintained consistently across the estate.
 
@@ -26,23 +26,23 @@ KOF standardizes these decisions so they are consistent, repeatable, and auditab
 
 By packaging observability and FinOps as a single subsystem, KOF connects operational signals and cost signals:
 
-- **Estate-wide visibility.** Every cluster participates, and data is aggregated centrally.  
-- **Actionable costs.** Workload and namespace spend is visible in the same dashboards as performance indicators.  
-- **Standardized retention.** Documented options define where data lives and how long it is kept.  
-- **Lifecycle management.** KOF is delivered as charts and operators, which can be consistently deployed and upgraded across the estate.  
+- **Estate-wide visibility.** Every cluster participates, and data is aggregated centrally.
+- **Actionable costs.** Workload and namespace spend is visible in the same dashboards as performance indicators.
+- **Standardized retention.** Documented options define where data lives and how long it is kept.
+- **Lifecycle management.** KOF is delivered as charts and operators, which can be consistently deployed and upgraded across the estate.
 - **Compliance and audit.** Central policy ensures retention, RBAC, and secure transport are enforced everywhere.
 
 Performance issues and cost spikes usually come from the same workloads, so you can't separate one from the other. When observability data and cost data live in the same place, it’s easier to spot the cause and fix both at once.
 
 ## KOF consists of well-established open source components wired for multi-cluster use
 
-- **Metrics:** [VictoriaMetrics](https://docs.victoriametrics.com/) with vmcluster and vmauth.  
-- **Logs:** [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/).  
-- **Tracing:** [Jaeger](https://www.jaegertracing.io/) with [OpenTelemetry](https://opentelemetry.io/).  
-- **Cost:** [OpenCost](https://opencost.io/).  
-- **Dashboards:** Grafana managed by grafana-operator.  
-- **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.  
-- **Control:** kof-operators for lifecycle and configuration.  
+- **Metrics:** [VictoriaMetrics](https://docs.victoriametrics.com/) with vmcluster and vmauth.
+- **Logs:** [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/).
+- **Tracing:** [Jaeger](https://www.jaegertracing.io/) with [OpenTelemetry](https://opentelemetry.io/).
+- **Cost:** [OpenCost](https://opencost.io/).
+- **Dashboards:** Grafana managed by grafana-operator.
+- **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.
+- **Control:** kof-operators for lifecycle and configuration.
 
 KOF is deployed through Helm charts and MultiClusterServices: `kof-operators`, `kof-mothership`, `kof-storage`, `kof-collectors`, with optional `kof-istio`, plus per-role services such as `kof-child` and `kof-regional`. (See [KOF architecture](https://docs.k0rdent.io/latest/admin/kof/kof-architecture/).)
 
@@ -107,10 +107,10 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
 
 - **Management cluster.** Runs Grafana, promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the `kof-mothership` chart.
 
-- **Storage and aggregation.** The main VictoriaMetrics, VictoriaLogs, and Jaeger stack can run in:  
-  - the management cluster (for management data, with Grafana and VM provided by `kof-mothership`),  
-  - a regional KOF deployment (collecting from child clusters in that region), or  
-  - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).  
+- **Storage and aggregation.** The main VictoriaMetrics, VictoriaLogs, and Jaeger stack can run in:
+  - the management cluster (for management data, with Grafana and VM provided by `kof-mothership`),
+  - a regional KOF deployment (collecting from child clusters in that region), or
+  - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: [Storing KOF data](https://docs.k0rdent.io/latest/admin/kof/kof-storing/).
 
 Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana provide the consolidated UI.
@@ -119,9 +119,9 @@ Data flows from child clusters into the chosen storage or aggregation point. On 
 
 KOF is fully functional out of the box, but you can also add additional capabilities through extensions.
 
-- **Dashboards and alerts.** Add Grafana dashboards and VMRules in Git; k0rdent `MultiClusterService` distributes them consistently.  
-- **Collector pipelines.** Extend OpenTelemetry collectors with custom receivers, processors, or exporters.  
-- **External destinations.** Route specific streams to third-party systems (recipes are included for CloudWatch and others).  
+- **Dashboards and alerts.** Add Grafana dashboards and VMRules in Git; k0rdent `MultiClusterService` distributes them consistently.
+- **Collector pipelines.** Extend OpenTelemetry collectors with custom receivers, processors, or exporters.
+- **External destinations.** Route specific streams to third-party systems (recipes are included for CloudWatch and others).
 
 All extensions are managed through the same GitOps lifecycle as the rest of the platform.
 
@@ -174,7 +174,7 @@ Get started with the basic documentation:
 - [KOF Alerts](kof-alerts.md)
 - [KOF Tracing](kof-tracing.md)
 - [Retention and Replication ](kof-retention.md)
-- [Limits](kof-limits.md)
+- [Resources Requirements](kof-resources.md)
 - [Scaling KOF](kof-scaling.md)
 - [Maintaining KOF](kof-maintainence.md)
 - [Upgrading KOF](kof-upgrade.md)
@@ -183,6 +183,3 @@ Get started with the basic documentation:
 Once you have KOF up and running,
 check [k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs)
 for advanced guides.
-
-
-
