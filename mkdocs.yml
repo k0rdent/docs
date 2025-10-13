@@ -8,7 +8,7 @@ repo_url: https://github.com/k0rdent/kcm
 edit_uri: https://github.com/k0rdent/docs/edit/main/docs/
 
 copyright:
-  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>. 
+  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
 
 theme:
   name: "material"
@@ -18,7 +18,7 @@ theme:
 
   favicon: img/k0rdent-logo-mark-inverted.svg
   logo: img/k0rdent-logo-horizontal-inverted.svg
-  
+
   palette:
     - scheme: default
       toggle:
@@ -93,7 +93,7 @@ plugins:
         admin-rbac.md: admin/access/rbac/index.md
         admin-backup.md: admin/backup/index.md
         user-create-cluster.md: user/user-create-cluster.md
-        user-create-service.md: user/services/index.md 
+        user-create-service.md: user/services/index.md
         user-enable-drift-detection.md: user/user-enable-drift-detection.md
         template-intro.md: reference/template/index.md
         template-predefined.md: reference/template/template-predefined.md
@@ -113,8 +113,8 @@ plugins:
         admin/upgrade/upgrade-to-1-1-0.md: admin/upgrade/upgrade-to-1-1-1.md
         admin/access/credentials/credentials-propogation.md: admin/access/credentials/credentials-propagation.md
         credentials-propogation.md: admin/access/credentials/credentials-propagation.md
-        
- 
+
+
 nav:
   - Welcome to the docs: index.md
   - k0rdent concepts:
@@ -150,7 +150,7 @@ nav:
         - Overview: admin/installation/auth/index.md
         - Okta: admin/installation/auth/okta.md
         - Entra-ID: admin/installation/auth/entra-id.md
-    - Working with clusters: 
+    - Working with clusters:
       - Overview: admin/clusters/index.md
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
@@ -169,7 +169,7 @@ nav:
       - Working with service templates: admin/ksm/ksm-service-templates.md
       - Creating multi-cluster services: admin/ksm/ksm-multiclusterservice.md
       - Deploying beach-head services on the Management Cluster itself: admin/ksm/ksm-self-management.md
-    - Hosted control planes: 
+    - Hosted control planes:
       - Overview: admin/hosted-control-plane/index.md
       - AWS: admin/hosted-control-plane/hcp-aws.md
       - Azure: admin/hosted-control-plane/hcp-azure.md
@@ -187,11 +187,11 @@ nav:
       - Upgrade to v1.4.0: admin/upgrade/upgrade-to-1-4-0.md
     - Access Management:
       - Overview: admin/access/index.md
-      - k0rdent Credentials Management: 
+      - k0rdent Credentials Management:
         - Overview: admin/access/credentials/index.md
         - The Credentials Process: admin/access/credentials/credentials-process.md
         - Credential Propagation: admin/access/credentials/credentials-propagation.md
-      - k0rdent Role Based Access Control (RBAC): 
+      - k0rdent Role Based Access Control (RBAC):
         - Overview: admin/access/rbac/index.md
         - What Roles Do: admin/access/rbac/what-roles-do.md
         - Role Definitions: admin/access/rbac/roles-summary.md
@@ -226,7 +226,7 @@ nav:
   - User Guide:
     - Overview: user/index.md
     - Creating clusters: user/user-create-cluster.md
-    - Adding services: 
+    - Adding services:
       - Overview: user/services/index.md
       - Understanding ServiceTemplates: user/services/understanding-servicetemplates.md
       - Adding a Service to a ClusterDeployment: user/services/add-service-to-clusterdeployment.md
@@ -249,7 +249,7 @@ nav:
       - Templates for OpenStack: reference/template/template-openstack.md
       - Templates for vSphere: reference/template/template-vsphere.md
       - Templates for Remote SSH: reference/template/template-remote.md
-  - Troubleshooting: 
+  - Troubleshooting:
     - Overview: troubleshooting/index.md
     - Inspecting K0rdent Events: troubleshooting/events.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
@@ -322,7 +322,7 @@ extra:
   version:
     provider: mike
     default: stable
-  analytics: 
+  analytics:
     feedback:
       title: Was this page helpful?
       ratings:
@@ -409,16 +409,14 @@ extra:
         regional: 1.0.0
     servicesVersions:
       dashVersions:
-        certManager: 1-17-1  
+        certManager: 1-17-1
         externalSecrets: 0-11-0
-        ingressNginx: 4-11-3   
-        kyverno: 3-2-6       
-        velero: 8-1-0   
+        ingressNginx: 4-11-3
+        kyverno: 3-2-6
+        velero: 8-1-0
       dotVersions:
-        certManager: 1.17.1  
+        certManager: 1.17.1
         externalSecrets: 0.11.0
-        ingressNginx: 4.11.3   
-        kyverno: 3.2.6       
-        velero: 8.1.0  
-    
-
+        ingressNginx: 4.11.3
+        kyverno: 3.2.6
+        velero: 8.1.0
