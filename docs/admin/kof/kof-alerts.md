@@ -250,8 +250,7 @@ graph TB
 
 * Alerting rules are mounted to Promxy in the management cluster as `/etc/promxy/rules`.
 
-* Recording rules are passed via `MultiClusterService` (or `ClusterProfile` for `istio` case)
-    to each regional cluster where `kof-storage` chart renders them to `VMRules`.
+* Recording rules are passed via `MultiClusterService` to each regional cluster where `kof-storage` chart renders them to `VMRules`.
 
 ## Mothership recording rules
 
