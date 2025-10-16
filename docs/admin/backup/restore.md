@@ -2,7 +2,7 @@
 
 > NOTE:
 > Please refer to the
-> [official migration documentation](https://velero.io/docs/v1.15/migration-case/#before-migrating-your-cluster)
+> [official migration documentation](https://velero.io/docs/migration-case/#before-migrating-your-cluster)
 > to familiarize yourself with potential limitations of the Velero backup system.
 
 In the event of disaster, you can restore from a backup by doing the following:
@@ -58,23 +58,134 @@ In the event of disaster, you can restore from a backup by doing the following:
     This ensures that the Velero `Deployment` name is exactly `velero`, which is a requirement due to the
     aforementioned known issue.
 
-1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/v1.15/api-types/restore/) object.
-   Note that it is important to set the `.spec.existingResourcePolicy` field value to `update`:
+1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/api-types/restore/) object.
+   Follow one of the case that is applicable to clusters' configuration in use:
 
-    ```yaml
-    apiVersion: velero.io/v1
-    kind: Restore
-    metadata:
-      name: <restore-name>
-      namespace: kcm-system
-    spec:
-      backupName: <backup-name>
-      existingResourcePolicy: update
-      includedNamespaces:
-      - '*'
-    ```
+    1. If there are **no** [regional clusters](../regional-clusters/index.md)
+        or all regional clusters' infrastructure is healthy.
+
+        Note that it is important to set the `.spec.existingResourcePolicy` field value to `update`.
+
+        ```yaml
+        apiVersion: velero.io/v1
+        kind: Restore
+        metadata:
+          name: <restore-name>
+          namespace: kcm-system
+        spec:
+          backupName: <backup-name>
+          existingResourcePolicy: update
+          includedNamespaces:
+          - '*'
+        ```
+
+    1. If one or more [regional clusters](../regional-clusters/index.md) require **reprovisioning**.
+
+        The following listing will create a `ConfigMap` object along with
+        the `Restore` object, and it allows `Velero` to set the
+        pause annotation to all of `regions` objects.
+
+        Substitute `<cluster-deployment-name>` with the corresponding
+        names of `ClusterDeployment` objects used for provisioning
+        of the corresponding region cluster.
+
+        Note that it is important to set the `.spec.existingResourcePolicy` field value to `update`.
+
+        ```yaml
+        ---
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: add-region-pause-anno
+          namespace: kcm-system
+        data:
+          add-region-pause-anno: |
+            version: v1
+            resourceModifierRules:
+            - conditions:
+                groupResource: regions.k0rdent.mirantis.com
+              mergePatches:
+              - patchData: |
+                  {
+                    "metadata": {
+                      "annotations": {
+                        "k0rdent.mirantis.com/region-pause": "true"
+                      }
+                    }
+                  }
+        ---
+        apiVersion: velero.io/v1
+        kind: Restore
+        metadata:
+          name: <restore-name>
+          namespace: kcm-system
+        spec:
+          backupName: <backup-name>
+          existingResourcePolicy: update
+          includedNamespaces:
+          - '*'
+          labelSelector:
+            matchExpressions:
+              - key: cluster.x-k8s.io/cluster-name
+                operator: NotIn
+                values: ["<cluster-deployment-name>"]
+              # Add new entries accordingly if more regional clusters require reprovisioning
+              # - key: cluster.x-k8s.io/cluster-name
+              #   operator: NotIn
+              #   values: ["<cluster-deployment-name>"]
+          resourceModifier:
+            kind: ConfigMap
+            name: add-region-pause-anno
+        ```
 
 1. Wait until the `Restore` status is `Completed` and all `kcm` components are up and running.
+
+1. If there were one or more [regional clusters](../regional-clusters/index.md)
+   that required reprovisioning, then:
+
+    1. On the management cluster, wait for the `regions` object readiness:
+
+        ```sh
+        kubectl wait regions kcm --for=condition=Ready=True --timeout 30m
+        ```
+
+    1. Manually ensure that the freshly reprovisioned regional cluster
+        runs and is accessable.
+
+    1. On the management cluster, unpause provisioning of
+        regional `ClusterDeployment` objects by removing annotation
+        from the `regions` object:
+
+        ```sh
+        kubectl annotate regions <region-name> 'k0rdent.mirantis.com/region-pause-'
+        ```
+
+    1. On the **regional** cluster, repeat the second step, creating the
+        `BackupStorageLocation`/`Secret` objects that were created during
+        the [preparation stage](./prepare-backups.md).
+
+    1. On the **regional** cluster, restore the cluster by creating a new
+        [`Restore`](https://velero.io/docs/api-types/restore/) object:
+
+        Note that in this case the `.spec.existingResourcePolicy` field is **not set**.
+
+        ```yaml
+        apiVersion: velero.io/v1
+        kind: Restore
+        metadata:
+          name: <restore-name>
+          namespace: kcm-system
+        spec:
+          backupName: <region-name>-<backup-name>
+          excludedResources:
+          - mutatingwebhookconfiguration.admissionregistration.k8s.io
+          - validatingwebhookconfiguration.admissionregistration.k8s.io
+          includedNamespaces:
+          - '*'
+        ```
+
+    1. On the **regional** cluster, wait until the `Restore`
+        status is `Completed` and all `ClusterDeployment` objects are ready.
 
 ## Caveats
 
@@ -86,6 +197,11 @@ default to avoid logical dependencies on one or another provider, and to create 
 > NOTE:
 > The described caveats apply only to the `Restore`
 > object creation step and do not affect the other steps.
+
+> NOTE:
+> The below mentioned exclusions (`excludedResources`)
+> are applicable to any of the `Restore` examples on
+> this page, including those tailored for [regional clusters](../regional-clusters/index.md).
 
 ### Azure (CAPZ)
 
@@ -128,7 +244,7 @@ The following resources should be excluded from the `Restore` object:
 * `mutatingwebhookconfiguration.admissionregistration.k8s.io`
 * `validatingwebhookconfiguration.admissionregistration.k8s.io`
 
-Due to the [Velero Restoration Order](https://velero.io/docs/v1.15/restore-reference/#restore-order),
+Due to the [Velero Restoration Order](https://velero.io/docs/restore-reference/#restore-order),
 some of the `CAPV` core objects cannot be restored,
 and they will not be recreated automatically.
 Because all of the objects have already passed both mutations

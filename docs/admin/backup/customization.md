@@ -10,7 +10,7 @@ The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied
 1. Install using `helm` and add corresponding parameters to the `helm install` command.
 
     > NOTE:
-    > Only a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
+    > Only a plugin that [supports Object Store](https://velero.io/docs/supported-providers/)
     > is required during restoration; the other parameters are optional.
 
     For example, this command installs {{{ docsVersionInfo.k0rdentName }}} via `helm install` with a configured plugin, `BackupStorageLocation`
@@ -37,7 +37,7 @@ The [Velero helm chart](https://vmware-tanzu.github.io/helm-charts/) is supplied
 1. Create or modify the existing `Management` object in the `.spec.config.kcm`.
 
     > NOTE:
-    > Only a plugin that [supports Object Store](https://velero.io/docs/v1.15/supported-providers/)
+    > Only a plugin that [supports Object Store](https://velero.io/docs/supported-providers/)
     > is required during restoration; the other parameters are optional.
 
     For example, this is a `Management` object with a configured plugin and enabled metrics:

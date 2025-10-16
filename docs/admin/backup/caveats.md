@@ -3,7 +3,7 @@
 The credentials stored in backups can and will get stale,
 so a proper rotation should be considered beforehand.
 
-Only plugins that [support Object Store](https://velero.io/docs/v1.15/supported-providers/)
+Only plugins that [support Object Store](https://velero.io/docs/supported-providers/)
 can be used to store backups into an object storage.
 
 All `velero` caveats and limitations are transitively implied in {{{ docsVersionInfo.k0rdentName }}}. In particular, that
@@ -62,4 +62,4 @@ spec:
 > deletes it from both
 > the management cluster and from the cloud storage.
 
-For reference, follow the [official documentation](https://velero.io/docs/v1.15/backup-reference/#deleting-backups).
+For reference, follow the [official documentation](https://velero.io/docs/backup-reference/#deleting-backups).

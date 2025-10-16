@@ -11,11 +11,18 @@ If the `.spec.schedule` field is not set, a [backup on demand](./ondemand-backup
 Optionally, set the name of the `.spec.backup.storageLocation` of the `BackupStorageLocation` object.
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
+> NOTE:
+> For the [regional cluster](../regional-clusters/index.md) case,
+> make sure to [setup](./prepare-backups.md) the same location on the regional cluster.
+
 For example, you can create a `ManagementBackup` object that backs up to the storage object
 created in the [preparation step](./prepare-backups.md) every 6 hours
-(ref: [Kubernetes CronJob schedule syntax, "Vixie cron" step values](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax)). Create a YAML file called `scheduled-backup.yaml`:
+(ref: [Kubernetes CronJob schedule syntax, "Vixie cron" step values](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax)).
 
-```yaml
+Start the scheduled backup process by creating the following object:
+
+```sh
+kubectl apply -f - <<EOF
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ManagementBackup
 metadata:
@@ -25,15 +32,15 @@ spec:
   storageLocation: aws-s3
 EOF
 ```
-Start the scheduled backup process by applying the YAML to the cluster:
-```sh
-kubectl apply -f scheduled-backup.yaml
-```
+
 Confirm the backup creation was successful by navigating to the appropriate storage console UI or from the command line:
+
 ```sh
-kubectl get managementbackup
+kubectl get mgmtbackup
 ```
+
 The `managementbackup` should show as `Completed`:
+
 ```console { .no-copy }
 NAME              LASTBACKUPSTATUS   NEXTBACKUP   AGE
 example-backup    Completed                       8m  
