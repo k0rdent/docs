@@ -45,6 +45,7 @@
 ## Upgrade to v1.3.0
 
 Before upgrading any helm chart:
+
 * If you have customized [VMCluster or VMAlert resources](https://github.com/k0rdent/kof/blob/v1.2.1/charts/kof-mothership/values.yaml#L169)
     then update your resources accordingly to the [new values under "spec"](https://github.com/k0rdent/kof/blob/v1.3.0/charts/kof-mothership/values.yaml#L167).
 
