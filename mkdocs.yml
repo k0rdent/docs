@@ -156,6 +156,7 @@ nav:
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
       - IP Address Management (IPAM): admin/clusters/cluster-ipam.md
+      - Migrate ClusterDeployment: admin/clusters/migration.md
     - Working with regional clusters:
       - Overview: admin/regional-clusters/index.md
       - Regional Components Segregation Overview: admin/regional-clusters/components-segregation.md

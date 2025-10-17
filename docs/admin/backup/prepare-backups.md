@@ -1,21 +1,21 @@
 # Preparing for Backups
 
-## Preparation
-
 > NOTE:
 > The following instructions are tailored for AWS. Please adapt them to your chosen platform and storage.
 
 Before you create a manual one-off or scheduled backup, review the steps below and update your configuration accordingly:
 
-1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](customization.md#velero-installation). If the `velero` plugins with the desired [storage option](https://velero.io/docs/v1.15/supported-providers/) are already configured, please skip the next step.
+1. Verify whether the `velero` plugins have been installed as suggested in [Velero installation](customization.md#velero-installation).
+  If the `velero` plugins with the desired [storage option](https://velero.io/docs/supported-providers/)
+  are already configured, please skip the next step.
 
-1. If no `velero` plugins have yet been installed in your k0rdent cluster, start by getting the kcm management yaml file:
+1. If no `velero` plugins have yet been installed in your k0rdent cluster,
+   start by editing the `kcm` `management` object so
+   that the velero plugin details are filled in under `spec.core.kcm`:
 
     ```sh
-    kubectl get management kcm -n kcm-system -o yaml > management.yaml
+    kubectl edit managements kcm
     ```
-
-    then edit the `management.yaml` file so that the velero plugin details are filled in under `spec.core.kcm`:
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
@@ -39,17 +39,49 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       # ...
     ```
 
+    For the [regional cluster](../regional-clusters/index.md) case, edit
+    the corresponding `region` object in a similar way:
+
+    ```sh
+    kubectl edit regions <region-name>
+    ```
+
+    ```yaml
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: Region
+    metadata:
+      name: <region-name>
+    spec:
+      # ... 
+      core:
+        kcm:
+          config:
+            velero:
+              initContainers:
+              - name: velero-plugin-for-<PROVIDER-NAME>
+                image: velero/velero-plugin-for-<PROVIDER-NAME>:<PROVIDER-PLUGIN-TAG>
+                imagePullPolicy: IfNotPresent
+                volumeMounts:
+                - mountPath: /target
+                  name: plugins
+      # ...
+    ```
+
+    Note, that the only change is the absence of the `regional` subpath.
+
     Please review [Velero's Docker Hub image plugin repositories](https://hub.docker.com/u/velero?page=1&search=velero-plugin)
     to help identify the required `<PROVIDER-NAME>`.
     Once the required image has been identified, select from the available tags to determine the correct
-    `<PROVIDER-PLUGIN-TAG>`. In the case of AWS, the provider-name would be `velero-plugin-for-aws`, we can
+    `<PROVIDER-PLUGIN-TAG>`. In the case of AWS, the name would be `velero-plugin-for-aws`, we can
     select from the [available tags](https://hub.docker.com/r/velero/velero-plugin-for-aws/tags).
 
-1. Prepare a [storage location](https://velero.io/docs/v1.15/supported-providers/), such as an Amazon S3 bucket, to store {{{ docsVersionInfo.k0rdentName }}} backups.
+1. Prepare a [storage location](https://velero.io/docs/supported-providers/), such as an Amazon S3 bucket, to store {{{ docsVersionInfo.k0rdentName }}} backups.
 
-1. Prepare a yaml file containing a [`BackupStorageLocation`](https://velero.io/docs/v1.15/api-types/backupstoragelocation/)
+1. Prepare a yaml containing a [`BackupStorageLocation`](https://velero.io/docs/api-types/backupstoragelocation/)
    object referencing a `Secret` with credentials to access the cloud storage
-   (if the multiple credentials feature is supported by the plugin). For example, you can create the `BackupStorageLocation` and the related `Secret` yaml for the Amazon S3 configuration by following these steps.
+   (if the multiple credentials feature is supported by the plugin).
+   For example, you can create the `BackupStorageLocation` and the related `Secret`
+   yaml for the Amazon S3 configuration by following these steps.
 
       First create a file called `credentials.txt` with your credentials, as in:
 
@@ -84,9 +116,12 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       base64 -w0 credentials.txt; echo
       ```
 
-      Use this base64 value in the `data.cloud` field in the `creds-and-backup-storage-location.yaml` you'll create next. Also make sure to substitute the appropriate `REGION-NAME` and `BUCKET-NAME`:
+      Use this base64 value in the `data.cloud` field in the `Secret` object
+      to be created by the next listing, also make sure to substitute the
+      appropriate `AWS-REGION-NAME` and `BUCKET-NAME`:
 
-      ```yaml
+      ```sh
+      kubectl create -f - << EOF
       ---
       apiVersion: v1
       data:
@@ -108,7 +143,7 @@ Before you create a manual one-off or scheduled backup, review the steps below a
         namespace: kcm-system
       spec:
         config:
-          region: <REGION-NAME>
+          region: <AWS-REGION-NAME>
         default: true # optional, if not set, then storage location name must always be set in ManagementBackup
         objectStorage:
           bucket: <BUCKET-NAME>
@@ -117,24 +152,28 @@ Before you create a manual one-off or scheduled backup, review the steps below a
         credential:
           name: cloud-credentials
           key: cloud
+      EOF
       ```
 
-1. Create the necessary Kubernetes resources in your k0rdent cluster by applying the YAML to the management cluster:
+    For the [regional cluster](../regional-clusters/index.md) case,
+    do exactly this step on the regional cluster.
 
-    ```sh
-    kubectl apply -f creds-and-backup-storage-location.yaml
-    kubectl apply -f management.yaml
-    ```
+    Note, that all of the management and regional cluster must have
+    the same `BackupStorageLocation` specification with the same
+    credentials.
 
 1. Confirm that the previous steps were applied correctly:
 
     ```sh
-    kubectl get management kcm -n kcm-system -o yaml
+    kubectl get managements kcm -o yaml
+    kubectl get regions <region-name> -o yaml
     ```
 
-    The management configuration yaml should have the new velero plugin details, as shown in step 2.
+    The `management` or `region` configuration yaml should have
+    the new velero plugin details, as shown in step 2.
 
-    Now make sure the `backupstoragelocation` shows as `Available`:
+    Now make sure the `backupstoragelocation` shows as `Available`
+    on the management cluster (and regional cluster if applicable):
 
     ```sh
     kubectl get backupstoragelocation -n kcm-system
@@ -145,4 +184,4 @@ Before you create a manual one-off or scheduled backup, review the steps below a
     aws-s3   Available   27s              2d    true
     ```
 
-You can get more information on how to build these objects at the [official Velero documentation](https://velero.io/docs/v1.15/locations).
+You can get more information on how to build these objects at the [official Velero documentation](https://velero.io/docs/locations).
