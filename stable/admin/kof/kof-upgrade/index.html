@@ -4653,11 +4653,15 @@ ls<span class="w"> </span>values-*.bak
 <li>This will not be required in future upgrades.</li>
 </ul>
 <h2 id="upgrade-to-v130">Upgrade to v1.3.0<a class="headerlink" href="#upgrade-to-v130" title="Permanent link">#</a></h2>
-<p>Before upgrading any helm chart:
-* If you have customized <a href="https://github.com/k0rdent/kof/blob/v1.2.1/charts/kof-mothership/values.yaml#L169">VMCluster or VMAlert resources</a>
-    then update your resources accordingly to the <a href="https://github.com/k0rdent/kof/blob/v1.3.0/charts/kof-mothership/values.yaml#L167">new values under "spec"</a>.</p>
+<p>Before upgrading any helm chart:</p>
 <ul>
-<li>If you have customized VMCluster/VMAlert resources using the "k0rdent.mirantis.com/kof-storage-values" cluster annotation, then keep the old but put new values first to reconcile the new <code>ClusterDeployment</code> configuration on the current release, <strong>then</strong> run the helm charts upgrade. After regional clusters have the new <code>kof-storage</code> helm chart installed, you can remove old values from the cluster annotation.</li>
+<li>
+<p>If you have customized <a href="https://github.com/k0rdent/kof/blob/v1.2.1/charts/kof-mothership/values.yaml#L169">VMCluster or VMAlert resources</a>
+    then update your resources accordingly to the <a href="https://github.com/k0rdent/kof/blob/v1.3.0/charts/kof-mothership/values.yaml#L167">new values under "spec"</a>.</p>
+</li>
+<li>
+<p>If you have customized VMCluster/VMAlert resources using the "k0rdent.mirantis.com/kof-storage-values" cluster annotation, then keep the old but put new values first to reconcile the new <code>ClusterDeployment</code> configuration on the current release, <strong>then</strong> run the helm charts upgrade. After regional clusters have the new <code>kof-storage</code> helm chart installed, you can remove old values from the cluster annotation.</p>
+</li>
 <li>
 <p>If you have set <code>storage</code> values of the <code>kof-regional</code> chart, update them in the same way.</p>
 </li>
