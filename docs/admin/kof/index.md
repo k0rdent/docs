@@ -44,7 +44,7 @@ Performance issues and cost spikes usually come from the same workloads, so you 
 - **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.
 - **Control:** kof-operators for lifecycle and configuration.
 
-KOF is deployed through Helm charts and MultiClusterServices: `kof-operators`, `kof-mothership`, `kof-storage`, `kof-collectors`, with optional `kof-istio`, plus per-role services such as `kof-child` and `kof-regional`. (See [KOF architecture](https://docs.k0rdent.io/latest/admin/kof/kof-architecture/).)
+KOF is deployed through Helm charts and MultiClusterServices: `kof-operators`, `kof-mothership`, `kof-storage`, `kof-collectors`, plus per-role services such as `kof-child` and `kof-regional`. (See [KOF architecture](https://docs.k0rdent.io/latest/admin/kof/kof-architecture/).)
 
 ## KOF in Action: A Day in the Life (and A Sudden Cost Spike)
 
