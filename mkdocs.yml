@@ -345,8 +345,8 @@ extra:
     k0rdentVersion: 1-5-0
     k0rdentDotVersion: 1.5.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
-    k0rdentDigestValue: sha256:6c7b320c3919f66705a89a9276c4605407201fd4d067006374f2417dc15c3648
-    k0rdentDigestDate: Tue Sep 30 12:54:32 2025
+    k0rdentDigestValue: sha256:382291ed68a79eb8e03a5b2f2b7d06b56e3fb798158c519433e254b695955391
+    k0rdentDigestDate: Thu Oct 30 12:54:32 2025
     k0rdentTagList: https://github.com/k0rdent/kcm/tags
     kofVersions:
       kofDotVersion: 1.4.0
