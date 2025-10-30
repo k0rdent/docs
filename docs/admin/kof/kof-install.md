@@ -340,6 +340,7 @@ and apply this example for AWS, or use it as a reference:
     spec:
       template: $TEMPLATE
       credential: aws-cluster-identity-cred
+      cleanupOnDeletion: true
       config:
         clusterIdentity:
           name: aws-cluster-identity
@@ -375,6 +376,7 @@ and apply this example for AWS, or use it as a reference:
     spec:
       template: $TEMPLATE
       credential: azure-cluster-identity-cred
+      cleanupOnDeletion: true
       config:
         clusterIdentity:
           name: azure-cluster-identity
@@ -592,6 +594,7 @@ and apply this example for AWS, or use it as a reference:
     spec:
       template: $TEMPLATE
       credential: aws-cluster-identity-cred
+      cleanupOnDeletion: true
       config:
         clusterIdentity:
           name: aws-cluster-identity
@@ -624,6 +627,7 @@ and apply this example for AWS, or use it as a reference:
     spec:
       template: $TEMPLATE
       credential: azure-cluster-identity-cred
+      cleanupOnDeletion: true
       config:
         clusterIdentity:
           name: azure-cluster-identity
