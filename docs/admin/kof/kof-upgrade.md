@@ -67,7 +67,7 @@ EOF
 ```
 
 > NOTE:
-> To estimate how much storage you need for the backup, open the [kof-ui](./ui.md), navigate to the `VictoriaMetrics/Logs` section, and click the `VictoriaMetrics storage` pod name on the cluster you want to back up. Find the `Data Size` metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.
+> To estimate how much storage you need for the backup, open the [kof-ui](./kof-using.md#access-to-the-kof-ui), navigate to the `VictoriaMetrics/Logs` section, and click the `VictoriaMetrics storage` pod name on the cluster you want to back up. Find the `Data Size` metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.
 
 #### Create a Backup Pod with `curl`
 

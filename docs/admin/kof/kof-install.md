@@ -133,33 +133,32 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 
 1. Check the overview in the [k0rdent/istio repository](https://github.com/k0rdent/istio) and this video:
 
-  <video controls width="1024" style="max-width: 100%">
-    <source src="../../../assets/kof/kof-istio.mp4" type="video/mp4" />
-  </video>
+    <video controls width="1024" style="max-width: 100%">
+      <source src="../../../assets/kof/kof-istio.mp4" type="video/mp4" />
+    </video>
 
 2. Create and label the `kof` namespace to allow Istio to inject its sidecars:
 
-  ```bash
-  kubectl create namespace kof
-  kubectl label namespace kof istio-injection=enabled
-  ```
+    ```bash
+    kubectl create namespace kof
+    kubectl label namespace kof istio-injection=enabled
+    ```
 
 3. Install the `k0rdent/istio` charts to the management cluster:
   
-  ```bash
-  helm upgrade -i --reset-values --wait \
-    --create-namespace -n istio-system k0rdent-istio-base \
-    oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base --version 0.1.0 \
-    --set cert-manager-service-template.enabled=false \
-    --set injectionNamespaces={kof}
+    ```bash
+    helm upgrade -i --reset-values --wait \
+      --create-namespace -n istio-system k0rdent-istio-base \
+      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base --version 0.1.0 \
+      --set cert-manager-service-template.enabled=false \
+      --set injectionNamespaces={kof}
 
-  helm upgrade -i --reset-values --wait -n istio-system k0rdent-istio \
-    oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.1.0 \
-    --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
-    --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
-    --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
-  ```
-
+    helm upgrade -i --reset-values --wait -n istio-system k0rdent-istio \
+      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.1.0 \
+      --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
+      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
+      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
+    ```
 
 ## Management Cluster
 
@@ -175,9 +174,7 @@ and apply this example, or use it as a reference:
       oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
-2. Create an empty `mothership-values.yaml` file.
-
-    If you have not applied the [Istio](#istio) section, add to this file:
+2. Create the `mothership-values.yaml` file and add there:
     ```yaml
     kcm:
       installTemplates: true
@@ -268,8 +265,7 @@ and apply this example, or use it as a reference:
 
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
-8. If you have not applied the [Istio](#istio) section:
-
+9. Apply shared configuration for the existing and upcoming regional and child clusters:
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
         ```bash
         kubectl get svctmpl -A
@@ -512,52 +508,52 @@ and apply this example for AWS, or use it as a reference:
 
 10. `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml) configure and install `cert-manager`, `ingress-nginx`, `kof-operators`, `kof-storage`, and `kof-collectors` charts automatically.
 
-  To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml) to the `kof-storage` chart or its subcharts, such as [victoria-logs-cluster](https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters), add them to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`. 
-  
-  For example:
+    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml) to the `kof-storage` chart or its subcharts, such as [victoria-logs-cluster](https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters), add them to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`.
 
-  ```yaml
-  k0rdent.mirantis.com/kof-storage-values: |
-    victoria-logs-cluster:
-      vlinsert:
-        replicaCount: 2
-  ```
+    For example:
 
-  For OpenStack, add:
+    ```yaml
+    k0rdent.mirantis.com/kof-storage-values: |
+      victoria-logs-cluster:
+        vlinsert:
+          replicaCount: 2
+    ```
 
-  ```yaml
-  k0rdent.mirantis.com/kof-storage-values: |
-    external-dns:
-      provider:
-        name: webhook
-        webhook:
-          image:
-            repository: ghcr.io/inovex/external-dns-openstack-webhook
-            tag: 1.1.0
-          extraVolumeMounts:
-            - name: oscloudsyaml
-              mountPath: /etc/openstack/
-      extraVolumeMounts: null
-      extraVolumes:
-        - name: oscloudsyaml
-          secret:
-            secretName: external-dns-openstack-credentials
-  ```
+    For OpenStack, add:
+
+    ```yaml
+    k0rdent.mirantis.com/kof-storage-values: |
+      external-dns:
+        provider:
+          name: webhook
+          webhook:
+            image:
+              repository: ghcr.io/inovex/external-dns-openstack-webhook
+              tag: 1.1.0
+            extraVolumeMounts:
+              - name: oscloudsyaml
+                mountPath: /etc/openstack/
+        extraVolumeMounts: null
+        extraVolumes:
+          - name: oscloudsyaml
+            secret:
+              secretName: external-dns-openstack-credentials
+    ```
 
 11. Verify and apply the Regional `ClusterDeployment`:
 
-  ```bash
-  cat regional-cluster.yaml
+    ```bash
+    cat regional-cluster.yaml
 
-  kubectl apply -f regional-cluster.yaml
-  ```
+    kubectl apply -f regional-cluster.yaml
+    ```
 
 12. Watch how the cluster is deployed until all values of `READY` are `True`:
 
-  ```bash
-  clusterctl describe cluster -n kcm-system $REGIONAL_CLUSTER_NAME \
-    --show-conditions all
-  ```
+    ```bash
+    clusterctl describe cluster -n kcm-system $REGIONAL_CLUSTER_NAME \
+      --show-conditions all
+    ```
 
 ## Child Cluster
 
@@ -645,17 +641,17 @@ and apply this example for AWS, or use it as a reference:
 
 4. If you've applied the [Istio](#istio) section, update the `child-cluster.yaml` file:
 
-  replace this line:
+    replace this line:
 
-  ```yaml
-  k0rdent.mirantis.com/kof-storage-secrets: "true"
-  ```
+    ```yaml
+    k0rdent.mirantis.com/kof-storage-secrets: "true"
+    ```
 
-  with this line:
+    with this line:
 
-  ```yaml
-  k0rdent.mirantis.com/istio-role: member
-  ```
+    ```yaml
+    k0rdent.mirantis.com/istio-role: member
+    ```
 
 5. This `ClusterDeployment` uses propagation of its `.metadata.labels`
     to the resulting `Cluster` because there are no `.spec.config.clusterLabels` here.
@@ -677,18 +673,18 @@ and apply this example for AWS, or use it as a reference:
 
 7. `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml) configure and install `cert-manager`, `kof-operators`, and `kof-collectors` charts automatically.
 
-  To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/values.yaml) to the `kof-collectors` chart or its subcharts, such as [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values), add them to the `child-cluster.yaml` file in the `.spec.config`. For example:
+    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/values.yaml) to the `kof-collectors` chart or its subcharts, such as [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values), add them to the `child-cluster.yaml` file in the `.spec.config`. For example:
 
-  ```yaml
-  clusterAnnotations:
-    k0rdent.mirantis.com/kof-collectors-values: |
-      opencost:
+    ```yaml
+    clusterAnnotations:
+      k0rdent.mirantis.com/kof-collectors-values: |
         opencost:
-          exporter:
-            replicas: 2
-  ```
+          opencost:
+            exporter:
+              replicas: 2
+    ```
 
-  Note: the first `opencost` key is to reference the subchart, and the second `opencost` key is part of its [values](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values).
+    Note: the first `opencost` key is to reference the subchart, and the second `opencost` key is part of its [values](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values).
 
 8. Verify and apply the `ClusterDeployment`:
     ```bash
