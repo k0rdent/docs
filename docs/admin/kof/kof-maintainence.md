@@ -29,7 +29,6 @@ kubectl delete --wait --cascade=foreground -f regional-cluster.yaml
 To remove KOF from the management cluster:
 
 ```bash
-helm uninstall --wait --cascade foreground -n istio-system kof-istio
 helm uninstall --wait --cascade foreground -n kof kof-child
 helm uninstall --wait --cascade foreground -n kof kof-regional
 helm uninstall --wait --cascade foreground -n kof kof-collectors
