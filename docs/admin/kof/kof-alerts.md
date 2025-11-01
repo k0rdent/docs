@@ -1,7 +1,5 @@
 # KOF Alerts
 
-## Summary
-
 At this point you have metrics collected and visualized. It is important to check them manually,
 but it is even better to **automate detection and notification about the issues found in the data.**
 
@@ -250,8 +248,7 @@ graph TB
 
 * Alerting rules are mounted to Promxy in the management cluster as `/etc/promxy/rules`.
 
-* Recording rules are passed via `MultiClusterService` (or `ClusterProfile` for `istio` case)
-    to each regional cluster where `kof-storage` chart renders them to `VMRules`.
+* Recording rules are passed via `MultiClusterService` to each regional cluster where `kof-storage` chart renders them to `VMRules`.
 
 ## Mothership recording rules
 
