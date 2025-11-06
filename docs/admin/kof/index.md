@@ -169,6 +169,7 @@ Get started with the basic documentation:
 - [Architecture](kof-architecture.md)
 - [Installing KOF](kof-install.md)
 - [Verifying the KOF installation](kof-verification.md)
+- [KCM Region With KOF](kof-kcm-region.md)
 - [Storing KOF data](kof-storing.md)
 - [Using KOF](kof-using.md)
 - [KOF Alerts](kof-alerts.md)
