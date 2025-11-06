@@ -203,6 +203,9 @@ Follow these steps to migrate Victoria Logs and Metrics data from the old region
 
 ## Upgrade to v1.5.0
 
+> NOTE:
+> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kcm-region.md) guide on top of the steps below.
+
 **Important!!!**
 
 > NOTICE:

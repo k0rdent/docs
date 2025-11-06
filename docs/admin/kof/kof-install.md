@@ -298,6 +298,9 @@ and apply this example, or use it as a reference:
 
 ## Regional Cluster
 
+> NOTE:
+> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kcm-region.md) guide on top of the steps below.
+
 To install KOF on the regional cluster,
 look through the default values of the [kof-storage](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml) chart,
 and apply this example for AWS, or use it as a reference:
@@ -558,6 +561,9 @@ and apply this example for AWS, or use it as a reference:
     ```
 
 ## Child Cluster
+
+> NOTE:
+> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kcm-region.md) guide on top of the steps below.
 
 To install KOF on the actual cluster to be monitored,
 look through the default values of the [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-operators/values.yaml)
