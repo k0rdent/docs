@@ -212,6 +212,7 @@ nav:
     - Overview: admin/kof/index.md
     - Architecture: admin/kof/kof-architecture.md
     - Installing KOF: admin/kof/kof-install.md
+    - KCM Region With KOF: admin/kof/kof-kcm-region.md
     - Upgrading KOF: admin/kof/kof-upgrade.md
     - Verifying the KOF installation: admin/kof/kof-verification.md
     - Storing KOF data: admin/kof/kof-storing.md
