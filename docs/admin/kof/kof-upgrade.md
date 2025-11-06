@@ -11,8 +11,9 @@ kubectl get cm kof-<cluster-name> -n kcm-system
 ```
 
 2. Note the `read_logs_endpoint`, `read_metrics_endpoint`, and other endpoints values from the configmap.
-3. Ensure that you have enough free disk space (e.g. check the total used size of volumes allocated to your regional cluster). Victoria Logs/Metrics usually compress the data. Commands to fetch the data compress data too.
+3. Ensure that you have enough free disk space (e.g. check the total used size of volumes allocated to your regional cluster). Victoria Logs/Metrics usually compress the data. Commands to fetch the data compress data too, but it stores data in a JSON line format, so requires 5 times more space.
 4. Ensure the connectivity to the regional cluster (e.g. do it on the Mothership cluster that surely has connectivity). If you are using Istio service mesh, consider to run a container in the Mothership cluster with attached properly sized volume in the kof namespace for connectivity to regional cluster endpoints.
+Check the k0rdent [cluster documentation](../clusters/deploy-cluster.md) to retrieve kubernetes configuration.
 
 ### Backup Victoria Metrics
 
@@ -31,10 +32,11 @@ To restore all metrics to a regional cluster from a local file run:
 Without Istio servicemesh:
 
 ```bash
+KUBECONFIG=kubeconfig kubectl port-forward svc/vminsert-cluster 8480:8480 -n kof # use kubeconfig of regional cluster to import data
+
 curl -H 'Content-Encoding: gzip' -sSX POST \
-  -u "<username>:<password>" \
   -T victoria-metrics-backup.gz \
-  <write_metrics_endpoint_host>/vm/insert/0/prometheus/api/v1/import
+  http://localhost:8480/insert/0/prometheus/api/v1/import
 ```
 
 With Istio servicemesh:
@@ -50,6 +52,23 @@ curl -H 'Content-Encoding: gzip' -sSX POST \
 
 ### Backup Victoria Logs
 
+Before querying logs increase the "search.maxQueryDuration" value for the `kof-storage-victoria-logs-cluster-vlselect` deployment which is just a 30s by default and not enough to query all logs at one request.
+
+```bash
+KUBECONFIG=kubeconfig kubectl edit deployment/kof-storage-victoria-logs-cluster-vlselect -n kof # use kubeconfig of regional cluster to import data
+```
+
+Edit and save the deployment spec to add `search.maxQueryDuration` argument (remove it after you finish the backup).
+
+```yaml
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - --search.maxQueryDuration=24h
+```
+
 To backup all logs data to a local file (`victoria-logs-backup.gz`):
 
 ```bash
@@ -59,6 +78,7 @@ curl -H 'Accept-Encoding: gzip' -sSN \
   -d 'query=*' > victoria-logs-backup.gz
 ```
 
+
 - This command fetches all logs from the old regional cluster and saves them as a gzip-compressed file.
 - You can later use this file for migration or restoration by uploading it to the new cluster.
 
@@ -67,10 +87,12 @@ To restore all logs to a regional cluster from a local file run:
 Without Istio servicemesh:
 
 ```bash
+
+KUBECONFIG=kubeconfig kubectl port-forward svc/kof-storage-victoria-logs-cluster-vlinsert 9481:9481 -n kof # use kubeconfig of regional cluster to import data
+
 curl -H 'Content-Encoding: gzip' -sSX POST \
-  -u "<username>:<password>" \
   -T victoria-logs-backup.gz \
-  <write_logs_endpoint>/insert/jsonline
+  http://localhost:9481/insert/jsonline
 ```
 
 *N.B.* the default `write_logs_endpoint` ends with `/insert/opentelemetry/v1/logs`: replace it with `/insert/jsonline`.
@@ -154,6 +176,11 @@ Follow these steps to migrate Victoria Logs and Metrics data from the old region
     Check [VictoriaLogs FAQ](https://docs.victoriametrics.com/victorialogs/faq/#how-to-export-logs-from-victorialogs) for more details.
 
     The query fetches all logs from the old regional cluster endpoint. If you need to split migration by chunks, please refer the documentation for `logsql` query filter available options (by stream name, time range, etc)
+
+To migrate data with transformation please consider one of the following options:
+
+* Backup data to a file with a JSON line format, change each json, restore the file to a new cluster
+* Use the [Python script](https://github.com/k0rdent/kof/tree/main/scripts/victoria-migration) with your custom transformation function
 
 **Explanation of curl parameters:**
 
