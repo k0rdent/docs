@@ -44,6 +44,22 @@ k0rdent.mirantis.com/kof-cluster-role: regional
 > NOTE:
 > A KCM Regional cluster cannot be extended with a KOF child role, but you can deploy a separate KOF child cluster within the same KCM Region if needed.
 
+### Istio Installation
+
+If you want to use Istio in the KCM Regional cluster, add the following labels to the KCM Regional ClusterDeployment:
+
+```yaml
+k0rdent.mirantis.com/istio-mesh: <REGION_NAME>
+k0rdent.mirantis.com/istio-gateway: "true"
+k0rdent.mirantis.com/istio-role: member
+```
+
+> NOTE:
+> The `k0rdent.mirantis.com/istio-mesh` label allows propagating `remote secrets` only to clusters that have this label. If this label is not set, remote secrets will be propagated across all regions.
+
+NOTE:
+To enable connectivity between a child cluster and the regional cluster, set the `k0rdent.mirantis.com/istio-mesh` label with the same `<REGION_NAME>` value on both clusters.
+
 ## Deploying Child Clusters in a KCM Region
 
 By now you have created the Region, Credential, and ClusterDeployment resources.
