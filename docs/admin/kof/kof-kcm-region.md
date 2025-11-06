@@ -28,9 +28,7 @@ metadata:
   name: kof-region-aws-ue2
   namespace: kcm-system
   labels:
-    k0rdent.mirantis.com/kof-storage-secrets: "true"
-    k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
-    k0rdent.mirantis.com/kof-cluster-role: regional
+    k0rdent.mirantis.com/kof-cluster-role: child
 spec:
   template: aws-standalone-cp-1-0-16
   credential: <REGION_CREDENTIALS>
@@ -71,4 +69,5 @@ spec:
 
 This will install and configure the KOF components inside the KCM Region, allowing KOF Child clusters deployed within the same Region to connect to it.
 
+> Note: KCM Regional and KOF Regional should be the same cluster. Don't install KOF Regional to an isolated KCM Child not seen from the Management cluster.
 > Note: A KCM Regional cluster cannot be extended with a KOF child role, but you can deploy a separate KOF child cluster within the same KCM Region if needed.
