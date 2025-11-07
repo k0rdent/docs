@@ -45,6 +45,7 @@ k0rdent.mirantis.com/kof-cluster-role: regional
 > A KCM Regional cluster cannot be extended with a KOF child role, but you can deploy a separate KOF child cluster within the same KCM Region if needed.
 
 Make sure to apply all the main [KOF Regional Cluster](kof-install.md#regional-cluster) steps for this `ClusterDeployment`.
+
 ### Istio Installation
 
 If you want to use Istio in the KCM Regional cluster, add the following labels to the KCM Regional ClusterDeployment:
@@ -60,6 +61,9 @@ k0rdent.mirantis.com/istio-role: member
 
 > NOTE:
 > To enable connectivity between a child cluster and the regional cluster, set the `k0rdent.mirantis.com/istio-mesh` label with the same `<REGION_NAME>` value on both clusters.
+
+> NOTE:
+> To use Istio in the KCM Regional cluster together with KOF, make sure your instances have sufficient RAM, CPU, and disk resources. For example, [t3.large](https://aws.amazon.com/ec2/instance-types/t3/) instance on AWS are the minimal instance type that provides enough RAM and CPU for this workload.
 
 ## Deploying Child Clusters in a KCM Region
 
