@@ -27,17 +27,11 @@ flowchart TD
     NAG --> MD
     NAG --> AD
 
-    AD --> R[Regional...]
-    I --> R
+    I --> R[KOF Regional:<br><br>own ClusterDeployment<br>or shared with KCM Region<br>or with Management<br>or just ConfigMap]
     MD --> R
+    AD --> R
 
-    R --> CD[...ClusterDeployment]
-    R --> CM[...ConfigMap]
-    R --> RIM[...in Management]
-
-    CD --> M2[Store KOF data<br>from Management...]
-    CM --> M2
-    RIM --> M2
+    R --> M2[Store KOF data<br>from Management...]
 
     M2 --> M2M[**...to Management**]
     M2 --> M2R[...to Regional<br>with Istio<br>or without]
@@ -299,7 +293,7 @@ and apply this example, or use it as a reference:
 ## Regional Cluster
 
 > NOTE:
-> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kcm-region.md) guide on top of the steps below.
+> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kof-kcm-region.md) guide on top of the steps below.
 
 To install KOF on the regional cluster,
 look through the default values of the [kof-storage](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml) chart,
@@ -564,7 +558,7 @@ and apply this example for AWS, or use it as a reference:
 ## Child Cluster
 
 > NOTE:
-> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kcm-region.md) guide on top of the steps below.
+> To use the new [KCM Regional Clusters](../regional-clusters/index.md) with KOF, please apply the [KCM Region With KOF](kof-kcm-region.md) guide on top of the steps below.
 
 To install KOF on the actual cluster to be monitored,
 look through the default values of the [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-operators/values.yaml)
@@ -713,6 +707,13 @@ and apply this example for AWS, or use it as a reference:
     ```bash
     clusterctl describe cluster -n kcm-system $CHILD_CLUSTER_NAME \
       --show-conditions all
+    ```
+
+    If the child cluster is created in [KCM Region](../regional-clusters/index.md),
+    get the `regional-kubeconfig` from [KOF Verification](kof-verification.md) and run:
+    ```bash
+    KUBECONFIG=regional-kubeconfig clusterctl describe cluster \
+      -n kcm-system $CHILD_CLUSTER_NAME --show-conditions all
     ```
     
 Now that you have installed KOF, please [verify it](./kof-verification.md).
