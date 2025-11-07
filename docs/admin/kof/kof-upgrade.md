@@ -319,22 +319,9 @@ Record the following endpoint values:
 kubectl exec -it -n kof <BACKUP_DEPLOYMENT_POD_NAME> -- /bin/sh
 ```
 
-#### Back Up VictoriaMetrics Data
+#### Back Up VictoriaMetrics/Logs Data
 
-```bash
-curl -H 'Accept-Encoding: gzip' -sSN \
-  <read_metrics_endpoint>/api/v1/export \
-  -d 'match[]={__name__!=""}' \
-  > victoria-metrics-backup.gz
-```
-
-#### Back Up VictoriaLogs Data
-
-```bash
-curl -H 'Accept-Encoding: gzip' -sSN \
-  <read_logs_endpoint>/select/logsql/query \
-  -d 'query=*' > victoria-logs-backup.gz
-```
+For instructions on creating backups of VictoriaMetrics and log data, refer to the [Data Backup](#data-backup) section.
 
 #### (Optional) Download Backups Locally
 
@@ -471,21 +458,9 @@ Use the backup created in step 2 to restore VictoriaMetrics and VictoriaLogs dat
 kubectl exec -it -n kof <BACKUP_DEPLOYMENT_POD_NAME> -- /bin/sh
 ```
 
-#### Restore VictoriaMetrics Data
+#### Restore VictoriaMetrics/Logs Data
 
-```bash
-curl -H 'Content-Encoding: gzip' -sSX POST \
-  -T victoria-metrics-backup.gz \
-  http://<CLUSTER_NAME>-vminsert:8480/insert/0/prometheus/api/v1/import
-```
-
-#### Restore VictoriaLogs Data
-
-```bash
-curl -H 'Content-Encoding: gzip' -sSX POST \
-  -T victoria-logs-backup.gz \
-  http://<CLUSTER_NAME>-logs-insert:9481/insert/jsonline
-```
+Follow the restore steps in the [Data Backup](#data-backup) section to import backups into VM/VL.
 
 ## Upgrade to v1.4.0
 
