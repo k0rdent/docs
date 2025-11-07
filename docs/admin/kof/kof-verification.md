@@ -4,11 +4,30 @@ Finally, verify that KOF installed properly.
 
 ## Verification steps
 
-1. Wait until the value of `HELMCHARTS` and `POLICYREFS`
+1. Get kubeconfigs of the regional and child clusters:
+    ```bash
+    kubectl get secret -n kcm-system $REGIONAL_CLUSTER_NAME-kubeconfig \
+      -o=jsonpath={.data.value} | base64 -d > regional-kubeconfig
+
+    kubectl get secret -n kcm-system $CHILD_CLUSTER_NAME-kubeconfig \
+      -o=jsonpath={.data.value} | base64 -d > child-kubeconfig
+    ```
+
+    If the child cluster is created in [KCM Region](../regional-clusters/index.md), run:
+    ```
+    KUBECONFIG=regional-kubeconfig kubectl get secret \
+      -n kcm-system $CHILD_CLUSTER_NAME-kubeconfig \
+      -o=jsonpath={.data.value} | base64 -d > child-kubeconfig
+    ```
+
+2. Wait until the value of `HELMCHARTS` and `POLICYREFS`
     changes from `Provisioning` to `Provisioned`:
     ```bash
     kubectl get clustersummaries -A -o wide
+
+    KUBECONFIG=regional-kubeconfig kubectl get clustersummaries -A -o wide
     ```
+
     If you see the `Failed/Provisioning` loop, check status and logs:
     ```bash
     kubectl get clustersummaries -A -o yaml \
@@ -19,20 +38,14 @@ Finally, verify that KOF installed properly.
     kubectl logs -n projectsveltos deploy/addon-controller | less
     ```
 
-2. Wait for all pods in the regional and child clusters to show as `Running`
+3. Wait for all pods in the regional and child clusters to show as `Running`
     in the namespaces `kof, kube-system, projectsveltos`:
     ```bash
-    kubectl get secret -n kcm-system $REGIONAL_CLUSTER_NAME-kubeconfig \
-      -o=jsonpath={.data.value} | base64 -d > regional-kubeconfig
-
-    kubectl get secret -n kcm-system $CHILD_CLUSTER_NAME-kubeconfig \
-      -o=jsonpath={.data.value} | base64 -d > child-kubeconfig
-
     KUBECONFIG=regional-kubeconfig kubectl get pod -A
     KUBECONFIG=child-kubeconfig kubectl get pod -A
     ```
 
-3. Wait until the value of `READY` changes to `True`
+4. Wait until the value of `READY` changes to `True`
     for all certificates in each cluster:
     ```bash
     KUBECONFIG=regional-kubeconfig kubectl get cert -A
