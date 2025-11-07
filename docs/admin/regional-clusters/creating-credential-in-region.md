@@ -126,16 +126,16 @@ The `spec.region` should be configured and refer the name of the `Region` object
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: Credential
-  metadata:
-    name: aws-cluster-identity-cred
-    namespace: kcm-system
-  spec:
-    region: region1
-    description: "Credential Example"
-    identityRef:
-      apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
-      kind: AWSClusterStaticIdentity
-      name: aws-cluster-identity
+metadata:
+  name: aws-cluster-identity-cred
+  namespace: kcm-system
+spec:
+  region: region1
+  description: Credential for child clusters of region1
+  identityRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+    kind: AWSClusterStaticIdentity
+    name: aws-cluster-identity
 ```
 
 Apply the YAML to your management cluster:

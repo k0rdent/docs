@@ -1,5 +1,7 @@
 # KOF Alerts
 
+## Summary
+
 At this point you have metrics collected and visualized. It is important to check them manually,
 but it is even better to **automate detection and notification about the issues found in the data.**
 

@@ -57,7 +57,7 @@ k0rdent.mirantis.com/istio-role: member
 ```
 
 > NOTE:
-> The `k0rdent.mirantis.com/istio-mesh` label allows propagating `remote secrets` only to clusters that have this label. If this label is not set, remote secrets will be propagated across all regions.
+> The `k0rdent.mirantis.com/istio-mesh` label allows propagating `remote secrets` only to clusters that have this label. This label is required.
 
 > NOTE:
 > To enable connectivity between a child cluster and the regional cluster, set the `k0rdent.mirantis.com/istio-mesh` label with the same `<REGION_NAME>` value on both clusters.

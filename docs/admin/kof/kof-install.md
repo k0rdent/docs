@@ -428,6 +428,7 @@ and apply this example for AWS, or use it as a reference:
       with this line:
       ```yaml
       k0rdent.mirantis.com/istio-role: member
+      k0rdent.mirantis.com/istio-gateway: "true"
       ```
       
     * Delete these lines:
