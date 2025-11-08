@@ -9,14 +9,14 @@
 | Cluster API                          | v1.11.2 |
 | Cluster API Provider AWS             | v2.9.2  |
 | Cluster API Provider Azure           | v1.21.1 |
-| Cluster API Provider Docker          | v1.9.6  |
+| Cluster API Provider Docker          | v1.11.2  |
 | Cluster API Provider GCP             | v1.10.0 |
 | Cluster API Provider Infoblox        | v0.1.0  |
-| Cluster API Provider IPAM            | v1.0.2  |
+| Cluster API Provider IPAM            | v1.1.0-rc.1  |
 | Cluster API Provider k0smotron       | v1.9.0  |
 | Cluster API Provider OpenStack (ORC) | v0.12.5-mirantis.0 (v2.1.0) |
-| Cluster API Provider vSphere         | v1.13.1 |
-| Projectsveltos                       | v0.57.2 |
+| Cluster API Provider vSphere         | v1.14.0 |
+| Projectsveltos                       | v1.1.1 |
 | k0s (control plane runtime)          | 1.32.8  |
 | cert-manager (charts)                | v1.19.1 |
 
