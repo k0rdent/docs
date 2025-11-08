@@ -9,5 +9,7 @@ You can find numerous useful applications in the [k0rdent Catalog](https://catal
 - [Beach Head Services](beach-head.md)
 - [Checking Status](checking-status.md)
 - [Remove Beach Head Services](remove-beach-head.md)
+- [Pause Beach Head Services Reconciliation](service-pause.md)
 - [ServiceTemplate Parameters](servicetemplate-parameters.md)
 - [Service Upgrades and ServiceTemplateChain](service-upgrade.md)
+

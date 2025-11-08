@@ -236,6 +236,7 @@ nav:
       - Beach Head Services: user/services/beach-head.md
       - Checking Status: user/services/checking-status.md
       - Remove Beach Head Services: user/services/remove-beach-head.md
+      - Pause Beach Head Services Reconciliation: user/services/service-pause.md
       - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
       - Upgrading Deployed Services: user/services/service-upgrade.md
     - Enabling drift detection: user/user-enable-drift-detection.md
