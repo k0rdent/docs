@@ -2,6 +2,11 @@
 
 > IMPORTANT: In some circumstances, upgrades involve additional manual steps. Be sure to check the additional instructions for upgrading to {{{ docsVersionInfo.k0rdentName }}} [`0.2.0`](upgrade-to-0-2-0.md), [`0.3.0`](upgrade-to-0-3-0.md), [`1.0.0`](upgrade-to-1-0-0.md), or [`1.1.1`](upgrade-to-1-1-1.md).
 
+> NOTE:
+> If upgrading from versions of {{{ docsVersionInfo.k0rdentName}}}
+> prior to v1.0.0, upgrade to v1.0.0 first to facilitate the change
+> from `alpha` to `beta` APIs.
+
 Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `Management` object. To do that, you must have the `Global Admin` role. (For detailed information about {{{ docsVersionInfo.k0rdentName }}} RBAC roles and permissions, refer to the [RBAC documentation](../access/rbac/index.md).) Follow these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
 
 1. Create a new `Release` object
