@@ -89,7 +89,7 @@ By the end of the day, Finance refreshes the **chargeback dashboard**. Costs for
 
 In a single day, KOF turned a vague cost spike into a resolved issue, with every team playing their part in one unified system.
 
-# Getting Started
+## Getting Started
 
 KOF lets you get started with some quick wins. For example, you can easily:
 
@@ -99,7 +99,7 @@ KOF lets you get started with some quick wins. For example, you can easily:
 * Start retaining logs and metrics for compliance right out of the box.
 
 
-## KOF architecture places collectors everywhere and lets you choose where to store and aggregate
+### KOF architecture places collectors everywhere and lets you choose where to store and aggregate
 
 k0rdent defines a management cluster and many child clusters. KOF follows this and adds an optional regional role for storage and aggregation. Placement options are documented and configurable:
 
@@ -115,7 +115,7 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
 
 Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana provide the consolidated UI.
 
-## KOF can be extended with your own dashboards, pipelines, and destinations
+### KOF can be extended with your own dashboards, pipelines, and destinations
 
 KOF is fully functional out of the box, but you can also add additional capabilities through extensions.
 
@@ -125,7 +125,7 @@ KOF is fully functional out of the box, but you can also add additional capabili
 
 All extensions are managed through the same GitOps lifecycle as the rest of the platform.
 
-## Managing KOF as Code
+### Managing KOF as Code
 
 We recommend keeping a dedicated Git repository for your KOF deployment, separate from the {{{ docsVersionInfo.k0rdentName }}} repo itself and separate from application workload repos.
 
@@ -146,7 +146,7 @@ With this setup you can:
 Other sections in this documentation, such as [Dashboard Lifecycle](kof-using.md) and [Retention](kof-retention.md) assume you have such a repo and a CI/CD pipeline in place.
 
 
-## DIY Stack vs. KOF
+### DIY Stack vs. KOF
 
 | Dimension                  | DIY Stack (Prometheus, Grafana, OpenCost, Jaeger, etc.)                               | **KOF**                                                                                              |
 | -------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -162,7 +162,7 @@ Other sections in this documentation, such as [Dashboard Lifecycle](kof-using.md
 | **Business Impact**        | Tools work, but require constant integration effort; finance rarely gets visibility.  | Engineers debug faster, finance gets cost accountability, compliance gets retention — in one system. |
 
 
-## Guides
+### Guides
 
 Get started with the basic documentation:
 
