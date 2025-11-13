@@ -95,6 +95,9 @@
 
     Create a YAML file with the specification of the resource-template and save it as `openstack-cluster-identity-resource-template.yaml`:
 
+    > NOTE:
+    > The ConfigMap name needs to be exactly `openstack-cloud-config-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -170,8 +173,6 @@
             {{- end }}
     ```
     
-    Object needs to be named `openstack-cluster-identity-resource-template.yaml`, `OpenStackClusterIdentity` object name + `-resource-template` string suffix.
-
     Apply the YAML to your cluster:
 
     ```bash
