@@ -7,15 +7,15 @@ Cloud provider credentials in Cluster API (CAPI) environments are managed throug
 
 The configuration follows two patterns:
 
-1. **ClusterIdentity Pattern**
-   - Uses a `ClusterIdentity` resource that defines provider identity configuration
-   - References a `Secret` with credentials
-   - Used by `Azure` and `vSphere` in-tree providers
+**ClusterIdentity Pattern**
+- Uses a `ClusterIdentity` resource that defines provider identity configuration
+- References a `Secret` with credentials
+- Used by `Azure` and `vSphere` in-tree providers
 
-2. **Source Secret Pattern**
-   - Uses only a `Secret` without `ClusterIdentity`
-   - `Secret` contains all cloud configuration data
-   - Used by `OpenStack` in-tree provider
+**Source Secret Pattern**
+- Uses only a `Secret` without `ClusterIdentity`
+- `Secret` contains all cloud configuration data
+- Used by `OpenStack` in-tree provider
 
 In both cases `ConfigMap` with template code is used to render configuration into child clusters.
 
@@ -23,8 +23,12 @@ In both cases `ConfigMap` with template code is used to render configuration int
 
 The `Credential` resource provides an abstraction layer by either:
 
-- Referencing a `ClusterIdentity` through `identityRef`
-- Directly referencing a `Secret`, depending on the pattern used
+- Referencing a `ClusterIdentity` through `identityRef` (ClusterIdentity Pattern).
+- Directly referencing a `Secret` (Source Secret Pattern).
+
+### Credential Secret
+
+If the ClusterIdentity Patten is being used, the name of the `Secret` containing the credentials must be `.spec.identityRef.name` from the `Credential` object + `-secret` string suffix.
 
 ### Template ConfigMap
 
@@ -33,7 +37,11 @@ The `Credential` resource provides an abstraction layer by either:
 - Template processing accesses cluster objects through:
   - Built-in Sveltos variables (`Cluster`, `InfrastructureProvider`)
   - `getResource` function for additionally exposed objects (`InfrastructureProviderIdentity`, `InfrastructureProviderIdentitySecret`)
-- The object name needs to follow a predictable naming pattern, such as the `ClusterIdentity` object (referenced via `identityRef` in the `Credential` resource) name + `-resource-template` suffix. It must also be placed in same Namespace as the `ClusterIdentity` object it references
+- It must be created in same Namespace as the `ClusterIdentity` object it references.
+
+#### Naming the Template ConfigMap
+
+The ConfigMap name needs to be `.spec.identityRef.name` from `Credential` object + `-resource-template` string suffix.
 
 ## Templating System
 

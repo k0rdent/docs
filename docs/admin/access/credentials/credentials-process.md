@@ -4,6 +4,9 @@ In order to pass credentials to {{{ docsVersionInfo.k0rdentName }}} so it can ta
 
 1. The lead platform engineer, or whoever has access to the actual provider credentials, creates a `Secret` that includes that information. For example, for an AWS cluster, it might look like this:
 
+    > NOTE:
+    > The Secret name needs to follow a pattern, see [credential secret](../../../appendix/appendix-providers.md#credential-secret) for more detail. 
+
     ```yaml
     apiVersion: v1
     kind: Secret

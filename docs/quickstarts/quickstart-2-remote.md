@@ -94,6 +94,9 @@ credential.k0rdent.mirantis.com/remote-cred created
 
 Now we create the {{{ docsVersionInfo.k0rdentName }}} `ClusterIdentity` resource template `ConfigMap`. As in prior steps, create a YAML file called `remote-ssh-key-resource-template.yaml`:
 
+> NOTE:
+> The ConfigMap name needs to be exactly `remote-ssh-key-resource-template`, see [naming the template configmap](../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+
 ```bash
 cat > remote-ssh-key-resource-template.yaml << EOF
 apiVersion: v1

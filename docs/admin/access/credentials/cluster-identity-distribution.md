@@ -27,6 +27,9 @@ the process step-by-step:
 
 1. User creates the following `Credential` and identity objects for the Azure provider in `region1` region:
 
+    > NOTE:
+    > The Secret name needs to follow a pattern, see [credential secret](../../../appendix/appendix-providers.md#credential-secret) for more detail. 
+
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
     kind: Credential

@@ -104,6 +104,9 @@ Capture this output and secure the values it contains. We'll need several of the
 
 In this quickstart we're assuming a self-managed Azure clusters (non-AKS) so create a `Secret` object that stores the `clientSecret` (password) from the Service Principal. Create a YAML file called `azure-cluster-identity-secret.yaml`, as follows, inserting the password for the Service Principal (represented by the placeholder `SP_PASSWORD_SP_PASSWORD` above):
 
+> NOTE:
+> The Secret name needs to be exactly `azure-cluster-identity-secret`, see [credential secret](../appendix/appendix-providers.md#credential-secret) for more detail.
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -255,6 +258,9 @@ credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
 Create a YAML with the specification of our resource-template (and the necessary `StorageClass`) and save it as
 `azure-cluster-identity-resource-template.yaml`
 
+> NOTE:
+> The ConfigMap name needs to be exactly `azure-cluster-identity-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -325,8 +331,6 @@ data:
     volumeBindingMode: WaitForFirstConsumer
     allowVolumeExpansion: true
 ```
-
-Object name needs to be exactly `azure-cluster-identity-resource-template`, `AzureClusterIdentity` object name + `-resource-template` string suffix.
 
 Apply the YAML to your cluster:
 

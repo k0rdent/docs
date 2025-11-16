@@ -141,6 +141,9 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
     Create a YAML with the specification of our resource-template and save it as
     `gcp-cloud-sa-resource-template.yaml`
 
+    > NOTE:
+    > The ConfigMap name needs to be exactly `gcp-cloud-sa-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -164,8 +167,6 @@ Standalone clusters can be deployed on GCP instances. Follow these steps to make
         data:
           cloud-sa.json: {{ index $secret "data" "credentials" }}
     ```
-
-    Object name needs to be exactly `gcp-cloud-sa-resource-template` (credentials `Secret` object name + `-resource-template` string suffix).
 
     Apply the YAML to your cluster:
 
