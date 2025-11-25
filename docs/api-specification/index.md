@@ -20,13 +20,37 @@ hide:
     display: none !important;
   }
 
-  /* Give ReDoc a full-viewport canvas */
-  #redoc-container { height: 100vh; }
-
-  /* Smallify function-name headers in case someone loads this page on a small screen and they hide under the examples pane */
-  #redoc-container h2 {
-    font-size: 1.3em !important;
+  /* Full-bleed page width */
+  .md-header .md-grid,
+  .md-main .md-grid,
+  .md-footer .md-grid {
+    max-width: none;
   }
+
+  /* Remove content padding so ReDoc can span edge-to-edge */
+  .md-content,
+  .md-content__inner {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide footer (prevents the ugly overlap) */
+  .md-footer { display: none !important; }
+
+  /* Ensure sidebars never appear */
+  .md-sidebar--primary,
+  .md-sidebar--secondary {
+    display: none !important;
+  }
+
+  /* ReDoc canvas */
+  #redoc-container {
+    min-height: 100vh;
+    height: 100vh;
+  }
+
+  /* Smallify function-name headers for small screens */
+  #redoc-container h2 { font-size: 1.3em !important; }
 </style>
 
 <!-- Force light theme on THIS page only (non-persistent) -->
@@ -60,4 +84,5 @@ hide:
     Redoc.init(specUrl, { scrollYOffset: 0 }, document.getElementById("redoc-container"));
   })();
 </script>
+
 
