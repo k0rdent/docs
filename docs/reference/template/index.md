@@ -18,6 +18,7 @@ templates shipped with {{{ docsVersionInfo.k0rdentName }}}.
 The templates can have any name. However, since they are immutable, we have adopted a naming convention that includes semantic versioning in the name, as in `template-<major>-<minor>-<patch>`. Below are some examples for each of the templates.
 
 EXAMPLE: An example of a `ProviderTemplate` with its status.
+
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ProviderTemplate
@@ -54,6 +55,7 @@ status:
 ```
 
 EXAMPLE: An example of a `ClusterTemplate` with its status.
+
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterTemplate
@@ -135,6 +137,7 @@ status:
 ```
 
 EXAMPLE: An example of a `ServiceTemplate` with its status.
+
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
@@ -168,6 +171,9 @@ Cluster and Service Templates can be delivered to target namespaces using the `A
 access rules to apply. Each access rule contains the namespaces' definition for delivering templates into and
 the template chains to deliver. Each `ClusterTemplateChain` and `ServiceTemplateChain` contains the supported templates
 and the upgrade sequences for them.
+
+> INFO:
+> The KCM controller copies the specified in the `.spec.accessRules` field objects from the **system namespace** (defaults to `kcm-system`).
 
 The example of `ClusterTemplate` Management:
 
@@ -211,6 +217,7 @@ As a result, the following new objects should be created:
 * `ClusterTemplate` `default/aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` (available for the upgrade from `aws-standalone-cp-0-0-2`)
 
 > NOTE:
+>
 > 1. The target `ClusterTemplate` defined as being available for the upgrade should reference the same helm chart name
 > as the source `ClusterTemplate`. Otherwise, after the upgrade is triggered, the cluster will be removed and then
 > recreated from scratch, even if the objects in the helm chart are the same.

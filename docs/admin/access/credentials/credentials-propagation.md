@@ -40,7 +40,7 @@ the correct `Credential` object.
 
 Since this feature depends on the provider, it's important to review any provider-specific notes and clarifications.
 
-> NOTE: 
+> NOTE:
 > More detailed research notes can be found [here](https://github.com/k0rdent/kcm/issues/293).
 
 ### AWS
@@ -70,12 +70,11 @@ automatically generates the cloud-config required by OpenStack’s cloud-control
 
 For more details, refer to the [KCM OpenStack Credential Propagation doc](https://github.com/k0rdent/kcm/blob/main/docs/dev.md#openstack).
 
-
 ### Adopted clusters
 
-Credentials for adopted clusters consist of a secret containing a kubeconfig file to access the existing kubernetes cluster. 
-The kubeconfig file for the cluster should be contained in the value key of the secret object. The following is an example of 
-a secret that contains the kubeconfig for an adopted cluster. To create this secret, first create or obtain a kubeconfig file 
+Credentials for adopted clusters consist of a secret containing a kubeconfig file to access the existing kubernetes cluster.
+The kubeconfig file for the cluster should be contained in the value key of the secret object. The following is an example of
+a secret that contains the kubeconfig for an adopted cluster. To create this secret, first create or obtain a kubeconfig file
 for the cluster that is being adopted and then run the following command to base64 encode it:
 
 ```bash
@@ -94,6 +93,7 @@ metadata:
   namespace: <namespace>
 type: Opaque
 ```
+
 ## The Credential Distribution System
 
 {{{ docsVersionInfo.k0rdentName }}} provides a mechanism to distribute `Credential` objects across namespaces using the
@@ -106,7 +106,7 @@ Each access rule specifies:
 
 <!-- TODO show an example of the AccessManagement object. -->
 
-The KCM controller copies the specified `Credential` objects from the `system` (defaults to `kcm-system`) namespace
+The KCM controller copies the specified `Credential` objects from the **system namespace** (defaults to `kcm-system`)
 to the target namespaces based on the `accessRules` in the `AccessManagement` spec.
 
 > NOTE:
