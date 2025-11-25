@@ -52,15 +52,15 @@ hide:
   /* Smallify function-name headers for small screens */
   #redoc-container h2 { font-size: 1.3em !important; }
 
-  /* Let long paths & summaries wrap */
-.swagger-ui .opblock-summary-path,
-.swagger-ui .opblock-summary-description,
-.swagger-ui .opblock-tag {
+/* ReDoc sidebar: allow long operation names to wrap */
+.redoc-wrap .menu-content,
+.redoc-wrap .menu-content .menu-item,
+.redoc-wrap .menu-content .menu-item .label,
+.redoc-wrap .menu-content .operation-name,
+.redoc-wrap .menu-content .section-item {
   white-space: normal !important;
-  overflow: visible !important;
-  text-overflow: unset !important;
-  word-break: break-word;      /* break long tokens */
-  overflow-wrap: anywhere;     /* modern wrap helper */
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 </style>
@@ -87,15 +87,25 @@ hide:
 <!-- ReDoc bundle -->
 <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 
-<!-- Initialize ReDoc with a robust spec URL (so this script works for all versions) -->
+<!-- Initialize ReDoc with a robust spec URL (so this script works for all versions) and take control of panel relative widths -->
 <script>
   (function () {
-    // Resolve "../../openapi/accounts.spec.yml" relative to THIS page, safely
     var specUrl = new URL("../openapi/k0rdent-api-1.5.0.json", window.location.href).pathname;
 
-    Redoc.init(specUrl, { scrollYOffset: 0 }, document.getElementById("redoc-container"));
+    Redoc.init(specUrl, {
+      scrollYOffset: 0,
+      theme: {
+        /* widen the left menu (default ~260px) */
+        sidebar: { width: '320px' },        // try 320–360px
+
+        /* make the right examples panel narrower */
+        rightPanel: { width: '30%' }        // try 28–34%
+      }
+    }, document.getElementById("redoc-container"));
   })();
 </script>
+
+
 
 
 
