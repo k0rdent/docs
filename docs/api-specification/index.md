@@ -51,6 +51,18 @@ hide:
 
   /* Smallify function-name headers for small screens */
   #redoc-container h2 { font-size: 1.3em !important; }
+
+  /* Let long paths & summaries wrap */
+.swagger-ui .opblock-summary-path,
+.swagger-ui .opblock-summary-description,
+.swagger-ui .opblock-tag {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;      /* break long tokens */
+  overflow-wrap: anywhere;     /* modern wrap helper */
+}
+
 </style>
 
 <!-- Force light theme on THIS page only (non-persistent) -->
@@ -84,5 +96,6 @@ hide:
     Redoc.init(specUrl, { scrollYOffset: 0 }, document.getElementById("redoc-container"));
   })();
 </script>
+
 
 
