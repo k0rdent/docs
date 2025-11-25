@@ -2,6 +2,7 @@
 hide:
   - navigation
   - toc
+  - feedback
 ---
 
 <!-- Page title for SEO/accessibility; visually hidden -->
@@ -104,6 +105,7 @@ hide:
     }, document.getElementById("redoc-container"));
   })();
 </script>
+
 
 
 
