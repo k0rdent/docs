@@ -91,7 +91,7 @@ hide:
 <!-- Initialize ReDoc with a robust spec URL (so this script works for all versions) and take control of panel relative widths -->
 <script>
   (function () {
-    var specUrl = new URL("../openapi/k0rdent-api-1.5.0.json", window.location.href).pathname;
+    var specUrl = new URL("../openapi/k0rdent-api-main.json", window.location.href).pathname;
 
     Redoc.init(specUrl, {
       scrollYOffset: 0,
