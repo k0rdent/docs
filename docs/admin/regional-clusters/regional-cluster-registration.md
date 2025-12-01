@@ -28,6 +28,9 @@ spec:
 
 ## Region Object with a ClusterDeployment Reference
 
+> NOTE:
+> Regional clusters registered by referencing a ClusterDeployment are available starting from version 1.5.0.
+
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
 kind: Region
