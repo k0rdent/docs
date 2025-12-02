@@ -117,6 +117,46 @@ To apply this option:
       monitoring: true
     opentelemetry-kube-stack:
       clusterName: mothership
+      collectors:
+        daemon:
+          hostNetwork: true
+          observability:
+            metrics:
+              disablePrometheusAnnotations: false
+              enableMetrics: false
+          podAnnotations:
+            prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}
+          config:
+            receivers:
+              prometheus:
+                api_server:
+                  server_config:
+                    endpoint: \${env:OTEL_K8S_NODE_IP}:9090
+              otlp:
+                protocols:
+                  grpc:
+                    endpoint: 127.0.0.1:4317
+                  http:
+                    endpoint: 127.0.0.1:4318
+            service:
+              extensions:
+                - k8s_observer
+                - file_storage/filelogreceiver
+                - file_storage/filelogsyslogreceiver
+                - file_storage/filelogk8sauditreceiver
+                - file_storage/journaldreceiver
+                - basicauth/metrics
+                - basicauth/logs
+                - basicauth/traces
+              telemetry:
+                metrics:
+                  address: \${env:OTEL_K8S_NODE_IP}:8888
+                  readers:
+                    - pull:
+                        exporter:
+                          prometheus:
+                            host: \${env:OTEL_K8S_NODE_IP}
+                            port: 8888
       defaultCRConfig:
         env:
           - name: KOF_VM_USER
@@ -191,6 +231,10 @@ To apply this option:
     EOF
     ```
 
+    > NOTE:
+    > If you create this file directly, make sure to replace `\$` with `$`,
+    > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
+
 2. Install the `kof-collectors` chart to the management cluster:
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
@@ -218,6 +262,18 @@ To apply this option:
       basic_auth: false
     opentelemetry-kube-stack:
       clusterName: mothership
+      collectors:
+        controller-k0s:
+          enabled: false
+        daemon:
+          hostNetwork: false
+          service:
+            extensions:
+              - k8s_observer
+              - file_storage/filelogreceiver
+              - file_storage/filelogsyslogreceiver
+              - file_storage/filelogk8sauditreceiver
+              - file_storage/journaldreceiver
       defaultCRConfig:
         config:
           processors:
