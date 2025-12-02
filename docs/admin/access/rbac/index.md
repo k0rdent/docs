@@ -4,4 +4,5 @@
 
 - [What Roles Do](what-roles-do.md)
 - [Role Definitions](roles-summary.md)
+- [Roles Management](roles-management.md)
 - [Limiting Access](limiting-access.md)

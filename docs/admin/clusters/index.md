@@ -9,3 +9,4 @@ infrastructure choices.  You can also "adopt" Kubernetes clusters created outsid
 - [Updating standalone clusters](update-cluster.md)
 - [Adopting clusters](admin-adopting-clusters.md)
 - [IP Address Management (IPAM)](admin-adopting-clusters.md)
+- [Identity And Authorization Management](cluster-iam-setup.md)
