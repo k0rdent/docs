@@ -5086,7 +5086,8 @@ enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml
 <p>Apply shared configuration for the existing and upcoming regional and child clusters:</p>
 <ul>
 <li>Wait until the value of <code>VALID</code> changes to <code>true</code> for all <code>ServiceTemplate</code> objects:
-    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"> </span>-A
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.status.valid<span class="o">}=</span><span class="nb">true</span><span class="w"> </span>svctmpl<span class="w"> </span>-A<span class="w"> </span>--all
+kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"> </span>-A
 </code></pre></div></li>
 <li>Look through the <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v1.5.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
     and <a href="https://github.com/k0rdent/kof/blob/v1.5.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>

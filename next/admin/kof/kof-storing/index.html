@@ -4942,6 +4942,46 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">  monitoring: true</span>
 <span class="s">opentelemetry-kube-stack:</span>
 <span class="s">  clusterName: mothership</span>
+<span class="s">  collectors:</span>
+<span class="s">    daemon:</span>
+<span class="s">      hostNetwork: true</span>
+<span class="s">      observability:</span>
+<span class="s">        metrics:</span>
+<span class="s">          disablePrometheusAnnotations: false</span>
+<span class="s">          enableMetrics: false</span>
+<span class="s">      podAnnotations:</span>
+<span class="s">        prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}</span>
+<span class="s">      config:</span>
+<span class="s">        receivers:</span>
+<span class="s">          prometheus:</span>
+<span class="s">            api_server:</span>
+<span class="s">              server_config:</span>
+<span class="s">                endpoint: \${env:OTEL_K8S_NODE_IP}:9090</span>
+<span class="s">          otlp:</span>
+<span class="s">            protocols:</span>
+<span class="s">              grpc:</span>
+<span class="s">                endpoint: 127.0.0.1:4317</span>
+<span class="s">              http:</span>
+<span class="s">                endpoint: 127.0.0.1:4318</span>
+<span class="s">        service:</span>
+<span class="s">          extensions:</span>
+<span class="s">            - k8s_observer</span>
+<span class="s">            - file_storage/filelogreceiver</span>
+<span class="s">            - file_storage/filelogsyslogreceiver</span>
+<span class="s">            - file_storage/filelogk8sauditreceiver</span>
+<span class="s">            - file_storage/journaldreceiver</span>
+<span class="s">            - basicauth/metrics</span>
+<span class="s">            - basicauth/logs</span>
+<span class="s">            - basicauth/traces</span>
+<span class="s">          telemetry:</span>
+<span class="s">            metrics:</span>
+<span class="s">              address: \${env:OTEL_K8S_NODE_IP}:8888</span>
+<span class="s">              readers:</span>
+<span class="s">                - pull:</span>
+<span class="s">                    exporter:</span>
+<span class="s">                      prometheus:</span>
+<span class="s">                        host: \${env:OTEL_K8S_NODE_IP}</span>
+<span class="s">                        port: 8888</span>
 <span class="s">  defaultCRConfig:</span>
 <span class="s">    env:</span>
 <span class="s">      - name: KOF_VM_USER</span>
@@ -5015,6 +5055,12 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">        url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+If you create this file directly, make sure to replace <code>\$</code> with <code>$</code>,
+and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</p>
+</div>
 </li>
 <li>
 <p>Install the <code>kof-collectors</code> chart to the management cluster:
@@ -5042,6 +5088,18 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">  basic_auth: false</span>
 <span class="s">opentelemetry-kube-stack:</span>
 <span class="s">  clusterName: mothership</span>
+<span class="s">  collectors:</span>
+<span class="s">    controller-k0s:</span>
+<span class="s">      enabled: false</span>
+<span class="s">    daemon:</span>
+<span class="s">      hostNetwork: false</span>
+<span class="s">      service:</span>
+<span class="s">        extensions:</span>
+<span class="s">          - k8s_observer</span>
+<span class="s">          - file_storage/filelogreceiver</span>
+<span class="s">          - file_storage/filelogsyslogreceiver</span>
+<span class="s">          - file_storage/filelogk8sauditreceiver</span>
+<span class="s">          - file_storage/journaldreceiver</span>
 <span class="s">  defaultCRConfig:</span>
 <span class="s">    config:</span>
 <span class="s">      processors:</span>
