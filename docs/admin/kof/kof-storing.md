@@ -131,7 +131,7 @@ To apply this option:
               prometheus:
                 api_server:
                   server_config:
-                    endpoint: ${env:OTEL_K8S_NODE_IP}:9090
+                    endpoint: \${env:OTEL_K8S_NODE_IP}:9090
               otlp:
                 protocols:
                   grpc:
@@ -150,12 +150,12 @@ To apply this option:
                 - basicauth/traces
               telemetry:
                 metrics:
-                  address: ${env:OTEL_K8S_NODE_IP}:8888
+                  address: \${env:OTEL_K8S_NODE_IP}:8888
                   readers:
                     - pull:
                         exporter:
                           prometheus:
-                            host: ${env:OTEL_K8S_NODE_IP}
+                            host: \${env:OTEL_K8S_NODE_IP}
                             port: 8888
       defaultCRConfig:
         env:
@@ -230,6 +230,10 @@ To apply this option:
             url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
     EOF
     ```
+
+    > NOTE:
+    > If you create this file directly, make sure to replace `\$` with `$`,
+    > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
 2. Install the `kof-collectors` chart to the management cluster:
     ```bash
