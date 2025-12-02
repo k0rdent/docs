@@ -262,6 +262,7 @@ and apply this example, or use it as a reference:
 9. Apply shared configuration for the existing and upcoming regional and child clusters:
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
         ```bash
+        kubectl wait --for=jsonpath={.status.valid}=true svctmpl -A --all
         kubectl get svctmpl -A
         ```
     * Look through the `MultiClusterService` objects in the [kof-regional](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
