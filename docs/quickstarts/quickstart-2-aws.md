@@ -267,9 +267,7 @@ metadata:
     k0rdent.mirantis.com/component: "kcm"
 spec:
   secretRef: aws-cluster-identity-secret
-  allowedNamespaces:
-    selector:
-      matchLabels: {}
+  allowedNamespaces: {}
 ```
 
 Note that the `spec.secretRef` is the same as the `metadata.name` of the secret we just created.

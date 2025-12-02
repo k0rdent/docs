@@ -325,9 +325,7 @@ Now go ahead and prepare the cluster.
         k0rdent.mirantis.com/component: "kcm"
     spec:
       secretRef: aws-cluster-identity-secret
-      allowedNamespaces:
-        selector:
-          matchLabels: {}
+      allowedNamespaces: {}
     ```
 
     Notice that the `secretRef` references the `Secret` you created in the previous step.
