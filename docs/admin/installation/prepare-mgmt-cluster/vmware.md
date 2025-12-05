@@ -62,7 +62,7 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     The `Secret` stores the username and password for your vSphere instance. Save the `Secret` YAML in a file named `vsphere-cluster-identity-secret.yaml`:
 
     > NOTE:
-    > The Secret name needs to follow a pattern, see [credential secret](../../../appendix/appendix-providers.md#credential-secret) for more detail.
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
     
     ```yaml
     apiVersion: v1
