@@ -54,6 +54,9 @@
             auth_type: <OS_AUTH_TYPE>
     ```
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+
     Apply the YAML to your cluster:
 
     ```bash
@@ -96,7 +99,7 @@
     Create a YAML file with the specification of the resource-template and save it as `openstack-cluster-identity-resource-template.yaml`:
 
     > NOTE:
-    > The ConfigMap name needs to be exactly `openstack-cloud-config-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+    > The `ConfigMap` name, in this case, needs to be exactly `openstack-cloud-config-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
     ```yaml
     apiVersion: v1
@@ -281,3 +284,4 @@
     ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-openstack-cluster-deployment" deleted
     ```
+
