@@ -4816,6 +4816,11 @@ a <code>Region</code> object. There are two ways to register a regional cluster:
 <li>By providing a kubeconfig <code>Secret</code> in the system namespace</li>
 <li>By referencing an existing <code>ClusterDeployment</code> to onboard it as a regional cluster</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+The name of the <code>Region</code> object must not exceed 22 characters.</p>
+</div>
 <h2 id="region-object-with-a-kubeconfig-secret-reference">Region Object with a Kubeconfig Secret Reference<a class="headerlink" href="#region-object-with-a-kubeconfig-secret-reference" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
@@ -4831,6 +4836,11 @@ a <code>Region</code> object. There are two ways to register a regional cluster:
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos</span>
 </code></pre></div>
 <h2 id="region-object-with-a-clusterdeployment-reference">Region Object with a ClusterDeployment Reference<a class="headerlink" href="#region-object-with-a-clusterdeployment-reference" title="Permanent link">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Regional clusters registered by referencing a <code>ClusterDeployment</code> are available starting from version 1.5.0.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
 <span class="nt">metadata</span><span class="p">:</span>
