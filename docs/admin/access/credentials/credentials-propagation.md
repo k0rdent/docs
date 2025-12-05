@@ -21,7 +21,7 @@ render the CCM template with all necessary data from the CAPI provider resources
 > NOTE:
 > CCM template examples can be found in `*-credentials.yaml` [here](https://github.com/k0rdent/kcm/tree/main/config/dev).
 > Look for the `ConfigMap` object that has the `projectsveltos.io/template: "true"`
-> annotation and `*-resource-template` as the object name. This ConfigMap name needs to follow a pattern, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+> annotation and `*-resource-template` as the object name. This `ConfigMap` name needs to follow a specific pattern. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 This eliminates the need to pass anything credentials-related to `cloud-init`
 and makes it possible to rotate credentials automatically without the need for
@@ -175,7 +175,7 @@ spec:
 and `AWSClusterStaticIdentity` references the `aws-cluster-identity-secret` secret:
 
 > NOTE:
-> The Secret name needs to follow a pattern, see [credential secret](../../../appendix/appendix-providers.md#credential-secret) for more detail. 
+> The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
 
 ```yaml
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
