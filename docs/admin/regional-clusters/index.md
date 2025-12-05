@@ -4,11 +4,12 @@
 > Regional clusters are available starting from version 1.4.0.
 
 > WARNING:
-> There are some limitations in deploying regional clusters, which will be addressed in upcoming
-> {{{ docsVersionInfo.k0rdentName }}} releases:
+> There are some limitations in deploying regional clusters:
 >
-> * Automated credential distribution is not yet supported. You must manually create the corresponding `ClusterIdentity`
-> objects (e.g., `Secrets`, `AWSClusterIdentity`) on each regional cluster.
+> * Automated credential distribution is supported starting from version 1.5.0 (see
+> [The Credential Distribution System](../access/credentials/credentials-propagation.md#the-credential-distribution-system)).
+> Before that, you must manually create the corresponding `ClusterIdentity` objects (e.g., `Secrets`, `AWSClusterIdentity`)
+> on each regional cluster.
 > * The kubeconfig `Secret` must exist in the system namespace (default: `kcm-system`) when registering a new region.
 
 {{{ docsVersionInfo.k0rdentName }}} can manage thousands of clusters, potentially over multiple clouds and infrastructure domains. 
