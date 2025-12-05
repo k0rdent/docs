@@ -27,6 +27,9 @@ the process step-by-step:
 
 1. User creates the following `Credential` and identity objects for the Azure provider in `region1` region:
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
     kind: Credential
@@ -134,5 +137,6 @@ a `Secret` with the name defined under `spec.clientSecret.name` and the namespac
 > Cluster Identity distribution will not work if the ProviderInterface for a particular provider does not exist or
 > does not have `spec.clusterIdentities` field defined. The KCM controller will not fail, but it will not create any cluster
 > identity resources automatically. You will have to create it manually.
+
 
 

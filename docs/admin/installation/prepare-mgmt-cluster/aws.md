@@ -292,6 +292,9 @@ Now go ahead and prepare the cluster.
 
     Create a YAML file called `aws-cluster-identity-secret.yaml` and add the following text, including the `AccessKeyId` and `SecretAccessKey` you created in the previous step:
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -339,6 +342,9 @@ Now go ahead and prepare the cluster.
 11. Create the Cluster Identity resource template `ConfigMap`
 
     Now we create Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
+
+    > NOTE:
+    > The `ConfigMap` name, in this case, needs to be exactly `aws-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
     ```yaml
     apiVersion: v1
@@ -455,4 +461,5 @@ Now go ahead and prepare the cluster.
     ```bash
     kubectl delete clusterdeployments my-aws-clusterdeployment1 
     ```
+
 

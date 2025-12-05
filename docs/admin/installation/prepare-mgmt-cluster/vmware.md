@@ -61,6 +61,9 @@ To enable users to deploy child clusers on vSphere, follow these steps:
 
     The `Secret` stores the username and password for your vSphere instance. Save the `Secret` YAML in a file named `vsphere-cluster-identity-secret.yaml`:
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+    
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -142,6 +145,9 @@ To enable users to deploy child clusers on vSphere, follow these steps:
     Create a YAML with the specification of our resource-template and save it as
     `vsphere-cluster-identity-resource-template.yaml`
 
+    > NOTE:
+    > The ConfigMap name needs to be exactly `vsphere-cluster-identity-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -207,7 +213,6 @@ To enable users to deploy child clusers on vSphere, follow these steps:
                   - ${VSPHERE_DATACENTER}
                 server: {{ $cluster.spec.server }}
     ```
-    Object name needs to be exactly `vsphere-cluster-identity-resource-template`, `VSphereClusterIdentity` object name + `-resource-template` string suffix.
 
     Apply the YAML to your cluster:
 

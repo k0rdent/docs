@@ -94,6 +94,9 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     The `Secret` stores the `clientSecret` (password) from the Service Principal.
     Save the `Secret` YAML in a file called `azure-cluster-identity-secret.yaml`:
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -167,9 +170,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
         namespace: kcm-system
     ```
 
-    You're referencing the `AzureClusterIdentity` object you just created, so make sure that `.spec.name` matches 
-    `.metadata.name` of that object. Also, note that while the overall object's `kind` is `Credential`, the 
-    `.spec.identityRef.kind` must be `AzureClusterIdentity` to match that object.
+    You're referencing the `AzureClusterIdentity` object you just created, so make sure that `.spec.name` matches `.metadata.name` of that object.
 
     Apply the YAML to your cluster:
 
@@ -184,6 +185,9 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
 
     Create a YAML with the specification of our resource-template and save it as
     `azure-cluster-identity-resource-template.yaml`
+
+    > NOTE:
+    > The `ConfigMap` name, in this case, needs to be exactly `azure-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
     ```yaml
     apiVersion: v1
@@ -242,8 +246,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
         data:
           cloud-config: {{ $cloudConfig | toJson | b64enc }}
     ```
-    Object name needs to be exactly `azure-cluster-identity-resource-template.yaml`, `AzureClusterIdentity` object name + `-resource-template` string suffix.
-
+    
     Apply the YAML to your cluster:
 
     ```bash
@@ -362,3 +365,4 @@ Now you're ready to deploy the cluster.
     ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
     ```
+

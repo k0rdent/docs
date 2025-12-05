@@ -4,6 +4,9 @@ In order to pass credentials to {{{ docsVersionInfo.k0rdentName }}} so it can ta
 
 1. The lead platform engineer, or whoever has access to the actual provider credentials, creates a `Secret` that includes that information. For example, for an AWS cluster, it might look like this:
 
+    > NOTE:
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -94,5 +97,6 @@ In order to pass credentials to {{{ docsVersionInfo.k0rdentName }}} so it can ta
     access to the credentials. Thus credentials could be used by engineers
     without a need to have access to actual credentials or underlying resources,
     like `ClusterIdentity`.
+
 
 

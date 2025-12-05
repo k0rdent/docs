@@ -230,6 +230,9 @@ You should see something like this. It's important to save these credentials sec
 
 Next, we create a `Secret` containing credentials for the {{{ docsVersionInfo.k0rdentName }}} user and apply this to the management cluster running {{{ docsVersionInfo.k0rdentName }}}, in the `kcm-system` namespace. Important: if you use another namespace, {{{ docsVersionInfo.k0rdentName }}} will be unable to read the credentials. To do this, create the following YAML in a file called `aws-cluster-identity-secret.yaml`:
 
+> NOTE:
+> The `Secret` name, in this case, needs to be exactly `aws-cluster-identity-secret`. See [credential secret](../appendix/appendix-providers.md#credential-secret) for  details.
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -307,6 +310,9 @@ kubectl apply -f aws-cluster-identity-cred.yaml -n kcm-system
 ## Create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template ConfigMap
 
 Now we create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
+
+> NOTE:
+> The `ConfigMap` name, in this case, needs to be exactly `aws-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 ```yaml
 apiVersion: v1
