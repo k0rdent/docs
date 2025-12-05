@@ -105,7 +105,7 @@ Capture this output and secure the values it contains. We'll need several of the
 In this quickstart we're assuming a self-managed Azure clusters (non-AKS) so create a `Secret` object that stores the `clientSecret` (password) from the Service Principal. Create a YAML file called `azure-cluster-identity-secret.yaml`, as follows, inserting the password for the Service Principal (represented by the placeholder `SP_PASSWORD_SP_PASSWORD` above):
 
 > NOTE:
-> The Secret name needs to be exactly `azure-cluster-identity-secret`, see [credential secret](../appendix/appendix-providers.md#credential-secret) for more detail.
+> The `Secret` name, in this case, needs to be exactly `azure-cluster-identity-secret`. See [credential secret](../appendix/appendix-providers.md#credential-secret) for details.
 
 ```yaml
 apiVersion: v1
@@ -259,7 +259,7 @@ Create a YAML with the specification of our resource-template (and the necessary
 `azure-cluster-identity-resource-template.yaml`
 
 > NOTE:
-> The ConfigMap name needs to be exactly `azure-cluster-identity-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+> The `ConfigMap` name, in this case, needs to be exactly `azure-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 ```yaml
 apiVersion: v1
