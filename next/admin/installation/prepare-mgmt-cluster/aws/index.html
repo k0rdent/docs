@@ -4992,6 +4992,11 @@ aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span cl
 <li>
 <p>Create the IAM Credentials <code>Secret</code> on the k0rdent Management Cluster</p>
 <p>Create a YAML file called <code>aws-cluster-identity-secret.yaml</code> and add the following text, including the <code>AccessKeyId</code> and <code>SecretAccessKey</code> you created in the previous step:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5029,6 +5034,11 @@ aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span cl
 <li>
 <p>Create the Cluster Identity resource template <code>ConfigMap</code></p>
 <p>Now we create Cluster Identity resource template <code>ConfigMap</code>. As in prior steps, create a YAML file called <code>aws-cluster-identity-resource-template.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>aws-cluster-identity-resource-template</code>. See <a href="../../../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>

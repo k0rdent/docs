@@ -4834,6 +4834,11 @@ with the cloud.</p>
 <p>Create the <code>Secret</code> with your AWS cloud credential</p>
 <p>Create a YAML file called <code>aws-cluster-identity-secret.yaml</code> and add the following text, replacing the
 <code>EXAMPLE_ACCESS_KEY_ID</code> and <code>EXAMPLE_SECRET_ACCESS_KEY</code> with corresponding cloud values:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>Secret</code> name needs to follow a specific pattern. See <a href="../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4878,6 +4883,11 @@ Create <code>ClusterIdentity</code> resource template <code>ConfigMap</code> in 
 <strong>not the management cluster</strong>.</p>
 </div>
 <p>Now we create <code>ClusterIdentity</code> resource template <code>ConfigMap</code>. As in prior steps, create a YAML file called <code>aws-cluster-identity-resource-template.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name needs to be exactly the <code>.spec.identityRef.name</code> from the <code>Credential</code> object + the <code>-resource-template</code> string suffix. See <a href="../../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>

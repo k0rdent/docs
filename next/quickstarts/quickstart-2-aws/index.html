@@ -5224,6 +5224,11 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 
 <h2 id="create-iam-credentials-secret-on-the-management-cluster">Create IAM credentials secret on the management cluster<a class="headerlink" href="#create-iam-credentials-secret-on-the-management-cluster" title="Permanent link">#</a></h2>
 <p>Next, we create a <code>Secret</code> containing credentials for the k0rdent user and apply this to the management cluster running k0rdent, in the <code>kcm-system</code> namespace. Important: if you use another namespace, k0rdent will be unable to read the credentials. To do this, create the following YAML in a file called <code>aws-cluster-identity-secret.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>Secret</code> name, in this case, needs to be exactly <code>aws-cluster-identity-secret</code>. See <a href="../../appendix/appendix-providers/#credential-secret">credential secret</a> for  details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5277,6 +5282,11 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 </code></pre></div>
 <h2 id="create-the-k0rdent-cluster-identity-resource-template-configmap">Create the k0rdent Cluster Identity resource template ConfigMap<a class="headerlink" href="#create-the-k0rdent-cluster-identity-resource-template-configmap" title="Permanent link">#</a></h2>
 <p>Now we create the k0rdent Cluster Identity resource template <code>ConfigMap</code>. As in prior steps, create a YAML file called <code>aws-cluster-identity-resource-template.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>aws-cluster-identity-resource-template</code>. See <a href="../../../appendix/appendix-providers.md#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>

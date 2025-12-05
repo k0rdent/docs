@@ -5085,6 +5085,11 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 <p>Capture this output and secure the values it contains. We'll need several of these in a moment.</p>
 <h2 id="create-a-secret-object-with-the-azure-credentials">Create a Secret object with the Azure credentials<a class="headerlink" href="#create-a-secret-object-with-the-azure-credentials" title="Permanent link">#</a></h2>
 <p>In this quickstart we're assuming a self-managed Azure clusters (non-AKS) so create a <code>Secret</code> object that stores the <code>clientSecret</code> (password) from the Service Principal. Create a YAML file called <code>azure-cluster-identity-secret.yaml</code>, as follows, inserting the password for the Service Principal (represented by the placeholder <code>SP_PASSWORD_SP_PASSWORD</code> above):</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>Secret</code> name, in this case, needs to be exactly <code>azure-cluster-identity-secret</code>. See <a href="../../appendix/appendix-providers/#credential-secret">credential secret</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5205,6 +5210,11 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <h2 id="create-the-configmap-resource-template-object">Create the <code>ConfigMap</code> resource-template Object<a class="headerlink" href="#create-the-configmap-resource-template-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our resource-template (and the necessary <code>StorageClass</code>) and save it as
 <code>azure-cluster-identity-resource-template.yaml</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-cluster-identity-resource-template</code>. See <a href="../../../appendix/appendix-providers.md#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5274,7 +5284,6 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="w">    </span><span class="no">volumeBindingMode: WaitForFirstConsumer</span>
 <span class="w">    </span><span class="no">allowVolumeExpansion: true</span>
 </code></pre></div>
-<p>Object name needs to be exactly <code>azure-cluster-identity-resource-template</code>, <code>AzureClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-resource-template.yaml
 </code></pre></div>

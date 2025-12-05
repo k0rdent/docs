@@ -4733,6 +4733,11 @@ For example, <code>userName@domainName</code>. If you don't specify the domain n
 the vSphere Container Storage Plug-in will not function properly.</p>
 </div>
 <p>The <code>Secret</code> stores the username and password for your vSphere instance. Save the <code>Secret</code> YAML in a file named <code>vsphere-cluster-identity-secret.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4797,7 +4802,12 @@ Again, <code>.spec.identityRef.name</code> must match the <code>.metadata.name</
 <p>Create the <code>ConfigMap</code> resource-template Object</p>
 <p>Create a YAML with the specification of our resource-template and save it as
 <code>vsphere-cluster-identity-resource-template.yaml</code></p>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The ConfigMap name needs to be exactly <code>vsphere-cluster-identity-resource-template</code>, see <a href="../../../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for more detail.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity-resource-template</span>
@@ -4861,7 +4871,6 @@ Again, <code>.spec.identityRef.name</code> must match the <code>.metadata.name</
 <span class="w">              </span><span class="no">- ${VSPHERE_DATACENTER}</span>
 <span class="w">            </span><span class="no">server: {{ $cluster.spec.server }}</span>
 </code></pre></div>
-Object name needs to be exactly <code>vsphere-cluster-identity-resource-template</code>, <code>VSphereClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>vsphere-cluster-identity-resource-template.yaml
 </code></pre></div>

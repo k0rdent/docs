@@ -5140,6 +5140,11 @@ Apply the YAML to your cluster:</p>
 <h2 id="create-the-configmap-resource-template-object">Create the <code>ConfigMap</code> resource-template Object<a class="headerlink" href="#create-the-configmap-resource-template-object" title="Permanent link">#</a></h2>
 <p>Create a YAML with the specification of our resource-template and save it as
 <code>gcp-cloud-sa-resource-template.yaml</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>gcp-cloud-sa-identity-resource-template</code>. See <a href="../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5162,7 +5167,6 @@ Apply the YAML to your cluster:</p>
 <span class="w">    </span><span class="no">data:</span>
 <span class="w">      </span><span class="no">cloud-sa.json: {{ index $secret &quot;data&quot; &quot;credentials&quot; }}</span>
 </code></pre></div>
-<p>Object name needs to be exactly <code>gcp-cloud-sa-resource-template</code> (credentials <code>Secret</code> object name + <code>-resource-template</code> string suffix).</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cloud-sa-resource-template.yaml
 </code></pre></div>

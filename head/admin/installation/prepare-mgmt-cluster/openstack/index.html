@@ -4727,6 +4727,11 @@ where appropriate. Save this as <code>openstack-cloud-config.yaml</code>:</p>
 <span class="w">        </span><span class="no">identity_api_version: &lt;OS_IDENTITY_API_VERSION&gt;</span>
 <span class="w">        </span><span class="no">auth_type: &lt;OS_AUTH_TYPE&gt;</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+</div>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cloud-config.yaml
 </code></pre></div>
@@ -4759,6 +4764,11 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <li>
 <p>Create the ConfigMap resource-template object</p>
 <p>Create a YAML file with the specification of the resource-template and save it as <code>openstack-cluster-identity-resource-template.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>openstack-cloud-config-resource-template</code>. See <a href="../../../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4832,7 +4842,6 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <span class="w">        </span><span class="no">public-network-name=&quot;{{ $network_name }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
 </code></pre></div>
-<p>Object needs to be named <code>openstack-cluster-identity-resource-template.yaml</code>, <code>OpenStackClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cluster-identity-resource-template.yaml
 </code></pre></div>

@@ -4964,6 +4964,11 @@
 </code></pre></div></p>
 <h2 id="create-the-cluster-identity-resource-template-configmap">Create the Cluster Identity resource template ConfigMap<a class="headerlink" href="#create-the-cluster-identity-resource-template-configmap" title="Permanent link">#</a></h2>
 <p>Now we create the k0rdent <code>ClusterIdentity</code> resource template <code>ConfigMap</code>. As in prior steps, create a YAML file called <code>remote-ssh-key-resource-template.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>remote-ssh-key-resource-template</code>. See <a href="../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
 <p><div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;<span class="w"> </span>remote-ssh-key-resource-template.yaml<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 <span class="s">apiVersion: v1</span>
 <span class="s">kind: ConfigMap</span>

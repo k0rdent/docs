@@ -4753,6 +4753,11 @@ like passwords. Do not share them or check them into a repository.</p>
 <p>Use the password to create a <code>Secret</code> object</p>
 <p>The <code>Secret</code> stores the <code>clientSecret</code> (password) from the Service Principal.
 Save the <code>Secret</code> YAML in a file called <code>azure-cluster-identity-secret.yaml</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4812,9 +4817,7 @@ the name of that <code>Secret</code>.</p>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity</span>
 <span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 </code></pre></div>
-<p>You're referencing the <code>AzureClusterIdentity</code> object you just created, so make sure that <code>.spec.name</code> matches 
-<code>.metadata.name</code> of that object. Also, note that while the overall object's <code>kind</code> is <code>Credential</code>, the 
-<code>.spec.identityRef.kind</code> must be <code>AzureClusterIdentity</code> to match that object.</p>
+<p>You're referencing the <code>AzureClusterIdentity</code> object you just created, so make sure that <code>.spec.name</code> matches <code>.metadata.name</code> of that object.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-cred.yaml
 </code></pre></div>
@@ -4825,7 +4828,12 @@ the name of that <code>Secret</code>.</p>
 <p>Create the <code>ConfigMap</code> resource-template Object</p>
 <p>Create a YAML with the specification of our resource-template and save it as
 <code>azure-cluster-identity-resource-template.yaml</code></p>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-cluster-identity-resource-template</code>. See <a href="../../../../appendix/appendix-providers/#naming-the-template-configmap">naming the template configmap</a> for details.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity-resource-template</span>
@@ -4881,7 +4889,6 @@ the name of that <code>Secret</code>.</p>
 <span class="w">    </span><span class="no">data:</span>
 <span class="w">      </span><span class="no">cloud-config: {{ $cloudConfig | toJson | b64enc }}</span>
 </code></pre></div>
-Object name needs to be exactly <code>azure-cluster-identity-resource-template.yaml</code>, <code>AzureClusterIdentity</code> object name + <code>-resource-template</code> string suffix.</p>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>azure-cluster-identity-resource-template.yaml
 </code></pre></div>
