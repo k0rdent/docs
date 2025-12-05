@@ -95,7 +95,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     Save the `Secret` YAML in a file called `azure-cluster-identity-secret.yaml`:
 
     > NOTE:
-    > The Secret name needs to follow a pattern, see [credential secret](../../../appendix/appendix-providers.md#credential-secret) for more detail. 
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
 
     ```yaml
     apiVersion: v1
@@ -187,7 +187,7 @@ Standalone clusters can be deployed on Azure instances. Follow these steps to ma
     `azure-cluster-identity-resource-template.yaml`
 
     > NOTE:
-    > The ConfigMap name needs to be exactly `azure-cluster-identity-resource-template`, see [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+    > The `ConfigMap` name, in this case, needs to be exactly `azure-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
     ```yaml
     apiVersion: v1
@@ -365,3 +365,4 @@ Now you're ready to deploy the cluster.
     ```console { .no-copy }
     clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted
     ```
+
