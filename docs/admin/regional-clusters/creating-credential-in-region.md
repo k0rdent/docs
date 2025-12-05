@@ -40,7 +40,7 @@ with the cloud.
 `EXAMPLE_ACCESS_KEY_ID` and `EXAMPLE_SECRET_ACCESS_KEY` with corresponding cloud values:
 
     > NOTE:
-    > The Secret name needs to follow a pattern, see [credential secret](../../appendix/appendix-providers.md#credential-secret) for more detail. 
+    > The `Secret` name needs to follow a specific pattern. See [credential secret](../../appendix/appendix-providers.md#credential-secret) for details. 
 
     ```yaml
     apiVersion: v1
@@ -93,7 +93,7 @@ with the cloud.
    Now we create `ClusterIdentity` resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
 
   > NOTE:
-  > The ConfigMap name needs to be exactly `.spec.identityRef.name` from Credential object + `-resource-template` string suffix. See [naming the template configmap](../../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+  > The `ConfigMap` name needs to be exactly the `.spec.identityRef.name` from the `Credential` object + the `-resource-template` string suffix. See [naming the template configmap](../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
    ```yaml
    apiVersion: v1
