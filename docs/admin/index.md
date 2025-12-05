@@ -114,16 +114,19 @@ The main difference is that {{{ docsVersionInfo.k0rdentName }}}'s way of represe
 The {{{ docsVersionInfo.k0rdentName }}} initialization process involves tools such as Helm and FluxCD.
 
 1. [`helm install kcm`](installation/install-k0rdent.md) brings up the bootstrap components (yellow in the above diagram).
-1. `kcm-controller-manager` sets up webhooks to validate its `CustomResource` objects, then cert-manager handles the webhooks’ certificates.
-1. `kcm-controller-manager` generates a `Release` object corresponding to the KCM helm chart version.
-1. `kcm-controller-manager` (or rather the [release-controller](https://github.com/k0rdent/kcm/blob/main/internal/controller/release_controller.go) inside it) generates template objects (`ProviderTemplate`/`ClusterTemplate`/`ServiceTemplate`) corresponding to a `Release` to be further processed.
-1. `kcm-controller-manager` generates a `HelmRelease` object for every standard template. Note that this includes the KCM helm chart itself.
-1. [Flux](https://github.com/fluxcd/flux2) (source-controller and helm-controller pods) reconciles the *HelmRelease* objects. In other words, it installs all the helm charts referred to in the templates.
+2. `kcm-controller-manager` sets up webhooks to validate its `CustomResource` objects, then cert-manager handles the webhooks’ certificates.
+3. `kcm-controller-manager` generates a `Release` object corresponding to the KCM helm chart version.
+4. `kcm-controller-manager` (or rather the [release-controller](https://github.com/k0rdent/kcm/blob/main/internal/controller/release_controller.go) inside it) generates template objects (`ProviderTemplate`/`ClusterTemplate`/`ServiceTemplate`) corresponding to a `Release` to be further processed.
+5. `kcm-controller-manager` generates a `HelmRelease` object for every standard template. Note that this includes the KCM helm chart itself.
+6. [Flux](https://github.com/fluxcd/flux2) (source-controller and helm-controller pods) reconciles the *HelmRelease* objects. In other words, it installs all the helm charts referred to in the templates.
 **After this point, the deployment is completely controlled by Flux.**
-1. `kcm-controller-manager` creates a `Management` object that refers to the above `Release` and the `ProviderTemplate` objects.
+7. `kcm-controller-manager` creates a `Management` object that refers to the above `Release` and the `ProviderTemplate` objects.
 The `Management` object represents the {{{ docsVersionInfo.k0rdentName }}} management cluster as a whole.
 The management cluster Day-2 operations (such as [upgrade](upgrade/index.md)) are  executed by manipulating the `Release` and `Management` objects.
-1. `kcm-controller-manager` generates an empty `AccessManagement` object. `AccessManagement` defines [access rules](../reference/template/index.md#template-life-cycle-management) for `ClusterTemplate`/`ServiceTemplate` propagation across user namespaces. Further, the `AccessManagement` might be edited and used along with admin-created `ClusterTemplateChain` and `ServiceTemplateChain` objects.
+8. `kcm-controller-manager` generates an empty `AccessManagement` object. `AccessManagement` defines
+[access rules](access/accessmanagement.md) for `ClusterTemplate`, `ServiceTemplate`, `Credential` and
+`ClusterAuthentication` propagation across user namespaces. Further, the `AccessManagement` might be edited and used
+along with admin-created `ClusterTemplateChain`, `ServiceTemplateChain`, `Credential` and `ClusterAuthentication` objects.
 
 This Administration Guide provides information on:
 

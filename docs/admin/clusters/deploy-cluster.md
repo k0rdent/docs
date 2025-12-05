@@ -6,7 +6,8 @@ A cluster deployment typically involves:
 
 1. Setting up credentials for the infrastructure provider (for example, AWS, vSphere).
 2. Choosing a template that defines the desired cluster configuration (for example, number of nodes, instance types).
-3. Submitting the configuration for deployment and monitoring the process.
+3. Cluster Authentication setup (optional).
+4. Submitting the configuration for deployment and monitoring the process.
 
 Follow these steps to deploy a standalone Kubernetes cluster tailored to your specific needs:
 
@@ -73,12 +74,16 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}} -n kcm-system
     ```
 
-3. Create a ClusterDeployment YAML Configuration
+3. [Optional] Create `ClusterAuthentication` object to configure authentication for the kubernetes cluster.
+   For details about the IAM configuration, see [Cluster Identity and Authorization Management](cluster-iam-setup.md).
+
+5. Create a ClusterDeployment YAML Configuration
 
     The `ClusterDeployment` object is the main configuration file that defines your cluster's specifications. It includes:
 
     * The template to use
     * The credentials for the infrastructure provider
+    * The name of the ClusterAuthentication object with cluster authentication configuration (optional)
     * Optional customizations such as instance types, regions, and networking
 
     Create a `ClusterDeployment` configuration in a YAML file, following this structure:
@@ -92,6 +97,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     spec:
       template: <template-name>
       credential: <infrastructure-provider-credential-name>
+      clusterAuth: <cluster-authentication-name>
       dryRun: <"true" or "false" (default: "false")>
       cleanupOnDeletion: <"true" or "false" (default: "false")>
       config:
@@ -109,6 +115,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     spec:
       template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-credential
+      clusterAuth: auth-config-dex
       dryRun: false
       config:
         clusterLabels: {}
@@ -121,7 +128,11 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
           rootVolumeSize: 32
     ```
 
-    Note that the `.spec.credential` value should match the `.metadata.name` value of a created `Credential` object.
+    > NOTE
+    > * The `.spec.credential` value should match the `.metadata.name` value of a created `Credential` object.
+    > * The `.spec.clusterAuth` value should match the `.metadata.name` value of the `ClusterAuthentication` object.
+    > For more information about authentication configuration in {{{ docsVersionInfo.k0rdentName }}} follow
+    > [Cluster Identity and Authorization Management](cluster-iam-setup.md).
 
     > TIP:
     > If automatic cleanup of potentially orphaned *LoadBalancer Services* and *Storage devices* during deletion of
@@ -129,7 +140,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     > This is a best-effort cleanup: if there is no possibility to acquire a managed cluster's kubeconfig,
     > the cleanup will **not** happen.
 
-4. Apply the Configuration
+6. Apply the Configuration
 
     Once the `ClusterDeployment` configuration is ready, apply it to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
 
@@ -139,7 +150,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     This step submits your deployment request to {{{ docsVersionInfo.k0rdentName }}}. If you've set `dryRun` to `true` you can observe what would happen. Otherwise, {{{ docsVersionInfo.k0rdentName }}} will go ahead and begin provisioning the necessary infrastructure.
 
-5. Verify Deployment Status
+7. Verify Deployment Status
 
     After submitting the configuration, verify that the `ClusterDeployment` object has been created successfully:
 
@@ -149,7 +160,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     The output shows the current status and any errors.
 
-6. Monitor Provisioning
+8. Monitor Provisioning
 
     {{{ docsVersionInfo.k0rdentName }}} will now start provisioning resources (for example, VMs and networks) and setting up the cluster. To monitor this process, run:
 
@@ -164,7 +175,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     clusterctl describe cluster <cluster-name> -n <namespace> --show-conditions all
     ```
 
-7. Retrieve the Kubernetes Configuration
+9. Retrieve the Kubernetes Configuration
 
     When provisioning is complete, retrieve the kubeconfig file for the new cluster. This file enables you to interact with the cluster using `kubectl`:
 

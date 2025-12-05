@@ -156,6 +156,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
+      - Identity and Authorization Management: admin/clusters/cluster-iam-setup.md
       - IP Address Management (IPAM): admin/clusters/cluster-ipam.md
       - Migrate ClusterDeployment: admin/clusters/migration.md
     - Working with regional clusters:
@@ -199,6 +200,7 @@ nav:
         - Overview: admin/access/rbac/index.md
         - What Roles Do: admin/access/rbac/what-roles-do.md
         - Role Definitions: admin/access/rbac/roles-summary.md
+        - Roles Management: admin/access/rbac/roles-management.md
         - Limiting Access: admin/access/rbac/limiting-access.md
     - Backup and Restore:
       - Overview: admin/backup/index.md
