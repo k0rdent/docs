@@ -141,7 +141,7 @@ Create a YAML with the specification of our resource-template and save it as
 `gcp-cloud-sa-resource-template.yaml`
 
 > NOTE:
-> The ConfigMap name needs to be exactly `gcp-cloud-sa-identity-resource-template`, see [naming the template configmap](../appendix/appendix-providers.md#naming-the-template-configmap) for more detail.
+> The `ConfigMap` name, in this case, needs to be exactly `gcp-cloud-sa-identity-resource-template`. See [naming the template configmap](../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 ```yaml
 apiVersion: v1
