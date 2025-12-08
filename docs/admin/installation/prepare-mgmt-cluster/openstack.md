@@ -232,7 +232,6 @@
         externalNetwork:
           filter:
             name: "public"
-        authURL: ${OS_AUTH_URL}
         identityRef:
           name: "openstack-cloud-config"
           cloudName: "openstack"
@@ -245,7 +244,7 @@
     > For older template versions, this parameter is required and must match the name of the `Secret` containing the
     > `clouds.yaml` configuration.
 
-    You can adjust `flavor`, `image name`, `region name`, and `authURL` to match your OpenStack environment. For more information about the configuration options, see the [OpenStack Template Parameters Reference](../../../reference/template/template-openstack.md).
+    You can adjust `flavor`, `image name` and `region name` to match your OpenStack environment. For more information about the configuration options, see the [OpenStack Template Parameters Reference](../../../reference/template/template-openstack.md).
 
     Apply the YAML to your management cluster:
 
