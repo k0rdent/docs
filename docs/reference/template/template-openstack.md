@@ -8,7 +8,6 @@ To deploy an OpenStack cluster, the following are the primary parameters in the 
 |-----------------------------------|---------------------------------------|-------------------------------------------------------------|
 | `.spec.credential`                | `openstack-cluster-identity-cred`     | Reference to the `Credential` object.                       |
 | `.spec.template`                  | `openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}` | Reference to the `ClusterTemplate`. |
-| `.spec.config.authURL`            | `https://keystone.yourorg.net/`       | Keystone authentication endpoint for OpenStack.             |
 | `.spec.config.controlPlaneNumber` | `3`                                   | Number of control plane nodes.                              |
 | `.spec.config.workersNumber`      | `2`                                   | Number of worker nodes.                                     |
 | `.spec.config.clusterLabels`      | `k0rdent: demo`                       | Labels to apply to the cluster. Used by MultiClusterService.|
@@ -182,7 +181,6 @@ spec:
     externalNetwork:
       filter:
         name: "public"
-    authURL: https://my-keystone-openstack-url.com
     identityRef:
       name: openstack-cloud-config
       cloudName: openstack
