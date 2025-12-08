@@ -556,6 +556,13 @@ and apply this example for AWS, or use it as a reference:
       --show-conditions all
     ```
 
+    To wait automatically, run:
+
+    ```bash
+    kubectl wait --for=condition=Ready --timeout=20m \
+      cld -n kcm-system $REGIONAL_CLUSTER_NAME
+    ```
+
 ## Child Cluster
 
 > NOTE:
@@ -710,11 +717,23 @@ and apply this example for AWS, or use it as a reference:
       --show-conditions all
     ```
 
+    To wait automatically, run:
+
+    ```bash
+    kubectl wait --for=condition=Ready --timeout=20m \
+      cld -n kcm-system $CHILD_CLUSTER_NAME
+    ```
+
     If the child cluster is created in [KCM Region](../regional-clusters/index.md),
     get the `regional-kubeconfig` from [KOF Verification](kof-verification.md) and run:
+
     ```bash
     KUBECONFIG=regional-kubeconfig clusterctl describe cluster \
       -n kcm-system $CHILD_CLUSTER_NAME --show-conditions all
+
+    KUBECONFIG=regional-kubeconfig kubectl wait \
+      --for=condition=Ready --timeout=20m \
+      cld -n kcm-system $CHILD_CLUSTER_NAME
     ```
-    
+
 Now that you have installed KOF, please [verify it](./kof-verification.md).
