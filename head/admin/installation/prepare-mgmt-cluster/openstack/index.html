@@ -4890,7 +4890,6 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="w">    </span><span class="nt">externalNetwork</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
-<span class="w">    </span><span class="nt">authURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OS_AUTH_URL}</span>
 <span class="w">    </span><span class="nt">identityRef</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack-cloud-config&quot;</span>
 <span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack&quot;</span>
@@ -4904,7 +4903,7 @@ When deploying clusters with <code>openstack-standalone-cp</code> template versi
 For older template versions, this parameter is required and must match the name of the <code>Secret</code> containing the
 <code>clouds.yaml</code> configuration.</p>
 </div>
-<p>You can adjust <code>flavor</code>, <code>image name</code>, <code>region name</code>, and <code>authURL</code> to match your OpenStack environment. For more information about the configuration options, see the <a href="../../../../reference/template/template-openstack/">OpenStack Template Parameters Reference</a>.</p>
+<p>You can adjust <code>flavor</code>, <code>image name</code> and <code>region name</code> to match your OpenStack environment. For more information about the configuration options, see the <a href="../../../../reference/template/template-openstack/">OpenStack Template Parameters Reference</a>.</p>
 <p>Apply the YAML to your management cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-openstack-cluster-deployment.yaml
 </code></pre></div>

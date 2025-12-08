@@ -4893,11 +4893,6 @@
 <td>Reference to the <code>ClusterTemplate</code>.</td>
 </tr>
 <tr>
-<td><code>.spec.config.authURL</code></td>
-<td><code>https://keystone.yourorg.net/</code></td>
-<td>Keystone authentication endpoint for OpenStack.</td>
-</tr>
-<tr>
 <td><code>.spec.config.controlPlaneNumber</code></td>
 <td><code>3</code></td>
 <td>Number of control plane nodes.</td>
@@ -5091,7 +5086,6 @@ The recommended minimum vCPU value for the control plane flavor is 2, while for 
 <span class="w">    </span><span class="nt">externalNetwork</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
-<span class="w">    </span><span class="nt">authURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://my-keystone-openstack-url.com</span>
 <span class="w">    </span><span class="nt">identityRef</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack-cloud-config</span>
 <span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openstack</span>
