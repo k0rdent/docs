@@ -4,11 +4,11 @@
 as part of the management cluster.
 
 The RBAC Manager is an operator that simplifies Kubernetes authorization.
-Instead of manually creating Roles, ClusterRoles, RoleBindings, ClusterRoleBindings, or ServiceAccounts, you
+Instead of manually creating `Roles`, `ClusterRoles`, `RoleBindings`, `ClusterRoleBindings`, or `ServiceAccounts`, you
 declare the desired state using a `RBACDefinition` custom resource. RBAC Manager then automatically creates
 and maintains the required RBAC objects.
 
-## Usage Example
+For example, you can create an `RBACDefinition` like this:
 
 ```yaml
 apiVersion: rbacmanager.reactiveops.io/v1beta1
@@ -58,11 +58,11 @@ rbacBindings:
 
 From the example above, RBAC Manager will generate:
 
-1. `ClusterRoleBinding` granting Kate the `kcm-global-admin-role`, providing full administrative access across
+1. A `ClusterRoleBinding` granting Kate the `kcm-global-admin-role`, providing full administrative access across
 the entire {{{ docsVersionInfo.k0rdentName }}} system.
-2. `RoleBinding` that gives Michael and Alexey `kcm-namespace-admin-role` with full administrative access across
+2. A `RoleBinding` that gives Michael and Alexey `kcm-namespace-admin-role` with full administrative access across
 the `dev` namespace and `kcm-namespace-viewer-role` with read-only access in the `test` namespace.
-3. `RoleBinding` granting Jack `kcm-namespace-admin-role` in the `test` namespace.
+3. A `RoleBinding` granting Jack `kcm-namespace-admin-role` in the `test` namespace.
 4. A `ServiceAccount` named `ci-bot` in the `kcm-system` namespace.
 5. `RoleBindings` that grant the `ci-bot` ServiceAccount `edit` access in `projectsveltos` and `kcm-system` namespaces
 using namespace selector.
