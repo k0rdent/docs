@@ -99,7 +99,8 @@ the {{{ docsVersionInfo.k0rdentName }}} KCM controller performs the following:
 * `auth.configSecret.key` - Key within the `Secret` where the configuration is stored.
 * `auth.configSecret.hash` - Hash of the configuration content; used to trigger control plane updates when changed.
 
-The `ClusterTemplate` must consume these values to configure the API server correctly.
+The `ClusterTemplate` must consume these values to configure the API server correctly. If you're using built-in templates, this isn't a problem; {{{ docsVersionInfo.k0rdentName }}} includes this information already.  However, if you're creating custom `ClusterTemplates` you
+will need to make sure this information is referenced in your assets.
 In particular, the control plane resources (`K0smotronControlPlane` or `K0sControlPlane`) must:
 
 1. Mount the authentication `Secret` on control plane nodes/pods, and
