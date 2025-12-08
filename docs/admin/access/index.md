@@ -6,3 +6,4 @@ cluster to control access to specific services or other Kubernetes resources.
 
 - [{{{ docsVersionInfo.k0rdentName }}} Credentials Management](credentials/index.md)
 - [{{{ docsVersionInfo.k0rdentName }}} Role Based Access Control (RBAC)](rbac/index.md)
+- [{{{ docsVersionInfo.k0rdentName }}} Access Management](accessmanagement.md)

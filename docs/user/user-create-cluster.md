@@ -89,7 +89,10 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     kubectl describe clustertemplate aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}} -n kcm-system
     ```
 
-3. Create a ClusterDeployment YAML Configuration
+3. [Optional] Create `ClusterAuthentication` object to configure authentication for the kubernetes cluster.
+   For details about the IAM configuration, see [Cluster Identity and Authorization Management](../admin/clusters/cluster-iam-setup.md).
+
+4. Create a ClusterDeployment YAML Configuration
 
     Once you have the `Credential` and the `ClusterTemplate` you can create the `ClusterDeployment` object configuration.
     It includes:
@@ -109,6 +112,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     spec:
       template: <template-name>
       credential: <infrastructure-provider-credential-name>
+      clusterAuth: <cluster-authentication-name>
       dryRun: <"true" or "false" (default: "false")>
       cleanupOnDeletion: <"true" or "false" (default: "false")>
       config:
@@ -126,6 +130,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     spec:
       template: aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
       credential: aws-credential
+      clusterAuth: auth-config-dex
       config:
         clusterLabels: {}
         region: us-west-2
@@ -135,7 +140,11 @@ Follow these steps to deploy a standalone Kubernetes cluster:
           instanceType: t3.small
     ```
 
-    Note that the `.spec.credential` value should match the `.metadata.name` value of a created `Credential` object.
+    > NOTE
+    > * The `.spec.credential` value should match the `.metadata.name` value of a created `Credential` object.
+    > * The `.spec.clusterAuth` value should match the `.metadata.name` value of the `ClusterAuthentication` object.
+    > For more information about authentication configuration in {{{ docsVersionInfo.k0rdentName }}} follow
+    > [Cluster Identity and Authorization Management](../admin/clusters/cluster-iam-setup.md).
 
     > TIP:
     > If automatic cleanup of potentially orphaned *LoadBalancer Services* and *Storage devices* during deletion of
@@ -143,7 +152,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     > This is a best-effort cleanup: if there is no possibility to acquire a managed cluster's kubeconfig,
     > the cleanup will **not** happen.
 
-4. Apply the Configuration
+5. Apply the Configuration
 
     Once the `ClusterDeployment` configuration is ready, apply it to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
 
@@ -153,7 +162,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
     This step submits your deployment request to {{{ docsVersionInfo.k0rdentName }}}.
 
-5. Verify Deployment Status
+6. Verify Deployment Status
 
     After submitting the configuration, verify that the `ClusterDeployment` object has been created successfully:
 
@@ -163,7 +172,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
 
     The output shows the current status and any errors.
 
-6. Monitor Provisioning
+7. Monitor Provisioning
 
     {{{ docsVersionInfo.k0rdentName }}} will now start provisioning resources (for example, VMs or networks) and setting up the cluster. To monitor this process, run:
 
@@ -171,7 +180,7 @@ Follow these steps to deploy a standalone Kubernetes cluster:
     kubectl -n <namespace> get cluster <cluster-name> -o=yaml
     ```
 
-7. Retrieve the Kubernetes Configuration
+8. Retrieve the Kubernetes Configuration
 
     When provisioning is complete, you can retrieve the kubeconfig file for the new cluster so you can interact with the cluster using `kubectl`:
 
