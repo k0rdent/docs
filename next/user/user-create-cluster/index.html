@@ -1161,6 +1161,8 @@
       
         
       
+        
+      
     
     
     
@@ -1253,6 +1255,27 @@
   
   <span class="md-ellipsis">
     Adopting clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/clusters/cluster-iam-setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and Authorization Management
   </span>
   
 
@@ -2256,6 +2279,8 @@
       
         
       
+        
+      
     
     
     
@@ -2327,6 +2352,27 @@
   
   <span class="md-ellipsis">
     Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/access/rbac/roles-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Roles Management
   </span>
   
 
@@ -4804,6 +4850,10 @@ Double-check to make sure that your credentials have sufficient permissions to c
 </code></pre></div>
 </li>
 <li>
+<p>[Optional] Create <code>ClusterAuthentication</code> object to configure authentication for the kubernetes cluster.
+   For details about the IAM configuration, see <a href="../../admin/clusters/cluster-iam-setup/">Cluster Identity and Authorization Management</a>.</p>
+</li>
+<li>
 <p>Create a ClusterDeployment YAML Configuration</p>
 <p>Once you have the <code>Credential</code> and the <code>ClusterTemplate</code> you can create the <code>ClusterDeployment</code> object configuration.
 It includes:</p>
@@ -4821,6 +4871,7 @@ It includes:</p>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;template-name&gt;</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;infrastructure-provider-credential-name&gt;</span>
+<span class="w">  </span><span class="nt">clusterAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cluster-authentication-name&gt;</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&quot;true&quot; or &quot;false&quot; (default</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="l l-Scalar l-Scalar-Plain">)&gt;</span>
 <span class="w">  </span><span class="nt">cleanupOnDeletion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&quot;true&quot; or &quot;false&quot; (default</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="l l-Scalar l-Scalar-Plain">)&gt;</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
@@ -4835,6 +4886,7 @@ It includes:</p>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-16</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
+<span class="w">  </span><span class="nt">clusterAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth-config-dex</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-2</span>
@@ -4843,7 +4895,13 @@ It includes:</p>
 <span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.small</span>
 </code></pre></div>
-<p>Note that the <code>.spec.credential</code> value should match the <code>.metadata.name</code> value of a created <code>Credential</code> object.</p>
+<blockquote>
+<p>NOTE
+* The <code>.spec.credential</code> value should match the <code>.metadata.name</code> value of a created <code>Credential</code> object.
+* The <code>.spec.clusterAuth</code> value should match the <code>.metadata.name</code> value of the <code>ClusterAuthentication</code> object.
+For more information about authentication configuration in k0rdent follow
+<a href="../../admin/clusters/cluster-iam-setup/">Cluster Identity and Authorization Management</a>.</p>
+</blockquote>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>

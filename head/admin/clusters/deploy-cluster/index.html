@@ -1165,6 +1165,8 @@
       
         
       
+        
+      
     
     
     
@@ -1267,6 +1269,27 @@
   
   <span class="md-ellipsis">
     Adopting clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cluster-iam-setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and Authorization Management
   </span>
   
 
@@ -2270,6 +2293,8 @@
       
         
       
+        
+      
     
     
     
@@ -2341,6 +2366,27 @@
   
   <span class="md-ellipsis">
     Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../access/rbac/roles-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Roles Management
   </span>
   
 
@@ -4682,6 +4728,7 @@
 <ol>
 <li>Setting up credentials for the infrastructure provider (for example, AWS, vSphere).</li>
 <li>Choosing a template that defines the desired cluster configuration (for example, number of nodes, instance types).</li>
+<li>Cluster Authentication setup (optional).</li>
 <li>Submitting the configuration for deployment and monitoring the process.</li>
 </ol>
 <p>Follow these steps to deploy a standalone Kubernetes cluster tailored to your specific needs:</p>
@@ -4741,11 +4788,16 @@ Learn more in <a href="../../regional-clusters/creating-credential-in-region/">C
 </code></pre></div>
 </li>
 <li>
+<p>[Optional] Create <code>ClusterAuthentication</code> object to configure authentication for the kubernetes cluster.
+   For details about the IAM configuration, see <a href="../cluster-iam-setup/">Cluster Identity and Authorization Management</a>.</p>
+</li>
+<li>
 <p>Create a ClusterDeployment YAML Configuration</p>
 <p>The <code>ClusterDeployment</code> object is the main configuration file that defines your cluster's specifications. It includes:</p>
 <ul>
 <li>The template to use</li>
 <li>The credentials for the infrastructure provider</li>
+<li>The name of the ClusterAuthentication object with cluster authentication configuration (optional)</li>
 <li>Optional customizations such as instance types, regions, and networking</li>
 </ul>
 <p>Create a <code>ClusterDeployment</code> configuration in a YAML file, following this structure:</p>
@@ -4757,6 +4809,7 @@ Learn more in <a href="../../regional-clusters/creating-credential-in-region/">C
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;template-name&gt;</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;infrastructure-provider-credential-name&gt;</span>
+<span class="w">  </span><span class="nt">clusterAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;cluster-authentication-name&gt;</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&quot;true&quot; or &quot;false&quot; (default</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="l l-Scalar l-Scalar-Plain">)&gt;</span>
 <span class="w">  </span><span class="nt">cleanupOnDeletion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;&quot;true&quot; or &quot;false&quot; (default</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="l l-Scalar l-Scalar-Plain">)&gt;</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
@@ -4771,6 +4824,7 @@ Learn more in <a href="../../regional-clusters/creating-credential-in-region/">C
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-16</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
+<span class="w">  </span><span class="nt">clusterAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth-config-dex</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
@@ -4782,7 +4836,13 @@ Learn more in <a href="../../regional-clusters/creating-credential-in-region/">C
 <span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.small</span>
 <span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 </code></pre></div>
-<p>Note that the <code>.spec.credential</code> value should match the <code>.metadata.name</code> value of a created <code>Credential</code> object.</p>
+<blockquote>
+<p>NOTE
+* The <code>.spec.credential</code> value should match the <code>.metadata.name</code> value of a created <code>Credential</code> object.
+* The <code>.spec.clusterAuth</code> value should match the <code>.metadata.name</code> value of the <code>ClusterAuthentication</code> object.
+For more information about authentication configuration in k0rdent follow
+<a href="../cluster-iam-setup/">Cluster Identity and Authorization Management</a>.</p>
+</blockquote>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>

@@ -1163,6 +1163,8 @@
       
         
       
+        
+      
     
     
     
@@ -1255,6 +1257,27 @@
   
   <span class="md-ellipsis">
     Adopting clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="clusters/cluster-iam-setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Identity and Authorization Management
   </span>
   
 
@@ -2258,6 +2281,8 @@
       
         
       
+        
+      
     
     
     
@@ -2329,6 +2354,27 @@
   
   <span class="md-ellipsis">
     Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="access/rbac/roles-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Roles Management
   </span>
   
 
@@ -4825,7 +4871,10 @@ ensure that reality matches the definition. We can say that k0rdent is GitOps-co
 <li><code>kcm-controller-manager</code> creates a <code>Management</code> object that refers to the above <code>Release</code> and the <code>ProviderTemplate</code> objects.
 The <code>Management</code> object represents the k0rdent management cluster as a whole.
 The management cluster Day-2 operations (such as <a href="upgrade/">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
-<li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines <a href="../reference/template/#template-life-cycle-management">access rules</a> for <code>ClusterTemplate</code>/<code>ServiceTemplate</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used along with admin-created <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects.</li>
+<li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines
+<a href="access/accessmanagement/">access rules</a> for <code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code> and
+<code>ClusterAuthentication</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used
+along with admin-created <code>ClusterTemplateChain</code>, <code>ServiceTemplateChain</code>, <code>Credential</code> and <code>ClusterAuthentication</code> objects.</li>
 </ol>
 <p>This Administration Guide provides information on:</p>
 <ul>
