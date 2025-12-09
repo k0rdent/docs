@@ -2851,6 +2851,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#existing-kof-regional-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Existing KOF Regional Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kcm-region-installation" class="md-nav__link">
     <span class="md-ellipsis">
       KCM Region Installation
@@ -4789,6 +4798,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#existing-kof-regional-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Existing KOF Regional Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kcm-region-installation" class="md-nav__link">
     <span class="md-ellipsis">
       KCM Region Installation
@@ -4862,6 +4880,37 @@
 
 <h1 id="kcm-region-with-kof">KCM Region With KOF<a class="headerlink" href="#kcm-region-with-kof" title="Permanent link">#</a></h1>
 <h2 id="kcmkof-regional-cluster">KCM/KOF Regional Cluster<a class="headerlink" href="#kcmkof-regional-cluster" title="Permanent link">#</a></h2>
+<p>How to proceed with KOF and regions depends on whether you already have a KOF regional cluster.</p>
+<h3 id="existing-kof-regional-cluster">Existing KOF Regional Cluster<a class="headerlink" href="#existing-kof-regional-cluster" title="Permanent link">#</a></h3>
+<p>If you already have a <a href="../kof-install/#regional-cluster">KOF regional cluster</a>
+and you want to create a KCM Region using this cluster,
+apply these steps:</p>
+<ol>
+<li>
+<p>Add the <code>k0rdent.mirantis.com/kcm-region-cluster: "true"</code> label
+    to the <code>.metadata.labels</code> field of the KOF regional <code>ClusterDeployment</code>.</p>
+<p>If this <code>ClusterDeployment</code> has <code>.spec.config.clusterLabels</code>,
+add the label there instead.</p>
+</li>
+<li>
+<p>Apply the steps in <a href="../../regional-clusters/regional-cluster-registration/">Regional Cluster Registration</a> 
+    to register the KOF regional cluster in a new KCM Region with <code>cert-manager</code> disabled
+    to avoid conflict with KOF's <code>cert-manager</code>:
+    <div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
+<span class="nn">...</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cert-manager</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Apply the steps in <a href="../../regional-clusters/creating-credential-in-region/">Create a Credential in a Region</a>.</p>
+</li>
+<li>Apply the steps in <a href="#deploying-child-clusters-in-a-kcm-region">Deploying Child Clusters in a KCM Region</a>.</li>
+</ol>
 <h3 id="kcm-region-installation">KCM Region Installation<a class="headerlink" href="#kcm-region-installation" title="Permanent link">#</a></h3>
 <p>To install KOF on a KCM Regional Cluster, you first need to set up all required components. Please follow this documentation to create a <a href="../../regional-clusters/creating-credential-in-region/">KCM Region Cluster</a>.</p>
 <p>When setting up a KCM Regional cluster to work with KOF, make sure the correct labels are applied for resource propagation:</p>
