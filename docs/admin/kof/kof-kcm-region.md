@@ -2,6 +2,37 @@
 
 ## KCM/KOF Regional Cluster
 
+How to proceed with KOF and regions depends on whether you already have a KOF regional cluster.
+
+### Existing KOF Regional Cluster
+
+If you already have a [KOF regional cluster](kof-install.md/#regional-cluster)
+and you want to create a KCM Region using this cluster,
+apply these steps:
+
+1. Add the `k0rdent.mirantis.com/kcm-region-cluster: "true"` label
+    to the `.metadata.labels` field of the KOF regional `ClusterDeployment`.
+
+    If this `ClusterDeployment` has `.spec.config.clusterLabels`,
+    add the label there instead.
+
+1. Apply the steps in [Regional Cluster Registration](../regional-clusters/regional-cluster-registration.md) 
+    to register the KOF regional cluster in a new KCM Region with `cert-manager` disabled
+    to avoid conflict with KOF's `cert-manager`:
+    ```yaml
+    kind: Region
+    ...
+    spec:
+      core:
+        kcm:
+          config:
+            cert-manager:
+              enabled: false
+    ```
+
+1. Apply the steps in [Create a Credential in a Region](../regional-clusters/creating-credential-in-region.md).
+2. Apply the steps in [Deploying Child Clusters in a KCM Region](#deploying-child-clusters-in-a-kcm-region).
+
 ### KCM Region Installation
 
 To install KOF on a KCM Regional Cluster, you first need to set up all required components. Please follow this documentation to create a [KCM Region Cluster](../../admin/regional-clusters/creating-credential-in-region.md).
