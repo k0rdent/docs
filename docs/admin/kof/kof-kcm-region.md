@@ -2,7 +2,7 @@
 
 ## KCM/KOF Regional Cluster
 
-How to proceed with KOF and regions depends on whether you already havve a KOF regional cluster.
+How to proceed with KOF and regions depends on whether you already have a KOF regional cluster.
 
 ### Existing KOF Regional Cluster
 
