@@ -2,33 +2,36 @@
 
 ## KCM/KOF Regional Cluster
 
+How to proceed with KOF and regions depends on whether you already havve a KOF regional cluster.
+
 ### Existing KOF Regional Cluster
 
-If you have [KOF regional cluster](kof-install.md/#regional-cluster) already
+If you already have a [KOF regional cluster](kof-install.md/#regional-cluster)
 and you want to create a KCM Region using this cluster,
-apply the next steps:
+apply these steps:
 
-* Add the label `k0rdent.mirantis.com/kcm-region-cluster: "true"`
-    to the `.metadata.labels` of the KOF regional `ClusterDeployment`.
+1. Add the `k0rdent.mirantis.com/kcm-region-cluster: "true"` label
+    to the `.metadata.labels` field of the KOF regional `ClusterDeployment`.
 
     If this `ClusterDeployment` has `.spec.config.clusterLabels`,
-    add that label there instead.
+    add the label there instead.
 
-* Apply the [Regional Cluster Registration](../regional-clusters/regional-cluster-registration.md) steps
-  to register KOF regional cluster in a new KCM Region with `cert-manager` disabled
-  to avoid conflict with KOF's `cert-manager`:
-  ```yaml
-  kind: Region
-  ...
-  spec:
-    core:
-      kcm:
-        config:
-          cert-manager:
-            enabled: false
-  ```
-* Apply the [Create a Credential in a Region](../regional-clusters/creating-credential-in-region.md) steps.
-* Apply the [Deploying Child Clusters in a KCM Region](#deploying-child-clusters-in-a-kcm-region) steps.
+1. Apply the steps in [Regional Cluster Registration](../regional-clusters/regional-cluster-registration.md) 
+    to register the KOF regional cluster in a new KCM Region with `cert-manager` disabled
+    to avoid conflict with KOF's `cert-manager`:
+    ```yaml
+    kind: Region
+    ...
+    spec:
+      core:
+        kcm:
+          config:
+            cert-manager:
+              enabled: false
+    ```
+
+1. Apply the steps in [Create a Credential in a Region](../regional-clusters/creating-credential-in-region.md).
+2. Apply the steps in [Deploying Child Clusters in a KCM Region](#deploying-child-clusters-in-a-kcm-region).
 
 ### KCM Region Installation
 
