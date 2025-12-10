@@ -5399,11 +5399,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 </code></pre></div>
 </li>
 <li>
-<p>Watch how the cluster is deployed until all values of <code>READY</code> are <code>True</code>:</p>
-<div class="highlight"><pre><span></span><code>clusterctl<span class="w"> </span>describe<span class="w"> </span>cluster<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--show-conditions<span class="w"> </span>all
-</code></pre></div>
-<p>To wait automatically, run:</p>
+<p>Wait for the <code>ClusterDeployment</code> to become Ready:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>--timeout<span class="o">=</span>20m<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>cld<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span>
 </code></pre></div>
@@ -5540,28 +5536,15 @@ The child cluster uses the gateway in the regional cluster to <a href="../kof-st
 <p>Note: the first <code>opencost</code> key is to reference the subchart, and the second <code>opencost</code> key is part of its <a href="https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values">values</a>.</p>
 </li>
 <li>
-<p>Verify and apply the <code>ClusterDeployment</code>:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>child-cluster.yaml
+<p>Verify and apply the <code>ClusterDeployment</code>:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>child-cluster.yaml
 
 kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>child-cluster.yaml
-</code></pre></div></p>
+</code></pre></div>
 </li>
 <li>
-<p>Watch while the cluster is deployed until all values of <code>READY</code> are <code>True</code>:
-    <div class="highlight"><pre><span></span><code>clusterctl<span class="w"> </span>describe<span class="w"> </span>cluster<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--show-conditions<span class="w"> </span>all
-</code></pre></div></p>
-<p>To wait automatically, run:</p>
+<p>Wait for the <code>ClusterDeployment</code> to become Ready:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>--timeout<span class="o">=</span>20m<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>cld<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CHILD_CLUSTER_NAME</span>
-</code></pre></div>
-<p>If the child cluster is created in <a href="../../regional-clusters/">KCM Region</a>,
-get the <code>regional-kubeconfig</code> from <a href="../kof-verification/">KOF Verification</a> and run:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>clusterctl<span class="w"> </span>describe<span class="w"> </span>cluster<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="w"> </span>--show-conditions<span class="w"> </span>all
-
-<span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>--timeout<span class="o">=</span>20m<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>cld<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CHILD_CLUSTER_NAME</span>
 </code></pre></div>
 </li>
