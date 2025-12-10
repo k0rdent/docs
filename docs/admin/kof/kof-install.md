@@ -549,14 +549,7 @@ and apply this example for AWS, or use it as a reference:
     kubectl apply -f regional-cluster.yaml
     ```
 
-12. Watch how the cluster is deployed until all values of `READY` are `True`:
-
-    ```bash
-    clusterctl describe cluster -n kcm-system $REGIONAL_CLUSTER_NAME \
-      --show-conditions all
-    ```
-
-    To wait automatically, run:
+12. Wait for the `ClusterDeployment` to become Ready:
 
     ```bash
     kubectl wait --for=condition=Ready --timeout=20m \
@@ -705,34 +698,17 @@ and apply this example for AWS, or use it as a reference:
     Note: the first `opencost` key is to reference the subchart, and the second `opencost` key is part of its [values](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values).
 
 8. Verify and apply the `ClusterDeployment`:
+
     ```bash
     cat child-cluster.yaml
 
     kubectl apply -f child-cluster.yaml
     ```
 
-9. Watch while the cluster is deployed until all values of `READY` are `True`:
-    ```bash
-    clusterctl describe cluster -n kcm-system $CHILD_CLUSTER_NAME \
-      --show-conditions all
-    ```
-
-    To wait automatically, run:
+9. Wait for the `ClusterDeployment` to become Ready:
 
     ```bash
     kubectl wait --for=condition=Ready --timeout=20m \
-      cld -n kcm-system $CHILD_CLUSTER_NAME
-    ```
-
-    If the child cluster is created in [KCM Region](../regional-clusters/index.md),
-    get the `regional-kubeconfig` from [KOF Verification](kof-verification.md) and run:
-
-    ```bash
-    KUBECONFIG=regional-kubeconfig clusterctl describe cluster \
-      -n kcm-system $CHILD_CLUSTER_NAME --show-conditions all
-
-    KUBECONFIG=regional-kubeconfig kubectl wait \
-      --for=condition=Ready --timeout=20m \
       cld -n kcm-system $CHILD_CLUSTER_NAME
     ```
 
