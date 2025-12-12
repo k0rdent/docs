@@ -245,6 +245,71 @@ To migrate data with transformation please consider one of the following options
         ```
 * This step will not be required in future upgrades.
 
+### Istio Chart Upgrade
+
+> NOTICE:
+> This section is for users of **k0rdent-istio** only.
+
+Starting from K0rdent Istio v0.2.0, the Istio charts have been combined into a single `k0rdent-istio` chart. Previously, Istio was installed using two separate charts: `k0rdent-istio-base` and `k0rdent-istio`.
+
+Due to this architectural change, upgrading **will trigger a complete uninstallation** of all Istio components across your clusters. To prevent data loss and ensure a smooth migration, follow these steps:
+
+#### 1. Back up data from all Istio clusters
+
+Follow the instructions in [Back Up Data from Istio Clusters](#1-back-up-data-from-istio-clusters) from the v1.5.0 upgrade guide.
+
+#### 2. Clean up old Istio and KOF components
+
+Follow the instructions in [Clean Up the Old Istio Clusters](#2-clean-up-the-old-istio-clusters) from the v1.5.0 upgrade guide.
+
+> NOTE:
+> The Istio chart names have changed in v1.5.0. Use the new names when uninstalling istio from clusters:
+>
+> | Old name (v1.4.0) | New name (v1.5.0+) |
+> |-------------------|-------------------|
+> | `kof-istio-gateway` | `istio-gateway` |
+> | `kof-istio` | `k0rdent-istio` |
+
+#### 3. Remove old Istio charts from the management cluster
+
+Remove the old Istio release and related resources from the management cluster:
+
+```bash
+helm uninstall --wait -n istio-system k0rdent-istio
+helm uninstall --wait -n istio-system k0rdent-istio-base
+kubectl delete namespace istio-system --wait
+kubectl get crd -o name | grep --color=never 'istio.io' | xargs kubectl delete
+```
+
+#### 4. Deploy the new Istio chart
+
+Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-istio`) as in v1.5.0, install the single chart:
+
+```bash
+helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
+  --set cert-manager-service-template.enabled=false \
+  --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
+  --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
+  --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
+```
+
+#### 5. Upgrade KOF to v1.6.0
+
+Upgrade KOF to v1.6.0 following standard upgrade procedures.
+
+#### 6. Restart KOF pods
+
+Follow the instructions in [Restart the KOF Pods](#6-restart-the-kof-pods) from the v1.5.0 upgrade guide.
+
+#### 7. Resume Sveltos synchronization
+
+Follow the instructions in [Resume Sveltos Synchronization](#7-resume-sveltos-synchronization) from the v1.5.0 upgrade guide.
+
+#### 8. Restore data from backups
+
+Follow the instructions in [Restore Data](#9-restore-data) from the v1.5.0 upgrade guide.
+
 ## Upgrade to v1.5.0
 
 > NOTE:
