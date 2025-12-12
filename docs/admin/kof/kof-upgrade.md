@@ -228,6 +228,23 @@ To migrate data with transformation please consider one of the following options
     * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
     * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
 
+## Upgrade to v1.6.0
+
+* Before upgrading `kof-mothership`, ensure the following steps are completed:
+    1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
+        ```bash
+        helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators -f operators-values.yaml \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+    2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
+        ```bash
+        KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators -f operators-values.yaml \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+* This step will not be required in future upgrades.
+
 ## Upgrade to v1.5.0
 
 > NOTE:
