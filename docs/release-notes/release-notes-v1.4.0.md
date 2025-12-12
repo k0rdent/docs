@@ -25,7 +25,7 @@
     - Distributed Regional Management Control Planes (technical preview)
     - Label based role aggregation to simplify OOT provider itegration
 
-- **k0rdent Serivce Manager (KSM):**
+- **k0rdent Service Manager (KSM):**
     - Inter-service dependencies in a ClusterDeployment or MultiClusterService spec
     - Support for helm options to use with service templayes
     - Improved observability of events and metrics for IPAM
