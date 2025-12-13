@@ -9,6 +9,9 @@ a `Region` object. There are two ways to register a regional cluster:
 * By providing a kubeconfig `Secret` in the system namespace
 * By referencing an existing `ClusterDeployment` to onboard it as a regional cluster
 
+> WARNING:
+> The name of the `Region` object must not exceed 21 characters.
+
 ## Region Object with a Kubeconfig Secret Reference
 
 ```yaml
