@@ -4580,8 +4580,13 @@
 <p>
 Regional clusters are available starting from version 1.4.0.</p>
 </div>
-<p>To register an existing Kubernetes cluster as a regional cluster in k0rdent, you must create
-a <code>Region</code> object. For example:</p>
+<p>To register an existing Kubernetes cluster as a regional cluster in k0rdent, you must create a <code>Region</code> object. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+The name of the <code>Region</code> object must not exceed 21 characters.</p>
+</div>
+<p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
 <span class="nt">metadata</span><span class="p">:</span>
