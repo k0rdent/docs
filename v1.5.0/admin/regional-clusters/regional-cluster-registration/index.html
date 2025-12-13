@@ -4737,6 +4737,11 @@ a <code>Region</code> object. There are two ways to register a regional cluster:
 <li>By providing a kubeconfig <code>Secret</code> in the system namespace</li>
 <li>By referencing an existing <code>ClusterDeployment</code> to onboard it as a regional cluster</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+The name of the <code>Region</code> object must not exceed 21 characters.</p>
+</div>
 <h2 id="region-object-with-a-kubeconfig-secret-reference">Region Object with a Kubeconfig Secret Reference<a class="headerlink" href="#region-object-with-a-kubeconfig-secret-reference" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
