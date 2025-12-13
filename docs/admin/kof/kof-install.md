@@ -141,14 +141,9 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 3. Install the `k0rdent/istio` charts to the management cluster:
   
     ```bash
-    helm upgrade -i --reset-values --wait \
-      --create-namespace -n istio-system k0rdent-istio-base \
-      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base --version 0.1.0 \
+    helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
       --set cert-manager-service-template.enabled=false \
-      --set injectionNamespaces={kof}
-
-    helm upgrade -i --reset-values --wait -n istio-system k0rdent-istio \
-      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.1.0 \
       --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
       --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
       --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
