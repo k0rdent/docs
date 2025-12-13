@@ -350,8 +350,8 @@ extra:
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
-    k0rdentVersion: 1-5-0
-    k0rdentDotVersion: 1.5.0
+    k0rdentVersion: 1-6-0-rc3
+    k0rdentDotVersion: 1.6.0-rc3
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:382291ed68a79eb8e03a5b2f2b7d06b56e3fb798158c519433e254b695955391
     k0rdentDigestDate: Thu Oct 30 12:54:32 2025
@@ -360,61 +360,61 @@ extra:
       kofDotVersion: 1.5.0
     providerVersions:
       dashVersions:
-        clusterApi: 1-0-7
-        clusterApiProviderAws: 1-0-7
-        clusterApiProviderAzure: 1-0-9
-        clusterApiProviderDocker: 1-0-5
+        clusterApi: 1-0-8
+        clusterApiProviderAws: 1-0-9
+        clusterApiProviderAzure: 1-0-11
+        clusterApiProviderDocker: 1-0-6
         clusterApiProviderGcp: 1-0-6
         clusterApiProviderIpam: 1-0-3
         clusterApiProviderInfoblox: 1-0-2
-        clusterApiProviderOpenstack: 1-0-10
+        clusterApiProviderOpenstack: 1-0-11
         clusterApiProviderVsphere: 1-0-6
-        regional: 1-0-5
+        regional: 1-6-0-rc3
         k0smotron: 1-0-11
         adoptedCluster: 1-0-1
-        awsEksCluster: 1-0-3
-        awsHostedCpCluster: 1-0-16
-        awsStandaloneCpCluster: 1-0-16
-        azureAksCluster: 1-0-1
-        azureHostedCpCluster: 1-0-19
-        azureStandaloneCpCluster: 1-0-17
+        awsEksCluster: 1-0-4
+        awsHostedCpCluster: 1-0-21
+        awsStandaloneCpCluster: 1-0-20
+        azureAksCluster: 1-0-2
+        azureHostedCpCluster: 1-0-23
+        azureStandaloneCpCluster: 1-0-20
         dockerHostedCpCluster: 1-0-4
-        gcpGkeCluster: 1-0-6
-        gcpHostedCpCluster: 1-0-16
-        gcpStandaloneCpCluster: 1-0-15
-        openstackHostedCpCluster: 1-0-7
-        openstackStandaloneCpCluster: 1-0-17
-        remoteCluster: 1-0-15
-        vsphereHostedCpCluster: 1-0-15
-        vsphereStandaloneCpCluster: 1-0-15
+        gcpGkeCluster: 1-0-7
+        gcpHostedCpCluster: 1-0-20
+        gcpStandaloneCpCluster: 1-0-18
+        openstackHostedCpCluster: 1-0-13
+        openstackStandaloneCpCluster: 1-0-22
+        remoteCluster: 1-0-19
+        vsphereHostedCpCluster: 1-0-19
+        vsphereStandaloneCpCluster: 1-0-18
         sveltosProvider: 1-1-1
       dotVersions:
-        clusterApi: 1.0.7
-        clusterApiProviderAws: 1.0.7
-        clusterApiProviderAzure: 1.0.9
-        clusterApiProviderDocker: 1.0.4
+        clusterApi: 1.0.8
+        clusterApiProviderAws: 1.0.9
+        clusterApiProviderAzure: 1.0.11
+        clusterApiProviderDocker: 1.0.6
         clusterApiProviderGcp: 1.0.6
-        clusterApiProviderOpenstack: 1.0.10
+        clusterApiProviderOpenstack: 1.0.11
         clusterApiProviderVsphere: 1.0.6
         clusterApiProviderIpam: 1.0.3
         clusterApiProviderInfoblox: 1.0.2
         k0smotron: 1.0.11
         adoptedCluster: 1.0.1
-        awsEksCluster: 1.0.3
-        awsHostedCpCluster: 1.0.16
-        awsStandaloneCpCluster: 1.0.16
-        azureAksCluster: 1.0.1
-        azureHostedCpCluster: 1.0.19
-        azureStandaloneCpCluster: 1.0.17
+        awsEksCluster: 1.0.4
+        awsHostedCpCluster: 1.0.21
+        awsStandaloneCpCluster: 1.0.20
+        azureAksCluster: 1.0.2
+        azureHostedCpCluster: 1.0.23
+        azureStandaloneCpCluster: 1.0.20
         dockerHostedCpCluster: 1.0.4
-        gcpGkeCluster: 1.0.6
-        gcpHostedCpCluster: 1.0.16
-        gcpStandaloneCpCluster: 1.0.15
-        openstackHostedCpCluster: 1.0.7
-        openstackStandaloneCpCluster: 1.0.17
-        remoteCluster: 1.0.15
-        vsphereHostedCpCluster: 1.0.15
-        vsphereStandaloneCpCluster: 1.0.15
+        gcpGkeCluster: 1.0.7
+        gcpHostedCpCluster: 1.0.20
+        gcpStandaloneCpCluster: 1.0.18
+        openstackHostedCpCluster: 1.0.13
+        openstackStandaloneCpCluster: 1.0.22
+        remoteCluster: 1.0.19
+        vsphereHostedCpCluster: 1.0.19
+        vsphereStandaloneCpCluster: 1.0.18
     servicesVersions:
       dashVersions:
         certManager: 1-17-1
