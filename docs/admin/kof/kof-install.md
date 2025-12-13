@@ -4,11 +4,32 @@
 
 KOF may be installed using different options:
 
-{%
-    include-markdown "./includes/kof-install-includes.md"
-    start="<!--mermaid-start-->"
-    end="<!--mermaid-end-->"
-%}
+```mermaid
+flowchart TD
+    S((Start))
+    S --> AWS[AWS]
+    S --> AZ[Azure]
+    S --> OS[OpenStack<br>and others]
+    AWS -.-> AG[**Aig Gap**]
+    AZ -.-> AG
+    OS --> AG
+    AWS --> NAG[No Air Gap]
+    AZ --> NAG
+    OS --> NAG
+    AG --> I[**Istio**]
+    AG --> MD[Manual DNS]
+    AG -.-> AD[Auto DNS]
+    NAG --> I
+    NAG --> MD
+    NAG --> AD
+    I --> R[KOF Regional:<br><br>own ClusterDeployment<br>or shared with KCM Region<br>or with Management<br>or just ConfigMap]
+    MD --> R
+    AD --> R
+    R --> M2[Store KOF data<br>from Management...]
+    M2 --> M2M[**...to Management**]
+    M2 --> M2R[...to Regional<br>with Istio<br>or without]
+    M2 --> M2TP[...to Third-party]
+```
 
 Opinionated default installation we plan to simplify in the next release
 is shown in **bold** style.
@@ -689,3 +710,4 @@ and apply this example for AWS, or use it as a reference:
     ```
 
 Now that you have installed KOF, please [verify it](./kof-verification.md).
+
