@@ -230,7 +230,7 @@ To migrate data with transformation please consider one of the following options
 
 ## Upgrade to v1.6.0
 
-* Before upgrading `kof-mothership`, ensure the following steps are completed:
+Before upgrading `kof-mothership`, ensure the following steps are completed:
     1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
         ```bash
         helm upgrade --take-ownership \
@@ -243,7 +243,7 @@ To migrate data with transformation please consider one of the following options
           --reset-values --wait -n kof kof-operators \
           oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
         ```
-* This step will not be required in future upgrades.
+This step will not be required in future upgrades.
 
 ### Istio Chart Upgrade
 
