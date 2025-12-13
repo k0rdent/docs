@@ -3,8 +3,12 @@
 > NOTE:
 > Regional clusters are available starting from version 1.4.0.
 
-To register an existing Kubernetes cluster as a regional cluster in {{{ docsVersionInfo.k0rdentName }}}, you must create
-a `Region` object. For example:
+To register an existing Kubernetes cluster as a regional cluster in {{{ docsVersionInfo.k0rdentName }}}, you must create a `Region` object. 
+
+> WARNING:
+> The name of the `Region` object must not exceed 21 characters.
+
+For example:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
