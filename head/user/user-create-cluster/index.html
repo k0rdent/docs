@@ -4830,23 +4830,23 @@ Double-check to make sure that your credentials have sufficient permissions to c
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-1           true</span>
-<span class="go">kcm-system   aws-eks-1-0-3                   true</span>
-<span class="go">kcm-system   aws-hosted-cp-1-0-16             true</span>
-<span class="go">kcm-system   aws-standalone-cp-1-0-16         true</span>
-<span class="go">kcm-system   azure-aks-1-0-1                 true</span>
-<span class="go">kcm-system   azure-hosted-cp-1-0-19           true</span>
-<span class="go">kcm-system   azure-standalone-cp-1-0-17       true</span>
+<span class="go">kcm-system   aws-eks-1-0-4                   true</span>
+<span class="go">kcm-system   aws-hosted-cp-1-0-21             true</span>
+<span class="go">kcm-system   aws-standalone-cp-1-0-20         true</span>
+<span class="go">kcm-system   azure-aks-1-0-2                 true</span>
+<span class="go">kcm-system   azure-hosted-cp-1-0-23           true</span>
+<span class="go">kcm-system   azure-standalone-cp-1-0-20       true</span>
 <span class="go">kcm-system   docker-hosted-cp-1-0-4          true</span>
-<span class="go">kcm-system   gcp-gke-1-0-6                   true</span>
-<span class="go">kcm-system   gcp-hosted-cp-1-0-16             true</span>
-<span class="go">kcm-system   gcp-standalone-cp-1-0-15         true</span>
-<span class="go">kcm-system   openstack-standalone-cp-1-0-17   true</span>
-<span class="go">kcm-system   remote-cluster-1-0-17            true</span>
-<span class="go">kcm-system   vsphere-hosted-cp-1-0-15         true</span>
-<span class="go">kcm-system   vsphere-standalone-cp-1-0-15     true</span>
+<span class="go">kcm-system   gcp-gke-1-0-7                   true</span>
+<span class="go">kcm-system   gcp-hosted-cp-1-0-20             true</span>
+<span class="go">kcm-system   gcp-standalone-cp-1-0-18         true</span>
+<span class="go">kcm-system   openstack-standalone-cp-1-0-22   true</span>
+<span class="go">kcm-system   remote-cluster-1-0-22            true</span>
+<span class="go">kcm-system   vsphere-hosted-cp-1-0-19         true</span>
+<span class="go">kcm-system   vsphere-standalone-cp-1-0-18     true</span>
 </code></pre></div>
 <p>You can then get information on the actual template by describing it, as in:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-1-0-16<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>clustertemplate<span class="w"> </span>aws-standalone-cp-1-0-20<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 </li>
 <li>
@@ -4884,7 +4884,7 @@ It includes:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-deployment</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-16</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-20</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">clusterAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth-config-dex</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
