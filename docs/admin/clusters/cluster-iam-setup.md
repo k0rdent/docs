@@ -1,15 +1,20 @@
-# Identity And Authorization Management
+# Identity and Authorization Management
 
-Identity and authorization are core to operating multi-cluster environments, and {{docsVersionInfo.k0rdentName}} now provides a consistent way to manage them through the `ClusterAuthentication` resource. This mechanism lets you define how each child cluster validates user requests, using standard Kubernetes authentication configuration while supporting multiple JWT issuers, custom claim mappings, and custom certificate authorities. By separating authentication policy from cluster templates and automating its propagation into hosted control planes, {{docsVersionInfo.k0rdentName}}  removes error-prone manual steps and gives you a repeatable, auditable way to enforce identity across your fleet.
+Identity and authorization are core to operating multi-cluster environments. {{{ docsVersionInfo.k0rdentName }}} provides a consistent mechanism for managing cluster authentication through the `ClusterAuthentication` resource.
+
+This page focuses on **authentication configuration**—how Kubernetes API servers validate user identity. Authorization is handled separately through RBAC and role bindings.
+
+By separating authentication policy from cluster templates and automating its propagation into hosted control planes, {{{ docsVersionInfo.k0rdentName }}} removes error-prone manual steps and provides a repeatable, auditable way to enforce identity across a fleet of clusters.
 
 ## ClusterAuthentication Resource
 
-{{{ docsVersionInfo.k0rdentName }}} supports configuring identity and authorization management (IAM) for
-child clusters through the `ClusterAuthentication` custom resource. A `ClusterAuthentication` object
-defines how the Kubernetes API server authenticates incoming requests. It supports multiple JWT authenticators,
-each configurable with an issuer URL, claim mappings, certificate authorities, and more.
+{{{ docsVersionInfo.k0rdentName }}} supports configuring authentication for child clusters through the `ClusterAuthentication` custom resource. A `ClusterAuthentication` object defines how the Kubernetes API server authenticates incoming requests.
 
-Consider this example:
+It supports multiple JWT authenticators, each configurable with an issuer URL, audience validation, claim mappings, certificate authorities, and validation rules. Each `ClusterAuthentication` resource can be referenced by one or more `ClusterDeployment` objects.
+
+### Example
+
+The following example configures a cluster to authenticate users via a Dex identity provider using JWTs:
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
@@ -42,24 +47,24 @@ spec:
     key: ca.crt
 ```
 
-Important fields to consider include:
+This configuration authenticates users based on email addresses and propagates group claims for downstream authorization decisions.
 
-* `spec.authenticationConfiguration`
+### Key Fields
 
-This field includes the full `AuthenticationConfiguration` object used by the API server. For all available configuration
-options, see the official Kubernetes documentation:
-[Authentication configuration from a file](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration).
+* **`spec.authenticationConfiguration`**
 
-* `spec.caSecret`
+  Contains the full `AuthenticationConfiguration` object consumed by the Kubernetes API server. For all supported options, see the official Kubernetes documentation:
+  [Authentication configuration from a file](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration).
 
-This field references a Kubernetes `Secret` that contains one or more CA certificates for the JWT issuer endpoint. (Make sure you've already created the `Secret` before you start!)
-If the issuer uses a custom or self-signed CA, the certificate must be provided here so the API server can trust the issuer.
-The CA value is injected into the `AuthenticationConfiguration` under `jwt.issuer[*].certificateAuthority`.
+* **`spec.caSecret`**
+
+  References a Kubernetes `Secret` containing one or more CA certificates used to trust the JWT issuer endpoint. The referenced `Secret` must exist before the `ClusterAuthentication` resource is applied.
+
+  The CA certificate is injected into the generated `AuthenticationConfiguration` under `jwt.issuer[*].certificateAuthority`.
 
 ## Configuring Authentication for ClusterDeployments
 
-Now let's look at how to make this work in practice. To enable authentication for a `ClusterDeployment`, set the `spec.clusterAuth` field to the name of an existing
-`ClusterAuthentication` object in the same namespace. For example:
+This links a `ClusterDeployment` to an authentication policy. To enable authentication for a cluster, set the `spec.clusterAuth` field to the name of an existing `ClusterAuthentication` object in the same namespace.
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
@@ -79,13 +84,14 @@ spec:
 
 ## Integration with ClusterTemplates
 
-When `spec.clusterAuth` is configured in the `ClusterDeployment` and the referenced `ClusterAuthentication` exists,
-the {{{ docsVersionInfo.k0rdentName }}} KCM controller performs the following:
+When authentication is enabled, {{{ docsVersionInfo.k0rdentName }}} injects the authentication configuration into the hosted control plane and manages updates when the configuration changes.
 
-1. Generates a `Secret` named `<cluster-deployment-name>-auth-config` that contains the merged
-`AuthenticationConfiguration` (including injected CA certificates).
+### What k0rdent Generates
 
-2. Passes required authentication values to the `HelmRelease` responsible for deploying the cluster:
+When `spec.clusterAuth` is configured and the referenced `ClusterAuthentication` exists, the KCM controller performs the following actions:
+
+1. Generates a `Secret` named `<cluster-deployment-name>-auth-config` containing the merged `AuthenticationConfiguration`, including injected CA certificates.
+2. Passes authentication values to the `HelmRelease` responsible for deploying the cluster control plane:
 
 ```yaml
     auth:
@@ -95,18 +101,25 @@ the {{{ docsVersionInfo.k0rdentName }}} KCM controller performs the following:
         hash: 3f7b8627
 ```
 
-* `auth.configSecret.name` - Name of the `Secret` containing the authentication config.
-* `auth.configSecret.key` - Key within the `Secret` where the configuration is stored.
-* `auth.configSecret.hash` - Hash of the configuration content; used to trigger control plane updates when changed.
+* `auth.configSecret.name` – Name of the `Secret` containing the authentication configuration.
+* `auth.configSecret.key` – Key within the `Secret` where the configuration is stored.
+* `auth.configSecret.hash` – Hash of the configuration content; used to trigger control plane updates when the configuration changes.
 
-The `ClusterTemplate` must consume these values to configure the API server correctly. If you're using built-in templates, this isn't a problem; {{{ docsVersionInfo.k0rdentName }}} includes this information already.  However, if you're creating custom `ClusterTemplates` you
-will need to make sure this information is referenced in your assets.
-In particular, the control plane resources (`K0smotronControlPlane` or `K0sControlPlane`) must:
+### What ClusterTemplates Must Consume
 
-1. Mount the authentication `Secret` on control plane nodes/pods, and
-2. Set the API server’s `--authentication-configuration` flag.
+The `ClusterTemplate` must consume these values to configure the API server correctly. Built-in templates already reference this information.
+
+If you are creating custom `ClusterTemplates`, you must explicitly reference these values. In particular, the control plane resources (`K0smotronControlPlane` or `K0sControlPlane`) must:
+
+1. Mount the authentication `Secret` into control plane nodes or pods.
+2. Set the API server `--authentication-configuration` flag to the mounted configuration file.
+
+> WARNING:
+> Updating `spec.clusterAuth` changes the configuration hash and triggers a rolling recreation of control plane machines.
 
 ### Example: `K0smotronControlPlane` Authentication Configuration
+
+This example shows how a hosted control plane consumes the injected authentication configuration.
 
 ```yaml
 spec:
@@ -137,6 +150,8 @@ spec:
 
 ### Example: `K0sControlPlane` Authentication Configuration
 
+This example shows the equivalent configuration for a non-hosted control plane.
+
 ```yaml
 spec:
   k0sConfigSpec:
@@ -161,9 +176,5 @@ spec:
             {{- if .Values.auth.configSecret.name }}
             authentication-config: /var/lib/k0s/auth/config-{{ .Values.auth.configSecret.hash }}.yaml
             {{- end }}
-     ...
+      ...
 ```
-
-> WARNING:
-> If `spec.clusterAuth` is updated with a different configuration, the hash value will change.
-> This triggers a rolling recreation of the control plane machines.

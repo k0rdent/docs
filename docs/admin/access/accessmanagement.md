@@ -1,40 +1,39 @@
 # Access Management Resource
 
-{{{ docsVersionInfo.k0rdentName }}} provides an `AccessManagement` resource (cluster-scoped, singleton) that
-enables controlled distribution of multiple object types (`ClusterTemplate`, `ServiceTemplate`, `Credential`, and
-`ClusterAuthentication`) from the system namespace (default: `kcm-system`) across other namespaces in the management
-cluster. This resource is created automatically during the installation of {{{ docsVersionInfo.k0rdentName }}}.
+{{{ docsVersionInfo.k0rdentName }}} provides an `AccessManagement` resource (cluster-scoped, singleton) that enables controlled distribution of multiple object types (`ClusterTemplate`, `ServiceTemplate`, `Credential`, and `ClusterAuthentication`) from the system namespace (default: `kcm-system`) across other namespaces in the management cluster. This resource is created automatically during the installation of {{{ docsVersionInfo.k0rdentName }}}.
 
 ## Supported Configuration Options
 
-The `AccessManagement` has a numver of parameters you can adjust.
+This section describes the fields available in `AccessManagement.spec` and how they control object distribution.
 
-* `spec.accessRules` - A list of access rules that define how specific objects should be distributed.
+The `AccessManagement` resource has a number of parameters you can adjust.
+
+* `spec.accessRules` – A list of access rules that define how specific objects are distributed.
 
 Each access rule supports the following fields:
 
-* `targetNamespaces` - Determines which namespaces selected objects should be distributed to.
-If omitted, objects are distributed to all namespaces.
+### Namespace Selection
 
-    You may customize this field, but you may use only one of the following mutually-exclusive selectors:
+* `targetNamespaces` – Determines which namespaces selected objects are distributed to.
+  If omitted, objects are distributed to all namespaces.
 
-    * `targetNamespaces.stringSelector` - A label query to select namespaces (type: `string`).
-    * `targetNamespaces.selector` - A structured label query to select namespaces (type: `metav1.LabelSelector`)
-    * `targetNamespaces.list` - The list of namespaces to select (type: `[]string`).
+  You may specify only one of the following mutually exclusive selectors:
 
-* `clusterTemplateChains` - The list of `ClusterTemplateChain` names whose `ClusterTemplates` will be distributed
-to all namespaces specified in `targetNamespaces`.
+  * `targetNamespaces.stringSelector` – A label query to select namespaces (type: `string`).
+  * `targetNamespaces.selector` – A structured label query to select namespaces (type: `metav1.LabelSelector`).
+  * `targetNamespaces.list` – A list of namespaces to select (type: `[]string`).
 
-* `serviceTemplateChains` - The list of `ServiceTemplateChain` names whose `ServiceTemplates` will be distributed
-  to all namespaces specified in `targetNamespaces`.
+### Distributed Object Types
 
-* `credentials` - The list of `Credential` names that will be distributed to all the namespaces specified in
-`targetNamespaces`.
+* `clusterTemplateChains` – The list of `ClusterTemplateChain` names whose `ClusterTemplates` are distributed to the selected namespaces.
 
-* `clusterAuthentications` - The list of `ClusterAuthentication` names that will be distributed to all the namespaces
-specified in `targetNamespaces`.
+* `serviceTemplateChains` – The list of `ServiceTemplateChain` names whose `ServiceTemplates` are distributed to the selected namespaces.
 
-Consider this example:
+* `credentials` – The list of `Credential` names that are distributed to the selected namespaces.
+
+* `clusterAuthentications` – The list of `ClusterAuthentication` names that are distributed to the selected namespaces.
+
+### Example
 
 ```yaml
 apiVersion: k0rdent.mirantis.com/v1beta1
@@ -62,13 +61,14 @@ spec:
     - auth1
 ```
 
-For the example above the following objects will be distributed following these rules:
+Based on the configuration above, the following objects are distributed:
 
-1. All `ClusterTemplates` referenced by `ClusterTemplateChain` `ct-chain1` are distributed to `namespace1` and `namespace2`.
-2. All `ServiceTemplates` referenced by `ServiceTemplateChain` `st-chain1` are distributed to `namespace1` and `namespace2`.
-3. The `Credential` `cred1` and all referenced `Identity` resources are distributed to `namespace1` and `namespace2`.
+1. All `ClusterTemplates` referenced by the `ClusterTemplateChain` `ct-chain1` are distributed to `namespace1` and `namespace2`.
+2. All `ServiceTemplates` referenced by the `ServiceTemplateChain` `st-chain1` are distributed to `namespace1` and `namespace2`.
+3. The `Credential` `cred1` and all referenced `Identity` resources (used for authentication) are distributed to `namespace1` and `namespace2`.
 4. The `ClusterAuthentication` `auth1` and its referenced CA secret are distributed to `namespace3`.
 
-See [Credential Distribution System](credentials/credentials-propagation.md#the-credential-distribution-system)
-and [Template Life Cycle Management](../../reference/template/index.md#template-life-cycle-management) for more details
-about distributing `Credential`, `ClusterTemplate` and `ServiceTemplate` objects.
+For more details, see:
+
+* [Credential Distribution System](credentials/credentials-propagation.md#the-credential-distribution-system)
+* [Template Life Cycle Management](../../reference/template/index.md#template-life-cycle-management)
