@@ -4688,6 +4688,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Supported Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespace-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distributed-object-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distributed Object Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -4722,45 +4755,41 @@
 
 
 <h1 id="access-management-resource">Access Management Resource<a class="headerlink" href="#access-management-resource" title="Permanent link">#</a></h1>
-<p>k0rdent provides an <code>AccessManagement</code> resource (cluster-scoped, singleton) that
-enables controlled distribution of multiple object types (<code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code>, and
-<code>ClusterAuthentication</code>) from the system namespace (default: <code>kcm-system</code>) across other namespaces in the management
-cluster. This resource is created automatically during the installation of k0rdent.</p>
+<p>k0rdent provides an <code>AccessManagement</code> resource (cluster-scoped, singleton) that enables controlled distribution of multiple object types (<code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code>, and <code>ClusterAuthentication</code>) from the system namespace (default: <code>kcm-system</code>) across other namespaces in the management cluster. This resource is created automatically during the installation of k0rdent.</p>
 <h2 id="supported-configuration-options">Supported Configuration Options<a class="headerlink" href="#supported-configuration-options" title="Permanent link">#</a></h2>
-<p>The <code>AccessManagement</code> has a numver of parameters you can adjust.</p>
+<p>This section describes the fields available in <code>AccessManagement.spec</code> and how they control object distribution.</p>
+<p>The <code>AccessManagement</code> resource has a number of parameters you can adjust.</p>
 <ul>
-<li><code>spec.accessRules</code> - A list of access rules that define how specific objects should be distributed.</li>
+<li><code>spec.accessRules</code> – A list of access rules that define how specific objects are distributed.</li>
 </ul>
 <p>Each access rule supports the following fields:</p>
+<h3 id="namespace-selection">Namespace Selection<a class="headerlink" href="#namespace-selection" title="Permanent link">#</a></h3>
+<ul>
+<li><code>targetNamespaces</code> – Determines which namespaces selected objects are distributed to.
+  If omitted, objects are distributed to all namespaces.</li>
+</ul>
+<p>You may specify only one of the following mutually exclusive selectors:</p>
+<ul>
+<li><code>targetNamespaces.stringSelector</code> – A label query to select namespaces (type: <code>string</code>).</li>
+<li><code>targetNamespaces.selector</code> – A structured label query to select namespaces (type: <code>metav1.LabelSelector</code>).</li>
+<li><code>targetNamespaces.list</code> – A list of namespaces to select (type: <code>[]string</code>).</li>
+</ul>
+<h3 id="distributed-object-types">Distributed Object Types<a class="headerlink" href="#distributed-object-types" title="Permanent link">#</a></h3>
 <ul>
 <li>
-<p><code>targetNamespaces</code> - Determines which namespaces selected objects should be distributed to.
-If omitted, objects are distributed to all namespaces.</p>
-<p>You may customize this field, but you may use only one of the following mutually-exclusive selectors:</p>
-<ul>
-<li><code>targetNamespaces.stringSelector</code> - A label query to select namespaces (type: <code>string</code>).</li>
-<li><code>targetNamespaces.selector</code> - A structured label query to select namespaces (type: <code>metav1.LabelSelector</code>)</li>
-<li><code>targetNamespaces.list</code> - The list of namespaces to select (type: <code>[]string</code>).</li>
-</ul>
+<p><code>clusterTemplateChains</code> – The list of <code>ClusterTemplateChain</code> names whose <code>ClusterTemplates</code> are distributed to the selected namespaces.</p>
 </li>
 <li>
-<p><code>clusterTemplateChains</code> - The list of <code>ClusterTemplateChain</code> names whose <code>ClusterTemplates</code> will be distributed
-to all namespaces specified in <code>targetNamespaces</code>.</p>
+<p><code>serviceTemplateChains</code> – The list of <code>ServiceTemplateChain</code> names whose <code>ServiceTemplates</code> are distributed to the selected namespaces.</p>
 </li>
 <li>
-<p><code>serviceTemplateChains</code> - The list of <code>ServiceTemplateChain</code> names whose <code>ServiceTemplates</code> will be distributed
-  to all namespaces specified in <code>targetNamespaces</code>.</p>
+<p><code>credentials</code> – The list of <code>Credential</code> names that are distributed to the selected namespaces.</p>
 </li>
 <li>
-<p><code>credentials</code> - The list of <code>Credential</code> names that will be distributed to all the namespaces specified in
-<code>targetNamespaces</code>.</p>
-</li>
-<li>
-<p><code>clusterAuthentications</code> - The list of <code>ClusterAuthentication</code> names that will be distributed to all the namespaces
-specified in <code>targetNamespaces</code>.</p>
+<p><code>clusterAuthentications</code> – The list of <code>ClusterAuthentication</code> names that are distributed to the selected namespaces.</p>
 </li>
 </ul>
-<p>Consider this example:</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AccessManagement</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4785,16 +4814,18 @@ specified in <code>targetNamespaces</code>.</p>
 <span class="w">    </span><span class="nt">clusterAuthentications</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth1</span>
 </code></pre></div>
-<p>For the example above the following objects will be distributed following these rules:</p>
+<p>Based on the configuration above, the following objects are distributed:</p>
 <ol>
-<li>All <code>ClusterTemplates</code> referenced by <code>ClusterTemplateChain</code> <code>ct-chain1</code> are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
-<li>All <code>ServiceTemplates</code> referenced by <code>ServiceTemplateChain</code> <code>st-chain1</code> are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
-<li>The <code>Credential</code> <code>cred1</code> and all referenced <code>Identity</code> resources are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
+<li>All <code>ClusterTemplates</code> referenced by the <code>ClusterTemplateChain</code> <code>ct-chain1</code> are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
+<li>All <code>ServiceTemplates</code> referenced by the <code>ServiceTemplateChain</code> <code>st-chain1</code> are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
+<li>The <code>Credential</code> <code>cred1</code> and all referenced <code>Identity</code> resources (used for authentication) are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
 <li>The <code>ClusterAuthentication</code> <code>auth1</code> and its referenced CA secret are distributed to <code>namespace3</code>.</li>
 </ol>
-<p>See <a href="../credentials/credentials-propagation/#the-credential-distribution-system">Credential Distribution System</a>
-and <a href="../../../reference/template/#template-life-cycle-management">Template Life Cycle Management</a> for more details
-about distributing <code>Credential</code>, <code>ClusterTemplate</code> and <code>ServiceTemplate</code> objects.</p>
+<p>For more details, see:</p>
+<ul>
+<li><a href="../credentials/credentials-propagation/#the-credential-distribution-system">Credential Distribution System</a></li>
+<li><a href="../../../reference/template/#template-life-cycle-management">Template Life Cycle Management</a></li>
+</ul>
 
 
 

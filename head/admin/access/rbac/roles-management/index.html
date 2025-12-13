@@ -2383,6 +2383,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Roles Management
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2392,6 +2403,61 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-rbac-manager-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How RBAC Manager Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-rbacdefinition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example RBACDefinition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resulting-rbac-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resulting RBAC Objects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -4695,6 +4761,50 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-rbac-manager-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How RBAC Manager Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-rbacdefinition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example RBACDefinition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resulting-rbac-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resulting RBAC Objects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -4725,13 +4835,13 @@
 
 
 <h1 id="roles-management">Roles Management<a class="headerlink" href="#roles-management" title="Permanent link">#</a></h1>
-<p>k0rdent now includes the <a href="https://rbac-manager.docs.fairwinds.com/">Fairwinds RBAC Manager</a>
-as part of the management cluster.</p>
-<p>The RBAC Manager is an operator that simplifies Kubernetes authorization.
-Instead of manually creating <code>Roles</code>, <code>ClusterRoles</code>, <code>RoleBindings</code>, <code>ClusterRoleBindings</code>, or <code>ServiceAccounts</code>, you
-declare the desired state using a <code>RBACDefinition</code> custom resource. RBAC Manager then automatically creates
-and maintains the required RBAC objects.</p>
-<p>For example, you can create an <code>RBACDefinition</code> like this:</p>
+<p>k0rdent includes the <a href="https://rbac-manager.docs.fairwinds.com/">Fairwinds RBAC Manager</a> as part of the management cluster.</p>
+<p>The RBAC Manager is an operator that simplifies Kubernetes authorization. Instead of manually creating <code>Roles</code>, <code>ClusterRoles</code>, <code>RoleBindings</code>, <code>ClusterRoleBindings</code>, or <code>ServiceAccounts</code>, you declare the desired state using an <code>RBACDefinition</code> custom resource. RBAC Manager then creates and maintains the required RBAC objects.</p>
+<p>This allows you to manage authorization declaratively using a single resource.</p>
+<h2 id="how-rbac-manager-works">How RBAC Manager Works<a class="headerlink" href="#how-rbac-manager-works" title="Permanent link">#</a></h2>
+<p>RBAC Manager watches for <code>RBACDefinition</code> resources and reconciles them into the corresponding Kubernetes RBAC objects, keeping the actual cluster state aligned with the declared intent.</p>
+<h2 id="example-rbacdefinition">Example RBACDefinition<a class="headerlink" href="#example-rbacdefinition" title="Permanent link">#</a></h2>
+<p>The following example defines four distinct RBAC bindings:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbacmanager.reactiveops.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RBACDefinition</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4776,26 +4886,26 @@ and maintains the required RBAC objects.</p>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos</span>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 </code></pre></div>
-<p>From the example above, RBAC Manager will generate:</p>
+<h2 id="resulting-rbac-objects">Resulting RBAC Objects<a class="headerlink" href="#resulting-rbac-objects" title="Permanent link">#</a></h2>
+<p>From the example above, RBAC Manager generates:</p>
 <ol>
-<li>A <code>ClusterRoleBinding</code> granting Kate the <code>kcm-global-admin-role</code>, providing full administrative access across
-the entire k0rdent system.</li>
-<li>A <code>RoleBinding</code> that gives Michael and Alexey <code>kcm-namespace-admin-role</code> with full administrative access across
-the <code>dev</code> namespace and <code>kcm-namespace-viewer-role</code> with read-only access in the <code>test</code> namespace.</li>
-<li>A <code>RoleBinding</code> granting Jack <code>kcm-namespace-admin-role</code> in the <code>test</code> namespace.</li>
+<li>A <code>ClusterRoleBinding</code> that grants Kate the <code>kcm-global-admin-role</code>, providing full administrative access across the entire k0rdent system.</li>
+<li>A <code>RoleBinding</code> that grants Michael and Alexey the <code>kcm-namespace-admin-role</code> in the <code>dev</code> namespace and the <code>kcm-namespace-viewer-role</code> in the <code>test</code> namespace.</li>
+<li>A <code>RoleBinding</code> that grants Jack the <code>kcm-namespace-admin-role</code> in the <code>test</code> namespace.</li>
 <li>A <code>ServiceAccount</code> named <code>ci-bot</code> in the <code>kcm-system</code> namespace.</li>
-<li><code>RoleBindings</code> that grant the <code>ci-bot</code> ServiceAccount <code>edit</code> access in <code>projectsveltos</code> and <code>kcm-system</code> namespaces
-using namespace selector.</li>
+<li><code>RoleBindings</code> that grant the <code>ci-bot</code> ServiceAccount <code>edit</code> access in the <code>projectsveltos</code> and <code>kcm-system</code> namespaces using a namespace selector rather than explicitly listing namespaces.</li>
 </ol>
-<p>See <a href="https://github.com/FairwindsOps/rbac-manager/tree/master/examples">RBACDefinition Examples</a> for more examples of
-the <code>RBACDefinition</code> resource.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-The names of the <code>ClusterRole</code> objects may have different prefixes depending on the name of the k0rdent Helm chart.
-The <code>ClusterRole</code> object definitions below use the <code>kcm</code> prefix, which is the default name of the k0rdent Helm chart.</p>
+The names of the <code>ClusterRole</code> objects may vary depending on the Helm release name used during installation.
+The examples above use the <code>kcm</code> prefix, which is the default Helm release name for k0rdent.</p>
 </div>
-<p>See <a href="../roles-summary/">Roles Summary</a> for more details about standard k0rdent roles.</p>
+<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://github.com/FairwindsOps/rbac-manager/tree/master/examples">RBACDefinition Examples</a></li>
+<li><a href="../roles-summary/">Roles Summary</a></li>
+</ul>
 
 
 

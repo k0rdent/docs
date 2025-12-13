@@ -1327,6 +1327,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="ClusterAuthentication Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Fields
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1347,6 +1371,24 @@
   
     <nav class="md-nav" aria-label="Integration with ClusterTemplates">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-k0rdent-generates" class="md-nav__link">
+    <span class="md-ellipsis">
+      What k0rdent Generates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-clustertemplates-must-consume" class="md-nav__link">
+    <span class="md-ellipsis">
+      What ClusterTemplates Must Consume
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#example-k0smotroncontrolplane-authentication-configuration" class="md-nav__link">
@@ -4787,6 +4829,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="ClusterAuthentication Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Fields
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4807,6 +4873,24 @@
   
     <nav class="md-nav" aria-label="Integration with ClusterTemplates">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-k0rdent-generates" class="md-nav__link">
+    <span class="md-ellipsis">
+      What k0rdent Generates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-clustertemplates-must-consume" class="md-nav__link">
+    <span class="md-ellipsis">
+      What ClusterTemplates Must Consume
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#example-k0smotroncontrolplane-authentication-configuration" class="md-nav__link">
@@ -4862,14 +4946,15 @@
   
 
 
-<h1 id="identity-and-authorization-management">Identity And Authorization Management<a class="headerlink" href="#identity-and-authorization-management" title="Permanent link">#</a></h1>
-<p>Identity and authorization are core to operating multi-cluster environments, and {{docsVersionInfo.k0rdentName}} now provides a consistent way to manage them through the <code>ClusterAuthentication</code> resource. This mechanism lets you define how each child cluster validates user requests, using standard Kubernetes authentication configuration while supporting multiple JWT issuers, custom claim mappings, and custom certificate authorities. By separating authentication policy from cluster templates and automating its propagation into hosted control planes, {{docsVersionInfo.k0rdentName}}  removes error-prone manual steps and gives you a repeatable, auditable way to enforce identity across your fleet.</p>
+<h1 id="identity-and-authorization-management">Identity and Authorization Management<a class="headerlink" href="#identity-and-authorization-management" title="Permanent link">#</a></h1>
+<p>Identity and authorization are core to operating multi-cluster environments. k0rdent provides a consistent mechanism for managing cluster authentication through the <code>ClusterAuthentication</code> resource.</p>
+<p>This page focuses on <strong>authentication configuration</strong>—how Kubernetes API servers validate user identity. Authorization is handled separately through RBAC and role bindings.</p>
+<p>By separating authentication policy from cluster templates and automating its propagation into hosted control planes, k0rdent removes error-prone manual steps and provides a repeatable, auditable way to enforce identity across a fleet of clusters.</p>
 <h2 id="clusterauthentication-resource">ClusterAuthentication Resource<a class="headerlink" href="#clusterauthentication-resource" title="Permanent link">#</a></h2>
-<p>k0rdent supports configuring identity and authorization management (IAM) for
-child clusters through the <code>ClusterAuthentication</code> custom resource. A <code>ClusterAuthentication</code> object
-defines how the Kubernetes API server authenticates incoming requests. It supports multiple JWT authenticators,
-each configurable with an issuer URL, claim mappings, certificate authorities, and more.</p>
-<p>Consider this example:</p>
+<p>k0rdent supports configuring authentication for child clusters through the <code>ClusterAuthentication</code> custom resource. A <code>ClusterAuthentication</code> object defines how the Kubernetes API server authenticates incoming requests.</p>
+<p>It supports multiple JWT authenticators, each configurable with an issuer URL, audience validation, claim mappings, certificate authorities, and validation rules. Each <code>ClusterAuthentication</code> resource can be referenced by one or more <code>ClusterDeployment</code> objects.</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h3>
+<p>The following example configures a cluster to authenticate users via a Dex identity provider using JWTs:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterAuthentication</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4899,22 +4984,20 @@ each configurable with an issuer URL, claim mappings, certificate authorities, a
 <span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
 </code></pre></div>
-<p>Important fields to consider include:</p>
+<p>This configuration authenticates users based on email addresses and propagates group claims for downstream authorization decisions.</p>
+<h3 id="key-fields">Key Fields<a class="headerlink" href="#key-fields" title="Permanent link">#</a></h3>
 <ul>
-<li><code>spec.authenticationConfiguration</code></li>
+<li><strong><code>spec.authenticationConfiguration</code></strong></li>
 </ul>
-<p>This field includes the full <code>AuthenticationConfiguration</code> object used by the API server. For all available configuration
-options, see the official Kubernetes documentation:
-<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration">Authentication configuration from a file</a>.</p>
+<p>Contains the full <code>AuthenticationConfiguration</code> object consumed by the Kubernetes API server. For all supported options, see the official Kubernetes documentation:
+  <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration">Authentication configuration from a file</a>.</p>
 <ul>
-<li><code>spec.caSecret</code></li>
+<li><strong><code>spec.caSecret</code></strong></li>
 </ul>
-<p>This field references a Kubernetes <code>Secret</code> that contains one or more CA certificates for the JWT issuer endpoint. (Make sure you've already created the <code>Secret</code> before you start!)
-If the issuer uses a custom or self-signed CA, the certificate must be provided here so the API server can trust the issuer.
-The CA value is injected into the <code>AuthenticationConfiguration</code> under <code>jwt.issuer[*].certificateAuthority</code>.</p>
+<p>References a Kubernetes <code>Secret</code> containing one or more CA certificates used to trust the JWT issuer endpoint. The referenced <code>Secret</code> must exist before the <code>ClusterAuthentication</code> resource is applied.</p>
+<p>The CA certificate is injected into the generated <code>AuthenticationConfiguration</code> under <code>jwt.issuer[*].certificateAuthority</code>.</p>
 <h2 id="configuring-authentication-for-clusterdeployments">Configuring Authentication for ClusterDeployments<a class="headerlink" href="#configuring-authentication-for-clusterdeployments" title="Permanent link">#</a></h2>
-<p>Now let's look at how to make this work in practice. To enable authentication for a <code>ClusterDeployment</code>, set the <code>spec.clusterAuth</code> field to the name of an existing
-<code>ClusterAuthentication</code> object in the same namespace. For example:</p>
+<p>This links a <code>ClusterDeployment</code> to an authentication policy. To enable authentication for a cluster, set the <code>spec.clusterAuth</code> field to the name of an existing <code>ClusterAuthentication</code> object in the same namespace.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4932,16 +5015,12 @@ The CA value is injected into the <code>AuthenticationConfiguration</code> under
 See <a href="../../access/accessmanagement/">Access Management Resource</a> for details.</p>
 </div>
 <h2 id="integration-with-clustertemplates">Integration with ClusterTemplates<a class="headerlink" href="#integration-with-clustertemplates" title="Permanent link">#</a></h2>
-<p>When <code>spec.clusterAuth</code> is configured in the <code>ClusterDeployment</code> and the referenced <code>ClusterAuthentication</code> exists,
-the k0rdent KCM controller performs the following:</p>
+<p>When authentication is enabled, k0rdent injects the authentication configuration into the hosted control plane and manages updates when the configuration changes.</p>
+<h3 id="what-k0rdent-generates">What k0rdent Generates<a class="headerlink" href="#what-k0rdent-generates" title="Permanent link">#</a></h3>
+<p>When <code>spec.clusterAuth</code> is configured and the referenced <code>ClusterAuthentication</code> exists, the KCM controller performs the following actions:</p>
 <ol>
-<li>
-<p>Generates a <code>Secret</code> named <code>&lt;cluster-deployment-name&gt;-auth-config</code> that contains the merged
-<code>AuthenticationConfiguration</code> (including injected CA certificates).</p>
-</li>
-<li>
-<p>Passes required authentication values to the <code>HelmRelease</code> responsible for deploying the cluster:</p>
-</li>
+<li>Generates a <code>Secret</code> named <code>&lt;cluster-deployment-name&gt;-auth-config</code> containing the merged <code>AuthenticationConfiguration</code>, including injected CA certificates.</li>
+<li>Passes authentication values to the <code>HelmRelease</code> responsible for deploying the cluster control plane:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">auth</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">configSecret</span><span class="p">:</span>
@@ -4950,18 +5029,24 @@ the k0rdent KCM controller performs the following:</p>
 <span class="w">        </span><span class="nt">hash</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3f7b8627</span>
 </code></pre></div>
 <ul>
-<li><code>auth.configSecret.name</code> - Name of the <code>Secret</code> containing the authentication config.</li>
-<li><code>auth.configSecret.key</code> - Key within the <code>Secret</code> where the configuration is stored.</li>
-<li><code>auth.configSecret.hash</code> - Hash of the configuration content; used to trigger control plane updates when changed.</li>
+<li><code>auth.configSecret.name</code> – Name of the <code>Secret</code> containing the authentication configuration.</li>
+<li><code>auth.configSecret.key</code> – Key within the <code>Secret</code> where the configuration is stored.</li>
+<li><code>auth.configSecret.hash</code> – Hash of the configuration content; used to trigger control plane updates when the configuration changes.</li>
 </ul>
-<p>The <code>ClusterTemplate</code> must consume these values to configure the API server correctly. If you're using built-in templates, this isn't a problem; k0rdent includes this information already.  However, if you're creating custom <code>ClusterTemplates</code> you
-will need to make sure this information is referenced in your assets.
-In particular, the control plane resources (<code>K0smotronControlPlane</code> or <code>K0sControlPlane</code>) must:</p>
+<h3 id="what-clustertemplates-must-consume">What ClusterTemplates Must Consume<a class="headerlink" href="#what-clustertemplates-must-consume" title="Permanent link">#</a></h3>
+<p>The <code>ClusterTemplate</code> must consume these values to configure the API server correctly. Built-in templates already reference this information.</p>
+<p>If you are creating custom <code>ClusterTemplates</code>, you must explicitly reference these values. In particular, the control plane resources (<code>K0smotronControlPlane</code> or <code>K0sControlPlane</code>) must:</p>
 <ol>
-<li>Mount the authentication <code>Secret</code> on control plane nodes/pods, and</li>
-<li>Set the API server’s <code>--authentication-configuration</code> flag.</li>
+<li>Mount the authentication <code>Secret</code> into control plane nodes or pods.</li>
+<li>Set the API server <code>--authentication-configuration</code> flag to the mounted configuration file.</li>
 </ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Updating <code>spec.clusterAuth</code> changes the configuration hash and triggers a rolling recreation of control plane machines.</p>
+</div>
 <h3 id="example-k0smotroncontrolplane-authentication-configuration">Example: <code>K0smotronControlPlane</code> Authentication Configuration<a class="headerlink" href="#example-k0smotroncontrolplane-authentication-configuration" title="Permanent link">#</a></h3>
+<p>This example shows how a hosted control plane consumes the injected authentication configuration.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">k0sConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0s.k0sproject.io/v1beta1</span>
@@ -4988,6 +5073,7 @@ In particular, the control plane resources (<code>K0smotronControlPlane</code> o
 <span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <h3 id="example-k0scontrolplane-authentication-configuration">Example: <code>K0sControlPlane</code> Authentication Configuration<a class="headerlink" href="#example-k0scontrolplane-authentication-configuration" title="Permanent link">#</a></h3>
+<p>This example shows the equivalent configuration for a non-hosted control plane.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">k0sConfigSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.auth.configSecret.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
@@ -5011,14 +5097,8 @@ In particular, the control plane resources (<code>K0smotronControlPlane</code> o
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.auth.configSecret.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">            </span><span class="nt">authentication-config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/k0s/auth/config-{{ .Values.auth.configSecret.hash }}.yaml</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="w w-Error"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>
-If <code>spec.clusterAuth</code> is updated with a different configuration, the hash value will change.
-This triggers a rolling recreation of the control plane machines.</p>
-</div>
 
 
 
