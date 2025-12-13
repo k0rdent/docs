@@ -1,14 +1,18 @@
 # Roles Management
 
-{{{ docsVersionInfo.k0rdentName }}} now includes the [Fairwinds RBAC Manager](https://rbac-manager.docs.fairwinds.com/)
-as part of the management cluster.
+{{{ docsVersionInfo.k0rdentName }}} includes the [Fairwinds RBAC Manager](https://rbac-manager.docs.fairwinds.com/) as part of the management cluster.
 
-The RBAC Manager is an operator that simplifies Kubernetes authorization.
-Instead of manually creating `Roles`, `ClusterRoles`, `RoleBindings`, `ClusterRoleBindings`, or `ServiceAccounts`, you
-declare the desired state using a `RBACDefinition` custom resource. RBAC Manager then automatically creates
-and maintains the required RBAC objects.
+The RBAC Manager is an operator that simplifies Kubernetes authorization. Instead of manually creating `Roles`, `ClusterRoles`, `RoleBindings`, `ClusterRoleBindings`, or `ServiceAccounts`, you declare the desired state using an `RBACDefinition` custom resource. RBAC Manager then creates and maintains the required RBAC objects.
 
-For example, you can create an `RBACDefinition` like this:
+This allows you to manage authorization declaratively using a single resource.
+
+## How RBAC Manager Works
+
+RBAC Manager watches for `RBACDefinition` resources and reconciles them into the corresponding Kubernetes RBAC objects, keeping the actual cluster state aligned with the declared intent.
+
+## Example RBACDefinition
+
+The following example defines four distinct RBAC bindings:
 
 ```yaml
 apiVersion: rbacmanager.reactiveops.io/v1beta1
@@ -56,22 +60,21 @@ rbacBindings:
                 - kcm-system
 ```
 
-From the example above, RBAC Manager will generate:
+## Resulting RBAC Objects
 
-1. A `ClusterRoleBinding` granting Kate the `kcm-global-admin-role`, providing full administrative access across
-the entire {{{ docsVersionInfo.k0rdentName }}} system.
-2. A `RoleBinding` that gives Michael and Alexey `kcm-namespace-admin-role` with full administrative access across
-the `dev` namespace and `kcm-namespace-viewer-role` with read-only access in the `test` namespace.
-3. A `RoleBinding` granting Jack `kcm-namespace-admin-role` in the `test` namespace.
+From the example above, RBAC Manager generates:
+
+1. A `ClusterRoleBinding` that grants Kate the `kcm-global-admin-role`, providing full administrative access across the entire {{{ docsVersionInfo.k0rdentName }}} system.
+2. A `RoleBinding` that grants Michael and Alexey the `kcm-namespace-admin-role` in the `dev` namespace and the `kcm-namespace-viewer-role` in the `test` namespace.
+3. A `RoleBinding` that grants Jack the `kcm-namespace-admin-role` in the `test` namespace.
 4. A `ServiceAccount` named `ci-bot` in the `kcm-system` namespace.
-5. `RoleBindings` that grant the `ci-bot` ServiceAccount `edit` access in `projectsveltos` and `kcm-system` namespaces
-using namespace selector.
-
-See [RBACDefinition Examples](https://github.com/FairwindsOps/rbac-manager/tree/master/examples) for more examples of
-the `RBACDefinition` resource.
+5. `RoleBindings` that grant the `ci-bot` ServiceAccount `edit` access in the `projectsveltos` and `kcm-system` namespaces using a namespace selector rather than explicitly listing namespaces.
 
 > NOTE:
-> The names of the `ClusterRole` objects may have different prefixes depending on the name of the {{{ docsVersionInfo.k0rdentName }}} Helm chart.
-> The `ClusterRole` object definitions below use the `kcm` prefix, which is the default name of the {{{ docsVersionInfo.k0rdentName }}} Helm chart.
+> The names of the `ClusterRole` objects may vary depending on the Helm release name used during installation.
+> The examples above use the `kcm` prefix, which is the default Helm release name for {{{ docsVersionInfo.k0rdentName }}}.
 
-See [Roles Summary](roles-summary.md) for more details about standard {{{ docsVersionInfo.k0rdentName }}} roles.
+## Further Reading
+
+* [RBACDefinition Examples](https://github.com/FairwindsOps/rbac-manager/tree/master/examples)
+* [Roles Summary](roles-summary.md)
