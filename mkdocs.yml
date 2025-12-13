@@ -67,6 +67,7 @@ plugins:
         - Makefile*
         - requirements_pip.txt
         - requirements.txt
+  - include-markdown
   - redirects:
       redirect_maps:
         why-k0rdent.md: concepts/why-k0rdent.md
