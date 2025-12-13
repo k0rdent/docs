@@ -4,39 +4,11 @@
 
 KOF may be installed using different options:
 
-```mermaid
-flowchart TD
-    S((Start))
-    S --> AWS[AWS]
-    S --> AZ[Azure]
-    S --> OS[OpenStack<br>and others]
-
-    AWS -.-> AG[**Aig Gap**]
-    AZ -.-> AG
-    OS --> AG
-
-    AWS --> NAG[No Air Gap]
-    AZ --> NAG
-    OS --> NAG
-
-    AG --> I[**Istio**]
-    AG --> MD[Manual DNS]
-    AG -.-> AD[Auto DNS]
-
-    NAG --> I
-    NAG --> MD
-    NAG --> AD
-
-    I --> R[KOF Regional:<br><br>own ClusterDeployment<br>or shared with KCM Region<br>or with Management<br>or just ConfigMap]
-    MD --> R
-    AD --> R
-
-    R --> M2[Store KOF data<br>from Management...]
-
-    M2 --> M2M[**...to Management**]
-    M2 --> M2R[...to Regional<br>with Istio<br>or without]
-    M2 --> M2TP[...to Third-party]
-```
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--mermaid-start-->"
+    end="<!--mermaid-end-->"
+%}
 
 Opinionated default installation we plan to simplify in the next release
 is shown in **bold** style.
@@ -57,6 +29,18 @@ Before beginning KOF installation, you should have the following components in p
       for service endpoints such as `kof.example.com`.
 
 For for information on long-term storage planning, review the [KOF Retention](./kof-retention.md) page, which covers retention and replication strategies.
+
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--image-registry-start-->"
+    end="<!--image-registry-end-->"
+%}
+
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--airgap-start-->"
+    end="<!--airgap-end-->"
+%}
 
 ### DNS auto-config
 
@@ -140,14 +124,11 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 
 3. Install the `k0rdent/istio` charts to the management cluster:
   
-    ```bash
-    helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-      oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
-      --set cert-manager-service-template.enabled=false \
-      --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
-      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
-      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
-    ```
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--install-istio-start-->"
+    end="<!--install-istio-end-->"
+%}
 
 ## Management Cluster
 
@@ -157,11 +138,12 @@ and [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionIn
 and apply this example, or use it as a reference:
 
 1. Install `kof-operators` as required by `kof-mothership`:
-    ```bash
-    helm upgrade -i --reset-values --wait \
-      --create-namespace -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--install-kof-operators-start-->"
+    end="<!--install-kof-operators-end-->"
+%}
 
 2. Create the `mothership-values.yaml` file and add there:
     ```yaml
@@ -246,11 +228,12 @@ and apply this example, or use it as a reference:
     ```
 
 6. Install `kof-mothership`:
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-mothership \
-      -f mothership-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--install-kof-mothership-start-->"
+    end="<!--install-kof-mothership-end-->"
+%}
 
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
@@ -271,13 +254,11 @@ and apply this example, or use it as a reference:
         you may set the OpenStack-specific values described in step 10 of the [Regional Cluster](#regional-cluster) section
         as a values file with `storage:` key passed to `kof-regional` chart here.
     * Install these charts into the management cluster with default or custom values:
-        ```bash
-        helm upgrade -i --reset-values --wait -n kof kof-regional \
-          oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-
-        helm upgrade -i --reset-values --wait -n kof kof-child \
-          oci://ghcr.io/k0rdent/kof/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-        ```
+{%
+    include-markdown "./includes/kof-install-includes.md"
+    start="<!--management-custom-start-->"
+    end="<!--management-custom-end-->"
+%}
 
 9. Wait for all pods to show that they're `Running`:
     ```bash
