@@ -1,39 +1,3 @@
-<!--mermaid-start-->
-```mermaid
-flowchart TD
-    S((Start))
-    S --> AWS[AWS]
-    S --> AZ[Azure]
-    S --> OS[OpenStack<br>and others]
-
-    AWS -.-> AG[**Aig Gap**]
-    AZ -.-> AG
-    OS --> AG
-
-    AWS --> NAG[No Air Gap]
-    AZ --> NAG
-    OS --> NAG
-
-    AG --> I[**Istio**]
-    AG --> MD[Manual DNS]
-    AG -.-> AD[Auto DNS]
-
-    NAG --> I
-    NAG --> MD
-    NAG --> AD
-
-    I --> R[KOF Regional:<br><br>own ClusterDeployment<br>or shared with KCM Region<br>or with Management<br>or just ConfigMap]
-    MD --> R
-    AD --> R
-
-    R --> M2[Store KOF data<br>from Management...]
-
-    M2 --> M2M[**...to Management**]
-    M2 --> M2R[...to Regional<br>with Istio<br>or without]
-    M2 --> M2TP[...to Third-party]
-```
-<!--mermaid-end-->
-
 <!--image-registry-start--><!--image-registry-end-->
 
 <!--airgap-start--><!--airgap-end-->
@@ -76,3 +40,4 @@ flowchart TD
           oci://ghcr.io/k0rdent/kof/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         ```
 <!--management-custom-end-->
+
