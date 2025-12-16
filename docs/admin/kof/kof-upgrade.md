@@ -249,12 +249,15 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
 
 This step will not be required in future upgrades.
 
-### Istio Chart Upgrade
+### Istio Upgrade
 
 > NOTICE:
 > This section is for users of **k0rdent-istio** only.
 
 Starting from k0rdent Istio v0.2.0, the Istio charts have been merged into a single chart called `k0rdent-istio`, replacing the previously used `k0rdent-istio-base` and `k0rdent-istio` charts. In k0rdent Istio v0.2.0 version, namespace creation with Istio sidecar injection was removed from the Istio charts. As a result, starting from the new KOF version, the kof namespace is created by KOF with the Istio injection label applied.
+
+> IMPORTANT:
+> KCM must be upgraded to v1.6.0 before upgrading KOF.
 
 To prevent data loss and ensure a smooth migration, follow these steps:
 
@@ -300,9 +303,9 @@ kubectl get crd -o name | grep --color=never 'istio.io' | xargs kubectl delete
 kubectl get mcs -o name | grep "remote-secret-propagation-" | xargs -r kubectl delete
 ```
 
-#### 5. Upgrade KOF and KCM
+#### 5. Upgrade KOF
 
-Before upgrading KOF components, first upgrade the KOF operator using `--take-ownership` by following the instructions at the beginning of the [Upgrade to v1.6.0 version](#upgrade-to-v160) section. After that, upgrade KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).
+First upgrade the KOF operator using `--take-ownership` by following the instructions at the beginning of the [Upgrade to v1.6.0 version](#upgrade-to-v160) section. After that, upgrade KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).
 
 #### 6. Deploy the new Istio chart
 
