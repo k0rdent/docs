@@ -254,22 +254,22 @@ This step will not be required in future upgrades.
 > NOTICE:
 > This section is for users of **k0rdent-istio** only.
 
-Starting from k0rdent Istio v0.2.0, the Istio charts have been merged into a single chart called `k0rdent-istio`, replacing the previously used `k0rdent-istio-base` and `k0rdent-istio` charts. In k0rdent Istio v0.2.0 version, namespace creation with Istio sidecar injection was removed from the Istio charts. As a result, starting from the new KOF version, the kof namespace is created by KOF with the Istio injection label applied.
+Starting from k0rdent Istio v0.2.0, the Istio charts have been merged into a single chart called `k0rdent-istio`, replacing the previously used `k0rdent-istio-base` and `k0rdent-istio` charts. In k0rdent Istio v0.2.0, namespace creation with Istio sidecar injection was removed from the Istio charts. As a result, starting from the new KOF version, the kof namespace is created by KOF with the Istio injection label applied.
 
 > IMPORTANT:
-> KCM must be upgraded to v1.6.0 before upgrading KOF.
+> You must upgrade KCM to v1.6.0 before upgrading KOF.
 
 To prevent data loss and ensure a smooth migration, follow these steps:
 
 #### 1. Back up data from all remote clusters
 
-During the Istio upgrade process, KOF should not be uninstalled if all instructions are followed. However, to avoid potential data loss, perform the following step:
+If you follow all instructions, KOF should not be uninstalled during the Istio upgrade process. However, to avoid potential data loss, perform the following step:
 
 Follow the instructions in [Back Up Data from Istio Clusters](#1-back-up-data-from-istio-clusters) from the v1.5.0 upgrade guide.
 
 #### 2. Patch MultiClusterServices
 
-To uninstall Istio without uninstalling KOF, remove the Istio dependency from the Istio MultiClusterService resources using the following commands:
+To uninstall Istio without uninstalling KOF, remove the Istio dependency from the Istio `MultiClusterService` resources using the following commands:
 
 ```bash
 kubectl patch mcs kof-istio-regional-cluster \
@@ -305,7 +305,7 @@ kubectl get mcs -o name | grep "remote-secret-propagation-" | xargs -r kubectl d
 
 #### 5. Upgrade KOF
 
-First upgrade the KOF operator using `--take-ownership` by following the instructions at the beginning of the [Upgrade to v1.6.0 version](#upgrade-to-v160) section. After that, upgrade KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).
+First upgrade the KOF operator using `--take-ownership` by following the instructions at the beginning of the [Upgrade to v1.6.0 version](#upgrade-to-v160) section. After that, upgrade the KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).
 
 #### 6. Deploy the new Istio chart
 
