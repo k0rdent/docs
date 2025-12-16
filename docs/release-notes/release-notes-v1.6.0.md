@@ -30,12 +30,14 @@
 
 - **k0rdent Service Manager (KSM):**
 
-    - An ability to pause reconciliation of Sveltos deployed services.
-    - An ability to upgrade services in sequential order.
-    - Add service dependencies.
+    - **Reconciliation Control for Sveltos Services**: The ability to pause reconciliation for services deployed via Sveltos, allowing controlled maintenance and troubleshooting without continuous drift correction.
+    -  **Sequential Service Upgrade Support**: Support for upgrading services in a defined, sequential order to reduce risk and manage inter-service dependencies during rollout.
+    - **Service Dependency Management**: The ability to define explicit dependencies between services, making sure prerequisite services are deployed and upgraded in the correct order.
 
 - **Observability (KOF):**
-    - TBD
+  
+    - **Adopted Cluster Support for KCM Regions**: Support for adopting existing clusters into a KCM Region, enabling centralized management of previously unmanaged or externally created clusters.
+    - **OTel Collector Misconfiguration Detection in KOF UI**: Automatic detection and surfacing of OpenTelemetry Collector misconfigurations directly in the KOF UI to speed up diagnosis and reduce observability blind spots.
 
 - **Platform & Dependency Updates:**
     - Cluster API upgraded to **v1.11.3**
@@ -48,7 +50,24 @@
 
 ## Upgrade Notes
 
-TBD
+-   Before upgrading `kof-mothership`, ensure the following steps are completed:
+    1.  Upgrade the `kof-operators` chart using the `--take-ownership` flag:
+
+        ```
+        helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators -f operators-values.yaml \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+        
+    1.  Make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
+ 
+        ```
+        KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators -f operators-values.yaml \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+        
+    This step will not be required in future upgrades.
 
 ---
 
@@ -64,6 +83,8 @@ TBD
 * **feat:** enhance multiclusterservice status with matching clusters ([#2169](https://github.com/k0rdent/kcm/pull/2169)) by @BROngineer
 * **feat:** implement sequential upgrade ([#2062](https://github.com/k0rdent/kcm/pull/2062)) by @kylewuolle
 * **feat:** keep deployed resources ([#2220](https://github.com/k0rdent/kcm/pull/2220)) by @BROngineer
+* **feat:** add adopted cluster support for KCM Region ([#630](https://github.com/k0rdent/kof/pull/630)) by @AndrejsPon00
+* **feat:** add OTel Collector misconfiguration detection to KOF UI ([#636](https://github.com/k0rdent/kof/pull/636)) by @AndrejsPon00
 
 ### Notable Fixes
 
@@ -95,6 +116,24 @@ TBD
 * **fix:** serviceset creation if no services defined in cld ([#2174](https://github.com/k0rdent/kcm/pull/2174)) by @BROngineer
 * **fix:** support empty ClusterDataSource status ([#2192](https://github.com/k0rdent/kcm/pull/2192)) by @eromanova
 * **fix:** trigger the deletion of ClusterDataSource ([#2200](https://github.com/k0rdent/kcm/pull/2200)) by @eromanova
+* **fix:** update KOF operator ClusterRole to prevent KOF UI errors ([#620](https://github.com/k0rdent/kof/pull/620)) by @AndrejsPon00
+* **fix:** mothership upgrade failure caused by `ServiceTemplateChain` spec changes ([#625](https://github.com/k0rdent/kof/pull/625)) by @AndrejsPon00
+* **fix:** prevent chart reinstallation by adding service dependencies to region/child MCS ([#623](https://github.com/k0rdent/kof/pull/623)) by @AndrejsPon00
+* **fix:** split queue utilization widgets ([#629](https://github.com/k0rdent/kof/pull/629)) by @gmlexx
+* **fix:** align operator service labels and ports with operator pod configuration ([#622](https://github.com/k0rdent/kof/pull/622)) by @AndrejsPon00
+* **fix:** false-positive misconfiguration alert for localhost ([#631](https://github.com/k0rdent/kof/pull/631)) by @gmlexx
+* **fix:** duplicated dashboard UID ([#635](https://github.com/k0rdent/kof/pull/635)) by @gmlexx
+* **fix:** Grafana operator reconciliation failure caused by missing credentials ([#645](https://github.com/k0rdent/kof/pull/645)) by @gmlexx
+* **fix:** incorrect vmalert image used for vmauth ([#646](https://github.com/k0rdent/kof/pull/646)) by @denis-ryzhkov
+* **fix:** improve cluster cloud detection logic ([#651](https://github.com/k0rdent/kof/pull/651)) by @AndrejsPon00
+* **fix:** unused `ServiceTemplateChain` blocking KOF installation ([#654](https://github.com/k0rdent/kof/pull/654)) by @AndrejsPon00
+* **fix:** remove `Patch Kind Config` step from upgrade CI pipelines ([#656](https://github.com/k0rdent/kof/pull/656)) by @AndrejsPon00
+* **fix:** Grafana operator reconciliation issue caused by missing credentials ([#657](https://github.com/k0rdent/kof/pull/657)) by @gmlexx
+* **fix:** make global values compatible with new collectors ([#663](https://github.com/k0rdent/kof/pull/663)) by @denis-ryzhkov
+* **fix:** missing version field in `ServiceTemplateChain` upgrades ([#668](https://github.com/k0rdent/kof/pull/668)) by @AndrejsPon00
+* **fix:** prevent chart reinstallation in MCS by adding `wait` to Helm options ([#664](https://github.com/k0rdent/kof/pull/664)) by @AndrejsPon00
+* **ci:** fix Docker pull rate-limit issues in CI ([#650](https://github.com/k0rdent/kof/pull/650)) by @AndrejsPon00
+* **ci:** add workaround for CI failures caused by Grafana Operator ([#659](https://github.com/k0rdent/kof/pull/659)) by @AndrejsPon00
 
 ### Dependency / Tooling Bumps (partial)
 
@@ -123,10 +162,20 @@ TBD
 * **chore(bump):** update openstack provider version to v0.13.0 ([#2154](https://github.com/k0rdent/kcm/pull/2154)) by @Kshatrix
 * **chore(bump):** update capi version to v1.11.3 ([#2150](https://github.com/k0rdent/kcm/pull/2150)) by @Kshatrix
 * **chore(deps):** bump sigs.k8s.io/cluster-api from 1.11.2 to 1.11.3 ([#2148](https://github.com/k0rdent/kcm/pull/2148))
+* **chore:** bump version to upcoming 1.6.0-rc0 ([#621](https://github.com/k0rdent/kof/pull/621)) by @denis-ryzhkov
+* **chore:** fix metrics port binding for kind clusters ([#626](https://github.com/k0rdent/kof/pull/626)) by @gmlexx
+* **chore:** update Istio-related files following Istio chart merge ([#627](https://github.com/k0rdent/kof/pull/627)) by @AndrejsPon00
+* **chore:** upgrade Grafana Operator to v5.20.0 ([#634](https://github.com/k0rdent/kof/pull/634)) by @gmlexx
+* **chore:** upgrade OpenCost to v1.118.0 ([#641](https://github.com/k0rdent/kof/pull/641)) by @gmlexx
+* **chore:** automatically label `kof` namespace for Istio sidecar injection ([#643](https://github.com/k0rdent/kof/pull/643)) by @AndrejsPon00
+* **chore:** pin image tags in kof-collectors values ([#647](https://github.com/k0rdent/kof/pull/647)) by @denis-ryzhkov
+* **chore:** bump version to KOF 1.6.0-rc1 ([#667](https://github.com/k0rdent/kof/pull/667)) by @AndrejsPon00
 
 ---
 
 ## References
 
 * [Compare KCM v1.5.0…v1.6.0](https://github.com/k0rdent/kcm/compare/v1.5.0...v1.6.0)
+* [Compare KOF v1.5.0...v1.6.0-rc1](https://github.com/k0rdent/kof/compare/v1.5.0...v1.6.0-rc1)
+
 
