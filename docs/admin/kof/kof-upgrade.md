@@ -228,6 +228,116 @@ To migrate data with transformation please consider one of the following options
     * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
     * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
 
+## Upgrade to v1.6.0
+
+Before upgrading `kof-mothership`, ensure the following steps are completed:
+    1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
+
+        ```bash
+        helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+
+    2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
+
+        ```bash
+        KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
+          --reset-values --wait -n kof kof-operators \
+          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+        ```
+
+This step will not be required in future upgrades.
+
+### Istio Upgrade
+
+> NOTICE:
+> This section is for users of **k0rdent-istio** only.
+
+Starting from k0rdent Istio v0.2.0, the Istio charts have been merged into a single chart called `k0rdent-istio`, replacing the previously used `k0rdent-istio-base` and `k0rdent-istio` charts. In k0rdent Istio v0.2.0, namespace creation with Istio sidecar injection was removed from the Istio charts. As a result, starting from the new KOF version, the kof namespace is created by KOF with the Istio injection label applied.
+
+> IMPORTANT:
+> You must upgrade KCM to v1.6.0 before upgrading KOF.
+
+To prevent data loss and ensure a smooth migration, follow these steps:
+
+#### 1. Back up data from all remote clusters
+
+If you follow all instructions, KOF should not be uninstalled during the Istio upgrade process. However, to avoid potential data loss, perform the following step:
+
+Follow the instructions in [Back Up Data from Istio Clusters](#1-back-up-data-from-istio-clusters) from the v1.5.0 upgrade guide.
+
+#### 2. Patch MultiClusterServices
+
+To uninstall Istio without uninstalling KOF, remove the Istio dependency from the Istio `MultiClusterService` resources using the following commands:
+
+```bash
+kubectl patch mcs kof-istio-regional-cluster \
+  --type=json \
+  -p='[{"op":"remove","path":"/spec/dependsOn"}]'
+
+kubectl patch mcs kof-istio-child-cluster \
+  --type=json \
+  -p='[{"op":"remove","path":"/spec/dependsOn"}]'
+```
+
+#### 3. Remove annotations from the KOF namespace on all remote clusters
+
+Remove the annotations from the KOF namespace across all remote clusters to break the link with Sveltos resources and prevent the namespace from being uninstalled during the Istio upgrade.
+
+```bash
+KUBECONTEXT=remote-kubeconfig kubectl patch namespace kof \
+  --type=merge \
+  -p='{"metadata":{"annotations":null}}'
+```
+
+#### 4. Uninstall old Istio resources on the management cluster
+
+Use the following commands to uninstall the old Istio charts on the **management** cluster:
+
+```bash
+helm uninstall --wait -n istio-system k0rdent-istio
+helm uninstall --wait -n istio-system k0rdent-istio-base
+kubectl delete namespace istio-system --wait
+kubectl get crd -o name | grep --color=never 'istio.io' | xargs kubectl delete 
+kubectl get mcs -o name | grep "remote-secret-propagation-" | xargs -r kubectl delete
+```
+
+#### 5. Upgrade KOF
+
+First upgrade the KOF operator using `--take-ownership` by following the instructions at the beginning of the [Upgrade to v1.6.0 version](#upgrade-to-v160) section. After that, upgrade the KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).
+
+#### 6. Deploy the new Istio chart
+
+Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-istio`), install the single chart:
+
+```bash
+helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
+  --set cert-manager-service-template.enabled=false \
+  --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
+  --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
+  --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
+```
+
+#### 7. Restart KOF pods
+
+Wait until Istio is fully installed on the management and remote clusters, then restart the KOF pods using the following command:
+
+```bash
+kubectl delete pods -n kof --all
+```
+
+To restart KOF pods on a remote cluster, use:
+
+```bash
+KUBECONTEXT=remote-kubeconfig kubectl delete pods -n kof --all
+```
+
+#### 8. (Optional) Restore Data
+
+If, for some reason, your data on regional clusters was corrupted or KOF was uninstalled during the Istio upgrade process, follow the instructions in [Restore Data](#9-restore-data)
+
 ## Upgrade to v1.5.0
 
 > NOTE:
