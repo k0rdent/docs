@@ -352,8 +352,8 @@ extra:
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
-    k0rdentVersion: 1-6-0-rc3
-    k0rdentDotVersion: 1.6.0-rc3
+    k0rdentVersion: 1-6-0
+    k0rdentDotVersion: 1.6.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:382291ed68a79eb8e03a5b2f2b7d06b56e3fb798158c519433e254b695955391
     k0rdentDigestDate: Thu Oct 30 12:54:32 2025
