@@ -359,6 +359,8 @@ extra:
     k0rdentTagList: https://github.com/k0rdent/kcm/tags
     kofVersions:
       kofDotVersion: 1.5.0
+      kofOciRegistryBase: oci://ghcr.io/k0rdent/kof
+      kofOciRegistryBaseIstio: oci://ghcr.io/k0rdent/istio
     providerVersions:
       dashVersions:
         clusterApi: 1-0-7
