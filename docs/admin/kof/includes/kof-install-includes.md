@@ -29,7 +29,7 @@
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f mothership-values.yaml \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase}}}/charts/kof-mothership \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership \
       --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 <!--install-kof-mothership-end-->
