@@ -247,8 +247,8 @@ nav:
     - Enabling drift detection: user/user-enable-drift-detection.md
   - Reference:
     - Overview: reference/index.md
-    - API specification:
-      - API specification: api-specification/index.md
+    #- API specification:
+    #  - API specification: api-specification/index.md
     - k0rdent CRDs: reference/crds/index.md
     - k0rdent Templates:
       - Introduction to k0rdent templates: reference/template/index.md
