@@ -151,6 +151,19 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
     end="<!--install-istio-end-->"
 %}
 
+4. [k0rdent/istio issue #27](https://github.com/k0rdent/istio/issues/27):
+    If you create a cluster a day or more later than others,
+    it may fail to see other clusters.
+    In this case, as a workaround, run this in the management cluster:
+
+    ```bash
+    kubectl get secret -n istio-system -o name \
+      | grep istio-remote-secret \
+      | xargs kubectl delete -n istio-system
+    ```
+
+    New secrets will be auto-created and auto-propagated to other clusters, fixing the issue.
+
 ## Management Cluster
 
 To install KOF on the management cluster,
@@ -258,7 +271,7 @@ and apply this example, or use it as a reference:
 
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
-9. Apply shared configuration for the existing and upcoming regional and child clusters:
+8. Apply shared configuration for the existing and upcoming regional and child clusters:
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
         ```bash
         kubectl wait --for=jsonpath={.status.valid}=true svctmpl -A --all
