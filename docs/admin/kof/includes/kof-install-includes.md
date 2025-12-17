@@ -7,7 +7,7 @@
 <!--install-istio-start-->
     ```bash
     helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}/charts/k0rdent-istio \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
       --version 0.2.0 \
       --set cert-manager-service-template.enabled=false \
       --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
@@ -45,4 +45,5 @@
           --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         ```
 <!--management-custom-end-->
+
 
