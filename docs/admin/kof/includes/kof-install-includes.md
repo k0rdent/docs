@@ -20,7 +20,7 @@
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase}}}/charts/kof-operators \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators \
       --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 <!--install-kof-operators-end-->
