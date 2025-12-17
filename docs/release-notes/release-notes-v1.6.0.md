@@ -27,11 +27,12 @@
 - **k0rdent Cluster Manager (KCM):**
 
     - **Identity and Authorization Management Support**: A unified way to manage authentication across `ClusterDeployments`.
+    - **Registry Authentication Support for Management components**: Support configuring the `imagePullSecret` parameter to enable all management components to use authenticated container registries.
 
 - **k0rdent Service Manager (KSM):**
 
     - **Reconciliation Control for Sveltos Services**: The ability to pause reconciliation for services deployed via Sveltos, allowing controlled maintenance and troubleshooting without continuous drift correction.
-    -  **Sequential Service Upgrade Support**: Support for upgrading services in a defined, sequential order to reduce risk and manage inter-service dependencies during rollout.
+    - **Sequential Service Upgrade Support**: Support for upgrading services in a defined, sequential order to reduce risk and manage inter-service dependencies during rollout.
     - **Service Dependency Management**: The ability to define explicit dependencies between services, making sure prerequisite services are deployed and upgraded in the correct order.
 
 - **Observability (KOF):**
