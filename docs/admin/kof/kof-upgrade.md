@@ -231,21 +231,22 @@ To migrate data with transformation please consider one of the following options
 ## Upgrade to v1.6.0
 
 Before upgrading `kof-mothership`, ensure the following steps are completed:
-    1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
 
-        ```bash
-        helm upgrade --take-ownership \
-          --reset-values --wait -n kof kof-operators \
-          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
-        ```
+1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
 
-    2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
+    ```bash
+    helm upgrade --take-ownership \
+      --reset-values --wait -n kof kof-operators \
+      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+    ```
 
-        ```bash
-        KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
-          --reset-values --wait -n kof kof-operators \
-          oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
-        ```
+2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
+
+    ```bash
+    KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
+      --reset-values --wait -n kof kof-operators \
+      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+    ```
 
 This step will not be required in future upgrades.
 
@@ -286,7 +287,7 @@ kubectl patch mcs kof-istio-child-cluster \
 Remove the annotations from the KOF namespace across all remote clusters to break the link with Sveltos resources and prevent the namespace from being uninstalled during the Istio upgrade.
 
 ```bash
-KUBECONTEXT=remote-kubeconfig kubectl patch namespace kof \
+KUBECONFIG=remote-kubeconfig kubectl patch namespace kof \
   --type=merge \
   -p='{"metadata":{"annotations":null}}'
 ```
@@ -331,7 +332,7 @@ kubectl delete pods -n kof --all
 To restart KOF pods on a remote cluster, use:
 
 ```bash
-KUBECONTEXT=remote-kubeconfig kubectl delete pods -n kof --all
+KUBECONFIG=remote-kubeconfig kubectl delete pods -n kof --all
 ```
 
 #### 8. (Optional) Restore Data
