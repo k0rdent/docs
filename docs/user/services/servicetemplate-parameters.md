@@ -70,7 +70,7 @@ services:
 
 ### HelmOptions Structure
 
-Per-service Helm options that override template-level `helmOptions`. See [ServiceTemplate Helm Options](../../admin/ksm/ksm-service-templates.md#spechelmOptions) for the complete list of available options.
+Per-service Helm options that override template-level `helmOptions`. See [ServiceTemplate Helm Options](../../admin/ksm/ksm-service-templates.md#spechelmoptions) for the complete list of available options.
 
 **Example:**
 ```yaml
