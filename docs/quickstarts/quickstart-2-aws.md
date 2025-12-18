@@ -312,7 +312,7 @@ kubectl apply -f aws-cluster-identity-cred.yaml -n kcm-system
 Now we create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `aws-cluster-identity-resource-template.yaml`:
 
 > NOTE:
-> The `ConfigMap` name, in this case, needs to be exactly `aws-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
+> The `ConfigMap` name, in this case, needs to be exactly `aws-cluster-identity-resource-template`. See [naming the template configmap](../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 ```yaml
 apiVersion: v1
