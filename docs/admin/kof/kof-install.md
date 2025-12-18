@@ -208,7 +208,7 @@ and apply this example, or use it as a reference:
 
     ```yaml
       kof:
-        clusterProfiles:
+        mcs:
           kof-aws-dns-secrets:
             matchLabels:
               k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
@@ -220,7 +220,7 @@ and apply this example, or use it as a reference:
 
     ```yaml
       kof:
-        clusterProfiles:
+        mcs:
           kof-azure-dns-secrets:
             matchLabels:
               k0rdent.mirantis.com/kof-azure-dns-secrets: "true"
@@ -232,7 +232,7 @@ and apply this example, or use it as a reference:
 
     ```yaml
       kof:
-        clusterProfiles:
+        mcs:
           kof-openstack-dns-secrets:
             matchLabels:
               k0rdent.mirantis.com/kof-openstack-dns-secrets: "true"
@@ -723,4 +723,3 @@ and apply this example for AWS, or use it as a reference:
     ```
 
 Now that you have installed KOF, please [verify it](./kof-verification.md).
-
