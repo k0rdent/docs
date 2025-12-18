@@ -96,7 +96,7 @@ and configure custom templates for each provider. Each provider in the list must
 and may include the `template` and `config` fields:
 
 ```yaml
-- name: <provider-name> 
+- name: <provider-name>
   template: <provider-template> # optional. If omitted, the default template from the `Release` object will be used
   config: {} # optional provider configuration containing provider Helm Chart values in YAML format
 ```
@@ -116,6 +116,10 @@ Controller Manager and to download required images, such as `etcd` or `kube-prox
 - `insecureRegistry`: Allows connecting to an HTTP registry. Default: `false`.
 - `registryCredsSecret`: Specifies the name of a Kubernetes `Secret` containing authentication credentials for the
 registry (optional). This `Secret` should exist in the system namespace (default: `kcm-system`).
+- `imagePullSecret`: Specifies the name of image pull secret which will be used
+  to pull images and components for all providers defined in the
+  `Management`. This `Secret` should exist in the system namespace (default:
+  `kcm-system`).
 
 Additionally, if your templates repository (`templatesRepoURL`) and/or registry (`globalRegistry`) is private and
 uses a certificate signed by an unknown authority, you can make them "trusted" within the K0rdent system by configuring
@@ -362,3 +366,72 @@ spec:
 
 Follow the [telemetry configuration page](./telemetry/configuration.md)
 for all of the possible values.
+
+### Configuring ImagePullSecrets
+
+Starting from v1.6.0 the new flag (`controller.imagePullSecret`) was introduced
+to pass registry authentication parameters to providers on the management
+cluster. To use it you must create an image pull secret in a `dockerconfigjson`
+format following the [standard
+procedure](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
+
+After secret has been created you can reference it by name in the helm chart
+values on:
+
+- Initial installation values
+
+    ```yaml
+	controller:
+      imagePullSecret: registry-pull-secret
+	```
+
+- Management object configuration
+
+    ```yaml
+	spec:
+      core:
+        kcm:
+          config:
+            controller:
+			  imagePullSecret: registry-pull-secret
+	```
+
+On initial installation if registry authentication is required you must still
+pass `imagePullSecrets` values to all subchart values as follows:
+
+```yaml
+global:
+  imagePullSecrets:
+    - name: registry-pull-secret
+
+controller:
+  imagePullSecret: registry-pull-secret
+
+flux2:
+  imagePullSecrets:
+    - name: registry-pull-secret
+
+regional:
+  cluster-api-operator:
+    imagePullSecrets:
+    - name: registry-pull-secret
+
+  velero:
+    image:
+      imagePullSecrets:
+      - registry-pull-secret
+
+rbac-manager:
+  image:
+    imagePullSecrets:
+    - registry-pull-secret
+```
+
+> NOTE:
+> When doing initial installation one limitation is applied to the
+> openstack-provider ORC controller, which is installed in the `orc-system`
+> namespace.
+> 
+> To mitigate this you must create the `orc-system` namespace and create the pull
+> secret there manually.
+
