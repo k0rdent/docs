@@ -259,7 +259,7 @@ Create a YAML with the specification of our resource-template (and the necessary
 `azure-cluster-identity-resource-template.yaml`
 
 > NOTE:
-> The `ConfigMap` name, in this case, needs to be exactly `azure-cluster-identity-resource-template`. See [naming the template configmap](../../../appendix/appendix-providers.md#naming-the-template-configmap) for details.
+> The `ConfigMap` name, in this case, needs to be exactly `azure-cluster-identity-resource-template`. See [naming the template configmap](../appendix/appendix-providers.md#naming-the-template-configmap) for details.
 
 ```yaml
 apiVersion: v1
