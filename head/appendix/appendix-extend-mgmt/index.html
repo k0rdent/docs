@@ -5405,12 +5405,12 @@ set values under the <code>telemetry</code> block. For example, you can disable 
 <p>Follow the <a href="../telemetry/configuration/">telemetry configuration page</a>
 for all of the possible values.</p>
 <h3 id="configuring-imagepullsecrets">Configuring ImagePullSecrets<a class="headerlink" href="#configuring-imagepullsecrets" title="Permanent link">#</a></h3>
-<p>Starting from v1.6.0 the new flag (<code>controller.imagePullSecret</code>) was introduced
+<p>Starting with k0rdent v1.6.0, a new flag (<code>controller.imagePullSecret</code>) has been introduced
 to pass registry authentication parameters to providers on the management
-cluster. To use it you must create an image pull secret in a <code>dockerconfigjson</code>
+cluster. To use it, you must create an image pull secret in a <code>dockerconfigjson</code>
 format following the <a href="https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/">standard
 procedure</a>.</p>
-<p>After secret has been created you can reference it by name in the helm chart
+<p>After the secret has been created, you can reference it by name in the helm chart
 values on:</p>
 <ul>
 <li>
@@ -5430,7 +5430,7 @@ values on:</p>
 </code></pre></div>
 </li>
 </ul>
-<p>On initial installation if registry authentication is required you must still
+<p>On initial installation, if registry authentication is required, you must still
 pass <code>imagePullSecrets</code> values to all subchart values as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
