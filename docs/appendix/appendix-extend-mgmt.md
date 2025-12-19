@@ -369,13 +369,13 @@ for all of the possible values.
 
 ### Configuring ImagePullSecrets
 
-Starting from v1.6.0 the new flag (`controller.imagePullSecret`) was introduced
+Starting with k0rdent v1.6.0, a new flag (`controller.imagePullSecret`) has been introduced
 to pass registry authentication parameters to providers on the management
-cluster. To use it you must create an image pull secret in a `dockerconfigjson`
+cluster. To use it, you must create an image pull secret in a `dockerconfigjson`
 format following the [standard
 procedure](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
 
-After secret has been created you can reference it by name in the helm chart
+After the secret has been created, you can reference it by name in the helm chart
 values on:
 
 - Initial installation values
@@ -396,7 +396,7 @@ values on:
 			  imagePullSecret: registry-pull-secret
 	```
 
-On initial installation if registry authentication is required you must still
+On initial installation, if registry authentication is required, you must still
 pass `imagePullSecrets` values to all subchart values as follows:
 
 ```yaml
