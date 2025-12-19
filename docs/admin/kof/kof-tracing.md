@@ -1,21 +1,19 @@
 # KOF Tracing
 
-KOF integrates Jaeger for distributed tracing via OpenTelemetry.. By default, Jaeger runs with in-memory storage and a maximum of 100,000 traces. When the limit is reached, it evicts the oldest traces (FIFO). Note that in-memory traces are lost on pod restart.
+KOF uses VictoriaTraces as the backend for distributed tracing. Traces are collected via OpenTelemetry and stored in VictoriaTraces, which provides efficient long-term storage and querying capabilities.
 
- To solve this problem in production, you canuse a persistent backend (e.g., Cassandra, Elasticsearch, or a compatible VictoriaMetrics-Jaeger deployment) and set retention according to your requirements.
+## Accessing Traces
 
- For example, you can tell Jaeger to use Cassandra by adding the following to the `charts/kof-storage/values.yaml` file:
+You can view and analyze traces through Grafana Explore:
 
-```yaml
-jaeger:
-  enabled: true
-  spec:
-    strategy: production
-    storage:
-      type: cassandra
-      options:
-        cassandra:
-          servers: cassandra.kof.svc
-          keyspace: jaeger_v1_dc1
-          replication: "{'class':'NetworkTopologyStrategy','dc1':3}"
-```
+1. Open Grafana in your browser
+2. Navigate to **Explore** (compass icon in the left sidebar)
+3. Select the **Jaeger** type datasource from the dropdown at the top
+4. Use the query builder to search for traces by service name, operation, tags, or trace ID
+
+## Configuration
+
+Tracing is enabled by default in KOF. The VictoriaTraces configuration can be customized in your `kof-storage` values.
+
+For available configuration options, refer to the VictoriaTraces values:
+[VictoriaTraces Cluster Helm Chart](https://docs.victoriametrics.com/helm/victoriatraces-cluster/#parameters)

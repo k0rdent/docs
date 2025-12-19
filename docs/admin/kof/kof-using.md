@@ -62,7 +62,7 @@ The logging interface will also be available, including:
 
 KOF ships with dashboards across:
 * Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.
-* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, Jaeger and OpenCost.
+* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.
 * Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.
 * Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.
 
@@ -110,45 +110,6 @@ Common OpenCost metrics include:
 | `cluster_efficiency` | Ratio of requested vs actual resource usage |
 
 These metrics appear in the pre-installed Grafana FinOps dashboards.
-
-## Access to Jaeger
-
-[Jaeger UI](https://www.jaegertracing.io/docs/2.5/frontend-ui/#trace-page) of each regional cluster can be accessed by following these steps:
-
-1. Ensure you have the `regional-kubeconfig` file created on the [verification step](./kof-verification.md#verification-steps).
-
-2. If you've applied the [Istio](./kof-install.md#istio) section:
-
-    * Forward a port to the Jaeger UI:
-
-        ```bash
-        KUBECONFIG=regional-kubeconfig kubectl port-forward \
-          -n kof svc/kof-storage-jaeger-query 16686:16686
-        ```
-
-    * Open the link [http://127.0.0.1:16686/search](http://127.0.0.1:16686/search)
-      and explore the Jaeger UI.
-
-3. If you have not applied the [Istio](./kof-install.md#istio) section:
-
-    * Ensure you have the `REGIONAL_DOMAIN` variable set on the [installation step](./kof-install.md#regional-cluster).
-
-    * Get the regional Jaeger username and password:
-
-        ```bash
-        KUBECONFIG=regional-kubeconfig kubectl get secret \
-          -n kof jaeger-admin-credentials -o yaml | yq '{
-          "user": .data.username | @base64d,
-          "pass": .data.password | @base64d
-        }'
-        ```
-
-    * Get the the Jaeger UI URL, open it,
-        and login with the username/password printed above:
-
-        ```bash
-        echo https://jaeger.$REGIONAL_DOMAIN
-        ```
 
 ## Access to the KOF UI
 

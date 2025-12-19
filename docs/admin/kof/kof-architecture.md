@@ -66,8 +66,8 @@ Cloud 1..N
       kof-storage chart
         victoria-metrics-operator
         victoria-logs-cluster
+        victoria-traces-cluster
         external-dns
-        jaeger-operator
         dex
         kof-dashboards
 
@@ -180,7 +180,7 @@ Cloud 1..N
           external-dns
         </div>
         <div class="o">
-          jaeger-operator
+          victoria-traces-cluster
         </div>
         <div class="o">
           dex
@@ -284,8 +284,8 @@ KOF is deployed as a series of Helm charts at various levels.
   - [vmauth](https://docs.victoriametrics.com/vmauth/) entrypoint proxy for VictoriaMetrics components
   - [vmcluster](https://docs.victoriametrics.com/operator/resources/vmcluster/) for high-available fault-tolerant version of VictoriaMetrics database
   - [victoria-logs-cluster](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-cluster) for high-performance, cost-effective, scalable logs storage
+  - [victoria-traces-cluster](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-traces-cluster) for distributed tracing storage and querying, providing a scalable backend for OpenTelemetry traces
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
-- [Jaeger](https://www.jaegertracing.io/) tracing platform, managed by [jaeger-operator](https://github.com/jaegertracing/jaeger-operator)
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
 - [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
 
@@ -314,7 +314,7 @@ KOF supports two topologies:
 | Promxy | Query Federation | Cross-cluster PromQL  alert rule evaluation at management |
 | VictoriaMetrics | Metrics Storage | Scalable TSDB; selected over Prometheus for clustering  efficiency |
 | VictoriaLogs | Log Storage | Scalable log TSDB with retention controls |
-| Jaeger | Tracing | Trace store/visualization; regional awareness |
+| VictoriaTraces | Tracing Storage | Scalable trace storage for OpenTelemetry data |
 | Grafana | Visualization | Unified dashboards; SSO/RBAC |
 | Dex | SSO | OIDC provider for Grafana |
 | OpenCost | FinOps | Cost allocation and efficiency ratios |

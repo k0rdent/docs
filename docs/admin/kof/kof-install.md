@@ -464,7 +464,8 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-read-metrics-endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
     k0rdent.mirantis.com/kof-write-logs-endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
     k0rdent.mirantis.com/kof-read-logs-endpoint: https://vmauth.$REGIONAL_DOMAIN/vls
-    k0rdent.mirantis.com/kof-write-traces-endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+    k0rdent.mirantis.com/kof-write-traces-endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces
+    k0rdent.mirantis.com/kof-read-traces-endpoint: https://vmauth.$REGIONAL_DOMAIN/vts/select/jaeger
     ```
 
     If you've applied the [Istio](#istio) section, default endpoints are:
@@ -473,7 +474,8 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-read-metrics-endpoint: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus
     k0rdent.mirantis.com/kof-write-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
     k0rdent.mirantis.com/kof-read-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-logs-select:9471
-    k0rdent.mirantis.com/kof-write-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-jaeger-collector:4318
+    k0rdent.mirantis.com/kof-write-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces
+    k0rdent.mirantis.com/kof-read-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-traces-select:10471/select/jaeger
     ```
 
     If you want to skip creation of the regional cluster completely,
@@ -502,7 +504,7 @@ and apply this example for AWS, or use it as a reference:
       read_metrics_endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
       write_logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
       read_logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vls
-      write_traces_endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+      write_traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces
     EOF
 
     cat regional-configmap.yaml
