@@ -47,10 +47,7 @@ For example, let's say you were adding auto-instrumentation to a Java Spring Boo
 
    With this annotation, KOF automatically injects the OpenTelemetry Java agent. The service then exports metrics, traces, and logs through the configured OpenTelemetry Collector.
 
-3. After deploying, you should see:
-   - Traces in VictoriaTraces (via Grafana datasource)
-   - Metrics in VictoriaMetrics (via Grafana dashboards)  
-   - Logs in VictoriaLogs
+3. After deploying, you should see metrics, logs, and [traces](kof-tracing.md) in Grafana.
 
 For other languages, use the appropriate annotation, as in:
 
