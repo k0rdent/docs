@@ -4337,6 +4337,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-imagepullsecrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring ImagePullSecrets
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4978,6 +4987,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-imagepullsecrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring ImagePullSecrets
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5100,7 +5118,7 @@ options available for kcm, refer to:
 <p>To customize the list of providers to deploy, update the <code>.spec.providers</code> section. You can add or remove providers
 and configure custom templates for each provider. Each provider in the list must include the <code>name</code> field
 and may include the <code>template</code> and <code>config</code> fields:</p>
-<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;provider-name&gt;</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;provider-name&gt;</span>
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;provider-template&gt;</span><span class="w"> </span><span class="c1"># optional. If omitted, the default template from the `Release` object will be used</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"> </span><span class="c1"># optional provider configuration containing provider Helm Chart values in YAML format</span>
 </code></pre></div>
@@ -5117,6 +5135,10 @@ Controller Manager and to download required images, such as <code>etcd</code> or
 <li><code>insecureRegistry</code>: Allows connecting to an HTTP registry. Default: <code>false</code>.</li>
 <li><code>registryCredsSecret</code>: Specifies the name of a Kubernetes <code>Secret</code> containing authentication credentials for the
 registry (optional). This <code>Secret</code> should exist in the system namespace (default: <code>kcm-system</code>).</li>
+<li><code>imagePullSecret</code>: Specifies the name of image pull secret which will be used
+  to pull images and components for all providers defined in the
+  <code>Management</code>. This <code>Secret</code> should exist in the system namespace (default:
+  <code>kcm-system</code>).</li>
 </ul>
 <p>Additionally, if your templates repository (<code>templatesRepoURL</code>) and/or registry (<code>globalRegistry</code>) is private and
 uses a certificate signed by an unknown authority, you can make them "trusted" within the K0rdent system by configuring
@@ -5326,6 +5348,69 @@ set values under the <code>telemetry</code> block. For example, you can disable 
 </code></pre></div>
 <p>Follow the <a href="../telemetry/configuration/">telemetry configuration page</a>
 for all of the possible values.</p>
+<h3 id="configuring-imagepullsecrets">Configuring ImagePullSecrets<a class="headerlink" href="#configuring-imagepullsecrets" title="Permanent link">#</a></h3>
+<p>Starting with k0rdent v1.6.0, a new flag (<code>controller.imagePullSecret</code>) has been introduced
+to pass registry authentication parameters to providers on the management
+cluster. To use it, you must create an image pull secret in a <code>dockerconfigjson</code>
+format following the <a href="https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/">standard
+procedure</a>.</p>
+<p>After the secret has been created, you can reference it by name in the helm chart
+values on:</p>
+<ul>
+<li>
+<p>Initial installation values</p>
+<div class="highlight"><pre><span></span><code><span class="nt">controller</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">imagePullSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+</code></pre></div>
+</li>
+<li>
+<p>Management object configuration</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">imagePullSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+</code></pre></div>
+</li>
+</ul>
+<p>On initial installation, if registry authentication is required, you must still
+pass <code>imagePullSecrets</code> values to all subchart values as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+
+<span class="nt">controller</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">imagePullSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+
+<span class="nt">flux2</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+
+<span class="nt">regional</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cluster-api-operator</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+
+<span class="w">  </span><span class="nt">velero</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+
+<span class="nt">rbac-manager</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-pull-secret</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+When doing initial installation one limitation is applied to the
+openstack-provider ORC controller, which is installed in the <code>orc-system</code>
+namespace.</p>
+<p>To mitigate this you must create the <code>orc-system</code> namespace and create the pull
+secret there manually.</p>
+</div>
 
 
 
