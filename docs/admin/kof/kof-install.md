@@ -52,13 +52,13 @@ Before beginning KOF installation, you should have the following components in p
 For for information on long-term storage planning, review the [KOF Retention](./kof-retention.md) page, which covers retention and replication strategies.
 
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--image-registry-start-->"
     end="<!--image-registry-end-->"
 %}
 
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--airgap-start-->"
     end="<!--airgap-end-->"
 %}
@@ -146,7 +146,7 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 3. Install the `k0rdent/istio` charts to the management cluster:
   
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--install-istio-start-->"
     end="<!--install-istio-end-->"
 %}
@@ -174,7 +174,7 @@ and apply this example, or use it as a reference:
 1. Install `kof-operators` as required by `kof-mothership`:
 
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--install-kof-operators-start-->"
     end="<!--install-kof-operators-end-->"
 %}
@@ -264,7 +264,7 @@ and apply this example, or use it as a reference:
 6. Install `kof-mothership`:
 
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--install-kof-mothership-start-->"
     end="<!--install-kof-mothership-end-->"
 %}
@@ -289,7 +289,7 @@ and apply this example, or use it as a reference:
         as a values file with `storage:` key passed to `kof-regional` chart here.
     * Install these charts into the management cluster with default or custom values:
 {%
-    include-markdown "./includes/kof-install-includes.md"
+    include-markdown "../../../includes/kof-install-includes.md"
     start="<!--management-custom-start-->"
     end="<!--management-custom-end-->"
 %}
