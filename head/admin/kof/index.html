@@ -5048,7 +5048,7 @@
 <ul>
 <li><strong>Metrics:</strong> <a href="https://docs.victoriametrics.com/">VictoriaMetrics</a> with vmcluster and vmauth.</li>
 <li><strong>Logs:</strong> <a href="https://docs.victoriametrics.com/victorialogs/">VictoriaLogs</a>.</li>
-<li><strong>Tracing:</strong> <a href="https://www.jaegertracing.io/">Jaeger</a> with <a href="https://opentelemetry.io/">OpenTelemetry</a>.</li>
+<li><strong>Tracing:</strong> <a href="https://docs.victoriametrics.com/victoriatraces/">VictoriaTraces</a> with <a href="https://opentelemetry.io/">OpenTelemetry</a>.</li>
 <li><strong>Cost:</strong> <a href="https://opencost.io/">OpenCost</a>.</li>
 <li><strong>Dashboards:</strong> Grafana managed by grafana-operator.</li>
 <li><strong>Aggregation:</strong> <a href="https://github.com/jacksontj/promxy">Promxy</a> for Prometheus-compatible fan-out.</li>
@@ -5063,7 +5063,7 @@
 <p><em>What used to be a mystery bill is now an actionable insight.</em></p>
 <h3 id="step-2-devops-traces-the-issue">Step 2: DevOps Traces the Issue<a class="headerlink" href="#step-2-devops-traces-the-issue" title="Permanent link">#</a></h3>
 <p>The <strong>DevOps team</strong> takes over. They drill into the same dashboard and pull up <strong>OpenCost metrics</strong> for that namespace. One service shows a sharp increase in CPU and memory usage starting on Friday.</p>
-<p>To understand why, they pivot into <strong>Jaeger traces</strong>. The culprit emerges: a new API endpoint is generating far more queries than expected.</p>
+<p>To understand why, they pivot into <strong>VictoriaTraces</strong>. The culprit emerges: a new API endpoint is generating far more queries than expected.</p>
 <p><em>What used to take days of log-diving is discovered in minutes.</em></p>
 <h3 id="step-3-platform-engineers-validate-the-fix">Step 3: Platform Engineers Validate the Fix<a class="headerlink" href="#step-3-platform-engineers-validate-the-fix" title="Permanent link">#</a></h3>
 <p>The <strong>Platform engineering team</strong> checks KOF’s <strong>cluster overview dashboards</strong> to confirm whether this workload is affecting other services. They see elevated resource usage but no system-wide instability.</p>
@@ -5098,7 +5098,7 @@
 <p><strong>Management cluster.</strong> Runs Grafana, promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the <code>kof-mothership</code> chart.</p>
 </li>
 <li>
-<p><strong>Storage and aggregation.</strong> The main VictoriaMetrics, VictoriaLogs, and Jaeger stack can run in:</p>
+<p><strong>Storage and aggregation.</strong> The main VictoriaMetrics, VictoriaLogs, and VictoriaTraces stack can run in:</p>
 </li>
 <li>the management cluster (for management data, with Grafana and VM provided by <code>kof-mothership</code>),</li>
 <li>a regional KOF deployment (collecting from child clusters in that region), or</li>
@@ -5132,7 +5132,7 @@
 <thead>
 <tr>
 <th>Dimension</th>
-<th>DIY Stack (Prometheus, Grafana, OpenCost, Jaeger, etc.)</th>
+<th>DIY Stack (Prometheus, Grafana, OpenCost, etc.)</th>
 <th><strong>KOF</strong></th>
 </tr>
 </thead>

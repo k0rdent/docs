@@ -3024,6 +3024,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Tracing KOF
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -3033,6 +3044,43 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessing Traces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -4829,6 +4877,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessing Traces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -4859,21 +4933,19 @@
 
 
 <h1 id="kof-tracing">KOF Tracing<a class="headerlink" href="#kof-tracing" title="Permanent link">#</a></h1>
-<p>KOF integrates Jaeger for distributed tracing via OpenTelemetry.. By default, Jaeger runs with in-memory storage and a maximum of 100,000 traces. When the limit is reached, it evicts the oldest traces (FIFO). Note that in-memory traces are lost on pod restart.</p>
-<p>To solve this problem in production, you canuse a persistent backend (e.g., Cassandra, Elasticsearch, or a compatible VictoriaMetrics-Jaeger deployment) and set retention according to your requirements.</p>
-<p>For example, you can tell Jaeger to use Cassandra by adding the following to the <code>charts/kof-storage/values.yaml</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">jaeger</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production</span>
-<span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra</span>
-<span class="w">      </span><span class="nt">options</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">cassandra</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">servers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cassandra.kof.svc</span>
-<span class="w">          </span><span class="nt">keyspace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jaeger_v1_dc1</span>
-<span class="w">          </span><span class="nt">replication</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{&#39;class&#39;:&#39;NetworkTopologyStrategy&#39;,&#39;dc1&#39;:3}&quot;</span>
-</code></pre></div>
+<p>KOF uses VictoriaTraces as the backend for distributed tracing. Traces are collected via OpenTelemetry and stored in VictoriaTraces, which provides efficient long-term storage and querying capabilities.</p>
+<h2 id="accessing-traces">Accessing Traces<a class="headerlink" href="#accessing-traces" title="Permanent link">#</a></h2>
+<p>You can view and analyze traces through Grafana Explore:</p>
+<ol>
+<li>Open Grafana in your browser</li>
+<li>Navigate to <strong>Explore</strong> (compass icon in the left sidebar)</li>
+<li>Select the <strong>Jaeger</strong> type datasource from the dropdown at the top</li>
+<li>Use the query builder to search for traces by service name, operation, tags, or trace ID</li>
+</ol>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h2>
+<p>Tracing is enabled by default in KOF. The VictoriaTraces configuration can be customized in your <code>kof-storage</code> values.</p>
+<p>For available configuration options, refer to the VictoriaTraces values:
+<a href="https://docs.victoriametrics.com/helm/victoriatraces-cluster/#parameters">VictoriaTraces Cluster Helm Chart</a></p>
 
 
 

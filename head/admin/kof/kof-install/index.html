@@ -5459,14 +5459,16 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="nt">k0rdent.mirantis.com/kof-read-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="nt">k0rdent.mirantis.com/kof-write-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs</span>
 <span class="nt">k0rdent.mirantis.com/kof-read-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vls</span>
-<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://jaeger.$REGIONAL_DOMAIN/collector</span>
+<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces</span>
+<span class="nt">k0rdent.mirantis.com/kof-read-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vts/select/jaeger</span>
 </code></pre></div></p>
 <p>If you've applied the <a href="#istio">Istio</a> section, default endpoints are:
 <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-write-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write</span>
 <span class="nt">k0rdent.mirantis.com/kof-read-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus</span>
 <span class="nt">k0rdent.mirantis.com/kof-write-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs</span>
 <span class="nt">k0rdent.mirantis.com/kof-read-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-logs-select:9471</span>
-<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-jaeger-collector:4318</span>
+<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces</span>
+<span class="nt">k0rdent.mirantis.com/kof-read-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-traces-select:10471/select/jaeger</span>
 </code></pre></div></p>
 <p>If you want to skip creation of the regional cluster completely,
 but still let child clusters discover your custom endpoints,
@@ -5493,7 +5495,7 @@ you may create a regional <code>ConfigMap</code> instead of a regional <code>Clu
 <span class="s">  read_metrics_endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">  write_logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs</span>
 <span class="s">  read_logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vls</span>
-<span class="s">  write_traces_endpoint: https://jaeger.$REGIONAL_DOMAIN/collector</span>
+<span class="s">  write_traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces</span>
 <span class="s">EOF</span>
 
 cat<span class="w"> </span>regional-configmap.yaml

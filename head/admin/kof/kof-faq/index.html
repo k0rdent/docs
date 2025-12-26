@@ -4988,7 +4988,7 @@
 
 <h1 id="kof-faq-scenarios">KOF FAQ &amp; Scenarios<a class="headerlink" href="#kof-faq-scenarios" title="Permanent link">#</a></h1>
 <h2 id="what-is-fullstack-observability-in-kof">What is full‑stack observability in KOF?<a class="headerlink" href="#what-is-fullstack-observability-in-kof" title="Permanent link">#</a></h2>
-<p>OpenTelemetry collects metrics, logs, and traces; data is stored in VictoriaMetrics, VictoriaLogs, and Jaeger, and visualized in Grafana.</p>
+<p>OpenTelemetry collects metrics, logs, and traces; data is stored in VictoriaMetrics, VictoriaLogs, and VictoriaTraces, and visualized in Grafana.</p>
 <h2 id="how-do-i-collect-telemetry-from-a-new-service">How do I collect telemetry from a new service?<a class="headerlink" href="#how-do-i-collect-telemetry-from-a-new-service" title="Permanent link">#</a></h2>
 <p>There are two ways to collect telemetry from a new service:</p>
 <ul>
@@ -5030,10 +5030,7 @@
 </ol>
 <p>With this annotation, KOF automatically injects the OpenTelemetry Java agent. The service then exports metrics, traces, and logs through the configured OpenTelemetry Collector.</p>
 <ol>
-<li>After deploying, you should see:</li>
-<li>Traces in Jaeger</li>
-<li>Metrics in VictoriaMetrics (via Grafana dashboards)  </li>
-<li>Logs in VictoriaLogs</li>
+<li>After deploying, you should see metrics, logs, and <a href="../kof-tracing/">traces</a> in Grafana.</li>
 </ol>
 <p>For other languages, use the appropriate annotation, as in:</p>
 <ul>

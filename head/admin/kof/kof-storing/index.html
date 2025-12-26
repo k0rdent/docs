@@ -5050,7 +5050,7 @@ No additional steps are required here.</p>
 <ul>
 <li>Grafana and VictoriaMetrics are provided by the <code>kof-mothership</code> chart,
   hence disabled in the <code>kof-storage</code> chart.</li>
-<li>PromxyServerGroup, VictoriaLogs, and Jaeger are provided by the <code>kof-storage</code> chart.</li>
+<li>PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the <code>kof-storage</code> chart.</li>
 </ul>
 <p>To apply this option:</p>
 <ol>
@@ -5178,16 +5178,6 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">          secretKeyRef:</span>
 <span class="s">            key: password</span>
 <span class="s">            name: storage-vmuser-credentials</span>
-<span class="s">      - name: KOF_JAEGER_USER</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: username</span>
-<span class="s">            name: jaeger-admin-credentials</span>
-<span class="s">      - name: KOF_JAEGER_PASSWORD</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: password</span>
-<span class="s">            name: jaeger-admin-credentials</span>
 <span class="s">    config:</span>
 <span class="s">      processors:</span>
 <span class="s">        resource/k8sclustername:</span>
@@ -5209,8 +5199,8 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
 <span class="s">        basicauth/traces:</span>
 <span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_JAEGER_USER}</span>
-<span class="s">            password: \${env:KOF_JAEGER_PASSWORD}</span>
+<span class="s">            username: \${env:KOF_VM_USER}</span>
+<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
 <span class="s">      exporters:</span>
 <span class="s">        prometheusremotewrite:</span>
 <span class="s">          endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write</span>
@@ -5224,7 +5214,7 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">          auth:</span>
 <span class="s">            authenticator: basicauth/logs</span>
 <span class="s">        otlphttp/traces:</span>
-<span class="s">          endpoint: https://jaeger.$REGIONAL_DOMAIN/collector</span>
+<span class="s">          traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces</span>
 <span class="s">          auth:</span>
 <span class="s">            authenticator: basicauth/traces</span>
 <span class="s">      service:</span>
@@ -5304,7 +5294,7 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <span class="s">        otlphttp/logs:</span>
 <span class="s">          logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs</span>
 <span class="s">        otlphttp/traces:</span>
-<span class="s">          endpoint: http://$REGIONAL_CLUSTER_NAME-jaeger-collector:4318</span>
+<span class="s">          traces_endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces</span>
 <span class="s">opencost:</span>
 <span class="s">  opencost:</span>
 <span class="s">    prometheus:</span>

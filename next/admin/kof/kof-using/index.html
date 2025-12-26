@@ -3046,15 +3046,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-to-jaeger" class="md-nav__link">
-    <span class="md-ellipsis">
-      Access to Jaeger
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#access-to-the-kof-ui" class="md-nav__link">
     <span class="md-ellipsis">
       Access to the KOF UI
@@ -5022,15 +5013,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-to-jaeger" class="md-nav__link">
-    <span class="md-ellipsis">
-      Access to Jaeger
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#access-to-the-kof-ui" class="md-nav__link">
     <span class="md-ellipsis">
       Access to the KOF UI
@@ -5124,7 +5106,7 @@ please apply this advanced guide: <a href="https://github.com/k0rdent/kof/blob/m
 <h2 id="dashboard-categories">Dashboard Categories<a class="headerlink" href="#dashboard-categories" title="Permanent link">#</a></h2>
 <p>KOF ships with dashboards across:
 * Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.
-* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, Jaeger and OpenCost.
+* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.
 * Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.
 * Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.</p>
 <h2 id="dashboard-lifecycle-gitops-workflow">Dashboard Lifecycle (GitOps Workflow)<a class="headerlink" href="#dashboard-lifecycle-gitops-workflow" title="Permanent link">#</a></h2>
@@ -5185,51 +5167,6 @@ please apply this advanced guide: <a href="https://github.com/k0rdent/kof/blob/m
 </tbody>
 </table>
 <p>These metrics appear in the pre-installed Grafana FinOps dashboards.</p>
-<h2 id="access-to-jaeger">Access to Jaeger<a class="headerlink" href="#access-to-jaeger" title="Permanent link">#</a></h2>
-<p><a href="https://www.jaegertracing.io/docs/2.5/frontend-ui/#trace-page">Jaeger UI</a> of each regional cluster can be accessed by following these steps:</p>
-<ol>
-<li>
-<p>Ensure you have the <code>regional-kubeconfig</code> file created on the <a href="../kof-verification/#verification-steps">verification step</a>.</p>
-</li>
-<li>
-<p>If you've applied the <a href="../kof-install/#istio">Istio</a> section:</p>
-<ul>
-<li>
-<p>Forward a port to the Jaeger UI:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-jaeger-query<span class="w"> </span><span class="m">16686</span>:16686
-</code></pre></div>
-</li>
-<li>
-<p>Open the link <a href="http://127.0.0.1:16686/search">http://127.0.0.1:16686/search</a>
-  and explore the Jaeger UI.</p>
-</li>
-</ul>
-</li>
-<li>
-<p>If you have not applied the <a href="../kof-install/#istio">Istio</a> section:</p>
-<ul>
-<li>
-<p>Ensure you have the <code>REGIONAL_DOMAIN</code> variable set on the <a href="../kof-install/#regional-cluster">installation step</a>.</p>
-</li>
-<li>
-<p>Get the regional Jaeger username and password:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>jaeger-admin-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;user&quot;: .data.username | @base64d,</span>
-<span class="s1">  &quot;pass&quot;: .data.password | @base64d</span>
-<span class="s1">}&#39;</span>
-</code></pre></div>
-</li>
-<li>
-<p>Get the the Jaeger UI URL, open it,
-    and login with the username/password printed above:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>https://jaeger.<span class="nv">$REGIONAL_DOMAIN</span>
-</code></pre></div>
-</li>
-</ul>
-</li>
-</ol>
 <h2 id="access-to-the-kof-ui">Access to the KOF UI<a class="headerlink" href="#access-to-the-kof-ui" title="Permanent link">#</a></h2>
 <p>When the <a href="https://opentelemetry.io/docs/platforms/kubernetes/operator/target-allocator/">TargetAllocator</a> is in use,
 the configuration of <a href="https://opentelemetry.io/docs/collector/">OpenTelemetryCollectors</a>

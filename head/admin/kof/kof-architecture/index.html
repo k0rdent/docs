@@ -5233,8 +5233,8 @@ Cloud 1..N
       kof-storage chart
         victoria-metrics-operator
         victoria-logs-cluster
+        victoria-traces-cluster
         external-dns
-        jaeger-operator
         dex
         kof-dashboards
 
@@ -5347,7 +5347,7 @@ Cloud 1..N
           external-dns
         </div>
         <div class="o">
-          jaeger-operator
+          victoria-traces-cluster
         </div>
         <div class="o">
           dex
@@ -5449,8 +5449,8 @@ Cloud 1..N
 <li><a href="https://docs.victoriametrics.com/vmauth/">vmauth</a> entrypoint proxy for VictoriaMetrics components</li>
 <li><a href="https://docs.victoriametrics.com/operator/resources/vmcluster/">vmcluster</a> for high-available fault-tolerant version of VictoriaMetrics database</li>
 <li><a href="https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-cluster">victoria-logs-cluster</a> for high-performance, cost-effective, scalable logs storage</li>
+<li><a href="https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-traces-cluster">victoria-traces-cluster</a> for distributed tracing storage and querying, providing a scalable backend for OpenTelemetry traces</li>
 <li><a href="https://github.com/kubernetes-sigs/external-dns">external-dns</a> to communicate with other clusters</li>
-<li><a href="https://www.jaegertracing.io/">Jaeger</a> tracing platform, managed by <a href="https://github.com/jaegertracing/jaeger-operator">jaeger-operator</a></li>
 <li><a href="https://dexidp.io/">Dex</a> SSO <a href="https://github.com/dexidp/helm-charts/tree/master/charts/dex">chart</a></li>
 <li><a href="https://github.com/k0rdent/kof/tree/v1.6.0/charts/kof-dashboards">kof-dashboards</a> for Grafana</li>
 </ul>
@@ -5506,9 +5506,9 @@ Cloud 1..N
 <td>Scalable log TSDB with retention controls</td>
 </tr>
 <tr>
-<td>Jaeger</td>
-<td>Tracing</td>
-<td>Trace store/visualization; regional awareness</td>
+<td>VictoriaTraces</td>
+<td>Tracing Storage</td>
+<td>Scalable trace storage for OpenTelemetry data</td>
 </tr>
 <tr>
 <td>Grafana</td>
