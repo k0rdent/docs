@@ -50,7 +50,7 @@ Each node is provisioned with its own `vmstorage-db` PVC for storing Victoria Me
 * **vmselect-cachedir**: 2Gi per node
 Each node has a dedicated `vmselect-cachedir` PVC for caching in VMSelect.
 * **grafana-vm-pvc**: 1Gi
-Used for regional components such as Grafana.
+Used for Grafana, if [enabled](kof-grafana.md).
 
 ## Recommendations for Cluster Scaling
 

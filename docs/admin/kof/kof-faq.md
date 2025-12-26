@@ -1,7 +1,7 @@
 # KOF FAQ & Scenarios
 
 ## What is full‑stack observability in KOF?
-OpenTelemetry collects metrics, logs, and traces; data is stored in VictoriaMetrics, VictoriaLogs, and Jaeger, and visualized in Grafana.
+OpenTelemetry collects metrics, logs, and traces; data is stored in VictoriaMetrics, VictoriaLogs, and Jaeger, and visualized [with or without Grafana](kof-grafana.md).
 
 ## How do I collect telemetry from a new service?
 
@@ -47,10 +47,7 @@ For example, let's say you were adding auto-instrumentation to a Java Spring Boo
 
    With this annotation, KOF automatically injects the OpenTelemetry Java agent. The service then exports metrics, traces, and logs through the configured OpenTelemetry Collector.
 
-3. After deploying, you should see:
-   - Traces in Jaeger
-   - Metrics in VictoriaMetrics (via Grafana dashboards)  
-   - Logs in VictoriaLogs
+3. After deploying, you should see metrics, logs, and traces.
 
 For other languages, use the appropriate annotation, as in:
 
@@ -58,7 +55,7 @@ For other languages, use the appropriate annotation, as in:
 - Node.js: `instrumentation.opentelemetry.io/inject-nodejs: "true"`
 
 ## How should I manage dashboards?
-Treat dashboards as code. Edit YAML under `charts/kof-dashboards/files/dashboards/*` and deploy via Helm/CI/CD. Avoid editing in the Grafana UI, as those changes will be overwritten.
+Treat dashboards as code. Edit YAML under `charts/kof-dashboards/files/dashboards/*` and deploy via Helm/CI/CD. Avoid editing in the UI, as those changes will be overwritten.
 
 ## How do I avoid commingling tenant data?
 Deploy collectors/storage per tenant namespace and restrict access with RBAC. This ensures separation of data paths per tenant.
