@@ -220,8 +220,11 @@ nav:
     - KOF Alerts: admin/kof/kof-alerts.md
     - Scaling KOF: admin/kof/kof-scaling.md
     - Maintaining KOF: admin/kof/kof-maintainence.md
+    - Tracing KOF: admin/kof/kof-tracing.md
+    - Retention and Replication: admin/kof/kof-retention.md
     - Resource Requirements: admin/kof/kof-resources.md
     - Version Compatibility: admin/kof/kof-version-compat.md
+    - KOF FAQ: admin/kof/kof-faq.md    
   - Template How-To:
     - Overview: templatehowto/index.md
     - The Templating System: templatehowto/the-templating-system-common-threads.md
