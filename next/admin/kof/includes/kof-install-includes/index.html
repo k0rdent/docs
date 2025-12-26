@@ -4861,7 +4861,7 @@ helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent
 helm upgrade -i --reset-values --wait \
   --create-namespace -n kof kof-operators \
   oci://ghcr.io/k0rdent/kof/charts/kof-operators \
-  --version 1.5.0
+  --version 1.6.0
 ```
 </code></pre></div>
 <!--install-kof-operators-end-->
@@ -4871,7 +4871,7 @@ helm upgrade -i --reset-values --wait \
 helm upgrade -i --reset-values --wait -n kof kof-mothership \
   -f mothership-values.yaml \
   oci://ghcr.io/k0rdent/kof/charts/kof-mothership \
-  --version 1.5.0
+  --version 1.6.0
 ```
 </code></pre></div>
 <!--install-kof-mothership-end-->
@@ -4880,11 +4880,11 @@ helm upgrade -i --reset-values --wait -n kof kof-mothership \
 <div class="highlight"><pre><span></span><code>    ```bash
     helm upgrade -i --reset-values --wait -n kof kof-regional \
       oci://ghcr.io/k0rdent/kof/charts/kof-regional \
-      --version 1.5.0
+      --version 1.6.0
 
     helm upgrade -i --reset-values --wait -n kof kof-child \
       oci://ghcr.io/k0rdent/kof/charts/kof-child \
-      --version 1.5.0
+      --version 1.6.0
     ```
 </code></pre></div>
 <!--management-custom-end-->
