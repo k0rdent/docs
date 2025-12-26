@@ -38,7 +38,7 @@ Performance issues and cost spikes usually come from the same workloads, so you 
 
 - **Metrics:** [VictoriaMetrics](https://docs.victoriametrics.com/) with vmcluster and vmauth.
 - **Logs:** [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/).
-- **Tracing:** [Jaeger](https://www.jaegertracing.io/) with [OpenTelemetry](https://opentelemetry.io/).
+- **Tracing:** [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) with [OpenTelemetry](https://opentelemetry.io/).
 - **Cost:** [OpenCost](https://opencost.io/).
 - **Dashboards:** Grafana managed by grafana-operator.
 - **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.
@@ -62,7 +62,7 @@ The **Finance team** opens the KOF FinOps dashboard in Grafana. They see that mo
 
 The **DevOps team** takes over. They drill into the same dashboard and pull up **OpenCost metrics** for that namespace. One service shows a sharp increase in CPU and memory usage starting on Friday.
 
-To understand why, they pivot into **Jaeger traces**. The culprit emerges: a new API endpoint is generating far more queries than expected.
+To understand why, they pivot into **VictoriaTraces**. The culprit emerges: a new API endpoint is generating far more queries than expected.
 
 *What used to take days of log-diving is discovered in minutes.*
 
@@ -107,7 +107,7 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
 
 - **Management cluster.** Runs Grafana, promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the `kof-mothership` chart.
 
-- **Storage and aggregation.** The main VictoriaMetrics, VictoriaLogs, and Jaeger stack can run in:
+- **Storage and aggregation.** The main VictoriaMetrics, VictoriaLogs, and VictoriaTraces stack can run in:
   - the management cluster (for management data, with Grafana and VM provided by `kof-mothership`),
   - a regional KOF deployment (collecting from child clusters in that region), or
   - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
@@ -148,7 +148,7 @@ Other sections in this documentation, such as [Dashboard Lifecycle](kof-using.md
 
 ### DIY Stack vs. KOF
 
-| Dimension                  | DIY Stack (Prometheus, Grafana, OpenCost, Jaeger, etc.)                               | **KOF**                                                                                              |
+| Dimension                  | DIY Stack (Prometheus, Grafana, OpenCost, etc.)                                       | **KOF**                                                                                              |
 | -------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | **Setup & Integration**    | Assemble 4–6 separate projects, each with its own configs, upgrades, and quirks.      | One integrated platform: metrics, logs, traces, and costs shipped together.                          |
 | **Scale & Performance**    | Prometheus federation slows at millions of samples; log systems require heavy tuning. | VictoriaMetrics/Logs designed for **millions of samples/sec**, fast queries, and long-term storage.  |

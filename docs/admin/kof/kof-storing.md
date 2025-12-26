@@ -38,7 +38,7 @@ This option stores KOF data of the management cluster in the same management clu
 
 * Grafana and VictoriaMetrics are provided by the `kof-mothership` chart,
   hence disabled in the `kof-storage` chart.
-* PromxyServerGroup, VictoriaLogs, and Jaeger are provided by the `kof-storage` chart.
+* PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the `kof-storage` chart.
 
 To apply this option:
 
@@ -169,16 +169,6 @@ To apply this option:
               secretKeyRef:
                 key: password
                 name: storage-vmuser-credentials
-          - name: KOF_JAEGER_USER
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: jaeger-admin-credentials
-          - name: KOF_JAEGER_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: jaeger-admin-credentials
         config:
           processors:
             resource/k8sclustername:
@@ -200,8 +190,8 @@ To apply this option:
                 password: \${env:KOF_VM_PASSWORD}
             basicauth/traces:
               client_auth:
-                username: \${env:KOF_JAEGER_USER}
-                password: \${env:KOF_JAEGER_PASSWORD}
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
           exporters:
             prometheusremotewrite:
               endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
@@ -215,7 +205,7 @@ To apply this option:
               auth:
                 authenticator: basicauth/logs
             otlphttp/traces:
-              endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+              traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces
               auth:
                 authenticator: basicauth/traces
           service:
@@ -294,7 +284,7 @@ To apply this option:
             otlphttp/logs:
               logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
             otlphttp/traces:
-              endpoint: http://$REGIONAL_CLUSTER_NAME-jaeger-collector:4318
+              traces_endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces
     opencost:
       opencost:
         prometheus:

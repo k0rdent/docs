@@ -67,7 +67,6 @@ and [Istio](./kof-install.md#istio), you will need to do the following:
 2. Create these DNS records of type `A`, all pointing to that `EXTERNAL-IP`:
     ```bash
     echo grafana.$REGIONAL_DOMAIN
-    echo jaeger.$REGIONAL_DOMAIN
     echo vmauth.$REGIONAL_DOMAIN
     ```
 
