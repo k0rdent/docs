@@ -82,7 +82,7 @@ To solve this problem, {{{ docsVersionInfo.k0rdentName }}} lets you create a `Cr
 3. Developers reference the `Credential` object, which gives the cluster the ability to access these credentials (little “c”) without having to expose them to developers directly.
 
 > NOTE:
-> To be sure credentials are not visible to developers, make sure to [limit access](../admin/access/rbac/roles-summary.md#limit-credential-access) to the `kcm-system` namespace.
+> To be sure credentials are not visible to developers, make sure to [limit access](../admin/access/rbac/limiting-access.md) to the `kcm-system` namespace.
 
 ## TL;DR - Conclusion
 
