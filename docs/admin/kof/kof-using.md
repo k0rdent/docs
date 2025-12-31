@@ -61,6 +61,7 @@ The logging interface will also be available, including:
 ## Dashboard Categories
 
 KOF ships with dashboards across:
+
 * Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.
 * Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, Jaeger and OpenCost.
 * Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.
@@ -233,3 +234,4 @@ To identify and debug issues in deployed clusters, check if KOF UI shows any err
 * SveltosCluster
 
 ![kof-ui-resources-monitoring](../../assets/kof/ui_resources_monitoring.gif)
+
