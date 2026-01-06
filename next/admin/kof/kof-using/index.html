@@ -5104,37 +5104,49 @@ please apply this advanced guide: <a href="https://github.com/k0rdent/kof/blob/m
 </video>
 
 <h2 id="dashboard-categories">Dashboard Categories<a class="headerlink" href="#dashboard-categories" title="Permanent link">#</a></h2>
-<p>KOF ships with dashboards across:
-* Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.
-* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.
-* Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.
-* Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.</p>
+<p>KOF ships with dashboards across:</p>
+<ul>
+<li>Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.</li>
+<li>Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.</li>
+<li>Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.</li>
+<li>Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.</li>
+</ul>
 <h2 id="dashboard-lifecycle-gitops-workflow">Dashboard Lifecycle (GitOps Workflow)<a class="headerlink" href="#dashboard-lifecycle-gitops-workflow" title="Permanent link">#</a></h2>
 <p>All dashboards are managed as code to keep environments consistent. To add or change a dashboard, follow these steps:</p>
-<p><strong>Add a new dashboard</strong>
-1. Create a YAML file under <code>charts/kof-dashboards/files/dashboards/</code> with the new dashboard definition.
-2. Commit and push the change to Git.
-3. Your CI/CD pipeline applies the Helm chart to the target cluster.</p>
-<p><strong>Update an existing dashboard</strong>
-1. Edit the corresponding YAML file.
-2. Commit and push changes.
-3. CI/CD will roll out the update automatically.</p>
-<p><strong>Delete a dashboard</strong>
-1. Remove the YAML file.
-2. Commit and push changes.
-3. CI/CD pipeline removes the dashboard from Grafana.</p>
+<p><strong>Add a new dashboard</strong></p>
+<ol>
+<li>Create a YAML file under <code>charts/kof-dashboards/files/dashboards/</code> with the new dashboard definition.</li>
+<li>Commit and push the change to Git.</li>
+<li>Your CI/CD pipeline applies the Helm chart to the target cluster.</li>
+</ol>
+<p><strong>Update an existing dashboard</strong></p>
+<ol>
+<li>Edit the corresponding YAML file.</li>
+<li>Commit and push changes.</li>
+<li>CI/CD will roll out the update automatically.</li>
+</ol>
+<p><strong>Delete a dashboard</strong></p>
+<ol>
+<li>Remove the YAML file.</li>
+<li>Commit and push changes.</li>
+<li>CI/CD pipeline removes the dashboard from Grafana.</li>
+</ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Avoid editing dashboards directly in the Grafana UI. Changes will be overwritten by the next Helm release.</p>
 </div>
 <h2 id="cost-management-opencost">Cost Management (OpenCost)<a class="headerlink" href="#cost-management-opencost" title="Permanent link">#</a></h2>
-<p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters. Common signals available in Grafana are:
-* <code>node_total_hourly_cost</code> (per-node hourly cost)
-* Namespace and pod-level cost allocation
-* Historical spend trends and efficiency ratios</p>
-<p>Once you have this information, you can optimize your cluster. Typical optimizations include:
-* Identify under-utilized resources and right-size workloads
-* Budgeting and monitoring with Grafana alerts</p>
+<p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters. Common signals available in Grafana are:</p>
+<ul>
+<li><code>node_total_hourly_cost</code> (per-node hourly cost)</li>
+<li>Namespace and pod-level cost allocation</li>
+<li>Historical spend trends and efficiency ratios</li>
+</ul>
+<p>Once you have this information, you can optimize your cluster. Typical optimizations include:</p>
+<ul>
+<li>Identify under-utilized resources and right-size workloads</li>
+<li>Budgeting and monitoring with Grafana alerts</li>
+</ul>
 <p>Common OpenCost metrics include:</p>
 <table>
 <thead>

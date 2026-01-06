@@ -5003,7 +5003,8 @@
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">java</span>
 </code></pre></div></li>
-<li>The Helm flag <code>kof.instrumentation.enabled=true</code> makes sure the necessary CRDs from the OpenTelemetry Operator are present in the cluster, but you still need to configure the actual application. When you deploy, add the appropriate annotation:
+<li>
+<p>The Helm flag <code>kof.instrumentation.enabled=true</code> makes sure the necessary CRDs from the OpenTelemetry Operator are present in the cluster, but you still need to configure the actual application. When you deploy, add the appropriate annotation:
    <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -5026,11 +5027,12 @@
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myregistry/my-java-service:1.0.0</span>
 <span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
-</code></pre></div></li>
-</ol>
+</code></pre></div></p>
 <p>With this annotation, KOF automatically injects the OpenTelemetry Java agent. The service then exports metrics, traces, and logs through the configured OpenTelemetry Collector.</p>
-<ol>
-<li>After deploying, you should see metrics, logs, and <a href="../kof-tracing/">traces</a> in Grafana.</li>
+</li>
+<li>
+<p>After deploying, you should see metrics, logs, and <a href="../kof-tracing/">traces</a> in Grafana.</p>
+</li>
 </ol>
 <p>For other languages, use the appropriate annotation, as in:</p>
 <ul>
