@@ -259,7 +259,8 @@ and apply this example, or use it as a reference:
 
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
-9. Apply shared configuration for the existing and upcoming regional and child clusters:
+8. Apply shared configuration for the existing and upcoming regional and child clusters:
+
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
         ```bash
         kubectl get svctmpl -A
@@ -646,7 +647,7 @@ and apply this example for AWS, or use it as a reference:
 
 4. If you've applied the [Istio](#istio) section, update the `child-cluster.yaml` file:
 
-    replace this line:
+    Replace this line:
 
     ```yaml
     k0rdent.mirantis.com/kof-storage-secrets: "true"
