@@ -40,8 +40,11 @@ Before beginning KOF installation, you should have the following components in p
 
 * A {{{ docsVersionInfo.k0rdentName }}} management cluster - You can get instructions to create one in the [quickstart guide](../../quickstarts/quickstart-1-mgmt-node-and-cluster.md).
 * You will also need your infrastructure provider credentials, such as those shown in the [guide for AWS](../../quickstarts/quickstart-2-aws.md).
+
     * Note that you should skip the "Create your `ClusterDeployment`" and later sections.
+
 * Finally, select one of the options:
+
     * [DNS auto-config](#dns-auto-config) to automate the process for all regional clusters.
     * [Manual DNS config](./kof-verification.md#manual-dns-config) is applied later
       for each regional cluster separately and manually.
