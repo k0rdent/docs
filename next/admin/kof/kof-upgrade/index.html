@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -3207,6 +3209,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5446,7 +5469,7 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Cont
 <li><strong>Ensure metrics and logs are available</strong> for the child cluster, confirming the new regional cluster is operational.</li>
 <li><strong>Change all other child clusters</strong> from the old regional cluster to the new one.</li>
 <li><strong>Start the data migration.</strong></li>
-<li><strong>Ensure that the data is migrated and explorable in Grafana</strong></li>
+<li><strong>Ensure that the data is migrated and explorable</strong></li>
 <li><strong>Delete old kof-regional cluster</strong></li>
 <li><strong>Remove the label from child ClusterDeployments.</strong></li>
 </ol>
@@ -5671,7 +5694,7 @@ Perform all backup steps in this section <strong>for each Istio cluster</strong>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-To estimate how much storage you need for the backup, open the <a href="../kof-using/#access-to-the-kof-ui">kof-ui</a>, navigate to the <code>VictoriaMetrics/Logs</code> section, and click the <code>VictoriaMetrics storage</code> pod name on the cluster you want to back up. Find the <code>Data Size</code> metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.</p>
+To estimate how much storage you need for the backup, open the <a href="../kof-using/#kof-ui">kof-ui</a>, navigate to the <code>VictoriaMetrics/Logs</code> section, and click the <code>VictoriaMetrics storage</code> pod name on the cluster you want to back up. Find the <code>Data Size</code> metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.</p>
 </div>
 <h4 id="create-a-backup-pod-with-curl">Create a Backup Pod with <code>curl</code><a class="headerlink" href="#create-a-backup-pod-with-curl" title="Permanent link">#</a></h4>
 <p>Deploy a temporary pod for performing backups on the management cluster:</p>

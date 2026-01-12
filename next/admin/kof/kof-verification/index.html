@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -3003,6 +3005,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5011,14 +5034,16 @@ and <a href="../kof-install/#istio">Istio</a>, you will need to do the following
     It should look like <code>REDACTED.us-east-2.elb.amazonaws.com</code></p>
 </li>
 <li>
-<p>Create these DNS records of type <code>A</code>, all pointing to that <code>EXTERNAL-IP</code>:
+<p>Create this DNS record of type <code>A</code>, pointing to that <code>EXTERNAL-IP</code>:
+    <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>vmauth.<span class="nv">$REGIONAL_DOMAIN</span>
+</code></pre></div>
+    Only if Grafana is <a href="../kof-grafana/">installed and enabled</a>, do the same for:
     <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>grafana.<span class="nv">$REGIONAL_DOMAIN</span>
-<span class="nb">echo</span><span class="w"> </span>vmauth.<span class="nv">$REGIONAL_DOMAIN</span>
 </code></pre></div></p>
 </li>
 </ol>
 <h2 id="kof-ui">KOF UI<a class="headerlink" href="#kof-ui" title="Permanent link">#</a></h2>
-<p>You can use the KOF UI to find and debug errors or misconfigurations. Check the <a href="../kof-using/#access-to-the-kof-ui">Access to the KOF UI</a> section to learn how to access it and read about its features.</p>
+<p>You can use the KOF UI to find and debug errors or misconfigurations. Check the <a href="../kof-using/#kof-ui">Access to the KOF UI</a> section to learn how to access it and read about its features.</p>
 
 
 

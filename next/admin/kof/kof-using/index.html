@@ -16,7 +16,7 @@
         <link rel="prev" href="../kof-storing/">
       
       
-        <link rel="next" href="../kof-alerts/">
+        <link rel="next" href="../kof-grafana/">
       
       
       <link rel="icon" href="../../../img/k0rdent-logo-mark-inverted.svg">
@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -2977,60 +2979,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-to-grafana" class="md-nav__link">
+  <a href="#optional-grafana" class="md-nav__link">
     <span class="md-ellipsis">
-      Access to Grafana
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Access to Grafana">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#single-sign-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      Single Sign-On
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cluster Overview
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logging-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      Logging Interface
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dashboard-categories" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dashboard Categories
+      Optional Grafana
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dashboard-lifecycle-gitops-workflow" class="md-nav__link">
+  <a href="#metrics-and-alerts" class="md-nav__link">
     <span class="md-ellipsis">
-      Dashboard Lifecycle (GitOps Workflow)
+      Metrics and alerts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traces
     </span>
   </a>
   
@@ -3046,9 +3024,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-to-the-kof-ui" class="md-nav__link">
+  <a href="#kof-ui" class="md-nav__link">
     <span class="md-ellipsis">
-      Access to the KOF UI
+      KOF UI
     </span>
   </a>
   
@@ -3058,6 +3036,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -4944,60 +4943,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#access-to-grafana" class="md-nav__link">
+  <a href="#optional-grafana" class="md-nav__link">
     <span class="md-ellipsis">
-      Access to Grafana
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Access to Grafana">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#single-sign-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      Single Sign-On
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cluster Overview
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logging-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      Logging Interface
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dashboard-categories" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dashboard Categories
+      Optional Grafana
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dashboard-lifecycle-gitops-workflow" class="md-nav__link">
+  <a href="#metrics-and-alerts" class="md-nav__link">
     <span class="md-ellipsis">
-      Dashboard Lifecycle (GitOps Workflow)
+      Metrics and alerts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traces
     </span>
   </a>
   
@@ -5013,9 +4988,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#access-to-the-kof-ui" class="md-nav__link">
+  <a href="#kof-ui" class="md-nav__link">
     <span class="md-ellipsis">
-      Access to the KOF UI
+      KOF UI
     </span>
   </a>
   
@@ -5053,101 +5028,96 @@
 
 
 <h1 id="using-kof">Using KOF<a class="headerlink" href="#using-kof" title="Permanent link">#</a></h1>
-<p>Most of the time, you'll access KOF's data through Grafana.</p>
-<h2 id="access-to-grafana">Access to Grafana<a class="headerlink" href="#access-to-grafana" title="Permanent link">#</a></h2>
-<p>To make Grafana available, start with these steps:</p>
-<ol>
-<li>
-<p>Get the Grafana username and password:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana-admin-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;user&quot;: .data.GF_SECURITY_ADMIN_USER | @base64d,</span>
-<span class="s1">  &quot;pass&quot;: .data.GF_SECURITY_ADMIN_PASSWORD | @base64d</span>
-<span class="s1">}&#39;</span>
-</code></pre></div>
-</li>
-<li>
-<p>Forward a port to the Grafana dashboard:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/grafana-vm-service<span class="w"> </span><span class="m">3000</span>:3000
-</code></pre></div>
-</li>
-<li>
-<p>Login to <a href="http://127.0.0.1:3000/dashboards">http://127.0.0.1:3000/dashboards</a> with the username/password printed above.</p>
-</li>
-<li>
-<p>Open a dashboard and select any cluster:</p>
-</li>
-</ol>
-<p><img alt="collect-from-3-cluster-roles" src="../../../assets/kof/collect-from-3-cluster-roles--2025-04-17.gif" /></p>
-<p><img alt="grafana-demo" src="../../../assets/kof/grafana-2025-01-14.gif" /></p>
-<h3 id="single-sign-on">Single Sign-On<a class="headerlink" href="#single-sign-on" title="Permanent link">#</a></h3>
-<p>Port forwarding, as described above, is a quick solution.</p>
-<p>Single Single-On provides better experience. If you want to enable it,
-please apply this advanced guide: <a href="https://github.com/k0rdent/kof/blob/main/docs/dex-sso.md">SSO for Grafana</a>.</p>
-<h3 id="cluster-overview">Cluster Overview<a class="headerlink" href="#cluster-overview" title="Permanent link">#</a></h3>
-<p>From here you can get an overview of the cluster, including:</p>
+<h2 id="optional-grafana">Optional Grafana<a class="headerlink" href="#optional-grafana" title="Permanent link">#</a></h2>
 <ul>
-<li>Health metrics</li>
-<li>Resource utilization</li>
-<li>Performance trends</li>
-<li>Cost analysis</li>
+<li>Grafana installation and automatic configuration are now disabled in KOF by default.</li>
+<li>If you want to install and enable Grafana, apply the <a href="../kof-grafana/">Grafana in KOF</a> guide.</li>
+<li>Otherwise, check the sections below, showing how to use KOF without Grafana.</li>
 </ul>
-<h3 id="logging-interface">Logging Interface<a class="headerlink" href="#logging-interface" title="Permanent link">#</a></h3>
-<p>The logging interface will also be available, including:</p>
+<h2 id="metrics-and-alerts">Metrics and alerts<a class="headerlink" href="#metrics-and-alerts" title="Permanent link">#</a></h2>
 <ul>
-<li>Real-time log streaming</li>
-<li>Full-text search</li>
-<li>Log aggregation</li>
-<li>Alert correlation</li>
-</ul>
-<video controls width="1024" style="max-width: 100%">
-  <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
-</video>
+<li><a href="../kof-alerts/#prometheus-ui">Prometheus UI</a>:<ul>
+<li>Run in the management cluster:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-mothership-promxy<span class="w"> </span><span class="m">8082</span>:8082
+</code></pre></div></li>
+<li>Explore the Graph: <a href="http://127.0.0.1:8082/graph?g0.expr=up&amp;g0.tab=0">http://127.0.0.1:8082/graph?g0.expr=up&amp;g0.tab=0</a></li>
+<li>Explore the Alerts: <a href="http://127.0.0.1:8082/alerts">http://127.0.0.1:8082/alerts</a></li>
+<li>CLI queries for automation:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.cluster) | unique&#39;</span>
 
-<h2 id="dashboard-categories">Dashboard Categories<a class="headerlink" href="#dashboard-categories" title="Permanent link">#</a></h2>
-<p>KOF ships with dashboards across:</p>
-<ul>
-<li>Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.</li>
-<li>Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.</li>
-<li>Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.</li>
-<li>Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.</li>
+curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.job) | unique&#39;</span>
+
+curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=up{cluster=&quot;mothership&quot;, job=&quot;kof-collectors-opencost&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq
+</code></pre></div></li>
 </ul>
-<h2 id="dashboard-lifecycle-gitops-workflow">Dashboard Lifecycle (GitOps Workflow)<a class="headerlink" href="#dashboard-lifecycle-gitops-workflow" title="Permanent link">#</a></h2>
-<p>All dashboards are managed as code to keep environments consistent. To add or change a dashboard, follow these steps:</p>
-<p><strong>Add a new dashboard</strong></p>
-<ol>
-<li>Create a YAML file under <code>charts/kof-dashboards/files/dashboards/</code> with the new dashboard definition.</li>
-<li>Commit and push the change to Git.</li>
-<li>Your CI/CD pipeline applies the Helm chart to the target cluster.</li>
-</ol>
-<p><strong>Update an existing dashboard</strong></p>
-<ol>
-<li>Edit the corresponding YAML file.</li>
-<li>Commit and push changes.</li>
-<li>CI/CD will roll out the update automatically.</li>
-</ol>
-<p><strong>Delete a dashboard</strong></p>
-<ol>
-<li>Remove the YAML file.</li>
-<li>Commit and push changes.</li>
-<li>CI/CD pipeline removes the dashboard from Grafana.</li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Avoid editing dashboards directly in the Grafana UI. Changes will be overwritten by the next Helm release.</p>
+</li>
+<li><a href="../kof-alerts/#alertmanager-ui">Alertmanager UI</a>:<ul>
+<li>Run in the management cluster:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/vmalertmanager-cluster<span class="w"> </span><span class="m">9093</span>:9093
+</code></pre></div></li>
+<li>Open <a href="http://127.0.0.1:9093/">http://127.0.0.1:9093/</a></li>
+</ul>
+</li>
+<li><a href="https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#vmui">VictoriaMetrics UI</a>:<ul>
+<li>Run in the regional cluster:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/vmselect-cluster<span class="w"> </span><span class="m">8481</span>:8481
+</code></pre></div>
+    To get metrics stored <a href="../kof-storing/#from-management-to-management">from Management to Management</a> (if any),
+    do this port-forward in the management cluster.</li>
+<li>Open <a href="http://127.0.0.1:8481/select/0/vmui/#/dashboards">http://127.0.0.1:8481/select/0/vmui/#/dashboards</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">#</a></h2>
+<ul>
+<li><a href="https://docs.victoriametrics.com/victorialogs/querying/#web-ui">VictoriaLogs UI</a>:<ul>
+<li>Run in the regional cluster:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-victoria-logs-cluster-vlselect<span class="w"> </span><span class="m">9471</span>:9471
+</code></pre></div>
+    We're using port 9471, not 9428.</li>
+<li>Open <a href="http://127.0.0.1:9471/select/vmui/">http://127.0.0.1:9471/select/vmui/</a></li>
+<li>CLI query for automation:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+</code></pre></div></li>
+</ul>
+</li>
+<li>Run inside of Istio mesh:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://<span class="nv">$REGIONAL_CLUSTER_NAME</span>-logs-select:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+</code></pre></div></li>
+<li>Run without Istio and port-forwarding:
+    <div class="highlight"><pre><span></span><code><span class="nv">VM_USER</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>storage-vmuser-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.data.username<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+<span class="k">)</span>
+<span class="nv">VM_PASS</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>storage-vmuser-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.data.password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+<span class="k">)</span>
+curl<span class="w"> </span>https://vmauth.<span class="nv">$REGIONAL_DOMAIN</span>/vls/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VM_USER</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="nv">$VM_PASS</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+</code></pre></div></li>
+</ul>
+<h2 id="traces">Traces<a class="headerlink" href="#traces" title="Permanent link">#</a></h2>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+<p>
+Test and document how to use <a href="https://docs.victoriametrics.com/victoriatraces/querying/#web-ui">VictoriaTraces UI</a>.</p>
 </div>
 <h2 id="cost-management-opencost">Cost Management (OpenCost)<a class="headerlink" href="#cost-management-opencost" title="Permanent link">#</a></h2>
-<p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters. Common signals available in Grafana are:</p>
-<ul>
-<li><code>node_total_hourly_cost</code> (per-node hourly cost)</li>
-<li>Namespace and pod-level cost allocation</li>
-<li>Historical spend trends and efficiency ratios</li>
-</ul>
-<p>Once you have this information, you can optimize your cluster. Typical optimizations include:</p>
-<ul>
-<li>Identify under-utilized resources and right-size workloads</li>
-<li>Budgeting and monitoring with Grafana alerts</li>
-</ul>
-<p>Common OpenCost metrics include:</p>
+<p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters.
+Common metrics (also available in the pre-installed Grafana FinOps dashboards if <a href="../kof-grafana/">enabled</a>) are:</p>
 <table>
 <thead>
 <tr>
@@ -5178,8 +5148,12 @@ please apply this advanced guide: <a href="https://github.com/k0rdent/kof/blob/m
 </tr>
 </tbody>
 </table>
-<p>These metrics appear in the pre-installed Grafana FinOps dashboards.</p>
-<h2 id="access-to-the-kof-ui">Access to the KOF UI<a class="headerlink" href="#access-to-the-kof-ui" title="Permanent link">#</a></h2>
+<p>Once you have this information, you can optimize your cluster. Typical optimizations include:</p>
+<ul>
+<li>Identify under-utilized resources and right-size workloads</li>
+<li>Budgeting and monitoring with <a href="../kof-alerts/">alerts</a></li>
+</ul>
+<h2 id="kof-ui">KOF UI<a class="headerlink" href="#kof-ui" title="Permanent link">#</a></h2>
 <p>When the <a href="https://opentelemetry.io/docs/platforms/kubernetes/operator/target-allocator/">TargetAllocator</a> is in use,
 the configuration of <a href="https://opentelemetry.io/docs/collector/">OpenTelemetryCollectors</a>
 Prometheus <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver#prometheus-api-server">receivers</a>

@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -2936,6 +2938,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5121,7 +5144,7 @@ Each node is provisioned with its own <code>vmstorage-db</code> PVC for storing 
 <li><strong>vmselect-cachedir</strong>: 2Gi per node
 Each node has a dedicated <code>vmselect-cachedir</code> PVC for caching in VMSelect.</li>
 <li><strong>grafana-vm-pvc</strong>: 1Gi
-Used for regional components such as Grafana.</li>
+Used for Grafana, if <a href="../kof-grafana/">enabled</a>.</li>
 </ul>
 <h2 id="recommendations-for-cluster-scaling">Recommendations for Cluster Scaling<a class="headerlink" href="#recommendations-for-cluster-scaling" title="Permanent link">#</a></h2>
 <p>To ensure optimal performance of your cluster under high load, it is recommended to:</p>

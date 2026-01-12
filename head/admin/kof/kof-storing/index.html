@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -3039,6 +3041,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5048,19 +5071,14 @@ No additional steps are required here.</p>
 <h2 id="from-management-to-management">From Management to Management<a class="headerlink" href="#from-management-to-management" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in the same management cluster.</p>
 <ul>
-<li>Grafana and VictoriaMetrics are provided by the <code>kof-mothership</code> chart,
-  hence disabled in the <code>kof-storage</code> chart.</li>
+<li>VictoriaMetrics is provided by the <code>kof-mothership</code> chart, hence disabled in the <code>kof-storage</code> chart.</li>
 <li>PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the <code>kof-storage</code> chart.</li>
 </ul>
 <p>To apply this option:</p>
 <ol>
 <li>
 <p>Create the <code>storage-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nt">grafana</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">  </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">create_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">victoria-metrics-operator</span><span class="p">:</span>
+    <div class="highlight"><pre><span></span><code><span class="nt">victoria-metrics-operator</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">victoriametrics</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>

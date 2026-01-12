@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -2936,6 +2938,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5050,7 +5073,7 @@
 <li><strong>Logs:</strong> <a href="https://docs.victoriametrics.com/victorialogs/">VictoriaLogs</a>.</li>
 <li><strong>Tracing:</strong> <a href="https://docs.victoriametrics.com/victoriatraces/">VictoriaTraces</a> with <a href="https://opentelemetry.io/">OpenTelemetry</a>.</li>
 <li><strong>Cost:</strong> <a href="https://opencost.io/">OpenCost</a>.</li>
-<li><strong>Dashboards:</strong> Grafana managed by grafana-operator.</li>
+<li><strong>Dashboards:</strong> Optional Grafana managed by grafana-operator.</li>
 <li><strong>Aggregation:</strong> <a href="https://github.com/jacksontj/promxy">Promxy</a> for Prometheus-compatible fan-out.</li>
 <li><strong>Control:</strong> kof-operators for lifecycle and configuration.</li>
 </ul>
@@ -5059,7 +5082,7 @@
 <p>It’s Monday morning. Finance notices that last week’s cloud bill is <strong>20% higher than forecast</strong>. The CFO wants answers before the leadership meeting tomorrow.</p>
 <p>Without KOF, this would trigger days of Slack threads and finger-pointing. With KOF, here’s what happens instead:</p>
 <h3 id="step-1-finance-spots-the-anomaly">Step 1: Finance Spots the Anomaly<a class="headerlink" href="#step-1-finance-spots-the-anomaly" title="Permanent link">#</a></h3>
-<p>The <strong>Finance team</strong> opens the KOF FinOps dashboard in Grafana. They see that most of the increase came from the <strong>US-East regional cluster</strong>, specifically from workloads tagged to the “recommendation-engine” project.</p>
+<p>The <strong>Finance team</strong> opens the KOF FinOps dashboard in Grafana or similar tool. They see that most of the increase came from the <strong>US-East regional cluster</strong>, specifically from workloads tagged to the “recommendation-engine” project.</p>
 <p><em>What used to be a mystery bill is now an actionable insight.</em></p>
 <h3 id="step-2-devops-traces-the-issue">Step 2: DevOps Traces the Issue<a class="headerlink" href="#step-2-devops-traces-the-issue" title="Permanent link">#</a></h3>
 <p>The <strong>DevOps team</strong> takes over. They drill into the same dashboard and pull up <strong>OpenCost metrics</strong> for that namespace. One service shows a sharp increase in CPU and memory usage starting on Friday.</p>
@@ -5083,7 +5106,7 @@
 <h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
 <p>KOF lets you get started with some quick wins. For example, you can easily:</p>
 <ul>
-<li>Spin up a single cluster and access Grafana dashboards in under 10 minutes.</li>
+<li>Spin up a single cluster and access dashboards in under 10 minutes.</li>
 <li>Attribute cloud costs to teams immediately using OpenCost metrics.</li>
 <li>Configure alerts for both performance and budget thresholds.</li>
 <li>Start retaining logs and metrics for compliance right out of the box.</li>
@@ -5095,21 +5118,21 @@
 <p><strong>Child clusters.</strong> Always run collectors (OpenTelemetry, OpenCost) to gather metrics, logs, and traces at the source. This is the "beach-head" service that travels with every cluster.</p>
 </li>
 <li>
-<p><strong>Management cluster.</strong> Runs Grafana, promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the <code>kof-mothership</code> chart.</p>
+<p><strong>Management cluster.</strong> Runs Grafana (if enabled), promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the <code>kof-mothership</code> chart.</p>
 </li>
 <li>
 <p><strong>Storage and aggregation.</strong> The main VictoriaMetrics, VictoriaLogs, and VictoriaTraces stack can run in:</p>
 </li>
-<li>the management cluster (for management data, with Grafana and VM provided by <code>kof-mothership</code>),</li>
+<li>the management cluster (for management data, with optional Grafana and VM provided by <code>kof-mothership</code>),</li>
 <li>a regional KOF deployment (collecting from child clusters in that region), or</li>
 <li>a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: <a href="https://docs.k0rdent.io/latest/admin/kof/kof-storing/">Storing KOF data</a>.</li>
 </ul>
-<p>Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana provide the consolidated UI.</p>
+<p>Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana (or other UIs) provide the consolidated UI.</p>
 <h3 id="kof-can-be-extended-with-your-own-dashboards-pipelines-and-destinations">KOF can be extended with your own dashboards, pipelines, and destinations<a class="headerlink" href="#kof-can-be-extended-with-your-own-dashboards-pipelines-and-destinations" title="Permanent link">#</a></h3>
 <p>KOF is fully functional out of the box, but you can also add additional capabilities through extensions.</p>
 <ul>
-<li><strong>Dashboards and alerts.</strong> Add Grafana dashboards and VMRules in Git; k0rdent <code>MultiClusterService</code> distributes them consistently.</li>
+<li><strong>Dashboards and alerts.</strong> Add Grafana dashboards (if enabled) and VMRules in Git; k0rdent <code>MultiClusterService</code> distributes them consistently.</li>
 <li><strong>Collector pipelines.</strong> Extend OpenTelemetry collectors with custom receivers, processors, or exporters.</li>
 <li><strong>External destinations.</strong> Route specific streams to third-party systems (recipes are included for CloudWatch and others).</li>
 </ul>
@@ -5132,7 +5155,7 @@
 <thead>
 <tr>
 <th>Dimension</th>
-<th>DIY Stack (Prometheus, Grafana, OpenCost, etc.)</th>
+<th>DIY Stack (Prometheus, optional Grafana, OpenCost, etc.)</th>
 <th><strong>KOF</strong></th>
 </tr>
 </thead>
@@ -5155,12 +5178,12 @@
 <tr>
 <td><strong>Troubleshooting</strong></td>
 <td>Metrics in one tool, logs in another, traces in a third. Correlation is manual.</td>
-<td>Unified Grafana dashboards: metrics, logs, and traces correlated automatically.</td>
+<td>Unified dashboards: metrics, logs, and traces correlated automatically.</td>
 </tr>
 <tr>
 <td><strong>Cost Management</strong></td>
 <td>OpenCost must be bolted on; engineers rarely look at it.</td>
-<td>Costs embedded in Grafana dashboards engineers already use; supports chargeback/showback.</td>
+<td>Costs embedded in dashboards engineers already use; supports chargeback/showback.</td>
 </tr>
 <tr>
 <td><strong>Multi-Cluster Support</strong></td>

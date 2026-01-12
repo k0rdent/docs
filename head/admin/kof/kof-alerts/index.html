@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../kof-using/">
+        <link rel="prev" href="../kof-grafana/">
       
       
         <link rel="next" href="../kof-scaling/">
@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -2936,6 +2938,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5081,16 +5104,18 @@
 <p>At this point you have metrics collected and visualized. It is important to check them manually,
 but it is even better to <strong>automate detection and notification about the issues found in the data.</strong></p>
 <p>We believe the rules should be configured using YAML IaC (Infrastructure as Code),
-while you can perform temporary management such as <a href="https://grafana.com/docs/grafana/latest/alerting/configure-notifications/create-silence/">Silences</a>
-using the UI.</p>
+while you can perform temporary management such as Silences using the <a href="#alertmanager-ui">Alertmanager UI</a>
+or <a href="https://grafana.com/docs/grafana/latest/alerting/configure-notifications/create-silence/">Grafana UI</a>
+if Grafana is <a href="../kof-grafana/">installed and enabled</a>.</p>
 <p><a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/">Alerting rules</a>
 and <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/#recording-rules">recording rules</a>
 in KOF are based on the <a href="https://github.com/prometheus-community/helm-charts/tree/5a42485c22e5beb3da772b32fbfd18719793bc5e/charts/kube-prometheus-stack/templates/prometheus/rules-1.14">PrometheusRules</a>
 from the <a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack#readme">kube-prometheus-stack</a> chart
 with per-cluster <a href="#custom-rules">customization</a> options.</p>
-<p>KOF uses the <a href="https://grafana.com/docs/grafana/latest/alerting/fundamentals/alert-rules/#data-source-managed-alert-rules">data source managed rules</a>
+<p>KOF uses the data source managed rules
 to store and <a href="#execution-of-rules">execute</a> recording rules in regional clusters closer to the source data,
-and to reduce the load on Grafana, even for alerting rules executed by Promxy in the management cluster.</p>
+and to reduce the load on a dashboarding tool,
+even for alerting rules executed by Promxy in the management cluster.</p>
 <p>Promxy is used as a data source and executor of alerting rules
 instead of <a href="https://docs.victoriametrics.com/operator/resources/vmalert/">VMAlert</a> because:</p>
 <ul>
@@ -5100,7 +5125,7 @@ instead of <a href="https://docs.victoriametrics.com/operator/resources/vmalert/
     (without federation, or re-scraping) but trivial in promxy."</p>
 </li>
 <li>
-<p>It fixes the "See graph" button in the Grafana Alerting rules UI,
+<p>It fixes the "See graph" button in the optional Grafana Alerting rules UI,
     as Grafana gets the metrics from all regional clusters via Promxy.</p>
 </li>
 </ul>
@@ -5203,7 +5228,7 @@ where Alertmanager UI shows the same data.</p>
 <p>To access the Grafana Alerting UI:</p>
 <ol>
 <li>
-<p>Apply the <a href="../kof-using/#access-to-grafana">Access to Grafana</a> step.</p>
+<p><a href="../kof-grafana/">Install and enable Grafana</a>.</p>
 </li>
 <li>
 <p>Open: Grafana - Alerting - and then "Alert rules" or "Silences", like this:</p>
@@ -5214,12 +5239,12 @@ where Alertmanager UI shows the same data.</p>
 <p>There are few places where you can find the graph of the firing alert:</p>
 <ol>
 <li>
-<p>Grafana - Alerting - Alert rules - rule - See graph.</p>
+<p>Grafana - Alerting - Alert rules - rule - See graph (if <a href="../kof-grafana/">Grafana is enabled</a>).</p>
 <p>This shows the graph in Grafana UI,
 as in the <a href="#grafana-alerting-ui">Grafana Alerting UI</a> demo above.</p>
 </li>
 <li>
-<p>Grafana - Alerting - Groups - group - alert - See source - Graph.</p>
+<p>Grafana - Alerting - Groups - group - alert - See source - Graph (if <a href="../kof-grafana/">Grafana is enabled</a>).</p>
 <p>This shows the graph in Prometheus UI.</p>
 </li>
 <li>

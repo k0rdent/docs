@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -3114,6 +3116,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -5189,7 +5212,7 @@
     D ==&gt; G[...]</code></pre>
 <h2 id="mid-level">Mid-level<a class="headerlink" href="#mid-level" title="Permanent link">#</a></h2>
 <p>Getting a little bit more detailed, it's important to undrestand that data flows upwards,
-from observed objects to centralized Grafana on the Management layer:</p>
+from observed objects to centralized dashboards on the Management layer:</p>
 <!--
 
 To update the diagram:
@@ -5200,7 +5223,7 @@ To update the diagram:
 
 <b>Management Cluster</b>
   kof-operators chart
-    grafana-operator
+    Optional grafana-operator
     opentelemetry-operator
     prometheus-operator-crds
 
@@ -5210,7 +5233,7 @@ To update the diagram:
     sveltos-dashboard
     dex
     k0rdent service templates
-    kof-dashboards
+    Optional kof-dashboards
     kof-operator
     promxy
 
@@ -5226,7 +5249,7 @@ Cloud 1..N
 
     <b>Regional Cluster</b>
       kof-operators chart
-        grafana-operator
+        Optional grafana-operator
         opentelemetry-operator
         prometheus-operator-crds
 
@@ -5236,7 +5259,7 @@ Cloud 1..N
         victoria-traces-cluster
         external-dns
         dex
-        kof-dashboards
+        Optional kof-dashboards
 
       kof-collectors chart
         opencost
@@ -5265,7 +5288,7 @@ Cloud 1..N
   <div class="o">
     kof-operators chart
     <div class="o">
-      grafana-operator
+      Optional grafana-operator
     </div>
     <div class="o">
       opentelemetry-operator
@@ -5292,7 +5315,7 @@ Cloud 1..N
       k0rdent service templates
     </div>
     <div class="o">
-      kof-dashboards
+      Optional kof-dashboards
     </div>
     <div class="o">
       kof-operator
@@ -5326,7 +5349,7 @@ Cloud 1..N
       <div class="o">
         kof-operators chart
         <div class="o">
-          grafana-operator
+          Optional grafana-operator
         </div>
         <div class="o">
           opentelemetry-operator
@@ -5353,7 +5376,7 @@ Cloud 1..N
           dex
         </div>
         <div class="o">
-          kof-dashboards
+          Optional kof-dashboards
         </div>
       </div>
       <div class="o">
@@ -5418,7 +5441,7 @@ Cloud 1..N
 <p>KOF is deployed as a series of Helm charts at various levels.</p>
 <h3 id="kof-operators">kof-operators<a class="headerlink" href="#kof-operators" title="Permanent link">#</a></h3>
 <ul>
-<li><a href="https://grafana.com/">Grafana</a> dashboards platform, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
+<li>Optional <a href="https://grafana.com/">Grafana</a> dashboards platform, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
 <li><a href="https://opentelemetry.io/">OpenTelemetry</a> <a href="https://opentelemetry.io/docs/collector/">collectors</a> below, managed by <a href="https://opentelemetry.io/docs/kubernetes/operator/">opentelemetry-operator</a></li>
 <li><a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds">prometheus-operator-crds</a> required to create OpenTelemetry collectors, also required to monitor <a href="#kof-mothership"><code>kof-mothership</code></a> itself</li>
 </ul>
@@ -5429,7 +5452,7 @@ Cloud 1..N
 <li><a href="https://projectsveltos.github.io/sveltos/">Sveltos</a> dashboard, automatic secret distribution</li>
 <li><a href="https://dexidp.io/">Dex</a> SSO <a href="https://github.com/dexidp/helm-charts/tree/master/charts/dex">chart</a></li>
 <li><a href="https://github.com/k0rdent">k0rdent</a> service templates used by <code>kof-regional</code> and <code>kof-child</code> charts</li>
-<li><a href="https://github.com/k0rdent/kof/tree/v1.6.0/charts/kof-dashboards">kof-dashboards</a> for Grafana</li>
+<li>Optional <a href="https://github.com/k0rdent/kof/tree/v1.6.0/charts/kof-dashboards">kof-dashboards</a> for Grafana</li>
 <li><a href="https://github.com/k0rdent/kof/tree/v1.6.0/kof-operator/internal/controller">kof-operator</a> (don't confuse it with the <code>kof-operators</code> chart) for auto-configuration</li>
 <li><a href="https://github.com/jacksontj/promxy">Promxy</a> for aggregating Prometheus metrics from regional clusters</li>
 </ul>
@@ -5452,7 +5475,7 @@ Cloud 1..N
 <li><a href="https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-traces-cluster">victoria-traces-cluster</a> for distributed tracing storage and querying, providing a scalable backend for OpenTelemetry traces</li>
 <li><a href="https://github.com/kubernetes-sigs/external-dns">external-dns</a> to communicate with other clusters</li>
 <li><a href="https://dexidp.io/">Dex</a> SSO <a href="https://github.com/dexidp/helm-charts/tree/master/charts/dex">chart</a></li>
-<li><a href="https://github.com/k0rdent/kof/tree/v1.6.0/charts/kof-dashboards">kof-dashboards</a> for Grafana</li>
+<li>Optional <a href="https://github.com/k0rdent/kof/tree/v1.6.0/charts/kof-dashboards">kof-dashboards</a> for Grafana</li>
 </ul>
 <h3 id="kof-collectors">kof-collectors<a class="headerlink" href="#kof-collectors" title="Permanent link">#</a></h3>
 <ul>
@@ -5513,12 +5536,12 @@ Cloud 1..N
 <tr>
 <td>Grafana</td>
 <td>Visualization</td>
-<td>Unified dashboards; SSO/RBAC</td>
+<td>Optional unified dashboards; SSO/RBAC</td>
 </tr>
 <tr>
 <td>Dex</td>
 <td>SSO</td>
-<td>OIDC provider for Grafana</td>
+<td>OIDC provider</td>
 </tr>
 <tr>
 <td>OpenCost</td>
@@ -5530,11 +5553,11 @@ Cloud 1..N
 <h2 id="dex-integration">Dex Integration<a class="headerlink" href="#dex-integration" title="Permanent link">#</a></h2>
 <p>KOF uses Dex as an identity provider to enable Single Sign‑On (SSO) with OAuth2 and OIDC.</p>
 <ul>
-<li>Authentication flow: Dex issues ID tokens to Grafana and other clients after authenticating against an upstream identity provider (IdP).</li>
+<li>Authentication flow: Dex issues ID tokens to dashboards and other clients after authenticating against an upstream identity provider (IdP).</li>
 <li>External IdP integration: Dex can delegate to providers such as Okta, Entra ID, GitHub, or LDAP.</li>
-<li>Group membership mapping: Dex propagates group membership claims, which KOF uses to enforce RBAC. Grafana dashboards and KOF namespaces can be restricted based on these groups.</li>
+<li>Group membership mapping: Dex propagates group membership claims, which KOF uses to enforce RBAC. Dashboards and KOF namespaces can be restricted based on these groups.</li>
 </ul>
-<p>This model centralizes authentication, while authorization remains controlled via Kubernetes RBAC and Grafana roles.</p>
+<p>This model centralizes authentication, while authorization remains controlled via Kubernetes RBAC and UI roles.</p>
 
 
 

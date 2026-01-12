@@ -2760,6 +2760,8 @@
       
         
       
+        
+      
     
     
     
@@ -2936,6 +2938,27 @@
   
   <span class="md-ellipsis">
     Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana in KOF
   </span>
   
 
@@ -4935,13 +4958,8 @@
 <h1 id="kof-tracing">KOF Tracing<a class="headerlink" href="#kof-tracing" title="Permanent link">#</a></h1>
 <p>KOF uses VictoriaTraces as the backend for distributed tracing. Traces are collected via OpenTelemetry and stored in VictoriaTraces, which provides efficient long-term storage and querying capabilities.</p>
 <h2 id="accessing-traces">Accessing Traces<a class="headerlink" href="#accessing-traces" title="Permanent link">#</a></h2>
-<p>You can view and analyze traces through Grafana Explore:</p>
-<ol>
-<li>Open Grafana in your browser</li>
-<li>Navigate to <strong>Explore</strong> (compass icon in the left sidebar)</li>
-<li>Select the <strong>Jaeger</strong> type datasource from the dropdown at the top</li>
-<li>Use the query builder to search for traces by service name, operation, tags, or trace ID</li>
-</ol>
+<p>Apply <a href="../kof-using/#traces">Using KOF - Traces</a>
+or <a href="../kof-grafana/#traces">Grafana in KOF - Traces</a>.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h2>
 <p>Tracing is enabled by default in KOF. The VictoriaTraces configuration can be customized in your <code>kof-storage</code> values.</p>
 <p>For available configuration options, refer to the VictoriaTraces values:
