@@ -83,7 +83,8 @@
 
 ## Traces
 
-* TODO: Document how to use [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui).
+> TODO:
+> Test and document how to use [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui).
 
 ## Cost Management (OpenCost)
 

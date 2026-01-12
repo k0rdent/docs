@@ -316,7 +316,7 @@ KOF supports two topologies:
 | VictoriaLogs | Log Storage | Scalable log TSDB with retention controls |
 | VictoriaTraces | Tracing Storage | Scalable trace storage for OpenTelemetry data |
 | Grafana | Visualization | Optional unified dashboards; SSO/RBAC |
-| Dex | SSO | OIDC provider for Grafana |
+| Dex | SSO | OIDC provider |
 | OpenCost | FinOps | Cost allocation and efficiency ratios |
 
 ## Dex Integration

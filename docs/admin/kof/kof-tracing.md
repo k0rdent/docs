@@ -4,12 +4,8 @@ KOF uses VictoriaTraces as the backend for distributed tracing. Traces are colle
 
 ## Accessing Traces
 
-You can view and analyze traces through Grafana Explore:
-
-1. Open Grafana in your browser
-2. Navigate to **Explore** (compass icon in the left sidebar)
-3. Select the **Jaeger** type datasource from the dropdown at the top
-4. Use the query builder to search for traces by service name, operation, tags, or trace ID
+Apply [Using KOF - Traces](kof-using.md#traces)
+or [Grafana in KOF - Traces](kof-grafana.md#traces).
 
 ## Configuration
 

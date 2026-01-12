@@ -122,6 +122,15 @@ The logging interface will also be available, including:
   <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
 </video>
 
+## Traces
+
+You can view and analyze traces through Grafana Explore:
+
+1. Open Grafana in your browser.
+2. Navigate to "Explore" (compass icon in the left sidebar).
+3. Select the "Jaeger" type datasource from the dropdown at the top (not "VictoriaTraces").
+4. Use the query builder to search for traces by service name, operation, tags, or trace ID.
+
 ## Dashboard Categories
 
 KOF ships with dashboards across:
