@@ -44,14 +44,15 @@ Let's start with the demo of an alert sent and received.
     ```yaml
     victoriametrics:
       vmalert:
-        vmalertmanager:
-          config: |
-            route:
-              receiver: webhook
-            receivers:
-              - name: webhook
-                webhook_configs:
-                  - url: $WEBHOOK_URL
+        manager:
+          spec:
+            configRawYaml: |
+              route:
+                receiver: webhook
+              receivers:
+                - name: webhook
+                  webhook_configs:
+                    - url: $WEBHOOK_URL
     ```
 
 3. Apply the `mothership-values.yaml` file as described in the [Management Cluster](./kof-install.md#management-cluster) section.
