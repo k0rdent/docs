@@ -21,7 +21,7 @@ flowchart TD
 ## Mid-level
 
 Getting a little bit more detailed, it's important to undrestand that data flows upwards,
-from observed objects to centralized Grafana on the Management layer:
+from observed objects to centralized dashboards on the Management layer:
 
 <!--
 
@@ -33,7 +33,7 @@ To update the diagram:
 
 <b>Management Cluster</b>
   kof-operators chart
-    grafana-operator
+    Optional grafana-operator
     opentelemetry-operator
     prometheus-operator-crds
 
@@ -43,7 +43,7 @@ To update the diagram:
     sveltos-dashboard
     dex
     {{{ docsVersionInfo.k0rdentName }}} service templates
-    kof-dashboards
+    Optional kof-dashboards
     kof-operator
     promxy
 
@@ -59,7 +59,7 @@ Cloud 1..N
 
     <b>Regional Cluster</b>
       kof-operators chart
-        grafana-operator
+        Optional grafana-operator
         opentelemetry-operator
         prometheus-operator-crds
 
@@ -69,7 +69,7 @@ Cloud 1..N
         victoria-traces-cluster
         external-dns
         dex
-        kof-dashboards
+        Optional kof-dashboards
 
       kof-collectors chart
         opencost
@@ -98,7 +98,7 @@ Cloud 1..N
   <div class="o">
     kof-operators chart
     <div class="o">
-      grafana-operator
+      Optional grafana-operator
     </div>
     <div class="o">
       opentelemetry-operator
@@ -125,7 +125,7 @@ Cloud 1..N
       {{{ docsVersionInfo.k0rdentName }}} service templates
     </div>
     <div class="o">
-      kof-dashboards
+      Optional kof-dashboards
     </div>
     <div class="o">
       kof-operator
@@ -159,7 +159,7 @@ Cloud 1..N
       <div class="o">
         kof-operators chart
         <div class="o">
-          grafana-operator
+          Optional grafana-operator
         </div>
         <div class="o">
           opentelemetry-operator
@@ -186,7 +186,7 @@ Cloud 1..N
           dex
         </div>
         <div class="o">
-          kof-dashboards
+          Optional kof-dashboards
         </div>
       </div>
       <div class="o">
@@ -253,7 +253,7 @@ KOF is deployed as a series of Helm charts at various levels.
 
 ### kof-operators
 
-- [Grafana](https://grafana.com/) dashboards platform, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
+- Optional [Grafana](https://grafana.com/) dashboards platform, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
 - [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
 - [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors, also required to monitor [`kof-mothership`](#kof-mothership) itself
 
@@ -264,7 +264,7 @@ KOF is deployed as a series of Helm charts at various levels.
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
 - [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates used by `kof-regional` and `kof-child` charts
-- [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
+- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
 - [kof-operator](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
 - [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
 
@@ -287,7 +287,7 @@ KOF is deployed as a series of Helm charts at various levels.
   - [victoria-traces-cluster](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-traces-cluster) for distributed tracing storage and querying, providing a scalable backend for OpenTelemetry traces
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
-- [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
+- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
 
 ### kof-collectors
 
@@ -315,7 +315,7 @@ KOF supports two topologies:
 | VictoriaMetrics | Metrics Storage | Scalable TSDB; selected over Prometheus for clustering  efficiency |
 | VictoriaLogs | Log Storage | Scalable log TSDB with retention controls |
 | VictoriaTraces | Tracing Storage | Scalable trace storage for OpenTelemetry data |
-| Grafana | Visualization | Unified dashboards; SSO/RBAC |
+| Grafana | Visualization | Optional unified dashboards; SSO/RBAC |
 | Dex | SSO | OIDC provider for Grafana |
 | OpenCost | FinOps | Cost allocation and efficiency ratios |
 
@@ -323,8 +323,8 @@ KOF supports two topologies:
 
 KOF uses Dex as an identity provider to enable Single Sign‑On (SSO) with OAuth2 and OIDC.
 
-- Authentication flow: Dex issues ID tokens to Grafana and other clients after authenticating against an upstream identity provider (IdP).
+- Authentication flow: Dex issues ID tokens to dashboards and other clients after authenticating against an upstream identity provider (IdP).
 - External IdP integration: Dex can delegate to providers such as Okta, Entra ID, GitHub, or LDAP.
-- Group membership mapping: Dex propagates group membership claims, which KOF uses to enforce RBAC. Grafana dashboards and KOF namespaces can be restricted based on these groups.
+- Group membership mapping: Dex propagates group membership claims, which KOF uses to enforce RBAC. Dashboards and KOF namespaces can be restricted based on these groups.
 
-This model centralizes authentication, while authorization remains controlled via Kubernetes RBAC and Grafana roles.
+This model centralizes authentication, while authorization remains controlled via Kubernetes RBAC and UI roles.

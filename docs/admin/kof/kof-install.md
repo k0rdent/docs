@@ -164,6 +164,11 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 
     New secrets will be auto-created and auto-propagated to other clusters, fixing the issue.
 
+### Grafana
+
+* Grafana installation and automatic configuration are now disabled in KOF by default.
+* Review the [Using KOF](kof-using.md) and [Grafana in KOF](kof-grafana.md) guides to make a decision.
+
 ## Management Cluster
 
 To install KOF on the management cluster,
@@ -455,7 +460,7 @@ and apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-storage-class: <EXAMPLE_STORAGE_CLASS>
     ```
 
-8. The `kof-operator` creates and configures `PromxyServerGroup` and `GrafanaDatasource` [automatically](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go).
+8. The `kof-operator` creates and configures `PromxyServerGroup` and `GrafanaDatasource` (if [enabled](kof-grafana.md)) [automatically](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go).
     It uses the endpoints listed below by default.
     If you want to disable the built-in metrics, logs, and traces to use your own existing instances instead,
     add custom endpoints to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`:
@@ -513,7 +518,8 @@ and apply this example for AWS, or use it as a reference:
 
     Note that a similar `ConfigMap` is generated automatically from a regional `ClusterDeployment` too.
 
-9. If you need a custom http client configuration for `PromxyServerGroup` and `GrafanaDatasource`,
+9. If you need a custom http client configuration for `PromxyServerGroup`
+    and `GrafanaDatasource` (if [enabled](kof-grafana.md)),
     add it to the `regional-cluster.yaml` file in the `.metadata.annotations`. For example:
     ```yaml
     k0rdent.mirantis.com/kof-http-config: '{"dial_timeout": "10s", "tls_config": {"insecure_skip_verify": true}}'

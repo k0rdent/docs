@@ -1,111 +1,94 @@
 # Using KOF
 
-Most of the time, you'll access KOF's data through Grafana.
+## Optional Grafana
 
-## Access to Grafana
+* Grafana installation and automatic configuration are now disabled in KOF by default.
+* If you want to install and enable Grafana, apply the [Grafana in KOF](kof-grafana.md) guide.
+* Otherwise, check the sections below, showing how to use KOF without Grafana.
 
-To make Grafana available, start with these steps:
+## Metrics and alerts
 
-1. Get the Grafana username and password:
+* [Prometheus UI](kof-alerts.md/#prometheus-ui):
+    * Run in the management cluster:
+        ```bash
+        kubectl port-forward -n kof svc/kof-mothership-promxy 8082:8082
+        ```
+    * Explore the Graph: [http://127.0.0.1:8082/graph?g0.expr=up&g0.tab=0](http://127.0.0.1:8082/graph?g0.expr=up&g0.tab=0)
+    * Explore the Alerts: [http://127.0.0.1:8082/alerts](http://127.0.0.1:8082/alerts)
+    * CLI queries for automation:
+        ```bash
+        curl http://localhost:8082/api/v1/query?query=up \
+          | jq '.data.result | map(.metric.cluster) | unique'
 
+        curl http://localhost:8082/api/v1/query?query=up \
+          | jq '.data.result | map(.metric.job) | unique'
+
+        curl http://localhost:8082/api/v1/query \
+          -d 'query=up{cluster="mothership", job="kof-collectors-opencost"}' \
+          | jq
+        ```
+* [Alertmanager UI](kof-alerts.md/#alertmanager-ui):
+    * Run in the management cluster:
+        ```bash
+        kubectl port-forward -n kof svc/vmalertmanager-cluster 9093:9093
+        ```
+    * Open [http://127.0.0.1:9093/](http://127.0.0.1:9093/)
+* [VictoriaMetrics UI](https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#vmui):
+    * Run in the regional cluster:
+        ```bash
+        KUBECONFIG=regional-kubeconfig kubectl port-forward \
+          -n kof svc/vmselect-cluster 8481:8481
+        ```
+        To get metrics stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
+        do this port-forward in the management cluster.
+    * Open [http://127.0.0.1:8481/select/0/vmui/#/dashboards](http://127.0.0.1:8481/select/0/vmui/#/dashboards)
+
+## Logs
+
+* [VictoriaLogs UI](https://docs.victoriametrics.com/victorialogs/querying/#web-ui):
+    * Run in the regional cluster:
+        ```bash
+        KUBECONFIG=regional-kubeconfig kubectl port-forward \
+          -n kof svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
+        ```
+        We're using port 9471, not 9428.
+    * Open [http://127.0.0.1:9471/select/vmui/](http://127.0.0.1:9471/select/vmui/)
+    * CLI query for automation:
+        ```bash
+        curl http://127.0.0.1:9471/select/logsql/query \
+          -d 'query=_time:1h' \
+          -d 'limit=10'
+        ```
+* Run inside of Istio mesh:
     ```bash
-    kubectl get secret -n kof grafana-admin-credentials -o yaml | yq '{
-      "user": .data.GF_SECURITY_ADMIN_USER | @base64d,
-      "pass": .data.GF_SECURITY_ADMIN_PASSWORD | @base64d
-    }'
+    curl http://$REGIONAL_CLUSTER_NAME-logs-select:9471/select/logsql/query \
+      -d 'query=_time:1h' \
+      -d 'limit=10'
+    ```
+* Run without Istio and port-forwarding:
+    ```bash
+    VM_USER=$(
+      kubectl get secret -n kof storage-vmuser-credentials -o yaml \
+      | yq .data.username | base64 -d
+    )
+    VM_PASS=$(
+      kubectl get secret -n kof storage-vmuser-credentials -o yaml \
+      | yq .data.password | base64 -d
+    )
+    curl https://vmauth.$REGIONAL_DOMAIN/vls/select/logsql/query \
+      -u "$VM_USER":"$VM_PASS" \
+      -d 'query=_time:1h' \
+      -d 'limit=10'
     ```
 
-2. Forward a port to the Grafana dashboard:
+## Traces
 
-    ```bash
-    kubectl port-forward -n kof svc/grafana-vm-service 3000:3000
-    ```
-
-3. Login to [http://127.0.0.1:3000/dashboards](http://127.0.0.1:3000/dashboards) with the username/password printed above.
-
-4. Open a dashboard and select any cluster:
-
-![collect-from-3-cluster-roles](../../assets/kof/collect-from-3-cluster-roles--2025-04-17.gif)
-
-![grafana-demo](../../assets/kof/grafana-2025-01-14.gif)
-
-### Single Sign-On
-
-Port forwarding, as described above, is a quick solution.
-
-Single Single-On provides better experience. If you want to enable it,
-please apply this advanced guide: [SSO for Grafana](https://github.com/k0rdent/kof/blob/main/docs/dex-sso.md).
-
-### Cluster Overview
-
-From here you can get an overview of the cluster, including:
-
-* Health metrics
-* Resource utilization
-* Performance trends
-* Cost analysis
-
-### Logging Interface
-
-The logging interface will also be available, including:
-
-* Real-time log streaming
-* Full-text search
-* Log aggregation
-* Alert correlation
-
-<video controls width="1024" style="max-width: 100%">
-  <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
-</video>
-
-## Dashboard Categories
-
-KOF ships with dashboards across:
-
-* Infrastructure: Provides infrastructure-related metrics, such as kube clusters, nodes, API server, networking, storage, or GPU.
-* Applications: Provides metrics for applications, such as VictoriaMetrics, VictoriaLogs, VictoriaTraces and OpenCost.
-* Service Mesh: Provides metrics for service mesh, such as Istio control-plane and traffic.
-* Platform: Provides metrics for the platform itself, including KCM, Cluster API, and Sveltos.
-
-## Dashboard Lifecycle (GitOps Workflow)
-
-All dashboards are managed as code to keep environments consistent. To add or change a dashboard, follow these steps:
-
-**Add a new dashboard**
-
-1. Create a YAML file under `charts/kof-dashboards/files/dashboards/` with the new dashboard definition.
-2. Commit and push the change to Git.
-3. Your CI/CD pipeline applies the Helm chart to the target cluster.
-
-**Update an existing dashboard**
-
-1. Edit the corresponding YAML file.
-2. Commit and push changes.
-3. CI/CD will roll out the update automatically.
-
-**Delete a dashboard**
-
-1. Remove the YAML file.
-2. Commit and push changes.
-3. CI/CD pipeline removes the dashboard from Grafana.
-
-> WARNING: 
-> Avoid editing dashboards directly in the Grafana UI. Changes will be overwritten by the next Helm release.
+* TODO: Document how to use [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui).
 
 ## Cost Management (OpenCost)
 
- KOF includes OpenCost, which provides cost management features for Kubernetes clusters. Common signals available in Grafana are:
-
-* `node_total_hourly_cost` (per-node hourly cost)
-* Namespace and pod-level cost allocation
-* Historical spend trends and efficiency ratios
-
-Once you have this information, you can optimize your cluster. Typical optimizations include:
-
-* Identify under-utilized resources and right-size workloads
-* Budgeting and monitoring with Grafana alerts
-
-Common OpenCost metrics include:
+KOF includes OpenCost, which provides cost management features for Kubernetes clusters.
+Common metrics (also available in the pre-installed Grafana FinOps dashboards if [enabled](kof-grafana.md)) are:
 
 | Metric | Description |
 |--------|-------------|
@@ -115,9 +98,12 @@ Common OpenCost metrics include:
 | `pod_cost` | Cost allocation at pod granularity |
 | `cluster_efficiency` | Ratio of requested vs actual resource usage |
 
-These metrics appear in the pre-installed Grafana FinOps dashboards.
+Once you have this information, you can optimize your cluster. Typical optimizations include:
 
-## Access to the KOF UI
+* Identify under-utilized resources and right-size workloads
+* Budgeting and monitoring with [alerts](kof-alerts.md)
+
+## KOF UI
 
 When the [TargetAllocator](https://opentelemetry.io/docs/platforms/kubernetes/operator/target-allocator/) is in use,
 the configuration of [OpenTelemetryCollectors](https://opentelemetry.io/docs/collector/)

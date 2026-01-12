@@ -40,7 +40,7 @@ Performance issues and cost spikes usually come from the same workloads, so you 
 - **Logs:** [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/).
 - **Tracing:** [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) with [OpenTelemetry](https://opentelemetry.io/).
 - **Cost:** [OpenCost](https://opencost.io/).
-- **Dashboards:** Grafana managed by grafana-operator.
+- **Dashboards:** Optional Grafana managed by grafana-operator.
 - **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.
 - **Control:** kof-operators for lifecycle and configuration.
 
@@ -54,7 +54,7 @@ Without KOF, this would trigger days of Slack threads and finger-pointing. With 
 
 ### Step 1: Finance Spots the Anomaly
 
-The **Finance team** opens the KOF FinOps dashboard in Grafana. They see that most of the increase came from the **US-East regional cluster**, specifically from workloads tagged to the “recommendation-engine” project.
+The **Finance team** opens the KOF FinOps dashboard in Grafana or similar tool. They see that most of the increase came from the **US-East regional cluster**, specifically from workloads tagged to the “recommendation-engine” project.
 
 *What used to be a mystery bill is now an actionable insight.*
 
@@ -93,7 +93,7 @@ In a single day, KOF turned a vague cost spike into a resolved issue, with every
 
 KOF lets you get started with some quick wins. For example, you can easily:
 
-* Spin up a single cluster and access Grafana dashboards in under 10 minutes.
+* Spin up a single cluster and access dashboards in under 10 minutes.
 * Attribute cloud costs to teams immediately using OpenCost metrics.
 * Configure alerts for both performance and budget thresholds.
 * Start retaining logs and metrics for compliance right out of the box.
@@ -105,21 +105,21 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
 
 - **Child clusters.** Always run collectors (OpenTelemetry, OpenCost) to gather metrics, logs, and traces at the source. This is the "beach-head" service that travels with every cluster.
 
-- **Management cluster.** Runs Grafana, promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the `kof-mothership` chart.
+- **Management cluster.** Runs Grafana (if enabled), promxy, operators, and policy. It may also run VictoriaMetrics for its own telemetry and alert evaluation via the `kof-mothership` chart.
 
 - **Storage and aggregation.** The main VictoriaMetrics, VictoriaLogs, and VictoriaTraces stack can run in:
-  - the management cluster (for management data, with Grafana and VM provided by `kof-mothership`),
+  - the management cluster (for management data, with optional Grafana and VM provided by `kof-mothership`),
   - a regional KOF deployment (collecting from child clusters in that region), or
   - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: [Storing KOF data](https://docs.k0rdent.io/latest/admin/kof/kof-storing/).
 
-Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana provide the consolidated UI.
+Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana (or other UIs) provide the consolidated UI.
 
 ### KOF can be extended with your own dashboards, pipelines, and destinations
 
 KOF is fully functional out of the box, but you can also add additional capabilities through extensions.
 
-- **Dashboards and alerts.** Add Grafana dashboards and VMRules in Git; k0rdent `MultiClusterService` distributes them consistently.
+- **Dashboards and alerts.** Add Grafana dashboards (if enabled) and VMRules in Git; k0rdent `MultiClusterService` distributes them consistently.
 - **Collector pipelines.** Extend OpenTelemetry collectors with custom receivers, processors, or exporters.
 - **External destinations.** Route specific streams to third-party systems (recipes are included for CloudWatch and others).
 
@@ -148,13 +148,13 @@ Other sections in this documentation, such as [Dashboard Lifecycle](kof-using.md
 
 ### DIY Stack vs. KOF
 
-| Dimension                  | DIY Stack (Prometheus, Grafana, OpenCost, etc.)                                       | **KOF**                                                                                              |
+| Dimension                  | DIY Stack (Prometheus, optional Grafana, OpenCost, etc.)                              | **KOF**                                                                                              |
 | -------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | **Setup & Integration**    | Assemble 4–6 separate projects, each with its own configs, upgrades, and quirks.      | One integrated platform: metrics, logs, traces, and costs shipped together.                          |
 | **Scale & Performance**    | Prometheus federation slows at millions of samples; log systems require heavy tuning. | VictoriaMetrics/Logs designed for **millions of samples/sec**, fast queries, and long-term storage.  |
 | **Consistency**            | Dashboards, alerts, and retention vary per cluster; drift happens quickly.            | **GitOps-native**: dashboards, alerts, and policies stored in Git and deployed via CI/CD.            |
-| **Troubleshooting**        | Metrics in one tool, logs in another, traces in a third. Correlation is manual.       | Unified Grafana dashboards: metrics, logs, and traces correlated automatically.                      |
-| **Cost Management**        | OpenCost must be bolted on; engineers rarely look at it.                              | Costs embedded in Grafana dashboards engineers already use; supports chargeback/showback.            |
+| **Troubleshooting**        | Metrics in one tool, logs in another, traces in a third. Correlation is manual.       | Unified dashboards: metrics, logs, and traces correlated automatically.                              |
+| **Cost Management**        | OpenCost must be bolted on; engineers rarely look at it.                              | Costs embedded in dashboards engineers already use; supports chargeback/showback.                    |
 | **Multi-Cluster Support**  | Each cluster runs its own observability stack; federation is fragile.                 | **Single control plane** for management, regional, and child clusters.                               |
 | **Compliance & Retention** | Long-term retention requires custom S3/Elasticsearch setups, costly and brittle.      | Policy-driven retention (30–365+ days) and replication built in.                                     |
 | **Security & Governance**  | Role-based access is piecemeal, TLS often manual.                                     | RBAC and secure communication enforced by default.                                                   |

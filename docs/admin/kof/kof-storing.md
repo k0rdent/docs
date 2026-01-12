@@ -36,18 +36,13 @@ No additional steps are required here.
 
 This option stores KOF data of the management cluster in the same management cluster.
 
-* Grafana and VictoriaMetrics are provided by the `kof-mothership` chart,
-  hence disabled in the `kof-storage` chart.
+* VictoriaMetrics is provided by the `kof-mothership` chart, hence disabled in the `kof-storage` chart.
 * PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the `kof-storage` chart.
 
 To apply this option:
 
 1. Create the `storage-values.yaml` file:
     ```yaml
-    grafana:
-      enabled: false
-      security:
-        create_secret: false
     victoria-metrics-operator:
       enabled: false
     victoriametrics:

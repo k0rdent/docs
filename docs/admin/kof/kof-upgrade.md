@@ -121,7 +121,7 @@ This section describes the process for migrating data to a new KOF regional clus
 3. **Ensure metrics and logs are available** for the child cluster, confirming the new regional cluster is operational.
 4. **Change all other child clusters** from the old regional cluster to the new one.
 5. **Start the data migration.**
-6. **Ensure that the data is migrated and explorable in Grafana**
+6. **Ensure that the data is migrated and explorable**
 7. **Delete old kof-regional cluster**
 8. **Remove the label from child ClusterDeployments.**
 
@@ -378,7 +378,7 @@ EOF
 ```
 
 > NOTE:
-> To estimate how much storage you need for the backup, open the [kof-ui](./kof-using.md#access-to-the-kof-ui), navigate to the `VictoriaMetrics/Logs` section, and click the `VictoriaMetrics storage` pod name on the cluster you want to back up. Find the `Data Size` metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.
+> To estimate how much storage you need for the backup, open the [kof-ui](./kof-using.md#kof-ui), navigate to the `VictoriaMetrics/Logs` section, and click the `VictoriaMetrics storage` pod name on the cluster you want to back up. Find the `Data Size` metric and multiply this value by at least two (or by at least five for VictoriaLogs). This is because the metric shows data compressed using the VictoriaMetrics algorithm, while the backup will be stored in a simple gzip format, which does not compress as efficiently.
 
 #### Create a Backup Pod with `curl`
 
