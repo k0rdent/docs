@@ -20,7 +20,7 @@ spec:
 
 This will create a ServiceSet which will also have `.spec.serviceSpec.provider.selfManagement=true`, which in-turn will indicate to the KSM [StateManagementProvider](ksm-providers.md) that this MCS is supposed to match the management cluster itself. 
 
-The default StateManagementProvider is Sveltos, so there is a SveltosCluster object named mgmt in the mgmt namespace where k0rdent has been installed. This object represents the management cluster itself. To view this object run:
+The default StateManagementProvider is Sveltos, so there is a SveltosCluster object named mgmt in the mgmt namespace of the cluster where k0rdent has been installed. This object represents the management cluster itself. To view this object run:
 
 ```sh
 kubectl -n mgmt get sveltoscluster mgmt --show-labels
