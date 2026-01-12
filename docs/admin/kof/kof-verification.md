@@ -64,12 +64,15 @@ and [Istio](./kof-install.md#istio), you will need to do the following:
     ```
     It should look like `REDACTED.us-east-2.elb.amazonaws.com`
 
-2. Create these DNS records of type `A`, all pointing to that `EXTERNAL-IP`:
+2. Create this DNS record of type `A`, pointing to that `EXTERNAL-IP`:
+    ```bash
+    echo vmauth.$REGIONAL_DOMAIN
+    ```
+    Only if Grafana is [installed and enabled](kof-grafana.md), do the same for:
     ```bash
     echo grafana.$REGIONAL_DOMAIN
-    echo vmauth.$REGIONAL_DOMAIN
     ```
 
 ## KOF UI
 
-You can use the KOF UI to find and debug errors or misconfigurations. Check the [Access to the KOF UI](kof-using.md#access-to-the-kof-ui) section to learn how to access it and read about its features.
+You can use the KOF UI to find and debug errors or misconfigurations. Check the [Access to the KOF UI](kof-using.md#kof-ui) section to learn how to access it and read about its features.

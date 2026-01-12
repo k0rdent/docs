@@ -4,7 +4,7 @@
 
 Backing up KOF requires backing up the following:
 
-* Grafana configurations
+* Grafana configurations (if enabled)
 * Alert definitions
 * Custom dashboards
 * Retention policies

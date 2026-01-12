@@ -6,8 +6,9 @@ At this point you have metrics collected and visualized. It is important to chec
 but it is even better to **automate detection and notification about the issues found in the data.**
 
 We believe the rules should be configured using YAML IaC (Infrastructure as Code),
-while you can perform temporary management such as [Silences](https://grafana.com/docs/grafana/latest/alerting/configure-notifications/create-silence/)
-using the UI.
+while you can perform temporary management such as Silences using the [Alertmanager UI](#alertmanager-ui)
+or [Grafana UI](https://grafana.com/docs/grafana/latest/alerting/configure-notifications/create-silence/)
+if Grafana is [installed and enabled](kof-grafana.md).
 
 [Alerting rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
 and [recording rules](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/#recording-rules)
@@ -15,9 +16,10 @@ in KOF are based on the [PrometheusRules](https://github.com/prometheus-communit
 from the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack#readme) chart
 with per-cluster [customization](#custom-rules) options.
 
-KOF uses the [data source managed rules](https://grafana.com/docs/grafana/latest/alerting/fundamentals/alert-rules/#data-source-managed-alert-rules)
+KOF uses the data source managed rules
 to store and [execute](#execution-of-rules) recording rules in regional clusters closer to the source data,
-and to reduce the load on Grafana, even for alerting rules executed by Promxy in the management cluster.
+and to reduce the load on a dashboarding tool,
+even for alerting rules executed by Promxy in the management cluster.
 
 Promxy is used as a data source and executor of alerting rules
 instead of [VMAlert](https://docs.victoriametrics.com/operator/resources/vmalert/) because:
@@ -26,7 +28,7 @@ instead of [VMAlert](https://docs.victoriametrics.com/operator/resources/vmalert
     this would be impossible on the individual prometheus hosts
     (without federation, or re-scraping) but trivial in promxy."
 
-* It fixes the "See graph" button in the Grafana Alerting rules UI,
+* It fixes the "See graph" button in the optional Grafana Alerting rules UI,
     as Grafana gets the metrics from all regional clusters via Promxy.
 
 [VMAlertManager](https://docs.victoriametrics.com/operator/resources/vmalertmanager/)
@@ -124,7 +126,7 @@ where Alertmanager UI shows the same data.
 
 To access the Grafana Alerting UI:
 
-1. Apply the [Access to Grafana](./kof-using.md/#access-to-grafana) step.
+1. [Install and enable Grafana](kof-grafana.md).
 
 2. Open: Grafana - Alerting - and then "Alert rules" or "Silences", like this:
 
@@ -134,12 +136,12 @@ To access the Grafana Alerting UI:
 
 There are few places where you can find the graph of the firing alert:
 
-1. Grafana - Alerting - Alert rules - rule - See graph.
+1. Grafana - Alerting - Alert rules - rule - See graph (if [Grafana is enabled](kof-grafana.md)).
 
     This shows the graph in Grafana UI,
     as in the [Grafana Alerting UI](#grafana-alerting-ui) demo above.
 
-2. Grafana - Alerting - Groups - group - alert - See source - Graph.
+2. Grafana - Alerting - Groups - group - alert - See source - Graph (if [Grafana is enabled](kof-grafana.md)).
 
     This shows the graph in Prometheus UI.
 
