@@ -16,7 +16,6 @@ The KCM controller periodically scrapes each managed cluster and records:
 * **Identification labels**: cluster namespaced name,
   [ClusterDeployment](../../reference/crds/index.md#clusterdeployment) UID,
   and k0s cluster ID.
-* **IPAM allocation**: the number of [ClusterIPAM](../../reference/crds/index.md#clusteripam) bound in a cluster and the overall number of [ClusterIPAM](../../reference/crds/index.md#clusteripam) objects in a cluster
 
 The exact metrics and their representation vary from the mode.
 
