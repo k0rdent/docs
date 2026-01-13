@@ -51,7 +51,8 @@
         KUBECONFIG=regional-kubeconfig kubectl port-forward \
           -n kof svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
         ```
-        We're using port 9471, not 9428.
+        To get logs stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
+        do this port-forward in the management cluster.
     * Open [http://127.0.0.1:9471/select/vmui/](http://127.0.0.1:9471/select/vmui/)
     * CLI query for automation:
         ```bash
@@ -83,8 +84,31 @@
 
 ## Traces
 
-> TODO:
-> Test and document how to use [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui).
+VictoriaTraces provides a scalable, cost-efficient distributed tracing backend that helps K0rdent users observe application performance while supporting FinOps goals by reducing storage and query costs.
+
+* [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui):
+    * Run in the regional cluster:
+        ```bash
+        KUBECONFIG=regional-kubeconfig kubectl port-forward \
+          -n kof svc/kof-storage-vt-cluster-vtselect 10471:10471
+        ```
+        To get traces stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
+        do this port-forward in the management cluster.
+    * Open [http://127.0.0.1:10471/select/vmui/](http://127.0.0.1:10471/select/vmui/)
+* CLI queries for automation:
+    * [LogSQL](https://docs.victoriametrics.com/victorialogs/querying/#http-api):
+        ```bash
+        curl http://127.0.0.1:10471/select/logsql/query \
+          -d 'query=_time:1h' \
+          -d 'limit=10'
+        ```
+    * [Jaeger HTTP API](https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api):
+        ```bash
+        curl http://127.0.0.1:10471/select/jaeger/api/services
+        ```
+        ```bash
+        curl http://127.0.0.1:10471/select/jaeger/api/traces?service=test
+        ```
 
 ## Cost Management (OpenCost)
 
@@ -187,3 +211,4 @@ To identify and debug issues in deployed clusters, check if KOF UI shows any err
 * SveltosCluster
 
 ![kof-ui-resources-monitoring](../../assets/kof/ui_resources_monitoring.gif)
+
