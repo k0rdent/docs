@@ -84,6 +84,8 @@
 
 ## Traces
 
+VictoriaTraces provides a scalable, cost-efficient distributed tracing backend that helps K0rdent users observe application performance while supporting FinOps goals by reducing storage and query costs.
+
 * [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui):
     * Run in the regional cluster:
         ```bash
@@ -209,3 +211,4 @@ To identify and debug issues in deployed clusters, check if KOF UI shows any err
 * SveltosCluster
 
 ![kof-ui-resources-monitoring](../../assets/kof/ui_resources_monitoring.gif)
+
