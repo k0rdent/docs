@@ -4884,23 +4884,12 @@
 
 
 <h1 id="deploy-beach-head-services-on-management-cluster-itself">Deploy beach-head services on Management Cluster itself<a class="headerlink" href="#deploy-beach-head-services-on-management-cluster-itself" title="Permanent link">#</a></h1>
-<p>There is a SveltosCluster object named mgmt in the mgmt namespace where k0rdent has been installed. This object represents the management cluster itself. The following command can be used to get this object along with labels:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>mgmt<span class="w"> </span>get<span class="w"> </span>sveltoscluster<span class="w"> </span>mgmt<span class="w"> </span>--show-labels
-</code></pre></div>
-<p>The output should be similar to this:</p>
-<div class="highlight"><pre><span></span><code>NAME<span class="w">   </span>READY<span class="w">   </span>VERSION<span class="w">   </span>LABELS
-mgmt<span class="w">   </span><span class="nb">true</span><span class="w">    </span>v1.32.2<span class="w">   </span>k0rdent.mirantis.com/management-cluster<span class="o">=</span>true,projectsveltos.io/k8s-version<span class="o">=</span>v1.32.2,sveltos-agent<span class="o">=</span>present
-</code></pre></div>
-<p>To deploy beach-head services on the management cluster, a MultiClusterService object can be created that matches the mgmt SveltosCluster using the k0rdent.mirantis.com/management-cluster=true and sveltos-agent=present labels as shown in the following YAML:</p>
+<p>To deploy beach-head services on the management cluster, a MultiClusterService object can be created with <code>.spec.serviceSpec.provider.selfManagement=true</code> as shown below: </p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MultiClusterService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mgmt-mcs</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">clusterSelector</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">k0rdent.mirantis.com/management-cluster</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">      </span><span class="nt">sveltos-agent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
 <span class="w">  </span><span class="nt">serviceSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">provider</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ksm-projectsveltos</span>
@@ -4909,6 +4898,14 @@ mgmt<span class="w">   </span><span class="nb">true</span><span class="w">    </
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-3</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
 <span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
+</code></pre></div>
+<p>This will create a ServiceSet which will also have <code>.spec.serviceSpec.provider.selfManagement=true</code>, which in-turn will indicate to the KSM <a href="../ksm-providers/">StateManagementProvider</a> that this MCS is supposed to match the management cluster itself. </p>
+<p>The default StateManagementProvider is Sveltos, so there is a object named mgmt in the mgmt namespace of the cluster where k0rdent has been installed. This object represents the management cluster itself, and is different from the default k0rdent namespace such as <code>kcm-system</code>. To view this object run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>mgmt<span class="w"> </span>get<span class="w"> </span>sveltoscluster<span class="w"> </span>mgmt<span class="w"> </span>--show-labels
+</code></pre></div>
+<p>The output should be similar to this:</p>
+<div class="highlight"><pre><span></span><code>NAME<span class="w">   </span>READY<span class="w">   </span>VERSION<span class="w">   </span>LABELS
+mgmt<span class="w">   </span><span class="nb">true</span><span class="w">    </span>v1.32.2<span class="w">   </span>k0rdent.mirantis.com/management-cluster<span class="o">=</span>true,projectsveltos.io/k8s-version<span class="o">=</span>v1.32.2,sveltos-agent<span class="o">=</span>present
 </code></pre></div>
 <p>Any number of ServiceTemplates (ingress-nginx-4-11-3 in this example) can be added to the MultiClusterService's <code>.spec.serviceSpec.services</code> field. See <a href="../ksm-service-templates/">Using and Creating ServiceTemplates</a> for how to create ServiceTemplates.</p>
 <p>To verify that the ingress-nginx-4-11-3 beach-head service was sucessfully deployed, the status of the MultiClusterService can be queried with:</p>
