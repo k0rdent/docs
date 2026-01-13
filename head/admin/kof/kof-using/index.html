@@ -5080,7 +5080,8 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
     <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-victoria-logs-cluster-vlselect<span class="w"> </span><span class="m">9471</span>:9471
 </code></pre></div>
-    We're using port 9471, not 9428.</li>
+    To get logs stored <a href="../kof-storing/#from-management-to-management">from Management to Management</a> (if any),
+    do this port-forward in the management cluster.</li>
 <li>Open <a href="http://127.0.0.1:9471/select/vmui/">http://127.0.0.1:9471/select/vmui/</a></li>
 <li>CLI query for automation:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
@@ -5110,11 +5111,32 @@ curl<span class="w"> </span>https://vmauth.<span class="nv">$REGIONAL_DOMAIN</sp
 </code></pre></div></li>
 </ul>
 <h2 id="traces">Traces<a class="headerlink" href="#traces" title="Permanent link">#</a></h2>
-<div class="admonition todo">
-<p class="admonition-title">Todo</p>
-<p>
-Test and document how to use <a href="https://docs.victoriametrics.com/victoriatraces/querying/#web-ui">VictoriaTraces UI</a>.</p>
-</div>
+<p>VictoriaTraces provides a scalable, cost-efficient distributed tracing backend that helps k0rdent users observe application performance while supporting FinOps goals by reducing storage and query costs.</p>
+<ul>
+<li><a href="https://docs.victoriametrics.com/victoriatraces/querying/#web-ui">VictoriaTraces UI</a>:<ul>
+<li>Run in the regional cluster:
+    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-vt-cluster-vtselect<span class="w"> </span><span class="m">10471</span>:10471
+</code></pre></div>
+    To get traces stored <a href="../kof-storing/#from-management-to-management">from Management to Management</a> (if any),
+    do this port-forward in the management cluster.</li>
+<li>Open <a href="http://127.0.0.1:10471/select/vmui/">http://127.0.0.1:10471/select/vmui/</a></li>
+</ul>
+</li>
+<li>CLI queries for automation:<ul>
+<li><a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogSQL</a>:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+</code></pre></div></li>
+<li><a href="https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api">Jaeger HTTP API</a>:
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/services
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/traces?service<span class="o">=</span><span class="nb">test</span>
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
 <h2 id="cost-management-opencost">Cost Management (OpenCost)<a class="headerlink" href="#cost-management-opencost" title="Permanent link">#</a></h2>
 <p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters.
 Common metrics (also available in the pre-installed Grafana FinOps dashboards if <a href="../kof-grafana/">enabled</a>) are:</p>
