@@ -51,7 +51,8 @@
         KUBECONFIG=regional-kubeconfig kubectl port-forward \
           -n kof svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
         ```
-        We're using port 9471, not 9428.
+        To get logs stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
+        do this port-forward in the management cluster.
     * Open [http://127.0.0.1:9471/select/vmui/](http://127.0.0.1:9471/select/vmui/)
     * CLI query for automation:
         ```bash
@@ -83,8 +84,29 @@
 
 ## Traces
 
-> TODO:
-> Test and document how to use [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui).
+* [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui):
+    * Run in the regional cluster:
+        ```bash
+        KUBECONFIG=regional-kubeconfig kubectl port-forward \
+          -n kof svc/kof-storage-vt-cluster-vtselect 10471:10471
+        ```
+        To get traces stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
+        do this port-forward in the management cluster.
+    * Open [http://127.0.0.1:10471/select/vmui/](http://127.0.0.1:10471/select/vmui/)
+* CLI queries for automation:
+    * [LogSQL](https://docs.victoriametrics.com/victorialogs/querying/#http-api):
+        ```bash
+        curl http://127.0.0.1:10471/select/logsql/query \
+          -d 'query=_time:1h' \
+          -d 'limit=10'
+        ```
+    * [Jaeger HTTP API](https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api):
+        ```bash
+        curl http://127.0.0.1:10471/select/jaeger/api/services
+        ```
+        ```bash
+        curl http://127.0.0.1:10471/select/jaeger/api/traces?service=test
+        ```
 
 ## Cost Management (OpenCost)
 
