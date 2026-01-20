@@ -4381,12 +4381,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4423,69 +4417,6 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../release-notes/release-notes-v1.0.0/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    v1.0.0
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../release-notes/release-notes-v1.1.0/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    v1.1.0
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../release-notes/release-notes-v1.3.1/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    v1.3.1
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -4809,14 +4740,15 @@ with <a href="#advanced-routing">advanced routing</a> options.</p>
 <p>Add the following to the <code>mothership-values.yaml</code> file, replacing <code>$WEBHOOK_URL</code> with the URL from step 1:
     <div class="highlight"><pre><span></span><code><span class="nt">victoriametrics</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">vmalert</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">vmalertmanager</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">        </span><span class="no">route:</span>
-<span class="w">          </span><span class="no">receiver: webhook</span>
-<span class="w">        </span><span class="no">receivers:</span>
-<span class="w">          </span><span class="no">- name: webhook</span>
-<span class="w">            </span><span class="no">webhook_configs:</span>
-<span class="w">              </span><span class="no">- url: $WEBHOOK_URL</span>
+<span class="w">    </span><span class="nt">manager</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">configRawYaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">route:</span>
+<span class="w">            </span><span class="no">receiver: webhook</span>
+<span class="w">          </span><span class="no">receivers:</span>
+<span class="w">            </span><span class="no">- name: webhook</span>
+<span class="w">              </span><span class="no">webhook_configs:</span>
+<span class="w">                </span><span class="no">- url: $WEBHOOK_URL</span>
 </code></pre></div></p>
 </li>
 <li>
