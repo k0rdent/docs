@@ -41,7 +41,6 @@ When setting up a KCM Regional cluster to work with KOF, make sure the correct l
 
 * `k0rdent.mirantis.com/kcm-region-cluster: "true"` - Enables propagation of templates and required resources to the regional cluster.
 * `k0rdent.mirantis.com/kof-aws-dns-secrets: "true"` - Propagates AWS DNS secrets to the regional cluster.
-* `k0rdent.mirantis.com/kof-storage-secrets: "true"` - Propagates storage secrets to the regional cluster.
 
 To prevent conflicts with an existing CertManager installation, disable CertManager in the KCM Region configuration. KOF will deploy its own CertManager instance automatically. Add the following configuration to the Region spec:
 
