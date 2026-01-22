@@ -288,6 +288,7 @@ nav:
       - Data Collected: appendix/telemetry/data_collected.md
       - Modes: appendix/telemetry/modes.md
       - Configuration: appendix/telemetry/configuration.md
+    - Proxy configuration: appendix/proxy.md
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.6.0: release-notes/release-notes-v1.6.0.md
