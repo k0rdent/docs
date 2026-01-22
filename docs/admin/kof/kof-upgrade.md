@@ -228,6 +228,10 @@ To migrate data with transformation please consider one of the following options
     * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
     * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
 
+## Upgrade to v1.7.0
+
+Starting from v1.7.0, there is no need to use the `k0rdent.mirantis.com/kof-storage-secret` label to propagate the storage secret. From this version onward, storage secrets are automatically created and propagated to the corresponding cluster. Now each cluster has its own secrets and VMUser, which improves security.
+
 ## Upgrade to v1.6.0
 
 Before upgrading `kof-mothership`, ensure the following steps are completed:

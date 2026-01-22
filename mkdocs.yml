@@ -229,6 +229,7 @@ nav:
     - Scaling KOF: admin/kof/kof-scaling.md
     - Maintaining KOF: admin/kof/kof-maintainence.md
     - Tracing KOF: admin/kof/kof-tracing.md
+    - Multi-tenancy in KOF: admin/kof/kof-multi-tenancy.md
     - Retention and Replication: admin/kof/kof-retention.md
     - Resource Requirements: admin/kof/kof-resources.md
     - Version Compatibility: admin/kof/kof-version-compat.md

@@ -348,7 +348,6 @@ and apply this example for AWS, or use it as a reference:
       name: $REGIONAL_CLUSTER_NAME
       namespace: kcm-system
       labels:
-        k0rdent.mirantis.com/kof-storage-secrets: "true"
         k0rdent.mirantis.com/kof-cluster-role: regional
     spec:
       template: $TEMPLATE
@@ -384,7 +383,6 @@ and apply this example for AWS, or use it as a reference:
       name: $REGIONAL_CLUSTER_NAME
       namespace: kcm-system
       labels:
-        k0rdent.mirantis.com/kof-storage-secrets: "true"
         k0rdent.mirantis.com/kof-cluster-role: regional
     spec:
       template: $TEMPLATE
@@ -431,11 +429,7 @@ and apply this example for AWS, or use it as a reference:
 
 5. If you've applied the [Istio](#istio) section, update the `regional-cluster.yaml` file:
 
-    * Replace this line:
-      ```yaml
-      k0rdent.mirantis.com/kof-storage-secrets: "true"
-      ```
-      with:
+    * Add these lines:
       ```yaml
       k0rdent.mirantis.com/istio-role: member
       k0rdent.mirantis.com/istio-gateway: "true"
@@ -475,12 +469,12 @@ and apply this example for AWS, or use it as a reference:
 
     If you've applied the [Istio](#istio) section, default endpoints are:
     ```yaml
-    k0rdent.mirantis.com/kof-write-metrics-endpoint: http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write
-    k0rdent.mirantis.com/kof-read-metrics-endpoint: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus
-    k0rdent.mirantis.com/kof-write-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
-    k0rdent.mirantis.com/kof-read-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-logs-select:9471
-    k0rdent.mirantis.com/kof-write-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces
-    k0rdent.mirantis.com/kof-read-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-traces-select:10471/select/jaeger
+    k0rdent.mirantis.com/kof-write-metrics-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write
+    k0rdent.mirantis.com/kof-read-metrics-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus
+    k0rdent.mirantis.com/kof-write-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs
+    k0rdent.mirantis.com/kof-read-logs-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vls
+    k0rdent.mirantis.com/kof-write-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces
+    k0rdent.mirantis.com/kof-read-traces-endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vts/select/jaeger
     ```
 
     If you want to skip creation of the regional cluster completely,
@@ -609,7 +603,6 @@ and apply this example for AWS, or use it as a reference:
       name: $CHILD_CLUSTER_NAME
       namespace: kcm-system
       labels:
-        k0rdent.mirantis.com/kof-storage-secrets: "true"
         k0rdent.mirantis.com/kof-cluster-role: child
     spec:
       template: $TEMPLATE
@@ -642,7 +635,6 @@ and apply this example for AWS, or use it as a reference:
       name: $CHILD_CLUSTER_NAME
       namespace: kcm-system
       labels:
-        k0rdent.mirantis.com/kof-storage-secrets: "true"
         k0rdent.mirantis.com/kof-cluster-role: child
     spec:
       template: $TEMPLATE
@@ -665,13 +657,7 @@ and apply this example for AWS, or use it as a reference:
 
 4. If you've applied the [Istio](#istio) section, update the `child-cluster.yaml` file:
 
-    replace this line:
-
-    ```yaml
-    k0rdent.mirantis.com/kof-storage-secrets: "true"
-    ```
-
-    with this line:
+    add this line:
 
     ```yaml
     k0rdent.mirantis.com/istio-role: member
