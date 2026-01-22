@@ -2,7 +2,7 @@
 
 ## Overview
 
-k0rdent enables configuring HTTP/HTTPS proxy settings for all default
+{{{ docsVersionInfo.k0rdentName }}} enables configuring HTTP/HTTPS proxy settings for all default
 CAPI providers deployed by the `kcm`, using a **single Kubernetes Secret**.
 The proxy configuration is propagated automatically from the `kcm` chart
 to all underlying provider charts and to the `kcm-regional` chart
