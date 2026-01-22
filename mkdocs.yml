@@ -130,6 +130,7 @@ nav:
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
     - Configure and Deploy w/ SSH: quickstarts/quickstart-2-remote.md
     - Configure and Deploy to GCP: quickstarts/quickstart-2-gcp.md
+    - Configure and Deploy to OpenStack: quickstarts/quickstart-2-openstack.md
   - Administrator Guide:
     - Before you start: admin/index.md
     - Installation:
