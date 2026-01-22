@@ -2762,6 +2762,8 @@
       
         
       
+        
+      
     
     
     
@@ -3161,6 +3163,27 @@
   
   <span class="md-ellipsis">
     Tracing KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kof-multi-tenancy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-tenancy in KOF
   </span>
   
 
@@ -4341,6 +4364,8 @@
       
         
       
+        
+      
     
     
     
@@ -4628,6 +4653,27 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../appendix/proxy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxy configuration
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -5277,7 +5323,6 @@ set the <code>REGIONAL_DOMAIN</code> too, using your own domain:
 <span class="s">  name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -5310,7 +5355,6 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -5351,10 +5395,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <p>If you've applied the <a href="#istio">Istio</a> section, update the <code>regional-cluster.yaml</code> file:</p>
 <ul>
 <li>
-<p>Replace this line:
-  <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-</code></pre></div>
-  with:
+<p>Add these lines:
   <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/istio-role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">member</span>
 <span class="nt">k0rdent.mirantis.com/istio-gateway</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
 </code></pre></div></p>
@@ -5394,12 +5435,12 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="nt">k0rdent.mirantis.com/kof-read-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://vmauth.$REGIONAL_DOMAIN/vts/select/jaeger</span>
 </code></pre></div></p>
 <p>If you've applied the <a href="#istio">Istio</a> section, default endpoints are:
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-write-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write</span>
-<span class="nt">k0rdent.mirantis.com/kof-read-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus</span>
-<span class="nt">k0rdent.mirantis.com/kof-write-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs</span>
-<span class="nt">k0rdent.mirantis.com/kof-read-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-logs-select:9471</span>
-<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces</span>
-<span class="nt">k0rdent.mirantis.com/kof-read-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-traces-select:10471/select/jaeger</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-write-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write</span>
+<span class="nt">k0rdent.mirantis.com/kof-read-metrics-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus</span>
+<span class="nt">k0rdent.mirantis.com/kof-write-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs</span>
+<span class="nt">k0rdent.mirantis.com/kof-read-logs-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vls</span>
+<span class="nt">k0rdent.mirantis.com/kof-write-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces</span>
+<span class="nt">k0rdent.mirantis.com/kof-read-traces-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vts/select/jaeger</span>
 </code></pre></div></p>
 <p>If you want to skip creation of the regional cluster completely,
 but still let child clusters discover your custom endpoints,
@@ -5517,7 +5558,6 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="s">  name: $CHILD_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -5547,7 +5587,6 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <span class="s">  name: $CHILD_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -5570,10 +5609,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 </li>
 <li>
 <p>If you've applied the <a href="#istio">Istio</a> section, update the <code>child-cluster.yaml</code> file:</p>
-<p>replace this line:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-</code></pre></div>
-<p>with this line:</p>
+<p>add this line:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/istio-role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">member</span>
 </code></pre></div>
 <div class="admonition note">
