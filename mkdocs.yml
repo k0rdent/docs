@@ -396,8 +396,8 @@ extra:
         gcpGkeCluster: 1-0-7
         gcpHostedCpCluster: 1-0-20
         gcpStandaloneCpCluster: 1-0-18
-        kubevirtHostedCpCluster: 1-0-0
-        kubevirtStandaloneCpCluster: 1-0-0
+        kubevirtHostedCpCluster: 1-0-1
+        kubevirtStandaloneCpCluster: 1-0-1
         openstackHostedCpCluster: 1-0-13
         openstackStandaloneCpCluster: 1-0-22
         remoteCluster: 1-0-19
@@ -426,8 +426,8 @@ extra:
         gcpGkeCluster: 1.0.7
         gcpHostedCpCluster: 1.0.20
         gcpStandaloneCpCluster: 1.0.18
-        kubevirtHostedCpCluster: 1.0.0
-        kubevirtStandaloneCpCluster: 1.0.0
+        kubevirtHostedCpCluster: 1.0.1
+        kubevirtStandaloneCpCluster: 1.0.1
         openstackHostedCpCluster: 1.0.13
         openstackStandaloneCpCluster: 1.0.22
         remoteCluster: 1.0.19
