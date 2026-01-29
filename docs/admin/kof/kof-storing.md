@@ -227,6 +227,18 @@ To apply this option:
     EOF
     ```
 
+    If you're using `kind` for Management cluster, insert this:
+
+    ```
+    ...
+      defaultCRConfig:
+        env:
+          - name: PKI_PATH
+            value: etc/kubernetes
+          - name: KOF_VM_USER
+    ...
+    ```
+
     > NOTE:
     > If you create this file directly, make sure to replace `\$` with `$`,
     > `$VMUSER_CREDS_NAME` with the value from step 1,
