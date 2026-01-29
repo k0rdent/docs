@@ -8,7 +8,7 @@
     ```bash
     helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
       {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
-      --version 0.2.0 \
+      --version 0.3.0 \
       --set cert-manager-service-template.enabled=false \
       --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
       --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
