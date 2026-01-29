@@ -9,7 +9,7 @@ For existing installations, users need to manually enable the KubeVirt provider 
 
 1. Follow the main upgrade instructions [here](./index.md) and wait for the successful upgrade to v1.7.0.
 
-1. Patch the Management object and enable the `cluster-api-provider-kubevirt` provider by running:
+1. Patch the `Management` object and enable the `cluster-api-provider-kubevirt` provider by running:
 
     ```bash
     kubectl patch managements kcm \
@@ -17,8 +17,8 @@ For existing installations, users need to manually enable the KubeVirt provider 
       -p='[{"op": "add", "path": "/spec/providers/-", "value": {"name": "cluster-api-provider-kubevirt"}}]'
     ```
 
-1. Wait for the Management object to be ready:
+1. Wait for the `Management` object to be ready:
 
-```bash
-kubectl wait --for=jsonpath='{.status.components.cluster-api-provider-kubevirt.success}=true' managements.k0rdent.mirantis.com/kcm
-```
+    ```bash
+    kubectl wait --for=jsonpath='{.status.components.cluster-api-provider-kubevirt.success}=true' managements.k0rdent.mirantis.com/kcm
+    ```
