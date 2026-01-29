@@ -375,17 +375,18 @@ extra:
       kofOciRegistryBaseIstio: oci://ghcr.io/k0rdent/istio
     providerVersions:
       dashVersions:
-        clusterApi: 1-0-8
-        clusterApiProviderAws: 1-0-9
-        clusterApiProviderAzure: 1-0-11
-        clusterApiProviderDocker: 1-0-6
-        clusterApiProviderGcp: 1-0-6
-        clusterApiProviderIpam: 1-0-3
-        clusterApiProviderInfoblox: 1-0-2
-        clusterApiProviderOpenstack: 1-0-11
-        clusterApiProviderVsphere: 1-0-6
-        regional: 1-6-0-rc3
-        k0smotron: 1-0-11
+        clusterApi: 1-1-2
+        clusterApiProviderAws: 1-0-12
+        clusterApiProviderAzure: 1-0-14
+        clusterApiProviderDocker: 1-0-9
+        clusterApiProviderGcp: 1-0-9
+        clusterApiProviderIpam: 1-0-6
+        clusterApiProviderInfoblox: 1-0-5
+        clusterApiProviderOpenstack: 1-0-15
+        clusterApiProviderVsphere: 1-0-10
+        clusterApiProviderKubevirt: 1-0-0
+        regional: 1-7-0
+        k0smotron: 1-0-16
         adoptedCluster: 1-0-1
         awsEksCluster: 1-0-4
         awsHostedCpCluster: 1-0-21
@@ -406,16 +407,17 @@ extra:
         vsphereStandaloneCpCluster: 1-0-18
         sveltosProvider: 1-1-1
       dotVersions:
-        clusterApi: 1.0.8
-        clusterApiProviderAws: 1.0.9
-        clusterApiProviderAzure: 1.0.11
-        clusterApiProviderDocker: 1.0.6
-        clusterApiProviderGcp: 1.0.6
-        clusterApiProviderOpenstack: 1.0.11
-        clusterApiProviderVsphere: 1.0.6
-        clusterApiProviderIpam: 1.0.3
-        clusterApiProviderInfoblox: 1.0.2
-        k0smotron: 1.0.11
+        clusterApi: 1.1.2
+        clusterApiProviderAws: 1.0.12
+        clusterApiProviderAzure: 1.0.14
+        clusterApiProviderDocker: 1.0.9
+        clusterApiProviderGcp: 1.0.9
+        clusterApiProviderOpenstack: 1.0.15
+        clusterApiProviderVsphere: 1.0.10
+        clusterApiProviderIpam: 1.0.6
+        clusterApiProviderInfoblox: 1.0.5
+        regional: 1.7.0
+        k0smotron: 1.0.16
         adoptedCluster: 1.0.1
         awsEksCluster: 1.0.4
         awsHostedCpCluster: 1.0.21
