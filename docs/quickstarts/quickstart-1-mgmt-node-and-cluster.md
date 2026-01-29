@@ -1,6 +1,6 @@
 # QuickStart 1 - Setup Management Cluster
 
-Please review the [Guide to QuickStarts](index.md) for preliminaries. This QuickStart unit details setting up a single-VM environment for managing and interacting with {{{ docsVersionInfo.k0rdentName }}}, and for hosting its components on a single-node local Kubernetes management cluster. Once {{{ docsVersionInfo.k0rdentName }}} is installed on the management cluster, you can drive it by SSHing into the management node (`kubectl` is there and will be provisioned with the appropriate `kubeconfig`) or remotely by various means. For example, you can install the management cluster `kubeconfig` in Lens or another Kubernetes dashboard on your laptop, tunnel across from your own local `kubectl`, and so on.
+Please review the [Guide to QuickStarts](index.md) for preliminaries. This QuickStart guide details setting up a single-VM environment for managing and interacting with {{{ docsVersionInfo.k0rdentName }}}, and for hosting its components on a single-node local Kubernetes management cluster. Once {{{ docsVersionInfo.k0rdentName }}} is installed on the management cluster, you can drive it by SSHing into the management node (`kubectl` is there and will be provisioned with the appropriate `kubeconfig`) or remotely by various means. For example, you can install the management cluster `kubeconfig` in Lens or another Kubernetes dashboard on your laptop, tunnel across from your own local `kubectl`, and so on.
 
 ## Install a Kubernetes cluster as the management cluster
 
