@@ -105,7 +105,17 @@ It assumes that:
 
 To apply this option:
 
-1. Create the `collectors-values.yaml` file:
+1. Run in the management cluster:
+    ```bash
+    VMUSER_CREDS_NAME=$(
+      kubectl get secret -n kof \
+      | grep vmuser-creds-admin \
+      | cut -d ' ' -f 1
+    )
+    echo $VMUSER_CREDS_NAME
+    ```
+
+2. Create the `collectors-values.yaml` file:
     ```bash
     cat >collectors-values.yaml <<EOF
     kcm:
@@ -158,12 +168,12 @@ To apply this option:
             valueFrom:
               secretKeyRef:
                 key: username
-                name: storage-vmuser-credentials
+                name: $VMUSER_CREDS_NAME
           - name: KOF_VM_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: storage-vmuser-credentials
+                name: $VMUSER_CREDS_NAME
         config:
           processors:
             resource/k8sclustername:
@@ -211,6 +221,7 @@ To apply this option:
     opencost:
       opencost:
         prometheus:
+          existingSecretName: $VMUSER_CREDS_NAME
           external:
             url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
     EOF
@@ -218,9 +229,10 @@ To apply this option:
 
     > NOTE:
     > If you create this file directly, make sure to replace `\$` with `$`,
+    > `$VMUSER_CREDS_NAME` with the value from step 1,
     > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
-2. Install the `kof-collectors` chart to the management cluster:
+3. Install the `kof-collectors` chart to the management cluster:
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
