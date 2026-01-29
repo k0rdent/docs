@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../hosted-control-plane/hcp-gcp/">
+        <link rel="prev" href="../hosted-control-plane/hcp-kubevirt/">
       
       
         <link rel="next" href="upgrade-to-0-2-0/">
@@ -403,6 +403,8 @@
       
         
       
+        
+      
     
     
     
@@ -537,6 +539,27 @@
   
   <span class="md-ellipsis">
     Configure and Deploy to GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstarts/quickstart-2-kubevirt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to KubeVirt
   </span>
   
 
@@ -876,6 +899,8 @@
       
         
       
+        
+      
     
     
     
@@ -968,6 +993,27 @@
   
   <span class="md-ellipsis">
     GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/prepare-mgmt-cluster/kubevirt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KubeVirt
   </span>
   
 
@@ -1708,6 +1754,8 @@
       
         
       
+        
+      
     
     
     
@@ -1851,6 +1899,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hosted-control-plane/hcp-kubevirt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KubeVirt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1872,6 +1941,10 @@
       
         
           
+        
+      
+        
+      
         
       
         
@@ -2087,6 +2160,48 @@
   
   <span class="md-ellipsis">
     Upgrade to v1.5.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="upgrade-to-1-6-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.6.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="upgrade-to-1-7-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.7.0
   </span>
   
 
@@ -3784,6 +3899,8 @@
       
         
       
+        
+      
     
     
     
@@ -3990,6 +4107,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/template/template-kubevirt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for KubeVirt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4016,6 +4154,8 @@
       
         
           
+        
+      
         
       
         
@@ -4159,6 +4299,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../troubleshooting/known-issues-kubevirt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KubeVirt
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../troubleshooting/known-issues-custom-ca/" class="md-nav__link">
         
   
@@ -4232,6 +4393,8 @@
       
         
           
+        
+      
         
       
         
@@ -4563,6 +4726,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/kubevirt-infra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KubeVirt Infrastructure Cluster Preparation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4823,17 +5007,17 @@ from <code>alpha</code> to <code>beta</code> APIs.</p>
 <p>Start by creating a <code>Release</code> object in the management cluster that points to the desired version. You can see
 available versions at <a href="https://github.com/k0rdent/kcm/releases">https://github.com/k0rdent/kcm/releases</a>.  The actual
 <code>Release</code> object includes information on the templates and resources that are available, as well as the version of the
-Kubernetes Cluster API.  For example, the v1.6.0 <code>Release</code> object looks like this:</p>
+Kubernetes Cluster API.  For example, the v1.7.0 <code>Release</code> object looks like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-1-6-0</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-1-7-0</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">helm.sh/resource-policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keep</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.6.0</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.7.0</span>
 <span class="w">  </span><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-1-6-0</span>
+<span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-1-7-0</span>
 <span class="w">  </span><span class="nt">capi</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-1-0-8</span>
 <span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
@@ -4859,10 +5043,10 @@ Kubernetes Cluster API.  For example, the v1.6.0 <code>Release</code> object loo
 <span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projectsveltos-1-1-1</span>
 </code></pre></div>
 <p>Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span>v1.6.0
+<p><div class="highlight"><pre><span></span><code><span class="nv">VERSION</span><span class="o">=</span>v1.7.0
 kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://github.com/k0rdent/kcm/releases/download/<span class="si">${</span><span class="nv">VERSION</span><span class="si">}</span>/release.yaml
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">release.k0rdent.mirantis.com/kcm-1-6-0 created</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">release.k0rdent.mirantis.com/kcm-1-7-0 created</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4872,13 +5056,13 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME        AGE</span>
 <span class="go">kcm-0-2-0   6d9h</span>
-<span class="go">kcm-1-6-0   12m</span>
+<span class="go">kcm-1-7-0   12m</span>
 </code></pre></div>
 </li>
 <li>
 <p>Patch the <code>Management</code> object with the new <code>Release</code></p>
 <p>Update the <code>spec.release</code> field in the <code>Management</code> object to point to the new release. Replace <code>&lt;release-name&gt;</code> with the name of your desired release:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">RELEASE_NAME</span><span class="o">=</span>kcm-1-6-0
+<div class="highlight"><pre><span></span><code><span class="nv">RELEASE_NAME</span><span class="o">=</span>kcm-1-7-0
 kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm<span class="w"> </span>--patch<span class="w"> </span><span class="s2">&quot;{\&quot;spec\&quot;:{\&quot;release\&quot;:\&quot;</span><span class="si">${</span><span class="nv">RELEASE_NAME</span><span class="si">}</span><span class="s2">\&quot;}}&quot;</span><span class="w"> </span>--type<span class="o">=</span>merge
 </code></pre></div>
 </li>
@@ -4889,7 +5073,7 @@ using. Monitor the readiness of the <code>Management</code> object to ensure the
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME   READY   RELEASE     AGE</span>
-<span class="go">kcm    True    kcm-1-6-0   4m34s</span>
+<span class="go">kcm    True    kcm-1-7-0   4m34s</span>
 </code></pre></div></p>
 </li>
 </ol>
