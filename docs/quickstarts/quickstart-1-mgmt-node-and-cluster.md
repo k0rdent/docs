@@ -242,4 +242,4 @@ vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vs
 
 ## Next steps
 
-Your QuickStart management node is now complete, and {{{ docsVersionInfo.k0rdentName }}} is installed and operational. Next, it's time to select [AWS](quickstart-2-aws.md), [Azure](quickstart-2-azure.md), [GCP](quickstart-2-gcp.md), or [Remote SSH Servers](quickstart-2-remote.md) as an environment for hosting managed clusters.
+Your QuickStart management node is now complete, and {{{ docsVersionInfo.k0rdentName }}} is installed and operational. Next, it's time to select [AWS](quickstart-2-aws.md), [Azure](quickstart-2-azure.md), [GCP](quickstart-2-gcp.md), [Remote SSH Servers](quickstart-2-remote.md) or [KubeVirt](quickstart-2-kubevirt.md) as an environment for hosting managed clusters.

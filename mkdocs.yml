@@ -131,6 +131,7 @@ nav:
     - Configure and Deploy w/ SSH: quickstarts/quickstart-2-remote.md
     - Configure and Deploy to GCP: quickstarts/quickstart-2-gcp.md
     - Configure and Deploy to OpenStack: quickstarts/quickstart-2-openstack.md
+    - Configure and Deploy to KubeVirt: quickstarts/quickstart-2-kubevirt.md
   - Administrator Guide:
     - Before you start: admin/index.md
     - Installation:
@@ -147,6 +148,7 @@ nav:
         - AWS: admin/installation/prepare-mgmt-cluster/aws.md
         - Azure: admin/installation/prepare-mgmt-cluster/azure.md
         - GCP: admin/installation/prepare-mgmt-cluster/gcp.md
+        - KubeVirt: admin/installation/prepare-mgmt-cluster/kubevirt.md
         - OpenStack: admin/installation/prepare-mgmt-cluster/openstack.md
         - VMware: admin/installation/prepare-mgmt-cluster/vmware.md
       - Authentication:
@@ -182,7 +184,8 @@ nav:
       - OpenStack: admin/hosted-control-plane/hcp-openstack.md
       - VMware: admin/hosted-control-plane/hcp-vmware.md
       - GCP: admin/hosted-control-plane/hcp-gcp.md
-    - Upgrading k0rdent: 
+      - KubeVirt: admin/hosted-control-plane/hcp-kubevirt.md
+    - Upgrading k0rdent:
       - Overview: admin/upgrade/index.md
       - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
       - Upgrade to v0.3.0: admin/upgrade/upgrade-to-0-3-0.md
@@ -192,6 +195,8 @@ nav:
       - Upgrade to v1.3.1: admin/upgrade/upgrade-to-1-3-1.md
       - Upgrade to v1.4.0: admin/upgrade/upgrade-to-1-4-0.md
       - Upgrade to v1.5.0: admin/upgrade/upgrade-to-1-5-0.md
+      - Upgrade to v1.6.0: admin/upgrade/upgrade-to-1-6-0.md
+      - Upgrade to v1.7.0: admin/upgrade/upgrade-to-1-7-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management:
@@ -230,6 +235,7 @@ nav:
     - Scaling KOF: admin/kof/kof-scaling.md
     - Maintaining KOF: admin/kof/kof-maintainence.md
     - Tracing KOF: admin/kof/kof-tracing.md
+    - Multi-tenancy in KOF: admin/kof/kof-multi-tenancy.md
     - Retention and Replication: admin/kof/kof-retention.md
     - Resource Requirements: admin/kof/kof-resources.md
     - Version Compatibility: admin/kof/kof-version-compat.md
@@ -267,12 +273,14 @@ nav:
       - Templates for OpenStack: reference/template/template-openstack.md
       - Templates for vSphere: reference/template/template-vsphere.md
       - Templates for Remote SSH: reference/template/template-remote.md
+      - Templates for KubeVirt: reference/template/template-kubevirt.md
   - Troubleshooting:
     - Overview: troubleshooting/index.md
     - Inspecting K0rdent Events: troubleshooting/events.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
     - EKS: troubleshooting/known-issues-eks.md
     - GCP: troubleshooting/known-issues-gcp.md
+    - KubeVirt: troubleshooting/known-issues-kubevirt.md
     - Custom CA Certificates: troubleshooting/known-issues-custom-ca.md
     - Clusterctl Issues: troubleshooting/known-issues-clusterctl.md
   - Frequently Asked Questions: faq/index.md
@@ -289,6 +297,8 @@ nav:
       - Data Collected: appendix/telemetry/data_collected.md
       - Modes: appendix/telemetry/modes.md
       - Configuration: appendix/telemetry/configuration.md
+    - Proxy configuration: appendix/proxy.md
+    - KubeVirt Infrastructure Cluster Preparation: appendix/kubevirt-infra.md
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.6.0: release-notes/release-notes-v1.6.0.md
@@ -354,8 +364,8 @@ extra:
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
-    k0rdentVersion: 1-6-0
-    k0rdentDotVersion: 1.6.0
+    k0rdentVersion: 1-7-0
+    k0rdentDotVersion: 1.7.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:382291ed68a79eb8e03a5b2f2b7d06b56e3fb798158c519433e254b695955391
     k0rdentDigestDate: Thu Oct 30 12:54:32 2025
@@ -388,6 +398,8 @@ extra:
         gcpGkeCluster: 1-0-7
         gcpHostedCpCluster: 1-0-20
         gcpStandaloneCpCluster: 1-0-18
+        kubevirtHostedCpCluster: 1-0-1
+        kubevirtStandaloneCpCluster: 1-0-1
         openstackHostedCpCluster: 1-0-13
         openstackStandaloneCpCluster: 1-0-22
         remoteCluster: 1-0-19
@@ -416,6 +428,8 @@ extra:
         gcpGkeCluster: 1.0.7
         gcpHostedCpCluster: 1.0.20
         gcpStandaloneCpCluster: 1.0.18
+        kubevirtHostedCpCluster: 1.0.1
+        kubevirtStandaloneCpCluster: 1.0.1
         openstackHostedCpCluster: 1.0.13
         openstackStandaloneCpCluster: 1.0.22
         remoteCluster: 1.0.19

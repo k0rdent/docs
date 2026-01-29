@@ -31,3 +31,4 @@ Instructions for setting up a hosted control plane vary slighting depending on t
 - [OpenStack](hcp-openstack.md)
 - [VMware](hcp-vmware.md)
 - [GCP](hcp-gcp.md)
+- [KubeVirt](hcp-kubevirt.md)
