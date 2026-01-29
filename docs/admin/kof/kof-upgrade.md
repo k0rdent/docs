@@ -230,7 +230,13 @@ To migrate data with transformation please consider one of the following options
 
 ## Upgrade to v1.7.0
 
-Starting from v1.7.0, there is no need to use the `k0rdent.mirantis.com/kof-storage-secret` label to propagate the storage secret. From this version onward, storage secrets are automatically created and propagated to the corresponding cluster. Now each cluster has its own secrets and VMUser, which improves security.
+Notice the big changes:
+
+* Grafana installation and automatic configuration are now disabled in KOF by default.
+    You can [install and enable Grafana](kof-grafana.md) or [use KOF without Grafana](kof-using.md).
+* [Tracing](https://docs.k0rdent.io/next/admin/kof/kof-tracing/) now uses VictoriaTraces instead of Jaeger.
+* [Multi-tenancy](https://docs.k0rdent.io/next/admin/kof/kof-multi-tenancy/) was added, enabled by `k0rdent.mirantis.com/kof-tenant-id` label.
+* Starting from v1.7.0, there is no need to use the `k0rdent.mirantis.com/kof-storage-secret` label to propagate the storage secret. From this version onward, storage secrets are automatically created and propagated to the corresponding cluster. Now each cluster has its own secrets and VMUser, which improves security.
 
 ## Upgrade to v1.6.0
 

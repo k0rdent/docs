@@ -151,19 +151,6 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
     end="<!--install-istio-end-->"
 %}
 
-4. [k0rdent/istio issue #27](https://github.com/k0rdent/istio/issues/27):
-    If you create a cluster a day or more later than others,
-    it may fail to see other clusters.
-    In this case, as a workaround, run this in the management cluster:
-
-    ```bash
-    kubectl get secret -n istio-system -o name \
-      | grep istio-remote-secret \
-      | xargs kubectl delete -n istio-system
-    ```
-
-    New secrets will be auto-created and auto-propagated to other clusters, fixing the issue.
-
 ### Grafana
 
 * Grafana installation and automatic configuration are now disabled in KOF by default.
@@ -273,6 +260,8 @@ and apply this example, or use it as a reference:
     start="<!--install-kof-mothership-start-->"
     end="<!--install-kof-mothership-end-->"
 %}
+
+    If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
 
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
