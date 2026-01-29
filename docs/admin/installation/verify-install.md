@@ -11,29 +11,30 @@ kubectl get pods -n kcm-system
 
 ```console { .no-copy }
 NAME                                                           READY   STATUS    RESTARTS   AGE
-azureserviceoperator-controller-manager-58bb68bc75-22p2m       1/1     Running   0          18m
-capa-controller-manager-d84cc5796-2bqx2                        1/1     Running   0          18m
-capd-controller-manager-74b8c9f576-mvvfg                       1/1     Running   0          18m
-capg-controller-manager-7f8bc6699f-f9vbh                       1/1     Running   0          18m
-capi-controller-manager-7666b86bcc-qzdqc                       1/1     Running   0          19m
-capi-ipam-in-cluster-controller-manager-68d4694bb4-dclj2       1/1     Running   0          19m
-capi-ipam-infoblox-controller-manager-5c76bc45b-cwh6g          1/1     Running   0          19m
-capo-controller-manager-b5b5c65bd-cxksm                        1/1     Running   0          18m
-capv-controller-manager-67674cc985-2qdmn                       1/1     Running   0          18m
-capz-controller-manager-b7dbff77-q569b                         1/1     Running   0          18m
-helm-controller-5b6bbd6968-4w6ln                               1/1     Running   0          23m
-k0smotron-controller-manager-bootstrap-5cd9cb9b75-vdff4        1/1     Running   0          19m
-k0smotron-controller-manager-control-plane-7776f8f694-zf75g    1/1     Running   0          19m
-k0smotron-controller-manager-infrastructure-5cdbc6b6d5-5c825   1/1     Running   0          18m
-kcm-cert-manager-657f64dbcb-f2r98                              1/1     Running   0          23m
-kcm-cert-manager-cainjector-7bc4bddd94-29qxh                   1/1     Running   0          23m
-kcm-cert-manager-webhook-598b5c4d9c-77fb4                      1/1     Running   0          23m
-kcm-cluster-api-operator-7d86849496-szdw2                      1/1     Running   0          20m
-kcm-controller-manager-6d79df9759-d66fz                        1/1     Running   0          20m
-kcm-rbac-manager-757798cd54-d4pjw                              1/1     Running   0          23m
-kcm-regional-telemetry-66f675fdf5-44f44                        1/1     Running   0          23m
-source-controller-5d7986cdd-9gblh                              1/1     Running   0          23m
-velero-67dc7b7dff-5mvcs                                        1/1     Running   0          23m
+azureserviceoperator-controller-manager-58bb68bc75-9ml6f       1/1     Running   0          8h
+capa-controller-manager-d84cc5796-86wf7                        1/1     Running   0          8h
+capd-controller-manager-74b8c9f576-m8dxk                       1/1     Running   0          8h
+capg-controller-manager-7f8bc6699f-lb988                       1/1     Running   0          8h
+capi-controller-manager-79db96b978-68wtf                       1/1     Running   0          8h
+capi-ipam-in-cluster-controller-manager-68d4694bb4-kmrp5       1/1     Running   0          8h
+capi-ipam-infoblox-controller-manager-5c76bc45b-brrtv          1/1     Running   0          8h
+capk-controller-manager-d95b4487b-ldcrr                        1/1     Running   0          8h
+capo-controller-manager-b5b5c65bd-h59wx                        1/1     Running   0          8h
+capv-controller-manager-5c47d75597-lkgrh                       1/1     Running   0          8h
+capz-controller-manager-b7dbff77-fbc2r                         1/1     Running   0          8h
+helm-controller-76bd49f44b-fbnhj                               1/1     Running   0          8h
+k0smotron-controller-manager-bootstrap-5cd9cb9b75-2q2kj        1/1     Running   0          8h
+k0smotron-controller-manager-control-plane-7776f8f694-78knr    1/1     Running   0          8h
+k0smotron-controller-manager-infrastructure-5cdbc6b6d5-s4ppb   1/1     Running   0          8h
+kcm-cert-manager-67f468cb5d-rr4fq                              1/1     Running   0          8h
+kcm-cert-manager-cainjector-5b669dfcc-cjb54                    1/1     Running   0          8h
+kcm-cert-manager-webhook-575596f6b6-qf8s9                      1/1     Running   0          8h
+kcm-cluster-api-operator-7d86849496-g74v2                      1/1     Running   0          8h
+kcm-controller-manager-86d748b49c-znmb8                        1/1     Running   0          8h
+kcm-rbac-manager-bdf9b4b8-9shrs                                1/1     Running   0          8h
+kcm-regional-telemetry-8499966b87-54hf6                        1/1     Running   0          8h
+source-controller-694fb4cd65-4jskk                             1/1     Running   0          8h
+velero-699d774b66-xqwqv                                        1/1     Running   0          8h
 ```
 
 ```bash
@@ -41,7 +42,7 @@ kubectl get pods -n kcm-system --no-headers | wc -l
 ```
 
 ```console { .no-copy }
-23
+24
 ```
 
 State management is handled by Project Sveltos, so you'll want to make sure that all 10 pods are running/completed in the `projectsveltos` namespace:
@@ -90,7 +91,7 @@ kubectl get providertemplate -n kcm-system
 ```console { .no-copy }
 NAME                                   VALID
 cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
-cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
+cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                   true
 cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAzure }}}                 true
 cluster-api-provider-docker-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderDocker }}}                 true
 cluster-api-provider-gcp-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderGcp }}}                    true
@@ -98,9 +99,9 @@ cluster-api-provider-infoblox-{{{ docsVersionInfo.providerVersions.dashVersions.
 cluster-api-provider-ipam-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderIpam }}}                   true
 cluster-api-provider-k0sproject-k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}  true
 cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderOpenstack }}}             true
-cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}                true
-kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                     true
-kcm-regional-{{{ docsVersionInfo.providerVersions.dashVersions.regional }}}                            true
+cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}               true
+kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                         true
+kcm-regional-{{{ docsVersionInfo.providerVersions.dashVersions.regional }}}                                true
 projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                              true
 ```
 
