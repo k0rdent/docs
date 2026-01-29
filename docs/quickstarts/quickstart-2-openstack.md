@@ -1,6 +1,6 @@
 # QuickStart 2 - OpenStack target environment
 
-In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on OpenStack, and deploying a child cluster.
+In this QuickStart guide, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on OpenStack, and deploying a child cluster.
 
 As noted in the [Guide to QuickStarts](./index.md), you'll need administrative access to an OpenStack cloud to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
 
@@ -9,7 +9,7 @@ Note that if you have already done one of the other quickstarts, such as our AWS
 > NOTE:
 > **Cloud Security 101:** {{{ docsVersionInfo.k0rdentName }}} requires _some_ but not _all_ permissions to manage OpenStack resources via the CAPO (ClusterAPI for OpenStack) provider.
 
-A best practice for using {{{ docsVersionInfo.k0rdentName }}} with OpenStack (this pattern is repeated with other clouds and infrastructures) is to create an Application Credential with the particular permissions {{{ docsVersionInfo.k0rdentName }}} and CAPO require. While it's possible to use a username and password instead of the Application Credential, an Application Credential is strongly recommended because it limits scope and improves security over a raw username/password approach.
+A best practice for using {{{ docsVersionInfo.k0rdentName }}} with OpenStack (this pattern is repeated with other clouds and infrastructures) is to create an Application Credential with the particular permissions {{{ docsVersionInfo.k0rdentName }}} that CAPO requires. While it's possible to use a username and password instead of the Application Credential, an Application Credential is strongly recommended because it limits scope and improves security over a raw username/password approach.
 
 > NOTE:
 > If you're working on a shared OpenStack account, please ensure that the Application Credential is not already set up before creating a new one.

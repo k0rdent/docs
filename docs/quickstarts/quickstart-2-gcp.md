@@ -1,6 +1,6 @@
 # QuickStart 2 - GCP target environment
 
-In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable
+In this QuickStart guide, we'll be gathering information and performing preparatory steps to enable
 {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on GCP and deploying a child cluster.
 
 Note that if you have already done one of the other quickstarts, such as our AWS or Azure QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)) or Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)), 

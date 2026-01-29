@@ -1,6 +1,6 @@
 # QuickStart 2 - AWS target environment
 
-In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on Amazon Web Services (AWS), and we'll deploy our first child cluster.
+In this QuickStart guide, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on Amazon Web Services (AWS), and we'll deploy our first child cluster.
 
 As noted in the [Guide to QuickStarts](./index.md), you'll need administrative access to an AWS account to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
 
