@@ -2,7 +2,7 @@
 
 In this QuickStart guide, we'll be gathering information and performing preparatory steps to enable {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on OpenStack, and deploying a child cluster.
 
-As noted in the [Guide to QuickStarts](./index.md), you'll need administrative access to an OpenStack cloud to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
+First off, note that you'll need administrative access to an OpenStack cloud to complete this step. If you haven't yet created a management node and installed {{{ docsVersionInfo.k0rdentName }}}, go back to [QuickStart 1 - Management node and cluster](./quickstart-1-mgmt-node-and-cluster.md).
 
 Note that if you have already done one of the other quickstarts, such as our AWS QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)) or Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)), you can use the same management cluster, continuing here with steps to add the ability to manage clusters on OpenStack. The {{{ docsVersionInfo.k0rdentName }}} management cluster can accommodate multiple provider and credential setups, enabling management of multiple infrastructures. And even if your management node is external to OpenStack (for example, it could be on an AWS EC2 virtual machine), as long as you permit outbound traffic to all IP addresses from the management node, this should work fine. A big benefit of {{{ docsVersionInfo.k0rdentName }}} is that it provides a single point of control and visibility across multiple clusters on multiple clouds and infrastructures.
 
@@ -82,7 +82,7 @@ Add the public key to OpenStack:
 OS_CLOUD=openstack openstack keypair create --public-key ~/.ssh/openstack_key.pub my-openstack-key
 ```
 
-Replace `my-openstack-key` with a name of your choice. Note this name as you'll need it in the ClusterDeployment configuration.
+Replace `my-openstack-key` with a name of your choice. Note this name as you'll need it in the `ClusterDeployment` configuration.
 
 You can verify the key was created:
 
@@ -92,9 +92,11 @@ OS_CLOUD=openstack openstack keypair list
 
 ## Discover OpenStack resources
 
-Before creating the ClusterDeployment, you'll need to identify several OpenStack resources. Use the OpenStack CLI to discover them:
+Before creating the `ClusterDeployment`, you'll need to identify several OpenStack resources. Use the OpenStack CLI to discover them:
 
 ### Find available flavors (VM sizes)
+
+To find the available OpenStack flavors:
 
 ```bash
 OS_CLOUD=openstack openstack flavor list
@@ -117,6 +119,8 @@ Choose a flavor with at least 2 vCPUs and 4GB RAM for both control plane and wor
 
 ### Find available images
 
+To get a list of available OpenStack images:
+
 ```bash
 OS_CLOUD=openstack openstack image list
 ```
@@ -136,6 +140,8 @@ Choose an Ubuntu 22.04 or 20.04 LTS image that is `active`.
 
 ### Find external network
 
+To fidn the external networks available to you, use:
+
 ```bash
 OS_CLOUD=openstack openstack network list --external
 ```
@@ -154,6 +160,8 @@ Note the name of the external network (commonly `public`, `external`, or `ext-ne
 
 ### Find volume types (optional)
 
+To get the OpenStack volume types:
+
 ```bash
 OS_CLOUD=openstack openstack volume type list
 ```
@@ -169,7 +177,7 @@ You'll see output like this:
 +--------------------------------------+-------------+
 ```
 
-Note the volume type name if you want to specify it in your ClusterDeployment (usually `lvmdriver-1` or the first one listed).
+Note the volume type name if you want to specify it in your `ClusterDeployment` (usually `lvmdriver-1` or the first one listed).
 
 ## Create the OpenStack Credentials Secret
 
@@ -179,6 +187,8 @@ Create a Kubernetes `Secret` containing the `clouds.yaml` that defines your Open
 > The `Secret` name, in this case, needs to be exactly `openstack-cloud-config`. See [credential secret](../appendix/appendix-providers.md#credential-secret) for details.
 
 ### Using Application Credential (Recommended)
+
+Create a `Secret` using the Application Credential:
 
 ```yaml
 apiVersion: v1
@@ -204,6 +214,8 @@ stringData:
 ```
 
 ### Using Username and Password
+
+Create a `Secret` using the username and password:
 
 ```yaml
 apiVersion: v1
@@ -439,6 +451,7 @@ spec:
 > When deploying clusters with `openstack-standalone-cp` template version `1-0-12` or newer, the `identityRef.name` parameter is ignored and can be omitted. For older template versions, this parameter is required and must match the name of the `Secret` containing the `clouds.yaml` configuration.
 
 Replace the placeholder values with your actual OpenStack resources:
+
 - `region`: Your OpenStack region (commonly `RegionOne`)
 - `flavor`: The flavor name you discovered earlier (e.g., `m1.medium`)
 - `image.filter.name`: The image name you discovered earlier (e.g., `ubuntu-22.04`)
@@ -471,7 +484,7 @@ kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-openstack-cl
 In a short while, you'll see output such as:
 
 ```console { .no-copy }
-NAME                        READY   STATUS
+NAME                              READY   STATUS
 my-openstack-clusterdeployment1   True    ClusterDeployment is ready
 ```
 
@@ -500,7 +513,7 @@ kubectl get ClusterDeployments -A
 You'll see output something like this:
 
 ```console { .no-copy }
-NAMESPACE    NAME                          READY   STATUS
+NAMESPACE    NAME                              READY   STATUS
 kcm-system   my-openstack-clusterdeployment1   True    ClusterDeployment is ready
 ```
 
@@ -525,8 +538,8 @@ Now that you've finished the {{{ docsVersionInfo.k0rdentName }}} QuickStart, we 
 Check out the [Administrator Guide](../admin/index.md) ...
 
 * For a more detailed view of {{{ docsVersionInfo.k0rdentName }}} setup for production
-* For details about setting up {{{ docsVersionInfo.k0rdentName }}} to manage clusters on VMware and OpenStack
-* For details about using {{{ docsVersionInfo.k0rdentName }}} with cloud Kubernetes distros: AWS EKS and Azure AKS
+* For details about setting up {{{ docsVersionInfo.k0rdentName }}} to manage clusters on VMware
+* For details about using {{{ docsVersionInfo.k0rdentName }}} with cloud Kubernetes distros such as AWS EKS, Azure AKS, and Google Kubernetes Engine
 
 <!--
 Or check out the [Demos Repository](https://github.com/k0rdent/demos) for fast, makefile-driven demos of {{{ docsVersionInfo.k0rdentName }}}'s key features.
