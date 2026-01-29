@@ -232,3 +232,4 @@ As a result, the following new objects should be created:
 - [Templates for OpenStack](template-openstack.md)
 - [Templates for vSphere](template-vsphere.md)
 - [Templates for Remote deployments using SSH](template-remote.md)
+- [Templates for KubeVirt](template-kubevirt.md)

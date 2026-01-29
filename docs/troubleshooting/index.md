@@ -7,5 +7,6 @@ things run smoothly.
 - [AWS VPCs](admin-troubleshooting-aws-vpcs.md)
 - [EKS](known-issues-eks.md)
 - [GCP](known-issues-gcp.md)
+- [KubeVirt](known-issues-kubevirt.md)
 - [Custom CA Certificates](known-issues-custom-ca.md)
 - [ClusterCtl Issues](known-issues-clusterctl.md)
