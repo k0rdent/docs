@@ -237,6 +237,12 @@ Notice the big changes:
 * [Tracing](https://docs.k0rdent.io/next/admin/kof/kof-tracing/) now uses VictoriaTraces instead of Jaeger.
 * [Multi-tenancy](https://docs.k0rdent.io/next/admin/kof/kof-multi-tenancy/) was added, enabled by `k0rdent.mirantis.com/kof-tenant-id` label.
 * Starting from v1.7.0, there is no need to use the `k0rdent.mirantis.com/kof-storage-secret` label to propagate the storage secret. From this version onward, storage secrets are automatically created and propagated to the corresponding cluster. Now each cluster has its own secrets and VMUser, which improves security.
+* Notice update in `mothership-values.yaml` in step 4 of [Management Cluster](kof-install.md#management-cluster):
+    ```yaml
+      kof:
+        mcs:  # Not `clusterProfiles`
+          kof-aws-dns-secrets:
+    ```
 
 ## Upgrade to v1.6.0
 
