@@ -274,6 +274,8 @@ and apply this example, or use it as a reference:
     end="<!--install-kof-mothership-end-->"
 %}
 
+    If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
+
 7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
 
 8. Apply shared configuration for the existing and upcoming regional and child clusters:

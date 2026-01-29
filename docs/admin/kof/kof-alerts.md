@@ -170,8 +170,8 @@ to the `kof-mothership` chart [installed in the management cluster](./kof-instal
 
 For example, let's update the `CPUThrottlingHigh` alert in the `kubernetes-resources` group:
 
-1. Note the [original alert](https://github.com/k0rdent/kof/blob/332f66ff03bae8abd37cc7e754dd8d7a42d059a7/charts/kof-mothership/templates/prometheus/rules/kubernetes-resources.yaml#L250-L281)
-    in the `PrometheusRule` has the threshold `> ( 25 / 100 )`.
+1. Note the [original alert](https://github.com/k0rdent/kof/blob/1c3337426e089e1ce82a14716ff0ad5d4cb3e4ad/charts/kof-mothership/templates/prometheus/rules/kubernetes-resources.yaml#L251-L266)
+    in the `PrometheusRule` has the threshold `> 0.25`.
 
 2. Add this cluster-specific patch to the `mothership-values.yaml` file:
     ```yaml
@@ -180,12 +180,12 @@ For example, let's update the `CPUThrottlingHigh` alert in the `kubernetes-resou
         kubernetes-resources:
           CPUThrottlingHigh:
             expr: |-
-              sum(increase(container_cpu_cfs_throttled_periods_total{cluster="cluster1", container!=""}[5m])) without (id, metrics_path, name, image, endpoint, job, node)
-                / on (cluster, namespace, pod, container, instance) group_left
-              sum(increase(container_cpu_cfs_periods_total{cluster="cluster1"}[5m])) without (id, metrics_path, name, image, endpoint, job, node)
-                > ( 42 / 100 )
+              sum by(cluster, namespace, node, pod, container) (increase(container_cpu_cfs_throttled_periods_total{cluster="cluster1", container!="", job="kubelet", metrics_path="/metrics/cadvisor", }[5m]))
+                /
+              sum by(cluster, namespace, node, pod, container) (increase(container_cpu_cfs_periods_total{cluster="cluster1", job="kubelet", metrics_path="/metrics/cadvisor", }[5m]))
+                > 0.42
     ```
-    Note the `cluster="cluster1"` filters and the `> ( 42 / 100 )` threshold.
+    Note the `cluster="cluster1"` filters and the `> 0.42` threshold.
 
 3. Add a similar patch for `cluster10` to the same `clusterAlertRules`.
 
@@ -199,10 +199,11 @@ For example, let's update the `CPUThrottlingHigh` alert in the `kubernetes-resou
       kubernetes-resources:
         CPUThrottlingHigh:
           expr: |-
-            sum(increase(container_cpu_cfs_throttled_periods_total{cluster!~"^cluster1$|^cluster10$", container!=""}[5m])) without (id, metrics_path, name, image, endpoint, job, node)
-              / on (cluster, namespace, pod, container, instance) group_left
-            sum(increase(container_cpu_cfs_periods_total{cluster!~"^cluster1$|^cluster10$"}[5m])) without (id, metrics_path, name, image, endpoint, job, node)
-              > ( 25 / 100 )
+            expr: |-
+              sum by(cluster, namespace, node, pod, container) (increase(container_cpu_cfs_throttled_periods_total{cluster!~"^cluster1$|^cluster10$", container!="", job="kubelet", metrics_path="/metrics/cadvisor", }[5m]))
+                /
+              sum by(cluster, namespace, node, pod, container) (increase(container_cpu_cfs_periods_total{cluster!~"^cluster1$|^cluster10$", job="kubelet", metrics_path="/metrics/cadvisor", }[5m]))
+                > 0.25
     ```
     Note the `cluster!~"^cluster1$|^cluster10$"` filters and the default threshold.
 
