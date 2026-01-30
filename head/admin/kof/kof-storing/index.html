@@ -5348,7 +5348,6 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">            - basicauth/traces</span>
 <span class="s">          telemetry:</span>
 <span class="s">            metrics:</span>
-<span class="s">              address: \${env:OTEL_K8S_NODE_IP}:8888</span>
 <span class="s">              readers:</span>
 <span class="s">                - pull:</span>
 <span class="s">                    exporter:</span>
@@ -5419,6 +5418,15 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 <span class="s">        url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
+<p>If you're using <code>kind</code> for Management cluster, insert this:</p>
+<div class="highlight"><pre><span></span><code>...
+  defaultCRConfig:
+    env:
+      - name: PKI_PATH
+        value: etc/kubernetes
+      - name: KOF_VM_USER
+...
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
@@ -5445,6 +5453,16 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <p>To apply this option:</p>
 <ol>
 <li>
+<p>Run in the management cluster:
+    <div class="highlight"><pre><span></span><code><span class="nv">VMUSER_CREDS_NAME</span><span class="o">=</span><span class="k">$(</span>
+<span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>vmuser-creds-admin<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>
+<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$VMUSER_CREDS_NAME</span>
+</code></pre></div></p>
+</li>
+<li>
 <p>Create the <code>collectors-values.yaml</code> file:
     <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kcm:</span>
@@ -5465,7 +5483,21 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <span class="s">          - file_storage/filelogsyslogreceiver</span>
 <span class="s">          - file_storage/filelogk8sauditreceiver</span>
 <span class="s">          - file_storage/journaldreceiver</span>
+<span class="s">          - basicauth/metrics</span>
+<span class="s">          - basicauth/logs</span>
+<span class="s">          - basicauth/traces</span>
 <span class="s">  defaultCRConfig:</span>
+<span class="s">    env:</span>
+<span class="s">      - name: KOF_VM_USER</span>
+<span class="s">        valueFrom:</span>
+<span class="s">          secretKeyRef:</span>
+<span class="s">            key: username</span>
+<span class="s">            name: $VMUSER_CREDS_NAME</span>
+<span class="s">      - name: KOF_VM_PASSWORD</span>
+<span class="s">        valueFrom:</span>
+<span class="s">          secretKeyRef:</span>
+<span class="s">            key: password</span>
+<span class="s">            name: $VMUSER_CREDS_NAME</span>
 <span class="s">    config:</span>
 <span class="s">      processors:</span>
 <span class="s">        resource/k8sclustername:</span>
@@ -5476,24 +5508,64 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <span class="s">            - action: insert</span>
 <span class="s">              key: k8s.cluster.namespace</span>
 <span class="s">              value: kcm-system</span>
+<span class="s">      extensions:</span>
+<span class="s">        basicauth/logs:</span>
+<span class="s">          client_auth:</span>
+<span class="s">            username: \${env:KOF_VM_USER}</span>
+<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">        basicauth/metrics:</span>
+<span class="s">          client_auth:</span>
+<span class="s">            username: \${env:KOF_VM_USER}</span>
+<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">        basicauth/traces:</span>
+<span class="s">          client_auth:</span>
+<span class="s">            username: \${env:KOF_VM_USER}</span>
+<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">      service:</span>
+<span class="s">        extensions:</span>
+<span class="s">        - basicauth/logs</span>
+<span class="s">        - basicauth/metrics</span>
+<span class="s">        - basicauth/traces</span>
 <span class="s">      exporters:</span>
 <span class="s">        prometheusremotewrite:</span>
-<span class="s">          endpoint: http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write</span>
+<span class="s">          endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write</span>
+<span class="s">          auth:</span>
+<span class="s">            authenticator: basicauth/metrics</span>
 <span class="s">          external_labels:</span>
 <span class="s">            cluster: mothership</span>
 <span class="s">            clusterNamespace: kcm-system</span>
 <span class="s">        otlphttp/logs:</span>
-<span class="s">          logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs</span>
+<span class="s">          logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs</span>
+<span class="s">          auth:</span>
+<span class="s">            authenticator: basicauth/logs</span>
 <span class="s">        otlphttp/traces:</span>
-<span class="s">          traces_endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces</span>
+<span class="s">          traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces</span>
+<span class="s">          auth:</span>
+<span class="s">            authenticator: basicauth/traces</span>
 <span class="s">opencost:</span>
 <span class="s">  opencost:</span>
 <span class="s">    prometheus:</span>
-<span class="s">      existingSecretName: &quot;&quot;</span>
+<span class="s">      existingSecretName: $VMUSER_CREDS_NAME</span>
 <span class="s">      external:</span>
-<span class="s">        url: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus</span>
+<span class="s">        url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
+<p>If you're using <code>kind</code> for Management cluster, insert this:</p>
+<div class="highlight"><pre><span></span><code>...
+  defaultCRConfig:
+    env:
+      - name: PKI_PATH
+        value: etc/kubernetes
+      - name: KOF_VM_USER
+...
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+If you create this file directly, make sure to replace <code>\$</code> with <code>$</code>,
+<code>$VMUSER_CREDS_NAME</code> with the value from step 1,
+and <code>$REGIONAL_CLUSTER_NAME</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</p>
+</div>
 </li>
 <li>
 <p>Install the <code>kof-collectors</code> chart to the management cluster:
