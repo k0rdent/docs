@@ -155,7 +155,6 @@ To apply this option:
                 - basicauth/traces
               telemetry:
                 metrics:
-                  address: \${env:OTEL_K8S_NODE_IP}:8888
                   readers:
                     - pull:
                         exporter:
@@ -227,6 +226,18 @@ To apply this option:
     EOF
     ```
 
+    If you're using `kind` for Management cluster, insert this:
+
+    ```
+    ...
+      defaultCRConfig:
+        env:
+          - name: PKI_PATH
+            value: etc/kubernetes
+          - name: KOF_VM_USER
+    ...
+    ```
+
     > NOTE:
     > If you create this file directly, make sure to replace `\$` with `$`,
     > `$VMUSER_CREDS_NAME` with the value from step 1,
@@ -250,7 +261,17 @@ It assumes that:
 
 To apply this option:
 
-1. Create the `collectors-values.yaml` file:
+1. Run in the management cluster:
+    ```bash
+    VMUSER_CREDS_NAME=$(
+      kubectl get secret -n kof \
+      | grep vmuser-creds-admin \
+      | cut -d ' ' -f 1
+    )
+    echo $VMUSER_CREDS_NAME
+    ```
+
+2. Create the `collectors-values.yaml` file:
     ```bash
     cat >collectors-values.yaml <<EOF
     kcm:
@@ -271,7 +292,21 @@ To apply this option:
               - file_storage/filelogsyslogreceiver
               - file_storage/filelogk8sauditreceiver
               - file_storage/journaldreceiver
+              - basicauth/metrics
+              - basicauth/logs
+              - basicauth/traces
       defaultCRConfig:
+        env:
+          - name: KOF_VM_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: $VMUSER_CREDS_NAME
+          - name: KOF_VM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: $VMUSER_CREDS_NAME
         config:
           processors:
             resource/k8sclustername:
@@ -282,26 +317,67 @@ To apply this option:
                 - action: insert
                   key: k8s.cluster.namespace
                   value: kcm-system
+          extensions:
+            basicauth/logs:
+              client_auth:
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
+            basicauth/metrics:
+              client_auth:
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
+            basicauth/traces:
+              client_auth:
+                username: \${env:KOF_VM_USER}
+                password: \${env:KOF_VM_PASSWORD}
+          service:
+            extensions:
+            - basicauth/logs
+            - basicauth/metrics
+            - basicauth/traces
           exporters:
             prometheusremotewrite:
-              endpoint: http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write
+              endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write
+              auth:
+                authenticator: basicauth/metrics
               external_labels:
                 cluster: mothership
                 clusterNamespace: kcm-system
             otlphttp/logs:
-              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
+              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs
+              auth:
+                authenticator: basicauth/logs
             otlphttp/traces:
-              traces_endpoint: http://$REGIONAL_CLUSTER_NAME-traces-insert:10481/insert/opentelemetry/v1/traces
+              traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces
+              auth:
+                authenticator: basicauth/traces
     opencost:
       opencost:
         prometheus:
-          existingSecretName: ""
+          existingSecretName: $VMUSER_CREDS_NAME
           external:
-            url: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus
+            url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus
     EOF
     ```
 
-2. Install the `kof-collectors` chart to the management cluster:
+    If you're using `kind` for Management cluster, insert this:
+
+    ```
+    ...
+      defaultCRConfig:
+        env:
+          - name: PKI_PATH
+            value: etc/kubernetes
+          - name: KOF_VM_USER
+    ...
+    ```
+
+    > NOTE:
+    > If you create this file directly, make sure to replace `\$` with `$`,
+    > `$VMUSER_CREDS_NAME` with the value from step 1,
+    > and `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
+
+3. Install the `kof-collectors` chart to the management cluster:
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
