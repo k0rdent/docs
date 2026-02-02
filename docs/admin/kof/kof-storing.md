@@ -276,8 +276,6 @@ To apply this option:
     cat >collectors-values.yaml <<EOF
     kcm:
       monitoring: true
-    kof:
-      basic_auth: false
     opentelemetry-kube-stack:
       clusterName: mothership
       collectors:
@@ -285,16 +283,17 @@ To apply this option:
           enabled: false
         daemon:
           hostNetwork: false
-          service:
-            extensions:
-              - k8s_observer
-              - file_storage/filelogreceiver
-              - file_storage/filelogsyslogreceiver
-              - file_storage/filelogk8sauditreceiver
-              - file_storage/journaldreceiver
-              - basicauth/metrics
-              - basicauth/logs
-              - basicauth/traces
+          config:
+            service:
+              extensions:
+                - k8s_observer
+                - file_storage/filelogreceiver
+                - file_storage/filelogsyslogreceiver
+                - file_storage/filelogk8sauditreceiver
+                - file_storage/journaldreceiver
+                - basicauth/metrics
+                - basicauth/logs
+                - basicauth/traces
       defaultCRConfig:
         env:
           - name: KOF_VM_USER
