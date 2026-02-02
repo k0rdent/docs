@@ -5293,7 +5293,7 @@ https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 <span class="s">EOF</span>
 </code></pre></div></li>
 <li>You may optionally add features like <code>dex</code> and <code>ingress</code>
-    from <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-mothership/templates/grafana/grafana.yaml">this example</a>.</li>
+    from <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-mothership/templates/grafana/grafana.yaml">this example</a>.</li>
 <li>Wait for Grafana installation to complete successfully:
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>grafana<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana-vm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--for<span class="o">=</span><span class="s1">&#39;jsonpath={.status.stage}=complete&#39;</span><span class="w"> </span><span class="se">\</span>

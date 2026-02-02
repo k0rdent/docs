@@ -5281,11 +5281,11 @@ No additional steps are required here.</p>
 <p>Install the <code>kof-storage</code> and <code>kof-collectors</code> charts to the management cluster:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>storage-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-storage<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-storage<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div></p>
 </li>
 </ol>
@@ -5439,7 +5439,7 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <p>Install the <code>kof-collectors</code> chart to the management cluster:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div></p>
 </li>
 </ol>
@@ -5467,8 +5467,6 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
     <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kcm:</span>
 <span class="s">  monitoring: true</span>
-<span class="s">kof:</span>
-<span class="s">  basic_auth: false</span>
 <span class="s">opentelemetry-kube-stack:</span>
 <span class="s">  clusterName: mothership</span>
 <span class="s">  collectors:</span>
@@ -5476,16 +5474,17 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <span class="s">      enabled: false</span>
 <span class="s">    daemon:</span>
 <span class="s">      hostNetwork: false</span>
-<span class="s">      service:</span>
-<span class="s">        extensions:</span>
-<span class="s">          - k8s_observer</span>
-<span class="s">          - file_storage/filelogreceiver</span>
-<span class="s">          - file_storage/filelogsyslogreceiver</span>
-<span class="s">          - file_storage/filelogk8sauditreceiver</span>
-<span class="s">          - file_storage/journaldreceiver</span>
-<span class="s">          - basicauth/metrics</span>
-<span class="s">          - basicauth/logs</span>
-<span class="s">          - basicauth/traces</span>
+<span class="s">      config:</span>
+<span class="s">        service:</span>
+<span class="s">          extensions:</span>
+<span class="s">            - k8s_observer</span>
+<span class="s">            - file_storage/filelogreceiver</span>
+<span class="s">            - file_storage/filelogsyslogreceiver</span>
+<span class="s">            - file_storage/filelogk8sauditreceiver</span>
+<span class="s">            - file_storage/journaldreceiver</span>
+<span class="s">            - basicauth/metrics</span>
+<span class="s">            - basicauth/logs</span>
+<span class="s">            - basicauth/traces</span>
 <span class="s">  defaultCRConfig:</span>
 <span class="s">    env:</span>
 <span class="s">      - name: KOF_VM_USER</span>
@@ -5571,7 +5570,7 @@ and <code>$REGIONAL_CLUSTER_NAME</code> with the value from <a href="../kof-inst
 <p>Install the <code>kof-collectors</code> chart to the management cluster:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div></p>
 </li>
 </ol>
@@ -5654,7 +5653,7 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 <p>Install the <code>kof-collectors</code> chart to the management cluster:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div></p>
 </li>
 <li>

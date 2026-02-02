@@ -5373,8 +5373,8 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 </ul>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the management cluster,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-mothership/README.md">kof-mothership</a>
-and <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-operators/values.yaml">kof-operators</a> charts,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-mothership/README.md">kof-mothership</a>
+and <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-operators/values.yaml">kof-operators</a> charts,
 and apply this example, or use it as a reference:</p>
 <ol>
 <li>
@@ -5382,7 +5382,7 @@ and apply this example, or use it as a reference:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div>
 </li>
 <li>
@@ -5458,7 +5458,7 @@ enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div>
 <p>If helm v4 <code>failed to call webhook</code>, apply the workaround from <a href="https://github.com/k0rdent/kof/issues/715">k0rdent/kof issue #715</a>.</p>
 </li>
@@ -5472,12 +5472,12 @@ enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.status.valid<span class="o">}=</span><span class="nb">true</span><span class="w"> </span>svctmpl<span class="w"> </span>-A<span class="w"> </span>--all
 kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"> </span>-A
 </code></pre></div></li>
-<li>Look through the <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
-    and <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>
+<li>Look through the <code>MultiClusterService</code> objects in the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional</a>
+    and <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child</a> charts.</li>
 <li>If your regional clusters already have <code>ingress-nginx</code> and <code>cert-manager</code> services,
     you can ask the <code>kof-regional</code> chart to not install them by setting Helm values
     <code>ingress-nginx.enabled</code> and <code>cert-manager.enabled</code> to <code>false</code>.</li>
-<li>You may want to <a href="https://github.com/k0rdent/kof/blob/v1.7.0/docs/collectors.md#example">customize collectors</a>
+<li>You may want to <a href="https://github.com/k0rdent/kof/blob/v1.7.1/docs/collectors.md#example">customize collectors</a>
     for all child clusters at once now, or for each child cluster later, or just use the default values.</li>
 <li>If all your regional clusters will use OpenStack,
     you may set the OpenStack-specific values described in step 10 of the <a href="#regional-cluster">Regional Cluster</a> section
@@ -5486,11 +5486,11 @@ kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"
 <p>Install these charts into the management cluster with default or custom values:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-child<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.0
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div>
 </li>
 </ul>
@@ -5511,7 +5511,7 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 To use the new <a href="../../regional-clusters/">KCM Regional Clusters</a> with KOF, please apply the <a href="../kof-kcm-region/">KCM Region With KOF</a> guide on top of the steps below.</p>
 </div>
 <p>To install KOF on the regional cluster,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-storage/values.yaml">kof-storage</a> chart,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-storage/values.yaml">kof-storage</a> chart,
 and apply this example for AWS, or use it as a reference:</p>
 <ol>
 <li>
@@ -5643,7 +5643,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 </code></pre></div></p>
 </li>
 <li>
-<p>The <code>kof-operator</code> creates and configures <code>PromxyServerGroup</code> and <code>GrafanaDatasource</code> (if <a href="../kof-grafana/">enabled</a>) <a href="https://github.com/k0rdent/kof/blob/v1.7.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">automatically</a>.
+<p>The <code>kof-operator</code> creates and configures <code>PromxyServerGroup</code> and <code>GrafanaDatasource</code> (if <a href="../kof-grafana/">enabled</a>) <a href="https://github.com/k0rdent/kof/blob/v1.7.1/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">automatically</a>.
     It uses the endpoints listed below by default.
     If you want to disable the built-in metrics, logs, and traces to use your own existing instances instead,
     add custom endpoints to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>:
@@ -5703,8 +5703,8 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 </code></pre></div></p>
 </li>
 <li>
-<p><code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional-cluster</a> configure and install <code>cert-manager</code>, <code>ingress-nginx</code>, <code>kof-operators</code>, <code>kof-storage</code>, and <code>kof-collectors</code> charts automatically.</p>
-<p>To pass any custom <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-storage/values.yaml">values</a> to the <code>kof-storage</code> chart or its subcharts, such as <a href="https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters">victoria-logs-cluster</a>, add them to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>.</p>
+<p><code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-regional/templates/regional-multi-cluster-service.yaml">kof-regional-cluster</a> configure and install <code>cert-manager</code>, <code>ingress-nginx</code>, <code>kof-operators</code>, <code>kof-storage</code>, and <code>kof-collectors</code> charts automatically.</p>
+<p>To pass any custom <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-storage/values.yaml">values</a> to the <code>kof-storage</code> chart or its subcharts, such as <a href="https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters">victoria-logs-cluster</a>, add them to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>.</p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">  </span><span class="no">victoria-logs-cluster:</span>
@@ -5751,8 +5751,8 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
 To use the new <a href="../../regional-clusters/">KCM Regional Clusters</a> with KOF, please apply the <a href="../kof-kcm-region/">KCM Region With KOF</a> guide on top of the steps below.</p>
 </div>
 <p>To install KOF on the actual cluster to be monitored,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-operators/values.yaml">kof-operators</a>
-and <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-collectors/values.yaml">kof-collectors</a> charts,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-operators/values.yaml">kof-operators</a>
+and <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-collectors/values.yaml">kof-collectors</a> charts,
 and apply this example for AWS, or use it as a reference:</p>
 <ol>
 <li>
@@ -5846,7 +5846,7 @@ The child cluster uses the gateway in the regional cluster to <a href="../kof-st
     If you add them, please copy <code>.metadata.labels</code> as well.</p>
 </li>
 <li>
-<p>The <code>kof-operator</code> <a href="https://github.com/k0rdent/kof/blob/v1.7.0/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">discovers</a>
+<p>The <code>kof-operator</code> <a href="https://github.com/k0rdent/kof/blob/v1.7.1/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go">discovers</a>
     the regional cluster by the location of the child cluster.
     If you have more than one regional cluster in the same AWS region / Azure location / etc.,
     and you want to connect the child cluster to specific regional cluster,
@@ -5858,8 +5858,8 @@ The child cluster uses the gateway in the regional cluster to <a href="../kof-st
 </code></pre></div></p>
 </li>
 <li>
-<p><code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child-cluster</a> configure and install <code>cert-manager</code>, <code>kof-operators</code>, and <code>kof-collectors</code> charts automatically.</p>
-<p>To pass any custom <a href="https://github.com/k0rdent/kof/blob/v1.7.0/charts/kof-collectors/values.yaml">values</a> to the <code>kof-collectors</code> chart or its subcharts, such as <a href="https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values">opencost</a>, add them to the <code>child-cluster.yaml</code> file in the <code>.spec.config</code>. For example:</p>
+<p><code>MultiClusterService</code> named <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-child/templates/child-multi-cluster-service.yaml">kof-child-cluster</a> configure and install <code>cert-manager</code>, <code>kof-operators</code>, and <code>kof-collectors</code> charts automatically.</p>
+<p>To pass any custom <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-collectors/values.yaml">values</a> to the <code>kof-collectors</code> chart or its subcharts, such as <a href="https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values">opencost</a>, add them to the <code>child-cluster.yaml</code> file in the <code>.spec.config</code>. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">clusterAnnotations</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">k0rdent.mirantis.com/kof-collectors-values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">opencost:</span>
