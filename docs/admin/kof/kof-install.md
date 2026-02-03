@@ -171,13 +171,7 @@ and apply this example, or use it as a reference:
     end="<!--install-kof-operators-end-->"
 %}
 
-2. Create the `mothership-values.yaml` file and add there:
-    ```yaml
-    kcm:
-      installTemplates: true
-    ```
-    This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-collectors`,
-    making it possible to reference them from the regional and child `MultiClusterService` objects.
+2. Create an empty `mothership-values.yaml` file.
 
 3. Check requirements to the [storage class](./kof-storing.md#storage-class-requirements-for-victoriametrics-cluster).
 
@@ -194,11 +188,12 @@ and apply this example, or use it as a reference:
       apply [OpenEBS](https://docs.k0sproject.io/stable/examples/openebs/) or similar.
 
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
-    add its information to the `kcm:` object in the `mothership-values.yaml` file.
+    add the information about `external-dns` credentials to the `mothership-values.yaml` file.
 
     For AWS, add:
 
     ```yaml
+    kcm:
       kof:
         mcs:
           kof-aws-dns-secrets:
@@ -211,6 +206,7 @@ and apply this example, or use it as a reference:
     For Azure, add:
 
     ```yaml
+    kcm:
       kof:
         mcs:
           kof-azure-dns-secrets:
@@ -223,6 +219,7 @@ and apply this example, or use it as a reference:
     For OpenStack, add:
 
     ```yaml
+    kcm:
       kof:
         mcs:
           kof-openstack-dns-secrets:
@@ -232,7 +229,7 @@ and apply this example, or use it as a reference:
               - external-dns-openstack-credentials
     ```
 
-    This enables Sveltos to auto-distribute the DNS secret to regional clusters.
+    This enables auto-distribution of the DNS secret to regional clusters.
 
 5. Examples of `ClusterDeployments` in [Regional Cluster](#regional-cluster)
     and [Child Cluster](#child-cluster) sections are both using `namespace: kcm-system`
