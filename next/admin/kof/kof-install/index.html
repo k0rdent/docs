@@ -5386,12 +5386,7 @@ and apply this example, or use it as a reference:</p>
 </code></pre></div>
 </li>
 <li>
-<p>Create the <code>mothership-values.yaml</code> file and add there:
-    <div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">installTemplates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</code></pre></div>
-    This enables installation of <code>ServiceTemplates</code> such as <code>cert-manager</code> and <code>kof-collectors</code>,
-    making it possible to reference them from the regional and child <code>MultiClusterService</code> objects.</p>
+<p>Create an empty <code>mothership-values.yaml</code> file.</p>
 </li>
 <li>
 <p>Check requirements to the <a href="../kof-storing/#storage-class-requirements-for-victoriametrics-cluster">storage class</a>.</p>
@@ -5407,9 +5402,10 @@ Otherwise you can use a non-default storage class in the <code>mothership-values
 </li>
 <li>
 <p>If you've applied the <a href="#dns-auto-config">DNS auto-config</a> section,
-    add its information to the <code>kcm:</code> object in the <code>mothership-values.yaml</code> file.</p>
+    add the information about <code>external-dns</code> credentials to the <code>mothership-values.yaml</code> file.</p>
 <p>For AWS, add:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
@@ -5418,7 +5414,8 @@ Otherwise you can use a non-default storage class in the <code>mothership-values
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div>
 <p>For Azure, add:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
@@ -5427,7 +5424,8 @@ Otherwise you can use a non-default storage class in the <code>mothership-values
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
 </code></pre></div>
 <p>For OpenStack, add:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-openstack-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
@@ -5435,7 +5433,7 @@ Otherwise you can use a non-default storage class in the <code>mothership-values
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-openstack-credentials</span>
 </code></pre></div>
-<p>This enables Sveltos to auto-distribute the DNS secret to regional clusters.</p>
+<p>This enables auto-distribution of the DNS secret to regional clusters.</p>
 </li>
 <li>
 <p>Examples of <code>ClusterDeployments</code> in <a href="#regional-cluster">Regional Cluster</a>
