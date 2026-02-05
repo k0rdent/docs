@@ -2,7 +2,35 @@
 
 Finally, verify that KOF installed properly.
 
-## Verification steps
+## Management Cluster Verification
+
+For KOF v1.8.0+, the umbrella chart uses FluxCD to orchestrate component installation. Verify the management cluster first:
+
+1. Wait for all HelmReleases to be ready:
+    ```bash
+    kubectl wait --for=condition=Ready helmreleases --all -n kof --timeout=10m
+    kubectl get helmreleases -n kof
+    ```
+
+    All HelmReleases should show `Ready=True`. If any are not ready, check their status:
+    ```bash
+    kubectl describe helmrelease -n kof <helmrelease-name>
+    ```
+
+2. Verify all pods are running in the `kof` namespace:
+    ```bash
+    kubectl get pods -n kof
+    ```
+
+3. Wait for ServiceTemplates to be valid:
+    ```bash
+    kubectl wait --for=jsonpath={.status.valid}=true svctmpl -A --all
+    kubectl get svctmpl -A
+    ```
+
+    All ServiceTemplates should show `VALID=true`.
+
+## Regional and Child Cluster Verification
 
 1. Get kubeconfigs of the regional and child clusters:
     ```bash

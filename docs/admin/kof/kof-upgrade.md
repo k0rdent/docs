@@ -228,6 +228,81 @@ To migrate data with transformation please consider one of the following options
     * first apply the [Upgrade to v1.2.0](#upgrade-to-v120) section,
     * then apply the [Upgrade to v1.3.0](#upgrade-to-v130) section.
 
+## Upgrade to v1.8.0
+
+KOF v1.8.0 introduces a new umbrella chart that consolidates the installation of all KOF components using FluxCD for orchestration. This represents a significant structural change in how KOF is deployed.
+
+### Key Changes
+
+* **New umbrella chart**: The `kof` chart now manages the installation of operators, mothership, storage, and collectors components.
+* **victoria-metrics-operator**: Now installed by the umbrella chart instead of as a dependency of `kof-mothership`.
+* **Single deployment command**: Replaces the previous multi-step installation process.
+
+### Important: Backup Required
+
+**Before upgrading to v1.8.0, you MUST create a backup of your Victoria Metrics and Victoria Logs data.**
+
+The structural changes may require reinstallation of storage components, which could result in data loss if backups are not available. Follow the [Data Backup](#data-backup) section at the top of this page to create backups of all your regional clusters.
+
+### Upgrade Procedure
+
+1. **Create backups** as described in the [Data Backup](#data-backup) section for all regional clusters.
+
+2. **Backup current Helm values** for all KOF charts:
+    ```bash
+    helm get values -n kof kof-operators -o yaml > kof-operators-values.bak
+    helm get values -n kof kof-mothership -o yaml > kof-mothership-values.bak
+    helm get values -n kof kof-regional -o yaml > kof-regional-values.bak 2>/dev/null || true
+    helm get values -n kof kof-child -o yaml > kof-child-values.bak 2>/dev/null || true
+    helm get values -n kof kof-storage -o yaml > kof-storage-values.bak 2>/dev/null || true
+    helm get values -n kof kof-collectors -o yaml > kof-collectors-values.bak 2>/dev/null || true
+    ```
+
+3. **Create new values file** for the umbrella chart. Merge your existing values into the new structure:
+
+    Create `kof-values.yaml` with values nested under component keys. For example, if your `kof-mothership-values.bak` contains:
+    ```yaml
+    kcm:
+      kof:
+        mcs:
+          kof-aws-dns-secrets:
+            matchLabels:
+              k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
+            secrets:
+              - external-dns-aws-credentials
+    ```
+
+    Transform it to:
+    ```yaml
+    kof-mothership:
+      values:
+        kcm:
+          kof:
+            mcs:
+              kof-aws-dns-secrets:
+                matchLabels:
+                  k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
+                secrets:
+                  - external-dns-aws-credentials
+    ```
+
+4. **Upgrade to the umbrella chart**:
+    ```bash
+    helm upgrade -i --reset-values --wait \
+      --create-namespace -n kof kof \
+      -f kof-values.yaml \
+      oci://ghcr.io/k0rdent/kof/charts/kof \
+      --version 1.8.0
+    ```
+
+    The umbrella chart will take ownership of existing resources and upgrade them in place.
+
+### Verification
+
+5. After upgrade, follow the [KOF Verification](kof-verification.md) guide to ensure KOF is functioning correctly.
+
+6. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](#data-backup) section.
+
 ## Upgrade to v1.7.0
 
 Notice the big changes:

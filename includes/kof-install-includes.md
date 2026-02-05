@@ -16,23 +16,15 @@
     ```
 <!--install-istio-end-->
 
-<!--install-kof-operators-start-->
+<!--install-kof-start-->
     ```bash
     helm upgrade -i --reset-values --wait \
-      --create-namespace -n kof kof-operators \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators \
+      --create-namespace -n kof kof \
+      -f kof-values.yaml \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
       --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
-<!--install-kof-operators-end-->
-
-<!--install-kof-mothership-start-->
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-mothership \
-      -f mothership-values.yaml \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership \
-      --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
-<!--install-kof-mothership-end-->
+<!--install-kof-end-->
 
 <!--management-custom-start-->
         ```bash
