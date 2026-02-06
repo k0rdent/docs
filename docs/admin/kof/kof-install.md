@@ -159,79 +159,86 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 ## Management Cluster
 
 To install KOF on the management cluster,
-look through the default values of the [kof-mothership](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-mothership/README.md)
-and [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-operators/values.yaml) charts,
+look through the default values of the [kof](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof/README.md) chart,
 and apply this example, or use it as a reference:
 
-1. Install `kof-operators` as required by `kof-mothership`:
+1. Create an empty `kof-values.yaml` file.
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-operators-start-->"
-    end="<!--install-kof-operators-end-->"
-%}
-
-2. Create an empty `mothership-values.yaml` file.
-
-3. Check requirements to the [storage class](./kof-storing.md#storage-class-requirements-for-victoriametrics-cluster).
+2. Check requirements to the [storage class](./kof-storing.md#storage-class-requirements-for-victoriametrics-cluster).
 
     If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
-    Otherwise you can use a non-default storage class in the `mothership-values.yaml` file:
+    Otherwise you can use a non-default storage class in the `kof-values.yaml` file:
     ```yaml
-    global:
-      storageClass: <EXAMPLE_STORAGE_CLASS>
+    kof-mothership:
+      values:
+        global:
+          storageClass: <EXAMPLE_STORAGE_CLASS>
+    ```
+
+    If you plan to enable `kof-storage` component (for local/single-cluster deployments), also set:
+    ```yaml
+    kof-storage:
+      values:
+        global:
+          storageClass: <EXAMPLE_STORAGE_CLASS>
     ```
 
       If `kubectl get sc` shows nothing
       or just `kubernetes.io/no-provisioner` in the `PROVISIONER` column,
       apply [OpenEBS](https://docs.k0sproject.io/stable/examples/openebs/) or similar.
 
-4. If you've applied the [DNS auto-config](#dns-auto-config) section,
-    add the information about `external-dns` credentials to the `mothership-values.yaml` file.
+3. If you've applied the [DNS auto-config](#dns-auto-config) section,
+    add the information about `external-dns` credentials to the `kof-values.yaml` file.
 
     For AWS, add:
 
     ```yaml
-    kcm:
-      kof:
-        mcs:
-          kof-aws-dns-secrets:
-            matchLabels:
-              k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
-            secrets:
-              - external-dns-aws-credentials
+    kof-mothership:
+      values:
+        kcm:
+          kof:
+            mcs:
+              kof-aws-dns-secrets:
+                matchLabels:
+                  k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
+                secrets:
+                  - external-dns-aws-credentials
     ```
 
     For Azure, add:
 
     ```yaml
-    kcm:
-      kof:
-        mcs:
-          kof-azure-dns-secrets:
-            matchLabels:
-              k0rdent.mirantis.com/kof-azure-dns-secrets: "true"
-            secrets:
-              - external-dns-azure-credentials
+    kof-mothership:
+      values:
+        kcm:
+          kof:
+            mcs:
+              kof-azure-dns-secrets:
+                matchLabels:
+                  k0rdent.mirantis.com/kof-azure-dns-secrets: "true"
+                secrets:
+                  - external-dns-azure-credentials
     ```
 
     For OpenStack, add:
 
     ```yaml
-    kcm:
-      kof:
-        mcs:
-          kof-openstack-dns-secrets:
-            matchLabels:
-              k0rdent.mirantis.com/kof-openstack-dns-secrets: "true"
-            secrets:
-              - external-dns-openstack-credentials
+    kof-mothership:
+      values:
+        kcm:
+          kof:
+            mcs:
+              kof-openstack-dns-secrets:
+                matchLabels:
+                  k0rdent.mirantis.com/kof-openstack-dns-secrets: "true"
+                secrets:
+                  - external-dns-openstack-credentials
     ```
 
     This enables auto-distribution of the DNS secret to regional clusters.
 
-5. Examples of `ClusterDeployments` in [Regional Cluster](#regional-cluster)
+4. Examples of `ClusterDeployments` in [Regional Cluster](#regional-cluster)
     and [Child Cluster](#child-cluster) sections are both using `namespace: kcm-system`
     for a child cluster to connect to a regional cluster easily.
 
@@ -241,26 +248,36 @@ and apply this example, or use it as a reference:
 
     If you want to allow a child cluster in one namespace
     to connect to a regional cluster in another namespace,
-    enable the `crossNamespace` value in the `mothership-values.yaml` file:
+    enable the `crossNamespace` value in the `kof-values.yaml` file:
 
     ```yaml
-    kcm:
-      kof:
-        operator:
-          crossNamespace: true
+    kof-mothership:
+      values:
+        kcm:
+          kof:
+            operator:
+              crossNamespace: true
     ```
 
-6. Install `kof-mothership`:
+5. Install the KOF umbrella chart, which orchestrates the installation of operators, mothership, storage, and collectors:
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-mothership-start-->"
-    end="<!--install-kof-mothership-end-->"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
 %}
 
+    The chart uses FluxCD to manage sequential deployment of all KOF components.
+    
     If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
 
-7. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
+6. If you're upgrading KOF from an earlier version, apply the [Upgrading KOF](./kof-upgrade.md) guide.
+
+7. Wait for all HelmReleases to be ready:
+    ```bash
+    kubectl wait --for=condition=Ready helmreleases --all -n kof --timeout=10m
+    kubectl get helmreleases -n kof
+    ```
 
 8. Apply shared configuration for the existing and upcoming regional and child clusters:
     * Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
