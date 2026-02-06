@@ -286,6 +286,16 @@ The structural changes may require reinstallation of storage components, which c
                   - external-dns-aws-credentials
     ```
 
+    > NOTE:
+    > victoria-metrics-operator helm chart is moved out of kof-mothership helm chart.
+    > If you have modified values for victoria-metrics-operator helm chart, then check them under this section
+
+    ```yaml
+    victoria-metrics-operator:
+      values:
+    ```
+
+
 4. **Upgrade to the umbrella chart**:
     ```bash
     helm upgrade -i --reset-values --wait \
