@@ -3077,9 +3077,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#verification-steps" class="md-nav__link">
+  <a href="#management-cluster-verification" class="md-nav__link">
     <span class="md-ellipsis">
-      Verification steps
+      Management Cluster Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regional-and-child-cluster-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regional and Child Cluster Verification
     </span>
   </a>
   
@@ -5077,9 +5086,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#verification-steps" class="md-nav__link">
+  <a href="#management-cluster-verification" class="md-nav__link">
     <span class="md-ellipsis">
-      Verification steps
+      Management Cluster Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regional-and-child-cluster-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regional and Child Cluster Verification
     </span>
   </a>
   
@@ -5136,7 +5154,32 @@
 
 <h1 id="kof-verification">KOF Verification<a class="headerlink" href="#kof-verification" title="Permanent link">#</a></h1>
 <p>Finally, verify that KOF installed properly.</p>
-<h2 id="verification-steps">Verification steps<a class="headerlink" href="#verification-steps" title="Permanent link">#</a></h2>
+<h2 id="management-cluster-verification">Management Cluster Verification<a class="headerlink" href="#management-cluster-verification" title="Permanent link">#</a></h2>
+<p>For KOF v1.8.0+, the umbrella chart uses FluxCD to orchestrate component installation. Verify the management cluster first:</p>
+<ol>
+<li>
+<p>Wait for all HelmReleases to be ready:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>helmreleases<span class="w"> </span>--all<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--timeout<span class="o">=</span>10m
+kubectl<span class="w"> </span>get<span class="w"> </span>helmreleases<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div></p>
+<p>All HelmReleases should show <code>Ready=True</code>. If any are not ready, check their status:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>helmrelease<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>&lt;helmrelease-name&gt;
+</code></pre></div></p>
+</li>
+<li>
+<p>Verify all pods are running in the <code>kof</code> namespace:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div></p>
+</li>
+<li>
+<p>Wait for ServiceTemplates to be valid:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.status.valid<span class="o">}=</span><span class="nb">true</span><span class="w"> </span>svctmpl<span class="w"> </span>-A<span class="w"> </span>--all
+kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"> </span>-A
+</code></pre></div></p>
+<p>All ServiceTemplates should show <code>VALID=true</code>.</p>
+</li>
+</ol>
+<h2 id="regional-and-child-cluster-verification">Regional and Child Cluster Verification<a class="headerlink" href="#regional-and-child-cluster-verification" title="Permanent link">#</a></h2>
 <ol>
 <li>
 <p>Get kubeconfigs of the regional and child clusters:

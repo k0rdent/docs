@@ -3131,6 +3131,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-to-v180" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade to v1.8.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrade to v1.8.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-backup-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important: Backup Required
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Procedure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrade-to-v170" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade to v1.7.0
@@ -5365,6 +5416,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-to-v180" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade to v1.8.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrade to v1.8.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-backup-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Important: Backup Required
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Procedure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrade-to-v170" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade to v1.7.0
@@ -5755,6 +5857,86 @@ ls<span class="w"> </span>values-*.bak
 </ul>
 </li>
 </ul>
+<h2 id="upgrade-to-v180">Upgrade to v1.8.0<a class="headerlink" href="#upgrade-to-v180" title="Permanent link">#</a></h2>
+<p>KOF v1.8.0 introduces a new umbrella chart that consolidates the installation of all KOF components using FluxCD for orchestration. This represents a significant structural change in how KOF is deployed.</p>
+<h3 id="key-changes">Key Changes<a class="headerlink" href="#key-changes" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>New umbrella chart</strong>: The <code>kof</code> chart now manages the installation of operators, mothership, storage, and collectors components.</li>
+<li><strong>victoria-metrics-operator</strong>: Now installed by the umbrella chart instead of as a dependency of <code>kof-mothership</code>.</li>
+<li><strong>Single deployment command</strong>: Replaces the previous multi-step installation process.</li>
+</ul>
+<h3 id="important-backup-required">Important: Backup Required<a class="headerlink" href="#important-backup-required" title="Permanent link">#</a></h3>
+<p><strong>Before upgrading to v1.8.0, you MUST create a backup of your Victoria Metrics and Victoria Logs data.</strong></p>
+<p>The structural changes may require reinstallation of storage components, which could result in data loss if backups are not available. Follow the <a href="#data-backup">Data Backup</a> section at the top of this page to create backups of all your regional clusters.</p>
+<h3 id="upgrade-procedure">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p><strong>Create backups</strong> as described in the <a href="#data-backup">Data Backup</a> section for all regional clusters.</p>
+</li>
+<li>
+<p><strong>Backup current Helm values</strong> for all KOF charts:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-operators-values.bak
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-mothership-values.bak
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-regional-values.bak<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-child-values.bak<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-storage<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-storage-values.bak<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-collectors-values.bak<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Create new values file</strong> for the umbrella chart. Merge your existing values into the new structure:</p>
+<p>Create <code>kof-values.yaml</code> with values nested under component keys. For example, if your <code>kof-mothership-values.bak</code> contains:
+<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
+</code></pre></div></p>
+<p>Transform it to:
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+victoria-metrics-operator helm chart is moved out of kof-mothership helm chart.
+If you have modified values for victoria-metrics-operator helm chart, then check them under this section</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">victoria-metrics-operator</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>Upgrade to the umbrella chart</strong>:
+    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
+</code></pre></div></p>
+<p>The umbrella chart will take ownership of existing resources and upgrade them in place.</p>
+</li>
+</ol>
+<h3 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p>After upgrade, follow the <a href="../kof-verification/">KOF Verification</a> guide to ensure KOF is functioning correctly.</p>
+</li>
+<li>
+<p><strong>(If needed) Restore data</strong> from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the <a href="#data-backup">Data Backup</a> section.</p>
+</li>
+</ol>
 <h2 id="upgrade-to-v170">Upgrade to v1.7.0<a class="headerlink" href="#upgrade-to-v170" title="Permanent link">#</a></h2>
 <p>Notice the big changes:</p>
 <ul>

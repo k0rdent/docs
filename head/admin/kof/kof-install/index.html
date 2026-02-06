@@ -5373,28 +5373,27 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 </ul>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the management cluster,
-look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-mothership/README.md">kof-mothership</a>
-and <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof-operators/values.yaml">kof-operators</a> charts,
+look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.7.1/charts/kof/README.md">kof</a> chart,
 and apply this example, or use it as a reference:</p>
 <ol>
 <li>
-<p>Install <code>kof-operators</code> as required by <code>kof-mothership</code>:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-</code></pre></div>
-</li>
-<li>
-<p>Create an empty <code>mothership-values.yaml</code> file.</p>
+<p>Create an empty <code>kof-values.yaml</code> file.</p>
 </li>
 <li>
 <p>Check requirements to the <a href="../kof-storing/#storage-class-requirements-for-victoriametrics-cluster">storage class</a>.</p>
 <p>If you want to use a <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass">default storage class</a>,
 but <code>kubectl get sc</code> shows no <code>(default)</code>, create it.
-Otherwise you can use a non-default storage class in the <code>mothership-values.yaml</code> file:
-<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+Otherwise you can use a non-default storage class in the <code>kof-values.yaml</code> file:
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+</code></pre></div></p>
+<p>If you plan to enable <code>kof-storage</code> component (for local/single-cluster deployments), also set:
+<div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
 </code></pre></div></p>
 <p>If <code>kubectl get sc</code> shows nothing
   or just <code>kubernetes.io/no-provisioner</code> in the <code>PROVISIONER</code> column,
@@ -5402,36 +5401,42 @@ Otherwise you can use a non-default storage class in the <code>mothership-values
 </li>
 <li>
 <p>If you've applied the <a href="#dns-auto-config">DNS auto-config</a> section,
-    add the information about <code>external-dns</code> credentials to the <code>mothership-values.yaml</code> file.</p>
+    add the information about <code>external-dns</code> credentials to the <code>kof-values.yaml</code> file.</p>
 <p>For AWS, add:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div>
 <p>For Azure, add:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
 </code></pre></div>
 <p>For OpenStack, add:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">kof-openstack-dns-secrets</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-openstack-credentials</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">kof-openstack-dns-secrets</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-openstack-credentials</span>
 </code></pre></div>
 <p>This enables auto-distribution of the DNS secret to regional clusters.</p>
 </li>
@@ -5444,24 +5449,34 @@ please note they are isolated by default: a child cluster in <code>namespace: te
 will be able to connect to a regional cluster in <code>namespace: tenantA</code> only.</p>
 <p>If you want to allow a child cluster in one namespace
 to connect to a regional cluster in another namespace,
-enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">kof</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">operator</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">crossNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+enable the <code>crossNamespace</code> value in the <code>kof-values.yaml</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">operator</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">crossNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </li>
 <li>
-<p>Install <code>kof-mothership</code>:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span><span class="se">\</span>
+<p>Install the KOF umbrella chart, which orchestrates the installation of operators, mothership, storage, and collectors:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
 </code></pre></div>
+<p>The chart uses FluxCD to manage sequential deployment of all KOF components.</p>
 <p>If helm v4 <code>failed to call webhook</code>, apply the workaround from <a href="https://github.com/k0rdent/kof/issues/715">k0rdent/kof issue #715</a>.</p>
 </li>
 <li>
 <p>If you're upgrading KOF from an earlier version, apply the <a href="../kof-upgrade/">Upgrading KOF</a> guide.</p>
+</li>
+<li>
+<p>Wait for all HelmReleases to be ready:
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>helmreleases<span class="w"> </span>--all<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--timeout<span class="o">=</span>10m
+kubectl<span class="w"> </span>get<span class="w"> </span>helmreleases<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div></p>
 </li>
 <li>
 <p>Apply shared configuration for the existing and upcoming regional and child clusters:</p>
