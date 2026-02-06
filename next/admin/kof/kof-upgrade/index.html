@@ -5910,12 +5910,27 @@ helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-victoria-metrics-operator helm chart is moved out of kof-mothership helm chart.
-If you have modified values for victoria-metrics-operator helm chart, then check them under this section</p>
+<code>victoria-metrics-operator</code> helm chart is moved out of <code>kof-mothership</code> helm chart.
+If you have modified values for <code>victoria-metrics-operator</code> helm chart, move them under this section:</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">victoria-metrics-operator</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
 </code></pre></div>
+<p><details>
+  <summary>Alternative: bash script that creates <code>kof-values.yaml</code> automatically</summary>
+  <div class="highlight"><pre><span></span><code>touch<span class="w"> </span>kof-values.yaml
+<span class="k">for</span><span class="w"> </span>filename<span class="w"> </span><span class="k">in</span><span class="w"> </span>kof-*-values.bak<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">component</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">filename</span><span class="p">%-values.bak</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">  </span>yq<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;.</span><span class="nv">$component</span><span class="s2">.values = load(\&quot;</span><span class="nv">$filename</span><span class="s2">\&quot;)&quot;</span><span class="w"> </span>kof-values.yaml
+<span class="k">done</span>
+
+yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">  .victoria-metrics-operator.values = .kof-mothership.values.victoria-metrics-operator</span>
+<span class="s1">  | del(.kof-mothership.values.victoria-metrics-operator)</span>
+<span class="s1">  | del(.victoria-metrics-operator.values | select(. == null))</span>
+<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+</code></pre></div>
+</details></p>
 </li>
 <li>
 <p><strong>Upgrade to the umbrella chart</strong>:
