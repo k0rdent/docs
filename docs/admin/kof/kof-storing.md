@@ -45,12 +45,7 @@ To apply this option:
     ```yaml
     kof-storage:
       values:
-        victoria-metrics-operator:
-          enabled: false
-        victoriametrics:
-          enabled: false
-        promxy:
-          enabled: true
+        enabled: true
     ```
 
     If you want to use a non-default storage class, add to the `kof-values.yaml` file:
