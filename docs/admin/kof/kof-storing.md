@@ -51,7 +51,6 @@ To apply this option:
     If you want to use a non-default storage class, add to the `kof-values.yaml` file:
     ```yaml
     kof-storage:
-      enabled: true
       values:
         victoria-logs-cluster:
           vlstorage:
