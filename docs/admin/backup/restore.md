@@ -2,7 +2,7 @@
 
 > NOTE:
 > Please refer to the
-> [official migration documentation](https://velero.io/docs/migration-case/#before-migrating-your-cluster)
+> [official migration documentation](https://velero.io/docs/v1.17/migration-case/#before-migrating-your-cluster)
 > to familiarize yourself with potential limitations of the Velero backup system.
 
 In the event of disaster, you can restore from a backup by doing the following:
@@ -58,7 +58,7 @@ In the event of disaster, you can restore from a backup by doing the following:
     This ensures that the Velero `Deployment` name is exactly `velero`, which is a requirement due to the
     aforementioned known issue.
 
-1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/api-types/restore/) object.
+1. Restore the `kcm` system creating the [`Restore`](https://velero.io/docs/v1.17/api-types/restore/) object.
    Follow one of the case that is applicable to clusters' configuration in use:
 
     1. If there are **no** [regional clusters](../regional-clusters/index.md)
@@ -157,7 +157,7 @@ In the event of disaster, you can restore from a backup by doing the following:
         the [preparation stage](./prepare-backups.md).
 
     1. On the **regional** cluster, restore the cluster by creating a new
-        [`Restore`](https://velero.io/docs/api-types/restore/) object:
+        [`Restore`](https://velero.io/docs/v1.17/api-types/restore/) object:
 
         Note that in this case the `.spec.existingResourcePolicy` field is **not set**.
 
@@ -244,7 +244,7 @@ The following resources should be excluded from the `Restore` object:
 * `mutatingwebhookconfiguration.admissionregistration.k8s.io`
 * `validatingwebhookconfiguration.admissionregistration.k8s.io`
 
-Due to the [Velero Restoration Order](https://velero.io/docs/restore-reference/#restore-order),
+Due to the [Velero Restoration Order](https://velero.io/docs/v1.17/restore-reference/#restore-order),
 some of the `CAPV` core objects cannot be restored,
 and they will not be recreated automatically.
 Because all of the objects have already passed both mutations

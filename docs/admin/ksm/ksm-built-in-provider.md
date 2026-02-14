@@ -2,7 +2,7 @@
 
 ## Overview
 
-{{{ docsVersionInfo.k0rdentName }}} comes with a built-in KSM provider which relies on [ProjectSveltos](https:#projectsveltos.github.io/sveltos/main/) as a CD solution.
+{{{ docsVersionInfo.k0rdentName }}} comes with a built-in KSM provider which relies on [ProjectSveltos](https://projectsveltos.github.io/sveltos/main/) as a CD solution.
 This provider is enabled by default by the command-line flag `--enable-sveltos-ctrl` provided to kcm-controller-manager:
 
 ```yaml

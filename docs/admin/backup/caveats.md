@@ -62,4 +62,4 @@ spec:
 > deletes it from both
 > the management cluster and from the cloud storage.
 
-For reference, follow the [official documentation](https://velero.io/docs/backup-reference/#deleting-backups).
+For reference, follow the [official documentation](https://velero.io/docs/v1.17/backup-reference/#deleting-backups).

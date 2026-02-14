@@ -20,8 +20,8 @@ To deploy a cluster using {{{ docsVersionInfo.k0rdentName}}} on any SSH accessib
 * `machines[].useSudo` (boolean): Whether or not to use sudo for running commands on the remote machine. Example: `false`.
 * `machines[].provisionJob.scpCommand` (string): The command to use for copying files to remote machines. Example: `"scp"`.
 * `machines[].provisionJob.sshCommand` (string): The command to use for connecting to remote machines. Example: `"ssh"`.
-* `machines[].provisionJob.jobSpecTemplate.metadata`: Kubernetes metadata for the provisioning job, such as labels or annotations. See: <https://docs.k0smotron.io/stable/resource-reference/#remotemachinespecprovisionjobjobspectemplatemetadata> for more information.
-* `machines[].provisionJob.jobSpecTemplate.spec`: Specification for the provisioning job, detailing the job’s behavior and configuration. See: <https://docs.k0smotron.io/stable/resource-reference/#remotemachinespecprovisionjobjobspectemplatespec> for more information.
+* `machines[].provisionJob.jobSpecTemplate.metadata`: Kubernetes metadata for the provisioning job, such as labels or annotations. See: <https://docs.k0smotron.io/stable/resource-reference/infrastructure.cluster.x-k8s.io-v1beta1/#remotemachinespecprovisionjobjobspectemplatemetadata> for more information.
+* `machines[].provisionJob.jobSpecTemplate.spec`: Specification for the provisioning job, detailing the job’s behavior and configuration. See: <https://docs.k0smotron.io/stable/resource-reference/infrastructure.cluster.x-k8s.io-v1beta1/#remotemachinespecprovisionjobjobspectemplatespec> for more information.
 * `machines[].k0s.args` (array of strings): A list of extra arguments for configuring the k0s worker node. See: <https://docs.k0sproject.io/stable/cli/k0s_worker>.
 
 ### K0smotron Parameters
