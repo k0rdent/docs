@@ -8,11 +8,12 @@
     ```bash
     helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
       {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
-      --version 0.3.0 \
+      --version 0.4.0 \
       --set cert-manager-service-template.enabled=false \
       --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
       --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
-      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"
+      --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
+      --set-json 'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'
     ```
 <!--install-istio-end-->
 

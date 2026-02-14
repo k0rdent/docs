@@ -329,6 +329,24 @@ The structural changes may require reinstallation of storage components, which c
 
 6. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](#data-backup) section.
 
+### Istio Upgrade
+
+> NOTICE:
+> This section is for users of **k0rdent-istio** only.
+
+Use this command to upgrade Istio:
+
+```bash
+ helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+    {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
+    --version 0.4.0 \
+    --set cert-manager-service-template.enabled=false \
+    --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
+    --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
+    --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
+    --set-json 'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'
+```
+
 ## Upgrade to v1.7.0
 
 Notice the big changes:
