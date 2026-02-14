@@ -5358,11 +5358,12 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 <p>Install the <code>k0rdent/istio</code> charts to the management cluster:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.3.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.4.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
 </code></pre></div>
 </li>
 </ol>

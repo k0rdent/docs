@@ -3176,6 +3176,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#istio-upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Istio Upgrade
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3201,7 +3210,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#istio-upgrade" class="md-nav__link">
+  <a href="#istio-upgrade_1" class="md-nav__link">
     <span class="md-ellipsis">
       Istio Upgrade
     </span>
@@ -5461,6 +5470,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#istio-upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Istio Upgrade
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5486,7 +5504,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#istio-upgrade" class="md-nav__link">
+  <a href="#istio-upgrade_1" class="md-nav__link">
     <span class="md-ellipsis">
       Istio Upgrade
     </span>
@@ -5952,6 +5970,22 @@ yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span
 <p><strong>(If needed) Restore data</strong> from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the <a href="#data-backup">Data Backup</a> section.</p>
 </li>
 </ol>
+<h3 id="istio-upgrade">Istio Upgrade<a class="headerlink" href="#istio-upgrade" title="Permanent link">#</a></h3>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>
+This section is for users of <strong>k0rdent-istio</strong> only.</p>
+</div>
+<p>Use this command to upgrade Istio:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--version<span class="w"> </span><span class="m">0</span>.4.0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
+</code></pre></div>
 <h2 id="upgrade-to-v170">Upgrade to v1.7.0<a class="headerlink" href="#upgrade-to-v170" title="Permanent link">#</a></h2>
 <p>Notice the big changes:</p>
 <ul>
@@ -5985,7 +6019,7 @@ yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span
 </li>
 </ol>
 <p>This step will not be required in future upgrades.</p>
-<h3 id="istio-upgrade">Istio Upgrade<a class="headerlink" href="#istio-upgrade" title="Permanent link">#</a></h3>
+<h3 id="istio-upgrade_1">Istio Upgrade<a class="headerlink" href="#istio-upgrade_1" title="Permanent link">#</a></h3>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>
