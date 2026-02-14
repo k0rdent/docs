@@ -177,6 +177,6 @@
 ## References
 
 * [Compare KCM v1.5.0…v1.6.0](https://github.com/k0rdent/kcm/compare/v1.5.0...v1.6.0)
-* [Compare KOF v1.5.0...v1.6.0-rc1](https://github.com/k0rdent/kof/compare/v1.5.0...v1.6.0-rc1)
+* [Compare KOF v1.5.0...v1.6.0](https://github.com/k0rdent/kof/compare/v1.5.0...v1.6.0)
 
 
