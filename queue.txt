@@ -1,2 +1,0 @@
-main
-release-v1.6.0
