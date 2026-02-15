@@ -77,7 +77,7 @@ Before you create a manual one-off or scheduled backup, review the steps below a
 
 1. Prepare a [storage location](https://velero.io/docs/supported-providers/), such as an Amazon S3 bucket, to store {{{ docsVersionInfo.k0rdentName }}} backups.
 
-1. Prepare a yaml containing a [`BackupStorageLocation`](https://velero.io/docs/api-types/backupstoragelocation/)
+1. Prepare a yaml containing a [`BackupStorageLocation`](https://velero.io/docs/v1.17/locations/)
    object referencing a `Secret` with credentials to access the cloud storage
    (if the multiple credentials feature is supported by the plugin).
    For example, you can create the `BackupStorageLocation` and the related `Secret`
@@ -184,4 +184,4 @@ Before you create a manual one-off or scheduled backup, review the steps below a
     aws-s3   Available   27s              2d    true
     ```
 
-You can get more information on how to build these objects at the [official Velero documentation](https://velero.io/docs/locations).
+You can get more information on how to build these objects at the [official Velero documentation](https://velero.io/docs/v1.17/locations/).
