@@ -4912,7 +4912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../release-notes/release-notes-v1.6.0/" class="md-nav__link">
+      <a href="../../../release-notes/release-notes-v1.6.0.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5153,7 +5153,7 @@
 <p class="admonition-title">Note</p>
 <p>
 Please refer to the
-<a href="https://velero.io/docs/migration-case/#before-migrating-your-cluster">official migration documentation</a>
+<a href="https://velero.io/docs/v1.17/migration-case/#before-migrating-your-cluster">official migration documentation</a>
 to familiarize yourself with potential limitations of the Velero backup system.</p>
 </div>
 <p>In the event of disaster, you can restore from a backup by doing the following:</p>
@@ -5203,7 +5203,7 @@ in the <code>Management</code> object, add to the path <code>spec.core.kcm.confi
 aforementioned known issue.</p>
 </li>
 <li>
-<p>Restore the <code>kcm</code> system creating the <a href="https://velero.io/docs/api-types/restore/"><code>Restore</code></a> object.
+<p>Restore the <code>kcm</code> system creating the <a href="https://velero.io/docs/v1.17/api-types/restore/"><code>Restore</code></a> object.
    Follow one of the case that is applicable to clusters' configuration in use:</p>
 <ol>
 <li>
@@ -5302,7 +5302,7 @@ of the corresponding region cluster.</p>
 </li>
 <li>
 <p>On the <strong>regional</strong> cluster, restore the cluster by creating a new
-    <a href="https://velero.io/docs/api-types/restore/"><code>Restore</code></a> object:</p>
+    <a href="https://velero.io/docs/v1.17/api-types/restore/"><code>Restore</code></a> object:</p>
 <p>Note that in this case the <code>.spec.existingResourcePolicy</code> field is <strong>not set</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Restore</span>
@@ -5385,7 +5385,7 @@ automatically with the same <code>spec</code> as in the backup.</p>
 <li><code>mutatingwebhookconfiguration.admissionregistration.k8s.io</code></li>
 <li><code>validatingwebhookconfiguration.admissionregistration.k8s.io</code></li>
 </ul>
-<p>Due to the <a href="https://velero.io/docs/restore-reference/#restore-order">Velero Restoration Order</a>,
+<p>Due to the <a href="https://velero.io/docs/v1.17/restore-reference/#restore-order">Velero Restoration Order</a>,
 some of the <code>CAPV</code> core objects cannot be restored,
 and they will not be recreated automatically.
 Because all of the objects have already passed both mutations
