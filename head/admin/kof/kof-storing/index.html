@@ -5238,55 +5238,55 @@ No additional steps are required here.</p>
 <p>To apply this option:</p>
 <ol>
 <li>
-<p>Create the <code>storage-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nt">victoria-metrics-operator</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">victoriametrics</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">promxy</span><span class="p">:</span>
+<p>Modify the <code>kof-values.yaml</code> file:
+    <div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div></p>
+<p>If you want to use a non-default storage class, add to the <code>kof-values.yaml</code> file:
+<div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">vlstorage</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">persistentVolume</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Modify the <code>kof-values.yaml</code> file:
+    <div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</code></pre></div></p>
-<p>If you want to use a non-default storage class, add to the <code>storage-values.yaml</code> file:
-<div class="highlight"><pre><span></span><code><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">vlstorage</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">persistentVolume</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Create the <code>collectors-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">monitoring</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">  </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">processors</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">resource/k8sclustername</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
-<span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.name</span>
-<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
-<span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.namespace</span>
-<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-<span class="w">      </span><span class="nt">exporters</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">prometheusremotewrite</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">external_labels</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">            </span><span class="nt">clusterNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">monitoring</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">processors</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">resource/k8sclustername</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">attributes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
+<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.name</span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
+<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.namespace</span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">          </span><span class="nt">exporters</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">prometheusremotewrite</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">external_labels</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
+<span class="w">                </span><span class="nt">clusterNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-storage</code> and <code>kof-collectors</code> charts to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>storage-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-storage<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-
-helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-</code></pre></div></p>
+<p>Update the <code>kof</code> chart on the management cluster:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-regional">From Management to Regional<a class="headerlink" href="#from-management-to-regional" title="Permanent link">#</a></h2>
@@ -5309,113 +5309,116 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 </code></pre></div></p>
 </li>
 <li>
-<p>Create the <code>collectors-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">kcm:</span>
-<span class="s">  monitoring: true</span>
-<span class="s">opentelemetry-kube-stack:</span>
-<span class="s">  clusterName: mothership</span>
-<span class="s">  collectors:</span>
-<span class="s">    daemon:</span>
-<span class="s">      hostNetwork: true</span>
-<span class="s">      observability:</span>
-<span class="s">        metrics:</span>
-<span class="s">          disablePrometheusAnnotations: false</span>
-<span class="s">          enableMetrics: false</span>
-<span class="s">      podAnnotations:</span>
-<span class="s">        prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}</span>
-<span class="s">      config:</span>
-<span class="s">        receivers:</span>
-<span class="s">          prometheus:</span>
-<span class="s">            api_server:</span>
-<span class="s">              server_config:</span>
-<span class="s">                endpoint: \${env:OTEL_K8S_NODE_IP}:9090</span>
-<span class="s">          otlp:</span>
-<span class="s">            protocols:</span>
-<span class="s">              grpc:</span>
-<span class="s">                endpoint: 127.0.0.1:4317</span>
-<span class="s">              http:</span>
-<span class="s">                endpoint: 127.0.0.1:4318</span>
-<span class="s">        service:</span>
-<span class="s">          extensions:</span>
-<span class="s">            - k8s_observer</span>
-<span class="s">            - file_storage/filelogreceiver</span>
-<span class="s">            - file_storage/filelogsyslogreceiver</span>
-<span class="s">            - file_storage/filelogk8sauditreceiver</span>
-<span class="s">            - file_storage/journaldreceiver</span>
-<span class="s">            - basicauth/metrics</span>
-<span class="s">            - basicauth/logs</span>
-<span class="s">            - basicauth/traces</span>
-<span class="s">          telemetry:</span>
+<p>Update the <code>kof-values.yaml</code> file:
+    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">kof-collectors:</span>
+<span class="s">  enabled: true</span>
+<span class="s">  values:</span>
+<span class="s">    kcm:</span>
+<span class="s">      monitoring: true</span>
+<span class="s">    opentelemetry-kube-stack:</span>
+<span class="s">      clusterName: mothership</span>
+<span class="s">      collectors:</span>
+<span class="s">        daemon:</span>
+<span class="s">          hostNetwork: true</span>
+<span class="s">          observability:</span>
 <span class="s">            metrics:</span>
-<span class="s">              readers:</span>
-<span class="s">                - pull:</span>
-<span class="s">                    exporter:</span>
-<span class="s">                      prometheus:</span>
-<span class="s">                        host: \${env:OTEL_K8S_NODE_IP}</span>
-<span class="s">                        port: 8888</span>
-<span class="s">  defaultCRConfig:</span>
-<span class="s">    env:</span>
-<span class="s">      - name: KOF_VM_USER</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: username</span>
-<span class="s">            name: $VMUSER_CREDS_NAME</span>
-<span class="s">      - name: KOF_VM_PASSWORD</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: password</span>
-<span class="s">            name: $VMUSER_CREDS_NAME</span>
-<span class="s">    config:</span>
-<span class="s">      processors:</span>
-<span class="s">        resource/k8sclustername:</span>
-<span class="s">          attributes:</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.name</span>
-<span class="s">              value: mothership</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.namespace</span>
-<span class="s">              value: kcm-system</span>
-<span class="s">      extensions:</span>
-<span class="s">        basicauth/metrics:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">        basicauth/logs:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">        basicauth/traces:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">      exporters:</span>
-<span class="s">        prometheusremotewrite:</span>
-<span class="s">          endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/metrics</span>
-<span class="s">          external_labels:</span>
-<span class="s">            cluster: mothership</span>
-<span class="s">            clusterNamespace: kcm-system</span>
-<span class="s">        otlphttp/logs:</span>
-<span class="s">          logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/logs</span>
-<span class="s">        otlphttp/traces:</span>
-<span class="s">          traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/traces</span>
-<span class="s">      service:</span>
-<span class="s">        extensions:</span>
-<span class="s">          - basicauth/metrics</span>
-<span class="s">          - basicauth/logs</span>
-<span class="s">          - basicauth/traces</span>
-<span class="s">opencost:</span>
-<span class="s">  opencost:</span>
-<span class="s">    prometheus:</span>
-<span class="s">      existingSecretName: $VMUSER_CREDS_NAME</span>
-<span class="s">      external:</span>
-<span class="s">        url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
+<span class="s">              disablePrometheusAnnotations: false</span>
+<span class="s">              enableMetrics: false</span>
+<span class="s">          podAnnotations:</span>
+<span class="s">            prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}</span>
+<span class="s">          config:</span>
+<span class="s">            receivers:</span>
+<span class="s">              prometheus:</span>
+<span class="s">                api_server:</span>
+<span class="s">                  server_config:</span>
+<span class="s">                    endpoint: \${env:OTEL_K8S_NODE_IP}:9090</span>
+<span class="s">              otlp:</span>
+<span class="s">                protocols:</span>
+<span class="s">                  grpc:</span>
+<span class="s">                    endpoint: 127.0.0.1:4317</span>
+<span class="s">                  http:</span>
+<span class="s">                    endpoint: 127.0.0.1:4318</span>
+<span class="s">            service:</span>
+<span class="s">              extensions:</span>
+<span class="s">                - k8s_observer</span>
+<span class="s">                - file_storage/filelogreceiver</span>
+<span class="s">                - file_storage/filelogsyslogreceiver</span>
+<span class="s">                - file_storage/filelogk8sauditreceiver</span>
+<span class="s">                - file_storage/journaldreceiver</span>
+<span class="s">                - basicauth/metrics</span>
+<span class="s">                - basicauth/logs</span>
+<span class="s">                - basicauth/traces</span>
+<span class="s">              telemetry:</span>
+<span class="s">                metrics:</span>
+<span class="s">                  readers:</span>
+<span class="s">                    - pull:</span>
+<span class="s">                        exporter:</span>
+<span class="s">                          prometheus:</span>
+<span class="s">                            host: \${env:OTEL_K8S_NODE_IP}</span>
+<span class="s">                            port: 8888</span>
+<span class="s">      defaultCRConfig:</span>
+<span class="s">        env:</span>
+<span class="s">          - name: KOF_VM_USER</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                key: username</span>
+<span class="s">                name: $VMUSER_CREDS_NAME</span>
+<span class="s">          - name: KOF_VM_PASSWORD</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                key: password</span>
+<span class="s">                name: $VMUSER_CREDS_NAME</span>
+<span class="s">        config:</span>
+<span class="s">          processors:</span>
+<span class="s">            resource/k8sclustername:</span>
+<span class="s">              attributes:</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.name</span>
+<span class="s">                  value: mothership</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.namespace</span>
+<span class="s">                  value: kcm-system</span>
+<span class="s">          extensions:</span>
+<span class="s">            basicauth/metrics:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">            basicauth/logs:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">            basicauth/traces:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">          exporters:</span>
+<span class="s">            prometheusremotewrite:</span>
+<span class="s">              endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/metrics</span>
+<span class="s">              external_labels:</span>
+<span class="s">                cluster: mothership</span>
+<span class="s">                clusterNamespace: kcm-system</span>
+<span class="s">            otlphttp/logs:</span>
+<span class="s">              logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/logs</span>
+<span class="s">            otlphttp/traces:</span>
+<span class="s">              traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/traces</span>
+<span class="s">          service:</span>
+<span class="s">            extensions:</span>
+<span class="s">              - basicauth/metrics</span>
+<span class="s">              - basicauth/logs</span>
+<span class="s">              - basicauth/traces</span>
+<span class="s">    opencost:</span>
+<span class="s">      opencost:</span>
+<span class="s">        prometheus:</span>
+<span class="s">          existingSecretName: $VMUSER_CREDS_NAME</span>
+<span class="s">          external:</span>
+<span class="s">            url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
 <p>If you're using <code>kind</code> for Management cluster, insert this:</p>
@@ -5436,11 +5439,13 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 </div>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-</code></pre></div></p>
+<p>Upgrade the <code>kof</code> chart on the management cluster:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-regional-with-istio">From Management to Regional with Istio<a class="headerlink" href="#from-management-to-regional-with-istio" title="Permanent link">#</a></h2>
@@ -5463,90 +5468,93 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 </code></pre></div></p>
 </li>
 <li>
-<p>Create the <code>collectors-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">kcm:</span>
-<span class="s">  monitoring: true</span>
-<span class="s">opentelemetry-kube-stack:</span>
-<span class="s">  clusterName: mothership</span>
-<span class="s">  collectors:</span>
-<span class="s">    controller-k0s:</span>
-<span class="s">      enabled: false</span>
-<span class="s">    daemon:</span>
-<span class="s">      hostNetwork: false</span>
-<span class="s">      config:</span>
-<span class="s">        service:</span>
+<p>Update the <code>kof-values.yaml</code> file:
+    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">kof-collectors:</span>
+<span class="s">  enabled: true</span>
+<span class="s">  values:</span>
+<span class="s">    kcm:</span>
+<span class="s">      monitoring: true</span>
+<span class="s">    opentelemetry-kube-stack:</span>
+<span class="s">      clusterName: mothership</span>
+<span class="s">      collectors:</span>
+<span class="s">        controller-k0s:</span>
+<span class="s">          enabled: false</span>
+<span class="s">        daemon:</span>
+<span class="s">          hostNetwork: false</span>
+<span class="s">          config:</span>
+<span class="s">            service:</span>
+<span class="s">              extensions:</span>
+<span class="s">                - k8s_observer</span>
+<span class="s">                - file_storage/filelogreceiver</span>
+<span class="s">                - file_storage/filelogsyslogreceiver</span>
+<span class="s">                - file_storage/filelogk8sauditreceiver</span>
+<span class="s">                - file_storage/journaldreceiver</span>
+<span class="s">                - basicauth/metrics</span>
+<span class="s">                - basicauth/logs</span>
+<span class="s">                - basicauth/traces</span>
+<span class="s">      defaultCRConfig:</span>
+<span class="s">        env:</span>
+<span class="s">          - name: KOF_VM_USER</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                key: username</span>
+<span class="s">                name: $VMUSER_CREDS_NAME</span>
+<span class="s">          - name: KOF_VM_PASSWORD</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                key: password</span>
+<span class="s">                name: $VMUSER_CREDS_NAME</span>
+<span class="s">        config:</span>
+<span class="s">          processors:</span>
+<span class="s">            resource/k8sclustername:</span>
+<span class="s">              attributes:</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.name</span>
+<span class="s">                  value: mothership</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.namespace</span>
+<span class="s">                  value: kcm-system</span>
 <span class="s">          extensions:</span>
-<span class="s">            - k8s_observer</span>
-<span class="s">            - file_storage/filelogreceiver</span>
-<span class="s">            - file_storage/filelogsyslogreceiver</span>
-<span class="s">            - file_storage/filelogk8sauditreceiver</span>
-<span class="s">            - file_storage/journaldreceiver</span>
-<span class="s">            - basicauth/metrics</span>
+<span class="s">            basicauth/logs:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">            basicauth/metrics:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">            basicauth/traces:</span>
+<span class="s">              client_auth:</span>
+<span class="s">                username: \${env:KOF_VM_USER}</span>
+<span class="s">                password: \${env:KOF_VM_PASSWORD}</span>
+<span class="s">          service:</span>
+<span class="s">            extensions:</span>
 <span class="s">            - basicauth/logs</span>
+<span class="s">            - basicauth/metrics</span>
 <span class="s">            - basicauth/traces</span>
-<span class="s">  defaultCRConfig:</span>
-<span class="s">    env:</span>
-<span class="s">      - name: KOF_VM_USER</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: username</span>
-<span class="s">            name: $VMUSER_CREDS_NAME</span>
-<span class="s">      - name: KOF_VM_PASSWORD</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            key: password</span>
-<span class="s">            name: $VMUSER_CREDS_NAME</span>
-<span class="s">    config:</span>
-<span class="s">      processors:</span>
-<span class="s">        resource/k8sclustername:</span>
-<span class="s">          attributes:</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.name</span>
-<span class="s">              value: mothership</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.namespace</span>
-<span class="s">              value: kcm-system</span>
-<span class="s">      extensions:</span>
-<span class="s">        basicauth/logs:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">        basicauth/metrics:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">        basicauth/traces:</span>
-<span class="s">          client_auth:</span>
-<span class="s">            username: \${env:KOF_VM_USER}</span>
-<span class="s">            password: \${env:KOF_VM_PASSWORD}</span>
-<span class="s">      service:</span>
-<span class="s">        extensions:</span>
-<span class="s">        - basicauth/logs</span>
-<span class="s">        - basicauth/metrics</span>
-<span class="s">        - basicauth/traces</span>
-<span class="s">      exporters:</span>
-<span class="s">        prometheusremotewrite:</span>
-<span class="s">          endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/metrics</span>
-<span class="s">          external_labels:</span>
-<span class="s">            cluster: mothership</span>
-<span class="s">            clusterNamespace: kcm-system</span>
-<span class="s">        otlphttp/logs:</span>
-<span class="s">          logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/logs</span>
-<span class="s">        otlphttp/traces:</span>
-<span class="s">          traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces</span>
-<span class="s">          auth:</span>
-<span class="s">            authenticator: basicauth/traces</span>
-<span class="s">opencost:</span>
-<span class="s">  opencost:</span>
-<span class="s">    prometheus:</span>
-<span class="s">      existingSecretName: $VMUSER_CREDS_NAME</span>
-<span class="s">      external:</span>
-<span class="s">        url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus</span>
+<span class="s">          exporters:</span>
+<span class="s">            prometheusremotewrite:</span>
+<span class="s">              endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/metrics</span>
+<span class="s">              external_labels:</span>
+<span class="s">                cluster: mothership</span>
+<span class="s">                clusterNamespace: kcm-system</span>
+<span class="s">            otlphttp/logs:</span>
+<span class="s">              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/logs</span>
+<span class="s">            otlphttp/traces:</span>
+<span class="s">              traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces</span>
+<span class="s">              auth:</span>
+<span class="s">                authenticator: basicauth/traces</span>
+<span class="s">    opencost:</span>
+<span class="s">      opencost:</span>
+<span class="s">        prometheus:</span>
+<span class="s">          existingSecretName: $VMUSER_CREDS_NAME</span>
+<span class="s">          external:</span>
+<span class="s">            url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
 <p>If you're using <code>kind</code> for Management cluster, insert this:</p>
@@ -5567,11 +5575,13 @@ and <code>$REGIONAL_CLUSTER_NAME</code> with the value from <a href="../kof-inst
 </div>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-</code></pre></div></p>
+<p>Update the <code>kof</code> chart on the management cluster:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-third-party">From Management to Third-party<a class="headerlink" href="#from-management-to-third-party" title="Permanent link">#</a></h2>
@@ -5598,63 +5608,68 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 </code></pre></div></p>
 </li>
 <li>
-<p>Create the <code>collectors-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">kcm:</span>
-<span class="s">  monitoring: true</span>
-<span class="s">opentelemetry-kube-stack:</span>
-<span class="s">  clusterName: mothership</span>
-<span class="s">  defaultCRConfig:</span>
-<span class="s">    env:</span>
-<span class="s">      - name: AWS_ACCESS_KEY_ID</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            name: cloudwatch-credentials</span>
-<span class="s">            key: AWS_ACCESS_KEY_ID</span>
-<span class="s">      - name: AWS_SECRET_ACCESS_KEY</span>
-<span class="s">        valueFrom:</span>
-<span class="s">          secretKeyRef:</span>
-<span class="s">            name: cloudwatch-credentials</span>
-<span class="s">            key: AWS_SECRET_ACCESS_KEY</span>
-<span class="s">    config:</span>
-<span class="s">      processors:</span>
-<span class="s">        resource/k8sclustername:</span>
-<span class="s">          attributes:</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.name</span>
-<span class="s">              value: mothership</span>
-<span class="s">            - action: insert</span>
-<span class="s">              key: k8s.cluster.namespace</span>
-<span class="s">              value: kcm-system</span>
-<span class="s">      exporters:</span>
-<span class="s">        awscloudwatchlogs:</span>
-<span class="s">          region: us-east-2</span>
-<span class="s">          log_group_name: management</span>
-<span class="s">          log_stream_name: logs</span>
-<span class="s">        prometheusremotewrite: null</span>
-<span class="s">        otlphttp/logs: null</span>
-<span class="s">        otlphttp/traces: null</span>
-<span class="s">      service:</span>
-<span class="s">        pipelines:</span>
-<span class="s">          logs:</span>
-<span class="s">            exporters:</span>
-<span class="s">            - awscloudwatchlogs</span>
-<span class="s">            - debug</span>
-<span class="s">          metrics:</span>
-<span class="s">            exporters:</span>
-<span class="s">            - debug</span>
-<span class="s">          traces:</span>
-<span class="s">            exporters:</span>
-<span class="s">            - debug</span>
+<p>Update the <code>kof-values.yaml</code> file:
+    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">kof-collectors:</span>
+<span class="s">  enabled: true</span>
+<span class="s">  values:</span>
+<span class="s">    kcm:</span>
+<span class="s">      monitoring: true</span>
+<span class="s">    opentelemetry-kube-stack:</span>
+<span class="s">      clusterName: mothership</span>
+<span class="s">      defaultCRConfig:</span>
+<span class="s">        env:</span>
+<span class="s">          - name: AWS_ACCESS_KEY_ID</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                name: cloudwatch-credentials</span>
+<span class="s">                key: AWS_ACCESS_KEY_ID</span>
+<span class="s">          - name: AWS_SECRET_ACCESS_KEY</span>
+<span class="s">            valueFrom:</span>
+<span class="s">              secretKeyRef:</span>
+<span class="s">                name: cloudwatch-credentials</span>
+<span class="s">                key: AWS_SECRET_ACCESS_KEY</span>
+<span class="s">        config:</span>
+<span class="s">          processors:</span>
+<span class="s">            resource/k8sclustername:</span>
+<span class="s">              attributes:</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.name</span>
+<span class="s">                  value: mothership</span>
+<span class="s">                - action: insert</span>
+<span class="s">                  key: k8s.cluster.namespace</span>
+<span class="s">                  value: kcm-system</span>
+<span class="s">          exporters:</span>
+<span class="s">            awscloudwatchlogs:</span>
+<span class="s">              region: us-east-2</span>
+<span class="s">              log_group_name: management</span>
+<span class="s">              log_stream_name: logs</span>
+<span class="s">            prometheusremotewrite: null</span>
+<span class="s">            otlphttp/logs: null</span>
+<span class="s">            otlphttp/traces: null</span>
+<span class="s">          service:</span>
+<span class="s">            pipelines:</span>
+<span class="s">              logs:</span>
+<span class="s">                exporters:</span>
+<span class="s">                - awscloudwatchlogs</span>
+<span class="s">                - debug</span>
+<span class="s">              metrics:</span>
+<span class="s">                exporters:</span>
+<span class="s">                - debug</span>
+<span class="s">              traces:</span>
+<span class="s">                exporters:</span>
+<span class="s">                - debug</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.1
-</code></pre></div></p>
+<p>Update the <code>kof</code> chart on the management cluster:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.7.1
+</code></pre></div>
 </li>
 <li>
 <p>Configure AWS CLI with the same access key, for verification:
