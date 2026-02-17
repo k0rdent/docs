@@ -41,58 +41,57 @@ This option stores KOF data of the management cluster in the same management clu
 
 To apply this option:
 
-1. Create the `storage-values.yaml` file:
+1. Modify the `kof-values.yaml` file:
     ```yaml
-    victoria-metrics-operator:
-      enabled: false
-    victoriametrics:
-      enabled: false
-    promxy:
+    kof-storage:
+      values:
+        enabled: true
+    ```
+
+    If you want to use a non-default storage class, add to the `kof-values.yaml` file:
+    ```yaml
+    kof-storage:
+      values:
+        victoria-logs-cluster:
+          vlstorage:
+            persistentVolume:
+              storageClassName: <EXAMPLE_STORAGE_CLASS>
+    ```
+
+2. Modify the `kof-values.yaml` file:
+    ```yaml
+    kof-collectors:
       enabled: true
+      values:
+        kcm:
+          monitoring: true
+        opentelemetry-kube-stack:
+          clusterName: mothership
+          defaultCRConfig:
+            config:
+              processors:
+                resource/k8sclustername:
+                  attributes:
+                    - action: insert
+                      key: k8s.cluster.name
+                      value: mothership
+                    - action: insert
+                      key: k8s.cluster.namespace
+                      value: kcm-system
+              exporters:
+                prometheusremotewrite:
+                  external_labels:
+                    cluster: mothership
+                    clusterNamespace: kcm-system
     ```
 
-    If you want to use a non-default storage class, add to the `storage-values.yaml` file:
-    ```yaml
-    victoria-logs-cluster:
-      vlstorage:
-        persistentVolume:
-          storageClassName: <EXAMPLE_STORAGE_CLASS>
-    ```
+3. Update the `kof` chart on the management cluster:
 
-2. Create the `collectors-values.yaml` file:
-    ```yaml
-    kcm:
-      monitoring: true
-    opentelemetry-kube-stack:
-      clusterName: mothership
-      defaultCRConfig:
-        config:
-          processors:
-            resource/k8sclustername:
-              attributes:
-                - action: insert
-                  key: k8s.cluster.name
-                  value: mothership
-                - action: insert
-                  key: k8s.cluster.namespace
-                  value: kcm-system
-          exporters:
-            prometheusremotewrite:
-              external_labels:
-                cluster: mothership
-                clusterNamespace: kcm-system
-    ```
-
-3. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-storage \
-      -f storage-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-storage --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-
-    helm upgrade -i --reset-values --wait -n kof kof-collectors \
-      -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
 
 ## From Management to Regional
 
@@ -115,114 +114,117 @@ To apply this option:
     echo $VMUSER_CREDS_NAME
     ```
 
-2. Create the `collectors-values.yaml` file:
+2. Update the `kof-values.yaml` file:
     ```bash
-    cat >collectors-values.yaml <<EOF
-    kcm:
-      monitoring: true
-    opentelemetry-kube-stack:
-      clusterName: mothership
-      collectors:
-        daemon:
-          hostNetwork: true
-          observability:
-            metrics:
-              disablePrometheusAnnotations: false
-              enableMetrics: false
-          podAnnotations:
-            prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}
-          config:
-            receivers:
-              prometheus:
-                api_server:
-                  server_config:
-                    endpoint: \${env:OTEL_K8S_NODE_IP}:9090
-              otlp:
-                protocols:
-                  grpc:
-                    endpoint: 127.0.0.1:4317
-                  http:
-                    endpoint: 127.0.0.1:4318
-            service:
-              extensions:
-                - k8s_observer
-                - file_storage/filelogreceiver
-                - file_storage/filelogsyslogreceiver
-                - file_storage/filelogk8sauditreceiver
-                - file_storage/journaldreceiver
-                - basicauth/metrics
-                - basicauth/logs
-                - basicauth/traces
-              telemetry:
+    cat <<EOF
+    kof-collectors:
+      enabled: true
+      values:
+        kcm:
+          monitoring: true
+        opentelemetry-kube-stack:
+          clusterName: mothership
+          collectors:
+            daemon:
+              hostNetwork: true
+              observability:
                 metrics:
-                  readers:
-                    - pull:
-                        exporter:
-                          prometheus:
-                            host: \${env:OTEL_K8S_NODE_IP}
-                            port: 8888
-      defaultCRConfig:
-        env:
-          - name: KOF_VM_USER
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: $VMUSER_CREDS_NAME
-          - name: KOF_VM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: $VMUSER_CREDS_NAME
-        config:
-          processors:
-            resource/k8sclustername:
-              attributes:
-                - action: insert
-                  key: k8s.cluster.name
-                  value: mothership
-                - action: insert
-                  key: k8s.cluster.namespace
-                  value: kcm-system
-          extensions:
-            basicauth/metrics:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-            basicauth/logs:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-            basicauth/traces:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-          exporters:
-            prometheusremotewrite:
-              endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
-              auth:
-                authenticator: basicauth/metrics
-              external_labels:
-                cluster: mothership
-                clusterNamespace: kcm-system
-            otlphttp/logs:
-              logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
-              auth:
-                authenticator: basicauth/logs
-            otlphttp/traces:
-              traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces
-              auth:
-                authenticator: basicauth/traces
-          service:
-            extensions:
-              - basicauth/metrics
-              - basicauth/logs
-              - basicauth/traces
-    opencost:
-      opencost:
-        prometheus:
-          existingSecretName: $VMUSER_CREDS_NAME
-          external:
-            url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
+                  disablePrometheusAnnotations: false
+                  enableMetrics: false
+              podAnnotations:
+                prometheus.io/ip4: \${env:OTEL_K8S_NODE_IP}
+              config:
+                receivers:
+                  prometheus:
+                    api_server:
+                      server_config:
+                        endpoint: \${env:OTEL_K8S_NODE_IP}:9090
+                  otlp:
+                    protocols:
+                      grpc:
+                        endpoint: 127.0.0.1:4317
+                      http:
+                        endpoint: 127.0.0.1:4318
+                service:
+                  extensions:
+                    - k8s_observer
+                    - file_storage/filelogreceiver
+                    - file_storage/filelogsyslogreceiver
+                    - file_storage/filelogk8sauditreceiver
+                    - file_storage/journaldreceiver
+                    - basicauth/metrics
+                    - basicauth/logs
+                    - basicauth/traces
+                  telemetry:
+                    metrics:
+                      readers:
+                        - pull:
+                            exporter:
+                              prometheus:
+                                host: \${env:OTEL_K8S_NODE_IP}
+                                port: 8888
+          defaultCRConfig:
+            env:
+              - name: KOF_VM_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: username
+                    name: $VMUSER_CREDS_NAME
+              - name: KOF_VM_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: password
+                    name: $VMUSER_CREDS_NAME
+            config:
+              processors:
+                resource/k8sclustername:
+                  attributes:
+                    - action: insert
+                      key: k8s.cluster.name
+                      value: mothership
+                    - action: insert
+                      key: k8s.cluster.namespace
+                      value: kcm-system
+              extensions:
+                basicauth/metrics:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+                basicauth/logs:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+                basicauth/traces:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+              exporters:
+                prometheusremotewrite:
+                  endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
+                  auth:
+                    authenticator: basicauth/metrics
+                  external_labels:
+                    cluster: mothership
+                    clusterNamespace: kcm-system
+                otlphttp/logs:
+                  logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
+                  auth:
+                    authenticator: basicauth/logs
+                otlphttp/traces:
+                  traces_endpoint: https://vmauth.$REGIONAL_DOMAIN/vti/insert/opentelemetry/v1/traces
+                  auth:
+                    authenticator: basicauth/traces
+              service:
+                extensions:
+                  - basicauth/metrics
+                  - basicauth/logs
+                  - basicauth/traces
+        opencost:
+          opencost:
+            prometheus:
+              existingSecretName: $VMUSER_CREDS_NAME
+              external:
+                url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
     EOF
     ```
 
@@ -243,12 +245,14 @@ To apply this option:
     > `$VMUSER_CREDS_NAME` with the value from step 1,
     > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
-3. Install the `kof-collectors` chart to the management cluster:
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-collectors \
-      -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+3. Upgrade the `kof` chart on the management cluster:
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
+
 
 ## From Management to Regional with Istio
 
@@ -271,91 +275,94 @@ To apply this option:
     echo $VMUSER_CREDS_NAME
     ```
 
-2. Create the `collectors-values.yaml` file:
+2. Update the `kof-values.yaml` file:
     ```bash
-    cat >collectors-values.yaml <<EOF
-    kcm:
-      monitoring: true
-    opentelemetry-kube-stack:
-      clusterName: mothership
-      collectors:
-        controller-k0s:
-          enabled: false
-        daemon:
-          hostNetwork: false
-          config:
-            service:
+    cat <<EOF
+    kof-collectors:
+      enabled: true
+      values:
+        kcm:
+          monitoring: true
+        opentelemetry-kube-stack:
+          clusterName: mothership
+          collectors:
+            controller-k0s:
+              enabled: false
+            daemon:
+              hostNetwork: false
+              config:
+                service:
+                  extensions:
+                    - k8s_observer
+                    - file_storage/filelogreceiver
+                    - file_storage/filelogsyslogreceiver
+                    - file_storage/filelogk8sauditreceiver
+                    - file_storage/journaldreceiver
+                    - basicauth/metrics
+                    - basicauth/logs
+                    - basicauth/traces
+          defaultCRConfig:
+            env:
+              - name: KOF_VM_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: username
+                    name: $VMUSER_CREDS_NAME
+              - name: KOF_VM_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: password
+                    name: $VMUSER_CREDS_NAME
+            config:
+              processors:
+                resource/k8sclustername:
+                  attributes:
+                    - action: insert
+                      key: k8s.cluster.name
+                      value: mothership
+                    - action: insert
+                      key: k8s.cluster.namespace
+                      value: kcm-system
               extensions:
-                - k8s_observer
-                - file_storage/filelogreceiver
-                - file_storage/filelogsyslogreceiver
-                - file_storage/filelogk8sauditreceiver
-                - file_storage/journaldreceiver
-                - basicauth/metrics
+                basicauth/logs:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+                basicauth/metrics:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+                basicauth/traces:
+                  client_auth:
+                    username: \${env:KOF_VM_USER}
+                    password: \${env:KOF_VM_PASSWORD}
+              service:
+                extensions:
                 - basicauth/logs
+                - basicauth/metrics
                 - basicauth/traces
-      defaultCRConfig:
-        env:
-          - name: KOF_VM_USER
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: $VMUSER_CREDS_NAME
-          - name: KOF_VM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: $VMUSER_CREDS_NAME
-        config:
-          processors:
-            resource/k8sclustername:
-              attributes:
-                - action: insert
-                  key: k8s.cluster.name
-                  value: mothership
-                - action: insert
-                  key: k8s.cluster.namespace
-                  value: kcm-system
-          extensions:
-            basicauth/logs:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-            basicauth/metrics:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-            basicauth/traces:
-              client_auth:
-                username: \${env:KOF_VM_USER}
-                password: \${env:KOF_VM_PASSWORD}
-          service:
-            extensions:
-            - basicauth/logs
-            - basicauth/metrics
-            - basicauth/traces
-          exporters:
-            prometheusremotewrite:
-              endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write
-              auth:
-                authenticator: basicauth/metrics
-              external_labels:
-                cluster: mothership
-                clusterNamespace: kcm-system
-            otlphttp/logs:
-              logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs
-              auth:
-                authenticator: basicauth/logs
-            otlphttp/traces:
-              traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces
-              auth:
-                authenticator: basicauth/traces
-    opencost:
-      opencost:
-        prometheus:
-          existingSecretName: $VMUSER_CREDS_NAME
-          external:
-            url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus
+              exporters:
+                prometheusremotewrite:
+                  endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/insert/0/prometheus/api/v1/write
+                  auth:
+                    authenticator: basicauth/metrics
+                  external_labels:
+                    cluster: mothership
+                    clusterNamespace: kcm-system
+                otlphttp/logs:
+                  logs_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vli/insert/opentelemetry/v1/logs
+                  auth:
+                    authenticator: basicauth/logs
+                otlphttp/traces:
+                  traces_endpoint: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vti/insert/opentelemetry/v1/traces
+                  auth:
+                    authenticator: basicauth/traces
+        opencost:
+          opencost:
+            prometheus:
+              existingSecretName: $VMUSER_CREDS_NAME
+              external:
+                url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus
     EOF
     ```
 
@@ -376,12 +383,14 @@ To apply this option:
     > `$VMUSER_CREDS_NAME` with the value from step 1,
     > and `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
-3. Install the `kof-collectors` chart to the management cluster:
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-collectors \
-      -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+3. Update the `kof` chart on the management cluster:
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
+
 
 ## From Management to Third-party
 
@@ -408,64 +417,68 @@ For now, however, just for the sake of this demo, you can use the most straightf
       --from-env-file=cloudwatch-credentials
     ```
 
-4. Create the `collectors-values.yaml` file:
+4. Update the `kof-values.yaml` file:
     ```bash
-    cat >collectors-values.yaml <<EOF
-    kcm:
-      monitoring: true
-    opentelemetry-kube-stack:
-      clusterName: mothership
-      defaultCRConfig:
-        env:
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: cloudwatch-credentials
-                key: AWS_ACCESS_KEY_ID
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: cloudwatch-credentials
-                key: AWS_SECRET_ACCESS_KEY
-        config:
-          processors:
-            resource/k8sclustername:
-              attributes:
-                - action: insert
-                  key: k8s.cluster.name
-                  value: mothership
-                - action: insert
-                  key: k8s.cluster.namespace
-                  value: kcm-system
-          exporters:
-            awscloudwatchlogs:
-              region: us-east-2
-              log_group_name: management
-              log_stream_name: logs
-            prometheusremotewrite: null
-            otlphttp/logs: null
-            otlphttp/traces: null
-          service:
-            pipelines:
-              logs:
-                exporters:
-                - awscloudwatchlogs
-                - debug
-              metrics:
-                exporters:
-                - debug
-              traces:
-                exporters:
-                - debug
+    cat <<EOF
+    kof-collectors:
+      enabled: true
+      values:
+        kcm:
+          monitoring: true
+        opentelemetry-kube-stack:
+          clusterName: mothership
+          defaultCRConfig:
+            env:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudwatch-credentials
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudwatch-credentials
+                    key: AWS_SECRET_ACCESS_KEY
+            config:
+              processors:
+                resource/k8sclustername:
+                  attributes:
+                    - action: insert
+                      key: k8s.cluster.name
+                      value: mothership
+                    - action: insert
+                      key: k8s.cluster.namespace
+                      value: kcm-system
+              exporters:
+                awscloudwatchlogs:
+                  region: us-east-2
+                  log_group_name: management
+                  log_stream_name: logs
+                prometheusremotewrite: null
+                otlphttp/logs: null
+                otlphttp/traces: null
+              service:
+                pipelines:
+                  logs:
+                    exporters:
+                    - awscloudwatchlogs
+                    - debug
+                  metrics:
+                    exporters:
+                    - debug
+                  traces:
+                    exporters:
+                    - debug
     EOF
     ```
 
-5. Install the `kof-collectors` chart to the management cluster:
-    ```bash
-    helm upgrade -i --reset-values --wait -n kof kof-collectors \
-      -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-    ```
+5. Update the `kof` chart on the management cluster:
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
 
 6. Configure AWS CLI with the same access key, for verification:
     ```bash
