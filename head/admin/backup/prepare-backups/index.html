@@ -5117,7 +5117,7 @@ select from the <a href="https://hub.docker.com/r/velero/velero-plugin-for-aws/t
 <p>Prepare a <a href="https://velero.io/docs/supported-providers/">storage location</a>, such as an Amazon S3 bucket, to store k0rdent backups.</p>
 </li>
 <li>
-<p>Prepare a yaml containing a <a href="https://velero.io/docs/v1.17/locations/"><code>BackupStorageLocation</code></a>
+<p>Prepare a yaml containing a <a href="https://velero.io/docs/v1.17/api-types/backupstoragelocation/"><code>BackupStorageLocation</code></a>
    object referencing a <code>Secret</code> with credentials to access the cloud storage
    (if the multiple credentials feature is supported by the plugin).
    For example, you can create the <code>BackupStorageLocation</code> and the related <code>Secret</code>
@@ -5132,14 +5132,14 @@ select from the <a href="https://hub.docker.com/r/velero/velero-plugin-for-aws/t
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-If you're using EKS, the "user" is actually a role. If you get an error such as...</p>
-<div class="highlight"><pre><span></span><code>AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: &quot;arn:aws:s3:::nick-chase-backup-bucket&quot; because no identity-based policy allows the s3:ListBucket action
+If you're using EKS, the "user" is actually a role. If you get an error such as</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: &quot;arn:aws:s3:::nick-chase-backup-bucket&quot; because no identity-based policy allows the s3:ListBucket action</span>
 </code></pre></div>
-<p>...you can extract the role from the message (in this example, it's the assumed-role) and create the policy. For example:</p>
-<div class="highlight"><pre><span></span><code>aws iam put-role-policy
---role-name eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A
---policy-name velero
---policy-document file://velero-policy.json
+<p>Extract the role from the message (in this example, it's the <code>assumed-role</code>) and create the policy. For example:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>put-role-policy<span class="w"> </span><span class="se">\</span>
+--role-name<span class="w"> </span>eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A<span class="w"> </span><span class="se">\</span>
+--policy-name<span class="w"> </span>velero<span class="w"> </span><span class="se">\</span>
+--policy-document<span class="w"> </span>file://velero-policy.json
 </code></pre></div>
 </div>
 <p>Generate the necessary base64-encoded credentials using:</p>
