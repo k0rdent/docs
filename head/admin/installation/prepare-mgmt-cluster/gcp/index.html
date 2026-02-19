@@ -5091,8 +5091,13 @@ the <a href="https://cloud.google.com/sdk/docs/install">Install the gcloud CLI i
 Skip this step if the Service Account already configured</p>
 </div>
 <p>Follow the <a href="https://cloud.google.com/iam/docs/service-accounts-create#creating">GCP Service Account creation guide</a>
-and create a new service account with <code>Editor</code> permissions.
-If you have plans to deploy <code>GKE</code>, the Service Account will also need the <code>iam.serviceAccountTokenCreator</code> role.</p>
+and create a new service account with <code>Editor</code> permissions. </p>
+<p>If you have plans to deploy <code>GKE</code>, the Service Account will also need all the permissions described in the
+<a href="https://docs.cloud.google.com/kubernetes-engine/docs/reference/api-permissions">API permissions documentation</a>.
+For example, assigning the <code>Owner</code> role satisfies these requirements. In addition, the Service Account must also
+have the <code>iam.serviceAccountTokenCreator</code> role.
+Ensure the Service Account has all necessary permissions to manage the GKE and Kubernetes resources required for
+your cluster deployment.</p>
 </li>
 <li>
 <p>Generate a JSON Key for the GCP Service Account</p>
