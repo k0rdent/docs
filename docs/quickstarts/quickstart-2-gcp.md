@@ -37,10 +37,16 @@ gcloud config set project PROJECT_ID
 
 > NOTE:
 > Skip this step if the Service Account already configured
+
 Follow the [GCP Service Account creation guide](https://cloud.google.com/iam/docs/service-accounts-create#creating)
 and create a new service account with `Editor` permissions.
 
-If you have plans to deploy `GKE`, the Service Account will also need the `iam.serviceAccountTokenCreator` role.
+If you have plans to deploy `GKE`, the Service Account will also need all the permissions described in the
+[API permissions documentation](https://docs.cloud.google.com/kubernetes-engine/docs/reference/api-permissions).
+For example, assigning the `Owner` role satisfies these requirements. In addition, the Service Account must also
+have the `iam.serviceAccountTokenCreator` role.
+Ensure the Service Account has all necessary permissions to manage the GKE and Kubernetes resources required for
+your cluster deployment.
 
 ## Generate JSON Key for the GCP Service Account
 
