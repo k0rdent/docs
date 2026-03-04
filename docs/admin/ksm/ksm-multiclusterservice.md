@@ -31,22 +31,12 @@ Consider the following example where two clusters have been deployed using `Clus
 Command:
 
 ```bash
-kubectl get clusterdeployments.k0rdent.mirantis.com -n kcm-system
+kubectl get clusterdeployments.k0rdent.mirantis.com -n kcm-system --show-labels
 ```
 ```console { .no-copy }
-NAME             READY   STATUS
-dev-cluster-1   True    ClusterDeployment is ready
-dev-cluster-2   True    ClusterDeployment is ready
-```
-
-Command:
-```bash
- kubectl get cluster -n kcm-system --show-labels
-```
-```console { .no-copy }
-NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS
-dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
-dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
+NAME             READY   STATUS                      LABELS
+dev-cluster-1   True    ClusterDeployment is ready  cluster-deployment/tier=dev
+dev-cluster-2   True    ClusterDeployment is ready  cluster-deployment/tier=dev
 ```
 
 The `dev-cluster-1` `ClusterDeployment` services are specified as:
@@ -56,6 +46,8 @@ kind: ClusterDeployment
 metadata:
   name: dev-cluster-1
   namespace: kcm-system
+  labels:
+     cluster-deployment/tier: dev
 spec:
   . . .
   serviceSpec:
@@ -77,6 +69,8 @@ kind: ClusterDeployment
 metadata:
   name: dev-cluster-2
   namespace: kcm-system
+  labels:
+     cluster-deployment/tier: dev
 spec:
   . . .
   serviceSpec:
@@ -100,7 +94,7 @@ metadata:
 spec:
   clusterSelector:
     matchLabels:
-      app.kubernetes.io/managed-by: Helm
+      cluster-deployment/tier: dev
   serviceSpec:
     services:
     - name: ingress-nginx
@@ -109,7 +103,7 @@ spec:
     priority: 300
 ```
 
-This MultiClusterService will match any CAPI cluster with the label `app.kubernetes.io/managed-by: Helm` and deploy chart
+This MultiClusterService will match any `ClusterDeployment` with the label `cluster-deployment/tier: dev` and deploy chart
 version 4.11.3 of ingress-nginx service on it.
 
 ### Configuring Custom Values
