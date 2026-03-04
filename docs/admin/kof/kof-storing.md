@@ -36,7 +36,7 @@ No additional steps are required here.
 
 This option stores KOF data of the management cluster in the same management cluster.
 
-* VictoriaMetrics is provided by the `kof-mothership` chart, hence disabled in the `kof-storage` chart.
+* VictoriaMetrics is provided by the `kof-mothership` chart, hence disabled in the `kof-storage` chart by default.
 * PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the `kof-storage` chart.
 
 To apply this option:
@@ -70,17 +70,34 @@ To apply this option:
                     clusterNamespace: kcm-system
     ```
 
-2. If you want to use a non-default storage class, add to the `kof-values.yaml` file:
-    ```yaml
-    kof-storage:
-      values:
-        victoria-logs-cluster:
-          vlstorage:
-            persistentVolume:
-              storageClassName: <EXAMPLE_STORAGE_CLASS>
-    ```
+    ??? note "If you're using `kind` for Management cluster, merge this:"
 
-3. Update the `kof` chart on the management cluster:
+        ```yaml
+        kof-collectors:
+          values:
+            metrics-server:
+              enabled: true
+              args:
+                - "--kubelet-insecure-tls"
+            opentelemetry-kube-stack:
+              defaultCRConfig:
+                env:
+                  - name: PKI_PATH
+                    value: etc/kubernetes
+        ```
+
+    ??? note "If you want to use a non-default storage class, merge this:"
+
+        ```yaml
+        kof-storage:
+          values:
+            victoria-logs-cluster:
+              vlstorage:
+                persistentVolume:
+                  storageClassName: <EXAMPLE_STORAGE_CLASS>
+        ```
+
+2. Update the `kof` chart in the management cluster:
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
@@ -223,22 +240,29 @@ To apply this option:
     EOF
     ```
 
-    If you're using `kind` for Management cluster, insert this:
+    ??? note "If you're using `kind` for Management cluster, merge this:"
 
-    ```
-    ...
-      defaultCRConfig:
-        env:
-          - name: PKI_PATH
-            value: etc/kubernetes
-          - name: KOF_VM_USER
-    ...
-    ```
+        ```yaml
+        kof-collectors:
+          values:
+            metrics-server:
+              enabled: true
+              args:
+                - "--kubelet-insecure-tls"
+            opentelemetry-kube-stack:
+              defaultCRConfig:
+                env:
+                  - name: PKI_PATH
+                    value: etc/kubernetes
+        ```
 
-    > NOTE:
-    > If you create this file directly, make sure to replace `\$` with `$`,
-    > `$VMUSER_CREDS_NAME` with the value from step 1,
-    > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
+        Please merge to the existing `env` list manually to avoid overwrite.
+
+    ??? note "If you create this file directly:"
+
+        * Replace `\$` with `$`,
+        * `$VMUSER_CREDS_NAME` with the value from step 1,
+        * `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
 3. Upgrade the `kof` chart on the management cluster:
 
@@ -361,22 +385,29 @@ To apply this option:
     EOF
     ```
 
-    If you're using `kind` for Management cluster, insert this:
+    ??? note "If you're using `kind` for Management cluster, merge this:"
 
-    ```
-    ...
-      defaultCRConfig:
-        env:
-          - name: PKI_PATH
-            value: etc/kubernetes
-          - name: KOF_VM_USER
-    ...
-    ```
+        ```yaml
+        kof-collectors:
+          values:
+            metrics-server:
+              enabled: true
+              args:
+                - "--kubelet-insecure-tls"
+            opentelemetry-kube-stack:
+              defaultCRConfig:
+                env:
+                  - name: PKI_PATH
+                    value: etc/kubernetes
+        ```
 
-    > NOTE:
-    > If you create this file directly, make sure to replace `\$` with `$`,
-    > `$VMUSER_CREDS_NAME` with the value from step 1,
-    > and `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
+        Please merge to the existing `env` list manually to avoid overwrite.
+
+    ??? note "If you create this file directly:"
+
+        * Replace `\$` with `$`,
+        * `$VMUSER_CREDS_NAME` with the value from step 1,
+        * `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
 3. Update the `kof` chart on the management cluster:
 
