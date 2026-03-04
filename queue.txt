@@ -1,2 +1,3 @@
 main
 main
+release-v1.8.0
