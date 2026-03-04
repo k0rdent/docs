@@ -87,13 +87,13 @@ Helm-based `ServiceTemplate` can be created in three ways:
   spec:
     helm:
       chartSource:
-        remoteSourceRef:
+        path: "./charts"
+        remoteSourceSpec:
           git:
             url: https://github.com/bar/foo.git
             reference:
               branch: main
             interval: 10m
-          path: "./charts"
   ```
 
 ### Kustomize-based ServiceTemplate
