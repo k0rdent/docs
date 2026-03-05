@@ -5209,7 +5209,7 @@ No additional steps are required here.</p>
 <h2 id="from-management-to-management">From Management to Management<a class="headerlink" href="#from-management-to-management" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in the same management cluster.</p>
 <ul>
-<li>VictoriaMetrics is provided by the <code>kof-mothership</code> chart, hence disabled in the <code>kof-storage</code> chart.</li>
+<li>VictoriaMetrics is provided by the <code>kof-mothership</code> chart, hence disabled in the <code>kof-storage</code> chart by default.</li>
 <li>PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the <code>kof-storage</code> chart.</li>
 </ul>
 <p>To apply this option:</p>
@@ -5242,19 +5242,34 @@ No additional steps are required here.</p>
 <span class="w">                </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
 <span class="w">                </span><span class="nt">clusterNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 </code></pre></div></p>
-</li>
-<li>
-<p>If you want to use a non-default storage class, add to the <code>kof-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
+<details class="note">
+<summary>If you're using <code>kind</code> for Management cluster, merge this:</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>If you want to use a non-default storage class, merge this:</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">vlstorage</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">persistentVolume</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
-</code></pre></div></p>
+</code></pre></div>
+</details>
 </li>
 <li>
-<p>Update the <code>kof</code> chart on the management cluster:</p>
+<p>Update the <code>kof</code> chart in the management cluster:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
@@ -5395,22 +5410,30 @@ No additional steps are required here.</p>
 <span class="s">            url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
-<p>If you're using <code>kind</code> for Management cluster, insert this:</p>
-<div class="highlight"><pre><span></span><code>...
-  defaultCRConfig:
-    env:
-      - name: PKI_PATH
-        value: etc/kubernetes
-      - name: KOF_VM_USER
-...
+<details class="note">
+<summary>If you're using <code>kind</code> for Management cluster, merge this:</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-If you create this file directly, make sure to replace <code>\$</code> with <code>$</code>,
-<code>$VMUSER_CREDS_NAME</code> with the value from step 1,
-and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</p>
-</div>
+<p>Please merge to the existing <code>env</code> list manually to avoid overwrite.</p>
+</details>
+<details class="note">
+<summary>If you create this file directly:</summary>
+<ul>
+<li>Replace <code>\$</code> with <code>$</code>,</li>
+<li><code>$VMUSER_CREDS_NAME</code> with the value from step 1,</li>
+<li><code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</li>
+</ul>
+</details>
 </li>
 <li>
 <p>Upgrade the <code>kof</code> chart on the management cluster:</p>
@@ -5531,22 +5554,30 @@ and <code>$REGIONAL_DOMAIN</code> with the value from <a href="../kof-install/#r
 <span class="s">            url: http://$REGIONAL_CLUSTER_NAME-vmauth:8427/vm/select/0/prometheus</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
-<p>If you're using <code>kind</code> for Management cluster, insert this:</p>
-<div class="highlight"><pre><span></span><code>...
-  defaultCRConfig:
-    env:
-      - name: PKI_PATH
-        value: etc/kubernetes
-      - name: KOF_VM_USER
-...
+<details class="note">
+<summary>If you're using <code>kind</code> for Management cluster, merge this:</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-If you create this file directly, make sure to replace <code>\$</code> with <code>$</code>,
-<code>$VMUSER_CREDS_NAME</code> with the value from step 1,
-and <code>$REGIONAL_CLUSTER_NAME</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</p>
-</div>
+<p>Please merge to the existing <code>env</code> list manually to avoid overwrite.</p>
+</details>
+<details class="note">
+<summary>If you create this file directly:</summary>
+<ul>
+<li>Replace <code>\$</code> with <code>$</code>,</li>
+<li><code>$VMUSER_CREDS_NAME</code> with the value from step 1,</li>
+<li><code>$REGIONAL_CLUSTER_NAME</code> with the value from <a href="../kof-install/#regional-cluster">Installing KOF - Regional Cluster</a>.</li>
+</ul>
+</details>
 </li>
 <li>
 <p>Update the <code>kof</code> chart on the management cluster:</p>

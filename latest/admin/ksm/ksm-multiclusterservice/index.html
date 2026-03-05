@@ -5256,18 +5256,11 @@
 <h2 id="matching-multiple-clusters">Matching Multiple Clusters<a class="headerlink" href="#matching-multiple-clusters" title="Permanent link">#</a></h2>
 <p>Consider the following example where two clusters have been deployed using <code>ClusterDeployment</code> objects:</p>
 <p>Command:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments.k0rdent.mirantis.com<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments.k0rdent.mirantis.com<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--show-labels
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME             READY   STATUS</span>
-<span class="go">dev-cluster-1   True    ClusterDeployment is ready</span>
-<span class="go">dev-cluster-2   True    ClusterDeployment is ready</span>
-</code></pre></div></p>
-<p>Command:
-<div class="highlight"><pre><span></span><code><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>cluster<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--show-labels
-</code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS</span>
-<span class="go">dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
-<span class="go">dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME             READY   STATUS                      LABELS</span>
+<span class="go">dev-cluster-1   True    ClusterDeployment is ready  cluster-deployment/tier=dev</span>
+<span class="go">dev-cluster-2   True    ClusterDeployment is ready  cluster-deployment/tier=dev</span>
 </code></pre></div></p>
 <p>The <code>dev-cluster-1</code> <code>ClusterDeployment</code> services are specified as:
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
@@ -5275,6 +5268,8 @@
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev-cluster-1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">cluster-deployment/tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">. . .</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">serviceSpec</span><span class="p p-Indicator">:</span>
@@ -5294,6 +5289,8 @@
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev-cluster-2</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">cluster-deployment/tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">. . .</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">serviceSpec</span><span class="p p-Indicator">:</span>
@@ -5317,7 +5314,7 @@ See <a href="../../../user/services/beach-head/#deployment-of-beach-head-service
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">clusterSelector</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">app.kubernetes.io/managed-by</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Helm</span>
+<span class="w">      </span><span class="nt">cluster-deployment/tier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
 <span class="w">  </span><span class="nt">serviceSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
@@ -5325,7 +5322,7 @@ See <a href="../../../user/services/beach-head/#deployment-of-beach-head-service
 <span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-3</span>
 <span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
 </code></pre></div></p>
-<p>This MultiClusterService will match any CAPI cluster with the label <code>app.kubernetes.io/managed-by: Helm</code> and deploy chart
+<p>This MultiClusterService will match any <code>ClusterDeployment</code> with the label <code>cluster-deployment/tier: dev</code> and deploy chart
 version 4.11.3 of ingress-nginx service on it.</p>
 <h3 id="configuring-custom-values">Configuring Custom Values<a class="headerlink" href="#configuring-custom-values" title="Permanent link">#</a></h3>
 <p>Refer to "Configuring Custom Values" in <a href="../../../user/services/beach-head/#deployment-of-beach-head-services">Deploy beach-head Services using Cluster Deployment</a> for more information on using custom values.</p>
