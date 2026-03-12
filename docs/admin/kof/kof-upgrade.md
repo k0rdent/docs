@@ -6,9 +6,9 @@ Before migrating or upgrading, it's recommended to create a backup of your Victo
 
 1. Lookup the regional cluster configmap named `kof-<cluster-name>` in the `kcm-system` namespace on the management cluster.
 
-```bash
-kubectl get cm kof-<cluster-name> -n kcm-system
-```
+    ```bash
+    kubectl get cm kof-<cluster-name> -n kcm-system
+    ```
 
 2. Note the `read_logs_endpoint`, `read_metrics_endpoint`, and other endpoints values from the configmap.
 3. Ensure that you have enough free disk space (e.g. check the total used size of volumes allocated to your regional cluster). Victoria Logs/Metrics usually compress the data. Commands to fetch the data compress data too, but it stores data in a JSON line format, so requires 5 times more space.
