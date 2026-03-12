@@ -1,6 +1,10 @@
 # Grafana in KOF
 
-Grafana installation and automatic configuration are now disabled in KOF by default.
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--grafana-intro-start-->"
+    end="<!--grafana-intro-end-->"
+%}
 
 Explore the [Using KOF](kof-using.md) guide showing how to use KOF without Grafana.
 

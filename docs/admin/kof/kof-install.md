@@ -49,7 +49,7 @@ Before beginning KOF installation, you should have the following components in p
       This is the only option which does not need access to create external DNS records
       for service endpoints such as `kof.example.com`.
 
-For for information on long-term storage planning, review the [KOF Retention](./kof-retention.md) page, which covers retention and replication strategies.
+For information on long-term storage planning, review the [KOF Retention](./kof-retention.md) page, which covers retention and replication strategies.
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
@@ -159,8 +159,11 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 
 ### Grafana
 
-* Grafana installation and automatic configuration are now disabled in KOF by default.
-* Review the [Using KOF](kof-using.md) and [Grafana in KOF](kof-grafana.md) guides to make a decision.
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--grafana-intro-start-->"
+    end="<!--grafana-intro-end-->"
+%}
 
 ## Management Cluster
 

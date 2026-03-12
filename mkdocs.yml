@@ -197,6 +197,7 @@ nav:
       - Upgrade to v1.5.0: admin/upgrade/upgrade-to-1-5-0.md
       - Upgrade to v1.6.0: admin/upgrade/upgrade-to-1-6-0.md
       - Upgrade to v1.7.0: admin/upgrade/upgrade-to-1-7-0.md
+      - Upgrade to v1.8.0: admin/upgrade/upgrade-to-1-8-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management:

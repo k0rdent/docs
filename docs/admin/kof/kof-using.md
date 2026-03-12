@@ -2,9 +2,11 @@
 
 ## Optional Grafana
 
-* Grafana installation and automatic configuration are now disabled in KOF by default.
-* If you want to install and enable Grafana, apply the [Grafana in KOF](kof-grafana.md) guide.
-* Otherwise, check the sections below, showing how to use KOF without Grafana.
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--grafana-intro-start-->"
+    end="<!--grafana-intro-end-->"
+%}
 
 ## Metrics and alerts
 
