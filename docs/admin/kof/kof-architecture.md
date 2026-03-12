@@ -90,13 +90,16 @@ To update the diagram:
 * Please preserve custom `max-width: 30em;` in the end.
 
 <b>Management Cluster</b>
+  kof umbrella chart
+
   kof-operators chart
     Optional grafana-operator
     opentelemetry-operator
     prometheus-operator-crds
 
+  victoria-metrics-operator
+
   kof-mothership chart
-    victoria-metrics-operator
     cluster-api-visualizer
     sveltos-dashboard
     dex
@@ -154,6 +157,9 @@ Cloud 1..N
 <div class="o">
   <b>Management Cluster</b>
   <div class="o">
+    kof umbrella chart
+  </div>
+  <div class="o">
     kof-operators chart
     <div class="o">
       Optional grafana-operator
@@ -166,10 +172,10 @@ Cloud 1..N
     </div>
   </div>
   <div class="o">
+    victoria-metrics-operator
+  </div>
+  <div class="o">
     kof-mothership chart
-    <div class="o">
-      victoria-metrics-operator
-    </div>
     <div class="o">
       cluster-api-visualizer
     </div>
@@ -307,7 +313,9 @@ Cloud 1..N
 
 ## Helm Charts
 
-KOF is deployed as a series of Helm charts at various levels.
+### kof umbrella chart
+
+- This is one chart to install them all.
 
 ### kof-operators
 
@@ -315,9 +323,12 @@ KOF is deployed as a series of Helm charts at various levels.
 - [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
 - [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors, also required to monitor [`kof-mothership`](#kof-mothership) itself
 
-### kof-mothership
+### victoria-metrics-operator
 
 - Local [VictoriaMetrics](https://victoriametrics.com/) storage for alerting rules only, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
+
+### kof-mothership
+
 - [cluster-api-visualizer](https://github.com/Jont828/cluster-api-visualizer) for insight into multicluster configuration
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)

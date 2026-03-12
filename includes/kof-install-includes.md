@@ -26,3 +26,7 @@
       --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 <!--install-kof-end-->
+
+<!--grafana-intro-start-->
+Grafana installation and automatic configuration are now disabled in KOF by default.
+<!--grafana-intro-end-->

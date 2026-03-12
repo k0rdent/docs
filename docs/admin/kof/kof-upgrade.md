@@ -315,7 +315,7 @@ The structural changes may require reinstallation of storage components, which c
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
       -f kof-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
       --version 1.8.0
     ```
 
@@ -370,7 +370,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
@@ -378,7 +378,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 This step will not be required in future upgrades.
@@ -713,7 +713,7 @@ Follow the restore steps in the [Data Backup](#data-backup) section to import ba
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.4.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership --version 1.4.0
     ```
 * This will not be required in future upgrades.
 

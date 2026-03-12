@@ -4,7 +4,7 @@ Running multiple clusters means you end up wrestling with half a dozen monitorin
 
 ## KOF makes sure every cluster is observable and accountable for cost
 
-{{{ docsVersionInfo.k0rdentName }}} estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In sthese kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).
+{{{ docsVersionInfo.k0rdentName }}} estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In these kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).
 
 KOF gives {{{ docsVersionInfo.k0rdentName }}} platform engineering teams the ability to guarantee that observability and cost management are deployed with every cluster they create, and then keep them consistent and automatically lifecycle-managed.
 
@@ -44,7 +44,7 @@ Performance issues and cost spikes usually come from the same workloads, so you 
 - **Aggregation:** [Promxy](https://github.com/jacksontj/promxy) for Prometheus-compatible fan-out.
 - **Control:** kof-operators for lifecycle and configuration.
 
-KOF is deployed through Helm charts and MultiClusterServices: `kof-operators`, `kof-mothership`, `kof-storage`, `kof-collectors`, plus per-role services such as `kof-child` and `kof-regional`. (See [KOF architecture](https://docs.k0rdent.io/latest/admin/kof/kof-architecture/).)
+KOF is deployed through Helm charts and MultiClusterServices: `kof-operators`, `kof-mothership`, `kof-storage`, `kof-collectors`, plus per-role services such as `kof-child` and `kof-regional`. (See [KOF architecture](kof-architecture.md).)
 
 ## KOF in Action: A Day in the Life (and A Sudden Cost Spike)
 
@@ -113,7 +113,7 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
   - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: [Storing KOF data](https://docs.k0rdent.io/latest/admin/kof/kof-storing/).
 
-Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana (or other UIs) provide the consolidated UI.
+Data flows from child clusters into the regional storage clusters. On the management cluster, promxy and vlogxy provide consolidated endpoints for consuming metrics and logs across all clusters, with optional visualization by Grafana or other UIs of your choice.
 
 ### KOF can be extended with your own dashboards, pipelines, and destinations
 
@@ -169,6 +169,7 @@ Get started with the basic documentation:
 - [Architecture](kof-architecture.md)
 - [Installing KOF](kof-install.md)
 - [Verifying the KOF installation](kof-verification.md)
+- [Using KOF with Grafana and Mirantis Grafana Dashboards](kof-grafana.md)
 - [KCM Region With KOF](kof-kcm-region.md)
 - [Storing KOF data](kof-storing.md)
 - [Using KOF](kof-using.md)
