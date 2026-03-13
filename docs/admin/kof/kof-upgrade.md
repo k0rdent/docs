@@ -447,7 +447,7 @@ Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-ist
 
 ```bash
 helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.2.0 \
   --set cert-manager-service-template.enabled=false \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
@@ -639,7 +639,7 @@ helm upgrade -i --wait \
   --create-namespace -n istio-system k0rdent-istio-base \
   --set cert-manager-service-template.enabled=false \
   --set injectionNamespaces="{kof}" \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base --version 0.1.0
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio-base --version 0.1.0
 ```
 
 **Notes:**
@@ -655,7 +655,7 @@ helm upgrade -i --wait -n istio-system k0rdent-istio \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.1.0
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.1.0
 ```
 
 ### 5. Upgrade the KOF Version

@@ -28,5 +28,7 @@
 <!--install-kof-end-->
 
 <!--grafana-intro-start-->
-Grafana installation and automatic configuration are now disabled in KOF by default.
+> NOTE:
+> Grafana installation and automatic configuration are now disabled in KOF by default.
+> Please check the [Using KOF without Grafana](../docs/admin/kof/kof-using.md) and [Grafana in KOF](../docs/admin/kof/kof-grafana.md) guides.
 <!--grafana-intro-end-->
