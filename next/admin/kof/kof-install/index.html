@@ -5221,13 +5221,13 @@
     S --&gt; AWS[AWS]
     S --&gt; AZ[Azure]
     S --&gt; OS[OpenStack&lt;br&gt;and others]
-    AWS -.-&gt; AG[**Aig Gap**]
+    AWS -.-&gt; AG[&lt;b&gt;Air Gap&lt;/b&gt;]
     AZ -.-&gt; AG
     OS --&gt; AG
     AWS --&gt; NAG[No Air Gap]
     AZ --&gt; NAG
     OS --&gt; NAG
-    AG --&gt; I[**Istio**]
+    AG --&gt; I[&lt;b&gt;Istio&lt;/b&gt;]
     AG --&gt; MD[Manual DNS]
     AG -.-&gt; AD[Auto DNS]
     NAG --&gt; I
@@ -5237,7 +5237,7 @@
     MD --&gt; R
     AD --&gt; R
     R --&gt; M2[Store KOF data&lt;br&gt;from Management...]
-    M2 --&gt; M2M[**...to Management**]
+    M2 --&gt; M2M[&lt;b&gt;...to Management&lt;/b&gt;]
     M2 --&gt; M2R[...to Regional&lt;br&gt;with Istio&lt;br&gt;or without]
     M2 --&gt; M2TP[...to Third-party]</code></pre>
 <p>Opinionated default installation we plan to simplify in the next release
