@@ -40,6 +40,9 @@ And of course when you need to clean up, you can use helm as well. Follow these 
 
 3. Remove the kcm Helm release:
 
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm uninstall kcm -n kcm-system
     ```
