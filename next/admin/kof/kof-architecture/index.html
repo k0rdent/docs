@@ -1982,6 +1982,8 @@
       
         
       
+        
+      
     
     
     
@@ -2221,6 +2223,27 @@
   
   <span class="md-ellipsis">
     Upgrade to v1.7.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrade/upgrade-to-1-8-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.8.0
   </span>
   
 
@@ -3039,9 +3062,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#kof-umbrella-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof umbrella chart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kof-operators" class="md-nav__link">
     <span class="md-ellipsis">
       kof-operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#victoria-metrics-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      victoria-metrics-operator
     </span>
   </a>
   
@@ -5229,9 +5270,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#kof-umbrella-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      kof umbrella chart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kof-operators" class="md-nav__link">
     <span class="md-ellipsis">
       kof-operators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#victoria-metrics-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      victoria-metrics-operator
     </span>
   </a>
   
@@ -5437,13 +5496,16 @@ To update the diagram:
 * Please preserve custom `max-width: 30em;` in the end.
 
 <b>Management Cluster</b>
+  kof umbrella chart
+
   kof-operators chart
     Optional grafana-operator
     opentelemetry-operator
     prometheus-operator-crds
 
+  victoria-metrics-operator
+
   kof-mothership chart
-    victoria-metrics-operator
     cluster-api-visualizer
     sveltos-dashboard
     dex
@@ -5501,6 +5563,9 @@ Cloud 1..N
 <div class="o">
   <b>Management Cluster</b>
   <div class="o">
+    kof umbrella chart
+  </div>
+  <div class="o">
     kof-operators chart
     <div class="o">
       Optional grafana-operator
@@ -5513,10 +5578,10 @@ Cloud 1..N
     </div>
   </div>
   <div class="o">
+    victoria-metrics-operator
+  </div>
+  <div class="o">
     kof-mothership chart
-    <div class="o">
-      victoria-metrics-operator
-    </div>
     <div class="o">
       cluster-api-visualizer
     </div>
@@ -5653,16 +5718,22 @@ Cloud 1..N
 </style>
 
 <h2 id="helm-charts">Helm Charts<a class="headerlink" href="#helm-charts" title="Permanent link">#</a></h2>
-<p>KOF is deployed as a series of Helm charts at various levels.</p>
+<h3 id="kof-umbrella-chart">kof umbrella chart<a class="headerlink" href="#kof-umbrella-chart" title="Permanent link">#</a></h3>
+<ul>
+<li>This is one chart to install them all.</li>
+</ul>
 <h3 id="kof-operators">kof-operators<a class="headerlink" href="#kof-operators" title="Permanent link">#</a></h3>
 <ul>
 <li>Optional <a href="https://grafana.com/">Grafana</a> dashboards platform, managed by <a href="https://github.com/grafana/grafana-operator">grafana-operator</a></li>
 <li><a href="https://opentelemetry.io/">OpenTelemetry</a> <a href="https://opentelemetry.io/docs/collector/">collectors</a> below, managed by <a href="https://opentelemetry.io/docs/kubernetes/operator/">opentelemetry-operator</a></li>
 <li><a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds">prometheus-operator-crds</a> required to create OpenTelemetry collectors, also required to monitor <a href="#kof-mothership"><code>kof-mothership</code></a> itself</li>
 </ul>
-<h3 id="kof-mothership">kof-mothership<a class="headerlink" href="#kof-mothership" title="Permanent link">#</a></h3>
+<h3 id="victoria-metrics-operator">victoria-metrics-operator<a class="headerlink" href="#victoria-metrics-operator" title="Permanent link">#</a></h3>
 <ul>
 <li>Local <a href="https://victoriametrics.com/">VictoriaMetrics</a> storage for alerting rules only, managed by <a href="https://docs.victoriametrics.com/operator/">victoria-metrics-operator</a></li>
+</ul>
+<h3 id="kof-mothership">kof-mothership<a class="headerlink" href="#kof-mothership" title="Permanent link">#</a></h3>
+<ul>
 <li><a href="https://github.com/Jont828/cluster-api-visualizer">cluster-api-visualizer</a> for insight into multicluster configuration</li>
 <li><a href="https://projectsveltos.github.io/sveltos/">Sveltos</a> dashboard, automatic secret distribution</li>
 <li><a href="https://dexidp.io/">Dex</a> SSO <a href="https://github.com/dexidp/helm-charts/tree/master/charts/dex">chart</a></li>

@@ -1982,6 +1982,8 @@
       
         
       
+        
+      
     
     
     
@@ -2221,6 +2223,27 @@
   
   <span class="md-ellipsis">
     Upgrade to v1.7.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrade/upgrade-to-1-8-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.8.0
   </span>
   
 
@@ -5661,12 +5684,14 @@
 <h2 id="data-backup">Data Backup<a class="headerlink" href="#data-backup" title="Permanent link">#</a></h2>
 <p>Before migrating or upgrading, it's recommended to create a backup of your Victoria Logs and Victoria Metrics data. You can export the data from the regional cluster endpoints to local files using the following commands. Repeat the describe procedure for each of your regional cluster if needed.</p>
 <ol>
-<li>Lookup the regional cluster configmap named <code>kof-&lt;cluster-name&gt;</code> in the <code>kcm-system</code> namespace on the management cluster.</li>
-</ol>
+<li>
+<p>Lookup the regional cluster configmap named <code>kof-&lt;cluster-name&gt;</code> in the <code>kcm-system</code> namespace on the management cluster.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>kof-&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<ol>
-<li>Note the <code>read_logs_endpoint</code>, <code>read_metrics_endpoint</code>, and other endpoints values from the configmap.</li>
+</li>
+<li>
+<p>Note the <code>read_logs_endpoint</code>, <code>read_metrics_endpoint</code>, and other endpoints values from the configmap.</p>
+</li>
 <li>Ensure that you have enough free disk space (e.g. check the total used size of volumes allocated to your regional cluster). Victoria Logs/Metrics usually compress the data. Commands to fetch the data compress data too, but it stores data in a JSON line format, so requires 5 times more space.</li>
 <li>Ensure the connectivity to the regional cluster (e.g. do it on the Mothership cluster that surely has connectivity). If you are using Istio service mesh, consider to run a container in the Mothership cluster with attached properly sized volume in the kof namespace for connectivity to regional cluster endpoints.
 Check the k0rdent <a href="../../clusters/deploy-cluster/">cluster documentation</a> to retrieve kubernetes configuration.</li>
