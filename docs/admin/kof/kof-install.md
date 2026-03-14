@@ -858,3 +858,4 @@ apply this example for AWS, or use it as a reference:
     ```
 
 Now that you have installed KOF, please [verify it](./kof-verification.md).
+
