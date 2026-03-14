@@ -12,6 +12,9 @@ In the event of disaster, you can restore from a backup by doing the following:
    will be part of your restored cluster. You can remove these objects after installation, but you
    can also install {{{ docsVersionInfo.k0rdentName }}} without them in the first place:
 
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
      --version <version> \
