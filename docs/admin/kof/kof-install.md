@@ -10,13 +10,13 @@ flowchart TD
     S --> AWS[AWS]
     S --> AZ[Azure]
     S --> OS[OpenStack<br>and others]
-    AWS -.-> AG[**Aig Gap**]
+    AWS -.-> AG[<b>Aig Gap</b>]
     AZ -.-> AG
     OS --> AG
     AWS --> NAG[No Air Gap]
     AZ --> NAG
     OS --> NAG
-    AG --> I[**Istio**]
+    AG --> I[<b>Istio</b>]
     AG --> MD[Manual DNS]
     AG -.-> AD[Auto DNS]
     NAG --> I
@@ -26,7 +26,7 @@ flowchart TD
     MD --> R
     AD --> R
     R --> M2[Store KOF data<br>from Management...]
-    M2 --> M2M[**...to Management**]
+    M2 --> M2M[<b>...to Management</b>]
     M2 --> M2R[...to Regional<br>with Istio<br>or without]
     M2 --> M2TP[...to Third-party]
 ```
