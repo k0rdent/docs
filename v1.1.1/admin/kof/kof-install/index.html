@@ -4047,15 +4047,20 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-istio</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<p>Install the <code>kof-istio</code> chart to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0
 </code></pre></div>
-    You may want to <a href="https://github.com/k0rdent/kof/blob/v1.1.0/docs/collectors.md#example">customize the collectors</a>
-    by passing values to the <a href="https://github.com/k0rdent/kof/blob/v1.1.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>
-    profile for all child clusters at once now,
-    or for each child cluster later. You can also opt for using the default values.</p>
+You may want to <a href="https://github.com/k0rdent/kof/blob/v1.1.0/docs/collectors.md#example">customize the collectors</a>
+by passing values to the <a href="https://github.com/k0rdent/kof/blob/v1.1.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>
+profile for all child clusters at once now,
+or for each child cluster later. You can also opt for using the default values.</p>
 </li>
 </ol>
 <div class="admonition notice">
@@ -4075,11 +4080,16 @@ and <a href="https://github.com/k0rdent/kof/blob/v1.1.0/charts/kof-operators/val
 and apply this example, or use it as a reference:</p>
 <ol>
 <li>
-<p>Install <code>kof-operators</code> as required by <code>kof-mothership</code>:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<p>Install <code>kof-operators</code> as required by <code>kof-mothership</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0
-</code></pre></div></p>
+</code></pre></div>
 </li>
 <li>
 <p>Create the <code>mothership-values.yaml</code> file:
@@ -4134,11 +4144,16 @@ apply <a href="https://docs.k0sproject.io/stable/examples/openebs/">OpenEBS</a> 
 </ul>
 </li>
 <li>
-<p>Install <code>kof-mothership</code>:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
+<p>Install <code>kof-mothership</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0
-</code></pre></div></p>
+</code></pre></div>
 <p>If you're upgrading from KOF version less than <code>1.1.0</code>, after upgrade please run:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>--force-conflicts<span class="w"> </span><span class="se">\</span>
 -f<span class="w"> </span>https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
@@ -4172,13 +4187,20 @@ Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use
     <code>ingress-nginx.enabled</code> and <code>cert-manager.enabled</code> to <code>false</code>.</li>
 <li>You may want to <a href="https://github.com/k0rdent/kof/blob/v1.1.0/docs/collectors.md#example">customize collectors</a>
     for all child clusters at once now, or for each child cluster later, or just use the default values.</li>
-<li>Install these charts into the management cluster with default or custom values:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Install these charts into the management cluster with default or custom values:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-child<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.1.0
-</code></pre></div></li>
+</code></pre></div>
+</li>
 </ul>
 </li>
 <li>
