@@ -147,6 +147,10 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     ```
 
 3. Install the `kof-istio` chart to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n istio-system kof-istio \
@@ -174,6 +178,10 @@ and [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionIn
 and apply this example, or use it as a reference:
 
 1. Install `kof-operators` as required by `kof-mothership`:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
@@ -263,6 +271,10 @@ and apply this example, or use it as a reference:
     ```
 
 6. Install `kof-mothership`:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f mothership-values.yaml \
@@ -297,6 +309,10 @@ and apply this example, or use it as a reference:
         you may set the OpenStack-specific values described in step 10 of the [Regional Cluster](#regional-cluster) section
         as a values file with `storage:` key passed to `kof-regional` chart here.
     * Install these charts into the management cluster with default or custom values:
+
+        > NOTE:
+        > Please use helm v3.
+
         ```bash
         helm upgrade -i --reset-values --wait -n kof kof-regional \
           oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
