@@ -57,6 +57,9 @@ interactions are limited to the Kubernetes API and local cluster resources.
 
 1. Install `kcm` with the proxy `Secret` name given.
 
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} \
       --version <version> \

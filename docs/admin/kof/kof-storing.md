@@ -84,6 +84,10 @@ To apply this option:
     ```
 
 3. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-storage \
       -f storage-values.yaml \
@@ -244,6 +248,10 @@ To apply this option:
     > and `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
 3. Install the `kof-collectors` chart to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
@@ -377,6 +385,10 @@ To apply this option:
     > and `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
 3. Install the `kof-collectors` chart to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \
@@ -461,6 +473,10 @@ For now, however, just for the sake of this demo, you can use the most straightf
     ```
 
 5. Install the `kof-collectors` chart to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f collectors-values.yaml \

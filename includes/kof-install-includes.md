@@ -5,6 +5,10 @@
 <!--airgap-end-->
 
 <!--install-istio-start-->
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
       {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
@@ -17,6 +21,10 @@
 <!--install-istio-end-->
 
 <!--install-kof-operators-start-->
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
@@ -26,6 +34,10 @@
 <!--install-kof-operators-end-->
 
 <!--install-kof-mothership-start-->
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f mothership-values.yaml \
@@ -35,6 +47,10 @@
 <!--install-kof-mothership-end-->
 
 <!--management-custom-start-->
+
+        > NOTE:
+        > Please use helm v3.
+
         ```bash
         helm upgrade -i --reset-values --wait -n kof kof-regional \
           {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-regional \
