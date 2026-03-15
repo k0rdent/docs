@@ -5326,6 +5326,11 @@ Ensure that both <code>VictoriaMetrics</code> and <code>VictoriaLogs</code> back
 <p>Cleanup typically takes 1–5 minutes, depending on the cluster size and network speed.</p>
 <h4 id="cleanup-old-istio-components">Cleanup Old Istio Components<a class="headerlink" href="#cleanup-old-istio-components" title="Permanent link">#</a></h4>
 <p>Remove old Istio components for each <strong>regional</strong> and <strong>child</strong> cluster</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig
 
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio-gateway
@@ -5345,6 +5350,11 @@ kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </
 <h3 id="4-deploy-new-istio-release">4. Deploy New Istio Release<a class="headerlink" href="#4-deploy-new-istio-release" title="Permanent link">#</a></h3>
 <p>Install the new Istio release to the management cluster.</p>
 <h4 id="install-the-k0rdent-istio-base-chart">Install the <code>k0rdent-istio-base</code> Chart<a class="headerlink" href="#install-the-k0rdent-istio-base-chart" title="Permanent link">#</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio-base<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
@@ -5357,6 +5367,11 @@ kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </
 <li><code>injectionNamespaces="{kof}"</code> ensures Istio sidecars are injected only into the <code>kof</code> namespace. To inject sidecars into additional namespaces, list them comma-separated: <code>{kof,&lt;YOUR_NAMESPACE&gt;}</code>.</li>
 </ul>
 <h4 id="install-the-k0rdent-istio-chart">Install the <code>k0rdent-istio</code> Chart<a class="headerlink" href="#install-the-k0rdent-istio-chart" title="Permanent link">#</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -5396,12 +5411,19 @@ kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </
 <h2 id="upgrade-to-v140">Upgrade to v1.4.0<a class="headerlink" href="#upgrade-to-v140" title="Permanent link">#</a></h2>
 <ul>
 <li><code>PromxyServerGroup</code> CRD was moved from the <code>crds/</code> directory to the <code>templates/</code> directory for auto-upgrade.</li>
-<li>Please use <code>--take-ownership</code> on upgrade of <code>kof-mothership</code> to 1.4.0:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>--take-ownership<span class="w"> </span><span class="se">\</span>
+<li>
+<p>Please use <code>--take-ownership</code> on upgrade of <code>kof-mothership</code> to 1.4.0:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>--take-ownership<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.4.0
-</code></pre></div></li>
-<li>This will not be required in future upgrades.</li>
+</code></pre></div>
+* This will not be required in future upgrades.</p>
+</li>
 </ul>
 <h2 id="upgrade-to-v130">Upgrade to v1.3.0<a class="headerlink" href="#upgrade-to-v130" title="Permanent link">#</a></h2>
 <p>Before upgrading any helm chart:</p>

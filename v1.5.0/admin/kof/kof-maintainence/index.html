@@ -4687,6 +4687,11 @@ Make sure these are just your demo clusters and do not contain important data.</
 kubectl<span class="w"> </span>delete<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="o">=</span>foreground<span class="w"> </span>-f<span class="w"> </span>regional-cluster.yaml
 </code></pre></div>
 <p>To remove KOF from the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>--cascade<span class="w"> </span>foreground<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors
