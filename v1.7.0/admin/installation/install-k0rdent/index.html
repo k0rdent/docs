@@ -5103,6 +5103,11 @@
 <h1 id="install-k0rdent">Install k0rdent<a class="headerlink" href="#install-k0rdent" title="Permanent link">#</a></h1>
 <p>This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the <a href="../create-mgmt-clusters/mgmt-create-k0s-single/">Create and prepare a Kubernetes cluster with k0s</a> to create a test cluster, or <a href="../create-mgmt-clusters/mgmt-create-eks-multi/">Create and prepare a production grade Kubernetes cluster with EKS</a> to create something more substantial. </p>
 <p>The actual management cluster is a Kubernetes cluster with the k0rdent application installed. The simplest way to install k0rdent is through its Helm chart.  You can find the latest release <a href="https://github.com/k0rdent/kcm/tags">here</a>, and from there you can deploy the Helm chart, as in:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kcm<span class="w"> </span>oci://ghcr.io/k0rdent/kcm/charts/kcm<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.7.0<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--create-namespace
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">Pulled: ghcr.io/k0rdent/kcm/charts/kcm:1.7.0</span>
@@ -5133,6 +5138,11 @@ Make sure to specify the correct release version number.</p>
 </li>
 <li>
 <p>Remove the kcm Helm release:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>kcm<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 </li>
