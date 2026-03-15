@@ -6,9 +6,9 @@ Before migrating or upgrading, it's recommended to create a backup of your Victo
 
 1. Lookup the regional cluster configmap named `kof-<cluster-name>` in the `kcm-system` namespace on the management cluster.
 
-```bash
-kubectl get cm kof-<cluster-name> -n kcm-system
-```
+    ```bash
+    kubectl get cm kof-<cluster-name> -n kcm-system
+    ```
 
 2. Note the `read_logs_endpoint`, `read_metrics_endpoint`, and other endpoints values from the configmap.
 3. Ensure that you have enough free disk space (e.g. check the total used size of volumes allocated to your regional cluster). Victoria Logs/Metrics usually compress the data. Commands to fetch the data compress data too, but it stores data in a JSON line format, so requires 5 times more space.
@@ -315,7 +315,7 @@ The structural changes may require reinstallation of storage components, which c
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
       -f kof-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
       --version 1.8.0
     ```
 
@@ -370,7 +370,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 2. Obtain the `regional-kubeconfig` file during the [KOF Verification](./kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
@@ -378,7 +378,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version 1.6.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 This step will not be required in future upgrades.
@@ -447,7 +447,7 @@ Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-ist
 
 ```bash
 helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.2.0 \
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.2.0 \
   --set cert-manager-service-template.enabled=false \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
@@ -639,7 +639,7 @@ helm upgrade -i --wait \
   --create-namespace -n istio-system k0rdent-istio-base \
   --set cert-manager-service-template.enabled=false \
   --set injectionNamespaces="{kof}" \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base --version 0.1.0
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio-base --version 0.1.0
 ```
 
 **Notes:**
@@ -655,7 +655,7 @@ helm upgrade -i --wait -n istio-system k0rdent-istio \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
-  oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio --version 0.1.0
+  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.1.0
 ```
 
 ### 5. Upgrade the KOF Version
@@ -713,7 +713,7 @@ Follow the restore steps in the [Data Backup](#data-backup) section to import ba
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.4.0
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership --version 1.4.0
     ```
 * This will not be required in future upgrades.
 
