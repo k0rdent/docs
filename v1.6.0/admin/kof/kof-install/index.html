@@ -4987,6 +4987,11 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 </li>
 <li>
 <p>Install the <code>k0rdent/istio</code> charts to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.2.0<span class="w"> </span><span class="se">\</span>
@@ -5016,6 +5021,11 @@ and apply this example, or use it as a reference:</p>
 <ol>
 <li>
 <p>Install <code>kof-operators</code> as required by <code>kof-mothership</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span><span class="se">\</span>
@@ -5092,6 +5102,11 @@ enable the <code>crossNamespace</code> value in the <code>mothership-values.yaml
 </li>
 <li>
 <p>Install <code>kof-mothership</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span><span class="se">\</span>
@@ -5120,6 +5135,11 @@ kubectl<span class="w"> </span>get<span class="w"> </span>svctmpl<span class="w"
     as a values file with <code>storage:</code> key passed to <code>kof-regional</code> chart here.</li>
 <li>
 <p>Install these charts into the management cluster with default or custom values:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.6.0
