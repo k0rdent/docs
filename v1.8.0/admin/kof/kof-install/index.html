@@ -1982,6 +1982,8 @@
       
         
       
+        
+      
     
     
     
@@ -2221,6 +2223,27 @@
   
   <span class="md-ellipsis">
     Upgrade to v1.7.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrade/upgrade-to-1-8-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.8.0
   </span>
   
 
@@ -5260,7 +5283,7 @@ is shown in <strong>bold</strong> style.</p>
 </ul>
 </li>
 </ul>
-<p>For for information on long-term storage planning, review the <a href="../kof-retention/">KOF Retention</a> page, which covers retention and replication strategies.</p>
+<p>For information on long-term storage planning, review the <a href="../kof-retention/">KOF Retention</a> page, which covers retention and replication strategies.</p>
 <h3 id="dns-auto-config">DNS auto-config<a class="headerlink" href="#dns-auto-config" title="Permanent link">#</a></h3>
 <p>To avoid <a href="../kof-verification/#manual-dns-config">manual configuration of DNS records</a> for service endpoints later,
 you can automate the process now using <a href="https://kubernetes-sigs.github.io/external-dns/latest/">external-dns</a>.
@@ -5357,10 +5380,12 @@ leading to <code>UPGRADE FAILED: conflict occurred...</code> when using helm v4.
 </ol>
 </details>
 <h3 id="grafana">Grafana<a class="headerlink" href="#grafana" title="Permanent link">#</a></h3>
-<ul>
-<li>Grafana installation and automatic configuration are now disabled in KOF by default.</li>
-<li>Review the <a href="../kof-using/">Using KOF</a> and <a href="../kof-grafana/">Grafana in KOF</a> guides to make a decision.</li>
-</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Grafana installation and automatic configuration are now disabled in KOF by default.
+Please check the <a href="../kof-using/">Using KOF without Grafana</a> and <a href="../kof-grafana/">Grafana in KOF</a> guides.</p>
+</div>
 <h2 id="management-cluster">Management Cluster<a class="headerlink" href="#management-cluster" title="Permanent link">#</a></h2>
 <p>To install KOF on the management cluster,
 look through the default values of the <a href="https://github.com/k0rdent/kof/blob/v1.8.0/charts/kof/README.md">kof</a> chart,

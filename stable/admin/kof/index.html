@@ -1982,6 +1982,8 @@
       
         
       
+        
+      
     
     
     
@@ -2221,6 +2223,27 @@
   
   <span class="md-ellipsis">
     Upgrade to v1.7.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/upgrade-to-1-8-0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrade to v1.8.0
   </span>
   
 
@@ -5176,7 +5199,7 @@
 <h1 id="k0rdent-observability-finops-kof">k0rdent Observability &amp; FinOps (KOF)<a class="headerlink" href="#k0rdent-observability-finops-kof" title="Permanent link">#</a></h1>
 <p>Running multiple clusters means you end up wrestling with half a dozen monitoring and cost tools, all with their own configs and upgrade headaches. k0rdent Observability &amp; FinOps (KOF) saves you from duct-taping that stack together by bundling metrics, logs, traces, and cost tracking into one setup. It's built to roll out the same way everywhere, so you don’t have to reinvent the wheel every time you spin up a new cluster.</p>
 <h2 id="kof-makes-sure-every-cluster-is-observable-and-accountable-for-cost">KOF makes sure every cluster is observable and accountable for cost<a class="headerlink" href="#kof-makes-sure-every-cluster-is-observable-and-accountable-for-cost" title="Permanent link">#</a></h2>
-<p>k0rdent estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In sthese kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).</p>
+<p>k0rdent estates can be large. They consist of a management cluster, potentially running many child (workload) clusters, often spread across multiple datacenters, regions, and clouds. In these kinds of environments, you need to both observe what clusters and workloads are doing (using metrics, logs, traces) and be accountable for what they cost (using allocation and trends).</p>
 <p>KOF gives k0rdent platform engineering teams the ability to guarantee that observability and cost management are deployed with every cluster they create, and then keep them consistent and automatically lifecycle-managed.</p>
 <h2 id="without-kof-you-would-be-forced-to-integrate-and-maintain-multiple-systems">Without KOF you would be forced to integrate and maintain multiple systems<a class="headerlink" href="#without-kof-you-would-be-forced-to-integrate-and-maintain-multiple-systems" title="Permanent link">#</a></h2>
 <p>KOF is optional, but if you were to build this yourself, you would need to select, integrate, and maintain separate systems for metrics, logs, tracing, dashboards, and cost visibility. At scale, this arrangement introduces persistent difficulties:</p>
@@ -5215,7 +5238,7 @@
 <li><strong>Aggregation:</strong> <a href="https://github.com/jacksontj/promxy">Promxy</a> for Prometheus-compatible fan-out.</li>
 <li><strong>Control:</strong> kof-operators for lifecycle and configuration.</li>
 </ul>
-<p>KOF is deployed through Helm charts and MultiClusterServices: <code>kof-operators</code>, <code>kof-mothership</code>, <code>kof-storage</code>, <code>kof-collectors</code>, plus per-role services such as <code>kof-child</code> and <code>kof-regional</code>. (See <a href="https://docs.k0rdent.io/latest/admin/kof/kof-architecture/">KOF architecture</a>.)</p>
+<p>KOF is deployed through Helm charts and MultiClusterServices: <code>kof-operators</code>, <code>kof-mothership</code>, <code>kof-storage</code>, <code>kof-collectors</code>, plus per-role services such as <code>kof-child</code> and <code>kof-regional</code>. (See <a href="kof-architecture/">KOF architecture</a>.)</p>
 <h2 id="kof-in-action-a-day-in-the-life-and-a-sudden-cost-spike">KOF in Action: A Day in the Life (and A Sudden Cost Spike)<a class="headerlink" href="#kof-in-action-a-day-in-the-life-and-a-sudden-cost-spike" title="Permanent link">#</a></h2>
 <p>It’s Monday morning. Finance notices that last week’s cloud bill is <strong>20% higher than forecast</strong>. The CFO wants answers before the leadership meeting tomorrow.</p>
 <p>Without KOF, this would trigger days of Slack threads and finger-pointing. With KOF, here’s what happens instead:</p>
@@ -5266,7 +5289,7 @@
 <li>a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: <a href="https://docs.k0rdent.io/latest/admin/kof/kof-storing/">Storing KOF data</a>.</li>
 </ul>
-<p>Data flows from child clusters into the chosen storage or aggregation point. On the management cluster, promxy and Grafana (or other UIs) provide the consolidated UI.</p>
+<p>Data flows from child clusters into the regional storage clusters. On the management cluster, promxy and vlogxy provide consolidated endpoints for consuming metrics and logs across all clusters, with optional visualization by Grafana or other UIs of your choice.</p>
 <h3 id="kof-can-be-extended-with-your-own-dashboards-pipelines-and-destinations">KOF can be extended with your own dashboards, pipelines, and destinations<a class="headerlink" href="#kof-can-be-extended-with-your-own-dashboards-pipelines-and-destinations" title="Permanent link">#</a></h3>
 <p>KOF is fully functional out of the box, but you can also add additional capabilities through extensions.</p>
 <ul>
@@ -5356,6 +5379,7 @@
 <li><a href="kof-architecture/">Architecture</a></li>
 <li><a href="kof-install/">Installing KOF</a></li>
 <li><a href="kof-verification/">Verifying the KOF installation</a></li>
+<li><a href="kof-grafana/">Using KOF with Grafana and Mirantis Grafana Dashboards</a></li>
 <li><a href="kof-kcm-region/">KCM Region With KOF</a></li>
 <li><a href="kof-storing/">Storing KOF data</a></li>
 <li><a href="kof-using/">Using KOF</a></li>
