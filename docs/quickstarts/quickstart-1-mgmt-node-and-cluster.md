@@ -100,6 +100,9 @@ helm installed into /usr/local/bin/helm
 
 Now we'll install {{{ docsVersionInfo.k0rdentName }}} itself into the k0s management cluster:
 
+> NOTE:
+> Please use helm v3.
+
 ```bash
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```

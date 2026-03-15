@@ -234,6 +234,9 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
 
 1. Upgrade the `kof-operators` chart using the `--take-ownership` flag:
 
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
@@ -296,6 +299,9 @@ KUBECONFIG=remote-kubeconfig kubectl patch namespace kof \
 
 Use the following commands to uninstall the old Istio charts on the **management** cluster:
 
+> NOTE:
+> Please use helm v3.
+
 ```bash
 helm uninstall --wait -n istio-system k0rdent-istio
 helm uninstall --wait -n istio-system k0rdent-istio-base
@@ -311,6 +317,9 @@ First upgrade the KOF operator using `--take-ownership` by following the instruc
 #### 6. Deploy the new Istio chart
 
 Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-istio`), install the single chart:
+
+> NOTE:
+> Please use helm v3.
 
 ```bash
 helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
@@ -472,6 +481,9 @@ Cleanup typically takes 1–5 minutes, depending on the cluster size and network
 
 Remove old Istio components for each **regional** and **child** cluster
 
+> NOTE:
+> Please use helm v3.
+
 ```bash
 export KUBECONFIG=regional-kubeconfig
 
@@ -501,6 +513,9 @@ Install the new Istio release to the management cluster.
 
 #### Install the `k0rdent-istio-base` Chart
 
+> NOTE:
+> Please use helm v3.
+
 ```bash
 helm upgrade -i --wait \
   --create-namespace -n istio-system k0rdent-istio-base \
@@ -515,6 +530,9 @@ helm upgrade -i --wait \
 * `injectionNamespaces="{kof}"` ensures Istio sidecars are injected only into the `kof` namespace. To inject sidecars into additional namespaces, list them comma-separated: `{kof,<YOUR_NAMESPACE>}`.
 
 #### Install the `k0rdent-istio` Chart
+
+> NOTE:
+> Please use helm v3.
 
 ```bash
 helm upgrade -i --wait -n istio-system k0rdent-istio \
@@ -577,6 +595,10 @@ Follow the restore steps in the [Data Backup](#data-backup) section to import ba
 
 * `PromxyServerGroup` CRD was moved from the `crds/` directory to the `templates/` directory for auto-upgrade.
 * Please use `--take-ownership` on upgrade of `kof-mothership` to 1.4.0:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
