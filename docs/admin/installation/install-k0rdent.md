@@ -4,6 +4,9 @@ This section assumes that you already have a kubernetes cluster installed. If yo
 
 The actual management cluster is a Kubernetes cluster with the {{{ docsVersionInfo.k0rdentName }}} application installed. The simplest way to install {{{ docsVersionInfo.k0rdentName }}} is through its Helm chart.  You can find the latest release [here](https://github.com/k0rdent/kcm/tags), and from there you can deploy the Helm chart, as in:
 
+> NOTE:
+> Please use helm v3.
+
 ```shell
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
@@ -36,6 +39,9 @@ And of course when you need to clean up, you can use helm as well. Follow these 
     ```
 
 3. Remove the kcm Helm release:
+
+    > NOTE:
+    > Please use helm v3.
 
     ```shell
     helm uninstall kcm -n kcm-system

@@ -88,6 +88,10 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     ```
 
 3. Install the `kof-istio` chart to the management cluster:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```shell
     helm upgrade -i --reset-values --wait \
       --create-namespace -n istio-system kof-istio \
@@ -115,6 +119,10 @@ and [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionIn
 and apply this example, or use it as a reference:
 
 1. Install `kof-operators` as required by `kof-mothership`:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```shell
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
@@ -174,6 +182,10 @@ and apply this example, or use it as a reference:
         It is auto-created [here](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-mothership/templates/grafana/secret.yaml).
 
 6. Install `kof-mothership`:
+
+    > NOTE:
+    > Please use helm v3.
+
     ```shell
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f mothership-values.yaml \
@@ -204,6 +216,10 @@ and apply this example, or use it as a reference:
     * You may want to [customize collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
         for all child clusters at once now, or for each child cluster later, or just use the default values.
     * Install these charts into the management cluster with default or custom values:
+
+        > NOTE:
+        > Please use helm v3.
+
         ```shell
         helm upgrade -i --reset-values --wait -n kof kof-regional \
           oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
