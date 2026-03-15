@@ -3831,14 +3831,19 @@ No additional steps are required here.</p>
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-storage</code> and <code>kof-collectors</code> charts to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
+<p>Install the <code>kof-storage</code> and <code>kof-collectors</code> charts to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>storage-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-storage<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
-</code></pre></div></p>
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-regional">From Management to Regional<a class="headerlink" href="#from-management-to-regional" title="Permanent link">#</a></h2>
@@ -3869,11 +3874,16 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
+<p>Install the <code>kof-collectors</code> chart to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
-</code></pre></div></p>
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-regional-with-istio">From Management to Regional with Istio<a class="headerlink" href="#from-management-to-regional-with-istio" title="Permanent link">#</a></h2>
@@ -3906,11 +3916,16 @@ helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
+<p>Install the <code>kof-collectors</code> chart to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
-</code></pre></div></p>
+</code></pre></div>
 </li>
 </ol>
 <h2 id="from-management-to-third-party">From Management to Third-party<a class="headerlink" href="#from-management-to-third-party" title="Permanent link">#</a></h2>
@@ -3992,11 +4007,16 @@ cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><sp
 </code></pre></div></p>
 </li>
 <li>
-<p>Install the <code>kof-collectors</code> chart to the management cluster:
-    <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
+<p>Install the <code>kof-collectors</code> chart to the management cluster:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please use helm v3.</p>
+</div>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-collectors<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>collectors-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-collectors<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
-</code></pre></div></p>
+</code></pre></div>
 </li>
 <li>
 <p>Configure AWS CLI with the same access key, for verification:
