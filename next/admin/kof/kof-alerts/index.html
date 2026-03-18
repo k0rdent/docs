@@ -5318,7 +5318,13 @@ with <a href="#advanced-routing">advanced routing</a> options.</p>
 </code></pre></div></p>
 </li>
 <li>
-<p>Apply the <code>kof-values.yaml</code> file as described in the <a href="../kof-install/#management-cluster">Management Cluster</a> section.</p>
+<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
+</code></pre></div>
 </li>
 <li>
 <p>Wait until the <a href="https://webhook.site/">https://webhook.site/</a>
@@ -5489,7 +5495,13 @@ Note the <code>cluster!~"^cluster1$|^cluster10$"</code> filters and the default 
     from the <a href="https://github.com/samber/awesome-prometheus-alerts">awesome-prometheus-alerts</a> collection.</p>
 </li>
 <li>
-<p>Apply the <code>kof-values.yaml</code> file as described in the <a href="../kof-install/#management-cluster">Management Cluster</a> section.</p>
+<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
+</code></pre></div>
 </li>
 </ol>
 <h2 id="generation-of-rules">Generation of rules<a class="headerlink" href="#generation-of-rules" title="Permanent link">#</a></h2>
