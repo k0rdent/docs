@@ -31,7 +31,14 @@ If you want to install Grafana manually and enable its support in KOF, apply the
         grafana:
           enabled: true
     ```
-* Apply the `kof-values.yaml` file as described in the [Management Cluster](kof-install.md#management-cluster) section.
+* Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
+
 * Install Grafana manually, for example:
     ```bash
     kubectl apply -f - <<EOF

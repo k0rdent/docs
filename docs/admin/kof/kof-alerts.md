@@ -42,7 +42,7 @@ Let's start with the demo of an alert sent and received.
 1. Open the [https://webhook.site/](https://webhook.site/) and save "Your unique URL"
     for the next step.
 
-1. Add the following to the `kof-values.yaml` file, replacing `$WEBHOOK_URL` with the URL from step 1:
+2. Add the following to the `kof-values.yaml` file, replacing `$WEBHOOK_URL` with the URL from step 1:
     ```yaml
     kof-mothership:
       values:
@@ -59,7 +59,13 @@ Let's start with the demo of an alert sent and received.
                         - url: $WEBHOOK_URL
     ```
 
-3. Apply the `kof-values.yaml` file as described in the [Management Cluster](./kof-install.md#management-cluster) section.
+3. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
 
 4. Wait until the [https://webhook.site/](https://webhook.site/)
     shows the `Watchdog` alert, as in:
@@ -228,7 +234,13 @@ For example, let's update the `CPUThrottlingHigh` alert in the `kubernetes-resou
     like the `ContainerHighMemoryUsage` alert that was added [on demand](https://github.com/k0rdent/kof/pull/317)
     from the [awesome-prometheus-alerts](https://github.com/samber/awesome-prometheus-alerts) collection.
 
-7. Apply the `kof-values.yaml` file as described in the [Management Cluster](./kof-install.md#management-cluster) section.
+7. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
+
+{%
+    include-markdown "../../../includes/kof-install-includes.md"
+    start="<!--install-kof-start-->"
+    end="<!--install-kof-end-->"
+%}
 
 ## Generation of rules
 
