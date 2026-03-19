@@ -29,7 +29,11 @@ For production usage.
 
 ### Storage Requirements
 
-Storage capacity may need to be expanded depending on the volume of logs and metrics collected. The estimates below provide guidance for the Victoria components:
+Storage capacity may need to be expanded depending on the volume of logs and metrics collected.
+
+We **highly recommend** to provision storage class with [allowVolumeExpansion](https://kubernetes.io/docs/concepts/storage/storage-classes/#allow-volume-expansion) capability to expand the volumes size if needed.
+
+The estimates below provide guidance for the Victoria components:
 
 #### Victoria Logs Storage
 
