@@ -5371,6 +5371,8 @@ No additional steps are required here.</p>
 <span class="s">                            port: 8888</span>
 <span class="s">      defaultCRConfig:</span>
 <span class="s">        env:</span>
+<span class="s">          - name: PKI_PATH</span>
+<span class="s">            value: var/lib/k0s</span>
 <span class="s">          - name: KOF_VM_USER</span>
 <span class="s">            valueFrom:</span>
 <span class="s">              secretKeyRef:</span>
@@ -5516,6 +5518,8 @@ No additional steps are required here.</p>
 <span class="s">                - basicauth/traces</span>
 <span class="s">      defaultCRConfig:</span>
 <span class="s">        env:</span>
+<span class="s">          - name: PKI_PATH</span>
+<span class="s">            value: var/lib/k0s</span>
 <span class="s">          - name: KOF_VM_USER</span>
 <span class="s">            valueFrom:</span>
 <span class="s">              secretKeyRef:</span>
