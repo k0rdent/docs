@@ -177,6 +177,8 @@ To apply this option:
                                 port: 8888
           defaultCRConfig:
             env:
+              - name: PKI_PATH
+                value: var/lib/k0s
               - name: KOF_VM_USER
                 valueFrom:
                   secretKeyRef:
@@ -322,6 +324,8 @@ To apply this option:
                     - basicauth/traces
           defaultCRConfig:
             env:
+              - name: PKI_PATH
+                value: var/lib/k0s
               - name: KOF_VM_USER
                 valueFrom:
                   secretKeyRef:
