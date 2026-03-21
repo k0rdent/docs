@@ -5238,7 +5238,7 @@ No additional steps are required here.</p>
 <p>To apply this option:</p>
 <ol>
 <li>
-<p>Update the <code>kof-values.yaml</code> file:
+<p>Add this patch to the existing <code>kof-values.yaml</code>:
     <div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="nt">kof-collectors</span><span class="p">:</span>
@@ -5292,7 +5292,7 @@ No additional steps are required here.</p>
 </details>
 </li>
 <li>
-<p>Update the <code>kof</code> chart in the management cluster:</p>
+<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
@@ -5321,7 +5321,7 @@ No additional steps are required here.</p>
 </code></pre></div></p>
 </li>
 <li>
-<p>Update the <code>kof-values.yaml</code> file:
+<p>Create the patch:
     <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kof-collectors:</span>
 <span class="s">  enabled: true</span>
@@ -5371,6 +5371,8 @@ No additional steps are required here.</p>
 <span class="s">                            port: 8888</span>
 <span class="s">      defaultCRConfig:</span>
 <span class="s">        env:</span>
+<span class="s">          - name: PKI_PATH</span>
+<span class="s">            value: var/lib/k0s</span>
 <span class="s">          - name: KOF_VM_USER</span>
 <span class="s">            valueFrom:</span>
 <span class="s">              secretKeyRef:</span>
@@ -5459,7 +5461,8 @@ No additional steps are required here.</p>
 </details>
 </li>
 <li>
-<p>Upgrade the <code>kof</code> chart on the management cluster:</p>
+<p>Add this patch to the existing <code>kof-values.yaml</code> file
+    and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
@@ -5488,7 +5491,7 @@ No additional steps are required here.</p>
 </code></pre></div></p>
 </li>
 <li>
-<p>Update the <code>kof-values.yaml</code> file:
+<p>Create the patch:
     <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kof-collectors:</span>
 <span class="s">  enabled: true</span>
@@ -5515,6 +5518,8 @@ No additional steps are required here.</p>
 <span class="s">                - basicauth/traces</span>
 <span class="s">      defaultCRConfig:</span>
 <span class="s">        env:</span>
+<span class="s">          - name: PKI_PATH</span>
+<span class="s">            value: var/lib/k0s</span>
 <span class="s">          - name: KOF_VM_USER</span>
 <span class="s">            valueFrom:</span>
 <span class="s">              secretKeyRef:</span>
@@ -5603,7 +5608,8 @@ No additional steps are required here.</p>
 </details>
 </li>
 <li>
-<p>Update the <code>kof</code> chart on the management cluster:</p>
+<p>Add this patch to the existing <code>kof-values.yaml</code> file
+    and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
@@ -5636,7 +5642,7 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 </code></pre></div></p>
 </li>
 <li>
-<p>Update the <code>kof-values.yaml</code> file:
+<p>Create the patch:
     <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kof-collectors:</span>
 <span class="s">  enabled: true</span>
@@ -5691,7 +5697,8 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 </code></pre></div></p>
 </li>
 <li>
-<p>Update the <code>kof</code> chart on the management cluster:</p>
+<p>Add this patch to the existing <code>kof-values.yaml</code> file
+    and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
