@@ -41,7 +41,7 @@ This option stores KOF data of the management cluster in the same management clu
 
 To apply this option:
 
-1. Update the `kof-values.yaml` file:
+1. Add this patch to the existing `kof-values.yaml`:
     ```yaml
     kof-storage:
       enabled: true
@@ -97,7 +97,7 @@ To apply this option:
                   storageClassName: <EXAMPLE_STORAGE_CLASS>
         ```
 
-2. Update the `kof` chart in the management cluster:
+2. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
@@ -126,7 +126,7 @@ To apply this option:
     echo $VMUSER_CREDS_NAME
     ```
 
-2. Update the `kof-values.yaml` file:
+2. Create the patch:
     ```bash
     cat <<EOF
     kof-collectors:
@@ -177,6 +177,8 @@ To apply this option:
                                 port: 8888
           defaultCRConfig:
             env:
+              - name: PKI_PATH
+                value: var/lib/k0s
               - name: KOF_VM_USER
                 valueFrom:
                   secretKeyRef:
@@ -264,14 +266,14 @@ To apply this option:
         * `$VMUSER_CREDS_NAME` with the value from step 1,
         * `$REGIONAL_DOMAIN` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
-3. Upgrade the `kof` chart on the management cluster:
+2. Add this patch to the existing `kof-values.yaml` file
+    and then apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
     start="<!--install-kof-start-->"
     end="<!--install-kof-end-->"
 %}
-
 
 ## From Management to Regional with Istio
 
@@ -294,7 +296,7 @@ To apply this option:
     echo $VMUSER_CREDS_NAME
     ```
 
-2. Update the `kof-values.yaml` file:
+2. Create the patch:
     ```bash
     cat <<EOF
     kof-collectors:
@@ -322,6 +324,8 @@ To apply this option:
                     - basicauth/traces
           defaultCRConfig:
             env:
+              - name: PKI_PATH
+                value: var/lib/k0s
               - name: KOF_VM_USER
                 valueFrom:
                   secretKeyRef:
@@ -409,14 +413,14 @@ To apply this option:
         * `$VMUSER_CREDS_NAME` with the value from step 1,
         * `$REGIONAL_CLUSTER_NAME` with the value from [Installing KOF - Regional Cluster](kof-install.md/#regional-cluster).
 
-3. Update the `kof` chart on the management cluster:
+2. Add this patch to the existing `kof-values.yaml` file
+    and then apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
     start="<!--install-kof-start-->"
     end="<!--install-kof-end-->"
 %}
-
 
 ## From Management to Third-party
 
@@ -443,7 +447,7 @@ For now, however, just for the sake of this demo, you can use the most straightf
       --from-env-file=cloudwatch-credentials
     ```
 
-4. Update the `kof-values.yaml` file:
+4. Create the patch:
     ```bash
     cat <<EOF
     kof-collectors:
@@ -498,7 +502,8 @@ For now, however, just for the sake of this demo, you can use the most straightf
     EOF
     ```
 
-5. Update the `kof` chart on the management cluster:
+5. Add this patch to the existing `kof-values.yaml` file
+    and then apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
 {%
     include-markdown "../../../includes/kof-install-includes.md"
