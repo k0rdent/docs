@@ -5233,7 +5233,7 @@ and <a href="../kof-install/#istio">Istio</a>, you will need to do the following
 <li>
 <p>Get the <code>EXTERNAL-IP</code> of <code>ingress-nginx</code>:
     <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>ingress-nginx-controller
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>ingress-nginx-<span class="nv">$REGIONAL_CLUSTER_NAME</span>
 </code></pre></div>
     It should look like <code>REDACTED.us-east-2.elb.amazonaws.com</code></p>
 </li>
@@ -5241,7 +5241,8 @@ and <a href="../kof-install/#istio">Istio</a>, you will need to do the following
 <p>Create this DNS record of type <code>A</code>, pointing to that <code>EXTERNAL-IP</code>:
     <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>vmauth.<span class="nv">$REGIONAL_DOMAIN</span>
 </code></pre></div>
-    Only if Grafana is <a href="../kof-grafana/">installed and enabled</a>, do the same for:
+    Only if Grafana is <a href="../kof-grafana/">installed and enabled</a> in the regional cluster too
+    (not just in the management cluster), do the same for:
     <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>grafana.<span class="nv">$REGIONAL_DOMAIN</span>
 </code></pre></div></p>
 </li>
