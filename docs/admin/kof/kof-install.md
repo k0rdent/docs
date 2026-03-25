@@ -399,6 +399,9 @@ apply this example for AWS, or use it as a reference:
             clusterAnnotations:
               k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN
               k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL
+              k0rdent.mirantis.com/kof-ingress-nginx-values: |
+                controller:
+                  name: $REGIONAL_CLUSTER_NAME
             region: $REGION
             controlPlaneNumber: 1
             controlPlane:
@@ -434,6 +437,9 @@ apply this example for AWS, or use it as a reference:
             clusterAnnotations:
               k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN
               k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL
+              k0rdent.mirantis.com/kof-ingress-nginx-values: |
+                controller:
+                  name: $REGIONAL_CLUSTER_NAME
             subscriptionID: $AZURE_SUBSCRIPTION_ID
             location: $REGION
             controlPlaneNumber: 1
@@ -470,6 +476,9 @@ apply this example for AWS, or use it as a reference:
             clusterAnnotations:
               k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN
               k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL
+              k0rdent.mirantis.com/kof-ingress-nginx-values: |
+                controller:
+                  name: $REGIONAL_CLUSTER_NAME
             controlPlaneNumber: 1
             controlPlane:
               flavor: $FLAVOR
