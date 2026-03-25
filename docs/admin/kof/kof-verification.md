@@ -88,7 +88,7 @@ and [Istio](./kof-install.md#istio), you will need to do the following:
 1. Get the `EXTERNAL-IP` of `ingress-nginx`:
     ```bash
     KUBECONFIG=regional-kubeconfig kubectl get svc \
-      -n kof ingress-nginx-controller
+      -n kof ingress-nginx-$REGIONAL_CLUSTER_NAME
     ```
     It should look like `REDACTED.us-east-2.elb.amazonaws.com`
 
@@ -96,7 +96,8 @@ and [Istio](./kof-install.md#istio), you will need to do the following:
     ```bash
     echo vmauth.$REGIONAL_DOMAIN
     ```
-    Only if Grafana is [installed and enabled](kof-grafana.md), do the same for:
+    Only if Grafana is [installed and enabled](kof-grafana.md) in the regional cluster too
+    (not just in the management cluster), do the same for:
     ```bash
     echo grafana.$REGIONAL_DOMAIN
     ```
