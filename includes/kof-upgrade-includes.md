@@ -95,7 +95,7 @@ yq -i '
 ' kof-values.yaml
 ```
 
-4. **Upgrade to the umbrella chart**:
+5. **Upgrade to the umbrella chart**:
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
@@ -108,9 +108,9 @@ yq -i '
 
 #### Verification
 
-5. After upgrade, follow the [KOF Verification](../docs/admin/kof/kof-verification.md) guide to ensure KOF is functioning correctly.
+6. After upgrade, follow the [KOF Verification](../docs/admin/kof/kof-verification.md) guide to ensure KOF is functioning correctly.
 
-6. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](../docs/admin/kof/kof-upgrade.md#data-backup) section.
+7. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](../docs/admin/kof/kof-upgrade.md#data-backup) section.
 
 ### Istio Upgrade
 
