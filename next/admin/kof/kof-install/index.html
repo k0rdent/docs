@@ -5605,6 +5605,9 @@ set the <code>REGIONAL_DOMAIN</code> too, using your own domain:
 <span class="s">    clusterAnnotations:</span>
 <span class="s">      k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN</span>
 <span class="s">      k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL</span>
+<span class="s">      k0rdent.mirantis.com/kof-ingress-nginx-values: |</span>
+<span class="s">        controller:</span>
+<span class="s">          name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">    region: $REGION</span>
 <span class="s">    controlPlaneNumber: 1</span>
 <span class="s">    controlPlane:</span>
@@ -5639,6 +5642,9 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">    clusterAnnotations:</span>
 <span class="s">      k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN</span>
 <span class="s">      k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL</span>
+<span class="s">      k0rdent.mirantis.com/kof-ingress-nginx-values: |</span>
+<span class="s">        controller:</span>
+<span class="s">          name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">    subscriptionID: $AZURE_SUBSCRIPTION_ID</span>
 <span class="s">    location: $REGION</span>
 <span class="s">    controlPlaneNumber: 1</span>
@@ -5674,6 +5680,9 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">    clusterAnnotations:</span>
 <span class="s">      k0rdent.mirantis.com/kof-regional-domain: $REGIONAL_DOMAIN</span>
 <span class="s">      k0rdent.mirantis.com/kof-cert-email: $ADMIN_EMAIL</span>
+<span class="s">      k0rdent.mirantis.com/kof-ingress-nginx-values: |</span>
+<span class="s">        controller:</span>
+<span class="s">          name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">    controlPlaneNumber: 1</span>
 <span class="s">    controlPlane:</span>
 <span class="s">      flavor: $FLAVOR</span>

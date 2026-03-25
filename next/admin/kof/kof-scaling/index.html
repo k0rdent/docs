@@ -3205,6 +3205,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#increase-volumes-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increase volumes size
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#regional-expansion" class="md-nav__link">
     <span class="md-ellipsis">
       Regional Expansion
@@ -5077,6 +5086,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#increase-volumes-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increase volumes size
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#regional-expansion" class="md-nav__link">
     <span class="md-ellipsis">
       Regional Expansion
@@ -5136,6 +5154,84 @@
 
 <h1 id="scaling-guidelines">Scaling Guidelines<a class="headerlink" href="#scaling-guidelines" title="Permanent link">#</a></h1>
 <p>The method for scaling KOF depends on the type of expansion:</p>
+<h2 id="increase-volumes-size">Increase volumes size<a class="headerlink" href="#increase-volumes-size" title="Permanent link">#</a></h2>
+<p><strong>Don't use this method</strong> if your storage class doesn't have <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#allow-volume-expansion">allowVolumeExpansion</a>.</p>
+<p>With allowVolumeExpansion you can increase the storage size for:</p>
+<details class="note">
+<summary>vmcluster</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-regional</span><span class="p">:</span><span class="w"> </span><span class="c1"># or kof-mothership if you have it installed on mothership cluster</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">victoriametrics</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">vmcluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">vmstorage</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">volumeClaimTemplate</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">                  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">                    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;new size&gt;</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary>victoria-logs-cluster</summary>
+<div class="highlight"><pre><span></span><code><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vlstorage</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">persistentVolume</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;new size&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">victoria-traces-cluster</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vtstorage</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">persistentVolume</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;new size&gt;</span>
+</code></pre></div>
+</details>
+<p>For <strong>vmcluster</strong> you can just run helm upgrade with new values, VictoriaMetrics operator will handle volume expansion automatically.</p>
+<div class="highlight"><pre><span></span><code>```bash
+helm upgrade -i --reset-values --wait \
+  --create-namespace -n kof kof \
+  -f kof-values.yaml \
+  oci://ghcr.io/k0rdent/kof/charts/kof \
+  --version 1.8.0
+```
+</code></pre></div>
+<p>For <strong>victoria-logs-cluster and victoria-traces-cluster</strong> you need to delete the stateful set and expand PVCs manually before running helm upgrade:</p>
+<details class="note">
+<summary>victoria-logs-cluster volumes expansion</summary>
+<ol>
+<li>
+<p>If you have installed the kof-storage chart on the mothership cluster via kof-umbrella helm chart, suspend the flux helmrelease firstly
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
+-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
+-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;: true}}&#39;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Delete the current stateful set:
+<div class="highlight"><pre><span></span><code><span class="c1"># --cascade=orphan keeps the Pods and PVCs alive while removing the StatefulSet object</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>statefulset<span class="w"> </span>kof-storage-victoria-logs-cluster-vlstorage<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>--cascade<span class="o">=</span>orphan
+</code></pre></div></p>
+</li>
+<li>
+<p>Expand the size <strong>for each</strong> PVC from 0 to the number of replicas
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pvc<span class="w"> </span>vlstorage-volume-kof-storage-victoria-logs-cluster-vlstorage-0<span class="w"> </span><span class="se">\</span>
+-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
+-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;resources&quot;:{&quot;requests&quot;:{&quot;storage&quot;:&quot;&lt;new size&gt;&quot;}}}}&#39;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Verify that PVCs are expanded
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>-w
+</code></pre></div></p>
+</li>
+<li>
+<p>Run helm upgrade with values set to the new size</p>
+</li>
+</ol>
+</details>
 <h2 id="regional-expansion">Regional Expansion<a class="headerlink" href="#regional-expansion" title="Permanent link">#</a></h2>
 <ol>
 <li>Deploy a <a href="../kof-install/#regional-cluster">regional cluster</a> in the new region.</li>

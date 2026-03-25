@@ -5291,7 +5291,9 @@ For production usage.</p>
 </tbody>
 </table>
 <h3 id="storage-requirements">Storage Requirements<a class="headerlink" href="#storage-requirements" title="Permanent link">#</a></h3>
-<p>Storage capacity may need to be expanded depending on the volume of logs and metrics collected. The estimates below provide guidance for the Victoria components:</p>
+<p>Storage capacity may need to be expanded depending on the volume of logs and metrics collected.</p>
+<p>We <strong>highly recommend</strong> to provision storage class with <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#allow-volume-expansion">allowVolumeExpansion</a> capability to expand the volumes size if needed.</p>
+<p>The estimates below provide guidance for the Victoria components:</p>
 <h4 id="victoria-logs-storage">Victoria Logs Storage<a class="headerlink" href="#victoria-logs-storage" title="Permanent link">#</a></h4>
 <p>For Victoria Logs storage, every <strong>1 million logs</strong> is estimated to require approximately <strong>25 MB</strong> of storage in the <code>emptyDir</code> volume of the <code>victoria-logs-cluster-vlstorage</code> pod.</p>
 <h4 id="victoria-metrics-storage">Victoria Metrics Storage<a class="headerlink" href="#victoria-metrics-storage" title="Permanent link">#</a></h4>
