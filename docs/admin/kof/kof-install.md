@@ -319,7 +319,15 @@ and apply this example, or use it as a reference:
 
 6. If you're upgrading KOF from an earlier version, check the [Upgrading KOF](./kof-upgrade.md) guide.
 
-7. Install the KOF umbrella chart, which orchestrates the installation of
+7. Using Gateway API instead of deprecated Nginx Ingress
+
+    Both `ingress` and `gateway` are **disabled** by default in the `kof-mothership` chart.
+    For regional clusters, `gateway` is **enabled** by default in `kof-regional`.
+
+    If `ingress-nginx` is already installed on your management cluster, uninstall it first,
+    then install a Gateway API implementation of your choice (e.g. [Envoy Gateway](https://gateway.envoyproxy.io/)).
+
+8. Install the KOF umbrella chart, which orchestrates the installation of
     operators, mothership, and shared config for all regional and child clusters:
 
 {%
@@ -332,19 +340,20 @@ and apply this example, or use it as a reference:
     
     If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
 
-8. Wait for all HelmReleases to be ready:
+9. Wait for all HelmReleases to be ready:
     ```bash
     kubectl wait --for=condition=Ready helmreleases --all -n kof --timeout=10m
     kubectl get helmreleases -n kof
     ```
 
 
-9. Wait for all pods to show that they're `Running`:
+10. Wait for all pods to show that they're `Running`:
     ```bash
     kubectl get pod -n kof
     ```
 
-10. Check options to store metrics of the management cluster in the [Storing KOF data](./kof-storing.md) guide.
+11. Check options to store metrics of the management cluster in the [Storing KOF data](./kof-storing.md) guide.
+
 
 ## Regional Cluster
 
@@ -867,4 +876,3 @@ apply this example for AWS, or use it as a reference:
     ```
 
 Now that you have installed KOF, please [verify it](./kof-verification.md).
-

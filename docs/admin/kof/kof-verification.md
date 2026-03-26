@@ -85,14 +85,13 @@ For KOF v1.8.0+, the umbrella chart uses FluxCD to orchestrate component install
 If you've opted out of [DNS auto-config](./kof-install.md#dns-auto-config)
 and [Istio](./kof-install.md#istio), you will need to do the following:
 
-1. Get the `EXTERNAL-IP` of `ingress-nginx`:
+1. Get the `ADDRESS` of `gateway`:
     ```bash
-    KUBECONFIG=regional-kubeconfig kubectl get svc \
-      -n kof ingress-nginx-$REGIONAL_CLUSTER_NAME
+    KUBECONFIG=regional-kubeconfig kubectl get gateway -n kof gateway
     ```
     It should look like `REDACTED.us-east-2.elb.amazonaws.com`
 
-2. Create this DNS record of type `A`, pointing to that `EXTERNAL-IP`:
+2. Create this DNS record of type `A`, pointing to that `ADDRESS`:
     ```bash
     echo vmauth.$REGIONAL_DOMAIN
     ```

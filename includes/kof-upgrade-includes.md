@@ -1,5 +1,49 @@
 
 <!--upgrade-start-->
+
+## Upgrade to v1.9.0
+
+KOF v1.9.0 introduces a [Gateway API](http://gateway-api.sigs.k8s.io/) support.
+
+### Upgrade Procedure
+
+1. **Get current Helm values of umbrella chart**:
+    ```bash
+    helm get values -n kof kof -o yaml > kof-values.yaml
+    ```
+
+2. **Migrate to Gateway API from Nginx Ingress**
+
+    Nginx Ingress will be removed and Envoy Gateway be created instead. That might cause a downtime while DNS is propagated from Nginx Ingress to Gateway IP address. If the downtime is not acceptable, consider deploying a new regional cluster with Gateway API and following the [migration to a new cluster](kof-upgrade.md#data-migration-to-a-new-regional-cluster)
+
+    Update kof-values.yaml:
+
+    ??? note "Switch regional clusters to Envoy Gateway"
+
+        ```yaml
+        kof-regional:
+          values:
+            ingress-nginx:
+              enabled: false
+            envoy-gateway:
+              enabled: true
+        ```
+
+    If you are using [DNS auto-config](./kof-install.md#dns-auto-config) DNS will be switched automatically.
+
+    In case of [Manual DNS config](./kof-verification.md#manual-dns-config), apply gateway address.
+
+
+3. **Upgrade the umbrella chart**:
+    
+    ```bash
+    helm upgrade -i --reset-values --wait \
+      --create-namespace -n kof kof \
+      -f kof-values.yaml \
+      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
+      --version 1.9.0
+    ```
+
 ## Upgrade to v1.8.0
 
 ### KOF Upgrade
