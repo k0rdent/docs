@@ -5319,15 +5319,16 @@ with <a href="#advanced-routing">advanced routing</a> options.</p>
 </li>
 <li>
 <p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-<li>
-<p>Wait until the <a href="https://webhook.site/">https://webhook.site/</a>
+<ol>
+<li>Wait until the <a href="https://webhook.site/">https://webhook.site/</a>
     shows the <code>Watchdog</code> alert, as in:
     <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;receiver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webhook&quot;</span><span class="p">,</span>
@@ -5349,8 +5350,7 @@ with <a href="#advanced-routing">advanced routing</a> options.</p>
 <span class="w">      </span><span class="nt">&quot;startsAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-02T10:27:29.14Z&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;endsAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0001-01-01T00:00:00Z&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;generatorURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8082/...&quot;</span><span class="p">,</span>
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ol>
 <h2 id="advanced-routing">Advanced Routing<a class="headerlink" href="#advanced-routing" title="Permanent link">#</a></h2>
 <p>The configuration of the <a href="#alertmanager-demo">Alertmanager Demo</a> is very basic.</p>
@@ -5496,14 +5496,14 @@ Note the <code>cluster!~"^cluster1$|^cluster10$"</code> filters and the default 
 </li>
 <li>
 <p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-</ol>
 <h2 id="generation-of-rules">Generation of rules<a class="headerlink" href="#generation-of-rules" title="Permanent link">#</a></h2>
 <p>The next steps are automated:</p>
 <pre class="mermaid"><code>graph TB

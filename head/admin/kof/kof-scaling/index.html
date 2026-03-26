@@ -5187,13 +5187,11 @@
 </code></pre></div>
 </details>
 <p>For <strong>vmcluster</strong> you can just run helm upgrade with new values, VictoriaMetrics operator will handle volume expansion automatically.</p>
-<div class="highlight"><pre><span></span><code>```bash
-helm upgrade -i --reset-values --wait \
-  --create-namespace -n kof kof \
-  -f kof-values.yaml \
-  oci://ghcr.io/k0rdent/kof/charts/kof \
-  --version 1.8.0
-```
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
 <p>For <strong>victoria-logs-cluster and victoria-traces-cluster</strong> you need to delete the stateful set and expand PVCs manually before running helm upgrade:</p>
 <details class="note">

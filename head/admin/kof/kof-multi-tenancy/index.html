@@ -5394,13 +5394,15 @@ grant full access to all tenants and features.</p>
 <li>
 <p>Add this patch to the existing <code>kof-values.yaml</code> file
     and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
+<ol>
 <li>
 <details class="note">
 <summary>Expose Dex at local management cluster as <code>https://dex.example.com:32000</code></summary>

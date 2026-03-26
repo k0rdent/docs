@@ -5293,14 +5293,14 @@ No additional steps are required here.</p>
 </li>
 <li>
 <p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-</ol>
 <h2 id="from-management-to-regional">From Management to Regional<a class="headerlink" href="#from-management-to-regional" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in the regional cluster.</p>
 <p>It assumes that:</p>
@@ -5463,14 +5463,14 @@ No additional steps are required here.</p>
 <li>
 <p>Add this patch to the existing <code>kof-values.yaml</code> file
     and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-</ol>
 <h2 id="from-management-to-regional-with-istio">From Management to Regional with Istio<a class="headerlink" href="#from-management-to-regional-with-istio" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in the regional cluster using Istio.</p>
 <p>It assumes that:</p>
@@ -5610,14 +5610,14 @@ No additional steps are required here.</p>
 <li>
 <p>Add this patch to the existing <code>kof-values.yaml</code> file
     and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-</ol>
 <h2 id="from-management-to-third-party">From Management to Third-party<a class="headerlink" href="#from-management-to-third-party" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in a third-party storage,
 using the <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/awscloudwatchlogsexporter#readme">AWS CloudWatch Logs Exporter</a> as an example.</p>
@@ -5699,13 +5699,15 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 <li>
 <p>Add this patch to the existing <code>kof-values.yaml</code> file
     and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
+<ol>
 <li>
 <p>Configure AWS CLI with the same access key, for verification:
     <div class="highlight"><pre><span></span><code>aws<span class="w"> </span>configure

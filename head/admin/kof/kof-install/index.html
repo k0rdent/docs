@@ -5530,15 +5530,19 @@ and the second <code>collectors</code> key is part of its <a href="https://githu
 <li>
 <p>Install the KOF umbrella chart, which orchestrates the installation of
     operators, mothership, and shared config for all regional and child clusters:</p>
+</li>
+</ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-<p>The chart uses FluxCD to manage sequential deployment of all KOF components.</p>
-<p>If helm v4 <code>failed to call webhook</code>, apply the workaround from <a href="https://github.com/k0rdent/kof/issues/715">k0rdent/kof issue #715</a>.</p>
-</li>
+<div class="highlight"><pre><span></span><code>The chart uses FluxCD to manage sequential deployment of all KOF components.
+
+If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
+</code></pre></div>
+<ol>
 <li>
 <p>Wait for all HelmReleases to be ready:
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>helmreleases<span class="w"> </span>--all<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--timeout<span class="o">=</span>10m

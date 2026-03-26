@@ -5252,17 +5252,16 @@ https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 <span class="w">    </span><span class="nt">grafana</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div></li>
-<li>
-<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+<li>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</li>
+</ul>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.8.0
 </code></pre></div>
-</li>
-<li>
-<p>Install Grafana manually, for example:
+<ul>
+<li>Install Grafana manually, for example:
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: grafana.integreatly.org/v1beta1</span>
 <span class="s">kind: Grafana</span>
@@ -5308,8 +5307,7 @@ https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 <span class="s">                - name: GF_INSTALL_PLUGINS</span>
 <span class="s">                  value: &quot;victoriametrics-logs-datasource 0.21.0,victoriametrics-metrics-datasource 0.19.4&quot;</span>
 <span class="s">EOF</span>
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 <li>You may optionally add features like <code>dex</code> and <code>ingress</code>
     from <a href="https://github.com/k0rdent/kof/blob/v1.8.0/charts/kof-mothership/templates/grafana/grafana.yaml">this example</a>.</li>
 <li>Wait for Grafana installation to complete successfully:
