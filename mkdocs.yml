@@ -185,6 +185,7 @@ nav:
       - VMware: admin/hosted-control-plane/hcp-vmware.md
       - GCP: admin/hosted-control-plane/hcp-gcp.md
       - KubeVirt: admin/hosted-control-plane/hcp-kubevirt.md
+      - Ingress Support for Hosted Control Planes: admin/hosted-control-plane/ingress.md
     - Upgrading k0rdent:
       - Overview: admin/upgrade/index.md
       - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md

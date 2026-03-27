@@ -32,3 +32,7 @@ Instructions for setting up a hosted control plane vary slighting depending on t
 - [VMware](hcp-vmware.md)
 - [GCP](hcp-gcp.md)
 - [KubeVirt](hcp-kubevirt.md)
+
+Additionally, hosted control plane clusters support ingress configuration. For more information, see:
+
+- [Ingress Support for Hosted Control Planes](ingress.md)
