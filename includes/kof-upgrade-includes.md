@@ -84,7 +84,18 @@ The structural changes may require reinstallation of storage components, which c
         ' kof-values.yaml
         ```
 
-4. **Upgrade to the umbrella chart**:
+4. **Patch VictoriaMetrics Operator CRDs upgrade config**:
+
+Run the following command to enable automatic CRD upgrades for `victoria-metrics-operator` during the helm upgrade:
+
+```bash
+yq -i '
+  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.enabled = true |
+  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.forceConflicts = true |
+' kof-values.yaml
+```
+
+5. **Upgrade to the umbrella chart**:
     ```bash
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
@@ -97,9 +108,9 @@ The structural changes may require reinstallation of storage components, which c
 
 #### Verification
 
-5. After upgrade, follow the [KOF Verification](../docs/admin/kof/kof-verification.md) guide to ensure KOF is functioning correctly.
+6. After upgrade, follow the [KOF Verification](../docs/admin/kof/kof-verification.md) guide to ensure KOF is functioning correctly.
 
-6. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](../docs/admin/kof/kof-upgrade.md#data-backup) section.
+7. **(If needed) Restore data** from backups if any storage components were reinstalled and verification shows data loss. Follow the restore procedures in the [Data Backup](../docs/admin/kof/kof-upgrade.md#data-backup) section.
 
 ### Istio Upgrade
 
