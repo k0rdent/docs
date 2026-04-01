@@ -12,13 +12,8 @@ fully used.
 
 For either of these cases, a better choice may be a "hosted control plane". 
 
-<<<<<<< HEAD
-A hosted control plane is a Kubernetes setup in which the control plane components (such as the API server, 
-etcd, and controllers) run as pods inside the management cluster instead of separate controller nodes. This 
-=======
 A hosted control plane is a Kubernetes setup in which the control plane components (such as the API server,
 etcd, and controllers) run as pods inside the management cluster instead of separate controller nodes. This
->>>>>>> 7b008d21 (fix: add a note regarding cluster name length)
 architecture centralizes control plane management and improves scalability by sharing resources in the management cluster.
 Need more controllers? Spin up another pod. Need fewer controllers? Remove some pods.
 
