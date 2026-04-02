@@ -92,6 +92,7 @@ Run the following command to enable automatic CRD upgrades for `victoria-metrics
 yq -i '
   ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.enabled = true |
   ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.forceConflicts = true |
+  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.podLabels."sidecar.istio.io/inject" = "false"
 ' kof-values.yaml
 ```
 
@@ -134,16 +135,80 @@ Use this command to upgrade Istio:
 
 Notice the big changes:
 
-* Grafana installation and automatic configuration are now disabled in KOF by default.
-    You can [install and enable Grafana](../docs/admin/kof/kof-grafana.md) or [use KOF without Grafana](../docs/admin/kof/kof-using.md).
+* Grafana installation and automatic configuration are now disabled in KOF by default. You can [install and enable Grafana](../docs/admin/kof/kof-grafana.md) or [use KOF without Grafana](../docs/admin/kof/kof-using.md).
 * [Tracing](https://docs.k0rdent.io/next/admin/kof/kof-tracing/) now uses VictoriaTraces instead of Jaeger.
 * [Multi-tenancy](https://docs.k0rdent.io/next/admin/kof/kof-multi-tenancy/) was added, enabled by `k0rdent.mirantis.com/kof-tenant-id` label.
 * Starting from v1.7.0, there is no need to use the `k0rdent.mirantis.com/kof-storage-secret` label to propagate the storage secret. From this version onward, storage secrets are automatically created and propagated to the corresponding cluster. Now each cluster has its own secrets and VMUser, which improves security.
-* Notice update in `mothership-values.yaml` in step 4 of [Management Cluster](../docs/admin/kof/kof-install.md#management-cluster):
+* If you used secret generation and secret propagation values, there are major changes.
+
+    Before:
+
     ```yaml
+    kcm:
       kof:
-        mcs:  # Not `clusterProfiles`
-          kof-aws-dns-secrets:
+        clusterProfiles:
+          kof-storage-secrets:
+            matchLabels:
+              k0rdent.mirantis.com/kof-storage-secrets: "true"
+            create_secrets: true
+            secrets:
+              - storage-vmuser-credentials
+              - jaeger-admin-credentials
+              - jaeger-admin-htpasswd
+            htpasswdFrom:
+              jaeger-admin-htpasswd: jaeger-admin-credentials
+    ```
+
+    Now:
+
+    ```yaml
+    kcm:
+      kof:
+        mcs:
+          # This section is not active in values by default
+          # It is included here only as an example of how to create secret propagation
+          kof-storage-secrets:
+            matchLabels:
+              k0rdent.mirantis.com/kof-storage-secrets: "true"
+            secrets:
+              - storage-vmuser-credentials
+
+        # -- Generation of secrets used by kof components.
+        # Generate random username/password if secret not found.
+        secrets:
+          kof-storage-secrets:
+            # htpasswdFrom: storage-vmuser-credentials
+            secrets:
+              - storage-vmuser-credentials
+    ```
+
+    Update your values to match the new structure.
+
+* The previous storage secret propagation will be automatically disabled and this secret will be used only for the management cluster. If you use these credentials for purposes beyond VMUser, you will need to add values to enable propagation for this secret.
+
+    ```yaml
+    kcm:
+      kof:
+        mcs:
+          kof-storage-secrets:
+            matchLabels:
+              k0rdent.mirantis.com/kof-storage-secrets: "true"
+            secrets:
+              - storage-vmuser-credentials
+    ```
+
+* If you want to continue using this secret as regional storage credentials, apply the following values in `kof-regional` values:
+
+    ```yaml
+    storage:
+      victoriametrics:
+        vmauth:
+          vmuser:
+            enabled: true
+            credentials:
+              username_key: username
+              password_key: password
+              credentials_secret_name: storage-vmuser-credentials
     ```
 
 ## Upgrade to v1.6.0
