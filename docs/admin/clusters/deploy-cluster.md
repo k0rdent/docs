@@ -26,7 +26,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     Start by creating a `Credential` object that includes all required authentication details for your chosen infrastructure provider. Follow the instructions in the [chapter about credential management](../access/credentials/index.md), as well as the specific instructions for your [target infrastructure](../installation/prepare-mgmt-cluster/index.md).
 
-    > TIP: 
+    > TIP:
     > Double-check to make sure that your credentials have sufficient permissions to create resources on the target infrastructure.
 
 2. Select a Template
@@ -76,6 +76,9 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     * Optional customizations such as instance types, regions, and networking
 
     Create a `ClusterDeployment` configuration in a YAML file, following this structure:
+
+	> WARNING:
+	> Cluster names must not exceed **40** characters.
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
@@ -143,7 +146,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     kubectl -n <namespace> get cluster <cluster-name> -o=yaml
     ```
 
-    > TIP:  
+    > TIP:
     > For a detailed view of the provisioning process, use the `clusterctl describe` command (note that this requires the [`clusterctl`](https://github.com/kubernetes-sigs/cluster-api/releases) CLI):
 
     ```shell
@@ -157,6 +160,7 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
     ```shell
     kubectl get secret -n <namespace> <cluster-name>-kubeconfig -o=jsonpath={.data.value} | base64 -d > kubeconfig
     ```
+    
     You can then use this file to access the cluster, as in:
 
     ```shell
