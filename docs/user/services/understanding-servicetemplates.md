@@ -53,6 +53,7 @@ Helm-based `ServiceTemplate` can be created in three ways:
       chartRef:
         kind: HelmChart
         name: foo-chart
+        namespace: bar
   ```
 
 - by defining Helm chart source, which can be one of types provided by FluxCD:
