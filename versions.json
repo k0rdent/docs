@@ -10,8 +10,8 @@
     "version": "v1.9.0",
     "title": "v1.9.0 (latest)",
     "aliases": [
-      "latest",
-      "stable"
+      "stable",
+      "latest"
     ]
   },
   {
@@ -37,6 +37,11 @@
   {
     "version": "v1.4.0",
     "title": "v1.4.0",
+    "aliases": []
+  },
+  {
+    "version": "v1.3.1",
+    "title": "v1.3.1",
     "aliases": []
   }
 ]
