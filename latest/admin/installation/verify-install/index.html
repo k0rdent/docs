@@ -5147,59 +5147,61 @@
 <p>
 After running the helm install command, please wait 5 to 10 minutes for the deployment to stabilize.</p>
 </div>
-<p>To understand whether installation is complete, start by making sure all pods are ready in the <code>kcm-system</code> namespace. There should be 21 pod entries:</p>
+<p>To understand whether installation is complete, start by making sure all pods are ready in the <code>kcm-system</code> namespace. There should be 27 pod entries:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                                           READY   STATUS    RESTARTS   AGE</span>
-<span class="go">azureserviceoperator-controller-manager-557c4bc8dc-shg4x       1/1     Running   0          2m22s</span>
-<span class="go">azureserviceoperator-controller-manager-557c4bc8dc-tfqm6       1/1     Running   0          2m22s</span>
-<span class="go">capa-controller-manager-6f4db96656-tzjrp                       1/1     Running   0          2m2s</span>
-<span class="go">capd-controller-manager-5977fc677-jql8m                        1/1     Running   0          117s</span>
-<span class="go">capg-controller-manager-668955d6f9-h94ff                       1/1     Running   0          110s</span>
-<span class="go">capi-controller-manager-66ccd9d8dd-w8bg7                       1/1     Running   0          3m12s</span>
-<span class="go">capi-ipam-in-cluster-controller-manager-56c7bd877c-wjc5l       1/1     Running   0          2m50s</span>
-<span class="go">capi-ipam-infoblox-controller-manager-548877ddb5-5xcvs         1/1     Running   0          2m48s</span>
-<span class="go">capk-controller-manager-769dc57dc8-r8sqk                       1/1     Running   0          104s</span>
-<span class="go">capo-controller-manager-7b55784585-fhjpb                       1/1     Running   0          108s</span>
-<span class="go">capv-controller-manager-64664f5cf4-s244l                       1/1     Running   0          119s</span>
-<span class="go">capz-controller-manager-d849cfbc6-5zkrt                        1/1     Running   0          2m22s</span>
-<span class="go">helm-controller-5466948d9f-746fm                               1/1     Running   0          5m40s</span>
-<span class="go">k0smotron-controller-manager-bootstrap-8658fbfcb8-t98zt        1/1     Running   0          2m53s</span>
-<span class="go">k0smotron-controller-manager-control-plane-595fdc8c84-vh67z    1/1     Running   0          2m47s</span>
-<span class="go">k0smotron-controller-manager-infrastructure-5bcdbb4f78-5mhc8   1/1     Running   0          2m8s</span>
-<span class="go">kcm-cert-manager-69b946fdb9-2h9bd                              1/1     Running   0          5m40s</span>
-<span class="go">kcm-cert-manager-cainjector-757fd85d77-tj54b                   1/1     Running   0          5m40s</span>
-<span class="go">kcm-cert-manager-webhook-59f6c49756-5bprs                      1/1     Running   0          5m40s</span>
-<span class="go">kcm-cluster-api-operator-bdb86f9fc-d2w2c                       1/1     Running   0          3m49s</span>
-<span class="go">kcm-controller-manager-5b6675b94f-x8cwf                        1/1     Running   0          3m49s</span>
-<span class="go">kcm-rbac-manager-7579db64d9-tb7gx                              1/1     Running   0          5m40s</span>
-<span class="go">kcm-regional-telemetry-69f8ddbc9-mr6sc                         1/1     Running   0          5m40s</span>
-<span class="go">kcm-reloader-fc9cbb8cf-rsb98                                   1/1     Running   0          5m40s</span>
-<span class="go">source-controller-597784bdbb-rwsqf                             1/1     Running   0          5m40s</span>
-<span class="go">velero-b7b646967-zwbxv                                         1/1     Running   0          5m40s</span>
+<span class="go">azureserviceoperator-controller-manager-557c4bc8dc-hs26b       1/1     Running   0          20h</span>
+<span class="go">azureserviceoperator-controller-manager-557c4bc8dc-wwxzr       1/1     Running   0          20h</span>
+<span class="go">capa-controller-manager-58554ddc78-htjst                       1/1     Running   0          20h</span>
+<span class="go">capd-controller-manager-659885cb55-2ns4b                       1/1     Running   0          20h</span>
+<span class="go">capg-controller-manager-7bc675f69b-x7wrz                       1/1     Running   0          20h</span>
+<span class="go">capi-controller-manager-78bdccfb94-kcddw                       1/1     Running   0          20h</span>
+<span class="go">capi-ipam-in-cluster-controller-manager-56c7bd877c-62bvk       1/1     Running   0          20h</span>
+<span class="go">capi-ipam-infoblox-controller-manager-548877ddb5-58pzg         1/1     Running   0          20h</span>
+<span class="go">capk-controller-manager-56d4bd4ccd-6z57q                       1/1     Running   0          20h</span>
+<span class="go">capo-controller-manager-7f77d84c58-fvv2n                       1/1     Running   0          20h</span>
+<span class="go">capv-controller-manager-64664f5cf4-9xsrp                       1/1     Running   0          20h</span>
+<span class="go">capz-controller-manager-669dffc9c7-7jssw                       1/1     Running   0          20h</span>
+<span class="go">helm-controller-5466948d9f-vsr7v                               1/1     Running   0          20h</span>
+<span class="go">k0smotron-controller-manager-bootstrap-5686664764-4ssh4        1/1     Running   0          20h</span>
+<span class="go">k0smotron-controller-manager-control-plane-6456dfd98-rq6xw     1/1     Running   0          20h</span>
+<span class="go">k0smotron-controller-manager-infrastructure-8479cbc858-2mv9x   1/1     Running   0          20h</span>
+<span class="go">kcm-cert-manager-76c7bcbcff-twckq                              1/1     Running   0          20h</span>
+<span class="go">kcm-cert-manager-cainjector-66c48469bb-dz99n                   1/1     Running   0          20h</span>
+<span class="go">kcm-cert-manager-webhook-f6587877f-vxpdw                       1/1     Running   0          20h</span>
+<span class="go">kcm-cluster-api-operator-684db579d6-m6gpq                      1/1     Running   0          20h</span>
+<span class="go">kcm-controller-manager-fbc544dcb-k474v                         1/1     Running   0          20h</span>
+<span class="go">kcm-rbac-manager-7579db64d9-fltlw                              1/1     Running   0          20h</span>
+<span class="go">kcm-regional-telemetry-777886fdd-vmqtc                         1/1     Running   0          20h</span>
+<span class="go">kcm-reloader-fc9cbb8cf-bgq8b                                   1/1     Running   0          20h</span>
+<span class="go">orc-controller-manager-6fb5b76975-4pg7g                        1/1     Running   0          20h</span>
+<span class="go">source-controller-597784bdbb-8mb9g                             1/1     Running   0          20h</span>
+<span class="go">velero-5c95c499cf-jblr2                                        1/1     Running   0          20h</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">26</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">27</span>
 </code></pre></div>
-<p>State management is handled by Project Sveltos, so you'll want to make sure that all 10 pods are running/completed in the <code>projectsveltos</code> namespace:</p>
+<p>State management is handled by Project Sveltos, so you'll want to make sure that all 11 pods are running/completed in the <code>projectsveltos</code> namespace:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                      READY   STATUS    RESTARTS   AGE</span>
-<span class="go">access-manager-74b7c98d8b-npj6t           1/1     Running   0          20m</span>
-<span class="go">addon-controller-6ddb848fdf-5vpnc         1/1     Running   0          20m</span>
-<span class="go">classifier-manager-57d5779966-ft9vs       1/1     Running   0          20m</span>
-<span class="go">event-manager-5569df975f-4cgrf            1/1     Running   0          20m</span>
-<span class="go">hc-manager-66c559fff6-l6xnx               1/1     Running   0          20m</span>
-<span class="go">mcp-server-55459fdccf-sg4lj               1/1     Running   0          20m</span>
-<span class="go">sc-manager-56ccc48477-lvz66               1/1     Running   0          20m</span>
-<span class="go">shard-controller-6b65cd4f8f-kmpps         1/1     Running   0          20m</span>
-<span class="go">sveltos-agent-manager-97d78f4bb-hqjm6     1/1     Running   0          19m</span>
-<span class="go">techsupport-controller-797459769b-wwg6h   1/1     Running   0          20m</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                       READY   STATUS    RESTARTS   AGE</span>
+<span class="go">access-manager-c7fcff5-h86f9               1/1     Running   0          20h</span>
+<span class="go">addon-controller-69b4bc995-bn7nl           1/1     Running   0          20h</span>
+<span class="go">classifier-manager-6b4bf7ccd7-g74n6        1/1     Running   0          20h</span>
+<span class="go">drift-detection-manager-64cbb969d6-lqh5x   1/1     Running   0          20h</span>
+<span class="go">event-manager-88dd9795b-dmrwq              1/1     Running   0          20h</span>
+<span class="go">hc-manager-5d69454f9c-2pmdr                1/1     Running   0          20h</span>
+<span class="go">mcp-server-575979f9dd-pjgmx                1/1     Running   0          20h</span>
+<span class="go">sc-manager-8b59fb5c4-v9bl8                 1/1     Running   0          20h</span>
+<span class="go">shard-controller-f4cf55db6-78pjn           1/1     Running   0          20h</span>
+<span class="go">sveltos-agent-manager-75c9b8dc45-5mvdp     1/1     Running   0          20h</span>
+<span class="go">techsupport-controller-6589c84864-vfzhl    1/1     Running   0          20h</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>--no-headers<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">10</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">11</span>
 </code></pre></div>
 <p>If any of these pods are missing, simply give k0rdent more time. If there's a problem, you'll see pods crashing and restarting, and you can see what's happening by describing the pod, as in:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>classifieclassifier-manager-5b47b66fc9-5mtwl<span class="w"> </span>-n<span class="w"> </span>projectsveltos
@@ -5210,19 +5212,19 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                   VALID</span>
-<span class="go">cluster-api-1-1-3                                 true</span>
-<span class="go">cluster-api-provider-aws-1-0-13                   true</span>
-<span class="go">cluster-api-provider-azure-1-0-16                 true</span>
-<span class="go">cluster-api-provider-docker-1-0-10                true</span>
-<span class="go">cluster-api-provider-gcp-1-0-11                   true</span>
-<span class="go">cluster-api-provider-infoblox-1-0-5               true</span>
-<span class="go">cluster-api-provider-ipam-1-0-6                   true</span>
-<span class="go">cluster-api-provider-k0sproject-k0smotron-1-0-16  true</span>
-<span class="go">cluster-api-provider-openstack-1-0-15             true</span>
-<span class="go">cluster-api-provider-vsphere-1-0-11               true</span>
+<span class="go">cluster-api-1-1-9                                 true</span>
+<span class="go">cluster-api-provider-aws-1-0-20                   true</span>
+<span class="go">cluster-api-provider-azure-1-0-23                 true</span>
+<span class="go">cluster-api-provider-docker-1-0-16                true</span>
+<span class="go">cluster-api-provider-gcp-1-0-17                   true</span>
+<span class="go">cluster-api-provider-infoblox-1-0-10               true</span>
+<span class="go">cluster-api-provider-ipam-1-0-11                   true</span>
+<span class="go">cluster-api-provider-k0sproject-k0smotron-1-0-24  true</span>
+<span class="go">cluster-api-provider-openstack-1-0-23             true</span>
+<span class="go">cluster-api-provider-vsphere-1-0-16               true</span>
 <span class="go">kcm-1-9-0                                         true</span>
-<span class="go">kcm-regional-1-8-0                                true</span>
-<span class="go">projectsveltos-1-1-1                              true</span>
+<span class="go">kcm-regional-1-9-0                                true</span>
+<span class="go">projectsveltos-1-8-0                              true</span>
 </code></pre></div></p>
 <p>Make sure that all templates are not just installed, but valid. Again, this may take a few minutes.</p>
 <p>You'll also want to make sure the <code>ClusterTemplate</code> objects are installed and valid:</p>
@@ -5230,21 +5232,21 @@ After running the helm install command, please wait 5 to 10 minutes for the depl
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                             VALID</span>
 <span class="go">adopted-cluster-1-0-2            true</span>
-<span class="go">aws-eks-1-0-4                    true</span>
-<span class="go">aws-hosted-cp-1-0-23             true</span>
-<span class="go">aws-standalone-cp-1-0-22         true</span>
-<span class="go">azure-aks-1-0-3                  true</span>
-<span class="go">azure-hosted-cp-1-0-25           true</span>
-<span class="go">azure-standalone-cp-1-0-22       true</span>
-<span class="go">docker-hosted-cp-1-0-25          true</span>
-<span class="go">gcp-gke-1-0-4                    true</span>
-<span class="go">gcp-hosted-cp-1-0-23             true</span>
-<span class="go">gcp-standalone-cp-1-0-22         true</span>
-<span class="go">openstack-hosted-cp-1-0-24       true</span>
-<span class="go">openstack-standalone-cp-1-0-24   true</span>
-<span class="go">remote-cluster-1-0-19            true</span>
-<span class="go">vsphere-hosted-cp-1-0-19         true</span>
-<span class="go">vsphere-standalone-cp-1-0-18     true</span>
+<span class="go">aws-eks-1-0-9                    true</span>
+<span class="go">aws-hosted-cp-1-0-31             true</span>
+<span class="go">aws-standalone-cp-1-0-28         true</span>
+<span class="go">azure-aks-1-0-6                  true</span>
+<span class="go">azure-hosted-cp-1-0-33           true</span>
+<span class="go">azure-standalone-cp-1-0-28       true</span>
+<span class="go">docker-hosted-cp-1-0-33          true</span>
+<span class="go">gcp-gke-1-0-9                    true</span>
+<span class="go">gcp-hosted-cp-1-0-31             true</span>
+<span class="go">gcp-standalone-cp-1-0-28         true</span>
+<span class="go">openstack-hosted-cp-1-0-29       true</span>
+<span class="go">openstack-standalone-cp-1-0-29   true</span>
+<span class="go">remote-cluster-1-0-25            true</span>
+<span class="go">vsphere-hosted-cp-1-0-28         true</span>
+<span class="go">vsphere-standalone-cp-1-0-25     true</span>
 </code></pre></div></p>
 <h2 id="verify-k0rdent-status">Verify k0rdent status<a class="headerlink" href="#verify-k0rdent-status" title="Permanent link">#</a></h2>
 <p>The final test of whether k0rdent installation is installed is making sure the

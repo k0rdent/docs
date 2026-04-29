@@ -5472,7 +5472,7 @@ Apply the YAML to your cluster, again keeping it in the <code>kcm-system</code> 
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-aws-clusterdeployment1</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-22</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-standalone-cp-1-0-28</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
@@ -5490,22 +5490,22 @@ Apply the YAML to your cluster, again keeping it in the <code>kcm-system</code> 
 <ul>
 <li>You're giving it an arbitrary name in <code>.metadata.name</code> (<code>my-aws-clusterdeployment1</code>)</li>
 <li>You're referencing the credential you created in the previous step, <code>aws-cluster-identity-cred</code>. This enables you to set up a system where users can take advantage of having access to the credentials to the AWS account without actually having those credentials in hand.</li>
-<li>You need to choose a template to use for the cluster, in this case <code>aws-standalone-cp-1-0-22</code>. You can get a list of available templates using:</li>
+<li>You need to choose a template to use for the cluster, in this case <code>aws-standalone-cp-1-0-28</code>. You can get a list of available templates using:</li>
 </ul>
 </div>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-9-0           true</span>
-<span class="go">aws-eks-1-0-4                   true</span>
-<span class="go">aws-hosted-cp-1-0-23             true</span>
-<span class="go">aws-standalone-cp-1-0-22         true</span>
-<span class="go">azure-aks-1-0-3                 true</span>
-<span class="go">azure-hosted-cp-1-0-25           true</span>
-<span class="go">azure-standalone-cp-1-0-22       true</span>
-<span class="go">openstack-standalone-cp-1-0-24   true</span>
-<span class="go">vsphere-hosted-cp-1-0-19         true</span>
-<span class="go">vsphere-standalone-cp-1-0-18     true</span>
+<span class="go">aws-eks-1-0-9                   true</span>
+<span class="go">aws-hosted-cp-1-0-31             true</span>
+<span class="go">aws-standalone-cp-1-0-28         true</span>
+<span class="go">azure-aks-1-0-6                 true</span>
+<span class="go">azure-hosted-cp-1-0-33           true</span>
+<span class="go">azure-standalone-cp-1-0-28       true</span>
+<span class="go">openstack-standalone-cp-1-0-29   true</span>
+<span class="go">vsphere-hosted-cp-1-0-28         true</span>
+<span class="go">vsphere-standalone-cp-1-0-25     true</span>
 </code></pre></div>
 Apply the YAML to your management cluster:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>my-aws-clusterdeployment1.yaml

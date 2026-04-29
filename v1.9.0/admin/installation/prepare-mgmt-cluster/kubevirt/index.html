@@ -5170,23 +5170,23 @@ any objects inside child clusters. You can use this object in the future if the 
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                            VALID</span>
 <span class="go">kcm-system   adopted-cluster-1-0-2           true</span>
-<span class="go">kcm-system   aws-eks-1-0-4                   true</span>
-<span class="go">kcm-system   aws-hosted-cp-1-0-23            true</span>
-<span class="go">kcm-system   aws-standalone-cp-1-0-22        true</span>
-<span class="go">kcm-system   azure-aks-1-0-3                 true</span>
-<span class="go">kcm-system   azure-hosted-cp-1-0-25          true</span>
-<span class="go">kcm-system   azure-standalone-cp-1-0-22      true</span>
-<span class="go">kcm-system   docker-hosted-cp-1-0-4          true</span>
-<span class="go">kcm-system   gcp-gke-1-0-7                   true</span>
-<span class="go">kcm-system   gcp-hosted-cp-1-0-22            true</span>
-<span class="go">kcm-system   gcp-standalone-cp-1-0-20        true</span>
-<span class="go">kcm-system   kubevirt-hosted-cp-1-0-1        true</span>
-<span class="go">kcm-system   kubevirt-standalone-cp-1-0-2    true</span>
-<span class="go">kcm-system   openstack-hosted-cp-1-0-24      true</span>
-<span class="go">kcm-system   openstack-standalone-cp-1-0-24  true</span>
-<span class="go">kcm-system   remote-cluster-1-0-19           true</span>
-<span class="go">kcm-system   vsphere-hosted-cp-1-0-19        true</span>
-<span class="go">kcm-system   vsphere-standalone-cp-1-0-18    true</span>
+<span class="go">kcm-system   aws-eks-1-0-9                   true</span>
+<span class="go">kcm-system   aws-hosted-cp-1-0-31            true</span>
+<span class="go">kcm-system   aws-standalone-cp-1-0-28        true</span>
+<span class="go">kcm-system   azure-aks-1-0-6                 true</span>
+<span class="go">kcm-system   azure-hosted-cp-1-0-33          true</span>
+<span class="go">kcm-system   azure-standalone-cp-1-0-28      true</span>
+<span class="go">kcm-system   docker-hosted-cp-1-0-7          true</span>
+<span class="go">kcm-system   gcp-gke-1-0-12                   true</span>
+<span class="go">kcm-system   gcp-hosted-cp-1-0-29            true</span>
+<span class="go">kcm-system   gcp-standalone-cp-1-0-25        true</span>
+<span class="go">kcm-system   kubevirt-hosted-cp-1-0-7        true</span>
+<span class="go">kcm-system   kubevirt-standalone-cp-1-0-7    true</span>
+<span class="go">kcm-system   openstack-hosted-cp-1-0-29      true</span>
+<span class="go">kcm-system   openstack-standalone-cp-1-0-29  true</span>
+<span class="go">kcm-system   remote-cluster-1-0-25           true</span>
+<span class="go">kcm-system   vsphere-hosted-cp-1-0-28        true</span>
+<span class="go">kcm-system   vsphere-standalone-cp-1-0-25    true</span>
 </code></pre></div></p>
 <p>A <code>ClusterDeployment</code> definition might look like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
@@ -5195,7 +5195,7 @@ any objects inside child clusters. You can use this object in the future if the 
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-kubevirt-cluster-deployment</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt-standalone-cp-1-0-2</span><span class="w"> </span><span class="c1"># name of the clustertemplate</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt-standalone-cp-1-0-7</span><span class="w"> </span><span class="c1"># name of the clustertemplate</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$CREDENTIAL_NAME</span>
 <span class="w">  </span><span class="nt">propagateCredentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
