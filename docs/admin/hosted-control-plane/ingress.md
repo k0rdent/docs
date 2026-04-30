@@ -55,9 +55,17 @@ spec:
 ```
 
 > NOTE:
-> By default, the `openstack-hosted-cp` `ClusterTemplate` is configured to pass the `haproxy.org/ssl-passthrough: "true"`
-> annotation to the `K0smotronControlPlane``spec.ingress.annotations` field. If you're using a different ingress
+> 1. Ensure that `k0smotron.service.type` is configured appropriately for your setup. By default, the
+> `openstack-hosted-cp` ClusterTemplate sets this value to `LoadBalancer`, which provisions an external load balancer
+> for a control plane service. When using ingress, this is unnecessary. To avoid unnecessary LoadBalancer provisioning,
+> set `k0smotron.service.type` to `ClusterIP` or `NodePort` instead.
+> 2. By default, the `openstack-hosted-cp` `ClusterTemplate` is configured to pass the `haproxy.org/ssl-passthrough: "true"`
+> annotation to the `K0smotronControlPlane` `spec.ingress.annotations` field. If you're using a different ingress
 > controller, make sure to set the correct SSL passthrough annotation.
+> 3. Set `apiHost` and `konnectivityHost` to hostnames that resolve to the ingress controller’s external IP address.
+> Each hostname must be unique per cluster. When using dynamic DNS services such as sslip.io or nip.io, verify that
+> the hostname resolves to the correct IP. For more details, see:
+> [Dynamic DNS Services Resolve Incorrect IP for Ingress Hostnames](#dynamic-dns-services-resolve-incorrect-ip-for-ingress-hostnames).
 
 When using a custom `ClusterTemplate`, ensure that the `K0smotronControlPlane` `spec.ingress` field is properly configured
 in the Helm chart. The `K0smotronControlPlane` `spec.ingress` field includes:
@@ -172,3 +180,28 @@ See details:
 
 * [Cloud Controller Manager fails to start with `--cloud-provider=external` when using Ingress support](https://docs.k0smotron.io/head/troubleshooting/#cloud-controller-manager-fails-to-start-with-cloud-providerexternal-when-using-ingress-support)
 * [GitHub issue](https://github.com/k0sproject/k0smotron/issues/1396)
+
+### Dynamic DNS Services Resolve Incorrect IP for Ingress Hostnames
+
+In certain cluster configurations, hostnames generated for ingress resources may be incorrectly resolved by dynamic
+DNS services like sslip.io or nip.io. This typically happens when the hostname includes multiple consecutive numeric
+components, which can cause the DNS service to misinterpret the intended IP address.
+
+For example: `api.test-cluster-1.172.19.114.90.sslip.io`. Instead of resolving to `172.19.114.90` as expected,
+the DNS service will resolve it to `1.172.19.114` due to the way it parses the hostname.
+
+Symptoms:
+
+* Ingress endpoints are unreachable.
+* DNS resolution returns an unexpected IP address.
+
+#### Resolution
+
+To avoid ambiguity, ensure that the hostname structure clearly separates the cluster identifier from the IP address.
+
+Best Practices:
+
+* Ensure hostnames include a non-numeric separator before the IP portion (e.g., `-api`, `-konnectivity`, etc.) (for example:
+`test-cluster-1-api.172.19.114.90.sslip.io`)
+* Avoid consecutive dot-separated numeric segments outside the intended IP address.
+* Validate DNS resolution (`dig`, `nslookup`) when troubleshooting ingress connectivity.
