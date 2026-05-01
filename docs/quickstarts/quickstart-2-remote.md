@@ -65,6 +65,8 @@ Before proceeding, make sure your management cluster meets the following require
       -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'  
     ```
 
+1. Make sure the key you will use to log in as root exists on the child machines.
+
 2. If the API server will be exposed as a `LoadBalancer`, ensure the appropriate cloud provider is installed on the management cluster.
 
 ## Create a Secret object containing the private SSH key to access remote machines
