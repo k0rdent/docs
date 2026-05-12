@@ -5614,6 +5614,18 @@ enable the <code>crossNamespace</code> value in the <code>kof-values.yaml</code>
     of the <code>kof</code> umbrella chart, and more detailed default values of other <a href="https://github.com/k0rdent/kof/tree/v1.9.0/charts">charts</a>,
     to customize your <code>kof-values.yaml</code> file where needed, for example:</p>
 <details class="note">
+<summary>If your management cluster does not have <a href="https://kubernetes-sigs.github.io/metrics-server/">metrics-server</a>:</summary>
+<p>E.g. <a href="https://k0sproject.io/">k0s</a> provides it,
+<a href="https://kind.sigs.k8s.io/">kind</a> does not, but you can install it:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--kubelet-insecure-tls</span>
+</code></pre></div>
+</details>
+<details class="note">
 <summary>If your regional clusters already have <code>cert-manager</code> and <code>envoy-gateway</code>, disable them in KOF:</summary>
 <div class="highlight"><pre><span></span><code><span class="nt">kof-regional</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
