@@ -5858,21 +5858,29 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="w">  </span><span class="nt">configmap.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">{{- $cluster := .InfrastructureProvider -}}</span>
 <span class="w">    </span><span class="no">{{- $identity := (getResource &quot;InfrastructureProviderIdentity&quot;) -}}</span>
+
 <span class="w">    </span><span class="no">{{- $clouds := fromYaml (index $identity &quot;data&quot; &quot;clouds.yaml&quot; | b64dec) -}}</span>
 <span class="w">    </span><span class="no">{{- if not $clouds }}</span>
 <span class="w">      </span><span class="no">{{ fail &quot;failed to decode clouds.yaml&quot; }}</span>
 <span class="w">    </span><span class="no">{{ end -}}</span>
+
 <span class="w">    </span><span class="no">{{- $openstack := index $clouds &quot;clouds&quot; &quot;openstack&quot; -}}</span>
+
 <span class="w">    </span><span class="no">{{- if not (hasKey $openstack &quot;auth&quot;) }}</span>
 <span class="w">      </span><span class="no">{{ fail &quot;auth key not found in openstack config&quot; }}</span>
 <span class="w">    </span><span class="no">{{- end }}</span>
 <span class="w">    </span><span class="no">{{- $auth := index $openstack &quot;auth&quot; -}}</span>
+
 <span class="w">    </span><span class="no">{{- $auth_url := index $auth &quot;auth_url&quot; -}}</span>
 <span class="w">    </span><span class="no">{{- $app_cred_id := index $auth &quot;application_credential_id&quot; -}}</span>
 <span class="w">    </span><span class="no">{{- $app_cred_name := index $auth &quot;application_credential_name&quot; -}}</span>
 <span class="w">    </span><span class="no">{{- $app_cred_secret := index $auth &quot;application_credential_secret&quot; -}}</span>
+
 <span class="w">    </span><span class="no">{{- $network_id := $cluster.status.externalNetwork.id -}}</span>
 <span class="w">    </span><span class="no">{{- $network_name := $cluster.status.externalNetwork.name -}}</span>
+
+<span class="w">    </span><span class="no">{{- $verify := index $openstack &quot;verify&quot; -}}</span>
+<span class="w">    </span><span class="no">{{- $ca_cert := index $identity &quot;data&quot; &quot;cacert&quot; -}}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
 <span class="w">    </span><span class="no">kind: Secret</span>
@@ -5884,28 +5892,53 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="w">      </span><span class="no">cloud.conf: |</span>
 <span class="w">        </span><span class="no">[Global]</span>
 <span class="w">        </span><span class="no">auth-url=&quot;{{ $auth_url }}&quot;</span>
+
 <span class="w">        </span><span class="no">{{- if $app_cred_id }}</span>
 <span class="w">        </span><span class="no">application-credential-id=&quot;{{ $app_cred_id }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">{{- if $app_cred_name }}</span>
 <span class="w">        </span><span class="no">application-credential-name=&quot;{{ $app_cred_name }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">{{- if $app_cred_secret }}</span>
 <span class="w">        </span><span class="no">application-credential-secret=&quot;{{ $app_cred_secret }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">{{- if and (not $app_cred_id) (not $app_cred_secret) }}</span>
 <span class="w">        </span><span class="no">username=&quot;{{ index $openstack &quot;username&quot; }}&quot;</span>
 <span class="w">        </span><span class="no">password=&quot;{{ index $openstack &quot;password&quot; }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
 <span class="w">        </span><span class="no">region=&quot;{{ index $openstack &quot;region_name&quot; }}&quot;</span>
+
+<span class="w">        </span><span class="no">{{- if or (eq $verify false) (eq (lower (printf &quot;%v&quot; $verify)) &quot;false&quot;) }}</span>
+<span class="w">        </span><span class="no">tls-insecure=true</span>
+<span class="w">        </span><span class="no">{{- end }}</span>
+
+<span class="w">        </span><span class="no">{{- if $ca_cert }}</span>
+<span class="w">        </span><span class="no">ca-file=/etc/cacert/ca.crt</span>
+<span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">[LoadBalancer]</span>
 <span class="w">        </span><span class="no">{{- if $network_id }}</span>
 <span class="w">        </span><span class="no">floating-network-id=&quot;{{ $network_id }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">[Networking]</span>
 <span class="w">        </span><span class="no">{{- if $network_name }}</span>
 <span class="w">        </span><span class="no">public-network-name=&quot;{{ $network_name }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+<span class="w">    </span><span class="no">{{- if $ca_cert }}</span>
+<span class="w">    </span><span class="no">---</span>
+<span class="w">    </span><span class="no">apiVersion: v1</span>
+<span class="w">    </span><span class="no">kind: Secret</span>
+<span class="w">    </span><span class="no">metadata:</span>
+<span class="w">      </span><span class="no">name: openstack-ca-cert</span>
+<span class="w">      </span><span class="no">namespace: kube-system</span>
+<span class="w">    </span><span class="no">type: Opaque</span>
+<span class="w">    </span><span class="no">data:</span>
+<span class="w">      </span><span class="no">ca.crt: &quot;{{ $ca_cert }}&quot;</span>
+<span class="w">    </span><span class="no">{{- end }}</span>
 </code></pre></div>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cloud-config-resource-template.yaml

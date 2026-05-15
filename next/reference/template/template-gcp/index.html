@@ -4191,6 +4191,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#etcd-encryption-at-rest-for-hosted-and-standalone-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Etcd encryption at rest for hosted and standalone templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#extensions-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Extensions parameters
@@ -5314,6 +5323,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#etcd-encryption-at-rest-for-hosted-and-standalone-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Etcd encryption at rest for hosted and standalone templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#extensions-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Extensions parameters
@@ -5449,6 +5467,47 @@
    and to override existing flags. The default flags are kept unless they are explicitly overriden. Flags with arguments must be specified as a single
    string, such as <code>--some-flag=argument</code>.</li>
 </ul>
+<h3 id="etcd-encryption-at-rest-for-hosted-and-standalone-templates">Etcd encryption at rest for hosted and standalone templates<a class="headerlink" href="#etcd-encryption-at-rest-for-hosted-and-standalone-templates" title="Permanent link">#</a></h3>
+<p>To enable Kubernetes API encryption at rest, configure these parameters under <code>.spec.config.encryption</code>:</p>
+<ul>
+<li><code>automaticReload</code> (boolean): Enables <code>kube-apiserver</code> automatic reload for
+  the encryption provider config (default: <code>true</code>).</li>
+<li><code>configSecret.name</code> (string): Name of the Secret containing
+  <code>EncryptionConfiguration</code>.</li>
+<li><code>configSecret.key</code> (string): Secret data key with <code>EncryptionConfiguration</code>
+  YAML (default: <code>config</code>).</li>
+<li><code>configSecret.hash</code> (string): Optional hash suffix for the mounted file name.
+  If empty, it is calculated automatically from the Secret data using Helm
+  <code>lookup</code>.</li>
+</ul>
+<p>The controller configures <code>kube-apiserver</code> with:</p>
+<ul>
+<li><code>--encryption-provider-config=&lt;path&gt;</code></li>
+<li><code>--encryption-provider-config-automatic-reload=true</code> (when <code>automaticReload=true</code>)</li>
+</ul>
+<p>Hash calculation behavior:</p>
+<ul>
+<li>If <code>configSecret.hash</code> is set, that value is used.</li>
+<li>If <code>configSecret.hash</code> is empty, the chart tries to calculate a hash from
+  <code>Secret.data[configSecret.key]</code> in the <code>ClusterDeployment</code> namespace.</li>
+<li>If lookup cannot read the Secret during rendering, the chart falls back to
+  <code>config.yaml</code>.</li>
+</ul>
+<p>Secret placement rules:</p>
+<ul>
+<li>The Secret must exist in the same namespace as the <code>ClusterDeployment</code>.</li>
+<li>If <code>Credential.spec.region</code> is not set, create the Secret in the management
+  cluster.</li>
+<li>If <code>Credential.spec.region</code> is set, create the Secret in the regional cluster.</li>
+<li>The encryption Secret is not copied automatically between management and
+  regional clusters.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Enabling encryption at rest affects newly written data. Existing etcd objects
+are not re-encrypted automatically and require a rewrite/migration procedure.</p>
+</div>
 <h3 id="extensions-parameters">Extensions parameters<a class="headerlink" href="#extensions-parameters" title="Permanent link">#</a></h3>
 <ul>
 <li><code>extensions.chartRepository</code> (string): Custom Helm repository.</li>

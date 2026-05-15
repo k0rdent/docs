@@ -5178,7 +5178,7 @@
 </li>
 <li>
 <p>OpenStack CLI (optional)</p>
-<p>If you plan to access OpenStack directly, go ahead and 
+<p>If you plan to access OpenStack directly, go ahead and
 <a href="https://docs.openstack.org/newton/user-guide/common/cli-install-openstack-command-line-clients.html">install the OpenStack CLI</a>.</p>
 </li>
 <li>
@@ -5221,7 +5221,7 @@ where appropriate. Save this as <code>openstack-cloud-config.yaml</code>:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
-The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details. </p>
+The name of the <code>Secret</code> must follow a specific pattern. See <a href="../../../../appendix/appendix-providers/#credential-secret">credential secret</a> for details.</p>
 </div>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cloud-config.yaml
@@ -5249,7 +5249,7 @@ Save this as <code>openstack-cluster-identity-cred.yaml</code>:</p>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cluster-identity-cred.yaml
 </code></pre></div>
-<p>Note that <code>.spec.identityRef.name</code> must match the <code>Secret</code> you created in the previous step, and 
+<p>Note that <code>.spec.identityRef.name</code> must match the <code>Secret</code> you created in the previous step, and
 <code>.spec.identityRef.namespace</code> must be the same as the one that includes the <code>Secret</code> (<code>kcm-system</code>).</p>
 </li>
 <li>
@@ -5293,6 +5293,9 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 
 <span class="w">    </span><span class="no">{{- $network_id := $cluster.status.externalNetwork.id -}}</span>
 <span class="w">    </span><span class="no">{{- $network_name := $cluster.status.externalNetwork.name -}}</span>
+
+<span class="w">    </span><span class="no">{{- $verify := index $openstack &quot;verify&quot; -}}</span>
+<span class="w">    </span><span class="no">{{- $ca_cert := index $identity &quot;data&quot; &quot;cacert&quot; -}}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
 <span class="w">    </span><span class="no">kind: Secret</span>
@@ -5323,6 +5326,14 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="w">        </span><span class="no">{{- end }}</span>
 <span class="w">        </span><span class="no">region=&quot;{{ index $openstack &quot;region_name&quot; }}&quot;</span>
 
+<span class="w">        </span><span class="no">{{- if or (eq $verify false) (eq (lower (printf &quot;%v&quot; $verify)) &quot;false&quot;) }}</span>
+<span class="w">        </span><span class="no">tls-insecure=true</span>
+<span class="w">        </span><span class="no">{{- end }}</span>
+
+<span class="w">        </span><span class="no">{{- if $ca_cert }}</span>
+<span class="w">        </span><span class="no">ca-file=/etc/cacert/ca.crt</span>
+<span class="w">        </span><span class="no">{{- end }}</span>
+
 <span class="w">        </span><span class="no">[LoadBalancer]</span>
 <span class="w">        </span><span class="no">{{- if $network_id }}</span>
 <span class="w">        </span><span class="no">floating-network-id=&quot;{{ $network_id }}&quot;</span>
@@ -5332,6 +5343,17 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="w">        </span><span class="no">{{- if $network_name }}</span>
 <span class="w">        </span><span class="no">public-network-name=&quot;{{ $network_name }}&quot;</span>
 <span class="w">        </span><span class="no">{{- end }}</span>
+<span class="w">    </span><span class="no">{{- if $ca_cert }}</span>
+<span class="w">    </span><span class="no">---</span>
+<span class="w">    </span><span class="no">apiVersion: v1</span>
+<span class="w">    </span><span class="no">kind: Secret</span>
+<span class="w">    </span><span class="no">metadata:</span>
+<span class="w">      </span><span class="no">name: openstack-ca-cert</span>
+<span class="w">      </span><span class="no">namespace: kube-system</span>
+<span class="w">    </span><span class="no">type: Opaque</span>
+<span class="w">    </span><span class="no">data:</span>
+<span class="w">      </span><span class="no">ca.crt: &quot;{{ $ca_cert }}&quot;</span>
+<span class="w">    </span><span class="no">{{- end }}</span>
 </code></pre></div>
 <p>Apply the YAML to your cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>openstack-cluster-identity-resource-template.yaml
@@ -5341,7 +5363,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <p>Create Your First Child Cluster</p>
 <p>To test the configuration, create a YAML file with the specification of your Managed Cluster and save it as
 <code>my-openstack-cluster-deployment.yaml</code>.  Note that you can see the available templates by listing them:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustertemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                            VALID</span>
 <span class="go">adopted-cluster-1-9-0           true</span>
@@ -5354,7 +5376,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>opensta
 <span class="go">openstack-standalone-cp-1-0-29   true</span>
 <span class="go">vsphere-hosted-cp-1-0-28         true</span>
 <span class="go">vsphere-standalone-cp-1-0-25     true</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>The <code>ClusterDeployment</code> should look something like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
@@ -5410,7 +5432,7 @@ provisioning process:</p>
 <li>
 <p>Cleanup</p>
 <p>To clean up OpenStack resources, delete the managed cluster by deleting the <code>ClusterDeployment</code>:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">NAMESPACE    NAME                          READY   STATUS</span>
 <span class="go">kcm-system   my-openstack-cluster-deployment   True    ClusterDeployment is ready</span>
@@ -5418,7 +5440,7 @@ provisioning process:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-openstack-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-openstack-cluster-deployment&quot; deleted</span>
-</code></pre></div></p>
+</code></pre></div>
 </li>
 </ol>
 
