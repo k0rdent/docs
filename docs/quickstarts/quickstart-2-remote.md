@@ -15,7 +15,58 @@ Note that if you have already done one of the other quickstarts, such as our AWS
 
 Before proceeding, make sure your management cluster meets the following requirements:
 
-1. A [default storage class](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) is configured on the management cluster to support Persistent Volumes.
+1. Increase filesystem limits by adding the following to `/etc/sysctl.conf`:
+
+    ```bash
+    fs.inotify.max_user_instances=8192
+    fs.inotify.max_user_watches=524288
+    ```
+
+    Then set `systemd` limits:
+
+    ```bash
+    sudo tee -a /etc/systemd/system.conf <<EOF
+    DefaultLimitNOFILE=1048576
+    EOF
+
+    sudo tee -a /etc/systemd/user.conf <<EOF
+    DefaultLimitNOFILE=1048576
+    EOF
+    ```
+
+    Next set the OS limits:
+
+    ```bash
+    sudo tee -a /etc/security/limits.conf <<EOF
+    * soft nofile 1048576
+    * hard nofile 1048576
+    EOF
+    ```
+
+    Finally, apply and reboot:
+
+    ```bash
+    sudo systemctl daemon-reexec
+    sudo systemctl daemon-reload
+    sudo reboot
+    ```
+
+1. A [default storage class](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) is configured on the management cluster to support Persistent Volumes.  For example:
+
+    ```bash
+    helm repo add openebs https://openebs.github.io/openebs
+    helm repo update
+
+    helm install openebs openebs/openebs \
+      --namespace openebs \
+      --create-namespace
+
+    kubectl patch storageclass openebs-hostpath \
+      -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'  
+    ```
+
+1. Make sure the key you will use to log in as root exists on the child machines.
+
 2. If the API server will be exposed as a `LoadBalancer`, ensure the appropriate cloud provider is installed on the management cluster.
 
 ## Create a Secret object containing the private SSH key to access remote machines
