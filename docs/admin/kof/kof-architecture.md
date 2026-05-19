@@ -76,6 +76,17 @@ flowchart LR
   c4 -.- r3[...] -.- management
 ```
 
+## Network connectivity
+
+This table explains how a network request travels from KOF child cluster to KOF regional cluster:
+
+| Istio | No Istio |
+| --- | --- |
+| Collector container in KOF child cluster sends data to `http://$REGIONAL_CLUSTER_NAME-vmauth:8427` | Collector container in KOF child cluster sends data to `https://vmauth.$REGIONAL_DOMAIN` |
+| Istio sidecar intercepts and routes this request to external IP address of `istio-gateway-$REGIONAL_CLUSTER_HASH` LoadBalancer, port 15443 (mTLS). | [DNS](kof-install.md#dns-auto-config) resolves this name to external IP/hostname of `gateway-$REGIONAL_CLUSTER_NAME` LoadBalancer, request reaches port 443 (TLS). |
+| This LoadBalancer exposes KOF regional [Istio east‑west Gateway](https://istio.io/latest/docs/setup/install/multicluster/multi-primary_multi-network/). | This LoadBalancer exposes KOF regional Envoy Gateway or equivalent Gateway or Ingress. |
+| The Gateway routes this request to Istio sidecar of `vmauth` Pod. The sidecar terminates mTLS and routes this request to the workload container, port 8427. | The Gateway or Ingress terminates TLS and routes this request to `vmauth` Service in its cluster, port 8427. |
+
 ## Mid-level
 
 Getting a little bit more detailed, it's important to undrestand that data flows upwards,
