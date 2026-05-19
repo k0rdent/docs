@@ -5329,71 +5329,78 @@
 <li><strong>Required Space:</strong> Storage requirements depend on your metrics volume, retention period, and replication factor. As a starting point, allocate at least 10–50 GiB per <code>vmstorage</code> pod for small clusters, and plan for growth based on actual ingestion rates and retention settings.</li>
 <li><strong>Volume Binding Mode:</strong> <code>WaitForFirstConsumer</code> is recommended for better pod scheduling and to ensure volumes are provisioned in the correct availability zone or node pool.</li>
 </ul>
-<p>For more details, see the <a href="https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#cluster-resizing-and-scalability">VictoriaMetrics Cluster documentation</a>.</p>
-<p>See also: <a href="../kof-retention/">KOF Retention</a> for details on configuring retention periods and replication factors for VictoriaMetrics and VictoriaLogs.</p>
+<p>See also <a href="../kof-retention/">KOF Retention and Replication</a> guide
+and <a href="#from-management-to-management">From Management to Management</a> option
+for the non-default storage class, space, retention, and replication details.</p>
 <h2 id="from-child-and-regional">From Child and Regional<a class="headerlink" href="#from-child-and-regional" title="Permanent link">#</a></h2>
 <p>KOF data collected from the child and regional clusters is routed out-of-the box.
 No additional steps are required here.</p>
 <h2 id="from-management-to-management">From Management to Management<a class="headerlink" href="#from-management-to-management" title="Permanent link">#</a></h2>
 <p>This option stores KOF data of the management cluster in the same management cluster.</p>
-<ul>
-<li>VictoriaMetrics is provided by the <code>kof-mothership</code> chart, hence disabled in the <code>kof-storage</code> chart by default.</li>
-<li>PromxyServerGroup, VictoriaLogs, and VictoriaTraces are provided by the <code>kof-storage</code> chart.</li>
-</ul>
 <p>To apply this option:</p>
 <ol>
 <li>
-<p>Add this patch to the existing <code>kof-values.yaml</code>:
-    <div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="nt">kof-collectors</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>Merge this patch to the existing <code>kof-values.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-child</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">monitoring</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">processors</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">resource/k8sclustername</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
-<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.name</span>
-<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
-<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.namespace</span>
-<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-<span class="w">          </span><span class="nt">exporters</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">prometheusremotewrite</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">external_labels</span><span class="p">:</span>
-<span class="w">                </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
-<span class="w">                </span><span class="nt">clusterNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-</code></pre></div></p>
+<span class="w">    </span><span class="nt">fromManagement</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">toManagementCluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
 <details class="note">
 <summary>If your management cluster is not <a href="https://k0sproject.io/">k0s</a>:</summary>
 <p>KOF scrapes <code>etcd</code> metrics using cert files like
 <code>/hostfs/${env:PKI_PATH}/pki/apiserver-etcd-client.crt</code></p>
 <p>If you have <code>PKI_PATH</code> other than <code>var/lib/k0s</code>,
 e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-child</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
-<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
+<span class="w">    </span><span class="nt">fromManagement</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">collectors</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
 </code></pre></div>
 </details>
 <details class="note">
-<summary>If you want to use a non-default storage class, merge this:</summary>
-<div class="highlight"><pre><span></span><code><span class="nt">kof-storage</span><span class="p">:</span>
+<summary>If you want to use a non-default storage class, space, retention, replication:</summary>
+<p>Adjust and merge this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-mothership</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">vlstorage</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">persistentVolume</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+<span class="w">    </span><span class="nt">victoriametrics</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">vmcluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">          </span><span class="nt">replicationFactor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">          </span><span class="nt">vmstorage</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">volumeClaimTemplate</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">                  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+<span class="w">                  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">                    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">                      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="nt">kof-child</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">victoria-logs-cluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">vlstorage</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">extraArgs</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">          </span><span class="nt">persistentVolume</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">      </span><span class="nt">victoria-traces-cluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">vtstorage</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">extraArgs</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">          </span><span class="nt">persistentVolume</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
+<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
 </code></pre></div>
+<p>See details in the <a href="../kof-retention/">KOF Retention and Replication</a> guide.</p>
 </details>
 </li>
 <li>
@@ -5407,20 +5414,18 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.9.0
 </code></pre></div>
 <h2 id="from-management-to-regional">From Management to Regional<a class="headerlink" href="#from-management-to-regional" title="Permanent link">#</a></h2>
-<p>This option stores KOF data of the management cluster in the regional cluster
-with the <code>REGIONAL_CLUSTER_NAME</code> configured <a href="../kof-install/#regional-cluster">here</a>.</p>
+<p>This option stores KOF data of the management cluster in the regional cluster.</p>
 <p>To apply this option:</p>
 <ol>
 <li>
-<p>Create the patch:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">kof-child:</span>
-<span class="s">  values:</span>
-<span class="s">    fromManagement:</span>
-<span class="s">      toRegionalCluster:</span>
-<span class="s">        name: $REGIONAL_CLUSTER_NAME</span>
-<span class="s">EOF</span>
-</code></pre></div></p>
+<p>Merge this patch to the existing <code>kof-values.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-child</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fromManagement</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">toRegionalCluster</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$REGIONAL_CLUSTER_NAME</span>
+</code></pre></div>
+<p>Make sure to replace <code>$REGIONAL_CLUSTER_NAME</code> with its value configured <a href="../kof-install/#regional-cluster">here</a>.</p>
 <details class="note">
 <summary>If your management cluster is not <a href="https://k0sproject.io/">k0s</a>:</summary>
 <p>KOF scrapes <code>etcd</code> metrics using cert files like
@@ -5431,18 +5436,16 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">fromManagement</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">collectors</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
-<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
+<span class="w">        </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
 </code></pre></div>
 </details>
 </li>
 <li>
-<p>Add this patch to the existing <code>kof-values.yaml</code> file
-    and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 </li>
 </ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span><span class="se">\</span>
@@ -5475,63 +5478,76 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 </code></pre></div></p>
 </li>
 <li>
-<p>Create the patch:
-    <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">kof-collectors:</span>
-<span class="s">  enabled: true</span>
-<span class="s">  values:</span>
-<span class="s">    kcm:</span>
-<span class="s">      monitoring: true</span>
-<span class="s">    opentelemetry-kube-stack:</span>
-<span class="s">      clusterName: mothership</span>
-<span class="s">      defaultCRConfig:</span>
-<span class="s">        env:</span>
-<span class="s">          - name: AWS_ACCESS_KEY_ID</span>
-<span class="s">            valueFrom:</span>
-<span class="s">              secretKeyRef:</span>
-<span class="s">                name: cloudwatch-credentials</span>
-<span class="s">                key: AWS_ACCESS_KEY_ID</span>
-<span class="s">          - name: AWS_SECRET_ACCESS_KEY</span>
-<span class="s">            valueFrom:</span>
-<span class="s">              secretKeyRef:</span>
-<span class="s">                name: cloudwatch-credentials</span>
-<span class="s">                key: AWS_SECRET_ACCESS_KEY</span>
-<span class="s">        config:</span>
-<span class="s">          processors:</span>
-<span class="s">            resource/k8sclustername:</span>
-<span class="s">              attributes:</span>
-<span class="s">                - action: insert</span>
-<span class="s">                  key: k8s.cluster.name</span>
-<span class="s">                  value: mothership</span>
-<span class="s">                - action: insert</span>
-<span class="s">                  key: k8s.cluster.namespace</span>
-<span class="s">                  value: kcm-system</span>
-<span class="s">          exporters:</span>
-<span class="s">            awscloudwatchlogs:</span>
-<span class="s">              region: us-east-2</span>
-<span class="s">              log_group_name: management</span>
-<span class="s">              log_stream_name: logs</span>
-<span class="s">            prometheusremotewrite: null</span>
-<span class="s">            otlphttp/logs: null</span>
-<span class="s">            otlphttp/traces: null</span>
-<span class="s">          service:</span>
-<span class="s">            pipelines:</span>
-<span class="s">              logs:</span>
-<span class="s">                exporters:</span>
-<span class="s">                - awscloudwatchlogs</span>
-<span class="s">                - debug</span>
-<span class="s">              metrics:</span>
-<span class="s">                exporters:</span>
-<span class="s">                - debug</span>
-<span class="s">              traces:</span>
-<span class="s">                exporters:</span>
-<span class="s">                - debug</span>
-<span class="s">EOF</span>
-</code></pre></div></p>
+<p>Merge this patch to the existing <code>kof-values.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">monitoring</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">clusterName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_ACCESS_KEY_ID</span>
+<span class="w">            </span><span class="nt">valueFrom</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloudwatch-credentials</span>
+<span class="w">                </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_ACCESS_KEY_ID</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_SECRET_ACCESS_KEY</span>
+<span class="w">            </span><span class="nt">valueFrom</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloudwatch-credentials</span>
+<span class="w">                </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_SECRET_ACCESS_KEY</span>
+<span class="w">        </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">processors</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">resource/k8sclustername</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">attributes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
+<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.name</span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mothership</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">insert</span>
+<span class="w">                  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s.cluster.namespace</span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">          </span><span class="nt">exporters</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">awscloudwatchlogs</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-2</span>
+<span class="w">              </span><span class="nt">log_group_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">management</span>
+<span class="w">              </span><span class="nt">log_stream_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logs</span>
+<span class="w">            </span><span class="nt">prometheusremotewrite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">            </span><span class="nt">otlphttp/logs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">            </span><span class="nt">otlphttp/traces</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">          </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">pipelines</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">logs</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">exporters</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">awscloudwatchlogs</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">debug</span>
+<span class="w">              </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">exporters</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">debug</span>
+<span class="w">              </span><span class="nt">traces</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">exporters</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">debug</span>
+</code></pre></div>
+<details class="note">
+<summary>If your management cluster is not <a href="https://k0sproject.io/">k0s</a>:</summary>
+<p>KOF scrapes <code>etcd</code> metrics using cert files like
+<code>/hostfs/${env:PKI_PATH}/pki/apiserver-etcd-client.crt</code></p>
+<p>If you have <code>PKI_PATH</code> other than <code>var/lib/k0s</code>,
+e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kof-collectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PKI_PATH</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">etc/kubernetes</span>
+</code></pre></div>
+<p>Please take especial care merging the <code>env</code> list manually to avoid overwriting it.</p>
+</details>
 </li>
 <li>
-<p>Add this patch to the existing <code>kof-values.yaml</code> file
-    and then apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
+<p>Apply <code>kof-values.yaml</code> to the <a href="../kof-install/#management-cluster">Management Cluster</a>:</p>
 </li>
 </ol>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span><span class="se">\</span>

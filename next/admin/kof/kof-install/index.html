@@ -5406,7 +5406,7 @@ is shown in <strong>bold</strong> style.</p>
 </ul>
 </li>
 </ul>
-<p>For information on long-term storage planning, review the <a href="../kof-retention/">KOF Retention</a> page, which covers retention and replication strategies.</p>
+<p>For information on long-term storage planning, review the <a href="../kof-retention/">KOF Retention and Replication</a> guide.</p>
 <h3 id="dns-auto-config">DNS auto-config<a class="headerlink" href="#dns-auto-config" title="Permanent link">#</a></h3>
 <p>To avoid <a href="../kof-verification/#manual-dns-config">manual configuration of DNS records</a> for service endpoints later,
 you can automate the process now using <a href="https://kubernetes-sigs.github.io/external-dns/latest/">external-dns</a>.
@@ -5645,6 +5645,7 @@ enable the <code>crossNamespace</code> value in the <code>kof-values.yaml</code>
 <p>For example, if all your regional clusters will use OpenStack,
 you may set the OpenStack-specific values described in step 10 of the <a href="#regional-cluster">Regional Cluster</a> section
 under the <code>storage:</code> key here.</p>
+<p>See also the <a href="../kof-retention/">KOF Retention and Replication</a> guide.</p>
 </details>
 <details class="note">
 <summary>To customize collectors for all child clusters at once now:</summary>
@@ -5972,12 +5973,13 @@ to the <code>kof-storage</code> chart or its subcharts, such as <a href="https:/
 add them to the <code>regional-cluster.yaml</code> file in the <code>.spec.config.clusterAnnotations</code>.
 Examples:</p>
 <details class="note">
-<summary>VictoriaLogs replicaCount</summary>
+<summary>VictoriaLogs vlinsert replicaCount</summary>
 <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">  </span><span class="no">victoria-logs-cluster:</span>
 <span class="w">    </span><span class="no">vlinsert:</span>
 <span class="w">      </span><span class="no">replicaCount: 2</span>
 </code></pre></div>
+<p>See also the <a href="../kof-retention/">KOF Retention and Replication</a> guide.</p>
 </details>
 <details class="note">
 <summary>OpenStack extra requirement for DNS auto-config</summary>
