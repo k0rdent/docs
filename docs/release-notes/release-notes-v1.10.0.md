@@ -25,22 +25,17 @@
 
 ## Highlights
 
-* **Policy and Security Controls Expanded**: This release adds audit policy support and template-level etcd encryption
-configuration, making it easier to align clusters with security and compliance requirements from day one.
+* **Stronger Security Baselines for New Clusters**: k0rdent 1.10.0 adds audit policy support and template-level etcd encryption configuration, helping platform teams apply security and compliance controls earlier in the cluster lifecycle instead of relying on post-deployment hardening.
 
-* **Service Lifecycle Management Is More Predictable**: `ServiceSet` and `MultiClusterService` behavior is improved
-with clearer deployed/total visibility, better status persistence, and support for keeping already deployed services
-when selectors change.
+* **Safer Multi-Cluster Service Changes**: Improvements to `ServiceSet` and `MultiClusterService` make service rollout status easier to understand and reduce disruption when selectors change. Operators can now keep already deployed services in place while adjusting targeting logic, which lowers the risk of accidental service removal during routine changes.
 
-* **Default Templates Configuration Is More Robust**: Default template fixes (including missing MachineDeployment versioning,
-OpenStack floating IP pool references, and defaults merging) plus chart updates (such as `priorityClassName` and
-topology spread constraints) reduce configuration drift and deployment failures.
+* **More Reliable Cluster Template Behavior**: Fixes to default template handling, MachineDeployment versioning, OpenStack floating IP pool references, and values merging make cluster deployments more consistent across environments. These changes reduce configuration drift and help prevent avoidable deployment failures.
 
-* **Operational Stability and Controller Efficiency Improved**: Reconcile path optimizations, namespace-watch filtering,
-semver-based version comparison, lower controller noise and improve convergence behavior.
+* **Better Scheduling and Availability Controls for k0rdent Components**: Chart updates add support for `priorityClassName` and topology spread constraints, giving operators more control over how k0rdent components run in production Kubernetes environments.
 
----
+* **Smoother Upgrades and More Predictable Convergence**: Upgrade-related fixes, semver-based version comparison, dependency handling, and controller reconcile optimizations improve the reliability of day-2 operations. The result is less controller noise, fewer edge-case failures, and clearer behavior during upgrades and reconciliation.
 
+* **Updated Platform Foundation**: This release refreshes core providers and dependencies, including Cluster API, major infrastructure providers, Projectsveltos, k0s, and cert-manager, keeping k0rdent aligned with the current Kubernetes ecosystem while incorporating upstream fixes and compatibility improvements.
 
 ## Upgrade Notes
 

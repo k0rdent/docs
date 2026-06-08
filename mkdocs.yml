@@ -311,7 +311,6 @@ nav:
     - Verifying a default `StorageClass`: appendix/storageclass.md
   - Release Notes:
     - Overview: release-notes/index.md
-    - v1.9.0: release-notes/release-notes-v1.9.0.md
     - v1.10.0: release-notes/release-notes-v1.10.0.md
   - Contributing:
     - Overview: contrib/index.md
