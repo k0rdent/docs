@@ -61,11 +61,11 @@ Let's start with the demo of an alert sent and received.
 
 3. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 4. Wait until the [https://webhook.site/](https://webhook.site/)
     shows the `Watchdog` alert, as in:
@@ -236,11 +236,11 @@ For example, let's update the `CPUThrottlingHigh` alert in the `kubernetes-resou
 
 7. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 ## Generation of rules
 

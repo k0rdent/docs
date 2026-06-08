@@ -237,7 +237,6 @@ nav:
     - Using KOF: admin/kof/kof-using.md
     - Grafana in KOF: admin/kof/kof-grafana.md
     - KOF Alerts: admin/kof/kof-alerts.md
-    - Scaling KOF: admin/kof/kof-scaling.md
     - Maintaining KOF: admin/kof/kof-maintainence.md
     - Tracing KOF: admin/kof/kof-tracing.md
     - Multi-tenancy in KOF: admin/kof/kof-multi-tenancy.md

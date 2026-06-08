@@ -148,11 +148,11 @@ To enable this option and Dex in general with [Usage Examples](#usage-examples) 
 3. Add this patch to the existing `kof-values.yaml` file
     and then apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 4. ??? note "Expose Dex at local management cluster as `https://dex.example.com:32000`"
 
