@@ -41,7 +41,20 @@
 
 ### k0rdent Observability an Finance (KOF)
 
-TBD
+KOF v1.10.0 introduces:
+
+* [Regionless](../admin/kof/kof-storing.md#regionless) setup option.
+  There are no regional clusters in this case.
+  Child clusters send metrics/logs/traces to the management cluster for storage.
+* Simplified [From Management to Management](../admin/kof/kof-storing.md#from-management-to-management) (M2M)
+  and  [From Management to Regional](../admin/kof/kof-storing.md#from-management-to-regional) (M2R) options.
+  Note that `kof-storage`/`kof-collectors` are removed from `kof` umbrella chart in favor of dynamic M2M option.
+* [Audit logs](../admin/kof/kof-retention.md/#audit-logs).
+* S3-compatible cold storage exporter.
+* File storage to persist export data.
+* Aggregation and multi-tenancy for traces.
+* Vlogxy is replaced with VLCluster multi-level selection.
+* Example of opentelemetry SDK usage in kof-operator.
 
 ---
 
