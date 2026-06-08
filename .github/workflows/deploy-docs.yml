@@ -103,8 +103,8 @@ jobs:
             if [[ "$BRANCH" == "main" ]]; then
               mike deploy -t "next" --update-aliases --push --alias-type=copy next head
 
-            elif [[ "$BRANCH" == "release-v1.9.0" ]]; then
-              mike deploy -t "v1.9.0 (latest)" --update-aliases --push --alias-type=copy v1.9.0 latest stable
+            elif [[ "$BRANCH" == "release-v1.10.0" ]]; then
+              mike deploy -t "v1.10.0 (latest)" --update-aliases --push --alias-type=copy v1.10.0 latest stable
               mike set-default --push latest
 
             else
