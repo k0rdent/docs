@@ -178,7 +178,6 @@ Get started with the basic documentation:
 - [KOF Multi-tenancy](kof-multi-tenancy.md)
 - [Retention and Replication](kof-retention.md)
 - [Resources Requirements](kof-resources.md)
-- [Scaling KOF](kof-scaling.md)
 - [Maintaining KOF](kof-maintainence.md)
 - [Upgrading KOF](kof-upgrade.md)
 - [FAQ](kof-faq.md)

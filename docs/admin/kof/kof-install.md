@@ -2,17 +2,17 @@
 
 ## Options
 
-KOF may be installed using different options:
+KOF may be installed using different options for each aspect:
 
-| Aspect | Options | | | |
-| --- | --- | --- | ---  |--- |
-| **Cloud** | AWS | Azure | OpenStack and others | |
-| **Air Gap** | Enabled | Disabled | | |
-| **[Multi-tenancy](kof-multi-tenancy.md)** with SSO and ACL | Enabled | Disabled | | |
-| **[Grafana](kof-grafana.md)** integration | Enabled | Disabled |
-| **Connect clusters** | [Istio](#istio) | [Auto DNS](#dns-auto-config) | [Manual DNS](kof-verification.md#manual-dns-config) | |
-| **KOF Regional** | [its own ClusterDeployment](#regional-cluster) | shared with [KCM Region](kof-kcm-region.md) | shared with Management ([Regionless](kof-storing.md#regionless)) | just a ConfigMap |
-| Store KOF data **from Management to** | [Management](kof-storing.md#from-management-to-management) | [Regional](kof-storing.md#from-management-to-regional) | [Third-party](kof-storing.md#from-management-to-third-party) | None |
+| Aspect | Options |
+| --- | --- |
+| **Cloud** | AWS / Azure / OpenStack and others |
+| **Air Gap** | Enabled / Disabled |
+| **[Multi-tenancy](kof-multi-tenancy.md)** with SSO and ACL | Enabled / Disabled |
+| **[Grafana](kof-grafana.md)** integration | Enabled / Disabled |
+| **Connect clusters** | <ul><li>[Istio](#istio)</li><li>[Auto DNS](#dns-auto-config)</li><li>[Manual DNS](kof-verification.md#manual-dns-config)</li></ul> |
+| **KOF Regional** | <ul><li>[its own ClusterDeployment](#regional-cluster)</li><li>shared with [KCM Region](kof-kcm-region.md)</li><li>shared with Management ([Regionless](kof-storing.md#regionless))</li><li>just a ConfigMap</li></ul> |
+| Store KOF data **from Management to** | <ul><li>[Management](kof-storing.md#from-management-to-management)</li><li>[Regional](kof-storing.md#from-management-to-regional)</li><li>[Third-party](kof-storing.md#from-management-to-third-party)</li><li>None</li></ul> |
 
 Each aspect is independent of the others with the only exception being:
 the regionless setup always stores KOF data from all clusters (including the management cluster)
@@ -358,13 +358,14 @@ and apply this example, or use it as a reference:
     If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
 
 9. Wait for all HelmReleases to be ready:
+
     ```bash
     kubectl wait --for=condition=Ready helmreleases --all -n kof --timeout=10m
     kubectl get helmreleases -n kof
     ```
 
-
 10. Wait for all pods to show that they're `Running`:
+
     ```bash
     kubectl get pod -n kof
     ```

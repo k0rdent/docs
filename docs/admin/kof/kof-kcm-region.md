@@ -93,7 +93,7 @@ k0rdent.mirantis.com/istio-role: member
 > To enable connectivity between a child cluster and the regional cluster, set the `k0rdent.mirantis.com/istio-mesh` label with the same `<REGION_NAME>` value on both clusters.
 
 > NOTE:
-> To use Istio in the KCM Regional cluster together with KOF, make sure your instances have sufficient RAM, CPU, and disk resources. For example, [t3.large](https://aws.amazon.com/ec2/instance-types/t3/) instance on AWS are the minimal instance type that provides enough RAM and CPU for this workload.
+> To use Istio in the KCM Regional cluster together with KOF, make sure your instances have sufficient RAM, CPU, and disk resources. For example, [t3.xlarge](https://aws.amazon.com/ec2/instance-types/t3/) instance on AWS are the minimal instance type that provides enough RAM and CPU for this workload.
 
 ## Deploying Child Clusters in a KCM Region
 

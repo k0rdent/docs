@@ -33,11 +33,11 @@ If you want to install Grafana manually and enable its support in KOF, apply the
     ```
 * Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 * Install Grafana manually, for example:
     ```bash

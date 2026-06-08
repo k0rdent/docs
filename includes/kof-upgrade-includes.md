@@ -11,7 +11,7 @@ KOF v1.10.0 introduces:
 * Simplified [From Management to Management](../docs/admin/kof/kof-storing.md#from-management-to-management) (M2M)
     and  [From Management to Regional](../docs/admin/kof/kof-storing.md#from-management-to-regional) (M2R) options.
     Note that `kof-storage`/`kof-collectors` are removed from `kof` umbrella chart in favor of dynamic M2M option.
-* Audit logs.
+* [Audit logs](../docs/admin/kof/kof-retention.md/#audit-logs).
 * S3-compatible cold storage exporter.
 * File storage to persist export data.
 * Aggregation and multi-tenancy for traces.

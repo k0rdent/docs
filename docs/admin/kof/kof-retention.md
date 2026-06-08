@@ -12,6 +12,7 @@ to balance cost, durability, and compliance, for example:
 * **Management cluster:** short-term retention (1–30 days)
 * **Regional clusters:** long-term retention (30–365 days)
 * Increase **replicationFactor** where higher availability is required; this field enables you to determine how many copies are stored, usually on different nodes.
+* The **replicaCount** defines how many pods should be running.
 
 Review the next guides to make **informed decision:**
 
@@ -20,6 +21,10 @@ Review the next guides to make **informed decision:**
 * [VictoriaMetrics Replication and Data Safety](https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#replication-and-data-safety)
 * [VictoriaLogs Cluster Replication](https://docs.victoriametrics.com/victorialogs/cluster/#replication) and [discussion](https://github.com/VictoriaMetrics/VictoriaLogs/issues/166#issuecomment-3043600409)
 * [VictoriaTraces Cluster HA](https://docs.victoriametrics.com/victoriatraces/cluster/#high-availability)
+
+> WARNING:
+> If your `StorageClass` does not have [allowVolumeExpansion: true](https://kubernetes.io/docs/concepts/storage/storage-classes/#allow-volume-expansion)
+> you will not be able to increase storage size by using the values below.
 
 ## Examples of values
 
@@ -31,7 +36,12 @@ victoriametrics:
     spec:
       retentionPeriod: "30d"
       replicationFactor: 2
+      vminsert:
+        replicaCount: 2
+      vmselect:
+        replicaCount: 2
       vmstorage:
+        replicaCount: 2
         resources:
           limits:
             cpu: "8"
@@ -42,7 +52,7 @@ victoriametrics:
               storageClassName: <EXAMPLE_STORAGE_CLASS>
               resources:
                 requests:
-                  storage: "100Gi"
+                  storage: "200Gi"
 ```
 
 Details: [VMClusterSpec](https://docs.victoriametrics.com/operator/api/#vmclusterspec)
@@ -51,7 +61,12 @@ Details: [VMClusterSpec](https://docs.victoriametrics.com/operator/api/#vmcluste
 
 ```yaml
 victoria-logs-cluster:
+  vlinsert:
+    replicaCount: 2
+  vlselect:
+    replicaCount: 2
   vlstorage:
+    replicaCount: 2
     extraArgs:
       retentionPeriod: "30d"
     persistentVolume:
@@ -73,7 +88,12 @@ victoriametrics:
   vlcluster_audit:
     enabled: true
     spec:
+      vlinsert:
+        replicaCount: 2
+      vlselect:
+        replicaCount: 2
       vlstorage:
+        replicaCount: 2
         retentionPeriod: "1y"
         storage:
           volumeClaimTemplate:
@@ -110,7 +130,12 @@ opentelemetry-kube-stack:
 
 ```yaml
 victoria-traces-cluster:
+  vtinsert:
+    replicaCount: 2
+  vtselect:
+    replicaCount: 2
   vtstorage:
+    replicaCount: 2
     extraArgs:
       retentionPeriod: "30d"
     persistentVolume:

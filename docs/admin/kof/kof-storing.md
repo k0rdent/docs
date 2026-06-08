@@ -84,9 +84,12 @@ To apply this option:
         ```yaml
         regionless:
           domain: mothership.kof.example.com
+          certEmail: admin@example.com
         ```
 
         Use your own domain. Child clusters will send KOF data to `https://vmauth.{domain}`.
+
+        The email address for the domain certificate is not required in the self-signed TLS case below.
 
     ??? note "If you need self-signed / insecure TLS:"
 
@@ -118,11 +121,23 @@ To apply this option:
 
 2. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
+
+3. If you have not applied the [Istio](kof-install.md#istio) section:
+
+    ??? note "Apply the workaround for [k0rdent/kcm issue #2677](https://github.com/k0rdent/kcm/issues/2677):"
+
+        Either `helm upgrade` KCM with `--set regional.cert-manager.config.enableGatewayAPI=true`
+
+        or patch it with:
+
+        ```bash
+        kubectl patch mgmt kcm --type=merge -p '{"spec":{"core":{"kcm":{"config":{"regional":{"cert-manager":{"config":{"enableGatewayAPI":true}}}}}}}}'
+        ```
 
 ## From Child and Regional
 
@@ -209,11 +224,11 @@ Otherwise, to apply this option:
 
 2. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 ## From Management to Regional
 
@@ -255,11 +270,11 @@ To apply this option:
 
 2. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 ## From Management to Third-party
 
@@ -362,11 +377,11 @@ For now, however, just for the sake of this demo, you can use the most straightf
 
 5. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
-{%
-    include-markdown "../../../includes/kof-install-includes.md"
-    start="<!--install-kof-start-->"
-    end="<!--install-kof-end-->"
-%}
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-kof-start-->"
+        end="<!--install-kof-end-->"
+    %}
 
 6. Configure AWS CLI with the same access key, for verification:
     ```bash
