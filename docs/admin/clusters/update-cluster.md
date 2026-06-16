@@ -78,8 +78,11 @@ the rollout, `etcd` may become unavailable if the cluster temporarily loses quor
 the departing control plane node is removed before quorum is safely maintained, preventing the cluster from scaling
 below the quorum threshold (for example, from two control plane nodes to one).
 
-To avoid this issue, {{{ docsVersionInfo.k0rdentName }}} recommends scaling the control plane to at least three nodes
-before applying any configuration changes that trigger a rollout. Once the rollout has completed successfully, you
-can scale the control plane back down if desired.
+To avoid issues, {{{ docsVersionInfo.k0rdentName }}} recommends:
+
+1. Scaling the control plane to at least three nodes before applying any configuration changes that triggers a rollout.
+Once the rollout has completed successfully, you can scale the control plane back down if desired.
+1. Don't attempt to make configuration changes that would trigger another rollout until the current one has completed.
+You can check the status of the rollout by inspecting the `ClusterDeployment` conditions.
 
 This issue is expected to be resolved in future k0s releases.
