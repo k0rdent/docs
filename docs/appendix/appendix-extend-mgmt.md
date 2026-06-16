@@ -524,3 +524,28 @@ spec:
       config:
         enableProvidersReload: true
 ```
+
+### Configuring Cert Manager
+
+Some environments require additional Cert Manager configuration. You can customize cert-manager by setting
+`spec.core.kcm.config.cert-manager` in either a `Management` or `Region` resource.
+
+For example, to enable support for the Gateway API, you can configure
+`spec.core.kcm.config.cert-manager.config.enableGatewayAPI: true`.
+
+> NOTE: See the Cert Manager documentation for the Gateway API in
+> the [Annotated Gateway resource guide](https://cert-manager.io/docs/usage/gateway/) (before enabling this feature,
+> ensure that all prerequisites are met, including installing the Gateway API CRDs).
+
+For the full list of available Cert Manager
+configuration options, refer to the [cert-manager's ArtifactHub page](https://artifacthub.io/packages/helm/cert-manager/cert-manager).
+
+```yaml
+spec:
+  core:
+    kcm:
+      config:
+        cert-manager:
+          config:
+            enableGatewayAPI: true
+```
