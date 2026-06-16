@@ -5405,9 +5405,13 @@ You wouldn't be able to use this template to update a cluster that uses any othe
 the rollout, <code>etcd</code> may become unavailable if the cluster temporarily loses quorum. This can occur when
 the departing control plane node is removed before quorum is safely maintained, preventing the cluster from scaling
 below the quorum threshold (for example, from two control plane nodes to one).</p>
-<p>To avoid this issue, k0rdent recommends scaling the control plane to at least three nodes
-before applying any configuration changes that trigger a rollout. Once the rollout has completed successfully, you
-can scale the control plane back down if desired.</p>
+<p>To avoid issues, k0rdent recommends:</p>
+<ol>
+<li>Scaling the control plane to at least three nodes before applying any configuration changes that triggers a rollout.
+Once the rollout has completed successfully, you can scale the control plane back down if desired.</li>
+<li>Don't attempt to make configuration changes that would trigger another rollout until the current one has completed.
+You can check the status of the rollout by inspecting the <code>ClusterDeployment</code> conditions.</li>
+</ol>
 <p>This issue is expected to be resolved in future k0s releases.</p>
 
 
