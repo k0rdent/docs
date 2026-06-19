@@ -77,7 +77,7 @@ Once the tenant is identified, KOF ACL service enforces the filtering of the dat
 flowchart TB
   User((User)) --"Show metrics,<br>logs, alerts"--> Grafana
   Grafana --"Get the data<br>using token with<br>tenant:example.com"--> ACL[KOF ACL]
-  ACL --"Get the data<br>having label<br>tenant:example.com"--> Proxies[Promxy, vlogxy]
+  ACL --"Get the data<br>having label<br>tenant:example.com"--> Proxies[Promxy, VL/VT multi-level select]
   Proxies --> Cluster1 -.-> Proxies
   Proxies --> Cluster2[...] -.-> Proxies
   Proxies --> ClusterN -.-> Proxies
