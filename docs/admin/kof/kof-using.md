@@ -56,13 +56,14 @@ Run the port-forward command for your cluster type:
 **Management Cluster**
 
 ```bash
-kubectl port-forward -n kof svc/vlselect-kof-mothership-logs-multilevel-select 9471:9471
+kubectl port-forward -n kof \
+  svc/vlselect-kof-mothership-logs-multilevel-select 9471:9471
 ```
 
 **Regional Cluster**
 
 ```bash
-KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \ 
+KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \
   svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
 ```
 
@@ -93,13 +94,15 @@ Run the port-forward command for your cluster type:
 **Management Cluster**
 
 ```bash
-kubectl port-forward -n kof svc/vtselect-kof-mothership-multilevel-select 10471:10471
+kubectl port-forward -n kof \
+  svc/vtselect-kof-mothership-multilevel-select 10471:10471
 ```
 
 **Regional Cluster**
 
 ```bash
-KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof svc/kof-storage-victoria-traces-cluster-vtselect 10471:10471
+KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \
+  svc/kof-storage-victoria-traces-cluster-vtselect 10471:10471
 ```
 
 All examples below assume the port-forward is running on `127.0.0.1:10471`.

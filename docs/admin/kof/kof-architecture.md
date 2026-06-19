@@ -26,7 +26,7 @@ Main components/features of KOF:
 
 📦 **Storage**: VictoriaMetrics/Logs/Traces, third party
 
-🌐 **Aggregation**: Promxy (Prometheus proxy), VictoriaLogs multi-level select, VictoriaTraces multi-level select
+🌐 **Aggregation**: Promxy (Prometheus proxy), VictoriaLogs/Traces multi-level select
 
 📈 **Visualization**: Grafana dashboards (optional), KOF UI, Alerts, Events
 
