@@ -5626,7 +5626,7 @@ Please adapt these reference examples to your own case.</p>
 <pre class="mermaid"><code>flowchart TB
   User((User)) --"Show metrics,&lt;br&gt;logs, alerts"--&gt; Grafana
   Grafana --"Get the data&lt;br&gt;using token with&lt;br&gt;tenant:example.com"--&gt; ACL[KOF ACL]
-  ACL --"Get the data&lt;br&gt;having label&lt;br&gt;tenant:example.com"--&gt; Proxies[Promxy, vlogxy]
+  ACL --"Get the data&lt;br&gt;having label&lt;br&gt;tenant:example.com"--&gt; Proxies[Promxy, VL/VT multi-level select]
   Proxies --&gt; Cluster1 -.-&gt; Proxies
   Proxies --&gt; Cluster2[...] -.-&gt; Proxies
   Proxies --&gt; ClusterN -.-&gt; Proxies

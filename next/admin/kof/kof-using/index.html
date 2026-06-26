@@ -3256,6 +3256,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#victorialogs-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      VictoriaLogs UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsql-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogsQL API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3264,6 +3288,48 @@
       Traces
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Traces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#victoriatraces-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      VictoriaTraces UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsql-api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogsQL API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaeger-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jaeger HTTP API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tempo-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tempo HTTP API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5425,6 +5491,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#victorialogs-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      VictoriaLogs UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsql-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogsQL API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5433,6 +5523,48 @@
       Traces
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Traces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#victoriatraces-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      VictoriaTraces UI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logsql-api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      LogsQL API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaeger-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jaeger HTTP API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tempo-http-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tempo HTTP API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5533,69 +5665,58 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
 </li>
 </ul>
 <h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">#</a></h2>
-<ul>
-<li><a href="https://docs.victoriametrics.com/victorialogs/querying/#web-ui">VictoriaLogs UI</a>:<ul>
-<li>Run in the regional cluster:
-    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-victoria-logs-cluster-vlselect<span class="w"> </span><span class="m">9471</span>:9471
+<p>KOF provides access to logs through <a href="https://docs.victoriametrics.com/victorialogs/">VictoriaLogs</a>, a high-performance log storage and query engine. All logs collected from managed clusters are forwarded and stored centrally, allowing you to search and analyze them from a single access point. Logs are accessible via the VictoriaLogs UI for interactive exploration, or via the LogsQL API for scripting and automation.</p>
+<p>Access is provided via a port-forward to the appropriate logs service. The management cluster aggregates logs from all regional clusters and the mothership itself, while a regional cluster port-forward scopes access to that cluster's logs only.</p>
+<p>Run the port-forward command for your cluster type:</p>
+<p><strong>Management Cluster</strong></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>svc/vlselect-kof-mothership-logs-multilevel-select<span class="w"> </span><span class="m">9471</span>:9471
 </code></pre></div>
-    To get logs stored <a href="../kof-storing/#from-management-to-management">from Management to Management</a> (if any),
-    do this port-forward in the management cluster.</li>
-<li>Open <a href="http://127.0.0.1:9471/select/vmui/">http://127.0.0.1:9471/select/vmui/</a></li>
-<li>CLI query for automation:
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<p><strong>Regional Cluster</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>svc/kof-storage-victoria-logs-cluster-vlselect<span class="w"> </span><span class="m">9471</span>:9471
+</code></pre></div>
+<h3 id="victorialogs-ui">VictoriaLogs UI<a class="headerlink" href="#victorialogs-ui" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victorialogs/querying/#web-ui">VictoriaLogs UI</a> provides an interactive interface for exploring and visualizing logs. You can filter by time range, search using <a href="https://docs.victoriametrics.com/victorialogs/logsql/">LogsQL</a> expressions, and inspect individual log entries.</p>
+<p>Open <a href="http://127.0.0.1:9471/select/vmui/">http://127.0.0.1:9471/select/vmui/</a></p>
+<h3 id="logsql-api">LogsQL API<a class="headerlink" href="#logsql-api" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogsQL HTTP API</a> allows querying logs programmatically using <a href="https://docs.victoriametrics.com/victorialogs/logsql/">LogsQL</a> syntax. This is suitable for scripting, alerting pipelines, and automation. The example below returns up to 10 log entries from the last hour:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
-</code></pre></div></li>
-</ul>
-</li>
-<li>Run inside of Istio mesh:
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://<span class="nv">$REGIONAL_CLUSTER_NAME</span>-logs-select:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
-</code></pre></div></li>
-<li>Run without Istio and port-forwarding:
-    <div class="highlight"><pre><span></span><code><span class="nv">VM_USER</span><span class="o">=</span><span class="k">$(</span>
-<span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>storage-vmuser-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.data.username<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
-<span class="k">)</span>
-<span class="nv">VM_PASS</span><span class="o">=</span><span class="k">$(</span>
-<span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>storage-vmuser-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.data.password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
-<span class="k">)</span>
-curl<span class="w"> </span>https://vmauth.<span class="nv">$REGIONAL_DOMAIN</span>/vls/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VM_USER</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="nv">$VM_PASS</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
-</code></pre></div></li>
-</ul>
+</code></pre></div>
 <h2 id="traces">Traces<a class="headerlink" href="#traces" title="Permanent link">#</a></h2>
-<p>VictoriaTraces provides a scalable, cost-efficient distributed tracing backend that helps k0rdent users observe application performance while supporting FinOps goals by reducing storage and query costs.</p>
-<ul>
-<li><a href="https://docs.victoriametrics.com/victoriatraces/querying/#web-ui">VictoriaTraces UI</a>:<ul>
-<li>Run in the regional cluster:
-    <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/kof-storage-vt-cluster-vtselect<span class="w"> </span><span class="m">10471</span>:10471
+<p>KOF provides distributed tracing through <a href="https://docs.victoriametrics.com/victoriatraces/">VictoriaTraces</a>. Traces are accessible via the VictoriaTraces UI or CLI using the LogsQL, Jaeger, or Tempo APIs.</p>
+<p>Access is provided via a port-forward to the appropriate traces service. The management cluster exposes a multi-level select service that aggregates traces from all regional clusters and the mothership, while a regional cluster port-forward scopes access to that cluster's traces only.</p>
+<p>Run the port-forward command for your cluster type:</p>
+<p><strong>Management Cluster</strong></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>svc/vtselect-kof-mothership-multilevel-select<span class="w"> </span><span class="m">10471</span>:10471
 </code></pre></div>
-    To get traces stored <a href="../kof-storing/#from-management-to-management">from Management to Management</a> (if any),
-    do this port-forward in the management cluster.</li>
-<li>Open <a href="http://127.0.0.1:10471/select/vmui/">http://127.0.0.1:10471/select/vmui/</a></li>
-</ul>
-</li>
-<li>CLI queries for automation:<ul>
-<li><a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogSQL</a>:
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/logsql/query<span class="w"> </span><span class="se">\</span>
+<p><strong>Regional Cluster</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>svc/kof-storage-victoria-traces-cluster-vtselect<span class="w"> </span><span class="m">10471</span>:10471
+</code></pre></div>
+<p>All examples below assume the port-forward is running on <code>127.0.0.1:10471</code>.</p>
+<h3 id="victoriatraces-ui">VictoriaTraces UI<a class="headerlink" href="#victoriatraces-ui" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victoriatraces/querying/#web-ui">VictoriaTraces UI</a> provides an interactive interface for exploring traces. You can search by service, operation, or time range, and inspect individual trace spans and their attributes.</p>
+<p>Open <a href="http://127.0.0.1:10471/select/vmui/">http://127.0.0.1:10471/select/vmui/</a></p>
+<h3 id="logsql-api_1">LogsQL API<a class="headerlink" href="#logsql-api_1" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogsQL HTTP API</a> allows querying trace data using <a href="https://docs.victoriametrics.com/victorialogs/logsql/">LogsQL</a> syntax. This is useful for integrating with automation pipelines. The example below returns up to 10 trace entries from the last hour:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/logsql/query<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
-</code></pre></div></li>
-<li><a href="https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api">Jaeger HTTP API</a>:
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/services
 </code></pre></div>
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/traces?service<span class="o">=</span><span class="nb">test</span>
-</code></pre></div></li>
-</ul>
-</li>
-</ul>
+<h3 id="jaeger-http-api">Jaeger HTTP API<a class="headerlink" href="#jaeger-http-api" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api">Jaeger HTTP API</a> provides compatibility with Jaeger clients and tooling. Use it to list services, retrieve traces by service name, or integrate with dashboards that support the Jaeger data source.</p>
+<p>List all services with recorded traces:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/services
+</code></pre></div>
+<h3 id="tempo-http-api">Tempo HTTP API<a class="headerlink" href="#tempo-http-api" title="Permanent link">#</a></h3>
+<p>The <a href="https://docs.victoriametrics.com/victoriatraces/querying/#tempo-http-api">Tempo HTTP API</a> provides compatibility with Grafana Tempo clients, allowing VictoriaTraces to be used as a drop-in Tempo data source in Grafana.</p>
+<p>Fetch a trace by ID:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/tempo/api/traces/&lt;traceID&gt;
+</code></pre></div>
 <h2 id="cost-management-opencost">Cost Management (OpenCost)<a class="headerlink" href="#cost-management-opencost" title="Permanent link">#</a></h2>
 <p>KOF includes OpenCost, which provides cost management features for Kubernetes clusters.
 Common metrics (also available in the pre-installed Grafana FinOps dashboards if <a href="../kof-grafana/">enabled</a>) are:</p>
