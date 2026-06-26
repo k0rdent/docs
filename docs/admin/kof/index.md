@@ -113,7 +113,7 @@ k0rdent defines a management cluster and many child clusters. KOF follows this a
   - a third-party service for selected streams (for example, logs exported to AWS CloudWatch).
   See: [Storing KOF data](https://docs.k0rdent.io/latest/admin/kof/kof-storing/).
 
-Data flows from child clusters into the regional storage clusters. On the management cluster, promxy and vlogxy provide consolidated endpoints for consuming metrics and logs across all clusters, with optional visualization by Grafana or other UIs of your choice.
+Data flows from child clusters into the regional storage clusters. On the management cluster, promxy and logs/traces multi-level select provide consolidated endpoints for consuming metrics, logs and traces across all clusters, with optional visualization by Grafana or other UIs of your choice.
 
 ### KOF can be extended with your own dashboards, pipelines, and destinations
 

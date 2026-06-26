@@ -47,70 +47,101 @@
 
 ## Logs
 
-* [VictoriaLogs UI](https://docs.victoriametrics.com/victorialogs/querying/#web-ui):
-    * Run in the regional cluster:
-        ```bash
-        KUBECONFIG=regional-kubeconfig kubectl port-forward \
-          -n kof svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
-        ```
-        To get logs stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
-        do this port-forward in the management cluster.
-    * Open [http://127.0.0.1:9471/select/vmui/](http://127.0.0.1:9471/select/vmui/)
-    * CLI query for automation:
-        ```bash
-        curl http://127.0.0.1:9471/select/logsql/query \
-          -d 'query=_time:1h' \
-          -d 'limit=10'
-        ```
-* Run inside of Istio mesh:
-    ```bash
-    curl http://$REGIONAL_CLUSTER_NAME-logs-select:9471/select/logsql/query \
-      -d 'query=_time:1h' \
-      -d 'limit=10'
-    ```
-* Run without Istio and port-forwarding:
-    ```bash
-    VM_USER=$(
-      kubectl get secret -n kof storage-vmuser-credentials -o yaml \
-      | yq .data.username | base64 -d
-    )
-    VM_PASS=$(
-      kubectl get secret -n kof storage-vmuser-credentials -o yaml \
-      | yq .data.password | base64 -d
-    )
-    curl https://vmauth.$REGIONAL_DOMAIN/vls/select/logsql/query \
-      -u "$VM_USER":"$VM_PASS" \
-      -d 'query=_time:1h' \
-      -d 'limit=10'
-    ```
+KOF provides access to logs through [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/), a high-performance log storage and query engine. All logs collected from managed clusters are forwarded and stored centrally, allowing you to search and analyze them from a single access point. Logs are accessible via the VictoriaLogs UI for interactive exploration, or via the LogsQL API for scripting and automation.
+
+Access is provided via a port-forward to the appropriate logs service. The management cluster aggregates logs from all regional clusters and the mothership itself, while a regional cluster port-forward scopes access to that cluster's logs only.
+
+Run the port-forward command for your cluster type:
+
+**Management Cluster**
+
+```bash
+kubectl port-forward -n kof \
+  svc/vlselect-kof-mothership-logs-multilevel-select 9471:9471
+```
+
+**Regional Cluster**
+
+```bash
+KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \
+  svc/kof-storage-victoria-logs-cluster-vlselect 9471:9471
+```
+
+### VictoriaLogs UI
+
+The [VictoriaLogs UI](https://docs.victoriametrics.com/victorialogs/querying/#web-ui) provides an interactive interface for exploring and visualizing logs. You can filter by time range, search using [LogsQL](https://docs.victoriametrics.com/victorialogs/logsql/) expressions, and inspect individual log entries.
+
+Open [http://127.0.0.1:9471/select/vmui/](http://127.0.0.1:9471/select/vmui/)
+
+### LogsQL API
+
+The [LogsQL HTTP API](https://docs.victoriametrics.com/victorialogs/querying/#http-api) allows querying logs programmatically using [LogsQL](https://docs.victoriametrics.com/victorialogs/logsql/) syntax. This is suitable for scripting, alerting pipelines, and automation. The example below returns up to 10 log entries from the last hour:
+
+```bash
+curl http://127.0.0.1:9471/select/logsql/query \
+  -d 'query=_time:1h' \
+  -d 'limit=10'
+```
 
 ## Traces
 
-VictoriaTraces provides a scalable, cost-efficient distributed tracing backend that helps k0rdent users observe application performance while supporting FinOps goals by reducing storage and query costs.
+KOF provides distributed tracing through [VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/). Traces are accessible via the VictoriaTraces UI or CLI using the LogsQL, Jaeger, or Tempo APIs.
 
-* [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui):
-    * Run in the regional cluster:
-        ```bash
-        KUBECONFIG=regional-kubeconfig kubectl port-forward \
-          -n kof svc/kof-storage-vt-cluster-vtselect 10471:10471
-        ```
-        To get traces stored [from Management to Management](kof-storing.md/#from-management-to-management) (if any),
-        do this port-forward in the management cluster.
-    * Open [http://127.0.0.1:10471/select/vmui/](http://127.0.0.1:10471/select/vmui/)
-* CLI queries for automation:
-    * [LogSQL](https://docs.victoriametrics.com/victorialogs/querying/#http-api):
-        ```bash
-        curl http://127.0.0.1:10471/select/logsql/query \
-          -d 'query=_time:1h' \
-          -d 'limit=10'
-        ```
-    * [Jaeger HTTP API](https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api):
-        ```bash
-        curl http://127.0.0.1:10471/select/jaeger/api/services
-        ```
-        ```bash
-        curl http://127.0.0.1:10471/select/jaeger/api/traces?service=test
-        ```
+Access is provided via a port-forward to the appropriate traces service. The management cluster exposes a multi-level select service that aggregates traces from all regional clusters and the mothership, while a regional cluster port-forward scopes access to that cluster's traces only.
+
+Run the port-forward command for your cluster type:
+
+**Management Cluster**
+
+```bash
+kubectl port-forward -n kof \
+  svc/vtselect-kof-mothership-multilevel-select 10471:10471
+```
+
+**Regional Cluster**
+
+```bash
+KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \
+  svc/kof-storage-victoria-traces-cluster-vtselect 10471:10471
+```
+
+All examples below assume the port-forward is running on `127.0.0.1:10471`.
+
+### VictoriaTraces UI
+
+The [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui) provides an interactive interface for exploring traces. You can search by service, operation, or time range, and inspect individual trace spans and their attributes.
+
+Open [http://127.0.0.1:10471/select/vmui/](http://127.0.0.1:10471/select/vmui/)
+
+### LogsQL API
+
+The [LogsQL HTTP API](https://docs.victoriametrics.com/victorialogs/querying/#http-api) allows querying trace data using [LogsQL](https://docs.victoriametrics.com/victorialogs/logsql/) syntax. This is useful for integrating with automation pipelines. The example below returns up to 10 trace entries from the last hour:
+
+```bash
+curl http://127.0.0.1:10471/select/logsql/query \
+  -d 'query=_time:1h' \
+  -d 'limit=10'
+```
+
+### Jaeger HTTP API
+
+The [Jaeger HTTP API](https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api) provides compatibility with Jaeger clients and tooling. Use it to list services, retrieve traces by service name, or integrate with dashboards that support the Jaeger data source.
+
+List all services with recorded traces:
+
+```bash
+curl http://127.0.0.1:10471/select/jaeger/api/services
+```
+
+### Tempo HTTP API
+
+The [Tempo HTTP API](https://docs.victoriametrics.com/victoriatraces/querying/#tempo-http-api) provides compatibility with Grafana Tempo clients, allowing VictoriaTraces to be used as a drop-in Tempo data source in Grafana.
+
+Fetch a trace by ID:
+
+```bash
+curl http://127.0.0.1:10471/select/tempo/api/traces/<traceID>
+```
 
 ## Cost Management (OpenCost)
 
