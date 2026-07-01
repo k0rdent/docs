@@ -24,7 +24,8 @@ KOF v1.10.0 introduces:
 * File storage to persist export data.
 * Aggregation and multi-tenancy for traces.
 * Vlogxy is replaced with VLCluster multi-level selection.
-* Example of opentelemetry SDK usage in kof-operator.
+* Example of [Auto-instrumentation](../docs/admin/kof/kof-tracing.md/#auto-instrumentation)
+    and OpenTelemetry [SDK usage](../docs/admin/kof/kof-tracing.md/#instrumentation-with-sdk) in kof-operator.
 
 ### Upgrade Procedure
 
