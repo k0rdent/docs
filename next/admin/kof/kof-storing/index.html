@@ -3273,6 +3273,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cold-storage-exporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cold Storage Exporter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logs-exporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Logs Exporter
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5472,6 +5490,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cold-storage-exporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cold Storage Exporter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logs-exporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Logs Exporter
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5512,7 +5548,8 @@
     Regional cluster-&gt;&gt;Regional cluster: KOF data of the&lt;br&gt;regional cluster&lt;br&gt;is stored in the same&lt;br&gt;regional cluster.
     Management cluster-&gt;&gt;Management cluster: KOF data of the&lt;br&gt;management cluster&lt;br&gt;can be stored in:&lt;br&gt;&lt;br&gt;the same management cluster,
     Management cluster-&gt;&gt;Regional cluster: the regional cluster,
-    Management cluster-&gt;&gt;Third-party storage: a third-party storage,&lt;br&gt;e.g. AWS CloudWatch.</code></pre>
+    Management cluster-&gt;&gt;Third-party storage: a third-party storage.</code></pre>
+<p>KOF data from all clusters can be additionally exported to a <a href="#cold-storage-exporter">cold storage</a>.</p>
 <h2 id="storage-class-requirements-for-victoriametrics-cluster">Storage Class Requirements for VictoriaMetrics Cluster<a class="headerlink" href="#storage-class-requirements-for-victoriametrics-cluster" title="Permanent link">#</a></h2>
 <p>When deploying VictoriaMetrics Cluster (used by KOF for metrics storage), consider the following Kubernetes storage class requirements:</p>
 <ul>
@@ -5593,7 +5630,8 @@ and restrict access only to the services you require.</p>
 </details>
 <details class="note">
 <summary>If you want to use a non-default storage class, space, retention, replication:</summary>
-<p>Adjust and merge this:</p>
+<p>Replace placeholders using <a href="../kof-retention/#examples-of-values">KOF Retention and Replication</a> guide
+and merge this to <code>kof-values.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">kof-regional</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">values</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
@@ -5604,7 +5642,6 @@ and restrict access only to the services you require.</p>
 <span class="w">      </span><span class="nt">victoria-traces-cluster</span><span class="p">:</span>
 <span class="w">        </span><span class="c1"># ...</span>
 </code></pre></div>
-<p>See details in the <a href="../kof-retention/">KOF Retention and Replication</a> guide.</p>
 </details>
 </li>
 <li>
@@ -5615,6 +5652,7 @@ and restrict access only to the services you require.</p>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.10.0
 </code></pre></div>
+<p>Please use helm v3 <a href="https://github.com/k0rdent/kof/issues/1121">for now</a>.</p>
 </li>
 <li>
 <p>If you have not applied the <a href="../kof-install/#istio">Istio</a> section:</p>
@@ -5705,6 +5743,7 @@ under <code>kof-storage.values</code>.</p>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.10.0
 </code></pre></div>
+<p>Please use helm v3 <a href="https://github.com/k0rdent/kof/issues/1121">for now</a>.</p>
 </li>
 </ol>
 <h2 id="from-management-to-regional">From Management to Regional<a class="headerlink" href="#from-management-to-regional" title="Permanent link">#</a></h2>
@@ -5746,6 +5785,7 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.10.0
 </code></pre></div>
+<p>Please use helm v3 <a href="https://github.com/k0rdent/kof/issues/1121">for now</a>.</p>
 </li>
 </ol>
 <h2 id="from-management-to-third-party">From Management to Third-party<a class="headerlink" href="#from-management-to-third-party" title="Permanent link">#</a></h2>
@@ -5848,6 +5888,7 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.10.0
 </code></pre></div>
+<p>Please use helm v3 <a href="https://github.com/k0rdent/kof/issues/1121">for now</a>.</p>
 </li>
 <li>
 <p>Configure AWS CLI with the same access key, for verification:
@@ -5867,6 +5908,222 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
   &quot;timestamp&quot;: 1744305535107,
   &quot;message&quot;: &quot;{\&quot;body\&quot;:\&quot;10.244.0.1 - - [10/Apr/2025 17:18:55] \\\&quot;GET /-/ready HTTP/1.1 200 ...
 </code></pre></div></p>
+</li>
+</ol>
+<h2 id="cold-storage-exporter">Cold Storage Exporter<a class="headerlink" href="#cold-storage-exporter" title="Permanent link">#</a></h2>
+<p>In addition to keeping metrics, logs, and traces
+in management or regional KOF storage clusters,
+KOF can export this data to S3-compatible cold storage
+like <a href="https://aws.amazon.com/s3/">AWS S3</a> or <a href="https://www.min.io/">MinIO</a>.</p>
+<p>Because the data is saved as <a href="https://parquet.apache.org/">Parquet</a> files,
+you can query it directly from your bucket using analytics tools
+such as <a href="https://aws.amazon.com/athena/">Amazon Athena</a>, <a href="https://spark.apache.org/">Apache Spark</a>, or <a href="https://clickhouse.com/">ClickHouse</a>.</p>
+<p>To apply this option, use the following AWS S3 setup as an example or reference:</p>
+<ol>
+<li>
+<p>Create an S3 bucket, for example, <code>cold-bucket</code> in <code>us-east-1</code> AWS region.</p>
+</li>
+<li>
+<p>Create AWS IAM user with the next minimal inline policy:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColdStorageExporterObjects&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:AbortMultipartUpload&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::cold-bucket/*&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColdStorageExporterBucket&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::cold-bucket&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Replace <code>cold-bucket</code> with the real bucket name.</p>
+</li>
+<li>
+<p>Create access key of this IAM user
+    and save it to the <code>cold-credentials</code> file:</p>
+<div class="highlight"><pre><span></span><code>S3_ACCESS_KEY=REDACTED
+S3_SECRET_KEY=REDACTED
+</code></pre></div>
+</li>
+<li>
+<p>Create the secret in the KOF storage cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>cold-storage-exporter-s3-credentials<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from-env-file<span class="o">=</span>cold-credentials
+</code></pre></div>
+</li>
+<li>
+<p>Create the <code>cold-values.yaml</code> file,
+    for example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;metrics,logs,traces&quot;</span>
+<span class="nt">s3</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cold-bucket</span>
+<span class="w">  </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<span class="w">  </span><span class="nt">usePathStyle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">existingSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cold-storage-exporter-s3-credentials</span>
+</code></pre></div>
+<p>You can override <code>image.repository</code>, <code>s3.endpoint</code>, or <a href="https://github.com/k0rdent/kof/blob/release/v1.10.0/charts/cold-storage-exporter/README.md">other values</a>
+for custom cases.</p>
+</li>
+<li>
+<p>Install the chart:</p>
+<p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>cold-storage-exporter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>cold-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/cold-storage-exporter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.11.0-rc0
+</code></pre></div>
+<!-- TODO Replace 1.11.0-rc0 with 1.10.0 in the next release --></p>
+</li>
+<li>
+<p>Verify by creating a one-off Job from the CronJob,
+    to avoid waiting until the midnight:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>job<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>cold-storage-exporter-manual<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from<span class="o">=</span>cronjob/cold-storage-exporter
+</code></pre></div>
+</li>
+<li>
+<p>Watch its logs:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>job-name<span class="o">=</span>cold-storage-exporter-manual<span class="w"> </span>-f
+</code></pre></div>
+<p>Log example:</p>
+<div class="highlight"><pre><span></span><code>{...&quot;msg&quot;:&quot;streaming parquet to S3&quot;,
+&quot;key&quot;:&quot;telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
+metrics/metrics.parquet&quot;}
+</code></pre></div>
+</li>
+<li>
+<p>List objects in S3 bucket:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>--recursive<span class="w"> </span>s3://cold-bucket
+</code></pre></div>
+<p>Output example:</p>
+<div class="highlight"><pre><span></span><code>153734056 telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
+metrics/metrics.parquet
+</code></pre></div>
+</li>
+</ol>
+<h2 id="audit-logs-exporter">Audit Logs Exporter<a class="headerlink" href="#audit-logs-exporter" title="Permanent link">#</a></h2>
+<p>In addition to keeping audit log events
+in the <a href="../kof-retention/#audit-logs">dedicated VictoriaLogs cluster</a>,
+KOF can export this data to S3-compatible storage
+like <a href="https://aws.amazon.com/s3/">AWS S3</a> or <a href="https://www.min.io/">MinIO</a>.</p>
+<p>Unlike the <a href="#cold-storage-exporter">Cold Storage Exporter</a>,
+the data is saved as <a href="https://github.com/ndjson/ndjson-spec">NDJSON</a> files
+with signed manifests for compliance. You can query it using log analysis tools.</p>
+<p>To apply this option, use the following AWS S3 setup as an example or reference:</p>
+<ol>
+<li>
+<p>Create an S3 bucket, for example, <code>audit-bucket</code> in <code>us-east-1</code> AWS region.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+For production environments it is highly recommended
+to enable <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html">S3 Object Lock (WORM)</a>
+on your bucket to ensure audit logs cannot be tampered with or deleted.</p>
+<p>If Object Lock is not enabled, the exporter will log a warning
+but will continue to function.</p>
+<p>For testing environments, keeping it disabled is recommended
+as it makes it easier to clean up test data.</p>
+</div>
+</li>
+<li>
+<p>Create AWS IAM user with the next minimal inline policy:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AuditLogsExporterObjects&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:AbortMultipartUpload&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::audit-bucket/*&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AuditLogsExporterBucket&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::audit-bucket&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Replace <code>audit-bucket</code> with the real bucket name.</p>
+</li>
+<li>
+<p>Create access key of this IAM user
+    and save it to the <code>audit-credentials</code> file:</p>
+<div class="highlight"><pre><span></span><code>S3_ACCESS_KEY=REDACTED
+S3_SECRET_KEY=REDACTED
+</code></pre></div>
+</li>
+<li>
+<p>Create the secret in the KOF storage cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>audit-logs-exporter-s3-credentials<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from-env-file<span class="o">=</span>audit-credentials
+</code></pre></div>
+</li>
+<li>
+<p>Create the <code>audit-values.yaml</code> file,
+    for example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">s3</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audit-bucket</span>
+<span class="w">  </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<span class="w">  </span><span class="nt">usePathStyle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">existingSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audit-logs-exporter-s3-credentials</span>
+</code></pre></div>
+<p>You can override <code>image.repository</code>, <code>s3.endpoint</code>, or <a href="https://github.com/k0rdent/kof/blob/release/v1.10.0/charts/audit-logs-exporter/README.md">other values</a>
+for custom cases.</p>
+</li>
+<li>
+<p>Install the chart:</p>
+<p><div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>audit-logs-exporter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>audit-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/audit-logs-exporter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.11.0-rc0
+</code></pre></div>
+<!-- TODO Replace 1.11.0-rc0 with 1.10.0 in the next release --></p>
+</li>
+<li>
+<p>Verify by creating a one-off Job from the CronJob,
+    to avoid waiting until the midnight:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>job<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>kof<span class="w"> </span>audit-logs-exporter-manual<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--from<span class="o">=</span>cronjob/audit-logs-exporter
+</code></pre></div>
+</li>
+<li>
+<p>Watch its logs:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>job-name<span class="o">=</span>audit-logs-exporter-manual<span class="w"> </span>-f
+</code></pre></div>
+<p>Log example:</p>
+<div class="highlight"><pre><span></span><code>{...&quot;msg&quot;:&quot;uploading manifest signature&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,
+&quot;key&quot;:&quot;audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig&quot;}
+
+{...&quot;msg&quot;:&quot;uploading manifest&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,
+&quot;key&quot;:&quot;audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json&quot;}
+
+{...&quot;msg&quot;:&quot;window exported successfully&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,
+&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,&quot;events&quot;:4638,&quot;size_bytes&quot;:360767}
+</code></pre></div>
+</li>
+<li>
+<p>List objects in S3 bucket:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>--recursive<span class="w"> </span>s3://audit-bucket
+</code></pre></div>
+<p>Output example:</p>
+<div class="highlight"><pre><span></span><code>360767 audit/platform-audit-log/PLATFORM/2026/06/30/14/data.jsonl.gz
+   574 audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json
+    44 audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig
+</code></pre></div>
 </li>
 </ol>
 

@@ -3250,6 +3250,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Upgrade to v1.10.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Procedure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3263,7 +3278,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#upgrade-procedure" class="md-nav__link">
+  <a href="#upgrade-procedure_1" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade Procedure
     </span>
@@ -5734,6 +5749,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Upgrade to v1.10.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade Procedure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5747,7 +5777,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#upgrade-procedure" class="md-nav__link">
+  <a href="#upgrade-procedure_1" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade Procedure
     </span>
@@ -6182,6 +6212,15 @@ ls<span class="w"> </span>values-*.bak
 <li>Apply each relevant "Upgrade to" section of this page from older to newer.</li>
 </ul>
 <h2 id="upgrade-to-v1100">Upgrade to v1.10.0<a class="headerlink" href="#upgrade-to-v1100" title="Permanent link">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+If you tested both <a href="../kof-install/#istio">Istio</a>
+and non-Istio options in the same environment,
+make sure that <code>kof</code> namespace has <code>istio-injection=enabled</code> label
+if and only if istio integration with KOF is enabled.
+Otherwise <code>kof-regional</code> MCS may uninstall the storage, leading to the data loss.</p>
+</div>
 <p>KOF v1.10.0 introduces:</p>
 <ul>
 <li><a href="../kof-storing/#regionless">Regionless</a> setup option.
@@ -6190,16 +6229,115 @@ ls<span class="w"> </span>values-*.bak
 <li>Simplified <a href="../kof-storing/#from-management-to-management">From Management to Management</a> (M2M)
     and  <a href="../kof-storing/#from-management-to-regional">From Management to Regional</a> (M2R) options.
     Note that <code>kof-storage</code>/<code>kof-collectors</code> are removed from <code>kof</code> umbrella chart in favor of dynamic M2M option.</li>
-<li><a href="../kof-retention/#audit-logs">Audit logs</a>.</li>
-<li>S3-compatible cold storage exporter.</li>
+<li><a href="../kof-retention/#audit-logs">Audit logs</a> in a dedicated VictoriaLogs cluster.</li>
+<li>S3-compatible <a href="../kof-storing/#cold-storage-exporter">Cold Storage Exporter</a>
+    and <a href="../kof-storing/#audit-logs-exporter">Audit Logs Exporter</a>.</li>
 <li>File storage to persist export data.</li>
 <li>Aggregation and multi-tenancy for traces.</li>
 <li>Vlogxy is replaced with VLCluster multi-level selection.</li>
-<li>Example of opentelemetry SDK usage in kof-operator.</li>
+<li>Example of <a href="../kof-tracing/#auto-instrumentation">Auto-instrumentation</a>
+    and OpenTelemetry <a href="../kof-tracing/#instrumentation-with-sdk">SDK usage</a> in kof-operator.</li>
 </ul>
+<h3 id="upgrade-procedure">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p>Get current Helm values of umbrella chart:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>kof-values.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Run this command before upgrading KCM,
+    otherwise the <code>kof-collectors</code> on child clusters will keep reinstalling
+    until the KOF upgrade. It shouldn't lead to data loss,
+    but for a smoother experience run this command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;values&quot;:{&quot;collectors&quot;:{&quot;opentelemetry-kube-stack&quot;:{&quot;collectors&quot;:{&quot;target-allocator&quot;:{&quot;volumes&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;emptyDir&quot;:{}}],&quot;volumeMounts&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;mountPath&quot;:&quot;/tmp/fix&quot;}]},&quot;cluster&quot;:{&quot;volumes&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;emptyDir&quot;:{}}],&quot;volumeMounts&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;mountPath&quot;:&quot;/tmp/fix&quot;}]}}}}}}}&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Follow the <a href="../../upgrade/">instructions</a> to upgrade KCM.</p>
+</li>
+<li>
+<details class="note">
+<summary>If you are using <a href="../kof-install/#istio">k0rdent-istio</a>:</summary>
+<p>Do <strong>not</strong> upgrade KOF before starting the Istio upgrade.</p>
+<p>Deploy new k0rdent-istio chart:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.6.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
+</code></pre></div>
+<p>Use this command to remove orphaned resources:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;ca-cert-propagation-&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
+</code></pre></div>
+</details>
+</li>
+<li>
+<details class="note">
+<summary>If you stored data <a href="../kof-storing/#from-management-to-management">from management to management</a></summary>
+<p>We're now using a different approach to store management data, which you can learn about <a href="../kof-storing/#from-management-to-management">here</a>. To seamlessly migrate to the new approach, follow these steps:</p>
+<p>Remove orphaned HelmReleases:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span>-n<span class="w"> </span>kof
+
+kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div>
+<p>Run this command to modify the <code>kof-values.yaml</code>. You need to specify the <code>persistentVolume</code> size to be exactly the same as your current PV size.</p>
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.toManagementCluster.enabled = true |</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-logs-cluster&quot;.enabled = true |</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-logs-cluster&quot;.vlstorage.persistentVolume.size = &quot;10Gi&quot; |</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-traces-cluster&quot;.enabled = true |</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-traces-cluster&quot;.vtstorage.persistentVolume.size = &quot;10Gi&quot;</span>
+<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+</code></pre></div>
+</details>
+</li>
+<li>
+<details class="note">
+<summary>If you stored data <a href="../kof-storing/#from-management-to-regional">from management to regional</a></summary>
+<p>We're now using a different approach to store management data, which you can learn about <a href="../kof-storing/#from-management-to-regional">here</a>. To seamlessly migrate to the new approach, follow these steps:</p>
+<p>Remove orphaned HelmRelease:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof
+</code></pre></div>
+<p>Run this command to modify the <code>kof-values.yaml</code>. Change the <code>REGIONAL_CLUSTER_NAME</code> in this command to send data from management to the cluster you want.</p>
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
+<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.toRegionalCluster.name = &lt;REGIONAL_CLUSTER_NAME&gt;</span>
+<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+</code></pre></div>
+</details>
+</li>
+<li>
+<p>Run this command to upgrade KOF to the newer version:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>kof-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.10.0
+</code></pre></div>
+</li>
+<li>
+<p>Run this command to remove the workaround added in step 2.
+    Otherwise you may experience collector crashes:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>json<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;[</span>
+<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumes&quot;},</span>
+<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumeMounts&quot;},</span>
+<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/cluster&quot;}</span>
+<span class="s1">]&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Follow the <a href="../kof-verification/">KOF Verification</a> guide to ensure KOF is functioning correctly.</p>
+</li>
+</ol>
 <h2 id="upgrade-to-v190">Upgrade to v1.9.0<a class="headerlink" href="#upgrade-to-v190" title="Permanent link">#</a></h2>
 <p>KOF v1.9.0 introduces a <a href="http://gateway-api.sigs.k8s.io/">Gateway API</a> support.</p>
-<h3 id="upgrade-procedure">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure" title="Permanent link">#</a></h3>
+<h3 id="upgrade-procedure_1">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure_1" title="Permanent link">#</a></h3>
 <ol>
 <li>
 <p><strong>Get current Helm values of umbrella chart</strong>:
@@ -6245,7 +6383,7 @@ ls<span class="w"> </span>values-*.bak
 <h4 id="important-backup-required">Important: Backup Required<a class="headerlink" href="#important-backup-required" title="Permanent link">#</a></h4>
 <p><strong>Before upgrading to v1.8.0, you MUST create a backup of your Victoria Metrics and Victoria Logs data.</strong></p>
 <p>The structural changes may require reinstallation of storage components, which could result in data loss if backups are not available. Follow the <a href="./#data-backup">Data Backup</a> section at the top of this page to create backups of all your regional clusters.</p>
-<h4 id="upgrade-procedure_1">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure_1" title="Permanent link">#</a></h4>
+<h4 id="upgrade-procedure_2">Upgrade Procedure<a class="headerlink" href="#upgrade-procedure_2" title="Permanent link">#</a></h4>
 <ol>
 <li>
 <p><strong>Create backups</strong> as described in the <a href="./#data-backup">Data Backup</a> section for all regional clusters.</p>
