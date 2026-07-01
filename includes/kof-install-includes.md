@@ -7,7 +7,7 @@
 <!--install-istio-start-->
     ```bash
     helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
       --version 0.6.0 \
       --set cert-manager-service-template.enabled=false \
       --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
@@ -22,10 +22,34 @@
   helm upgrade -i --reset-values \
     --create-namespace -n kof kof \
     -f kof-values.yaml \
-    {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
+    {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
     --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
   ```
+
+  Please use helm v3 [for now](https://github.com/k0rdent/kof/issues/1121).
 <!--install-kof-end-->
+
+<!--install-cold-start-->
+```bash
+helm upgrade -i --reset-values \
+  -n kof cold-storage-exporter \
+  -f cold-values.yaml \
+  {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/cold-storage-exporter \
+  --version 1.11.0-rc0
+```
+<!-- TODO Replace 1.11.0-rc0 with {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}} in the next release -->
+<!--install-cold-end-->
+
+<!--install-audit-start-->
+```bash
+helm upgrade -i --reset-values \
+  -n kof audit-logs-exporter \
+  -f audit-values.yaml \
+  {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/audit-logs-exporter \
+  --version 1.11.0-rc0
+```
+<!-- TODO Replace 1.11.0-rc0 with {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}} in the next release -->
+<!--install-audit-end-->
 
 <!--opencost-openstack-start-->
     ??? note "OpenCost for OpenStack and other unsupported providers"

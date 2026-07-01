@@ -11,8 +11,10 @@ sequenceDiagram
     Regional cluster->>Regional cluster: KOF data of the<br>regional cluster<br>is stored in the same<br>regional cluster.
     Management cluster->>Management cluster: KOF data of the<br>management cluster<br>can be stored in:<br><br>the same management cluster,
     Management cluster->>Regional cluster: the regional cluster,
-    Management cluster->>Third-party storage: a third-party storage,<br>e.g. AWS CloudWatch.
+    Management cluster->>Third-party storage: a third-party storage.
 ```
+
+KOF data from all clusters can be additionally exported to a [cold storage](#cold-storage-exporter).
 
 ## Storage Class Requirements for VictoriaMetrics Cluster
 
@@ -103,7 +105,8 @@ To apply this option:
 
     ??? note "If you want to use a non-default storage class, space, retention, replication:"
 
-        Adjust and merge this:
+        Replace placeholders using [KOF Retention and Replication](kof-retention.md#examples-of-values) guide
+        and merge this to `kof-values.yaml`:
 
         ```yaml
         kof-regional:
@@ -116,8 +119,6 @@ To apply this option:
               victoria-traces-cluster:
                 # ...
         ```
-
-        See details in the [KOF Retention and Replication](kof-retention.md) guide.
 
 2. Apply `kof-values.yaml` to the [Management Cluster](kof-install.md/#management-cluster):
 
@@ -401,4 +402,249 @@ For now, however, just for the sake of this demo, you can use the most straightf
     {"events": [{
       "timestamp": 1744305535107,
       "message": "{\"body\":\"10.244.0.1 - - [10/Apr/2025 17:18:55] \\\"GET /-/ready HTTP/1.1 200 ...
+    ```
+
+## Cold Storage Exporter
+
+In addition to keeping metrics, logs, and traces
+in management or regional KOF storage clusters,
+KOF can export this data to S3-compatible cold storage
+like [AWS S3](https://aws.amazon.com/s3/) or [MinIO](https://www.min.io/).
+
+Because the data is saved as [Parquet](https://parquet.apache.org/) files,
+you can query it directly from your bucket using analytics tools
+such as [Amazon Athena](https://aws.amazon.com/athena/), [Apache Spark](https://spark.apache.org/), or [ClickHouse](https://clickhouse.com/).
+
+To apply this option, use the following AWS S3 setup as an example or reference:
+
+1. Create an S3 bucket, for example, `cold-bucket` in `us-east-1` AWS region.
+
+2. Create AWS IAM user with the next minimal inline policy:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "ColdStorageExporterObjects",
+          "Effect": "Allow",
+          "Action": ["s3:PutObject", "s3:GetObject", "s3:AbortMultipartUpload"],
+          "Resource": "arn:aws:s3:::cold-bucket/*"
+        },
+        {
+          "Sid": "ColdStorageExporterBucket",
+          "Effect": "Allow",
+          "Action": "s3:ListBucket",
+          "Resource": "arn:aws:s3:::cold-bucket"
+        }
+      ]
+    }
+    ```
+
+    Replace `cold-bucket` with the real bucket name.
+
+3. Create access key of this IAM user
+    and save it to the `cold-credentials` file:
+
+    ```
+    S3_ACCESS_KEY=REDACTED
+    S3_SECRET_KEY=REDACTED
+    ```
+
+4. Create the secret in the KOF storage cluster:
+
+    ```bash
+    kubectl create secret generic \
+      -n kof cold-storage-exporter-s3-credentials \
+      --from-env-file=cold-credentials
+    ```
+
+5. Create the `cold-values.yaml` file,
+    for example:
+
+    ```yaml
+    sources: "metrics,logs,traces"
+    s3:
+      bucket: cold-bucket
+      region: us-east-1
+      usePathStyle: false
+      existingSecret: cold-storage-exporter-s3-credentials
+    ```
+
+    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/cold-storage-exporter/README.md)
+    for custom cases.
+
+6. Install the chart:
+
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-cold-start-->"
+        end="<!--install-cold-end-->"
+    %}
+
+7. Verify by creating a one-off Job from the CronJob,
+    to avoid waiting until the midnight:
+
+    ```bash
+    kubectl create job \
+      -n kof cold-storage-exporter-manual \
+      --from=cronjob/cold-storage-exporter
+    ```
+
+8. Watch its logs:
+
+    ```bash
+    kubectl logs -n kof -l job-name=cold-storage-exporter-manual -f
+    ```
+
+    Log example:
+
+    ```
+    {..."msg":"streaming parquet to S3",
+    "key":"telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
+    metrics/metrics.parquet"}
+    ```
+
+9. List objects in S3 bucket:
+
+    ```bash
+    aws s3 ls --recursive s3://cold-bucket
+    ```
+
+    Output example:
+
+    ```
+    153734056 telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
+    metrics/metrics.parquet
+    ```
+
+## Audit Logs Exporter
+
+In addition to keeping audit log events
+in the [dedicated VictoriaLogs cluster](kof-retention.md/#audit-logs),
+KOF can export this data to S3-compatible storage
+like [AWS S3](https://aws.amazon.com/s3/) or [MinIO](https://www.min.io/).
+
+Unlike the [Cold Storage Exporter](#cold-storage-exporter),
+the data is saved as [NDJSON](https://github.com/ndjson/ndjson-spec) files
+with signed manifests for compliance. You can query it using log analysis tools.
+
+To apply this option, use the following AWS S3 setup as an example or reference:
+
+1. Create an S3 bucket, for example, `audit-bucket` in `us-east-1` AWS region.
+
+    > NOTE:
+    >
+    > For production environments it is highly recommended
+    > to enable [S3 Object Lock (WORM)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html)
+    > on your bucket to ensure audit logs cannot be tampered with or deleted.
+    >
+    > If Object Lock is not enabled, the exporter will log a warning
+    > but will continue to function.
+    >
+    > For testing environments, keeping it disabled is recommended
+    > as it makes it easier to clean up test data.
+
+2. Create AWS IAM user with the next minimal inline policy:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "AuditLogsExporterObjects",
+          "Effect": "Allow",
+          "Action": ["s3:PutObject", "s3:GetObject", "s3:AbortMultipartUpload"],
+          "Resource": "arn:aws:s3:::audit-bucket/*"
+        },
+        {
+          "Sid": "AuditLogsExporterBucket",
+          "Effect": "Allow",
+          "Action": "s3:ListBucket",
+          "Resource": "arn:aws:s3:::audit-bucket"
+        }
+      ]
+    }
+    ```
+
+    Replace `audit-bucket` with the real bucket name.
+
+3. Create access key of this IAM user
+    and save it to the `audit-credentials` file:
+
+    ```
+    S3_ACCESS_KEY=REDACTED
+    S3_SECRET_KEY=REDACTED
+    ```
+
+4. Create the secret in the KOF storage cluster:
+
+    ```bash
+    kubectl create secret generic \
+      -n kof audit-logs-exporter-s3-credentials \
+      --from-env-file=audit-credentials
+    ```
+
+5. Create the `audit-values.yaml` file,
+    for example:
+
+    ```yaml
+    s3:
+      bucket: audit-bucket
+      region: us-east-1
+      usePathStyle: false
+      existingSecret: audit-logs-exporter-s3-credentials
+    ```
+
+    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/audit-logs-exporter/README.md)
+    for custom cases.
+
+6. Install the chart:
+
+    {%
+        include-markdown "../../../includes/kof-install-includes.md"
+        start="<!--install-audit-start-->"
+        end="<!--install-audit-end-->"
+    %}
+
+7. Verify by creating a one-off Job from the CronJob,
+    to avoid waiting until the midnight:
+
+    ```bash
+    kubectl create job \
+      -n kof audit-logs-exporter-manual \
+      --from=cronjob/audit-logs-exporter
+    ```
+
+8. Watch its logs:
+
+    ```bash
+    kubectl logs -n kof -l job-name=audit-logs-exporter-manual -f
+    ```
+
+    Log example:
+
+    ```
+    {..."msg":"uploading manifest signature","stream":"platform-audit-log","tenant":"PLATFORM","window":"2026-06-30T14:00Z",
+    "key":"audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig"}
+
+    {..."msg":"uploading manifest","stream":"platform-audit-log","tenant":"PLATFORM","window":"2026-06-30T14:00Z",
+    "key":"audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json"}
+
+    {..."msg":"window exported successfully","stream":"platform-audit-log","tenant":"PLATFORM",
+    "window":"2026-06-30T14:00Z","events":4638,"size_bytes":360767}
+    ```
+
+9. List objects in S3 bucket:
+
+    ```bash
+    aws s3 ls --recursive s3://audit-bucket
+    ```
+
+    Output example:
+
+    ```
+    360767 audit/platform-audit-log/PLATFORM/2026/06/30/14/data.jsonl.gz
+       574 audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json
+        44 audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig
     ```

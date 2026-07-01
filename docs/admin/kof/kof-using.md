@@ -107,6 +107,8 @@ KUBECONFIG=regional-kubeconfig kubectl port-forward -n kof \
 
 All examples below assume the port-forward is running on `127.0.0.1:10471`.
 
+If you don't see any traces after applying the examples, expand the details [here](kof-tracing.md/#instrumentation-with-sdk).
+
 ### VictoriaTraces UI
 
 The [VictoriaTraces UI](https://docs.victoriametrics.com/victoriatraces/querying/#web-ui) provides an interactive interface for exploring traces. You can search by service, operation, or time range, and inspect individual trace spans and their attributes.

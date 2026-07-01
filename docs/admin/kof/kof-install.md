@@ -354,8 +354,6 @@ and apply this example, or use it as a reference:
     %}
 
     The chart uses FluxCD to manage sequential deployment of all KOF components.
-    
-    If helm v4 `failed to call webhook`, apply the workaround from [k0rdent/kof issue #715](https://github.com/k0rdent/kof/issues/715).
 
 9. Wait for all HelmReleases to be ready:
 
