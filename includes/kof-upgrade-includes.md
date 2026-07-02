@@ -3,6 +3,13 @@
 
 ## Upgrade to v1.10.0
 
+> WARNING:
+> If you tested both [Istio](../docs/admin/kof/kof-install.md/#istio)
+> and non-Istio options in the same environment,
+> make sure that `kof` namespace has `istio-injection=enabled` label
+> if and only if istio integration with KOF is enabled.
+> Otherwise `kof-regional` MCS may uninstall the storage, leading to the data loss.
+
 KOF v1.10.0 introduces:
 
 * [Regionless](../docs/admin/kof/kof-storing.md#regionless) setup option.
@@ -11,12 +18,124 @@ KOF v1.10.0 introduces:
 * Simplified [From Management to Management](../docs/admin/kof/kof-storing.md#from-management-to-management) (M2M)
     and  [From Management to Regional](../docs/admin/kof/kof-storing.md#from-management-to-regional) (M2R) options.
     Note that `kof-storage`/`kof-collectors` are removed from `kof` umbrella chart in favor of dynamic M2M option.
-* [Audit logs](../docs/admin/kof/kof-retention.md/#audit-logs).
-* S3-compatible cold storage exporter.
+* [Audit logs](../docs/admin/kof/kof-retention.md/#audit-logs) in a dedicated VictoriaLogs cluster.
+* S3-compatible [Cold Storage Exporter](../docs/admin/kof/kof-storing.md#cold-storage-exporter)
+    and [Audit Logs Exporter](../docs/admin/kof/kof-storing.md#audit-logs-exporter).
 * File storage to persist export data.
 * Aggregation and multi-tenancy for traces.
 * Vlogxy is replaced with VLCluster multi-level selection.
-* Example of opentelemetry SDK usage in kof-operator.
+* Example of [Auto-instrumentation](../docs/admin/kof/kof-tracing.md/#auto-instrumentation)
+    and OpenTelemetry [SDK usage](../docs/admin/kof/kof-tracing.md/#instrumentation-with-sdk) in kof-operator.
+
+### Upgrade Procedure
+
+1. Get current Helm values of umbrella chart:
+
+    ```bash
+    helm get values -n kof kof -o yaml > kof-values.yaml
+    ```
+
+2. Run this command before upgrading KCM,
+    otherwise the `kof-collectors` on child clusters will keep reinstalling
+    until the KOF upgrade. It shouldn't lead to data loss,
+    but for a smoother experience run this command:
+
+    ```bash
+    kubectl patch helmrelease kof-regional -n kof --type=merge -p '{"spec":{"values":{"collectors":{"opentelemetry-kube-stack":{"collectors":{"target-allocator":{"volumes":[{"name":"fix","emptyDir":{}}],"volumeMounts":[{"name":"fix","mountPath":"/tmp/fix"}]},"cluster":{"volumes":[{"name":"fix","emptyDir":{}}],"volumeMounts":[{"name":"fix","mountPath":"/tmp/fix"}]}}}}}}}'
+    ```
+
+4. Follow the [instructions](../docs/admin/upgrade/index.md) to upgrade KCM.
+
+5. ??? note "If you are using [k0rdent-istio](../docs/admin/kof/kof-install.md/#istio):"
+
+        Do **not** upgrade KOF before starting the Istio upgrade.
+
+        Deploy new k0rdent-istio chart:
+
+        ```bash
+        helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+          {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
+          --version 0.6.0 \
+          --set cert-manager-service-template.enabled=false \
+          --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
+          --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
+          --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
+          --set-json 'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'
+        ```
+
+        Use this command to remove orphaned resources:
+
+        ```bash
+        kubectl get mcs -o name | grep "ca-cert-propagation-" | xargs -r kubectl delete
+        ```
+
+6. ??? note "If you stored data [from management to management](../docs/admin/kof/kof-storing.md#from-management-to-management)"
+
+        We're now using a different approach to store management data, which you can learn about [here](../docs/admin/kof/kof-storing.md#from-management-to-management). To seamlessly migrate to the new approach, follow these steps:
+
+        Remove orphaned HelmReleases:
+
+        ```bash
+        kubectl patch helmrelease kof-storage -n kof --type merge -p '{"spec":{"suspend":true}}'
+        kubectl delete helmrelease kof-storage -n kof
+
+        kubectl patch helmrelease kof-collectors -n kof --type merge -p '{"spec":{"suspend":true}}'
+        kubectl delete helmrelease kof-collectors -n kof
+        ```
+
+        Run this command to modify the `kof-values.yaml`. You need to specify the `persistentVolume` size to be exactly the same as your current PV size.
+
+        ```bash
+        yq -i '
+          ."kof-child".values.fromManagement.toManagementCluster.enabled = true |
+          ."kof-child".values.fromManagement.storage."victoria-logs-cluster".enabled = true |
+          ."kof-child".values.fromManagement.storage."victoria-logs-cluster".vlstorage.persistentVolume.size = "10Gi" |
+          ."kof-child".values.fromManagement.storage."victoria-traces-cluster".enabled = true |
+          ."kof-child".values.fromManagement.storage."victoria-traces-cluster".vtstorage.persistentVolume.size = "10Gi"
+        ' kof-values.yaml
+        ```
+
+7. ??? note "If you stored data [from management to regional](../docs/admin/kof/kof-storing.md#from-management-to-regional)"
+
+        We're now using a different approach to store management data, which you can learn about [here](../docs/admin/kof/kof-storing.md#from-management-to-regional). To seamlessly migrate to the new approach, follow these steps:
+
+        Remove orphaned HelmRelease:
+
+        ```bash
+        kubectl patch helmrelease kof-collectors -n kof --type merge -p '{"spec":{"suspend":true}}'
+        kubectl delete helmrelease kof-collectors -n kof
+        ```
+
+        Run this command to modify the `kof-values.yaml`. Change the `REGIONAL_CLUSTER_NAME` in this command to send data from management to the cluster you want.
+
+        ```bash
+        yq -i '
+          ."kof-child".values.fromManagement.toRegionalCluster.name = <REGIONAL_CLUSTER_NAME>
+        ' kof-values.yaml
+        ```
+
+8. Run this command to upgrade KOF to the newer version:
+
+    ```bash
+    helm upgrade -i --reset-values \
+      --create-namespace -n kof kof \
+      -f kof-values.yaml \
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
+      --version 1.10.0
+    ```
+
+9. Run this command to remove the workaround added in step 2.
+    Otherwise you may experience collector crashes:
+
+    ```bash
+    kubectl patch helmrelease kof-regional -n kof --type=json -p '[
+      {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumes"},
+      {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumeMounts"},
+      {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/cluster"}
+    ]'
+    ```
+
+10. Follow the [KOF Verification](../docs/admin/kof/kof-verification.md) guide to ensure KOF is functioning correctly.
 
 ## Upgrade to v1.9.0
 
@@ -57,7 +176,7 @@ KOF v1.9.0 introduces a [Gateway API](http://gateway-api.sigs.k8s.io/) support.
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
       -f kof-values.yaml \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
       --version 1.9.0
     ```
 
@@ -162,7 +281,7 @@ yq -i '
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof \
       -f kof-values.yaml \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof \
       --version 1.8.0
     ```
 
@@ -183,7 +302,7 @@ Use this command to upgrade Istio:
 
 ```bash
  helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-    {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
+    {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
     --version 0.4.0 \
     --set cert-manager-service-template.enabled=false \
     --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
@@ -281,7 +400,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 2. Obtain the `regional-kubeconfig` file during the [KOF Verification](../docs/admin/kof/kof-verification.md) step and make sure to upgrade `kof-operators` using the `--take-ownership` flag on each KOF Regional cluster:
@@ -289,7 +408,7 @@ Before upgrading `kof-mothership`, ensure the following steps are completed:
     ```bash
     KUBECONFIG=regional-kubeconfig helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-operators \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-operators --version 1.6.0
     ```
 
 This step will not be required in future upgrades.
@@ -358,7 +477,7 @@ Instead of installing two separate charts (`k0rdent-istio-base` and `k0rdent-ist
 
 ```bash
 helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
-  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.2.0 \
+  {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.2.0 \
   --set cert-manager-service-template.enabled=false \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
@@ -550,7 +669,7 @@ helm upgrade -i --wait \
   --create-namespace -n istio-system k0rdent-istio-base \
   --set cert-manager-service-template.enabled=false \
   --set injectionNamespaces="{kof}" \
-  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio-base --version 0.1.0
+  {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio-base --version 0.1.0
 ```
 
 **Notes:**
@@ -566,7 +685,7 @@ helm upgrade -i --wait -n istio-system k0rdent-istio \
   --set "istiod.meshConfig.extensionProviders[0].name=otel-tracing" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317" \
   --set "istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local" \
-  {{{ docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.1.0
+  {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio --version 0.1.0
 ```
 
 ### 5. Upgrade the KOF Version
@@ -624,7 +743,7 @@ Follow the restore steps in the [Data Backup](../docs/admin/kof/kof-upgrade.md#d
     ```bash
     helm upgrade --take-ownership \
       --reset-values --wait -n kof kof-mothership -f mothership-values.yaml \
-      {{{ docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership --version 1.4.0
+      {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBase }}}/charts/kof-mothership --version 1.4.0
     ```
 * This will not be required in future upgrades.
 
