@@ -108,3 +108,32 @@ Infrastructure Cluster. You must create the namespace in advance before creating
 ```bash
 kubectl --kubeconfig <kubevirt-infra-cluster-kubeconfig> create namespace <cld-namespace>
 ```
+
+
+## The KubeVirt deployment fails with `cannot get resource "virtualmachineinstances" in API group "kubevirt.io"`
+
+[Related calico issue #12972](https://github.com/projectcalico/calico/issues/12972)
+
+When deploying KubeVirt VMs on a workload cluster running Calico `v3.32.0` installed using manifests,
+VM provisioning may fail due to missing RBAC permissions in the Calico CNI plugin.
+
+A typical error looks like this:
+
+```
+failed to query VMI resource <namespace>/<name>: virtualmachineinstances.kubevirt.io "<name>" is forbidden:
+User "system:serviceaccount:kube-system:calico-cni-plugin" cannot get resource "virtualmachineinstances" in API group
+"kubevirt.io" in the namespace "<namespace>"
+```
+
+**Root cause**
+
+The manifest-based Calico installation (`v3.32.0`) is missing permissions required to access KubeVirt
+VirtualMachineInstance resources.
+
+As a result, the Calico CNI plugin cannot query KubeVirt resources, causing VM provisioning to fail.
+
+> NOTE:
+> This issue affects the workload cluster where KubeVirt is installed and VMs are provisioned. It is not related
+> to the Calico version running on the k0rdent/kcm management cluster.
+
+The issue has been fixed in calico `v3.32.1`, which includes the required RBAC permissions for KubeVirt resources.
