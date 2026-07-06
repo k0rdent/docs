@@ -1,6 +1,29 @@
 
 <!--upgrade-start-->
 
+## Upgrade to v1.11.0
+
+### On-demand upgrade by default
+
+KOF 1.11.0 allows to upgrade `ClusterDeployments` one-by-one on-demand
+by labeling them with a new `k0rdent.mirantis.com/kof-version` like this:
+
+```bash
+kubectl label --overwrite cld -n kcm-system $CLUSTER_NAME \
+  k0rdent.mirantis.com/kof-version=1.11.0
+```
+
+For an old behavior, merge this to your `kof-values.yaml` file:
+
+```yaml
+kof-regional:
+  values:
+    autoUpgrade: true
+kof-child:
+  values:
+    autoUpgrade: true
+```
+
 ## Upgrade to v1.10.0
 
 > WARNING:

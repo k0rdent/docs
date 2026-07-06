@@ -417,6 +417,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: regional
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: aws-cluster-identity-cred
@@ -455,6 +456,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: regional
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: azure-cluster-identity-cred
@@ -494,6 +496,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: regional
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: openstack-cluster-identity-cred
@@ -522,6 +525,9 @@ apply this example for AWS, or use it as a reference:
                   name: $IMAGE
         EOF
         ```
+
+    * For on-demand upgrade: set `k0rdent.mirantis.com/kof-version` label here.
+    * For auto-upgrade: set `kof-regional.values.autoUpgrade: true` in `kof-values.yaml`.
 
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
     add it to the `.metadata.labels` in the `regional-cluster.yaml` file.
@@ -750,6 +756,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: child
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: aws-cluster-identity-cred
@@ -782,6 +789,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: child
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: azure-cluster-identity-cred
@@ -815,6 +823,7 @@ apply this example for AWS, or use it as a reference:
           namespace: kcm-system
           labels:
             k0rdent.mirantis.com/kof-cluster-role: child
+            k0rdent.mirantis.com/kof-version: {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         spec:
           template: $TEMPLATE
           credential: openstack-cluster-identity-cred
@@ -837,6 +846,9 @@ apply this example for AWS, or use it as a reference:
                   name: $IMAGE
         EOF
         ```
+
+    * For on-demand upgrade: set `k0rdent.mirantis.com/kof-version` label here.
+    * For auto-upgrade: set `kof-child.values.autoUpgrade: true` in `kof-values.yaml`.
 
 4. If you've applied the [Istio](#istio) section, update the `child-cluster.yaml` file:
 
