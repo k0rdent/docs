@@ -527,7 +527,7 @@ apply this example for AWS, or use it as a reference:
         ```
 
     * For on-demand upgrade: set `k0rdent.mirantis.com/kof-version` label here.
-    * For auto-upgrade: set `kof-regional.values.autoUpgrade: true` in `kof-values.yaml`.
+    * For auto-upgrade: set `autoUpgrade: true` in `kof-values.yaml`.
 
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
     add it to the `.metadata.labels` in the `regional-cluster.yaml` file.
@@ -848,7 +848,7 @@ apply this example for AWS, or use it as a reference:
         ```
 
     * For on-demand upgrade: set `k0rdent.mirantis.com/kof-version` label here.
-    * For auto-upgrade: set `kof-child.values.autoUpgrade: true` in `kof-values.yaml`.
+    * For auto-upgrade: set `autoUpgrade: true` in `kof-values.yaml`.
 
 4. If you've applied the [Istio](#istio) section, update the `child-cluster.yaml` file:
 
