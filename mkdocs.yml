@@ -296,6 +296,7 @@ nav:
     - Overview: appendix/index.md
     - Glossary: appendix/glossary.md
     - Extended management configuration: appendix/appendix-extend-mgmt.md
+    - KCM-Managed Resources: appendix/kcm-managed-resources.md
     - Deploy from a private secure registry: appendix/private-secure-registry.md
     - Understanding the dry run: appendix/appendix-dryrun.md
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
