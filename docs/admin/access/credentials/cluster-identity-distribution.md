@@ -11,10 +11,10 @@ AccessManagement system (Credentials with `k0rdent.mirantis.com/managed: "true"`
 
 > WARNING:
 > To ensure proper Cluster Identity distribution, make sure the following requirements are met:
-> 
-> 1. The ProviderInterface object is correctly configured. For details, see 
+>
+> 1. The ProviderInterface object is correctly configured. For details, see
 > [ProviderInterface Configuration](#providerinterface-configuration).
-> 
+>
 > 2. When distributing `ClusterIdentity` objects to regional clusters, the provider that defines the corresponding
 > `ClusterIdentity` CRDs must be enabled on the management and on the regional cluster. For example, to distribute
 > an `AWSClusterStaticIdentity` to a regional cluster, the AWS provider must be enabled on both the
@@ -28,7 +28,7 @@ the process step-by-step:
 1. User creates the following `Credential` and identity objects for the Azure provider in `region1` region:
 
     > NOTE:
-    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details.
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
@@ -70,7 +70,7 @@ the process step-by-step:
       clientSecret: "${AZURE_CLIENT_SECRET}"
     type: Opaque
     ```
-   
+
 2. The KCM controller retrieves all the `ProviderInterfaces` from the regional cluster registered with `region1` Region
 and looks for the `AzureClusterIdentity` object definition under `spec.clusterIdentities` of each `ProviderInterface`
 object. If nothing found, the cluster identity distribution will not work.
@@ -78,7 +78,7 @@ object. If nothing found, the cluster identity distribution will not work.
 3. The KCM controller copies the `test/azure-cluster-identity-secret` `Secret` and `test/azure-cluster-identity`
 `AzureClusterIdentity` objects from the management to the regional cluster.
 
-## ProviderInterface Configuration
+## `ProviderInterface` Configuration
 
 A `Credential` in k0rdent could reference more than one `ClusterIdentity` type and each of those identities might have
 its own transitive references.
@@ -87,9 +87,16 @@ namespaces and multiple regions.
 
 The `ProviderInterface` object which is a part of the `ProviderTemplate` should define a set of identity kinds, each
 with its own reference-resolution instructions. Providers included with {{{ docsVersionInfo.k0rdentName }}} already
-have a preconfigured ProviderInterface as part of the `ProviderTemplate`. If you are using a custom or Bring-Your-Own
-provider, you must properly configure the ProviderInterface `spec.clusterIdentities` field to enable Cluster
+have a preconfigured `ProviderInterface` as part of the `ProviderTemplate`. If you are using a custom or Bring-Your-Own
+provider, you must properly configure the `ProviderInterface` `spec.clusterIdentities` field to enable Cluster
 Identity distribution.
+
+> NOTE:
+> Custom or out-of-tree `ProviderInterface` objects must also carry the
+> standard Cluster API provider label `cluster.x-k8s.io/provider: <role>-<name>`
+> (for example, `infrastructure-azure`) so {{{ docsVersionInfo.k0rdentName }}}
+> can discover them. See [ProviderInterface Required Labels](../../../reference/provider-interface.md#required-labels)
+> for details.
 
 The example of the `ProviderInterface` object for the Azure provider:
 
@@ -98,6 +105,8 @@ apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ProviderInterface
 metadata:
   name: cluster-api-provider-azure
+  labels:
+    cluster.x-k8s.io/provider: infrastructure-azure
   annotations:
     helm.sh/resource-policy: keep
 spec:
@@ -137,6 +146,3 @@ a `Secret` with the name defined under `spec.clientSecret.name` and the namespac
 > Cluster Identity distribution will not work if the ProviderInterface for a particular provider does not exist or
 > does not have `spec.clusterIdentities` field defined. The KCM controller will not fail, but it will not create any cluster
 > identity resources automatically. You will have to create it manually.
-
-
-

@@ -7,6 +7,30 @@ Each infrastructure provider Helm chart ships with a pre-configured `ProviderInt
 **Short name:** `pi`  
 **Scope:** Cluster
 
+## Required Labels
+
+Every `ProviderInterface` object **must** carry the standard Cluster API
+provider label so {{{ docsVersionInfo.k0rdentName }}} can discover it:
+
+```yaml
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: <provider-name>
+```
+
+The label value follows the Cluster API convention `<role>-<name>` and must
+match the corresponding value the provider's Helm chart sets in its
+`Chart.yaml` `cluster.x-k8s.io/provider` annotation (for example,
+`infrastructure-aws`, `infrastructure-azure`, `infrastructure-openstack`).
+
+> WARNING:
+> If the label is missing, {{{ docsVersionInfo.k0rdentName }}} falls back to a
+> legacy discovery method based on the flux `helm.toolkit.fluxcd.io/name` label.
+> That fallback only matches `ProviderInterface` objects created by the
+> provider's own Helm chart via a `HelmRelease`, so any custom or out-of-tree
+> `ProviderInterface` installed differently will be invisible to the controller
+> without the CAPI provider label.
+
 ## Spec Fields
 
 ### `.spec.description`
@@ -34,6 +58,7 @@ spec:
 ```
 
 **Fields per entry:**
+
 - `group` (string): API group
 - `version` (string): API version
 - `kind` (string): Resource kind
@@ -60,12 +85,14 @@ spec:
 ```
 
 **`ClusterIdentity` fields:**
+
 - `group` (string): API group of the identity object
 - `version` (string): API version of the identity object
 - `kind` (string): Kind of the identity object
 - `references[]`: List of objects transitively referenced by this identity (see below)
 
 **`ClusterIdentityReference` fields:**
+
 - `group` (string): API group of the referenced object
 - `version` (string): API version of the referenced object
 - `kind` (string): Kind of the referenced object
@@ -91,6 +118,8 @@ apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ProviderInterface
 metadata:
   name: cluster-api-provider-azure
+  labels:
+    cluster.x-k8s.io/provider: infrastructure-azure
   annotations:
     helm.sh/resource-policy: keep
 spec:
