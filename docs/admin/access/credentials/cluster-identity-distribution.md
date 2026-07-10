@@ -11,10 +11,10 @@ AccessManagement system (Credentials with `k0rdent.mirantis.com/managed: "true"`
 
 > WARNING:
 > To ensure proper Cluster Identity distribution, make sure the following requirements are met:
-> 
-> 1. The ProviderInterface object is correctly configured. For details, see 
+>
+> 1. The ProviderInterface object is correctly configured. For details, see
 > [ProviderInterface Configuration](#providerinterface-configuration).
-> 
+>
 > 2. When distributing `ClusterIdentity` objects to regional clusters, the provider that defines the corresponding
 > `ClusterIdentity` CRDs must be enabled on the management and on the regional cluster. For example, to distribute
 > an `AWSClusterStaticIdentity` to a regional cluster, the AWS provider must be enabled on both the
@@ -28,7 +28,7 @@ the process step-by-step:
 1. User creates the following `Credential` and identity objects for the Azure provider in `region1` region:
 
     > NOTE:
-    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details. 
+    > The name of the `Secret` must follow a specific pattern. See [credential secret](../../../appendix/appendix-providers.md#credential-secret) for details.
 
     ```yaml
     apiVersion: k0rdent.mirantis.com/v1beta1
@@ -70,7 +70,7 @@ the process step-by-step:
       clientSecret: "${AZURE_CLIENT_SECRET}"
     type: Opaque
     ```
-   
+
 2. The KCM controller retrieves all the `ProviderInterfaces` from the regional cluster registered with `region1` Region
 and looks for the `AzureClusterIdentity` object definition under `spec.clusterIdentities` of each `ProviderInterface`
 object. If nothing found, the cluster identity distribution will not work.
@@ -101,13 +101,6 @@ metadata:
   annotations:
     helm.sh/resource-policy: keep
 spec:
-  clusterGVKs:
-    - group: infrastructure.cluster.x-k8s.io
-      version: v1beta1
-      kind: AzureCluster
-    - group: infrastructure.cluster.x-k8s.io
-      version: v1alpha1
-      kind: AzureASOManagedCluster
   clusterIdentities:
     - group: infrastructure.cluster.x-k8s.io
       version: v1beta1
@@ -137,6 +130,3 @@ a `Secret` with the name defined under `spec.clientSecret.name` and the namespac
 > Cluster Identity distribution will not work if the ProviderInterface for a particular provider does not exist or
 > does not have `spec.clusterIdentities` field defined. The KCM controller will not fail, but it will not create any cluster
 > identity resources automatically. You will have to create it manually.
-
-
-

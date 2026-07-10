@@ -20,6 +20,9 @@ spec:
 
 ### `.spec.clusterGVKs`
 
+> WARNING:
+> Removed in {{{ docsVersionInfo.k0rdentName }}} `v1.11.0`.
+
 List of Group-Version-Kind (GVK) tuples identifying the cluster resource kinds this provider manages. Used by {{{ docsVersionInfo.k0rdentName }}} to locate infrastructure cluster objects for a given `ClusterDeployment`.
 
 ```yaml
@@ -34,6 +37,7 @@ spec:
 ```
 
 **Fields per entry:**
+
 - `group` (string): API group
 - `version` (string): API version
 - `kind` (string): Resource kind
@@ -60,12 +64,14 @@ spec:
 ```
 
 **`ClusterIdentity` fields:**
+
 - `group` (string): API group of the identity object
 - `version` (string): API version of the identity object
 - `kind` (string): Kind of the identity object
 - `references[]`: List of objects transitively referenced by this identity (see below)
 
 **`ClusterIdentityReference` fields:**
+
 - `group` (string): API group of the referenced object
 - `version` (string): API version of the referenced object
 - `kind` (string): Kind of the referenced object
