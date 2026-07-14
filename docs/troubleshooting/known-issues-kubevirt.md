@@ -128,7 +128,7 @@ User "system:serviceaccount:kube-system:calico-cni-plugin" cannot get resource "
 **Root cause**
 
 The manifest-based Calico installation (`v3.32.0`) is missing permissions required to access KubeVirt
-VirtualMachineInstance resources.
+`VirtualMachineInstance` resources.
 
 As a result, the Calico CNI plugin cannot query KubeVirt resources, causing VM provisioning to fail.
 
