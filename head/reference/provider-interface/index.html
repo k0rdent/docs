@@ -4753,6 +4753,8 @@
       
         
       
+        
+      
     
     
     
@@ -4824,6 +4826,27 @@
   
   <span class="md-ellipsis">
     Extended management configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/kcm-managed-resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KCM-Managed Resources
   </span>
   
 
@@ -4943,7 +4966,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_9" >
         
           
           
@@ -4959,14 +4982,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_11_8" id="__nav_11_8_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_11_9" id="__nav_11_9_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11_8">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_9">
             <span class="md-nav__icon md-icon"></span>
             Telemetry
           </label>
@@ -5547,6 +5570,11 @@
 <span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AWS</span><span class="nv"> </span><span class="s">infrastructure</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">Cluster</span><span class="nv"> </span><span class="s">API&quot;</span>
 </code></pre></div>
 <h3 id="specclustergvks"><code>.spec.clusterGVKs</code><a class="headerlink" href="#specclustergvks" title="Permanent link">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Removed in k0rdent <code>v1.11.0</code>.</p>
+</div>
 <p>List of Group-Version-Kind (GVK) tuples identifying the cluster resource kinds this provider manages. Used by k0rdent to locate infrastructure cluster objects for a given <code>ClusterDeployment</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">clusterGVKs</span><span class="p">:</span>
@@ -5557,10 +5585,12 @@
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1beta2</span>
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWSManagedCluster</span>
 </code></pre></div>
-<p><strong>Fields per entry:</strong>
-- <code>group</code> (string): API group
-- <code>version</code> (string): API version
-- <code>kind</code> (string): Resource kind</p>
+<p><strong>Fields per entry:</strong></p>
+<ul>
+<li><code>group</code> (string): API group</li>
+<li><code>version</code> (string): API version</li>
+<li><code>kind</code> (string): Resource kind</li>
+</ul>
 <h3 id="specclusteridentities"><code>.spec.clusterIdentities</code><a class="headerlink" href="#specclusteridentities" title="Permanent link">#</a></h3>
 <p>List of <code>ClusterIdentity</code> types supported by this provider, along with instructions for resolving their transitive references (e.g., Secrets referenced by the identity object). Used by the Cluster Identity distribution mechanism to propagate credentials across namespaces and regions.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -5578,17 +5608,21 @@
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 </code></pre></div>
-<p><strong><code>ClusterIdentity</code> fields:</strong>
-- <code>group</code> (string): API group of the identity object
-- <code>version</code> (string): API version of the identity object
-- <code>kind</code> (string): Kind of the identity object
-- <code>references[]</code>: List of objects transitively referenced by this identity (see below)</p>
-<p><strong><code>ClusterIdentityReference</code> fields:</strong>
-- <code>group</code> (string): API group of the referenced object
-- <code>version</code> (string): API version of the referenced object
-- <code>kind</code> (string): Kind of the referenced object
-- <code>nameFieldPath</code> (string, required): Dot-separated field path in the identity object where the referenced object's name can be found. Cannot start with <code>.</code>. Example: <code>spec.clientSecret.name</code>
-- <code>namespaceFieldPath</code> (string): Dot-separated field path in the identity object where the referenced object's namespace can be found. Cannot start with <code>.</code>. Defaults to the system namespace. Example: <code>spec.clientSecret.namespace</code></p>
+<p><strong><code>ClusterIdentity</code> fields:</strong></p>
+<ul>
+<li><code>group</code> (string): API group of the identity object</li>
+<li><code>version</code> (string): API version of the identity object</li>
+<li><code>kind</code> (string): Kind of the identity object</li>
+<li><code>references[]</code>: List of objects transitively referenced by this identity (see below)</li>
+</ul>
+<p><strong><code>ClusterIdentityReference</code> fields:</strong></p>
+<ul>
+<li><code>group</code> (string): API group of the referenced object</li>
+<li><code>version</code> (string): API version of the referenced object</li>
+<li><code>kind</code> (string): Kind of the referenced object</li>
+<li><code>nameFieldPath</code> (string, required): Dot-separated field path in the identity object where the referenced object's name can be found. Cannot start with <code>.</code>. Example: <code>spec.clientSecret.name</code></li>
+<li><code>namespaceFieldPath</code> (string): Dot-separated field path in the identity object where the referenced object's namespace can be found. Cannot start with <code>.</code>. Defaults to the system namespace. Example: <code>spec.clientSecret.namespace</code></li>
+</ul>
 <h3 id="specclusteridentitykinds"><code>.spec.clusterIdentityKinds</code><a class="headerlink" href="#specclusteridentitykinds" title="Permanent link">#</a></h3>
 <blockquote>
 <p><strong>Deprecated</strong>: Use <code>.spec.clusterIdentities</code> instead.</p>

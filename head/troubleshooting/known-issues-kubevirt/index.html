@@ -4682,6 +4682,8 @@
       
         
       
+        
+      
     
     
     
@@ -4753,6 +4755,27 @@
   
   <span class="md-ellipsis">
     Extended management configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/kcm-managed-resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KCM-Managed Resources
   </span>
   
 
@@ -4872,7 +4895,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_9" >
         
           
           
@@ -4888,14 +4911,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_11_8" id="__nav_11_8_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_11_9" id="__nav_11_9_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11_8">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_9">
             <span class="md-nav__icon md-icon"></span>
             Telemetry
           </label>
@@ -5478,6 +5501,26 @@ on the KubeVirt Infrastructure Cluster, the following misleading error may appea
 Infrastructure Cluster. You must create the namespace in advance before creating the <code>ClusterDeployment</code> object:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>--kubeconfig<span class="w"> </span>&lt;kubevirt-infra-cluster-kubeconfig&gt;<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>&lt;cld-namespace&gt;
 </code></pre></div>
+<h2 id="the-kubevirt-deployment-fails-with-cannot-get-resource-virtualmachineinstances-in-api-group-kubevirtio">The KubeVirt deployment fails with <code>cannot get resource "virtualmachineinstances" in API group "kubevirt.io"</code><a class="headerlink" href="#the-kubevirt-deployment-fails-with-cannot-get-resource-virtualmachineinstances-in-api-group-kubevirtio" title="Permanent link">#</a></h2>
+<p><a href="https://github.com/projectcalico/calico/issues/12972">Related calico issue #12972</a></p>
+<p>When deploying KubeVirt VMs on a workload cluster running Calico <code>v3.32.0</code> installed using manifests,
+VM provisioning may fail due to missing RBAC permissions in the Calico CNI plugin.</p>
+<p>A typical error looks like this:</p>
+<div class="highlight"><pre><span></span><code>failed to query VMI resource &lt;namespace&gt;/&lt;name&gt;: virtualmachineinstances.kubevirt.io &quot;&lt;name&gt;&quot; is forbidden:
+User &quot;system:serviceaccount:kube-system:calico-cni-plugin&quot; cannot get resource &quot;virtualmachineinstances&quot; in API group
+&quot;kubevirt.io&quot; in the namespace &quot;&lt;namespace&gt;&quot;
+</code></pre></div>
+<p><strong>Root cause</strong></p>
+<p>The manifest-based Calico installation (<code>v3.32.0</code>) is missing permissions required to access KubeVirt
+<code>VirtualMachineInstance</code> resources.</p>
+<p>As a result, the Calico CNI plugin cannot query KubeVirt resources, causing VM provisioning to fail.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+This issue affects the workload cluster where KubeVirt is installed and VMs are provisioned. It is not related
+to the Calico version running on the k0rdent/kcm management cluster.</p>
+</div>
+<p>The issue has been fixed in calico <code>v3.32.1</code>, which includes the required RBAC permissions for KubeVirt resources.</p>
 
 
 
