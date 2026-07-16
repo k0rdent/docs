@@ -5,8 +5,8 @@
 
 ### On-demand upgrade by default
 
-Earlier, upgrade of `kof` umbrella chart in the management cluster
-lead to instant upgrade of **all** regional and child clusters at the same time,
+In previous versions, upgrading the `kof` umbrella chart in the management cluster would
+lead to an instant upgrade of **all** regional and child clusters at the same time,
 which may be not the best strategy.
 
 For more fine-grained control, starting from KOF 1.11.0
@@ -18,7 +18,7 @@ kubectl label --overwrite cld -n kcm-system $CLUSTER_NAME \
   k0rdent.mirantis.com/kof-version=1.11.0
 ```
 
-If you want to keep old behavior,
+If you want to keep the old "instant upgrade" behavior,
 set `autoUpgrade: true` in your `kof-values.yaml` file
 and apply it on upgrade of the management cluster.
 
