@@ -78,7 +78,7 @@ object. If nothing found, the cluster identity distribution will not work.
 3. The KCM controller copies the `test/azure-cluster-identity-secret` `Secret` and `test/azure-cluster-identity`
 `AzureClusterIdentity` objects from the management to the regional cluster.
 
-## ProviderInterface Configuration
+## `ProviderInterface` Configuration
 
 A `Credential` in k0rdent could reference more than one `ClusterIdentity` type and each of those identities might have
 its own transitive references.
@@ -87,9 +87,16 @@ namespaces and multiple regions.
 
 The `ProviderInterface` object which is a part of the `ProviderTemplate` should define a set of identity kinds, each
 with its own reference-resolution instructions. Providers included with {{{ docsVersionInfo.k0rdentName }}} already
-have a preconfigured ProviderInterface as part of the `ProviderTemplate`. If you are using a custom or Bring-Your-Own
-provider, you must properly configure the ProviderInterface `spec.clusterIdentities` field to enable Cluster
+have a preconfigured `ProviderInterface` as part of the `ProviderTemplate`. If you are using a custom or Bring-Your-Own
+provider, you must properly configure the `ProviderInterface` `spec.clusterIdentities` field to enable Cluster
 Identity distribution.
+
+> NOTE:
+> Custom or out-of-tree `ProviderInterface` objects must also carry the
+> standard Cluster API provider label `cluster.x-k8s.io/provider: <role>-<name>`
+> (for example, `infrastructure-azure`) so {{{ docsVersionInfo.k0rdentName }}}
+> can discover them. See [ProviderInterface Required Labels](../../../reference/provider-interface.md#required-labels)
+> for details.
 
 The example of the `ProviderInterface` object for the Azure provider:
 
@@ -98,6 +105,8 @@ apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ProviderInterface
 metadata:
   name: cluster-api-provider-azure
+  labels:
+    cluster.x-k8s.io/provider: infrastructure-azure
   annotations:
     helm.sh/resource-policy: keep
 spec:

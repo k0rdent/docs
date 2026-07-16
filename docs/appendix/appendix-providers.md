@@ -8,11 +8,13 @@ Cloud provider credentials in Cluster API (CAPI) environments are managed throug
 The configuration follows two patterns:
 
 **ClusterIdentity Pattern**
+
 - Uses a `ClusterIdentity` resource that defines provider identity configuration
 - References a `Secret` with credentials
 - Used by `Azure` and `vSphere` in-tree providers
 
 **Source Secret Pattern**
+
 - Uses only a `Secret` without `ClusterIdentity`
 - `Secret` contains all cloud configuration data
 - Used by `OpenStack` in-tree provider
@@ -72,7 +74,12 @@ Providers are registered through `ProviderInterface` CR, each [provider Helm cha
 
 Modifications to the `Management` Spec are needed to enable newly added provider.
 
-For detailed information, refer to [Extended Management Configuration](./appendix-extend-mgmt.md)
+For detailed information, refer to [Extended Management Configuration](./appendix-extend-mgmt.md).
+
+Every `ProviderInterface` must carry the standard Cluster API provider label
+`cluster.x-k8s.io/provider: <role>-<name>` (for example, `infrastructure-aws`)
+so {{{ docsVersionInfo.k0rdentName }}} can discover it. See
+[ProviderInterface Required Labels](../reference/provider-interface.md#required-labels) for details.
 
 ### Configuration Examples
 
