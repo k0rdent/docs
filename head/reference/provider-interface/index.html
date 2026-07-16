@@ -4091,6 +4091,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#required-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#spec-fields" class="md-nav__link">
     <span class="md-ellipsis">
       Spec Fields
@@ -5450,6 +5459,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#required-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required Labels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#spec-fields" class="md-nav__link">
     <span class="md-ellipsis">
       Spec Fields
@@ -5563,6 +5581,27 @@
 <p>Each infrastructure provider Helm chart ships with a pre-configured <code>ProviderInterface</code> object. Custom or bring-your-own providers must supply their own.</p>
 <p><strong>Short name:</strong> <code>pi</code><br />
 <strong>Scope:</strong> Cluster</p>
+<h2 id="required-labels">Required Labels<a class="headerlink" href="#required-labels" title="Permanent link">#</a></h2>
+<p>Every <code>ProviderInterface</code> object <strong>must</strong> carry the standard Cluster API
+provider label so k0rdent can discover it:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;provider-name&gt;</span>
+</code></pre></div>
+<p>The label value follows the Cluster API convention <code>&lt;role&gt;-&lt;name&gt;</code> and must
+match the corresponding value the provider's Helm chart sets in its
+<code>Chart.yaml</code> <code>cluster.x-k8s.io/provider</code> annotation (for example,
+<code>infrastructure-aws</code>, <code>infrastructure-azure</code>, <code>infrastructure-openstack</code>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+If the label is missing, k0rdent falls back to a
+legacy discovery method based on the flux <code>helm.toolkit.fluxcd.io/name</code> label.
+That fallback only matches <code>ProviderInterface</code> objects created by the
+provider's own Helm chart via a <code>HelmRelease</code>, so any custom or out-of-tree
+<code>ProviderInterface</code> installed differently will be invisible to the controller
+without the CAPI provider label.</p>
+</div>
 <h2 id="spec-fields">Spec Fields<a class="headerlink" href="#spec-fields" title="Permanent link">#</a></h2>
 <h3 id="specdescription"><code>.spec.description</code><a class="headerlink" href="#specdescription" title="Permanent link">#</a></h3>
 <p>Human-readable explanation of what this provider does.</p>
@@ -5637,6 +5676,8 @@ Removed in k0rdent <code>v1.11.0</code>.</p>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ProviderInterface</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-azure</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cluster.x-k8s.io/provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">infrastructure-azure</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">helm.sh/resource-policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keep</span>
 <span class="nt">spec</span><span class="p">:</span>

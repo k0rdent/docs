@@ -3244,6 +3244,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-to-v1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade to v1.11.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrade to v1.11.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-demand-upgrade-by-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      On-demand upgrade by default
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrade-to-v1100" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade to v1.10.0
@@ -5766,6 +5790,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upgrade-to-v1110" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrade to v1.11.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrade to v1.11.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-demand-upgrade-by-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      On-demand upgrade by default
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#upgrade-to-v1100" class="md-nav__link">
     <span class="md-ellipsis">
       Upgrade to v1.10.0
@@ -6234,6 +6282,20 @@ ls<span class="w"> </span>values-*.bak
 <li>Do the same for other <a href="../#guides">KOF guides</a>.</li>
 <li>Apply each relevant "Upgrade to" section of this page from older to newer.</li>
 </ul>
+<h2 id="upgrade-to-v1110">Upgrade to v1.11.0<a class="headerlink" href="#upgrade-to-v1110" title="Permanent link">#</a></h2>
+<h3 id="on-demand-upgrade-by-default">On-demand upgrade by default<a class="headerlink" href="#on-demand-upgrade-by-default" title="Permanent link">#</a></h3>
+<p>In previous versions, upgrading the <code>kof</code> umbrella chart in the management cluster would
+lead to an instant upgrade of <strong>all</strong> regional and child clusters at the same time,
+which may be not the best strategy.</p>
+<p>For more fine-grained control, starting from KOF 1.11.0
+you can upgrade each regional and child cluster on-demand
+by labeling it with a new <code>k0rdent.mirantis.com/kof-version</code> like this:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>--overwrite<span class="w"> </span>cld<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>k0rdent.mirantis.com/kof-version<span class="o">=</span><span class="m">1</span>.11.0
+</code></pre></div>
+<p>If you want to keep the old "instant upgrade" behavior,
+set <code>autoUpgrade: true</code> in your <code>kof-values.yaml</code> file
+and apply it on upgrade of the management cluster.</p>
 <h2 id="upgrade-to-v1100">Upgrade to v1.10.0<a class="headerlink" href="#upgrade-to-v1100" title="Permanent link">#</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

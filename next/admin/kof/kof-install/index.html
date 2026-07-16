@@ -5705,7 +5705,8 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 </li>
 <li>
 <p>Install the <code>k0rdent/istio</code> charts to the management cluster:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.6.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
@@ -5968,6 +5969,7 @@ set the <code>REGIONAL_DOMAIN</code> too, using your own domain:
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: aws-cluster-identity-cred</span>
@@ -6005,6 +6007,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: azure-cluster-identity-cred</span>
@@ -6043,6 +6046,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: openstack-cluster-identity-cred</span>
@@ -6072,6 +6076,10 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">EOF</span>
 </code></pre></div>
 </details>
+<ul>
+<li>For on-demand upgrade: set <code>k0rdent.mirantis.com/kof-version</code> label here.</li>
+<li>For auto-upgrade: set <code>autoUpgrade: true</code> in <code>kof-values.yaml</code>.</li>
+</ul>
 </li>
 <li>
 <p>If you've applied the <a href="#dns-auto-config">DNS auto-config</a> section,
@@ -6302,6 +6310,7 @@ apply this example for AWS, or use it as a reference:</p>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: aws-cluster-identity-cred</span>
@@ -6333,6 +6342,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: azure-cluster-identity-cred</span>
@@ -6365,6 +6375,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
+<span class="s">    k0rdent.mirantis.com/kof-version: 1.10.0</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
 <span class="s">  credential: openstack-cluster-identity-cred</span>
@@ -6388,6 +6399,10 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">EOF</span>
 </code></pre></div>
 </details>
+<ul>
+<li>For on-demand upgrade: set <code>k0rdent.mirantis.com/kof-version</code> label here.</li>
+<li>For auto-upgrade: set <code>autoUpgrade: true</code> in <code>kof-values.yaml</code>.</li>
+</ul>
 </li>
 <li>
 <p>If you've applied the <a href="#istio">Istio</a> section, update the <code>child-cluster.yaml</code> file:</p>
