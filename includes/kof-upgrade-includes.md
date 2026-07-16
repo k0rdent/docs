@@ -1,6 +1,27 @@
 
 <!--upgrade-start-->
 
+## Upgrade to v1.11.0
+
+### On-demand upgrade by default
+
+In previous versions, upgrading the `kof` umbrella chart in the management cluster would
+lead to an instant upgrade of **all** regional and child clusters at the same time,
+which may be not the best strategy.
+
+For more fine-grained control, starting from KOF 1.11.0
+you can upgrade each regional and child cluster on-demand
+by labeling it with a new `k0rdent.mirantis.com/kof-version` like this:
+
+```bash
+kubectl label --overwrite cld -n kcm-system $CLUSTER_NAME \
+  k0rdent.mirantis.com/kof-version=1.11.0
+```
+
+If you want to keep the old "instant upgrade" behavior,
+set `autoUpgrade: true` in your `kof-values.yaml` file
+and apply it on upgrade of the management cluster.
+
 ## Upgrade to v1.10.0
 
 > WARNING:

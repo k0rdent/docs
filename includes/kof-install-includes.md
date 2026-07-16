@@ -6,7 +6,8 @@
 
 <!--install-istio-start-->
     ```bash
-    helm upgrade -i --reset-values --wait --create-namespace -n istio-system k0rdent-istio \
+    helm upgrade -i --reset-values --wait \
+      --create-namespace -n istio-system k0rdent-istio \
       {{{ extra.docsVersionInfo.kofVersions.kofOciRegistryBaseIstio }}}/charts/k0rdent-istio \
       --version 0.6.0 \
       --set cert-manager-service-template.enabled=false \
