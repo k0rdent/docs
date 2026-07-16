@@ -39,6 +39,8 @@ KCM_SYSTEM_NS=kcm-system
 CREDENTIAL_NAME=remote-cred
 RESOURCE_TEMPLATE_NAME=remote-ssh-key-resource-template
 CLUSTER_DEPLOYMENT_NAME=my-remote-clusterdeployment1
+
+# Replace These: Target IP addresses of your actual remote nodes
 MACHINE_0_ADDRESS=127.0.0.1
 MACHINE_1_ADDRESS=127.0.0.2
 ```
