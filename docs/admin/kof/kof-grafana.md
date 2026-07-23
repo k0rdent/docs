@@ -109,9 +109,9 @@ If you want to install Grafana manually and enable its support in KOF, apply the
 * Check the [Dashboards - Cluster Monitoring - Kubernetes / Views / Global](http://127.0.0.1:3000/d/k8s_views_global/kubernetes-views-global),
     it should show all clusters you collect metrics from.
 
-![collect-from-3-cluster-roles](../../assets/kof/collect-from-3-cluster-roles--2025-04-17.gif)
+![collect-from-3-cluster-roles](https://drive.google.com/file/d/1Foo1XxXxWFOSDC7npdfuHvcbO-yHTM1b/view?usp=drive_link)
 
-![grafana-demo](../../assets/kof/grafana-2025-01-14.gif)
+![grafana-demo](https://drive.google.com/file/d/1iquZ1Mi-MPzifJsUyN1ZB4yyADGRKNDD/view?usp=drive_link)
 
 ## Cluster Overview
 
@@ -131,9 +131,7 @@ The logging interface will also be available, including:
 * Log aggregation
 * Alert correlation
 
-<video controls width="1024" style="max-width: 100%">
-  <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
-</video>
+<iframe  src="https://drive.google.com/file/d/1SloJjaKa2nsUHsWA4FgMlP6NIU90b4oz/preview"      style="max-width: 100%; aspect-ratio: 1910 / 872;"      allow="autoplay"      allowfullscreen></iframe>
 
 ## Traces
 
