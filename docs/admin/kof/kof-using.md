@@ -226,15 +226,15 @@ You can access the KOF UI by following these steps:
 
 3. Check the state of the endpoints:
 
-![kof-ui-prometheus-targets](https://drive.google.com/file/d/1HRIUWU-5hbqEIgyOI54DdzbYXflsjstA/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1HRIUWU-5hbqEIgyOI54DdzbYXflsjstA/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>kof-ui-prometheus-targets</iframe>
 
 If there is a misconfiguration in the Prometheus targets (for example, if multiple targets scrape the same URL), the UI will display an error:
 
-![kof-ui-prometheus-targets-misconfiguration](https://drive.google.com/file/d/1i6vxV_ouKXwRY-hbuPWlLLOtyeP4_s_T/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1i6vxV_ouKXwRY-hbuPWlLLOtyeP4_s_T/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>kof-ui-prometheus-targets-misconfiguration</iframe>
 
 The KOF UI also allows you to monitor internal telemetry from OpenTelemetry collectors and VictoriaMetrics/Logs, enabling comprehensive observability of their health and performance.
 
-![kof-ui-collectors-metrics](https://drive.google.com/file/d/18zzicLf0g0hmFcXnn6Cws6mBfn5eQ5Ne/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/18zzicLf0g0hmFcXnn6Cws6mBfn5eQ5Ne/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>kof-ui-collectors-metrics</iframe>
 
 To identify and debug issues in deployed clusters, check if KOF UI shows any errors in these monitored resources:
 
@@ -245,6 +245,6 @@ To identify and debug issues in deployed clusters, check if KOF UI shows any err
 * StateManagementProvider
 * SveltosCluster
 
-![kof-ui-resources-monitoring](https://drive.google.com/file/d/1uPuUw-gUE20ZrsaZp2Kh1enasTSEVhLG/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1uPuUw-gUE20ZrsaZp2Kh1enasTSEVhLG/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>kof-ui-resources-monitoring</iframe>
 
 

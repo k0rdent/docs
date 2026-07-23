@@ -80,13 +80,13 @@ All header text should be capitalized.
 
 ## Embedding videos
 
-Videos should not be stored in the repository. Instead, they should be stored in the [`Mirantis Docs` shared drive](https://drive.google.com/drive/u/0/folders/0ABalyEh44hkqUk9PVA). If you don't have access to this drive, add the video to the PR and note it in the description.  To add the video to the page, use this format:
+Videos and large animated gif files should not be stored in the repository. Instead, they should be stored in the [`Mirantis Docs` shared drive](https://drive.google.com/drive/u/0/folders/0ABalyEh44hkqUk9PVA). If you don't have access to this drive, add the asset file to the PR and note it in the description.  To add the video to the page, use this format:
 
 ```
 <iframe  src="https://drive.google.com/file/d/<FILE_ID>/preview" style="aspect-ratio: <HEIGHT> / <WIDTH>;"      allow="autoplay" allowfullscreen></iframe>
 ```
 
-You can retrieve the `FILE_ID` by choosing **Share**-->**Copy URL** for the video on Google Drive and extracting it from the URL.  For example, the `FILE_ID` for:
+You can retrieve the `FILE_ID` of the video or gif by choosing **Share**-->**Copy URL** for the video on Google Drive and extracting it from the URL.  For example, the `FILE_ID` for:
 
 ```
 https://drive.google.com/file/d/1MrCs07LGN5LPD4stktwC5sv0PB8HclTa/view?usp=sharing

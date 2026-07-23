@@ -109,9 +109,9 @@ If you want to install Grafana manually and enable its support in KOF, apply the
 * Check the [Dashboards - Cluster Monitoring - Kubernetes / Views / Global](http://127.0.0.1:3000/d/k8s_views_global/kubernetes-views-global),
     it should show all clusters you collect metrics from.
 
-![collect-from-3-cluster-roles](https://drive.google.com/file/d/1Foo1XxXxWFOSDC7npdfuHvcbO-yHTM1b/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1Foo1XxXxWFOSDC7npdfuHvcbO-yHTM1b/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>collect-from-3-cluster-roles</iframe>
 
-![grafana-demo](https://drive.google.com/file/d/1iquZ1Mi-MPzifJsUyN1ZB4yyADGRKNDD/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1iquZ1Mi-MPzifJsUyN1ZB4yyADGRKNDD/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>grafana-demo</iframe>
 
 ## Cluster Overview
 
