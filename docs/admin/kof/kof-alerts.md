@@ -138,7 +138,7 @@ To access the Grafana Alerting UI:
 
 2. Open: Grafana - Alerting - and then "Alert rules" or "Silences", like this:
 
-![alerts-demo](https://drive.google.com/file/d/1-YCoeUR0KcfEm2tqQu402kS8YwydKZ4p/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1-YCoeUR0KcfEm2tqQu402kS8YwydKZ4p/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>alerts-2025-06-05.gif</iframe>
 
 ## Prometheus UI
 
@@ -158,7 +158,7 @@ There are few places where you can find the graph of the firing alert:
 
 The Prometheus UI looks like this:
 
-![prom-ui](https://drive.google.com/file/d/1BSAEqIdSZ4e3q_OHMx1mFAiT3fhMNZXJ/view?usp=drive_link)
+<iframe  src="https://drive.google.com/file/d/1BSAEqIdSZ4e3q_OHMx1mFAiT3fhMNZXJ/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen>prom-ui</iframe>
 
 To enable Promxy Prometheus UI, please run this command in the management cluster:
 

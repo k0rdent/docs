@@ -121,9 +121,7 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 
     1. Check the overview in the [k0rdent/istio repository](https://github.com/k0rdent/istio) and this video:
     
-    <iframe  src="https://drive.google.com/file/d/1MrCs07LGN5LPD4stktwC5sv0PB8HclTa/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen></iframe>
-
-    1,918 x 918
+        <iframe  src="https://drive.google.com/file/d/1MrCs07LGN5LPD4stktwC5sv0PB8HclTa/preview"      style="max-width: 100%; aspect-ratio: 1918 / 918;"      allow="autoplay"      allowfullscreen></iframe>
 
     2. Create and label the `kof` namespace to allow Istio to inject its sidecars:
 
