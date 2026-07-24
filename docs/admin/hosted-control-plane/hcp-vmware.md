@@ -53,9 +53,27 @@ Follow these steps to set up a k0smotron-hosted control plane on vSphere.
         vmTemplate: "/DC/vm/template"
         network: "/DC/network/Net"
         k0smotron:
-          service:
-            annotations:
-              kube-vip.io/loadbalancerIPs: "172.16.0.10"
+          patches:
+          - patch:
+              content: |
+                metadata:
+                  annotations:
+                    kube-vip.io/loadbalancerIPs: "172.16.0.10"
+              type: merge
+            target:
+              component: control-plane
+              kind: Service
     ```
+
+    > NOTE:
+    > For `vsphere-hosted-cp` cluster template versions earlier than `1.0.40`, add the legacy annotation-based configuration
+    > instead of the `k0smotron.patches` section. For example:
+    >
+    > ```yaml
+    > k0smotron:
+    >   service:
+    >     annotations:
+    >       kube-vip.io/loadbalancerIPs: "172.16.0.10"
+    > ```
 
 For more information on these parameters, see the [Template reference for vsphere](../../reference/template/template-vsphere.md).
