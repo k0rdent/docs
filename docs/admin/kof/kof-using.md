@@ -226,15 +226,15 @@ You can access the KOF UI by following these steps:
 
 3. Check the state of the endpoints:
 
-![kof-ui-prometheus-targets](../../assets/kof/ui_prometheus_targets.gif)
+![kof-ui-prometheus-targets]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_prometheus_targets.gif)
 
 If there is a misconfiguration in the Prometheus targets (for example, if multiple targets scrape the same URL), the UI will display an error:
 
-![kof-ui-prometheus-targets-misconfiguration](../../assets/kof/ui_prometheus_targets_misconf.gif)
+![kof-ui-prometheus-targets-misconfiguration]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_prometheus_targets_misconf.gif)
 
 The KOF UI also allows you to monitor internal telemetry from OpenTelemetry collectors and VictoriaMetrics/Logs, enabling comprehensive observability of their health and performance.
 
-![kof-ui-collectors-metrics](../../assets/kof/ui_vm_and_collectors_metrics.gif)
+![kof-ui-collectors-metrics]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_vm_and_collectors_metrics.gif)
 
 To identify and debug issues in deployed clusters, check if KOF UI shows any errors in these monitored resources:
 
@@ -245,6 +245,7 @@ To identify and debug issues in deployed clusters, check if KOF UI shows any err
 * StateManagementProvider
 * SveltosCluster
 
-![kof-ui-resources-monitoring](../../assets/kof/ui_resources_monitoring.gif)
+![kof-ui-resources-monitoring]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_resources_monitoring.gif)
+
 
 
