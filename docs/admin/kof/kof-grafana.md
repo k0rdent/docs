@@ -88,7 +88,7 @@ If you want to install Grafana manually and enable its support in KOF, apply the
     EOF
     ```
 * You may optionally add features like `dex` and `ingress`
-    from [this example](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-mothership/templates/grafana/grafana.yaml).
+    from [this example](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-mothership/templates/grafana/grafana.yaml).
 * Wait for Grafana installation to complete successfully:
     ```bash
     kubectl wait grafana -n kof grafana-vm \

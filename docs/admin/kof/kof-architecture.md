@@ -336,18 +336,18 @@ Cloud 1..N
 - [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
 - [{{{ docsVersionInfo.k0rdentName }}}](https://github.com/k0rdent) service templates used by `kof-regional` and `kof-child` charts
-- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
-- [kof-operator](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
+- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-dashboards) for Grafana
+- [kof-operator](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/kof-operator/internal/controller) (don't confuse it with the `kof-operators` chart) for auto-configuration
 - [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
 
 ### kof-regional
 
-- [MultiClusterService](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
+- [MultiClusterService](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml)
   which configures and installs `kof-storage` and other charts to regional clusters
 
 ### kof-child
 
-- [MultiClusterService](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
+- [MultiClusterService](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
   which configures and installs `kof-collectors` and other charts to child clusters
   and [optionally](kof-storing.md) to the management cluster
 
@@ -360,7 +360,7 @@ Cloud 1..N
   - [victoria-traces-cluster](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-traces-cluster) for distributed tracing storage and querying, providing a scalable backend for OpenTelemetry traces
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
 - [Dex](https://dexidp.io/) SSO [chart](https://github.com/dexidp/helm-charts/tree/master/charts/dex)
-- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-dashboards) for Grafana
+- Optional [kof-dashboards](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-dashboards) for Grafana
 
 ### kof-collectors
 

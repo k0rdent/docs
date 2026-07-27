@@ -183,5 +183,5 @@ Get started with the basic documentation:
 - [FAQ](kof-faq.md)
 
 Once you have KOF up and running,
-check [k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs)
+check [k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/docs)
 for advanced guides.

@@ -471,7 +471,7 @@ To apply this option, use the following AWS S3 setup as an example or reference:
       existingSecret: cold-storage-exporter-s3-credentials
     ```
 
-    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/cold-storage-exporter/README.md)
+    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/cold-storage-exporter/README.md)
     for custom cases.
 
 6. Install the chart:
@@ -596,7 +596,7 @@ To apply this option, use the following AWS S3 setup as an example or reference:
       existingSecret: audit-logs-exporter-s3-credentials
     ```
 
-    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/audit-logs-exporter/README.md)
+    You can override `image.repository`, `s3.endpoint`, or [other values](https://github.com/k0rdent/kof/blob/release/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/audit-logs-exporter/README.md)
     for custom cases.
 
 6. Install the chart:

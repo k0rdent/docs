@@ -9,7 +9,7 @@
 
 Detailed:
 
-- [kof-mothership](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-mothership/Chart.yaml)
-- [kof-storage](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/Chart.yaml)
-- [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-operators/Chart.yaml)
-- [kof-collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/Chart.yaml)
+- [kof-mothership](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-mothership/Chart.yaml)
+- [kof-storage](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-storage/Chart.yaml)
+- [kof-operators](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-operators/Chart.yaml)
+- [kof-collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-collectors/Chart.yaml)

@@ -155,7 +155,7 @@ If you've selected to skip both [DNS auto-config](#dns-auto-config) now and [Man
 ## Management Cluster
 
 To install KOF on the management cluster,
-look through the default values of the [kof](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof/README.md) chart,
+look through the default values of the [kof](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof/README.md) chart,
 and apply this example, or use it as a reference:
 
 1. Create an empty `kof-values.yaml` file.
@@ -261,8 +261,8 @@ and apply this example, or use it as a reference:
                   crossNamespace: true
         ```
 
-5. Check the high-level [default values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof/values.yaml)
-    of the `kof` umbrella chart, and more detailed default values of other [charts](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts),
+5. Check the high-level [default values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof/values.yaml)
+    of the `kof` umbrella chart, and more detailed default values of other [charts](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts),
     to customize your `kof-values.yaml` file where needed, for example:
 
     ??? note "To enable the Regionless setup:"
@@ -328,9 +328,9 @@ and apply this example, or use it as a reference:
         ```
 
         Note: the first `collectors` key is to reference the subchart,
-        and the second `collectors` key is part of its [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/values.yaml).
+        and the second `collectors` key is part of its [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-collectors/values.yaml).
 
-        Check the [examples of OpenTelemetry collectors custom configuration](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example).
+        Check the [examples of OpenTelemetry collectors custom configuration](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/docs/collectors.md#example).
 
 6. If you're upgrading KOF from an earlier version, check the [Upgrading KOF](./kof-upgrade.md) guide.
 
@@ -585,7 +585,7 @@ apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-storage-class: <EXAMPLE_STORAGE_CLASS>
     ```
 
-8. The `kof-operator` creates and configures `PromxyServerGroup` and `GrafanaDatasource` (if [enabled](kof-grafana.md)) [automatically](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go).
+8. The `kof-operator` creates and configures `PromxyServerGroup` and `GrafanaDatasource` (if [enabled](kof-grafana.md)) [automatically](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go).
     It uses the endpoints listed below by default.
     If you want to disable the built-in metrics, logs, and traces to use your own existing instances instead,
     add custom endpoints to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`:
@@ -658,9 +658,9 @@ apply this example for AWS, or use it as a reference:
         k0rdent.mirantis.com/kof-http-config: '{"dial_timeout": "10s", "tls_config": {"insecure_skip_verify": true}}'
         ```
 
-10. `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml) configure and install `cert-manager`, `envoy-gateway` or `ingress-nginx`, `kof-operators`, `victoria-metrics-operator`, `kof-storage`, and `kof-collectors` charts automatically.
+10. `MultiClusterService` named [kof-regional-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-regional/templates/regional-multi-cluster-service.yaml) configure and install `cert-manager`, `envoy-gateway` or `ingress-nginx`, `kof-operators`, `victoria-metrics-operator`, `kof-storage`, and `kof-collectors` charts automatically.
 
-    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-storage/values.yaml)
+    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-storage/values.yaml)
     to the `kof-storage` chart or its subcharts, such as [victoria-logs-cluster](https://docs.victoriametrics.com/helm/victorialogs-cluster/#parameters),
     add them to the `regional-cluster.yaml` file in the `.spec.config.clusterAnnotations`.
     Examples:
@@ -868,7 +868,7 @@ apply this example for AWS, or use it as a reference:
     to the resulting `Cluster` because there are no `.spec.config.clusterLabels` here.
     If you add them, please copy `.metadata.labels` as well.
 
-6. The `kof-operator` [discovers](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go)
+6. The `kof-operator` [discovers](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/kof-operator/internal/controller/clusterdeployment_kof_cluster_role.go)
     the regional cluster by the location of the child cluster.
     If you have more than one regional cluster in the same AWS region / Azure location / etc.,
     and you want to connect the child cluster to specific regional cluster,
@@ -882,10 +882,10 @@ apply this example for AWS, or use it as a reference:
     k0rdent.mirantis.com/kof-regional-cluster-namespace: kcm-system
     ```
 
-7. `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
+7. `MultiClusterService` named [kof-child-cluster](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-child/templates/child-multi-cluster-service.yaml)
     configures and installs `cert-manager`, `kof-operators`, and `kof-collectors` charts automatically.
 
-    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-collectors/values.yaml)
+    To pass any custom [values](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.ossKofDotVersion }}}/charts/kof-collectors/values.yaml)
     to the `kof-collectors` chart or its subcharts, such as [opencost](https://github.com/opencost/opencost-helm-chart/blob/main/charts/opencost/README.md#values),
     add them to the `child-cluster.yaml` file in the `.spec.config.clusterAnnotations`. Example:
 
