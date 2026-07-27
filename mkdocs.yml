@@ -383,6 +383,7 @@ extra:
     k0rdentDigestValue: sha256:809772d69c1e54a134a8bc0d565a86c212bdacaee3e9296ab093409a706758e6
     k0rdentDigestDate: Tue Jun 8 16:22:42 2026
     k0rdentTagList: https://github.com/k0rdent/kcm/tags
+    assetsBaseUrl: https://d334iv9pn3108y.cloudfront.net
     kofVersions:
       kofDotVersion: 1.10.0
       ossKofDotVersion: 1.10.0
