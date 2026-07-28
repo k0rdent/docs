@@ -88,7 +88,7 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     and this video:
 
     <video controls width="1024" style="max-width: 100%">
-      <source src="../../../assets/kof/kof-istio.mp4" type="video/mp4" />
+      <source src="{{{ docsVersionInfo.assetsBaseUrl }}}/kof/kof-istio.mp4" type="video/mp4" />
     </video>
 
 2. Create and label the `kof` namespace to allow Istio to inject its sidecars:
