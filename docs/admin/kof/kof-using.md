@@ -25,9 +25,9 @@ To make Grafana available, start with these steps:
 
 4. Open a dashboard and select any cluster:
 
-![collect-from-3-cluster-roles](../../assets/kof/collect-from-3-cluster-roles--2025-04-17.gif)
+![collect-from-3-cluster-roles]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/collect-from-3-cluster-roles--2025-04-17.gif)
 
-![grafana-demo](../../assets/kof/grafana-2025-01-14.gif)
+![grafana-demo]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/grafana-2025-01-14.gif)
 
 ### Single Sign-On
 
@@ -55,7 +55,7 @@ The logging interface will also be available, including:
 * Alert correlation
 
 <video controls width="1024" style="max-width: 100%">
-  <source src="../../../assets/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
+  <source src="{{{ docsVersionInfo.assetsBaseUrl }}}/kof/victoria-logs-dashboard--2025-03-11.mp4" type="video/mp4" />
 </video>
 
 ### Cost Management
@@ -169,12 +169,12 @@ You can access the KOF UI by following these steps:
 
 3. Check the state of the endpoints:
 
-![kof-ui-prometheus-targets](../../assets/kof/ui_prometheus_targets.gif)
+![kof-ui-prometheus-targets]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_prometheus_targets.gif)
 
 If there is a misconfiguration in the Prometheus targets (for example, if multiple targets scrape the same URL), the UI will display an error:
 
-![kof-ui-prometheus-targets-misconfiguration](../../assets/kof/ui_prometheus_targets_misconf.gif)
+![kof-ui-prometheus-targets-misconfiguration]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_prometheus_targets_misconf.gif)
 
 The KOF UI also allows you to monitor internal telemetry from OpenTelemetry collectors and VictoriaMetrics/Logs, enabling comprehensive observability of their health and performance.
 
-![kof-ui-collectors-metrics](../../assets/kof/ui_vm_and_collectors_metrics.gif)
+![kof-ui-collectors-metrics]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/ui_vm_and_collectors_metrics.gif)
