@@ -310,7 +310,7 @@ nav:
     - Verifying a default `StorageClass`: appendix/storageclass.md
   - Release Notes:
     - Overview: release-notes/index.md
-    - v1.10.0: release-notes/release-notes-v1.10.0.md
+    - v1.11.0: release-notes/release-notes-v1.11.0.md
   - Contributing:
     - Overview: contrib/index.md
     - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
@@ -376,8 +376,8 @@ extra:
             using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: k0rdent
-    k0rdentVersion: 1-10-0
-    k0rdentDotVersion: 1.10.0
+    k0rdentVersion: 1-11-0
+    k0rdentDotVersion: 1.11.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
     k0rdentDigestValue: sha256:809772d69c1e54a134a8bc0d565a86c212bdacaee3e9296ab093409a706758e6
     k0rdentDigestDate: Tue Jun 8 16:22:42 2026
@@ -390,77 +390,77 @@ extra:
       kofOciRegistryBaseIstio: oci://ghcr.io/k0rdent/istio
     providerVersions:
       dashVersions:
-        clusterApi: 1-1-13
-        clusterApiProviderAws: 1-0-22
-        clusterApiProviderAzure: 1-0-27
-        clusterApiProviderDocker: 1-0-20
-        clusterApiProviderGcp: 1-0-20
-        clusterApiProviderInfoblox: 1-0-11
-        clusterApiProviderIpam: 1-0-12
-        clusterApiProviderKubevirt: 1-0-8
-        clusterApiProviderOpenstack: 1-0-25
-        clusterApiProviderVsphere: 1-0-19
-        regional: 1-10-0 
-        k0smotron: 1-0-24
+        clusterApi: 1-1-15
+        clusterApiProviderAws: 1-0-25
+        clusterApiProviderAzure: 1-0-31
+        clusterApiProviderDocker: 1-0-24
+        clusterApiProviderGcp: 1-0-23
+        clusterApiProviderInfoblox: 1-0-12
+        clusterApiProviderIpam: 1-0-13
+        clusterApiProviderKubevirt: 1-0-10
+        clusterApiProviderOpenstack: 1-0-28
+        clusterApiProviderVsphere: 1-0-21
+        regional: 1-11-0
+        k0smotron: 1-0-32
         adoptedCluster: 1-0-2
-        awsEksCluster: 1-0-10
-        awsHostedCpCluster: 1-0-36
-        awsStandaloneCpCluster: 1-0-34
-        azureAksCluster: 1-0-8
-        azureHostedCpCluster: 1-0-39
-        azureStandaloneCpCluster: 1-0-36
-        dockerHostedCpCluster: 1-0-11
-        gcpGkeCluster: 1-0-13
-        gcpHostedCpCluster: 1-0-34
-        gcpStandaloneCpCluster: 1-0-32
-        kubevirtHostedCpCluster: 1-0-10
-        kubevirtStandaloneCpCluster: 1-0-12
-        openstackHostedCpCluster: 1-0-31
-        openstackStandaloneCpCluster: 1-0-37
-        remoteCluster: 1-0-29
-        vsphereHostedCpCluster: 1-0-34
-        vsphereStandaloneCpCluster: 1-0-33
-        sveltosProvider: 1-9-0
+        awsEksCluster: 1-0-13
+        awsHostedCpCluster: 1-0-43
+        awsStandaloneCpCluster: 1-0-41
+        azureAksCluster: 1-0-9
+        azureHostedCpCluster: 1-0-46
+        azureStandaloneCpCluster: 1-0-43
+        dockerHostedCpCluster: 1-0-15
+        gcpGkeCluster: 1-0-15
+        gcpHostedCpCluster: 1-0-43
+        gcpStandaloneCpCluster: 1-0-41
+        kubevirtHostedCpCluster: 1-0-18
+        kubevirtStandaloneCpCluster: 1-0-20
+        openstackHostedCpCluster: 1-0-38
+        openstackStandaloneCpCluster: 1-0-44
+        remoteCluster: 1-0-36
+        vsphereHostedCpCluster: 1-0-41
+        vsphereStandaloneCpCluster: 1-0-40
+        sveltosProvider: 1-12-1
       dotVersions:
-        clusterApi: 1.1.13
-        clusterApiProviderAws: 1.0.22
-        clusterApiProviderAzure: 1.0.27
-        clusterApiProviderDocker: 1.0.20
-        clusterApiProviderGcp: 1.0.20
-        clusterApiProviderOpenstack: 1.0.25
-        clusterApiProviderVsphere: 1.0.19 
-        clusterApiProviderIpam: 1.0.12
-        clusterApiProviderInfoblox: 1.0.11
-        regional: 1.10.0
-        k0smotron: 1.0.24
+        clusterApi: 1.1.15
+        clusterApiProviderAws: 1.0.25
+        clusterApiProviderAzure: 1.0.31
+        clusterApiProviderDocker: 1.0.24
+        clusterApiProviderGcp: 1.0.23
+        clusterApiProviderOpenstack: 1.0.28
+        clusterApiProviderVsphere: 1.0.21
+        clusterApiProviderIpam: 1.0.13
+        clusterApiProviderInfoblox: 1.0.12
+        regional: 1.11.0
+        k0smotron: 1.0.32
         adoptedCluster: 1.0.2
-        awsEksCluster: 1.0.10
-        awsHostedCpCluster: 1.0.36
-        awsStandaloneCpCluster: 1.0.34
-        azureAksCluster: 1.0.8
-        azureHostedCpCluster: 1.0.39
-        azureStandaloneCpCluster: 1.0.36
-        dockerHostedCpCluster: 1.0.11
-        gcpGkeCluster: 1.0.13
-        gcpHostedCpCluster: 1.0.34
-        gcpStandaloneCpCluster: 1.0.32
-        kubevirtHostedCpCluster: 1.0.10
-        kubevirtStandaloneCpCluster: 1.0.12
-        openstackHostedCpCluster: 1.0.31
-        openstackStandaloneCpCluster: 1.0.37
-        remoteCluster: 1.0.29
-        vsphereHostedCpCluster: 1.0.34
-        vsphereStandaloneCpCluster: 1.0.33
+        awsEksCluster: 1.0.13
+        awsHostedCpCluster: 1.0.43
+        awsStandaloneCpCluster: 1.0.41
+        azureAksCluster: 1.0.9
+        azureHostedCpCluster: 1.0.46
+        azureStandaloneCpCluster: 1.0.43
+        dockerHostedCpCluster: 1.0.15
+        gcpGkeCluster: 1.0.15
+        gcpHostedCpCluster: 1.0.43
+        gcpStandaloneCpCluster: 1.0.41
+        kubevirtHostedCpCluster: 1.0.18
+        kubevirtStandaloneCpCluster: 1.0.20
+        openstackHostedCpCluster: 1.0.38
+        openstackStandaloneCpCluster: 1.0.44
+        remoteCluster: 1.0.36
+        vsphereHostedCpCluster: 1.0.41
+        vsphereStandaloneCpCluster: 1.0.40
     servicesVersions:
       dashVersions:
-        certManager: 1-17-1
+        certManager: 1-21-0
         externalSecrets: 0-11-0
         ingressNginx: 4-11-3
         kyverno: 3-2-6
-        velero: 8-1-0
+        velero: 12-1-0
       dotVersions:
-        certManager: 1.17.1
+        certManager: 1.21.0
         externalSecrets: 0.11.0
         ingressNginx: 4.11.3
         kyverno: 3.2.6
-        velero: 8.1.0
+        velero: 12.1.0
