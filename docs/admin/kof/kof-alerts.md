@@ -127,7 +127,7 @@ To access the Grafana Alerting UI:
 
 2. Open: Grafana - Alerting - and then "Alert rules" or "Silences", like this:
 
-![alerts-demo](../../assets/kof/alerts-2025-06-05.gif)
+![alerts-demo]({{{ docsVersionInfo.assetsBaseUrl }}}/kof/alerts-2025-06-05.gif)
 
 ## Prometheus UI
 
