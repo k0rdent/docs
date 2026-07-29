@@ -37,7 +37,8 @@ failures, and fixes to service key collision handling and dependency filtering i
 reliability.
 
 * **Audit Policy Distribution**: Building on v1.10.0's audit policy support, this release adds the ability
-to distribute `ClusterAuditPolicies` across managed clusters, along with 
+to distribute `ClusterAuditPolicies` across managed clusters, along with ClusterTemplates, ServiceTemplates,
+Credentials, and ClusterAuthentications using `AccessManagement` system.
 
 * **Improved Auth and Audit-related Secrets and ConfigMaps Cleanup**: k0rdent now properly removes authentication and
 audit-related Secrets and ConfigMaps when they are no longer referenced.
