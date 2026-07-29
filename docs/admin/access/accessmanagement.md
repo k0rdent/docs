@@ -1,6 +1,10 @@
 # Access Management Resource
 
-{{{ docsVersionInfo.k0rdentName }}} provides an `AccessManagement` resource (cluster-scoped, singleton) that enables controlled distribution of multiple object types (`ClusterTemplate`, `ServiceTemplate`, `Credential`, and `ClusterAuthentication`) from the system namespace (default: `kcm-system`) across other namespaces in the management cluster. This resource is created automatically during the installation of {{{ docsVersionInfo.k0rdentName }}}.
+{{{ docsVersionInfo.k0rdentName }}} provides an `AccessManagement` resource (cluster-scoped, singleton) that enables
+controlled distribution of multiple object types (`ClusterTemplate`, `ServiceTemplate`, `Credential`,
+`ClusterAuthentication` and `ClusterAuditPolicy`) from the system namespace (default: `kcm-system`) across other
+namespaces in the management cluster. This resource is created automatically during the installation of
+{{{ docsVersionInfo.k0rdentName }}}.
 
 ## Supported Configuration Options
 
@@ -33,6 +37,8 @@ Each access rule supports the following fields:
 
 * `clusterAuthentications` – The list of `ClusterAuthentication` names that are distributed to the selected namespaces.
 
+* `clusterAuditPolicies` – The list of `ClusterAuditPolicy` names that are distributed to the selected namespaces.
+
 ### Example
 
 ```yaml
@@ -59,6 +65,8 @@ spec:
       - namespace3
     clusterAuthentications:
     - auth1
+    clusterAuditPolicies:
+    - audit-policy1
 ```
 
 Based on the configuration above, the following objects are distributed:
@@ -67,6 +75,7 @@ Based on the configuration above, the following objects are distributed:
 2. All `ServiceTemplates` referenced by the `ServiceTemplateChain` `st-chain1` are distributed to `namespace1` and `namespace2`.
 3. The `Credential` `cred1` and all referenced `Identity` resources (used for authentication) are distributed to `namespace1` and `namespace2`.
 4. The `ClusterAuthentication` `auth1` and its referenced CA secret are distributed to `namespace3`.
+5. The `ClusterAuditPolicy` `audit-policy1` is distributed to `namespace3`.
 
 For more details, see:
 
