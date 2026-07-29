@@ -1,6 +1,6 @@
 # k0rdent 1.11.0 Release Notes
 
-**Release date:** July 28, 2026
+**Release date:** July 29, 2026
 
 ## Components Versions
 
