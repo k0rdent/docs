@@ -39,7 +39,6 @@ metadata:
   labels:
     k0rdent.mirantis.com/managed: "true"
 spec:
-  insecure: true
   interval: 10m0s
   provider: generic
   type: oci
