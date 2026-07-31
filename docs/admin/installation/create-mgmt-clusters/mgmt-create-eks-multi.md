@@ -67,9 +67,9 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```
     ```console
     2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version
-    2025-03-05 22:57:18 [ℹ]  nodegroup "nickchasek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]
-    2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)
-    2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "NickChasek0rdentControlCluster"
+    2025-03-05 22:57:18 [ℹ]  nodegroup "JohnDoek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]
+    2025-03-05 22:57:19 [ℹ]  1 nodegroup (JohnDoek0rdentcontroller-group) was included (based on the include/exclude rules)
+    2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "JohnDoek0rdentControlCluster"
     ...
     2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates
     ```
@@ -96,8 +96,8 @@ Follow these steps to install and prepare an [Amazon EKS](https://ca-central-1.c
     ```shell
     aws eks update-kubeconfig --region YOUR_AWS_REGION --name CLUSTER_NAME
     ```
-    ```shell
-    Updated context arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster in /home/nick/.kube/config
+    ```bash
+    Updated context arn:aws:eks:ca-central-1:FAKE_ARN_123:cluster/JohnDoek0rdentControlCluster in /home/nick/.kube/config
     ```
 
 1. Taint controllers
