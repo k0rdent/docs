@@ -61,10 +61,10 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       appropriate Velero S3 bucket access. Review the necessary permissions [here](https://github.com/vmware-tanzu/velero-plugin-for-aws?tab=readme-ov-file#option-1-set-permissions-with-an-iam-user). Reference the JSON policy file named `velero-policy.json` and take care to replace `${BUCKET}` with the correct bucket name).
 
       > NOTE:
-      > If you're using EKS, the "user" is actually a role. If you get an error such as...
-      > 
-      > ```
-      > AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nick-chase-backup-bucket" because no identity-based policy allows the s3:ListBucket action
+      > If you're using EKS, the "user" is actually a role. If you get an error such as
+      >
+      > ```console { .no-copy }
+      > AccessDenied: User: arn:aws:sts::FAKE_ARN_123:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nick-chase-backup-bucket" because no identity-based policy allows the s3:ListBucket action
       > ```
       > 
       > ...you can extract the role from the message (in this example, it's the assumed-role) and create the policy. For example:
