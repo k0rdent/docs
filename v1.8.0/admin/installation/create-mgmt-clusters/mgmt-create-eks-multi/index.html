@@ -5102,9 +5102,9 @@ eksctl<span class="w"> </span>version
 --node-labels<span class="w"> </span><span class="s2">&quot;role=control-plane&quot;</span><span class="w"> </span>
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
-<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;nickchasek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
-<span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (nickchasek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
-<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;NickChasek0rdentControlCluster&quot;</span>
+<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;JohnDoek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (JohnDoek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;JohnDoek0rdentControlCluster&quot;</span>
 <span class="go">...</span>
 <span class="go">2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
 </code></pre></div></p>
@@ -5127,7 +5127,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <p>You don't have to access the KUBECONFIG directly; you can use the aws tool to get access to it:</p>
 <p><div class="highlight"><pre><span></span><code>aws<span class="w"> </span>eks<span class="w"> </span>update-kubeconfig<span class="w"> </span>--region<span class="w"> </span>&lt;YOUR_AWS_REGION&gt;<span class="w"> </span>--name<span class="w"> </span>&lt;CLUSTER_NAME&gt;
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:026090528175:cluster/NickChasek0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
+<div class="highlight"><pre><span></span><code>Updated<span class="w"> </span>context<span class="w"> </span>arn:aws:eks:ca-central-1:FAKE_ARN_123:cluster/JohnDoek0rdentControlCluster<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/nick/.kube/config
 </code></pre></div></p>
 </li>
 <li>
