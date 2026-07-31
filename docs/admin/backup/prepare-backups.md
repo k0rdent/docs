@@ -97,8 +97,13 @@ Before you create a manual one-off or scheduled backup, review the steps below a
       > NOTE:
       > If you're using EKS, the "user" is actually a role. If you get an error such as...
       >
+<<<<<<< HEAD
       > ```text
       > AccessDenied: User: arn:aws:sts::026090528175:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nick-chase-backup-bucket" because no identity-based policy allows the s3:ListBucket action
+=======
+      > ```console { .no-copy }
+      > AccessDenied: User: arn:aws:sts::FAKE_ARN_123:assumed-role/eksctl-JohnDoeEKSK0rdentMgmtClus-NodeInstanceRole-j0olMRJHrM0A/i-0f7dad2d91447f173 is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nick-chase-backup-bucket" because no identity-based policy allows the s3:ListBucket action
+>>>>>>> c09115da (OPSEC fix to insert placeholders for account id)
       > ```
       >
       > ...you can extract the role from the message (in this example, it's the assumed-role) and create the policy. For example:
