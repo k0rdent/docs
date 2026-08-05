@@ -1,0 +1,34 @@
+name: Test Native GitHub Queue
+
+on:
+  push:
+    branches:
+      - queue-test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-queue-experiment
+  queue: max
+
+jobs:
+  queue-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show start information
+        run: |
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Commit: $GITHUB_SHA"
+          echo "Started: $(date -u --iso-8601=seconds)"
+
+      - name: Simulate a long documentation deployment
+        run: |
+          echo "Holding the deployment slot for two minutes..."
+          sleep 120
+
+      - name: Show finish information
+        run: |
+          echo "Run ID: $GITHUB_RUN_ID"
+          echo "Finished: $(date -u --iso-8601=seconds)"
