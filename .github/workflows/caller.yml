@@ -1,6 +1,7 @@
 name: Deploy Docs Enqueuer
 
 on:
+  workflow_dispatch: # Nick added so I can test
   push:
     branches:
       - '**'  # Trigger on push to any branch (universal file)
