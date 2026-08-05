@@ -1,6 +1,7 @@
 name: Deploy Docs Enqueuer
 
 on:
+  workflow_dispatch: # Nick added so I can test
   push:
     branches:
       - '**'  # Trigger on push to any branch (universal file)
@@ -32,7 +33,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Checkout the workflow-queue branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: workflow-queue
           fetch-depth: 0
