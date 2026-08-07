@@ -1,6 +1,6 @@
 # Troubleshooting
 
-There are some situations in which you will need to take extra care to make sure 
+There are some situations in which you will need to take extra care to make sure
 things run smoothly.
 
 - [Inspecting k0rdent events](events.md)
@@ -11,3 +11,4 @@ things run smoothly.
 - [Remote](known-issues-remote.md)
 - [Custom CA Certificates](known-issues-custom-ca.md)
 - [ClusterCtl Issues](known-issues-clusterctl.md)
+- [Sveltos PatchTransformer Errors](known-issues-sveltos-patch-formats.md)
