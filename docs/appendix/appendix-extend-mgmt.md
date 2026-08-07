@@ -375,6 +375,11 @@ cluster. To use it, you must create an image pull secret in a `dockerconfigjson`
 format following the [standard
 procedure](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
 
+> NOTE:
+> If the `Management` object also defines custom Projectsveltos agent or drift detection patches, use the structured
+> patch format consistently. Mixing legacy bare patches with KCM-generated image pull secret patches can cause
+> [Sveltos PatchTransformer errors](../troubleshooting/known-issues-sveltos-patch-formats.md).
+
 After the secret has been created, you can reference it by name in the helm chart
 values on:
 
