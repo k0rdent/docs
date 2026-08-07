@@ -285,6 +285,7 @@ nav:
     - KubeVirt: troubleshooting/known-issues-kubevirt.md
     - Custom CA Certificates: troubleshooting/known-issues-custom-ca.md
     - Clusterctl Issues: troubleshooting/known-issues-clusterctl.md
+    - Sveltos PatchTransformer Errors: troubleshooting/known-issues-sveltos-patch-formats.md
   - Frequently Asked Questions: faq/index.md
   - Appendix:
     - Overview: appendix/index.md
