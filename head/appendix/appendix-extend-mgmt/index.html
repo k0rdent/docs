@@ -4342,6 +4342,8 @@
       
         
       
+        
+      
     
     
     
@@ -4539,6 +4541,27 @@
   
   <span class="md-ellipsis">
     Clusterctl Issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/known-issues-sveltos-patch-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sveltos PatchTransformer Errors
   </span>
   
 
@@ -5945,6 +5968,13 @@ to pass registry authentication parameters to providers on the management
 cluster. To use it, you must create an image pull secret in a <code>dockerconfigjson</code>
 format following the <a href="https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/">standard
 procedure</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+If the <code>Management</code> object also defines custom Projectsveltos agent or drift detection patches, use the structured
+patch format consistently. Mixing legacy bare patches with KCM-generated image pull secret patches can cause
+<a href="../../troubleshooting/known-issues-sveltos-patch-formats/">Sveltos PatchTransformer errors</a>.</p>
+</div>
 <p>After the secret has been created, you can reference it by name in the helm chart
 values on:</p>
 <ul>
