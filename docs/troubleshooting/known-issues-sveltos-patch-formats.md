@@ -12,7 +12,7 @@ patch: |-
 `: unable to parse SM or JSON patch
 ```
 
-This issue occurs when one of the following Projectsveltos patch ConfigMaps contains both legacy bare patches and
+This issue occurs when one of the following Projectsveltos patch `ConfigMaps` contains both legacy bare patches and
 structured Sveltos `Patch` documents:
 
 - `sveltos-agent-config`
@@ -41,25 +41,25 @@ data:
         - name: registry-pull-secret
 ```
 
-Projectsveltos first attempts to parse all entries in a ConfigMap as structured patches. If any entry is a legacy bare
+Projectsveltos first attempts to parse all entries in a `ConfigMap` as structured patches. If any entry is a legacy bare
 patch, it falls back to interpreting all entries as legacy patches. The structured `image-patch` is then passed to
-kustomize without removing its inner `patch` field, resulting in the duplicate `patch: |-` shown in the error.
+`kustomize` without removing its inner `patch` field, resulting in the duplicate `patch: |-` shown in the error.
 
 ## Verify the Issue
 
-Inspect both ConfigMaps:
+Inspect both `ConfigMaps`:
 
 ```bash
 kubectl -n projectsveltos get configmap \
   sveltos-agent-config drift-detection-config -o yaml
 ```
 
-The issue is present if the same ConfigMap contains a bare patch that starts with `apiVersion`, `{`, or `- op`, and a
+The issue is present if the same `ConfigMap` contains a bare patch that starts with `apiVersion`, `{`, or `- op`, and a
 structured patch that starts with `patch:`.
 
 ## Workaround
 
-Use the structured Sveltos patch format for every custom entry in both ConfigMaps. The following minimal
+Use the structured Sveltos patch format for every custom entry in both `ConfigMaps`. The following minimal
 `Management` fragment configures structured scheduling patches that can coexist with the KCM-generated image pull
 secret patch:
 
@@ -109,5 +109,5 @@ spec:
                   name: drift-detection-manager
 ```
 
-Apply the updated `Management` object, then verify that every entry in both ConfigMaps begins with `patch:`. Existing
+Apply the updated `Management` object, then verify that every entry in both `ConfigMaps` begins with `patch:`. Existing
 custom patch bodies, including tolerations and probes, can remain unchanged inside the inner `patch: |-` block.
