@@ -89,6 +89,7 @@ plugins:
         ksm-multiclusterservice.md: admin/ksm/ksm-multiclusterservice.md
         ksm-self-management.md: admin/ksm/ksm-self-management.md
         ksm-byo-provider.md: admin/ksm/ksm-byo-provider.md
+        ksm-service-state-verification.md: admin/ksm/ksm-service-state-verification.md
         admin-kof.md: admin/kof/index.md
         admin-upgrading-k0rdent.md: admin/upgrade/index.md
         admin-credentials.md: admin/access/credentials/index.md
@@ -176,6 +177,7 @@ nav:
       - KSM Providers: admin/ksm/ksm-providers.md
       - Built-In Provider: admin/ksm/ksm-built-in-provider.md
       - Build-Your-Own Provider: admin/ksm/ksm-byo-provider.md
+      - Service State Verification: admin/ksm/ksm-service-state-verification.md
       - Working with service templates: admin/ksm/ksm-service-templates.md
       - Creating multi-cluster services: admin/ksm/ksm-multiclusterservice.md
       - Deploying beach-head services on the Management Cluster itself: admin/ksm/ksm-self-management.md

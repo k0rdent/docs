@@ -193,6 +193,8 @@ spec:
 
 In this example, for all matching clusters, `ingress-nginx` and `postgres-operators` defined by `mcs2` will not be deployed until `cert-manager` defined by `mcs1` has been successfully deployed.
 
+Both `dependsOn` between services within a `ClusterDeployment`/`MultiClusterService` and sequential upgrades through a `ServiceTemplateChain` gate on the service reaching `state == Deployed`. That state reflects the verifier's confirmation that the workload is actually healthy on the child cluster, not merely that Sveltos accepted the release. Dependent services and next chain steps advance only after the current service is verified. See [Service State Verification](ksm-service-state-verification.md) for the mechanics.
+
 ### Keeping Services on Selector Mismatch
 
 By default, when a cluster's labels no longer match a `MultiClusterService`'s `clusterSelector` (or the selector is cleared), the services previously deployed on that cluster by this MCS are removed.
