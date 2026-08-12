@@ -10,18 +10,42 @@ Each entry in `.status.services[]` contains:
 - `name`: Service name
 - `namespace`: Service namespace
 - `template`: ServiceTemplate name used
-- `version`: Application version from the ServiceTemplate
+- `version`: Application version confirmed on cluster at the last successful verification. For Helm services this is only populated once the verifier has cross-checked the deploy against the child cluster; see [Service State Verification](../../admin/ksm/ksm-service-state-verification.md) for the underlying mechanics.
 - `state`: Current deployment state (see below)
+- `lastDeployedHash`: Fingerprint of the chart, values, and patches at which the service was most recently confirmed `Deployed`. Guaranteed non-empty whenever `state` is `Deployed`. Helm services only.
 - `failureMessage`: Error message if state is `Failed`
 - `lastStateTransitionTime`: When the state last changed
+- `conditions`: Per-service health conditions written by the verifier (see [Health conditions](#health-conditions) below).
 
 ### Service States
 
 - **`Pending`**: Service is waiting (e.g., for dependencies to be satisfied)
-- **`Provisioning`**: Service is currently being deployed
-- **`Deployed`**: Service successfully deployed and running
+- **`Provisioning`**: Service is currently being deployed, OR the verifier detected that the resources deployed by the service are not yet healthy on the child cluster. Which of the two is the case can be told from the presence of `ServiceHealth<Kind>` entries in `conditions[]` — see [Health conditions](#health-conditions) below.
+- **`Deployed`**: Service successfully deployed and verified running on the child cluster. For Helm services this state implies a non-empty `lastDeployedHash`.
 - **`Failed`**: Service deployment failed (check `failureMessage`)
 - **`Deleting`**: Service is being removed
+
+### Health conditions
+
+For Helm services, the verifier evaluates on-cluster resources (Deployments, Pods, PersistentVolumeClaims, and others) against CEL health rules. When unhealthy resources are found, one `ServiceHealth<Kind>` condition is added to the service, aggregating the unhealthy references for that Kind:
+
+```yaml
+services:
+  - name: podinfo
+    namespace: podinfo
+    state: Provisioning
+    conditions:
+      - type: ServiceHealthDeployment
+        status: "False"
+        reason: DeploymentUnhealthy
+        message: "1 Deployment unhealthy: podinfo/podinfo (0/1 replicas ready, 1 updated, rule kcm-system/kcm-default-health-rules#0)"
+      - type: ServiceHealthPod
+        status: "False"
+        reason: PodUnhealthy
+        message: "1 Pod unhealthy: podinfo/podinfo-d959ff8fc-2sw84 (podinfo: not ready, rule kcm-system/kcm-default-health-rules#3)"
+```
+
+Conditions clear automatically once the underlying resources become healthy. See [Service State Verification](../../admin/ksm/ksm-service-state-verification.md) for how the verifier decides what "healthy" means and how to author custom rules.
 
 ## ClusterDeployment Status Example
 
