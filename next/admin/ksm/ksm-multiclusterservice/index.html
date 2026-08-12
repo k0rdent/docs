@@ -1630,6 +1630,8 @@
       
         
       
+        
+      
     
     
     
@@ -1722,6 +1724,27 @@
   
   <span class="md-ellipsis">
     Build-Your-Own Provider
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksm-service-state-verification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Service State Verification
   </span>
   
 
@@ -5786,6 +5809,7 @@ If <code>priority</code> values are equal, the first one to reach the cluster wi
 <span class="w">            </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
 </code></pre></div>
 <p>In this example, for all matching clusters, <code>ingress-nginx</code> and <code>postgres-operators</code> defined by <code>mcs2</code> will not be deployed until <code>cert-manager</code> defined by <code>mcs1</code> has been successfully deployed.</p>
+<p>Both <code>dependsOn</code> between services within a <code>ClusterDeployment</code>/<code>MultiClusterService</code> and sequential upgrades through a <code>ServiceTemplateChain</code> gate on the service reaching <code>state == Deployed</code>. That state reflects the verifier's confirmation that the workload is actually healthy on the child cluster, not merely that Sveltos accepted the release. Dependent services and next chain steps advance only after the current service is verified. See <a href="../ksm-service-state-verification/">Service State Verification</a> for the mechanics.</p>
 <h3 id="keeping-services-on-selector-mismatch">Keeping Services on Selector Mismatch<a class="headerlink" href="#keeping-services-on-selector-mismatch" title="Permanent link">#</a></h3>
 <p>By default, when a cluster's labels no longer match a <code>MultiClusterService</code>'s <code>clusterSelector</code> (or the selector is cleared), the services previously deployed on that cluster by this MCS are removed.</p>
 <p>Setting <code>.spec.keepServicesOnSelectorMismatch: true</code> preserves those services on clusters that fall out of the selector. This is useful for per-cluster opt-in rollouts: you can remove a cluster from the selector without tearing down its services, allowing manual control over which clusters adopt new service versions.</p>
