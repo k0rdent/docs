@@ -1,0 +1,359 @@
+# .github/workflows/shared-ci.yml
+#
+# Builds the documentation for ONE branch and publishes it into the gh-pages
+# branch using mike (a versioning wrapper around mkdocs).
+#
+# This workflow never runs on its own. It is called by:
+#   * ci-caller.yml   - lives in every buildable branch, runs on push, and passes
+#                       the branch that was pushed
+#   * rebuild-all.yml - manual full rebuild, calls this once per branch
+#
+# HOW THE DOCUMENTATION SITE IS LAID OUT
+#
+#   gh-pages branch                  what it is
+#   ---------------                  ----------
+#   next/                            docs built from the main branch
+#   v1.9.0/, v1.10.0/, ...           docs built from each release-vX.Y.Z branch
+#   latest/, stable/                 copies of the highest release version
+#   index.html                       redirect that sends "/" to latest/
+#   versions.json                    mike's index of everything above
+#   .nojekyll                        tells GitHub not to run Jekyll over the site
+#
+# HOW IT REACHES THE WEB
+#
+# This workflow only pushes to the gh-pages branch. It does NOT publish the
+# site. GitHub Pages is configured to "Deploy from a branch" (gh-pages), so
+# GitHub's own built-in "pages build and deployment" workflow notices the push
+# and copies the branch to the web server. That built-in workflow is not in this
+# repository and needs no configuration here.
+#
+# One thing that surprises people: GitHub normally refuses to trigger workflows
+# from pushes made with the automatic GITHUB_TOKEN, to prevent runaway loops.
+# Pages builds are exempt, so mike's push really does publish the site.
+
+name: Individual Branch CI
+
+on:
+  # workflow_call means "only another workflow may start this". There is no
+  # push or schedule trigger here on purpose - the caller decides what to build.
+  workflow_call:
+    inputs:
+      branch:
+        description: "Branch whose documentation should be deployed"
+        # Required, so a caller that forgets it fails immediately with a clear
+        # error instead of quietly building the wrong branch.
+        required: true
+        type: string
+
+# Every run of this workflow writes to the same gh-pages branch, so only one may
+# run at a time or they would overwrite each other's commits.
+#
+# The group name is a fixed string rather than something per-branch, so ALL
+# callers share the single lane: a push to main and a twelve-branch full rebuild
+# all queue behind one another.
+#
+# "queue: max" means extra runs WAIT their turn. The alternative GitHub
+# behaviour is to cancel the ones already running, which would abandon deploys
+# half-finished.
+concurrency:
+  group: docs-deployment
+  queue: max
+
+# Permissions for the automatic GITHUB_TOKEN.
+#
+# "contents: write" is what lets mike push commits to the gh-pages branch, and
+# it is the only permission needed. Naming any permission here sets every
+# permission not named to "none", so this is the complete list, not an addition
+# to some default.
+#
+# Note that a called workflow can never be granted MORE than its caller allows.
+# If this list asks for something ci-caller.yml does not grant, the run fails
+# before any step executes.
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # The branch name is put into an environment variable, and the shell steps
+    # below read that variable. This is deliberate and worth preserving.
+    #
+    # If the steps instead wrote the value directly into the script text, a
+    # branch whose name contained shell characters could run arbitrary commands
+    # inside this job. Passing it as an environment variable means the shell
+    # only ever sees it as data.
+    env:
+      SOURCE_BRANCH: ${{ inputs.branch }}
+
+    steps:
+      # ------------------------------------------------------------------
+      # Reject anything that is not a branch we know how to build.
+      #
+      # This check matters because rebuild-all.yml discovers branches with a
+      # loose wildcard (release-v*) and passes whatever it finds. A branch named
+      # something like "release-v-whoa-baby" arrives here and is stopped now,
+      # before any checkout or build work happens. It fails only its own run;
+      # other branches in a full rebuild are unaffected.
+      #
+      # If you change the accepted names here, also update the "== main" test in
+      # the deploy step further down - both have to agree on what main is.
+      # ------------------------------------------------------------------
+      - name: Validate branch name 
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Accepted: exactly "main", or "release-v" followed by three
+          # dot-separated numbers, and nothing else before or after.
+          if ! [[ "$SOURCE_BRANCH" =~ ^(main|release-v[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "ERROR: '$SOURCE_BRANCH' is not main or a valid release-vX.Y.Z branch."
+            exit 1
+          fi
+
+          echo "Branch name accepted: $SOURCE_BRANCH"
+
+      # ------------------------------------------------------------------
+      # Check out the branch we were asked to build.
+      #
+      # DO NOT reduce fetch-depth. It is not here for history.
+      #
+      # fetch-depth: 0 makes the checkout fetch every branch from the remote,
+      # which is the only reason the deploy step can look at origin/gh-pages to
+      # find out which versions are already published. With the default depth of
+      # 1, only this one branch is fetched, origin/gh-pages would not exist
+      # locally, and the deploy step would conclude that nothing has ever been
+      # published - handing the "latest" aliases to every release it builds.
+      # ------------------------------------------------------------------
+      - name: Checkout source branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.SOURCE_BRANCH }}
+          fetch-depth: 0
+
+      # ------------------------------------------------------------------
+      # mike creates git commits on the gh-pages branch, and git refuses to
+      # commit without an author. These are the standard bot identity values.
+      # ------------------------------------------------------------------
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          # "3.x" means "newest Python 3", so this can change without warning.
+          python-version: "3.x"
+          cache: pip
+
+      # ------------------------------------------------------------------
+      # Install mkdocs, mike, and the theme and plugins the docs need.
+      # ------------------------------------------------------------------
+      - name: Install dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python -m pip install --upgrade pip
+
+          # Fail with a readable message rather than a confusing pip error if
+          # the branch is missing its requirements file.
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          else
+            echo "ERROR: requirements.txt was not found."
+            exit 1
+          fi
+
+      # ------------------------------------------------------------------
+      # Print the tool versions actually installed.
+      #
+      # This looks like clutter but earns its place: the Python version above is
+      # "newest 3.x" and at least one entry in requirements.txt has no pinned
+      # version, so the toolchain can change between two runs of identical
+      # source. When a build breaks for no apparent reason, this is the first
+      # place to look.
+      # ------------------------------------------------------------------
+      - name: Show installed versions
+        run: |
+          python --version
+          mike --version
+          mkdocs --version
+
+      # ------------------------------------------------------------------
+      # Build the docs and publish them into gh-pages.
+      #
+      # There are exactly three outcomes:
+      #
+      #   main                        -> build into next/, no aliases
+      #   a release, not the highest  -> build into vX.Y.Z/, no aliases
+      #   a release, the highest      -> build into vX.Y.Z/ and point the
+      #                                  latest/ and stable/ aliases at it,
+      #                                  and make "/" redirect there
+      #
+      # ABOUT TITLES
+      #
+      # A "title" is the label mike shows in the version dropdown on the site.
+      # Here every version's title is left at mike's default, which is simply
+      # the version's own name ("v1.10.0", "next").
+      #
+      # This is a deliberate decision. It is tempting to title the newest
+      # release "v1.10.0 (latest)" so readers can see which one it is. Don't.
+      # mike moves aliases between versions automatically, but it never edits
+      # the title stored for some other version. The moment a newer release
+      # arrives, the old one would still be labelled "(latest)" and something
+      # would have to go back and rewrite it - which means extra commits, extra
+      # pushes, and hand-editing mike's own metadata file. Leaving titles alone
+      # means nothing ever needs correcting. Which version is newest is carried
+      # by the aliases and the redirect at "/" instead.
+      # ------------------------------------------------------------------
+      - name: Deploy documentation
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # ----------------------------------------------------------------
+          # Case 1: the main branch.
+          #
+          # main holds work in progress, so it is published as "next" and is
+          # never a candidate for latest/stable. Naming it "next" rather than
+          # "main" also keeps it out of the version comparison further down,
+          # because "next" cannot match the vX.Y.Z pattern.
+          #
+          # Nothing after this block applies to main, so the script stops here.
+          # ----------------------------------------------------------------
+          if [[ "$SOURCE_BRANCH" == main ]]; then
+
+            echo "Deploying $SOURCE_BRANCH as next"
+
+            mike deploy --push next
+
+            exit 0
+
+          fi
+
+          # ----------------------------------------------------------------
+          # Case 2 and 3: a release branch.
+          #
+          # Turn the branch name into the version name by removing the
+          # "release-" prefix, so release-v1.10.0 publishes into v1.10.0/.
+          # ----------------------------------------------------------------
+          VERSION="${SOURCE_BRANCH#release-}"
+
+          echo "Deploying release branch: $SOURCE_BRANCH as $VERSION"
+
+          # ----------------------------------------------------------------
+          # Find out which versions are already published.
+          #
+          # mike records them in versions.json at the root of gh-pages, so read
+          # that file straight out of the branch without checking it out.
+          #
+          # Read origin/gh-pages, not gh-pages. Before mike has run there is no
+          # local gh-pages branch at all - only the copy of the remote branch
+          # fetched during checkout.
+          #
+          # gh-pages may also not exist yet. mike creates it, along with
+          # versions.json and the redirect page, on its very first deploy. So a
+          # missing branch or a missing file is normal on a new repository and
+          # simply means nothing has been published yet.
+          #
+          # The filter keeps only names shaped like v1.2.3, which is what
+          # excludes "next" from ever being treated as a release.
+          # ----------------------------------------------------------------
+          EXISTING_VERSIONS=""
+
+          if git rev-parse --verify --quiet refs/remotes/origin/gh-pages >/dev/null; then
+            EXISTING_VERSIONS="$(
+              git show origin/gh-pages:versions.json 2>/dev/null |
+              jq -r '
+                .[]
+                | .version
+                | select(test("^v[0-9]+\\.[0-9]+\\.[0-9]+$"))
+              ' || true
+            )"
+          else
+            echo "No gh-pages branch yet; this deploy will create it."
+          fi
+
+          echo "Published versions:"
+          printf '%s\n' "$EXISTING_VERSIONS"
+
+          # ----------------------------------------------------------------
+          # Work out whether the version being built is the highest one.
+          #
+          # The comparison list is everything already published PLUS the version
+          # being built right now. Including the current one is what allows this
+          # decision to be made BEFORE deploying anything. An earlier version of
+          # this workflow deployed first and then asked the published site
+          # whether it had just become the newest, which forced it to deploy a
+          # second time to correct itself.
+          #
+          # "sort -V" is version sorting, and the -V is essential: it knows that
+          # 1.10 is higher than 1.9. Ordinary sort compares the text character by
+          # character and would decide 1.9 is higher, handing latest/ to an old
+          # release.
+          #
+          # Because the answer depends only on version numbers and never on when
+          # a run happens, branches can be rebuilt in any order. Rebuilding an
+          # old release cannot take the aliases away from a newer one, even
+          # though it is the most recent thing deployed.
+          # ----------------------------------------------------------------
+          LATEST_VERSION="$(
+            {
+              printf '%s\n' "$EXISTING_VERSIONS"
+              printf '%s\n' "$VERSION"
+            } |
+            sed '/^$/d' |
+            sort -V |
+            tail -n 1
+          )"
+
+          echo "Current version: $VERSION"
+          echo "Highest version: $LATEST_VERSION"
+
+          if [[ "$VERSION" == "$LATEST_VERSION" ]]; then
+
+            # --------------------------------------------------------------
+            # Case 3: this is the newest release.
+            #
+            # Publish it and point latest/ and stable/ at it in one step.
+            #
+            #   --update-aliases  lets those two names be moved off whichever
+            #                     older version currently holds them; without it
+            #                     mike refuses to reassign an existing alias
+            #   --alias-type=copy writes latest/ and stable/ as real, complete
+            #                     copies of the site rather than redirect pages
+            # --------------------------------------------------------------
+            echo "Deploying $VERSION as latest and stable"
+
+            mike deploy \
+              --update-aliases \
+              --push \
+              --alias-type=copy \
+              "$VERSION" latest stable
+
+            # Write the redirect at the site root so that "/" sends visitors to
+            # latest/. This only changes anything the first time; afterwards the
+            # redirect already points at latest and mike makes no commit.
+            mike set-default --push latest
+
+          else
+
+            # --------------------------------------------------------------
+            # Case 2: a release, but an older one.
+            #
+            # Publish it into its own folder and nothing else. No aliases are
+            # passed, so latest/ and stable/ stay where they are, and the site
+            # root is left alone.
+            # --------------------------------------------------------------
+            echo "$VERSION is not the highest version; deploying without aliases"
+
+            mike deploy --push "$VERSION"
+
+          fi
+
+          # A note on what you will see in the log: if the rebuilt documentation
+          # is byte-for-byte identical to what is already published, mike prints
+          # "nothing changed in commit" and makes no commit. That is normal and
+          # not an error. It also means no push, and therefore no Pages build.
