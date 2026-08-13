@@ -1,0 +1,24 @@
+# .github/workflows/ci-caller.yml
+
+# This workflow exists in all release branches and calls the actual CI workflow that lives in the
+# main branch. This enables us to manage the actual CI workflow in one place.
+name: CI Caller
+
+on:
+  push:
+    branches:
+      - main
+      - "release-v*"
+
+# Ceiling for the called workflow's GITHUB_TOKEN. `contents: write` is what lets
+# mike push to gh-pages; everything else drops to `none` implicitly.
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    uses: k0rdent/docs/.github/workflows/shared-ci.yml@main
+    with:
+      # The branch that triggered this run. Identical text in every branch,
+      # so this file still needs no per-branch maintenance.
+      branch: ${{ github.ref_name }}
