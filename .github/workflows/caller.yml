@@ -1,0 +1,48 @@
+name: Deploy Docs Enqueuer
+
+on:
+  push:
+    branches:
+      - '**'  # Trigger on push to any branch (universal file)
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  enqueue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if this is a valid release branch
+        id: check
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          if ! [[ "$BRANCH" =~ ^(main|release-v[0-9]+(\.[0-9]+)*)$ ]]; then
+            echo "Branch $BRANCH is not a valid release branch. Exiting."
+            exit 0
+          fi
+          echo "Branch $BRANCH is valid, proceeding with enqueue."
+          echo "BRANCH_NAME=$BRANCH" >> "$GITHUB_OUTPUT"
+        
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Checkout the workflow-queue branch
+        uses: actions/checkout@v4
+        with:
+          ref: workflow-queue
+          fetch-depth: 0
+
+      - name: Add the branch name to the queue
+        run: |
+          BRANCH=${{ steps.check.outputs.BRANCH_NAME }}
+          touch queue.txt
+          echo "$BRANCH" >> queue.txt
+          git add queue.txt
+          git commit -m "Enqueue $BRANCH" || echo "No changes to commit."
+          git push origin workflow-queue
+          
