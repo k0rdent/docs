@@ -1,6 +1,11 @@
 site_name: Documentation
 site_description: Documentation for k0rdent.
 site_author: Mirantis, Inc.
+# Required for sitemap.xml to be generated with absolute page URLs. Material's
+# version selector fetches the target version's sitemap.xml to find the
+# equivalent page; without it the sitemap is empty and switching versions always
+# lands on the home page. mike rewrites this per version (site_url + version).
+site_url: https://docs.k0rdent.io/
 
 docs_dir: docs/
 repo_name: k0rdent/kcm
