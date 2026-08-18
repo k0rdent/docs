@@ -5700,48 +5700,48 @@
 <span class="nt">clusterNetwork</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pods</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">cidrBlocks</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;10.244.0.0/16&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"10.244.0.0/16"</span>
 <span class="w">  </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">cidrBlocks</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;10.96.0.0/12&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"10.96.0.0/12"</span>
 
 <span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="nt">clusterAnnotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 
-<span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="nt">publicIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">bastion</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">disableIngressRules</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">allowedCIDRBlocks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 <span class="w">  </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t2.micro</span>
-<span class="w">  </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="nt">clusterIdentity</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AWSClusterStaticIdentity&quot;</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"AWSClusterStaticIdentity"</span>
 
 <span class="nt">controlPlane</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">iamInstanceProfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane.cluster-api-provider-aws.sigs.k8s.io</span>
-<span class="w">  </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <span class="w">  </span><span class="nt">imageLookup</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amzn2-ami-hvm*-gp2&quot;</span>
-<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;137112412989&quot;</span>
-<span class="w">    </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"amzn2-ami-hvm*-gp2"</span>
+<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"137112412989"</span>
+<span class="w">    </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">uncompressedUserData</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">nonRootVolumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 
 <span class="nt">worker</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">iamInstanceProfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane.cluster-api-provider-aws.sigs.k8s.io</span>
-<span class="w">  </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <span class="w">  </span><span class="nt">imageLookup</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;amzn2-ami-hvm*-gp2&quot;</span>
-<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;137112412989&quot;</span>
-<span class="w">    </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">"amzn2-ami-hvm*-gp2"</span>
+<span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"137112412989"</span>
+<span class="w">    </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">uncompressedUserData</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">nonRootVolumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 
@@ -5766,10 +5766,10 @@
 <div class="highlight"><pre><span></span><code><span class="nt">k0s</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.32.6+k0s.0</span>
 <span class="w">  </span><span class="nt">cpArgs</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--enable-worker&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--enable-calico&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--enable-worker"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--enable-calico"</span><span class="w"> </span>
 <span class="w">  </span><span class="nt">workerArgs</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--labels=network=calico&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--labels=network=calico"</span>
 </code></pre></div>
 <h3 id="4-package-and-upload">4. Package and upload<a class="headerlink" href="#4-package-and-upload" title="Permanent link">#</a></h3>
 <p>Once modified, package the chart:</p>
@@ -5788,7 +5788,7 @@
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-repo</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-ottowa</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci://registry.example.com/templates</span>
 <span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci</span>

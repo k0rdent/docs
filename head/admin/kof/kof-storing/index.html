@@ -5632,8 +5632,8 @@ for all regional clusters.</p>
 <p>To allow child clusters to communicate with the management cluster,
 use the following values during the Istio installation or upgrade:</p>
 <div class="highlight"><pre><span></span><code>--set managementCluster.includeInMesh=true \
---set managementCluster.apiServer=&quot;https://EXAMPLE-control-plane:6443&quot; \
---set-json &#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;mothership-vmauth.kof.svc.cluster.local&quot;]}&#39;
+--set managementCluster.apiServer="https://EXAMPLE-control-plane:6443" \
+--set-json 'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["mothership-vmauth.kof.svc.cluster.local"]}'
 </code></pre></div>
 <ul>
 <li>With <code>managementCluster.includeInMesh</code> the management cluster itself is enrolled as a mesh member.
@@ -5706,7 +5706,7 @@ and merge this to <code>kof-values.yaml</code>:</p>
 <summary>Apply the workaround for <a href="https://github.com/k0rdent/kcm/issues/2677">k0rdent/kcm issue #2677</a>:</summary>
 <p>Either <code>helm upgrade</code> KCM with <code>--set regional.cert-manager.config.enableGatewayAPI=true</code></p>
 <p>or patch it with:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>mgmt<span class="w"> </span>kcm<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;core&quot;:{&quot;kcm&quot;:{&quot;config&quot;:{&quot;regional&quot;:{&quot;cert-manager&quot;:{&quot;config&quot;:{&quot;enableGatewayAPI&quot;:true}}}}}}}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>mgmt<span class="w"> </span>kcm<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"core":{"kcm":{"config":{"regional":{"cert-manager":{"config":{"enableGatewayAPI":true}}}}}}}}'</span>
 </code></pre></div>
 </details>
 </li>
@@ -5759,22 +5759,22 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">      </span><span class="nt">victoria-traces-cluster</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">vtstorage</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">extraArgs</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">            </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"30d"</span>
 <span class="w">          </span><span class="nt">persistentVolume</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
-<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">            </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">"100Gi"</span>
 <span class="w">      </span><span class="nt">victoriametrics</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">vlcluster_audit</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">vlstorage</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1y&quot;</span>
+<span class="w">              </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"1y"</span>
 <span class="w">              </span><span class="nt">storage</span><span class="p">:</span>
 <span class="w">                </span><span class="nt">volumeClaimTemplate</span><span class="p">:</span>
 <span class="w">                  </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">                    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
 <span class="w">                    </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">                      </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">                        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">                        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">"100Gi"</span>
 </code></pre></div>
 <p>To disable the audit logs cluster entirely, set <code>vlcluster_audit.enabled: false</code>
 under <code>kof-storage.values</code>.</p>
@@ -5950,9 +5950,9 @@ e.g. when testing with <a href="https://kind.sigs.k8s.io/">kind</a>, merge this:
 <span class="w">  </span>--limit<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
     Example of the output:
-    <div class="highlight"><pre><span></span><code>{&quot;events&quot;: [{
-  &quot;timestamp&quot;: 1744305535107,
-  &quot;message&quot;: &quot;{\&quot;body\&quot;:\&quot;10.244.0.1 - - [10/Apr/2025 17:18:55] \\\&quot;GET /-/ready HTTP/1.1 200 ...
+    <div class="highlight"><pre><span></span><code>{"events": [{
+  "timestamp": 1744305535107,
+  "message": "{\"body\":\"10.244.0.1 - - [10/Apr/2025 17:18:55] \\\"GET /-/ready HTTP/1.1 200 ...
 </code></pre></div></p>
 </li>
 </ol>
@@ -5972,19 +5972,19 @@ such as <a href="https://aws.amazon.com/athena/">Amazon Athena</a>, <a href="htt
 <li>
 <p>Create AWS IAM user with the next minimal inline policy:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColdStorageExporterObjects&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:AbortMultipartUpload&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::cold-bucket/*&quot;</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ColdStorageExporterObjects"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"s3:PutObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:GetObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:AbortMultipartUpload"</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:s3:::cold-bucket/*"</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ColdStorageExporterBucket&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::cold-bucket&quot;</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ColdStorageExporterBucket"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3:ListBucket"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:s3:::cold-bucket"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
@@ -6008,7 +6008,7 @@ S3_SECRET_KEY=REDACTED
 <li>
 <p>Create the <code>cold-values.yaml</code> file,
     for example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;metrics,logs,traces&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="s">"metrics,logs,traces"</span>
 <span class="nt">s3</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cold-bucket</span>
 <span class="w">  </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
@@ -6041,9 +6041,9 @@ for custom cases.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>job-name<span class="o">=</span>cold-storage-exporter-manual<span class="w"> </span>-f
 </code></pre></div>
 <p>Log example:</p>
-<div class="highlight"><pre><span></span><code>{...&quot;msg&quot;:&quot;streaming parquet to S3&quot;,
-&quot;key&quot;:&quot;telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
-metrics/metrics.parquet&quot;}
+<div class="highlight"><pre><span></span><code>{..."msg":"streaming parquet to S3",
+"key":"telemetry/tenant=default/cluster=mothership/dt=2026-06-29/hour=17/
+metrics/metrics.parquet"}
 </code></pre></div>
 </li>
 <li>
@@ -6083,19 +6083,19 @@ as it makes it easier to clean up test data.</p>
 <li>
 <p>Create AWS IAM user with the next minimal inline policy:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AuditLogsExporterObjects&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;s3:AbortMultipartUpload&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::audit-bucket/*&quot;</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AuditLogsExporterObjects"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"s3:PutObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:GetObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:AbortMultipartUpload"</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:s3:::audit-bucket/*"</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AuditLogsExporterBucket&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::audit-bucket&quot;</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AuditLogsExporterBucket"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s3:ListBucket"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:s3:::audit-bucket"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
@@ -6151,14 +6151,14 @@ for custom cases.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>-l<span class="w"> </span>job-name<span class="o">=</span>audit-logs-exporter-manual<span class="w"> </span>-f
 </code></pre></div>
 <p>Log example:</p>
-<div class="highlight"><pre><span></span><code>{...&quot;msg&quot;:&quot;uploading manifest signature&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,
-&quot;key&quot;:&quot;audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig&quot;}
+<div class="highlight"><pre><span></span><code>{..."msg":"uploading manifest signature","stream":"platform-audit-log","tenant":"PLATFORM","window":"2026-06-30T14:00Z",
+"key":"audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json.sig"}
 
-{...&quot;msg&quot;:&quot;uploading manifest&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,
-&quot;key&quot;:&quot;audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json&quot;}
+{..."msg":"uploading manifest","stream":"platform-audit-log","tenant":"PLATFORM","window":"2026-06-30T14:00Z",
+"key":"audit/platform-audit-log/PLATFORM/2026/06/30/14/manifest.json"}
 
-{...&quot;msg&quot;:&quot;window exported successfully&quot;,&quot;stream&quot;:&quot;platform-audit-log&quot;,&quot;tenant&quot;:&quot;PLATFORM&quot;,
-&quot;window&quot;:&quot;2026-06-30T14:00Z&quot;,&quot;events&quot;:4638,&quot;size_bytes&quot;:360767}
+{..."msg":"window exported successfully","stream":"platform-audit-log","tenant":"PLATFORM",
+"window":"2026-06-30T14:00Z","events":4638,"size_bytes":360767}
 </code></pre></div>
 </li>
 <li>

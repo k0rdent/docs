@@ -5529,58 +5529,58 @@ For instance built-in adapter which relies on ProjectSveltos API, supports the f
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">provider</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">      </span><span class="c1"># &quot;syncMode&quot; specifies how features are synced in a matching workload cluster.</span>
+<span class="w">      </span><span class="c1"># "syncMode" specifies how features are synced in a matching workload cluster.</span>
 <span class="w">      </span><span class="c1"># - OneTime means, first time a workload cluster matches the ClusterProfile,</span>
 <span class="w">      </span><span class="c1"># features will be deployed in such cluster. Any subsequent feature configuration</span>
-<span class="w">      </span><span class="c1"># change won&#39;t be applied into the matching workload clusters;</span>
+<span class="w">      </span><span class="c1"># change won't be applied into the matching workload clusters;</span>
 <span class="w">      </span><span class="c1"># - Continuous mode ensures that the first time a workload cluster matches a ClusterProfile,</span>
 <span class="w">      </span><span class="c1"># the specified features are deployed. Subsequent changes to the feature configuration are also</span>
 <span class="w">      </span><span class="c1"># automatically applied to all matching workload clusters.</span>
 <span class="w">      </span><span class="c1"># _ SyncModeContinuousWithDriftDetection operates similarly to Continuous mode, but also monitors</span>
 <span class="w">      </span><span class="c1"># matching managed clusters for configuration drift. If drift is detected, a reconciliation is</span>
-<span class="w">      </span><span class="c1"># triggered to ensure the managed cluster&#39;s configuration aligns with the ClusterProfile.</span>
+<span class="w">      </span><span class="c1"># triggered to ensure the managed cluster's configuration aligns with the ClusterProfile.</span>
 <span class="w">      </span><span class="c1"># - DryRun means no change will be propagated to any matching cluster. A report</span>
 <span class="w">      </span><span class="c1"># instead will be generated summarizing what would happen in any matching cluster</span>
 <span class="w">      </span><span class="c1"># because of the changes made to ClusterProfile while in DryRun mode.</span>
 <span class="w">      </span><span class="nt">syncMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OneTime | Continuous | ContinuousWithDriftDetection | DryRun</span>
-<span class="w">      </span><span class="c1"># By default (when &quot;continueOnError&quot; is unset or set to false), Sveltos stops deployment after</span>
+<span class="w">      </span><span class="c1"># By default (when "continueOnError" is unset or set to false), Sveltos stops deployment after</span>
 <span class="w">      </span><span class="c1"># encountering the first error.</span>
 <span class="w">      </span><span class="c1"># If set to true, Sveltos will attempt to deploy remaining resources in the ClusterProfile even</span>
 <span class="w">      </span><span class="c1"># if errors are detected for previous resources.</span>
 <span class="w">      </span><span class="nt">continueOnError</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span>
-<span class="w">      </span><span class="c1"># When &quot;stopOnConflict&quot; is set to true, Sveltos stops deployment after</span>
+<span class="w">      </span><span class="c1"># When "stopOnConflict" is set to true, Sveltos stops deployment after</span>
 <span class="w">      </span><span class="c1"># encountering the first conflict (e.g., another ClusterProfile already deployed the resource).</span>
 <span class="w">      </span><span class="c1"># If set to true, Sveltos will attempt to deploy remaining resources in the ClusterProfile even</span>
 <span class="w">      </span><span class="c1"># if conflicts are detected for previous resources.</span>
 <span class="w">      </span><span class="nt">stopOnConflict</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span>
-<span class="w">      </span><span class="c1"># &quot;reload&quot; indicates whether Deployment/StatefulSet/DaemonSet instances deployed</span>
+<span class="w">      </span><span class="c1"># "reload" indicates whether Deployment/StatefulSet/DaemonSet instances deployed</span>
 <span class="w">      </span><span class="c1"># by Sveltos and part of Profile (or ClusterProfile) need to be restarted via rolling upgrade</span>
 <span class="w">      </span><span class="c1"># when a ConfigMap/Secret instance mounted as volume is modified.</span>
 <span class="w">      </span><span class="c1"># When set to true, when any mounted ConfigMap/Secret is modified, Sveltos automatically</span>
 <span class="w">      </span><span class="c1"># starts a rolling upgrade for Deployment/StatefulSet/DaemonSet instances mounting it.</span>
 <span class="w">      </span><span class="nt">reload</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span>
-<span class="w">      </span><span class="c1"># &quot;priority&quot; sets the priority for the services defined in this spec.</span>
+<span class="w">      </span><span class="c1"># "priority" sets the priority for the services defined in this spec.</span>
 <span class="w">      </span><span class="c1"># Higher value means higher priority and lower means lower.</span>
 <span class="w">      </span><span class="c1"># In case of conflict with another object managing the service,</span>
 <span class="w">      </span><span class="c1"># the one with higher priority will get to deploy its services.</span>
 <span class="w">      </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int32</span>
-<span class="w">      </span><span class="c1"># Define additional Kustomize inline &quot;patches&quot; applied for all resources on this profile</span>
+<span class="w">      </span><span class="c1"># Define additional Kustomize inline "patches" applied for all resources on this profile</span>
 <span class="w">      </span><span class="c1"># Within the Patch Spec you can use templating.</span>
 <span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/libsveltos/api/v1beta1.Patch]</span>
 <span class="w">      </span><span class="nt">patches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="c1"># &quot;driftExclusions&quot; is a list of configuration drift exclusions to be applied when syncMode is</span>
+<span class="w">      </span><span class="c1"># "driftExclusions" is a list of configuration drift exclusions to be applied when syncMode is</span>
 <span class="w">      </span><span class="c1"># set to ContinuousWithDriftDetection. Each exclusion specifies JSON6902 paths to ignore</span>
 <span class="w">      </span><span class="c1"># when evaluating drift, optionally targeting specific resources and features.</span>
 <span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/addon-controller/api/v1beta1.DriftExclusion]</span>
 <span class="w">      </span><span class="nt">driftExclusions</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="c1"># &quot;driftIgnore&quot; is a list of fields selectors to ignore when checking for drift.</span>
+<span class="w">      </span><span class="c1"># "driftIgnore" is a list of fields selectors to ignore when checking for drift.</span>
 <span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/libsveltos/api/v1beta1.PatchSelector]</span>
 <span class="w">      </span><span class="nt">driftIgnore</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="c1"># &quot;templateResourceRefs&quot; is a list of resources to collect from the management cluster,</span>
+<span class="w">      </span><span class="c1"># "templateResourceRefs" is a list of resources to collect from the management cluster,</span>
 <span class="w">      </span><span class="c1"># the values from which can be used in templates.</span>
 <span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/addon-controller/api/v1beta1.TemplateResourceRef]</span>
 <span class="w">      </span><span class="nt">templateResourceRefs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="c1"># &quot;policyRefs&quot; references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources</span>
+<span class="w">      </span><span class="c1"># "policyRefs" references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources</span>
 <span class="w">      </span><span class="c1"># that need to be deployed in the matching managed clusters.</span>
 <span class="w">      </span><span class="c1"># The values contained in those resources can be static or leverage Go templates for dynamic customization.</span>
 <span class="w">      </span><span class="c1"># When expressed as templates, the values are filled in using information from</span>

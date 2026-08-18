@@ -5457,12 +5457,12 @@ For existing installations, users need to manually enable the KubeVirt provider 
 <p>Patch the <code>Management</code> object and enable the <code>cluster-api-provider-kubevirt</code> provider by running:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>managements<span class="w"> </span>kcm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/spec/providers/-&quot;, &quot;value&quot;: {&quot;name&quot;: &quot;cluster-api-provider-kubevirt&quot;}}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op": "add", "path": "/spec/providers/-", "value": {"name": "cluster-api-provider-kubevirt"}}]'</span>
 </code></pre></div>
 </li>
 <li>
 <p>Wait for the <code>Management</code> object to be ready:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.components.cluster-api-provider-kubevirt.success}=true&#39;</span><span class="w"> </span>managements.k0rdent.mirantis.com/kcm
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.components.cluster-api-provider-kubevirt.success}=true'</span><span class="w"> </span>managements.k0rdent.mirantis.com/kcm
 </code></pre></div>
 </li>
 </ol>

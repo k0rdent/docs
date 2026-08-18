@@ -5756,7 +5756,7 @@ If you're working on a shared Azure account, please ensure that the Azure Cluste
 <h2 id="register-resource-providers">Register resource providers<a class="headerlink" href="#register-resource-providers" title="Permanent link">#</a></h2>
 <p>Azure Resource Manager uses resource providers to manage resources of all different kinds, and required providers must be registered with an Azure account before k0rdent and CAPZ can work with them.</p>
 <p>You can list resources registered with your account using Azure CLI:</p>
-<div class="highlight"><pre><span></span><code>az<span class="w"> </span>provider<span class="w"> </span>list<span class="w"> </span>--query<span class="w"> </span><span class="s2">&quot;[?registrationState==&#39;Registered&#39;]&quot;</span><span class="w"> </span>--output<span class="w"> </span>table
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>provider<span class="w"> </span>list<span class="w"> </span>--query<span class="w"> </span><span class="s2">"[?registrationState=='Registered']"</span><span class="w"> </span>--output<span class="w"> </span>table
 </code></pre></div>
 <p>And see a listing like this:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">Namespace                             RegistrationState</span>
@@ -5783,14 +5783,14 @@ az<span class="w"> </span>provider<span class="w"> </span>register<span class="w
 <p>The Subcription ID is in the second column.</p>
 <h2 id="create-a-service-principal-for-k0rdent">Create a Service Principal for k0rdent<a class="headerlink" href="#create-a-service-principal-for-k0rdent" title="Permanent link">#</a></h2>
 <p>The Service Principal is like a password-protected user that CAPZ will use to manage resources on Azure. To create it, run the following command with the Azure CLI, replacing <code>&lt;subscription-id&gt;</code> with the ID you copied earlier.</p>
-<div class="highlight"><pre><span></span><code>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--role<span class="w"> </span>contributor<span class="w"> </span>--scopes<span class="o">=</span><span class="s2">&quot;/subscriptions/&lt;subscription-id&gt;&quot;</span>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--role<span class="w"> </span>contributor<span class="w"> </span>--scopes<span class="o">=</span><span class="s2">"/subscriptions/&lt;subscription-id&gt;"</span>
 </code></pre></div>
 <p>You'll see output that resembles what's below:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go"> &quot;appId&quot;: &quot;SP_APP_ID_SP_APP_ID&quot;,</span>
-<span class="go"> &quot;displayName&quot;: &quot;azure-cli-2024-10-24-17-36-47&quot;,</span>
-<span class="go"> &quot;password&quot;: &quot;SP_PASSWORD_SP_PASSWORD&quot;,</span>
-<span class="go"> &quot;tenant&quot;: &quot;SP_TENANT_SP_TENANT&quot;</span>
+<span class="go"> "appId": "SP_APP_ID_SP_APP_ID",</span>
+<span class="go"> "displayName": "azure-cli-2024-10-24-17-36-47",</span>
+<span class="go"> "password": "SP_PASSWORD_SP_PASSWORD",</span>
+<span class="go"> "tenant": "SP_TENANT_SP_TENANT"</span>
 <span class="go">}</span>
 </code></pre></div>
 <p>Capture this output and secure the values it contains. We'll need several of these in a moment.</p>
@@ -5807,7 +5807,7 @@ The <code>Secret</code> name, in this case, needs to be exactly <code>azure-clus
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SP_PASSWORD_SP_PASSWORD</span><span class="w"> </span><span class="c1"># Password retrieved from the Service Principal</span>
 <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
@@ -5821,7 +5821,7 @@ For managed (AKS) clusters on Azure create the `Secret` with the `AZURE_CLIENT_I
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-aks-credential</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">AZURE_CLIENT_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;SP_APP_ID_SP_APP_ID&gt;</span><span class="w"> </span><span class="c1"># AppId retrieved from the Service Principal</span>
 <span class="w">  </span><span class="nt">AZURE_CLIENT_SECRET</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;SP_PASSWORD_SP_PASSWORD&gt;</span><span class="w"> </span><span class="c1"># Password retrieved from the Service Principal</span>
@@ -5850,8 +5850,8 @@ For managed (AKS) clusters on Azure create the `Secret` with the `AZURE_CLIENT_I
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">clusterctl.cluster.x-k8s.io/move-hierarchy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">clusterctl.cluster.x-k8s.io/move-hierarchy</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">allowedNamespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">  </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SP_APP_ID_SP_APP_ID</span><span class="w"> </span><span class="c1"># The App ID retrieved from the Service Principal above in Step 2</span>
@@ -5907,9 +5907,9 @@ Note: for AKS we also need to create Cluster Identity resource template ConfigMa
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-aks-credential-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 -->
 <p>Apply the YAML to your cluster:</p>
@@ -5932,19 +5932,19 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-c
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">configmap.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">{{- $cluster := .InfrastructureProvider -}}</span>
-<span class="w">    </span><span class="no">{{- $identity := (getResource &quot;InfrastructureProviderIdentity&quot;) -}}</span>
-<span class="w">    </span><span class="no">{{- $secret := (getResource &quot;InfrastructureProviderIdentitySecret&quot;) -}}</span>
-<span class="w">    </span><span class="no">{{- $subnetName := &quot;&quot; -}}</span>
-<span class="w">    </span><span class="no">{{- $securityGroupName := &quot;&quot; -}}</span>
-<span class="w">    </span><span class="no">{{- $routeTableName := &quot;&quot; -}}</span>
+<span class="w">    </span><span class="no">{{- $identity := (getResource "InfrastructureProviderIdentity") -}}</span>
+<span class="w">    </span><span class="no">{{- $secret := (getResource "InfrastructureProviderIdentitySecret") -}}</span>
+<span class="w">    </span><span class="no">{{- $subnetName := "" -}}</span>
+<span class="w">    </span><span class="no">{{- $securityGroupName := "" -}}</span>
+<span class="w">    </span><span class="no">{{- $routeTableName := "" -}}</span>
 <span class="w">    </span><span class="no">{{- range $cluster.spec.networkSpec.subnets -}}</span>
-<span class="w">      </span><span class="no">{{- if eq .role &quot;node&quot; -}}</span>
+<span class="w">      </span><span class="no">{{- if eq .role "node" -}}</span>
 <span class="w">        </span><span class="no">{{- $subnetName = .name -}}</span>
 <span class="w">        </span><span class="no">{{- $securityGroupName = .securityGroup.name -}}</span>
 <span class="w">        </span><span class="no">{{- $routeTableName = .routeTable.name -}}</span>
@@ -5952,25 +5952,25 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-c
 <span class="w">      </span><span class="no">{{- end -}}</span>
 <span class="w">    </span><span class="no">{{- end -}}</span>
 <span class="w">    </span><span class="no">{{- $cloudConfig := dict</span>
-<span class="w">      </span><span class="no">&quot;aadClientId&quot; $identity.spec.clientID</span>
-<span class="w">      </span><span class="no">&quot;aadClientSecret&quot; (index $secret.data &quot;clientSecret&quot; | b64dec)</span>
-<span class="w">      </span><span class="no">&quot;cloud&quot; $cluster.spec.azureEnvironment</span>
-<span class="w">      </span><span class="no">&quot;loadBalancerName&quot; &quot;&quot;</span>
-<span class="w">      </span><span class="no">&quot;loadBalancerSku&quot; &quot;Standard&quot;</span>
-<span class="w">      </span><span class="no">&quot;location&quot; $cluster.spec.location</span>
-<span class="w">      </span><span class="no">&quot;maximumLoadBalancerRuleCount&quot; 250</span>
-<span class="w">      </span><span class="no">&quot;resourceGroup&quot; $cluster.spec.resourceGroup</span>
-<span class="w">      </span><span class="no">&quot;routeTableName&quot; $routeTableName</span>
-<span class="w">      </span><span class="no">&quot;securityGroupName&quot; $securityGroupName</span>
-<span class="w">      </span><span class="no">&quot;securityGroupResourceGroup&quot; $cluster.spec.networkSpec.vnet.resourceGroup</span>
-<span class="w">      </span><span class="no">&quot;subnetName&quot; $subnetName</span>
-<span class="w">      </span><span class="no">&quot;subscriptionId&quot; $cluster.spec.subscriptionID</span>
-<span class="w">      </span><span class="no">&quot;tenantId&quot; $identity.spec.tenantID</span>
-<span class="w">      </span><span class="no">&quot;useInstanceMetadata&quot; true</span>
-<span class="w">      </span><span class="no">&quot;useManagedIdentityExtension&quot; false</span>
-<span class="w">      </span><span class="no">&quot;vmType&quot; &quot;vmss&quot;</span>
-<span class="w">      </span><span class="no">&quot;vnetName&quot; $cluster.spec.networkSpec.vnet.name</span>
-<span class="w">      </span><span class="no">&quot;vnetResourceGroup&quot; $cluster.spec.networkSpec.vnet.resourceGroup</span>
+<span class="w">      </span><span class="no">"aadClientId" $identity.spec.clientID</span>
+<span class="w">      </span><span class="no">"aadClientSecret" (index $secret.data "clientSecret" | b64dec)</span>
+<span class="w">      </span><span class="no">"cloud" $cluster.spec.azureEnvironment</span>
+<span class="w">      </span><span class="no">"loadBalancerName" ""</span>
+<span class="w">      </span><span class="no">"loadBalancerSku" "Standard"</span>
+<span class="w">      </span><span class="no">"location" $cluster.spec.location</span>
+<span class="w">      </span><span class="no">"maximumLoadBalancerRuleCount" 250</span>
+<span class="w">      </span><span class="no">"resourceGroup" $cluster.spec.resourceGroup</span>
+<span class="w">      </span><span class="no">"routeTableName" $routeTableName</span>
+<span class="w">      </span><span class="no">"securityGroupName" $securityGroupName</span>
+<span class="w">      </span><span class="no">"securityGroupResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup</span>
+<span class="w">      </span><span class="no">"subnetName" $subnetName</span>
+<span class="w">      </span><span class="no">"subscriptionId" $cluster.spec.subscriptionID</span>
+<span class="w">      </span><span class="no">"tenantId" $identity.spec.tenantID</span>
+<span class="w">      </span><span class="no">"useInstanceMetadata" true</span>
+<span class="w">      </span><span class="no">"useManagedIdentityExtension" false</span>
+<span class="w">      </span><span class="no">"vmType" "vmss"</span>
+<span class="w">      </span><span class="no">"vnetName" $cluster.spec.networkSpec.vnet.name</span>
+<span class="w">      </span><span class="no">"vnetResourceGroup" $cluster.spec.networkSpec.vnet.resourceGroup</span>
 <span class="w">    </span><span class="no">-}}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
@@ -5987,7 +5987,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-c
 <span class="w">    </span><span class="no">metadata:</span>
 <span class="w">      </span><span class="no">name: managed-csi</span>
 <span class="w">      </span><span class="no">annotations:</span>
-<span class="w">        </span><span class="no">storageclass.kubernetes.io/is-default-class: &quot;true&quot;</span>
+<span class="w">        </span><span class="no">storageclass.kubernetes.io/is-default-class: "true"</span>
 <span class="w">    </span><span class="no">provisioner: disk.csi.azure.com</span>
 <span class="w">    </span><span class="no">parameters:</span>
 <span class="w">      </span><span class="no">skuName: StandardSSD_LRS</span>
@@ -6049,7 +6049,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>azure-c
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AZURE_LOCATION&quot;</span><span class="w"> </span><span class="c1"># Select your desired Azure Location</span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">"AZURE_LOCATION"</span><span class="w"> </span><span class="c1"># Select your desired Azure Location</span>
 <span class="w">    </span><span class="nt">subscriptionID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SUBSCRIPTION_ID_SUBSCRIPTION_ID</span><span class="w"> </span><span class="c1"># Enter the Subscription ID used earlier</span>
 <span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">vmSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_A4_v2</span>
@@ -6070,7 +6070,7 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <span class="w">  </span><span class="nt">propagateCredentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># Should be set to `false`</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;westus&quot;</span><span class="w"> </span><span class="c1"># Select your desired Azure Location (find it via `az account list-locations -o table`)</span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">"westus"</span><span class="w"> </span><span class="c1"># Select your desired Azure Location (find it via `az account list-locations -o table`)</span>
 <span class="w">    </span><span class="nt">machinePools</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">system</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">vmSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_A4_v2</span>
@@ -6091,10 +6091,10 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 </code></pre></div>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
 <p>Now you can retrieve the cluster's <code>kubeconfig</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig.kubeconfig
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-azure-clusterdeployment1-kubeconfig.kubeconfig
 </code></pre></div>
 <p>And you can use the <code>kubeconfig</code> to see what's running on the cluster:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-azure-clusterdeployment1-kubeconfig.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-azure-clusterdeployment1-kubeconfig.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 <h2 id="list-child-clusters">List child clusters<a class="headerlink" href="#list-child-clusters" title="Permanent link">#</a></h2>
 <p>To verify the presence of the child cluster, list the available <code>ClusterDeployment</code> objects:</p>
@@ -6107,7 +6107,7 @@ For AKS clusters, the `ClusterDeployment` looks like this:
 <p>To tear down the child cluster, delete the <code>ClusterDeployment</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-azure-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-azure-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com "my-azure-clusterdeployment1" deleted</span>
 </code></pre></div></p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:</p>

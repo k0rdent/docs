@@ -5677,7 +5677,7 @@ you will not be able to increase storage size by using the values below.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">victoriametrics</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">vmcluster</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">spec</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"30d"</span>
 <span class="w">      </span><span class="nt">replicationFactor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">vminsert</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
@@ -5687,7 +5687,7 @@ you will not be able to increase storage size by using the values below.</p>
 <span class="w">        </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+<span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"8"</span>
 <span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000Mi</span>
 <span class="w">        </span><span class="nt">storage</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">volumeClaimTemplate</span><span class="p">:</span>
@@ -5695,7 +5695,7 @@ you will not be able to increase storage size by using the values below.</p>
 <span class="w">              </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
 <span class="w">              </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">                </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;200Gi&quot;</span>
+<span class="w">                  </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">"200Gi"</span>
 </code></pre></div>
 <p>Details: <a href="https://docs.victoriametrics.com/operator/api/#vmclusterspec">VMClusterSpec</a></p>
 <h3 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">#</a></h3>
@@ -5707,10 +5707,10 @@ you will not be able to increase storage size by using the values below.</p>
 <span class="w">  </span><span class="nt">vlstorage</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"30d"</span>
 <span class="w">    </span><span class="nt">persistentVolume</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
-<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">"100Gi"</span>
 </code></pre></div>
 <p>Details: <a href="https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-logs-cluster/values.yaml">Values of victoria-logs-cluster</a></p>
 <h3 id="audit-logs">Audit Logs<a class="headerlink" href="#audit-logs" title="Permanent link">#</a></h3>
@@ -5727,14 +5727,14 @@ separate from the regular logs cluster, to allow a longer retention period (defa
 <span class="w">        </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">vlstorage</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="w">        </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1y&quot;</span>
+<span class="w">        </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"1y"</span>
 <span class="w">        </span><span class="nt">storage</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">volumeClaimTemplate</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">spec</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
 <span class="w">              </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">                </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">                  </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="s">"100Gi"</span>
 </code></pre></div>
 <p>Details: <a href="https://docs.victoriametrics.com/operator/api/#vlclusterspec">VLClusterSpec</a></p>
 <p>To disable audit log <strong>storage</strong>, set <code>vlcluster_audit.enabled: false</code> in <code>kof-storage</code> values.</p>
@@ -5762,10 +5762,10 @@ receiver from the daemon collector pipeline:</p>
 <span class="w">  </span><span class="nt">vtstorage</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">extraArgs</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30d&quot;</span>
+<span class="w">      </span><span class="nt">retentionPeriod</span><span class="p">:</span><span class="w"> </span><span class="s">"30d"</span>
 <span class="w">    </span><span class="nt">persistentVolume</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;EXAMPLE_STORAGE_CLASS&gt;</span>
-<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gi&quot;</span>
+<span class="w">      </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="s">"100Gi"</span>
 </code></pre></div>
 <p>Details: <a href="https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-traces-cluster/values.yaml">Values of victoria-traces-cluster</a></p>
 <h2 id="places-to-customize">Places to customize<a class="headerlink" href="#places-to-customize" title="Permanent link">#</a></h2>

@@ -5750,7 +5750,7 @@ The <code>path</code> field in <code>.spec.helm.chartSource</code>, <code>.spec.
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-templates-repo</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
 <span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">generic</span>
@@ -5829,7 +5829,7 @@ To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-catalog</span>
 <span class="w">      </span><span class="c1"># path is optional; defaults to artifact root if omitted</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./charts/ingress-nginx&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./charts/ingress-nginx"</span>
 </code></pre></div>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
    <code>my-target-namespace</code> namespace.  It references the existing <code>GitRepository</code> object called
@@ -5850,7 +5850,7 @@ To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>
 <span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/path/to/charts</span>
 <span class="w">          </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
 <span class="w">        </span><span class="c1"># path is optional; defaults to artifact root if omitted</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./ingress-nginx&quot;</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./ingress-nginx"</span>
 </code></pre></div>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
    <code>my-target-namespace</code> namespace.  It defines the source of the Helm chart located in the
@@ -5862,13 +5862,13 @@ To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>
 <p>Semantic version of the application backed by the template. This field helps track which application version is deployed.</p>
 <p>Example:
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4.11.3&quot;</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"4.11.3"</span>
 </code></pre></div></p>
 <h4 id="speck8sconstraint"><code>.spec.k8sConstraint</code><a class="headerlink" href="#speck8sconstraint" title="Permanent link">#</a></h4>
 <p>Kubernetes version constraint in SemVer format describing compatible K8s versions for the target cluster.</p>
 <p>Example:
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">k8sConstraint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&gt;=1.28.0</span><span class="nv"> </span><span class="s">&lt;1.32.0&quot;</span>
+<span class="w">  </span><span class="nt">k8sConstraint</span><span class="p">:</span><span class="w"> </span><span class="s">"&gt;=1.28.0</span><span class="nv"> </span><span class="s">&lt;1.32.0"</span>
 </code></pre></div></p>
 <h4 id="spechelmoptions"><code>.spec.helmOptions</code><a class="headerlink" href="#spechelmoptions" title="Permanent link">#</a></h4>
 <p>Global Helm options applied when installing or updating the Helm chart. These options control the behavior of Helm operations.</p>
@@ -5943,7 +5943,7 @@ These global options can be overridden at the service level when deploying using
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-git-repo</span>
 <span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flux-system</span><span class="w">  </span><span class="c1"># Different namespace is OK</span>
 <span class="w">    </span><span class="c1"># path is optional; defaults to repository root</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./base&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./base"</span>
 </code></pre></div></p>
 <h3 id="remote-source-object-creation">Remote Source Object Creation<a class="headerlink" href="#remote-source-object-creation" title="Permanent link">#</a></h3>
 <p>When using <code>.spec.helm.chartSource.remoteSourceSpec</code>, <code>.spec.kustomize.remoteSourceSpec</code>, or <code>.spec.resources.remoteSourceSpec</code>, the controller automatically creates corresponding FluxCD source objects (GitRepository, Bucket, or OCIRepository).</p>
@@ -5993,7 +5993,7 @@ These global options can be overridden at the service level when deploying using
 <p>Example status:
 <div class="highlight"><pre><span></span><code><span class="nt">status</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">valid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">k8sConstraint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&gt;=1.28.0&quot;</span>
+<span class="w">  </span><span class="nt">k8sConstraint</span><span class="p">:</span><span class="w"> </span><span class="s">"&gt;=1.28.0"</span>
 <span class="w">  </span><span class="nt">sourceStatus</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-source</span>
@@ -6003,7 +6003,7 @@ These global options can be overridden at the service level when deploying using
 <span class="w">      </span><span class="nt">revision</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main@sha1:abc123def456</span>
 <span class="w">    </span><span class="nt">conditions</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ready</span>
-<span class="w">      </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;True&quot;</span>
+<span class="w">      </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">"True"</span>
 <span class="w">      </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Succeeded</span>
 <span class="w">    </span><span class="nt">observedGeneration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </code></pre></div></p>
@@ -6020,7 +6020,7 @@ These global options can be overridden at the service level when deploying using
 <ol>
 <li>
 <p>Check the <code>validationError</code> in status:
-   <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>servicetemplate<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.validationError}&#39;</span>
+   <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>servicetemplate<span class="w"> </span>&lt;name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.validationError}'</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -6066,7 +6066,7 @@ have the label <code>k0rdent.mirantis.com/managed: "true"</code>.</p>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-x</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
 <span class="w">    </span><span class="c1"># path is optional</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./base&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./base"</span>
 </code></pre></div>
 <p>Aside from flux sources, local <code>ConfigMap</code> or <code>Secret</code> object can be used as a source of the kustomization manifests. The <code>ServiceTemplate</code> definition will not differ
 from one in above, except the <code>.spec.kustomize.localSourceRef.kind</code> which should be set to respective object type. However, to use <code>ConfigMap</code> or <code>Secret</code> as a source, they must
@@ -6089,7 +6089,7 @@ embed archive with kustomization. After the archive was created, this can be don
 <span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
 <span class="w">    </span><span class="c1"># path is optional</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./overlays"</span>
 </code></pre></div>
 <p>When <code>.spec.kustomize.remoteSourceSpec</code> is defined, the controller will create corresponding object.</p>
 <h3 id="creating-raw-resources-based-servicetemplate">Creating Raw-Resources-based ServiceTemplate<a class="headerlink" href="#creating-raw-resources-based-servicetemplate" title="Permanent link">#</a></h3>
@@ -6140,7 +6140,7 @@ and the resources' manifests to be deployed must be inlined in the source's <cod
 <span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
 <span class="w">    </span><span class="c1"># path is optional</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./overlays"</span>
 </code></pre></div>
 <h3 id="deploying-application-with-servicetemplate">Deploying Application with ServiceTemplate<a class="headerlink" href="#deploying-application-with-servicetemplate" title="Permanent link">#</a></h3>
 <h4 id="create-a-servicetemplatechain">Create a <code>ServiceTemplateChain</code><a class="headerlink" href="#create-a-servicetemplatechain" title="Permanent link">#</a></h4>
@@ -6187,7 +6187,7 @@ when you create it, as in:</p>
 As you can see, you're simply referencing the template in the <code>.spec.serviceSpec.services[].template</code> field of the <code>ClusterDeployment</code>
 to tell k0rdent that you want this service to be part of this cluster.</p>
 <p>If you wanted to add this service to an existing cluster, you would simply patch the definition of the <code>ClusterDeployment</code>, as in:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment<span class="w"> </span>my-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>my-target-namespace<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;merge&#39;</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;serviceSpec&quot;:{&quot;services&quot;:[{&quot;template&quot;:&quot;project-ingress-nginx-4.11.3&quot;,&quot;name&quot;:&quot;ingress-nginx&quot;,&quot;namespace&quot;:&quot;my-target-namespace&quot;}]}}}&#39;</span>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment<span class="w"> </span>my-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>my-target-namespace<span class="w"> </span>--type<span class="o">=</span><span class="s1">'merge'</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"serviceSpec":{"services":[{"template":"project-ingress-nginx-4.11.3","name":"ingress-nginx","namespace":"my-target-namespace"}]}}}'</span>
 </code></pre></div>
 For more information on creating and using <code>ServiceTemplate</code> objects, see the <a href="../../../user/services/">User Guide</a>.</p>
 

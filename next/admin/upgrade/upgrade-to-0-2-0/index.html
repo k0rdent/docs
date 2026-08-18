@@ -5398,7 +5398,7 @@ and perform the additional manual steps outlined below:</p>
 <li>
 <p>Verify the new <code>Release</code> status</p>
 <p>Wait for the new <code>Release</code> to have <code>status.ready: true</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.ready}=true&#39;</span><span class="w"> </span>release/kcm-0-2-0
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.ready}=true'</span><span class="w"> </span>release/kcm-0-2-0
 </code></pre></div>
 </li>
 <li>

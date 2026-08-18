@@ -5650,7 +5650,7 @@ https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 <span class="s">                      key: GF_SECURITY_ADMIN_PASSWORD</span>
 <span class="s">                      name: grafana-admin-credentials</span>
 <span class="s">                - name: GF_INSTALL_PLUGINS</span>
-<span class="s">                  value: &quot;victoriametrics-logs-datasource 0.21.0,victoriametrics-metrics-datasource 0.19.4&quot;</span>
+<span class="s">                  value: "victoriametrics-logs-datasource 0.21.0,victoriametrics-metrics-datasource 0.19.4"</span>
 <span class="s">EOF</span>
 </code></pre></div></p>
 </li>
@@ -5658,15 +5658,15 @@ https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
     from <a href="https://github.com/k0rdent/kof/blob/v1.10.0/charts/kof-mothership/templates/grafana/grafana.yaml">this example</a>.</li>
 <li>Wait for Grafana installation to complete successfully:
     <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>grafana<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana-vm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--for<span class="o">=</span><span class="s1">&#39;jsonpath={.status.stage}=complete&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--for<span class="o">=</span><span class="s1">&#39;jsonpath={.status.stageStatus}=success&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--for<span class="o">=</span><span class="s1">'jsonpath={.status.stage}=complete'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--for<span class="o">=</span><span class="s1">'jsonpath={.status.stageStatus}=success'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--timeout<span class="o">=</span>5m
 </code></pre></div></li>
 <li>Get access to Grafana:
-    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana-admin-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;user&quot;: .data.GF_SECURITY_ADMIN_USER | @base64d,</span>
-<span class="s1">  &quot;pass&quot;: .data.GF_SECURITY_ADMIN_PASSWORD | @base64d</span>
-<span class="s1">}&#39;</span>
+    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana-admin-credentials<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "user": .data.GF_SECURITY_ADMIN_USER | @base64d,</span>
+<span class="s1">  "pass": .data.GF_SECURITY_ADMIN_PASSWORD | @base64d</span>
+<span class="s1">}'</span>
 
 kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>svc/grafana-vm-service<span class="w"> </span><span class="m">3000</span>:3000
 </code></pre></div></li>

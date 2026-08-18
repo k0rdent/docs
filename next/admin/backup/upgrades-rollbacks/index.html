@@ -5475,7 +5475,7 @@ can enable the automatic creation of backups before
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-backup</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+<span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span>
 <span class="w">  </span><span class="nt">performOnManagementUpgrade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>After the enablement, before each upgrade of <code>kcm</code> to a new version,
@@ -5516,8 +5516,8 @@ Please consider the <a href="../caveats/">restoration caveats</a> section before
 <span class="w">        </span><span class="no">groupResource: managements.k0rdent.mirantis.com</span>
 <span class="w">      </span><span class="no">patches:</span>
 <span class="w">      </span><span class="no">- operation: replace</span>
-<span class="w">        </span><span class="no">path: &quot;/spec/release&quot;</span>
-<span class="w">        </span><span class="no">value: &quot;&lt;version-before-upgrade&gt;&quot;</span>
+<span class="w">        </span><span class="no">path: "/spec/release"</span>
+<span class="w">        </span><span class="no">value: "&lt;version-before-upgrade&gt;"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patch-mgmt-spec-release</span>
@@ -5532,7 +5532,7 @@ Please consider the <a href="../caveats/">restoration caveats</a> section before
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
 <span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 <span class="w">  </span><span class="nt">resourceModifier</span><span class="p">:</span><span class="w"> </span><span class="c1"># propagate patches</span>
 <span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patch-mgmt-spec-release</span>

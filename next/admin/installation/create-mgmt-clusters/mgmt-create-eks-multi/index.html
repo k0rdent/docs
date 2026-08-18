@@ -5395,14 +5395,14 @@
 <li>
 <p>The basic AWS tools</p>
 <p>Start by installing and configuring the Amazon tools. First download and install the <code>aws</code> tool:</p>
-<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;awscliv2.zip&quot;</span>
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="s2">"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">"awscliv2.zip"</span>
 unzip<span class="w"> </span>awscliv2.zip
 sudo<span class="w"> </span>./aws/install
 </code></pre></div>
  Then configure it using environment variables:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_ACCESS_KEY_ID&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SECRET_ACCESS_KEY&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_SESSION_TOKEN&quot;</span>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s2">"EXAMPLE_ACCESS_KEY_ID"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s2">"EXAMPLE_SECRET_ACCESS_KEY"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span><span class="s2">"EXAMPLE_SESSION_TOKEN"</span>
 aws<span class="w"> </span>configure
 </code></pre></div>
  <div class="no-copy highlight"><pre><span></span><code><span class="go">AWS Access Key ID [EXAMPLE_ACCESS_KEY_ID]:</span>
@@ -5411,7 +5411,7 @@ aws<span class="w"> </span>configure
 <span class="go">Default output format [json]:</span>
 </code></pre></div>
  Once <code>aws</code> is installed you can install <code>eksctl</code>:</p>
-<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--silent<span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>xz<span class="w"> </span>-C<span class="w"> </span>/tmp
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--silent<span class="w"> </span>--location<span class="w"> </span><span class="s2">"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>xz<span class="w"> </span>-C<span class="w"> </span>/tmp
 sudo<span class="w"> </span>mv<span class="w"> </span>/tmp/eksctl<span class="w"> </span>/usr/local/bin
 eksctl<span class="w"> </span>version
 </code></pre></div>
@@ -5428,9 +5428,9 @@ eksctl<span class="w"> </span>version
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-05 22:26:02 [ℹ]  eksctl version 0.211.0</span>
 <span class="go">...</span>
-<span class="go">2025-03-05 22:36:14 [✔]  all EKS cluster resources for &quot;CLUSTER_NAME&quot; have been created</span>
-<span class="go">2025-03-05 22:36:15 [ℹ]  kubectl command should work with &quot;/home/username/.kube/config&quot;, try &#39;kubectl get nodes&#39;</span>
-<span class="go">2025-03-05 22:36:15 [✔]  EKS cluster &quot;CLUSTER_NAME&quot; in &quot;YOUR_AWS_REGION&quot; region is ready</span>
+<span class="go">2025-03-05 22:36:14 [✔]  all EKS cluster resources for "CLUSTER_NAME" have been created</span>
+<span class="go">2025-03-05 22:36:15 [ℹ]  kubectl command should work with "/home/username/.kube/config", try 'kubectl get nodes'</span>
+<span class="go">2025-03-05 22:36:15 [✔]  EKS cluster "CLUSTER_NAME" in "YOUR_AWS_REGION" region is ready</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -5442,12 +5442,12 @@ eksctl<span class="w"> </span>version
 --nodes<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 --nodes-min<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 --nodes-max<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
---node-labels<span class="w"> </span><span class="s2">&quot;role=control-plane&quot;</span><span class="w"> </span>
+--node-labels<span class="w"> </span><span class="s2">"role=control-plane"</span><span class="w"> </span>
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-05 22:57:15 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
-<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup &quot;JohnDoek0rdentcontroller-group&quot; will use &quot;&quot; [AmazonLinux2/1.31]</span>
+<span class="go">2025-03-05 22:57:18 [ℹ]  nodegroup "JohnDoek0rdentcontroller-group" will use "" [AmazonLinux2/1.31]</span>
 <span class="go">2025-03-05 22:57:19 [ℹ]  1 nodegroup (JohnDoek0rdentcontroller-group) was included (based on the include/exclude rules)</span>
-<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster &quot;JohnDoek0rdentControlCluster&quot;</span>
+<span class="go">2025-03-05 22:57:19 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "JohnDoek0rdentControlCluster"</span>
 <span class="go">...</span>
 <span class="go">2025-03-05 23:00:27 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
 </code></pre></div></p>
@@ -5459,7 +5459,7 @@ eksctl<span class="w"> </span>version
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg
 curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg
 sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/keyrings/kubernetes-apt-keyring.gpg<span class="w"> </span><span class="c1"># allow unprivileged APT programs to read this keyring</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list
+<span class="nb">echo</span><span class="w"> </span><span class="s1">'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list
 sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/sources.list.d/kubernetes.list<span class="w">   </span><span class="c1"># helps tools such as command-not-found to work correctly</span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>kubectl
@@ -5490,7 +5490,7 @@ For each node, go ahead and set the taint:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">node/nodename1.ca-central-1.compute.internal tainted</span>
 </code></pre></div>
 Now verify the taints:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>nodes<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;Taints:&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>nodes<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">"Taints:"</span>
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">Taints:             node-role.kubernetes.io/control-plane=true:NoSchedule</span>
 <span class="go">Unschedulable:      false</span>
@@ -5523,11 +5523,11 @@ Now verify the taints:
 --nodes<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 --nodes-min<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
 --nodes-max<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
---node-labels<span class="w"> </span><span class="s2">&quot;role=worker&quot;</span>
+--node-labels<span class="w"> </span><span class="s2">"role=worker"</span>
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">2025-03-06 03:10:48 [ℹ]  will use version 1.31 for new nodegroup(s) based on control plane version</span>
 <span class="go">...</span>
-<span class="go">2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster &quot;CLUSTER_NAME&quot;</span>
+<span class="go">2025-03-06 03:13:38 [✔]  created 1 managed nodegroup(s) in cluster "CLUSTER_NAME"</span>
 <span class="go">2025-03-06 03:13:39 [ℹ]  checking security group configuration for all nodegroups</span>
 <span class="go">2025-03-06 03:13:39 [ℹ]  all nodegroups have up-to-date cloudformation templates</span>
 </code></pre></div>
@@ -5555,7 +5555,7 @@ test-pod<span class="w">   </span><span class="m">1</span>/1<span class="w">    
 Clean up so you can start fresh:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>test-pod
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>pod<span class="w"> </span><span class="s2">&quot;test-pod&quot;</span><span class="w"> </span>deleted
+<div class="highlight"><pre><span></span><code>pod<span class="w"> </span><span class="s2">"test-pod"</span><span class="w"> </span>deleted
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
 </code></pre></div>

@@ -5678,11 +5678,11 @@ kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="
 <li>
 <p>Create the <code>azure.json</code> text file containing <a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file">the service principal configuration data</a>:
     <div class="highlight"><pre><span></span><code>{
-  &quot;tenantId&quot;: &quot;&lt;EXAMPLE_TENANT_ID&gt;&quot;,
-  &quot;subscriptionId&quot;: &quot;&lt;EXAMPLE_SUBSCRIPTION_ID&gt;&quot;,
-  &quot;resourceGroup&quot;: &quot;&lt;EXAMPLE_RESOURCE_GROUP&gt;&quot;,
-  &quot;aadClientId&quot;: &quot;&lt;EXAMPLE_SP_APP_ID&gt;&quot;,
-  &quot;aadClientSecret&quot;: &quot;&lt;EXAMPLE_SP_PASSWORD&gt;&quot;
+  "tenantId": "&lt;EXAMPLE_TENANT_ID&gt;",
+  "subscriptionId": "&lt;EXAMPLE_SUBSCRIPTION_ID&gt;",
+  "resourceGroup": "&lt;EXAMPLE_RESOURCE_GROUP&gt;",
+  "aadClientId": "&lt;EXAMPLE_SP_APP_ID&gt;",
+  "aadClientSecret": "&lt;EXAMPLE_SP_PASSWORD&gt;"
 }
 </code></pre></div></p>
 </li>
@@ -5733,10 +5733,10 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.6.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'</span>
 </code></pre></div>
 <p>Please use helm v3 until we fix <a href="https://github.com/k0rdent/istio/issues/40">k0rdent/istio issue #40</a>
 leading to <code>UPGRADE FAILED: conflict occurred...</code> when using helm v4.</p>
@@ -5794,7 +5794,7 @@ apply <a href="https://docs.k0sproject.io/stable/examples/openebs/">OpenEBS</a> 
 <span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div>
@@ -5808,7 +5808,7 @@ apply <a href="https://docs.k0sproject.io/stable/examples/openebs/">OpenEBS</a> 
 <span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
 </code></pre></div>
@@ -5822,7 +5822,7 @@ apply <a href="https://docs.k0sproject.io/stable/examples/openebs/">OpenEBS</a> 
 <span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">kof-openstack-dns-secrets</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-openstack-credentials</span>
 </code></pre></div>
@@ -5966,12 +5966,12 @@ apply this example for AWS, or use it as a reference:</p>
     <div class="highlight"><pre><span></span><code><span class="nv">REGION</span><span class="o">=</span>us-east-2
 <span class="nv">REGIONAL_CLUSTER_NAME</span><span class="o">=</span>aws-<span class="nv">$REGION</span>
 <span class="nv">ADMIN_EMAIL</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>config<span class="w"> </span>user.email<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REGION</span><span class="s2">, </span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REGION</span><span class="s2">, </span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">"</span>
 </code></pre></div></p>
 <p>If you have not applied the <a href="#istio">Istio</a> section,
 set the <code>REGIONAL_DOMAIN</code> too, using your own domain:
 <div class="highlight"><pre><span></span><code><span class="nv">REGIONAL_DOMAIN</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>.kof.example.com
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -6020,7 +6020,7 @@ set the <code>REGIONAL_DOMAIN</code> too, using your own domain:
 <details class="note">
 <summary>Azure</summary>
 <div class="highlight"><pre><span></span><code><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>account<span class="w"> </span>show<span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">"</span>
 
 cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
@@ -6110,17 +6110,17 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
     Examples by cloud provider:</p>
 <details class="note">
 <summary>AWS</summary>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 </details>
 <details class="note">
 <summary>Azure</summary>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 </details>
 <details class="note">
 <summary>OpenStack</summary>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-openstack-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>See also "OpenStack extra requirement for DNS auto-config" on step 10.</p>
 </details>
@@ -6135,7 +6135,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
   <div class="highlight"><pre><span></span><code><span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">k0rdent.mirantis.com/istio-role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">member</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/istio-gateway</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/istio-gateway</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -6205,11 +6205,11 @@ you may create a regional <code>ConfigMap</code> instead of a regional <code>Clu
 <span class="s">  regional_cluster_namespace: kcm-system</span>
 <span class="s">  regional_cluster_cloud: aws</span>
 <span class="s">  aws_region: $REGION</span>
-<span class="s">  azure_location: &quot;&quot;</span>
-<span class="s">  openstack_region: &quot;&quot;</span>
-<span class="s">  vsphere_datacenter: &quot;&quot;</span>
-<span class="s">  istio_role: &quot;&quot;</span>
-<span class="s">  kof_http_config: &quot;&quot;</span>
+<span class="s">  azure_location: ""</span>
+<span class="s">  openstack_region: ""</span>
+<span class="s">  vsphere_datacenter: ""</span>
+<span class="s">  istio_role: ""</span>
+<span class="s">  kof_http_config: ""</span>
 <span class="s">  write_metrics_endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write</span>
 <span class="s">  read_metrics_endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus</span>
 <span class="s">  write_logs_endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs</span>
@@ -6228,7 +6228,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> <
     add it to the <code>regional-cluster.yaml</code> file in the <code>.metadata.annotations</code>:</p>
 <details class="note">
 <summary>Custom http client configuration</summary>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-http-config</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{&quot;dial_timeout&quot;:</span><span class="nv"> </span><span class="s">&quot;10s&quot;,</span><span class="nv"> </span><span class="s">&quot;tls_config&quot;:</span><span class="nv"> </span><span class="s">{&quot;insecure_skip_verify&quot;:</span><span class="nv"> </span><span class="s">true}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-http-config</span><span class="p">:</span><span class="w"> </span><span class="s">'{"dial_timeout":</span><span class="nv"> </span><span class="s">"10s",</span><span class="nv"> </span><span class="s">"tls_config":</span><span class="nv"> </span><span class="s">{"insecure_skip_verify":</span><span class="nv"> </span><span class="s">true}}'</span>
 </code></pre></div>
 </details>
 </li>
@@ -6312,7 +6312,7 @@ apply this example for AWS, or use it as a reference:</p>
 <p>Ensure you still have the variables set in the <a href="#regional-cluster">Regional Cluster</a> section,
     and set your own value for the <code>CHILD_CLUSTER_NAME</code> variable:
     <div class="highlight"><pre><span></span><code><span class="nv">CHILD_CLUSTER_NAME</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-child1
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -6355,7 +6355,7 @@ apply this example for AWS, or use it as a reference:</p>
 <details class="note">
 <summary>Azure</summary>
 <div class="highlight"><pre><span></span><code><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>account<span class="w"> </span>show<span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">"</span>
 
 cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>

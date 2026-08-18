@@ -5422,7 +5422,7 @@ Cluster.</p>
 <span class="s">  name: kubevirt-kubeconfig</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/component: &quot;kcm&quot;</span>
+<span class="s">    k0rdent.mirantis.com/component: "kcm"</span>
 <span class="s">type: Opaque</span>
 <span class="s">EOF</span>
 </code></pre></div>
@@ -5470,9 +5470,9 @@ The <code>ConfigMap</code> name must be exactly <code>$SECRET_NAME-resource-temp
 <span class="s">  name: kubevirt-kubeconfig-resource-template</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/component: &quot;kcm&quot;</span>
+<span class="s">    k0rdent.mirantis.com/component: "kcm"</span>
 <span class="s">  annotations:</span>
-<span class="s">    projectsveltos.io/template: &quot;true&quot;</span>
+<span class="s">    projectsveltos.io/template: "true"</span>
 <span class="s">EOF</span>
 </code></pre></div>
 The <code>ConfigMap</code> only contains metadata and no data fields. This is expected, because we do not need to template
@@ -5549,8 +5549,8 @@ provisioning process with:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-cluster-deployment<span class="w"> </span>--watch
 </code></pre></div>
 <p>After the cluster is <code>Ready</code>, you can access it via its kubeconfig, just like any other Kubernetes cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-kubevirt-cluster-deployment-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-kubevirt-cluster-deployment.kubeconfig
-<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-kubevirt-cluster-deployment.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-kubevirt-cluster-deployment-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-kubevirt-cluster-deployment.kubeconfig
+<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-kubevirt-cluster-deployment.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 </li>
 <li>
@@ -5563,7 +5563,7 @@ provisioning process with:</p>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-kubevirt-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-kubevirt-cluster-deployment&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com "my-kubevirt-cluster-deployment" deleted</span>
 </code></pre></div></p>
 </li>
 </ol>

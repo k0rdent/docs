@@ -5553,7 +5553,7 @@ be deployed as a complete application.</p>
 <span class="w">      </span><span class="nt">localSourceRef</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo-repository</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./charts&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./charts"</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
@@ -5563,7 +5563,7 @@ be deployed as a complete application.</p>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">chartSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./charts&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./charts"</span>
 <span class="w">      </span><span class="nt">remoteSourceSpec</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">git</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/bar/foo.git</span>
@@ -5587,7 +5587,7 @@ be deployed as a complete application.</p>
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bucket</span><span class="w">  </span><span class="c1"># also can be GitRepository, OCIRepository, ConfigMap or Secret</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo-bar</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./base&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./base"</span>
 </code></pre></div>
 <p><code>ConfigMap</code> or <code>Secret</code> in this case must embed the tar-gzipped archive containing the kustomization files. This can be done by the following command, assuming the the archive was already created:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>foo-bar<span class="w"> </span>--from-file<span class="o">=</span>/path/to/kustomization/archive.tar.gz
@@ -5609,7 +5609,7 @@ be deployed as a complete application.</p>
 <span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
 <span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./overlays"</span>
 </code></pre></div>
 <p><code>.spec.kustomize.remoteSourceSpec</code> has mutual exclusive fields <code>.git</code>, <code>.bucket</code> and <code>.oci</code> which inline <code>GitRepositorySpec</code>, <code>BucketSpec</code> and <code>OCIRepositorySpec</code> respectively.</p>
 <h3 id="raw-resources-based-servicetemplate">Raw-resources-based ServiceTemplate<a class="headerlink" href="#raw-resources-based-servicetemplate" title="Permanent link">#</a></h3>

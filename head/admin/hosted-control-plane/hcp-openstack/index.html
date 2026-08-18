@@ -5416,13 +5416,13 @@ using the same network, subnet and router as your management cluster, you can re
 <p>If your management cluster was deployed using the Cluster API Provider OpenStack (CAPO), you can gather the required
 networking details using the following commands:</p>
 <p>Retrieve the network name:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.status.network.name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.status.network.name}}'</span>
 </code></pre></div>
 <p>Retrieve the subnet name:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .status.network.subnets 0).name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .status.network.subnets 0).name}}'</span>
 </code></pre></div>
 <p>Retrieve the router name:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.status.router.name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.status.router.name}}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5444,10 +5444,10 @@ deploy and manage the hosted control plane. For example:</p>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-20.04</span>
 <span class="w">  </span><span class="nt">externalNetwork</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"public"</span>
 <span class="w">  </span><span class="nt">identityRef</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack-cloud-config&quot;</span>
-<span class="w">    </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack&quot;</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"openstack-cloud-config"</span>
+<span class="w">    </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">"openstack"</span>
 <span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${OS_REGION_NAME}</span>
 
 <span class="w">  </span><span class="nt">network</span><span class="p">:</span>
@@ -5493,29 +5493,29 @@ inserts the appropriate values:</p>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-20.04</span>
 <span class="w">    </span><span class="nt">externalNetwork</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;public&quot;</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"public"</span>
 <span class="w">    </span><span class="nt">identityRef</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack-cloud-config&quot;</span>
-<span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openstack&quot;</span>
-<span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.identityRef.region}}&quot;</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"openstack-cloud-config"</span>
+<span class="w">      </span><span class="nt">cloudName</span><span class="p">:</span><span class="w"> </span><span class="s">"openstack"</span>
+<span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.identityRef.region}}"</span>
 
 <span class="w">    </span><span class="nt">network</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.status.network.name}}&quot;</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.status.network.name}}"</span>
 <span class="w">    </span><span class="nt">router</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.status.router.name}}&quot;</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.status.router.name}}"</span>
 <span class="w">    </span><span class="nt">subnets</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{(index</span><span class="nv"> </span><span class="s">.status.network.subnets</span><span class="nv"> </span><span class="s">0).name}}&quot;</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"{{(index</span><span class="nv"> </span><span class="s">.status.network.subnets</span><span class="nv"> </span><span class="s">0).name}}"</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">network</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">filter</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.status.network.name}}&quot;</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.status.network.name}}"</span>
 </code></pre></div>
 <p>For more information on these and other available parameters, see the <a href="../../../reference/template/template-openstack/">Template reference for openstack</a>.</p>
 <p>Save this template as <code>clusterdeployment.yaml.tpl</code>, then generate your manifest using the following command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>clusterdeployment.yaml.tpl<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>clusterdeployment.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;<span class="w"> </span>get<span class="w"> </span>openstackcluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">"</span><span class="k">$(</span>cat<span class="w"> </span>clusterdeployment.yaml.tpl<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="w"> </span>clusterdeployment.yaml
 </code></pre></div>
 </li>
 <li>

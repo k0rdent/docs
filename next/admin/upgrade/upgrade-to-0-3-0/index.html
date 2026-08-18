@@ -5475,7 +5475,7 @@ v0.3.0, you can remove the <code>defaultRegistryURL</code> parameter altogether.
 upgrade is stuck, with an error referencing an immutable field when patching the
 <code>register-mgmt-cluster-job</code> <code>Job</code> object.</p>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code>Helm upgrade failed for release projectsveltos/projectsveltos with chart projectsveltos@0.52.2: cannot patch &quot;register-mgmt-cluster-job&quot; with kind Job: Job.batch &quot;register-mgmt-cluster-job&quot; is invalid: spec.template: Invalid value
+<div class="highlight"><pre><span></span><code>Helm upgrade failed for release projectsveltos/projectsveltos with chart projectsveltos@0.52.2: cannot patch "register-mgmt-cluster-job" with kind Job: Job.batch "register-mgmt-cluster-job" is invalid: spec.template: Invalid value
 </code></pre></div>
 <p>To mitigate this error, follow these steps:</p>
 <ol>
@@ -5483,7 +5483,7 @@ upgrade is stuck, with an error referencing an immutable field when patching the
    <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>delete<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>--all
 </code></pre></div></li>
 <li>Fix the <code>projectsveltos</code> helm release by executing the following command:
-    <div class="highlight"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>annotate<span class="w"> </span>hr<span class="w"> </span>projectsveltos<span class="w"> </span><span class="s2">&quot;reconcile.fluxcd.io/requestedAt=</span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;reconcile.fluxcd.io/forceAt=</span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+    <div class="highlight"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">"</span><span class="w"> </span>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>annotate<span class="w"> </span>hr<span class="w"> </span>projectsveltos<span class="w"> </span><span class="s2">"reconcile.fluxcd.io/requestedAt=</span><span class="nv">$TOKEN</span><span class="s2">"</span><span class="w"> </span><span class="s2">"reconcile.fluxcd.io/forceAt=</span><span class="nv">$TOKEN</span><span class="s2">"</span>
 </code></pre></div></li>
 </ol>
 

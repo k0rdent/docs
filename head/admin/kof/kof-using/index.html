@@ -5681,13 +5681,13 @@ Please check the <a href="./">Using KOF without Grafana</a> and <a href="../kof-
 <li>Explore the Alerts: <a href="http://127.0.0.1:8082/alerts">http://127.0.0.1:8082/alerts</a></li>
 <li>CLI queries for automation:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.cluster) | unique&#39;</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">'.data.result | map(.metric.cluster) | unique'</span>
 
 curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.job) | unique&#39;</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">'.data.result | map(.metric.job) | unique'</span>
 
 curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=up{cluster=&quot;mothership&quot;, job=&quot;kof-collectors-opencost&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=up{cluster="mothership", job="kof-collectors-opencost"}'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div></li>
 </ul>
@@ -5728,8 +5728,8 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
 <h3 id="logsql-api">LogsQL API<a class="headerlink" href="#logsql-api" title="Permanent link">#</a></h3>
 <p>The <a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogsQL HTTP API</a> allows querying logs programmatically using <a href="https://docs.victoriametrics.com/victorialogs/logsql/">LogsQL</a> syntax. This is suitable for scripting, alerting pipelines, and automation. The example below returns up to 10 log entries from the last hour:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div>
 <h2 id="traces">Traces<a class="headerlink" href="#traces" title="Permanent link">#</a></h2>
 <p>KOF provides distributed tracing through <a href="https://docs.victoriametrics.com/victoriatraces/">VictoriaTraces</a>. Traces are accessible via the VictoriaTraces UI or CLI using the LogsQL, Jaeger, or Tempo APIs.</p>
@@ -5751,8 +5751,8 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
 <h3 id="logsql-api_1">LogsQL API<a class="headerlink" href="#logsql-api_1" title="Permanent link">#</a></h3>
 <p>The <a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogsQL HTTP API</a> allows querying trace data using <a href="https://docs.victoriametrics.com/victorialogs/logsql/">LogsQL</a> syntax. This is useful for integrating with automation pipelines. The example below returns up to 10 trace entries from the last hour:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div>
 <h3 id="jaeger-http-api">Jaeger HTTP API<a class="headerlink" href="#jaeger-http-api" title="Permanent link">#</a></h3>
 <p>The <a href="https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api">Jaeger HTTP API</a> provides compatibility with Jaeger clients and tooling. Use it to list services, retrieve traces by service name, or integrate with dashboards that support the Jaeger data source.</p>

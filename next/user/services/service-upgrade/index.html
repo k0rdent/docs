@@ -3879,6 +3879,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#extending-the-upgrade-path-for-new-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extending the Upgrade Path for New Releases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#service-version-rollback" class="md-nav__link">
     <span class="md-ellipsis">
       Service Version Rollback
@@ -5422,6 +5431,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#extending-the-upgrade-path-for-new-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extending the Upgrade Path for New Releases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#service-version-rollback" class="md-nav__link">
     <span class="md-ellipsis">
       Service Version Rollback
@@ -5513,7 +5531,7 @@ The <code>ServiceTemplateChain</code> has immutable spec. You can't change it af
 <p>
 If no <code>templateChain</code> is specified for the service, the service cannot be upgraded because no path is availble.
 If you try to change the service template, in the logs, you'll see an error message such as:</p>
-<div class="highlight"><pre><span></span><code>service<span class="w"> </span>ingress-nginx/ingress-nginx<span class="w"> </span>can<span class="err">&#39;</span>t<span class="w"> </span>be<span class="w"> </span>upgraded<span class="w"> </span>from<span class="w"> </span>ingress-nginx-4-11-3<span class="w"> </span>to<span class="w"> </span>ingress-nginx-4-11-5
+<div class="highlight"><pre><span></span><code>service<span class="w"> </span>ingress-nginx/ingress-nginx<span class="w"> </span>can<span class="err">'</span>t<span class="w"> </span>be<span class="w"> </span>upgraded<span class="w"> </span>from<span class="w"> </span>ingress-nginx-4-11-3<span class="w"> </span>to<span class="w"> </span>ingress-nginx-4-11-5
 </code></pre></div>
 </div>
 <p>After the <code>ClusterDeployment</code> or <code>MultiClusterService</code> has been reconciled, you will see available upgrade paths for the service in the status:</p>
@@ -5563,6 +5581,84 @@ The upgrade paths are calculated from the ServiceTemplateChain. If multiple path
 <span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenant42</span>
 <span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
+<h2 id="extending-the-upgrade-path-for-new-releases">Extending the Upgrade Path for New Releases<a class="headerlink" href="#extending-the-upgrade-path-for-new-releases" title="Permanent link">#</a></h2>
+<p>A <code>ServiceTemplateChain</code> only defines the upgrade paths known at the time it was created, and its spec is immutable, so you can't append a newly released <code>ServiceTemplate</code> to a chain that's already in use. Instead, create a new <code>ServiceTemplateChain</code> that starts from the currently deployed template and points to the new one, then switch the service over to that chain.</p>
+<p>The following example walks a service through two consecutive upgrades. It uses a <code>MultiClusterService</code> that deploys <code>ingress-nginx</code> to the management cluster itself, but the same steps apply to a <code>ClusterDeployment</code> or to any set of clusters matched by a <code>MultiClusterService</code>.</p>
+<p>Start with a chain that allows an upgrade from version 4.11.5 to 4.12.0:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplateChain</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-5-chain</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">supportedTemplates</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-5</span>
+<span class="w">      </span><span class="nt">availableUpgrades</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0</span>
+</code></pre></div>
+<p>Then reference that chain from the service:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MultiClusterService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcs1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">serviceSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">selfManagement</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">services</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-5</span>
+<span class="w">        </span><span class="nt">templateChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-5-chain</span>
+</code></pre></div>
+<p>To perform the upgrade, change only the <code>template</code> field:</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">services</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0</span><span class="w"> </span><span class="c1"># &lt;-- upgrade to 4.12.0</span>
+<span class="w">        </span><span class="nt">templateChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-11-5-chain</span>
+</code></pre></div>
+<p>The upgrade rolls out without downtime: the new controller pod becomes ready before the previously running pod is terminated.</p>
+<p>Command:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>nginx<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-w
+</code></pre></div>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">NAME                                              READY   STATUS              RESTARTS   AGE</span>
+<span class="go">nginx-ingress-nginx-controller-69b985bfb8-6dzx7   1/1     Running             0          2m15s</span>
+<span class="go">nginx-ingress-nginx-admission-create-k9hpj        0/1     Pending             0          0s</span>
+<span class="go">nginx-ingress-nginx-admission-create-k9hpj        0/1     ContainerCreating   0          0s</span>
+<span class="go">nginx-ingress-nginx-admission-create-k9hpj        0/1     Completed           0          4s</span>
+<span class="go">nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     Pending             0          0s</span>
+<span class="go">nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     ContainerCreating   0          0s</span>
+<span class="go">nginx-ingress-nginx-admission-patch-c76b8         0/1     Pending             0          0s</span>
+<span class="go">nginx-ingress-nginx-admission-patch-c76b8         0/1     ContainerCreating   0          0s</span>
+<span class="go">nginx-ingress-nginx-admission-patch-c76b8         0/1     Completed           0          2s</span>
+<span class="go">nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     Running             0          7s</span>
+<span class="go">nginx-ingress-nginx-controller-57b79899cd-x9572   1/1     Running             0          18s</span>
+<span class="go">nginx-ingress-nginx-controller-69b985bfb8-6dzx7   1/1     Terminating         0          3m4s</span>
+<span class="go">nginx-ingress-nginx-controller-69b985bfb8-6dzx7   0/1     Completed           0          3m15s</span>
+</code></pre></div></p>
+<p>The service is now running 4.12.0, and <code>ingress-nginx-4-11-5-chain</code> offers no further upgrades. When version 4.13.0 is released, create a new chain that starts from the currently deployed 4.12.0 template:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplateChain</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0-chain</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">supportedTemplates</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0</span>
+<span class="w">      </span><span class="nt">availableUpgrades</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-13-0</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-13-0</span>
+</code></pre></div>
+<p>Then point the service at the new chain, leaving the <code>template</code> field unchanged:</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">services</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0</span>
+<span class="w">        </span><span class="nt">templateChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-4-12-0-chain</span><span class="w"> </span><span class="c1"># &lt;-- switch to the new chain</span>
+</code></pre></div>
+<p>Because 4.12.0 is already deployed, switching the chain makes no changes on the cluster. It only makes the new upgrade path available, which you can confirm in <code>.status.servicesUpgradePaths</code>. From there, upgrade to 4.13.0 the same way as before, by setting <code>template: ingress-nginx-4-13-0</code>.</p>
 <h2 id="service-version-rollback">Service Version Rollback<a class="headerlink" href="#service-version-rollback" title="Permanent link">#</a></h2>
 <p>In general, the process of rolling back a service to the previous version is the same as upgrading the service in the first place. You'll need to create a separate <code>ServiceTemplateChain</code>, which defines the downgrade path:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>

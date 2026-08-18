@@ -5455,7 +5455,7 @@ The name of the <code>Secret</code> must follow a specific pattern. See <a href=
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;USERNAME&gt;</span>
 <span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;PASSWORD&gt;</span>
@@ -5475,7 +5475,7 @@ The name of the <code>Secret</code> must follow a specific pattern. See <a href=
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">allowedNamespaces</span><span class="p">:</span>
@@ -5524,14 +5524,14 @@ The ConfigMap name needs to be exactly <code>vsphere-cluster-identity-resource-t
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vsphere-cluster-identity-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">configmap.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">{{- $cluster := .InfrastructureProvider -}}</span>
-<span class="w">    </span><span class="no">{{- $identity := (getResource &quot;InfrastructureProviderIdentity&quot;) -}}</span>
-<span class="w">    </span><span class="no">{{- $secret := (getResource &quot;InfrastructureProviderIdentitySecret&quot;) -}}</span>
+<span class="w">    </span><span class="no">{{- $identity := (getResource "InfrastructureProviderIdentity") -}}</span>
+<span class="w">    </span><span class="no">{{- $secret := (getResource "InfrastructureProviderIdentitySecret") -}}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
 <span class="w">    </span><span class="no">kind: Secret</span>
@@ -5540,8 +5540,8 @@ The ConfigMap name needs to be exactly <code>vsphere-cluster-identity-resource-t
 <span class="w">      </span><span class="no">namespace: kube-system</span>
 <span class="w">    </span><span class="no">type: Opaque</span>
 <span class="w">    </span><span class="no">data:</span>
-<span class="w">      </span><span class="no">{{ printf &quot;%s.username&quot; $cluster.spec.server }}: {{ index $secret.data &quot;username&quot; }}</span>
-<span class="w">      </span><span class="no">{{ printf &quot;%s.password&quot; $cluster.spec.server }}: {{ index $secret.data &quot;password&quot; }}</span>
+<span class="w">      </span><span class="no">{{ printf "%s.username" $cluster.spec.server }}: {{ index $secret.data "username" }}</span>
+<span class="w">      </span><span class="no">{{ printf "%s.password" $cluster.spec.server }}: {{ index $secret.data "password" }}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
 <span class="w">    </span><span class="no">kind: Secret</span>
@@ -5552,13 +5552,13 @@ The ConfigMap name needs to be exactly <code>vsphere-cluster-identity-resource-t
 <span class="w">    </span><span class="no">stringData:</span>
 <span class="w">      </span><span class="no">csi-vsphere.conf: |</span>
 <span class="w">        </span><span class="no">[Global]</span>
-<span class="w">        </span><span class="no">cluster-id = &quot;{{ $cluster.metadata.name }}&quot;</span>
+<span class="w">        </span><span class="no">cluster-id = "{{ $cluster.metadata.name }}"</span>
 
-<span class="w">        </span><span class="no">[VirtualCenter &quot;{{ $cluster.spec.server }}&quot;]</span>
-<span class="w">        </span><span class="no">insecure-flag = &quot;true&quot;</span>
-<span class="w">        </span><span class="no">user = &quot;{{ index $secret.data &quot;username&quot; | b64dec }}&quot;</span>
-<span class="w">        </span><span class="no">password = &quot;{{ index $secret.data &quot;password&quot; | b64dec }}&quot;</span>
-<span class="w">        </span><span class="no">port = &quot;443&quot;</span>
+<span class="w">        </span><span class="no">[VirtualCenter "{{ $cluster.spec.server }}"]</span>
+<span class="w">        </span><span class="no">insecure-flag = "true"</span>
+<span class="w">        </span><span class="no">user = "{{ index $secret.data "username" | b64dec }}"</span>
+<span class="w">        </span><span class="no">password = "{{ index $secret.data "password" | b64dec }}"</span>
+<span class="w">        </span><span class="no">port = "443"</span>
 <span class="w">        </span><span class="no">datacenters = ${VSPHERE_DATACENTER}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
@@ -5656,8 +5656,8 @@ provisioning process with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-vsphere-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
 <p>After the cluster is <code>Ready</code>, you can access it via the kubeconfig, like this:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-vsphere-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-vsphere-clusterdeployment1-kubeconfig.kubeconfig
-<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-vsphere-clusterdeployment1-kubeconfig.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-vsphere-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-vsphere-clusterdeployment1-kubeconfig.kubeconfig
+<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-vsphere-clusterdeployment1-kubeconfig.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 </li>
 <li>

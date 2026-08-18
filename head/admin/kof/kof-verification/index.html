@@ -5547,8 +5547,8 @@ kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w">
 </code></pre></div></p>
 <p>If you see the <code>Failed/Provisioning</code> loop, check status and logs:
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clustersummaries<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.items[].status.featureSummaries[]</span>
-<span class="s1">  | select(.status != &quot;Provisioned&quot;)&#39;</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">'.items[].status.featureSummaries[]</span>
+<span class="s1">  | select(.status != "Provisioned")'</span>
 
 kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>deploy/kof-mothership-kof-operator<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
 kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>projectsveltos<span class="w"> </span>deploy/addon-controller<span class="w"> </span><span class="p">|</span><span class="w"> </span>less

@@ -5605,12 +5605,12 @@ between the clusters.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Switch context to source cluster</span>
 kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>&lt;source-cluster-context&gt;
 <span class="c1"># Or set the source config</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;&lt;path-to-source-cluster-kubeconfig&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"&lt;path-to-source-cluster-kubeconfig&gt;"</span>
 
 <span class="c1"># Create a backup</span>
-<span class="nv">CLD</span><span class="o">=</span><span class="s2">&quot;&lt;cluster-deployment-name&gt;&quot;</span>
-<span class="nv">BSL</span><span class="o">=</span><span class="s2">&quot;&lt;storage-location-name&gt;&quot;</span>
-<span class="nv">TPL</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cld-namespace&gt;<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CLD</span><span class="s2">&quot;</span><span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.template}}&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">CLD</span><span class="o">=</span><span class="s2">"&lt;cluster-deployment-name&gt;"</span>
+<span class="nv">BSL</span><span class="o">=</span><span class="s2">"&lt;storage-location-name&gt;"</span>
+<span class="nv">TPL</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cld-namespace&gt;<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span><span class="s2">"</span><span class="nv">$CLD</span><span class="s2">"</span><span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.template}}'</span><span class="k">)</span><span class="s2">"</span>
 
 <span class="o">{</span>
 <span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
@@ -5622,35 +5622,35 @@ kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span cl
 <span class="s">spec:</span>
 <span class="s">  storageLocation: $BSL</span>
 <span class="s">  includedNamespaces:</span>
-<span class="s">  - &#39;*&#39;</span>
+<span class="s">  - '*'</span>
 <span class="s">  orLabelSelectors:</span>
 <span class="s">  - matchLabels:</span>
 <span class="s">      k0rdent.mirantis.com/component: kcm</span>
 <span class="s">  - matchLabels:</span>
 <span class="s">      cluster.x-k8s.io/provider: cluster-api</span>
 <span class="s">  - matchLabels:</span>
-<span class="s">      controller.cert-manager.io/fao: &quot;true&quot;</span>
+<span class="s">      controller.cert-manager.io/fao: "true"</span>
 <span class="s">  - matchLabels:</span>
 <span class="s">      helm.toolkit.fluxcd.io/name: $CLD</span>
 <span class="s">  - matchLabels:</span>
 <span class="s">      cluster.x-k8s.io/cluster-name: $CLD</span>
 <span class="s">EOF</span>
 
-<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-template-namespace&gt;<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TPL</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{range .status.providers}}{{if ne . &quot;cluster-api&quot;}}{{printf &quot;  - matchLabels:\n      cluster.x-k8s.io/provider: %s\n&quot; .}}{{end}}{{end}}&#39;</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-template-namespace&gt;<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span><span class="s2">"</span><span class="nv">$TPL</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{range .status.providers}}{{if ne . "cluster-api"}}{{printf "  - matchLabels:\n      cluster.x-k8s.io/provider: %s\n" .}}{{end}}{{end}}'</span>
 <span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>-
 
 
 <span class="c1"># Verify backup completion</span>
 kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>backups.velero.io<span class="w"> </span>cld-migration<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.phase}&#39;</span><span class="o">=</span><span class="s1">&#39;Completed&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.phase}'</span><span class="o">=</span><span class="s1">'Completed'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--timeout<span class="w"> </span>10m
 </code></pre></div>
 <h3 id="2-prepare-the-target-management-cluster">2. Prepare the target Management cluster<a class="headerlink" href="#2-prepare-the-target-management-cluster" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Switch context to target cluster</span>
 kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>&lt;target-cluster-context&gt;
 <span class="c1"># Or set the target config</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;&lt;path-to-target-cluster-kubeconfig&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"&lt;path-to-target-cluster-kubeconfig&gt;"</span>
 
 <span class="c1"># Verify Velero and BackupStorageLocation are properly configured</span>
 kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>backupstoragelocation
@@ -5658,7 +5658,7 @@ kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="
 <h3 id="3-restore-the-clusterdeployment-to-the-target-cluster">3. Restore the ClusterDeployment to the target cluster<a class="headerlink" href="#3-restore-the-clusterdeployment-to-the-target-cluster" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Disable admission validating webhook</span>
 kubectl<span class="w"> </span>patch<span class="w"> </span>managements<span class="w"> </span>kcm<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;core&quot;:{&quot;kcm&quot;:{&quot;config&quot;:{&quot;admissionWebhook&quot;:{&quot;enabled&quot;: false}}}}}}&#39;</span>
+<span class="w">    </span>--patch<span class="o">=</span><span class="s1">'{"spec":{"core":{"kcm":{"config":{"admissionWebhook":{"enabled": false}}}}}}'</span>
 
 <span class="c1"># Wait the management cluster to be reconfigured</span>
 kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>management<span class="w"> </span>kcm<span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span><span class="nv">Ready</span><span class="o">=</span>True<span class="w"> </span>--timeout<span class="w"> </span>10m
@@ -5676,10 +5676,10 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 <span class="s">spec:</span>
 <span class="s">  backupName: cld-migration</span>
 <span class="s">  includedNamespaces:</span>
-<span class="s">  - &#39;*&#39;</span>
+<span class="s">  - '*'</span>
 <span class="s">  restoreStatus:</span>
 <span class="s">    includedResources:</span>
-<span class="s">    - &#39;*&#39;</span>
+<span class="s">    - '*'</span>
 <span class="s">  excludedResources:</span>
 <span class="s">  - mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="s">  - validatingwebhookconfiguration.admissionregistration.k8s.io</span>
@@ -5687,12 +5687,12 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 
 <span class="c1"># Wait for the restore process successful completion</span>
 kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>restores.velero.io<span class="w"> </span>restore-cld-migration<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.phase}&#39;</span><span class="o">=</span><span class="s1">&#39;Completed&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--for<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.phase}'</span><span class="o">=</span><span class="s1">'Completed'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--timeout<span class="w"> </span>10m
 
 <span class="c1"># Enable admission validating webhook back (if it was enabled initially)</span>
 kubectl<span class="w"> </span>patch<span class="w"> </span>managements<span class="w"> </span>kcm<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--patch<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;core&quot;:{&quot;kcm&quot;:{&quot;config&quot;:{&quot;admissionWebhook&quot;:{&quot;enabled&quot;: true}}}}}}&#39;</span>
+<span class="w">    </span>--patch<span class="o">=</span><span class="s1">'{"spec":{"core":{"kcm":{"config":{"admissionWebhook":{"enabled": true}}}}}}'</span>
 </code></pre></div>
 <h3 id="4-verify-the-migration">4. Verify the migration<a class="headerlink" href="#4-verify-the-migration" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Verify the ClusterDeployment exists on the target cluster</span>

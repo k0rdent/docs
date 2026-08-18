@@ -5624,8 +5624,8 @@ In the following example, the "ingress-nginx/ingress-nginx-controller" deploymen
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">. . .</span>
 </code></pre></div>
 <p>Yet another way to check if a resource is being ignored for drift is by verifying that the <code>projectsveltos.io/driftDetectionIgnore: ok</code> annotation has been applied to it, as in:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>ingress-nginx-controller<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span>
-<span class="o">{</span><span class="s2">&quot;deployment.kubernetes.io/revision&quot;</span>:<span class="s2">&quot;1&quot;</span>,<span class="s2">&quot;meta.helm.sh/release-name&quot;</span>:<span class="s2">&quot;ingress-nginx&quot;</span>,<span class="s2">&quot;meta.helm.sh/release-namespace&quot;</span>:<span class="s2">&quot;ingress-nginx&quot;</span>,<span class="s2">&quot;projectsveltos.io/driftDetectionIgnore&quot;</span>:<span class="s2">&quot;ok&quot;</span><span class="o">}</span>%
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>ingress-nginx-controller<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
+<span class="o">{</span><span class="s2">"deployment.kubernetes.io/revision"</span>:<span class="s2">"1"</span>,<span class="s2">"meta.helm.sh/release-name"</span>:<span class="s2">"ingress-nginx"</span>,<span class="s2">"meta.helm.sh/release-namespace"</span>:<span class="s2">"ingress-nginx"</span>,<span class="s2">"projectsveltos.io/driftDetectionIgnore"</span>:<span class="s2">"ok"</span><span class="o">}</span>%
 </code></pre></div>
 <h3 id="removing-drift-ignore">Removing Drift Ignore<a class="headerlink" href="#removing-drift-ignore" title="Permanent link">#</a></h3>
 <p>The drift ignore setting can be removed by removing the <code>.spec.serviceSpec.driftIgnore</code> field.</p>
@@ -5645,7 +5645,7 @@ In the following example, the <code>.spec.replicas</code> field of the <code>ing
 <span class="w">    </span><span class="nt">syncMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ContinuousWithDriftDetection</span>
 <span class="w">    </span><span class="nt">driftExclusions</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">paths</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/spec/replicas&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"/spec/replicas"</span>
 <span class="w">        </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx-controller</span>
@@ -5653,7 +5653,7 @@ In the following example, the <code>.spec.replicas</code> field of the <code>ing
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">. . .</span>
 </code></pre></div>
 <p>If we manually edit the replicas to be 1, the number of replicas is not corrected back to 3 as is indicated by the following watch output.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>ingress-nginx-controller<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.replicas}&#39;</span><span class="w"> </span>-w
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>deployments.apps<span class="w"> </span>ingress-nginx-controller<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.replicas}'</span><span class="w"> </span>-w
 <span class="m">3111</span>
 </code></pre></div>
 <p>We can also verify that this is the case by observing that the <code>ResourceSummary</code> object has the following patch in its spec now.</p>

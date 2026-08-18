@@ -5710,23 +5710,23 @@ grant full access to all tenants and features.</p>
 <span class="s">          replicaCount: 1</span>
 <span class="s">          extraArgs:</span>
 <span class="s">            issuer: https://dex.example.com:32000</span>
-<span class="s">            admin-email: &quot;$ADMIN_EMAIL&quot;</span>
+<span class="s">            admin-email: "$ADMIN_EMAIL"</span>
 <span class="s">    dex:</span>
 <span class="s">      enabled: true</span>
 <span class="s">      config:</span>
 <span class="s">        issuer: https://dex.example.com:32000</span>
 <span class="s">        enablePasswordDB: true</span>
 <span class="s">        staticPasswords:</span>
-<span class="s">          - email: &quot;$ADMIN_EMAIL&quot;</span>
-<span class="s">            hash: &quot;$ADMIN_PASSWORD_HASH&quot;</span>
-<span class="s">            username: &quot;admin&quot;</span>
-<span class="s">            userID: &quot;1&quot;</span>
+<span class="s">          - email: "$ADMIN_EMAIL"</span>
+<span class="s">            hash: "$ADMIN_PASSWORD_HASH"</span>
+<span class="s">            username: "admin"</span>
+<span class="s">            userID: "1"</span>
 <span class="s">        oauth2:</span>
 <span class="s">          passwordConnector: local</span>
 <span class="s">        staticClients:</span>
 <span class="s">          - id: grafana-id</span>
 <span class="s">            redirectURIs:</span>
-<span class="s">              - &quot;http://localhost:3000/login/generic_oauth&quot;</span>
+<span class="s">              - "http://localhost:3000/login/generic_oauth"</span>
 <span class="s">            name: Grafana</span>
 <span class="s">            secret: grafana-secret</span>
 <span class="s">        connectors: []</span>
@@ -5748,11 +5748,11 @@ grant full access to all tenants and features.</p>
 <li>
 <details class="note">
 <summary>Expose Dex at local management cluster as <code>https://dex.example.com:32000</code></summary>
-<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-qxF<span class="w"> </span><span class="s2">&quot;127.0.0.1 dex.example.com&quot;</span><span class="w"> </span>/etc/hosts<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;127.0.0.1 dex.example.com&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/hosts
+<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-qxF<span class="w"> </span><span class="s2">"127.0.0.1 dex.example.com"</span><span class="w"> </span>/etc/hosts<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"127.0.0.1 dex.example.com"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/hosts
 
 <span class="nv">node_internal_ip</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>k0rdent-control-plane<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.addresses[?(@.type==&quot;InternalIP&quot;)].address}&#39;</span>
+<span class="w">  </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.addresses[?(@.type=="InternalIP")].address}'</span>
 <span class="k">)</span>
 
 kubectl<span class="w"> </span>get<span class="w"> </span>ns<span class="w"> </span>kof<span class="w"> </span><span class="o">||</span><span class="w"> </span>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>kof
@@ -5781,15 +5781,15 @@ kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/kof-mothe
 <span class="s">spec:</span>
 <span class="s">  config:</span>
 <span class="s">    auth.generic_oauth:</span>
-<span class="s">      enabled: &quot;true&quot;</span>
+<span class="s">      enabled: "true"</span>
 <span class="s">      name: Dex</span>
-<span class="s">      scopes: &quot;openid email profile groups offline_access&quot;</span>
+<span class="s">      scopes: "openid email profile groups offline_access"</span>
 <span class="s">      auth_url: https://dex.example.com:32000/auth</span>
 <span class="s">      token_url: https://dex.example.com:32000/token</span>
 <span class="s">      api_url: https://dex.example.com:32000/userinfo</span>
 <span class="s">      client_id: grafana-id</span>
 <span class="s">      client_secret: grafana-secret</span>
-<span class="s">      tls_skip_verify_insecure: &quot;true&quot;</span>
+<span class="s">      tls_skip_verify_insecure: "true"</span>
 <span class="s">EOF</span>
 
 kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>grafana<span class="w"> </span>grafana-vm<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
@@ -5838,14 +5838,14 @@ kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> <
 <span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Google</span>
 <span class="w">            </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">issuer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://accounts.google.com</span>
-<span class="w">              </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;GOOGLE_CLIENT_ID&gt;&quot;</span>
-<span class="w">              </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;GOOGLE_CLIENT_SECRET&gt;&quot;</span>
+<span class="w">              </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;GOOGLE_CLIENT_ID&gt;"</span>
+<span class="w">              </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;GOOGLE_CLIENT_SECRET&gt;"</span>
 <span class="w">              </span><span class="nt">redirectURI</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://dex.example.com:32000/callback</span>
 <span class="w">              </span><span class="nt">insecureEnableGroups</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">              </span><span class="nt">claimModifications</span><span class="p">:</span>
 <span class="w">                </span><span class="nt">newGroupFromClaims</span><span class="p">:</span>
 <span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenant</span>
-<span class="w">                    </span><span class="nt">delimiter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;:&quot;</span>
+<span class="w">                    </span><span class="nt">delimiter</span><span class="p">:</span><span class="w"> </span><span class="s">":"</span>
 <span class="w">                    </span><span class="nt">clearDelimiter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">                    </span><span class="nt">claims</span><span class="p">:</span>
 <span class="w">                      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hd</span>

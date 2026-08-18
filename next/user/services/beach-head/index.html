@@ -5609,7 +5609,7 @@ helm charts for ingress-nginx and kyverno as dependencies.</p>
 <span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myappz</span>
 <span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">        </span><span class="no">controlPlaneEndpointHost: {{ .Cluster.spec.controlPlaneEndpoint.host }}</span>
-<span class="w">        </span><span class="no">controlPlaneEndpointPort: &quot;{{ .Cluster.spec.controlPlaneEndpoint.port }}&quot;</span>
+<span class="w">        </span><span class="no">controlPlaneEndpointPort: "{{ .Cluster.spec.controlPlaneEndpoint.port }}"</span>
 <span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">. . .</span><span class="w">        </span>
 </code></pre></div>

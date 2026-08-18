@@ -5392,29 +5392,29 @@
 components required for other components creation, and all the required resources
 of <code>CAPI</code> and the <code>ClusterDeployment</code>s currently in use in the management cluster.</p>
 <p>By default, objects satisfying these labels will be included in the backup:</p>
-<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name=&quot;&lt;cluster-deployment-name&gt;&quot;
-helm.toolkit.fluxcd.io/name=&quot;&lt;cluster-deployment-name&gt;&quot;
+<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name="&lt;cluster-deployment-name&gt;"
+helm.toolkit.fluxcd.io/name="&lt;cluster-deployment-name&gt;"
 
-cluster.x-k8s.io/provider=&quot;bootstrap-&lt;provider&gt;&quot;
-cluster.x-k8s.io/provider=&quot;control-plane-&lt;provider&gt;&quot;
-cluster.x-k8s.io/provider=&quot;infrastructure-&lt;provider&gt;&quot;
+cluster.x-k8s.io/provider="bootstrap-&lt;provider&gt;"
+cluster.x-k8s.io/provider="control-plane-&lt;provider&gt;"
+cluster.x-k8s.io/provider="infrastructure-&lt;provider&gt;"
 
-cluster.x-k8s.io/provider=&quot;cluster-api&quot;
+cluster.x-k8s.io/provider="cluster-api"
 
-controller.cert-manager.io/fao=&quot;true&quot;
+controller.cert-manager.io/fao="true"
 
-k0rdent.mirantis.com/component=&quot;kcm&quot;
+k0rdent.mirantis.com/component="kcm"
 </code></pre></div>
 <p>An example sorted set of labels, objects satisfying these labels will
 be included in the backup:</p>
-<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name=&quot;some-cluster-deployment-name&quot;
-cluster.x-k8s.io/provider=&quot;bootstrap-k0sproject-k0smotron&quot;
-cluster.x-k8s.io/provider=&quot;cluster-api&quot;
-cluster.x-k8s.io/provider=&quot;control-plane-k0sproject-k0smotron&quot;
-cluster.x-k8s.io/provider=&quot;infrastructure-aws&quot;
-controller.cert-manager.io/fao=&quot;true&quot;
-helm.toolkit.fluxcd.io/name=&quot;some-cluster-deployment-name&quot;
-k0rdent.mirantis.com/component=&quot;kcm&quot;
+<div class="highlight"><pre><span></span><code>cluster.x-k8s.io/cluster-name="some-cluster-deployment-name"
+cluster.x-k8s.io/provider="bootstrap-k0sproject-k0smotron"
+cluster.x-k8s.io/provider="cluster-api"
+cluster.x-k8s.io/provider="control-plane-k0sproject-k0smotron"
+cluster.x-k8s.io/provider="infrastructure-aws"
+controller.cert-manager.io/fao="true"
+helm.toolkit.fluxcd.io/name="some-cluster-deployment-name"
+k0rdent.mirantis.com/component="kcm"
 </code></pre></div>
 
 

@@ -5400,7 +5400,7 @@ k0rdent will then realize the cluster is out of sync and will attempt to remedy 
 <li>
 <p>Patch the <code>ClusterDeployment</code> with the new template</p>
 <p>Run the following command, replacing the placeholders with the appropriate values:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment.kcm<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;template&quot;:&quot;&lt;new-template-name&gt;&quot;}}&#39;</span><span class="w"> </span>--type<span class="o">=</span>merge
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment.kcm<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{"spec":{"template":"&lt;new-template-name&gt;"}}'</span><span class="w"> </span>--type<span class="o">=</span>merge
 </code></pre></div>
 </li>
 <li>

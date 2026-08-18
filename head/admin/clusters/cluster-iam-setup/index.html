@@ -5635,13 +5635,13 @@
 <span class="w">        </span><span class="nt">claimMappings</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">username</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">claim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">email</span>
-<span class="w">            </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">            </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">          </span><span class="nt">groups</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">claim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">groups</span>
-<span class="w">            </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">            </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">        </span><span class="nt">userValidationRules</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expression</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!user.username.startsWith(&#39;system:&#39;)&quot;</span>
-<span class="w">            </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;username</span><span class="nv"> </span><span class="s">cannot</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">reserved</span><span class="nv"> </span><span class="s">system:</span><span class="nv"> </span><span class="s">prefix&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">expression</span><span class="p">:</span><span class="w"> </span><span class="s">"!user.username.startsWith('system:')"</span>
+<span class="w">            </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">"username</span><span class="nv"> </span><span class="s">cannot</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">reserved</span><span class="nv"> </span><span class="s">system:</span><span class="nv"> </span><span class="s">prefix"</span>
 <span class="w">  </span><span class="nt">caSecret</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dex-ca-secret</span>
 <span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
@@ -5747,8 +5747,8 @@ For mitigation steps and additional details, see <a href="../update-cluster/#con
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contentFrom</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">secretRef</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Values.auth.configSecret.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default &quot;config&quot; .Values.auth.configSecret.key</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">      </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0644&quot;</span>
+<span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default "config" .Values.auth.configSecret.key</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">      </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">"0644"</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/k0s/auth/config-{{ .Values.auth.configSecret.hash }}.yaml</span>
 <span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>

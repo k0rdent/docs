@@ -5406,7 +5406,7 @@
 </li>
 <li>
 <p>Create a test PVC:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;'EOF' | kubectl apply -f -</span>
 <span class="s">apiVersion: v1</span>
 <span class="s">kind: PersistentVolumeClaim</span>
 <span class="s">metadata:</span>
@@ -5422,7 +5422,7 @@
 </li>
 <li>
 <p>Create a test pod:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; | kubectl apply -f -</span>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;'EOF' | kubectl apply -f -</span>
 <span class="s">apiVersion: v1</span>
 <span class="s">kind: Pod</span>
 <span class="s">metadata:</span>
@@ -5431,7 +5431,7 @@
 <span class="s">  containers:</span>
 <span class="s">    - name: test</span>
 <span class="s">      image: busybox</span>
-<span class="s">      command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo hello &gt; /data/test.txt &amp;&amp; sleep 3600&quot;]</span>
+<span class="s">      command: ["sh", "-c", "echo hello &gt; /data/test.txt &amp;&amp; sleep 3600"]</span>
 <span class="s">      volumeMounts:</span>
 <span class="s">        - name: data</span>
 <span class="s">          mountPath: /data</span>

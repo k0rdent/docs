@@ -5452,7 +5452,7 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 <p>Patch the <code>Management</code> object with the new <code>Release</code></p>
 <p>Update the <code>spec.release</code> field in the <code>Management</code> object to point to the new release. Replace <code>&lt;release-name&gt;</code> with the name of your desired release:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">RELEASE_NAME</span><span class="o">=</span>kcm-1-11-0
-kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm<span class="w"> </span>--patch<span class="w"> </span><span class="s2">&quot;{\&quot;spec\&quot;:{\&quot;release\&quot;:\&quot;</span><span class="si">${</span><span class="nv">RELEASE_NAME</span><span class="si">}</span><span class="s2">\&quot;}}&quot;</span><span class="w"> </span>--type<span class="o">=</span>merge
+kubectl<span class="w"> </span>patch<span class="w"> </span>managements.k0rdent.mirantis.com<span class="w"> </span>kcm<span class="w"> </span>--patch<span class="w"> </span><span class="s2">"{\"spec\":{\"release\":\"</span><span class="si">${</span><span class="nv">RELEASE_NAME</span><span class="si">}</span><span class="s2">\"}}"</span><span class="w"> </span>--type<span class="o">=</span>merge
 </code></pre></div>
 </li>
 <li>

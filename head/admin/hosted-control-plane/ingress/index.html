@@ -5646,7 +5646,7 @@ cluster by setting the following parameters in the <code>ClusterDeployment</code
 <span class="w">    </span><span class="nt">ingress</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">deploy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haproxy&quot;</span>
+<span class="w">      </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">"haproxy"</span>
 <span class="w">      </span><span class="nt">apiHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api.test-cluster.example.com</span>
 <span class="w">      </span><span class="nt">konnectivityHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">konnectivity.test-cluster.example.com</span>
 <span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
@@ -5682,7 +5682,7 @@ in the Helm chart. The <code>K0smotronControlPlane</code> <code>spec.ingress</co
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">controlplane.cluster.x-k8s.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K0smotronControlPlane</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">include &quot;k0smotroncontrolplane.name&quot; .</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">include "k0smotroncontrolplane.name" .</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">{{</span><span class="nv">- if and .Values.ingress.enabled .Values.ingress.apiHost .Values.ingress.konnectivityHost</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
@@ -5702,9 +5702,9 @@ in the Helm chart. The <code>K0smotronControlPlane</code> <code>spec.ingress</co
 <div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haproxy&quot;</span>
-<span class="w">  </span><span class="nt">apiHost</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">  </span><span class="nt">konnectivityHost</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">"haproxy"</span>
+<span class="w">  </span><span class="nt">apiHost</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">  </span><span class="nt">konnectivityHost</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 </code></pre></div>
@@ -5730,12 +5730,12 @@ fields in the <code>K0smotronControlPlane</code> <code>spec.ingress</code>.</p>
 <span class="w">    </span><span class="nt">ingress</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">deploy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;haproxy&quot;</span>
+<span class="w">      </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="s">"haproxy"</span>
 <span class="w">      </span><span class="nt">apiHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api.test-cluster.172.96.1.2.nip.io</span>
 <span class="w">      </span><span class="nt">konnectivityHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">konnectivity.test-cluster.172.96.1.2.nip.io</span>
 <span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
 <span class="w">      </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">haproxy-ingress.github.io/ssl-passthrough</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">        </span><span class="nt">haproxy-ingress.github.io/ssl-passthrough</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
 <h3 id="clusterdeployment-stuck-waiting-for-worker-nodes-to-become-ready-when-ingress-is-enabled">ClusterDeployment Stuck Waiting for Worker Nodes to Become Ready When Ingress Is Enabled<a class="headerlink" href="#clusterdeployment-stuck-waiting-for-worker-nodes-to-become-ready-when-ingress-is-enabled" title="Permanent link">#</a></h3>
@@ -5749,9 +5749,9 @@ worker node addresses, but the CCM cannot reach the API server because the HAPro
 in the CCM pod spec, pointing directly to the ingress hostname:</p>
 <div class="highlight"><pre><span></span><code>env:
 - name: KUBERNETES_SERVICE_HOST
-  value: &quot;api.test-cluster.example.com&quot;
+  value: "api.test-cluster.example.com"
 - name: KUBERNETES_SERVICE_PORT
-  value: &quot;443&quot;
+  value: "443"
 </code></pre></div>
 <p>This can be done either by modifying the CCM deployment directly after the API server becomes reachable or,
 if the CCM configuration is managed by the helm chart, by setting these env vars in the CCM helm chart values.</p>

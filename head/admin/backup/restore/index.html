@@ -5532,7 +5532,7 @@ in the <code>Management</code> object, add to the path <code>spec.core.kcm.confi
 <p>Example of a patch if the path <code>spec.core.kcm.config.velero</code> does not yet exist:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>managements<span class="w"> </span>kcm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/spec/core/kcm/config/velero&quot;, &quot;value&quot;: {&quot;fullnameOverride&quot;: &quot;velero&quot;}}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op": "add", "path": "/spec/core/kcm/config/velero", "value": {"fullnameOverride": "velero"}}]'</span>
 </code></pre></div>
 <p>Example how it should look after the required change:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -5562,7 +5562,7 @@ aforementioned known issue.</p>
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
 <span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5589,9 +5589,9 @@ of the corresponding region cluster.</p>
 <span class="w">      </span><span class="no">mergePatches:</span>
 <span class="w">      </span><span class="no">- patchData: |</span>
 <span class="w">          </span><span class="no">{</span>
-<span class="w">            </span><span class="no">&quot;metadata&quot;: {</span>
-<span class="w">              </span><span class="no">&quot;annotations&quot;: {</span>
-<span class="w">                </span><span class="no">&quot;k0rdent.mirantis.com/region-pause&quot;: &quot;true&quot;</span>
+<span class="w">            </span><span class="no">"metadata": {</span>
+<span class="w">              </span><span class="no">"annotations": {</span>
+<span class="w">                </span><span class="no">"k0rdent.mirantis.com/region-pause": "true"</span>
 <span class="w">              </span><span class="no">}</span>
 <span class="w">            </span><span class="no">}</span>
 <span class="w">          </span><span class="no">}</span>
@@ -5605,16 +5605,16 @@ of the corresponding region cluster.</p>
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
 <span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 <span class="w">  </span><span class="nt">labelSelector</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">matchExpressions</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster.x-k8s.io/cluster-name</span>
 <span class="w">        </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NotIn</span>
-<span class="w">        </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;&lt;cluster-deployment-name&gt;&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"&lt;cluster-deployment-name&gt;"</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="c1"># Add new entries accordingly if more regional clusters require reprovisioning</span>
 <span class="w">      </span><span class="c1"># - key: cluster.x-k8s.io/cluster-name</span>
 <span class="w">      </span><span class="c1">#   operator: NotIn</span>
-<span class="w">      </span><span class="c1">#   values: [&quot;&lt;cluster-deployment-name&gt;&quot;]</span>
+<span class="w">      </span><span class="c1">#   values: ["&lt;cluster-deployment-name&gt;"]</span>
 <span class="w">  </span><span class="nt">resourceModifier</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">add-region-pause-anno</span>
@@ -5658,7 +5658,7 @@ of the corresponding region cluster.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5669,7 +5669,7 @@ of the corresponding region cluster.</p>
 <p>On the management cluster, unpause provisioning of
     regional <code>ClusterDeployment</code> objects by removing annotation
     from the <code>regions</code> object:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>annotate<span class="w"> </span>regions<span class="w"> </span>&lt;region-name&gt;<span class="w"> </span><span class="s1">&#39;k0rdent.mirantis.com/region-pause-&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>annotate<span class="w"> </span>regions<span class="w"> </span>&lt;region-name&gt;<span class="w"> </span><span class="s1">'k0rdent.mirantis.com/region-pause-'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -5720,7 +5720,7 @@ automatically with the same <code>spec</code> as in the backup.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworks.network.azure.com</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworkssubnets.network.azure.com</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 <h3 id="vsphere-capv">vSphere (CAPV)<a class="headerlink" href="#vsphere-capv" title="Permanent link">#</a></h3>
 <p>The following resources should be excluded from the <code>Restore</code> object:</p>
@@ -5748,7 +5748,7 @@ of the <code>CAPV</code> provider.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 
 

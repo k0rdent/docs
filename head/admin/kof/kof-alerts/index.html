@@ -5674,25 +5674,25 @@ with <a href="#advanced-routing">advanced routing</a> options.</p>
 <p>Wait until the <a href="https://webhook.site/">https://webhook.site/</a>
     shows the <code>Watchdog</code> alert, as in:
     <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;receiver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;webhook&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;firing&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;alerts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"receiver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webhook"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"firing"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"alerts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;firing&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;labels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;alertgroup&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;general.rules&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;alertname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Watchdog&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;promxy&quot;</span>
+<span class="w">      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"firing"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"alertgroup"</span><span class="p">:</span><span class="w"> </span><span class="s2">"general.rules"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"alertname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Watchdog"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"promxy"</span>
 <span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;annotations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is an alert meant to ensure that the entire alerting pipeline is functional...&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;runbook_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://runbooks.prometheus-operator.dev/runbooks/general/watchdog&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;An alert that should always be firing to certify that Alertmanager is working properly.&quot;</span>
+<span class="w">      </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is an alert meant to ensure that the entire alerting pipeline is functional..."</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"runbook_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://runbooks.prometheus-operator.dev/runbooks/general/watchdog"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An alert that should always be firing to certify that Alertmanager is working properly."</span>
 <span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;startsAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-02T10:27:29.14Z&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;endsAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0001-01-01T00:00:00Z&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;generatorURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8082/...&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"startsAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-06-02T10:27:29.14Z"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"endsAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0001-01-01T00:00:00Z"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"generatorURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://127.0.0.1:8082/..."</span><span class="p">,</span>
 </code></pre></div></p>
 </li>
 </ol>
@@ -5794,11 +5794,11 @@ to the <code>kof-mothership</code> chart <a href="../kof-install/#management-clu
 <span class="w">            </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
 <span class="w">              </span><span class="no">sum by(tenant, cluster, namespace, node, pod, container)</span>
 <span class="w">              </span><span class="no">(increase(container_cpu_cfs_throttled_periods_total{</span>
-<span class="w">              </span><span class="no">cluster=&quot;cluster1&quot;, container!=&quot;&quot;, job=&quot;kubelet&quot;, metrics_path=&quot;/metrics/cadvisor&quot;}[5m]))</span>
+<span class="w">              </span><span class="no">cluster="cluster1", container!="", job="kubelet", metrics_path="/metrics/cadvisor"}[5m]))</span>
 <span class="w">                </span><span class="no">/</span>
 <span class="w">              </span><span class="no">sum by(tenant, cluster, namespace, node, pod, container)</span>
 <span class="w">              </span><span class="no">(increase(container_cpu_cfs_periods_total{</span>
-<span class="w">              </span><span class="no">cluster=&quot;cluster1&quot;, container!=&quot;&quot;, job=&quot;kubelet&quot;, metrics_path=&quot;/metrics/cadvisor&quot;}[5m]))</span>
+<span class="w">              </span><span class="no">cluster="cluster1", container!="", job="kubelet", metrics_path="/metrics/cadvisor"}[5m]))</span>
 <span class="w">                </span><span class="no">&gt; 0.42</span>
 </code></pre></div>
     Note the <code>cluster="cluster1"</code> filters and the <code>&gt; 0.42</code> threshold.</p>
@@ -5820,11 +5820,11 @@ to the <code>kof-mothership</code> chart <a href="../kof-install/#management-clu
 <span class="w">            </span><span class="no">expr: |-</span>
 <span class="w">              </span><span class="no">sum by(tenant, cluster, namespace, node, pod, container)</span>
 <span class="w">              </span><span class="no">(increase(container_cpu_cfs_throttled_periods_total{</span>
-<span class="w">              </span><span class="no">cluster!~&quot;^cluster1$|^cluster10$&quot;, container!=&quot;&quot;, job=&quot;kubelet&quot;, metrics_path=&quot;/metrics/cadvisor&quot;}[5m]))</span>
+<span class="w">              </span><span class="no">cluster!~"^cluster1$|^cluster10$", container!="", job="kubelet", metrics_path="/metrics/cadvisor"}[5m]))</span>
 <span class="w">                </span><span class="no">/</span>
 <span class="w">              </span><span class="no">sum by(tenant, tenant, cluster, namespace, node, pod, container)</span>
 <span class="w">              </span><span class="no">(increase(container_cpu_cfs_periods_total{</span>
-<span class="w">              </span><span class="no">cluster!~&quot;^cluster1$|^cluster10$&quot;, container!=&quot;&quot;, job=&quot;kubelet&quot;, metrics_path=&quot;/metrics/cadvisor&quot;}[5m]))</span>
+<span class="w">              </span><span class="no">cluster!~"^cluster1$|^cluster10$", container!="", job="kubelet", metrics_path="/metrics/cadvisor"}[5m]))</span>
 <span class="w">                </span><span class="no">&gt; 0.25</span>
 </code></pre></div>
 Note the <code>cluster!~"^cluster1$|^cluster10$"</code> filters and the default threshold.</p>

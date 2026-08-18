@@ -5454,17 +5454,17 @@ and create a new key with the JSON key type.</p>
 <p>A JSON file will automatically download to your computer. Keep it somewhere safe.</p>
 <p>The example of the JSON file:</p>
 <div class="highlight"><pre><span></span><code><span class="o">{</span>
-<span class="w">  </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;service_account&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;project_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;GCP_PROJECT_ID&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;private_key_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;GCP_PRIVATE_KEY_ID&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;private_key&quot;</span>:<span class="w"> </span><span class="s2">&quot;-----BEGIN PRIVATE KEY-----\nGCP_PRIVATE_KEY\n-----END PRIVATE KEY-----\n&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;client_email&quot;</span>:<span class="w"> </span><span class="s2">&quot;name@project_id.iam.gserviceaccount.com&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;client_id&quot;</span>:<span class="w"> </span><span class="s2">&quot;GCP_CLIENT_ID&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;auth_uri&quot;</span>:<span class="w"> </span><span class="s2">&quot;https://accounts.google.com/o/oauth2/auth&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;token_uri&quot;</span>:<span class="w"> </span><span class="s2">&quot;https://oauth2.googleapis.com/token&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;auth_provider_x509_cert_url&quot;</span>:<span class="w"> </span><span class="s2">&quot;https://www.googleapis.com/oauth2/v1/certs&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;client_x509_cert_url&quot;</span>:<span class="w"> </span><span class="s2">&quot;https://www.googleapis.com/robot/v1/metadata/x509/user%40project_id.iam.gserviceaccount.com&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;universe_domain&quot;</span>:<span class="w"> </span><span class="s2">&quot;googleapis.com&quot;</span>
+<span class="w">  </span><span class="s2">"type"</span>:<span class="w"> </span><span class="s2">"service_account"</span>,
+<span class="w">  </span><span class="s2">"project_id"</span>:<span class="w"> </span><span class="s2">"GCP_PROJECT_ID"</span>,
+<span class="w">  </span><span class="s2">"private_key_id"</span>:<span class="w"> </span><span class="s2">"GCP_PRIVATE_KEY_ID"</span>,
+<span class="w">  </span><span class="s2">"private_key"</span>:<span class="w"> </span><span class="s2">"-----BEGIN PRIVATE KEY-----\nGCP_PRIVATE_KEY\n-----END PRIVATE KEY-----\n"</span>,
+<span class="w">  </span><span class="s2">"client_email"</span>:<span class="w"> </span><span class="s2">"name@project_id.iam.gserviceaccount.com"</span>,
+<span class="w">  </span><span class="s2">"client_id"</span>:<span class="w"> </span><span class="s2">"GCP_CLIENT_ID"</span>,
+<span class="w">  </span><span class="s2">"auth_uri"</span>:<span class="w"> </span><span class="s2">"https://accounts.google.com/o/oauth2/auth"</span>,
+<span class="w">  </span><span class="s2">"token_uri"</span>:<span class="w"> </span><span class="s2">"https://oauth2.googleapis.com/token"</span>,
+<span class="w">  </span><span class="s2">"auth_provider_x509_cert_url"</span>:<span class="w"> </span><span class="s2">"https://www.googleapis.com/oauth2/v1/certs"</span>,
+<span class="w">  </span><span class="s2">"client_x509_cert_url"</span>:<span class="w"> </span><span class="s2">"https://www.googleapis.com/robot/v1/metadata/x509/user%40project_id.iam.gserviceaccount.com"</span>,
+<span class="w">  </span><span class="s2">"universe_domain"</span>:<span class="w"> </span><span class="s2">"googleapis.com"</span>
 <span class="o">}</span>
 </code></pre></div>
 </li>
@@ -5482,7 +5482,7 @@ To get base64 encoded credentials, run:</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-cloud-sa</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># the secret key should always equal `credentials`</span>
 <span class="w">  </span><span class="nt">credentials</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GCP_B64ENCODED_CREDENTIALS</span>
@@ -5534,12 +5534,12 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>gcp-clo
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-cloud-sa-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">data</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">configmap.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">{{- $secret := (getResource &quot;InfrastructureProviderIdentity&quot;) -}}</span>
+<span class="w">    </span><span class="no">{{- $secret := (getResource "InfrastructureProviderIdentity") -}}</span>
 <span class="w">    </span><span class="no">---</span>
 <span class="w">    </span><span class="no">apiVersion: v1</span>
 <span class="w">    </span><span class="no">kind: Secret</span>
@@ -5548,7 +5548,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>gcp-clo
 <span class="w">      </span><span class="no">namespace: kube-system</span>
 <span class="w">    </span><span class="no">type: Opaque</span>
 <span class="w">    </span><span class="no">data:</span>
-<span class="w">      </span><span class="no">cloud-sa.json: {{ index $secret &quot;data&quot; &quot;credentials&quot; }}</span>
+<span class="w">      </span><span class="no">cloud-sa.json: {{ index $secret "data" "credentials" }}</span>
 </code></pre></div>
 <p>Apply the YAML to your cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcp-cloud-sa-resource-template.yaml
@@ -5605,9 +5605,9 @@ First get a list of available regions:</p>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PROJECT_NAME</span><span class="w"> </span><span class="c1"># Your project name</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GCP_REGION&quot;</span><span class="w"> </span><span class="c1"># Select your desired GCP region (find it via `gcloud compute regions list`)</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">"GCP_REGION"</span><span class="w"> </span><span class="c1"># Select your desired GCP region (find it via `gcloud compute regions list`)</span>
 <span class="w">    </span><span class="nt">network</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"> </span><span class="c1"># Select your desired network name (select new network name to create or find it via `gcloud compute networks list --format=&quot;value(name)&quot;`)</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"> </span><span class="c1"># Select your desired network name (select new network name to create or find it via `gcloud compute networks list --format="value(name)"`)</span>
 <span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">n1-standard-2</span><span class="w"> </span><span class="c1"># Select your desired instance type (find it via `gcloud compute machine-types list | grep REGION`)</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20250213</span><span class="w"> </span><span class="c1"># Select image (find it via `gcloud compute images list --uri`)</span>
@@ -5627,8 +5627,8 @@ First get a list of available regions:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-gcp-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
 <p>After the cluster is <code>Ready</code>, you can access it via the kubeconfig:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-gcp-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-gcp-clusterdeployment1-kubeconfig.kubeconfig
-<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-gcp-clusterdeployment1-kubeconfig.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-gcp-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-gcp-clusterdeployment1-kubeconfig.kubeconfig
+<span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-gcp-clusterdeployment1-kubeconfig.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 </li>
 <li>
@@ -5641,7 +5641,7 @@ First get a list of available regions:</p>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>clusterdeployments<span class="w"> </span>my-gcp-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-gcp-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com "my-gcp-clusterdeployment1" deleted</span>
 </code></pre></div></p>
 </li>
 </ol>

@@ -5682,18 +5682,18 @@ do <strong>not add</strong> it if a <code>regions</code> object is being edited.
 <span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostPath</span><span class="w">     </span><span class="c1"># pvc | existing | hostPath (default)</span>
 <span class="w">      </span><span class="c1"># For source: pvc (dynamic provisioning)</span>
 <span class="w">      </span><span class="nt">pvc</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">        </span><span class="c1"># default StorageClass if empty</span>
+<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">        </span><span class="c1"># default StorageClass if empty</span>
 <span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ReadWriteOnce</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
 <span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mi</span>
 <span class="w">        </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">      </span><span class="c1"># For source: existing (use pre-created PVC)</span>
-<span class="w">      </span><span class="nt">existingClaim</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">existingClaim</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="c1"># For source: hostPath (static PV + matching PVC)</span>
 <span class="w">      </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">                    </span><span class="c1"># defaults to &lt;fullname&gt;-telemetry-data</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">                    </span><span class="c1"># defaults to &lt;fullname&gt;-telemetry-data</span>
 <span class="w">        </span><span class="nt">reclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
-<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;manual&quot;</span>
+<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">"manual"</span>
 <span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ReadWriteOnce</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
 <span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mi</span>
@@ -5814,7 +5814,7 @@ in the pod, rotated daily.</p>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/hostname</span>
 <span class="w">                </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
-<span class="w">                </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;worker-01&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">                </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"worker-01"</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>Chart creates a hostPath PV at <code>/var/lib/telemetry</code> and a matching PVC;
 prefer PVC-backed options in HA clusters.</p>
@@ -5853,16 +5853,16 @@ The list of default settings is as follows:</p>
 <span class="w">    </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="c1"># Tolerations to allow the pod to schedule on tainted nodes</span>
 <span class="w">    </span><span class="nt">tolerations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">    </span><span class="c1"># Global runner&#39;s logger settings</span>
+<span class="w">    </span><span class="c1"># Global runner's logger settings</span>
 <span class="w">    </span><span class="nt">logger</span><span class="p">:</span>
 <span class="w">      </span><span class="c1"># Development defaults to (encoder=console,logLevel=debug,stackTraceLevel=warn) Production defaults to (encoder=json,logLevel=info,stackTraceLevel=error)</span>
 <span class="w">      </span><span class="nt">devel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">      </span><span class="c1"># Encoder type, one of [json, console]</span>
-<span class="w">      </span><span class="nt">encoder</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">encoder</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="c1"># Log level, one of [info, debug, error]</span>
-<span class="w">      </span><span class="nt">log-level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">log-level</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="c1"># Level on which to produce stacktraces, one of [info, error, panic]</span>
-<span class="w">      </span><span class="nt">stacktrace-level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">stacktrace-level</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="c1"># Type of time encoding, one of [epoch, millis, nano, iso8601, rfc3339, rfc3339nano]</span>
 <span class="w">      </span><span class="nt">time-encoding</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rfc3339</span>
 </code></pre></div>

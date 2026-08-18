@@ -5556,7 +5556,7 @@ The <code>Secret</code> name needs to follow a specific pattern. See <a href="..
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">AccessKeyID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EXAMPLE_ACCESS_KEY_ID</span>
@@ -5575,7 +5575,7 @@ The <code>Secret</code> name needs to follow a specific pattern. See <a href="..
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">secretRef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">allowedNamespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
@@ -5605,9 +5605,9 @@ The <code>ConfigMap</code> name needs to be exactly the <code>.spec.identityRef.
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>Note that <code>ConfigMap</code> is empty. This is expected as we don't need to template any objects inside child cluster(s) for now, but we can use that object in the future if need arises.</p>
 <p>Apply the YAML to your regional cluster:</p>
@@ -5652,14 +5652,14 @@ ready, run:</p>
 <p>Example of an error status:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">status</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">conditions</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2025-09-26T10:15:17Z&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">"2025-09-26T10:15:17Z"</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CredentialReady</span>
-<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;False&quot;</span>
+<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">"False"</span>
 <span class="w">    </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Failed</span>
-<span class="w">    </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Failed</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">ClusterIdentity</span><span class="nv"> </span><span class="s">object</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Kind=AWSClusterStaticIdentity</span>
+<span class="w">    </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="s">"Failed</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">ClusterIdentity</span><span class="nv"> </span><span class="s">object</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">Kind=AWSClusterStaticIdentity</span>
 <span class="w">      </span><span class="s">/aws-cluster-identity:</span><span class="nv"> </span><span class="s">unable</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">retrieve</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">complete</span><span class="nv"> </span><span class="s">list</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">APIs:</span>
 <span class="w">      </span><span class="s">infrastructure.cluster.x-k8s.io/v1beta2:</span><span class="nv"> </span><span class="s">no</span><span class="nv"> </span><span class="s">matches</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">infrastructure.cluster.x-k8s.io/v1beta2,</span>
-<span class="w">      </span><span class="s">Resource=&quot;</span>
+<span class="w">      </span><span class="s">Resource="</span>
 <span class="w">  </span><span class="w w-Error"> </span><span class="nt">ready</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 <p>This usually indicates that either the provider is not enabled in the specified <code>Region</code>, or provider deployment failed.
@@ -5667,11 +5667,11 @@ Double-check the <code>Region</code> spec for the required provider's presence a
 <p>Example of a ready status:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">status</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">conditions</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2025-09-26T11:15:57Z&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">"2025-09-26T11:15:57Z"</span>
 <span class="w">    </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential is ready</span>
 <span class="w">    </span><span class="nt">observedGeneration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Succeeded</span>
-<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;True&quot;</span>
+<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">"True"</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CredentialReady</span>
 <span class="w">  </span><span class="nt">ready</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>

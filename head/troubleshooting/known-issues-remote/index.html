@@ -5446,18 +5446,18 @@
 <ol>
 <li>
 <p>Check the <code>ClusterDeployment</code> status condition on the management cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 </li>
 <li>
 <p>Check the <code>RemoteMachine</code> status condition on the management or regional cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>remotemachine<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>remotemachine<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 </li>
 <li>
 <p>In case of worker provisioning issues, check the logs of the k0smotron infrastructure controller pod on
 the management or regional cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SYSTEM_NAMESPACE</span><span class="w"> </span>logs<span class="w"> </span>-l<span class="w"> </span>k0smotron-provider<span class="o">=</span>infrastructure<span class="w"> </span>--tail<span class="o">=</span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;fail\|error&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SYSTEM_NAMESPACE</span><span class="w"> </span>logs<span class="w"> </span>-l<span class="w"> </span>k0smotron-provider<span class="o">=</span>infrastructure<span class="w"> </span>--tail<span class="o">=</span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"fail\|error"</span>
 </code></pre></div>
 </li>
 <li>

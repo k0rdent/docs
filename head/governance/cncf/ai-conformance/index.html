@@ -5529,10 +5529,10 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <span class="go">dra-demo-pod-gpu-mwv6r   allocated,reserved</span>
 
 <span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>dra-demo<span class="w"> </span>dra-demo-pod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>GPU_DEVICE_5
-<span class="go">GPU_DEVICE_5=&quot;gpu-5&quot;</span>
-<span class="go">GPU_DEVICE_5_RESOURCE_CLAIM=&quot;03f5fca0-c04c-43d2-9ba9-db6f570bce00&quot;</span>
-<span class="go">GPU_DEVICE_5_SHARING_STRATEGY=&quot;TimeSlicing&quot;</span>
-<span class="go">GPU_DEVICE_5_TIMESLICE_INTERVAL=&quot;Default&quot;</span>
+<span class="go">GPU_DEVICE_5="gpu-5"</span>
+<span class="go">GPU_DEVICE_5_RESOURCE_CLAIM="03f5fca0-c04c-43d2-9ba9-db6f570bce00"</span>
+<span class="go">GPU_DEVICE_5_SHARING_STRATEGY="TimeSlicing"</span>
+<span class="go">GPU_DEVICE_5_TIMESLICE_INTERVAL="Default"</span>
 </code></pre></div>
 <p>The four per-device environment variables - identity, claim UUID, sharing strategy, and time-slice interval, are the direct demonstration of the spec's "fine-grained resource requests beyond simple counts" wording: structured metadata that varies per allocation, derived from the driver's understanding of its own device pool.</p>
 <p>Further reading:</p>
@@ -5569,16 +5569,16 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
 <p>k0rdent supports GPU sharing through NVIDIA device plugin time-slicing, configured via a single <code>kubectl patch</code> against the GPU Operator's <code>ClusterPolicy</code>. On the test cluster, each Tesla T4 was reconfigured to advertise four schedulable <code>nvidia.com/gpu</code> replicas; cluster-wide capacity moved from <code>nvidia.com/gpu = 2</code> to <code>nvidia.com/gpu = 8</code>, and four GPU-requesting Pods ran concurrently on a single physical GPU, all reporting the same physical GPU UUID. T4 hardware does not support MIG, so time-slicing is the applicable sharing mechanism on this SKU. Sharing was reverted with a second `kubectl patch'.</p>
 <p>Minimal example:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.capacity.nvidia\.com/gpu}{&quot;\n&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.capacity.nvidia\.com/gpu}{"\n"}'</span>
 <span class="go">4</span>
 
-<span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.labels.nvidia\.com/gpu\.sharing-strategy}{&quot;\n&quot;}&#39;</span>
+<span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.labels.nvidia\.com/gpu\.sharing-strategy}{"\n"}'</span>
 <span class="go">time-slicing</span>
 
-<span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.labels.nvidia\.com/gpu\.product}{&quot;\n&quot;}&#39;</span>
+<span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.labels.nvidia\.com/gpu\.product}{"\n"}'</span>
 <span class="go">Tesla-T4-SHARED</span>
 
-<span class="gp">$ </span><span class="k">for</span><span class="w"> </span>p<span class="w"> </span><span class="k">in</span><span class="w"> </span>shared-gpu-<span class="o">{</span><span class="m">1</span>..4<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<span class="gp">$ </span><span class="k">for</span><span class="w"> </span>p<span class="w"> </span><span class="k">in</span><span class="w"> </span>shared-gpu-<span class="o">{</span><span class="m">1</span>..4<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>kubectl<span class="w"> </span>logs<span class="w"> </span><span class="s2">"</span><span class="nv">$p</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="p">;</span><span class="w"> </span><span class="k">done</span>
 <span class="go">GPU 0: Tesla T4 (UUID: GPU-05fd76a7-f718-d68f-1ed3-28921dd4bcbf)</span>
 <span class="go">GPU 0: Tesla T4 (UUID: GPU-05fd76a7-f718-d68f-1ed3-28921dd4bcbf)</span>
 <span class="go">GPU 0: Tesla T4 (UUID: GPU-05fd76a7-f718-d68f-1ed3-28921dd4bcbf)</span>
@@ -5615,7 +5615,7 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>http://20.235.37.179/predict
 <span class="go">HTTP/1.1 200 OK</span>
 <span class="go">x-app-name: http-echo</span>
-<span class="go">{&quot;prediction&quot;:0.87}</span>
+<span class="go">{"prediction":0.87}</span>
 
 <span class="gp">$ </span>curl<span class="w"> </span>-si<span class="w"> </span>http://20.235.37.179/
 <span class="go">HTTP/1.1 404 Not Found</span>
@@ -5644,7 +5644,7 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <span class="go">gang-overflow-worker-0   0/1     Pending   &lt;none&gt;</span>
 <span class="go">gang-overflow-worker-1   0/1     Pending   &lt;none&gt;</span>
 
-<span class="gp">$ </span>kubectl<span class="w"> </span>describe<span class="w"> </span>podgroup<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A1<span class="w"> </span><span class="s1">&#39;NotEnoughResources&#39;</span>
+<span class="gp">$ </span>kubectl<span class="w"> </span>describe<span class="w"> </span>podgroup<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A1<span class="w"> </span><span class="s1">'NotEnoughResources'</span>
 <span class="go">    Reason:  NotEnoughResources</span>
 <span class="go">    Message: 12/12 tasks in gang unschedulable: ... Pending: 4 Schedulable, 8 Unschedulable.</span>
 </code></pre></div>
@@ -5704,12 +5704,12 @@ helm<span class="w"> </span>install<span class="w"> </span>cluster-autoscaler<sp
 All four spec-named DCGM metrics: <code>DCGM_FI_DEV_GPU_UTIL</code>, <code>DCGM_FI_DEV_FB_USED</code>, <code>DCGM_FI_DEV_GPU_TEMP</code>, <code>DCGM_FI_DEV_POWER_USAGE</code>, flow through end-to-end and are queryable via the standard Prometheus API.</p>
 <p>The platform's customer-facing observability product is <strong>k0rdent Observability and FinOps (KOF)</strong>, which uses the same <code>ServiceMonitor</code> discovery contract and Prometheus exposition format, ingesting into VictoriaMetrics. KOF is the recommended production backend for k0rdent users; <code>kube-prometheus-stack</code> was used here because it is the field-standard backend for AI conformance evidence and matches the topology of a single Azure child cluster reviewed in isolation.</p>
 <p>Minimal example:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;http://localhost:9090/api/v1/query?query=DCGM_FI_DEV_GPU_UTIL&#39;</span>
-<span class="go">&quot;__name__&quot;:&quot;DCGM_FI_DEV_GPU_UTIL&quot;</span>
-<span class="go">&quot;UUID&quot;:&quot;GPU-05fd76a7-f718-d68f-1ed3-28921dd4bcbf&quot;</span>
-<span class="go">&quot;modelName&quot;:&quot;Tesla T4&quot;</span>
-<span class="go">&quot;Hostname&quot;:&quot;k0rdent-ai-conformance-md-stxjr-77mds&quot;</span>
-<span class="go">&quot;DCGM_FI_DRIVER_VERSION&quot;:&quot;580.126.20&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">'http://localhost:9090/api/v1/query?query=DCGM_FI_DEV_GPU_UTIL'</span>
+<span class="go">"__name__":"DCGM_FI_DEV_GPU_UTIL"</span>
+<span class="go">"UUID":"GPU-05fd76a7-f718-d68f-1ed3-28921dd4bcbf"</span>
+<span class="go">"modelName":"Tesla T4"</span>
+<span class="go">"Hostname":"k0rdent-ai-conformance-md-stxjr-77mds"</span>
+<span class="go">"DCGM_FI_DRIVER_VERSION":"580.126.20"</span>
 </code></pre></div>
 <p>Further reading:</p>
 <ul>
@@ -5723,15 +5723,15 @@ All four spec-named DCGM metrics: <code>DCGM_FI_DEV_GPU_UTIL</code>, <code>DCGM_
 <p>k0rdent supports workload metrics collection through Prometheus Operator-compatible monitoring stacks. We installed <code>kube-prometheus-stack</code>, applied a <code>ServiceMonitor</code> for a sample inference-shaped workload, and verified that Prometheus discovered the target and stored its metrics with workload-identifying labels. This demonstrates the standard collection path most AI services use in practice: workload metrics exposed on <code>/metrics</code> in Prometheus exposition format, discovered via <code>ServiceMonitor</code>, and stored in Prometheus. The same path applies to AI inference servers (vLLM, KServe, Triton, NIM, etc.) that expose Prometheus-format <code>/metrics</code>.</p>
 <p>For production deployments, k0rdent's <strong>KOF</strong> consumes the same <code>ServiceMonitor</code> and <code>PodMonitor</code> resources via prometheus-operator-crds and ingests into VictoriaMetrics. The discovery contract is identical to the one demonstrated here.</p>
 <p>Minimal example:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;http://localhost:9090/api/v1/query&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">&#39;query=up{job=&quot;sample-inference&quot;}&#39;</span>
-<span class="go">&quot;job&quot;:&quot;sample-inference&quot;</span>
-<span class="go">&quot;namespace&quot;:&quot;default&quot;</span>
-<span class="go">&quot;value&quot;:[..., &quot;1&quot;]</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">'http://localhost:9090/api/v1/query'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">'query=up{job="sample-inference"}'</span>
+<span class="go">"job":"sample-inference"</span>
+<span class="go">"namespace":"default"</span>
+<span class="go">"value":[..., "1"]</span>
 
-<span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;http://localhost:9090/api/v1/query&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">&#39;query=node_cpu_seconds_total{job=&quot;sample-inference&quot;}&#39;</span>
-<span class="go">&quot;__name__&quot;:&quot;node_cpu_seconds_total&quot;</span>
+<span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">'http://localhost:9090/api/v1/query'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--data-urlencode<span class="w"> </span><span class="s1">'query=node_cpu_seconds_total{job="sample-inference"}'</span>
+<span class="go">"__name__":"node_cpu_seconds_total"</span>
 </code></pre></div>
 <p>Further reading:</p>
 <ul>
@@ -5770,17 +5770,17 @@ All four spec-named DCGM metrics: <code>DCGM_FI_DEV_GPU_UTIL</code>, <code>DCGM_
 <span class="go">NAME              DESIRED WORKERS   AVAILABLE WORKERS   STATUS</span>
 <span class="go">raycluster-demo   1                 1                   ready</span>
 
-<span class="gp">$ </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HEAD_POD</span><span class="s2">&quot;</span><span class="w"> </span>--<span class="w"> </span>python<span class="w"> </span>-<span class="w"> </span>&lt;&lt;<span class="s1">&#39;PY&#39;</span>
-<span class="go">import ray; ray.init(address=&#39;auto&#39;)</span>
+<span class="gp">$ </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span><span class="s2">"</span><span class="nv">$HEAD_POD</span><span class="s2">"</span><span class="w"> </span>--<span class="w"> </span>python<span class="w"> </span>-<span class="w"> </span>&lt;&lt;<span class="s1">'PY'</span>
+<span class="go">import ray; ray.init(address='auto')</span>
 <span class="go">@ray.remote</span>
 <span class="go">def f(x): return x * x</span>
-<span class="go">print(&#39;Result:&#39;, ray.get([f.remote(i) for i in range(5)]))</span>
-<span class="go">print(&#39;Nodes:&#39;, len(ray.nodes()))</span>
+<span class="go">print('Result:', ray.get([f.remote(i) for i in range(5)]))</span>
+<span class="go">print('Nodes:', len(ray.nodes()))</span>
 <span class="go">PY</span>
 <span class="go">Result: [0, 1, 4, 9, 16]</span>
 <span class="go">Nodes: 2</span>
 
-<span class="gp">$ </span>kubectl<span class="w"> </span>describe<span class="w"> </span>raycluster<span class="w"> </span>raycluster-demo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;CreatedHeadPod|DeletedHeadPod&#39;</span>
+<span class="gp">$ </span>kubectl<span class="w"> </span>describe<span class="w"> </span>raycluster<span class="w"> </span>raycluster-demo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'CreatedHeadPod|DeletedHeadPod'</span>
 <span class="go">Normal  CreatedHeadPod    Created head Pod default/raycluster-demo-head-gkpwl</span>
 <span class="go">Normal  DeletedHeadPod    Deleted head Pod default/raycluster-demo-head-gkpwl</span>
 <span class="go">Normal  CreatedHeadPod    Created head Pod default/raycluster-demo-head-p6qqn</span>

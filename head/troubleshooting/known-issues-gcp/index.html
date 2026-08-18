@@ -5389,11 +5389,11 @@
 <p><a href="https://github.com/k0rdent/kcm/issues/1476">Related issue: KCM #1476</a></p>
 <p>When deleting a GCP cluster, the process can become stuck during the VPC deletion phase. The following error may
 appear in the <code>cluster-api-provider-gcp</code> logs:</p>
-<div class="highlight"><pre><span></span><code>E0505<span class="w"> </span><span class="m">13</span>:33:29.573486<span class="w">       </span><span class="m">1</span><span class="w"> </span>controller.go:324<span class="o">]</span><span class="w"> </span><span class="s2">&quot;Reconciler error&quot;</span><span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="s2">&quot;googleapi:</span>
-<span class="s2">Error 400: RESOURCE_IN_USE_BY_ANOTHER_RESOURCE - The network resource &#39;projects/k0rdent-dev/global/networks/network-name&#39;</span>
-<span class="s2">is already being used by &#39;projects/k0rdent-dev/global/routes/kubernetes-f85faa80-9d44-4a73-a679-97aa072ecb4e&#39;&quot;</span>
-<span class="nv">controller</span><span class="o">=</span><span class="s2">&quot;gcpcluster&quot;</span><span class="w"> </span><span class="nv">controllerGroup</span><span class="o">=</span><span class="s2">&quot;infrastructure.cluster.x-k8s.io&quot;</span><span class="w"> </span><span class="nv">controllerKind</span><span class="o">=</span><span class="s2">&quot;GCPCluster&quot;</span>
-<span class="nv">GCPCluster</span><span class="o">=</span><span class="s2">&quot;kcm-system/gcp-ekaz&quot;</span><span class="w"> </span><span class="nv">namespace</span><span class="o">=</span><span class="s2">&quot;kcm-system&quot;</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;gcp-ekaz&quot;</span><span class="w"> </span><span class="nv">reconcileID</span><span class="o">=</span><span class="s2">&quot;74d04828-3892-4ad5-80c9-dd9187857c6e&quot;</span>
+<div class="highlight"><pre><span></span><code>E0505<span class="w"> </span><span class="m">13</span>:33:29.573486<span class="w">       </span><span class="m">1</span><span class="w"> </span>controller.go:324<span class="o">]</span><span class="w"> </span><span class="s2">"Reconciler error"</span><span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="s2">"googleapi:</span>
+<span class="s2">Error 400: RESOURCE_IN_USE_BY_ANOTHER_RESOURCE - The network resource 'projects/k0rdent-dev/global/networks/network-name'</span>
+<span class="s2">is already being used by 'projects/k0rdent-dev/global/routes/kubernetes-f85faa80-9d44-4a73-a679-97aa072ecb4e'"</span>
+<span class="nv">controller</span><span class="o">=</span><span class="s2">"gcpcluster"</span><span class="w"> </span><span class="nv">controllerGroup</span><span class="o">=</span><span class="s2">"infrastructure.cluster.x-k8s.io"</span><span class="w"> </span><span class="nv">controllerKind</span><span class="o">=</span><span class="s2">"GCPCluster"</span>
+<span class="nv">GCPCluster</span><span class="o">=</span><span class="s2">"kcm-system/gcp-ekaz"</span><span class="w"> </span><span class="nv">namespace</span><span class="o">=</span><span class="s2">"kcm-system"</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">"gcp-ekaz"</span><span class="w"> </span><span class="nv">reconcileID</span><span class="o">=</span><span class="s2">"74d04828-3892-4ad5-80c9-dd9187857c6e"</span>
 </code></pre></div>
 <p>This typically occurs when orphaned routes remain in the VPC and reference deleted compute instances.</p>
 <p>As a result, the <code>ClusterDeployment</code> object cannot be fully deleted until these route resources are removed.</p>
@@ -5407,7 +5407,7 @@ the <code>gcloud</code> CLI:</p>
 </li>
 <li>
 <p>List all routes in the affected network:</p>
-<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>routes<span class="w"> </span>list<span class="w"> </span>--filter<span class="o">=</span><span class="s2">&quot;network:&lt;networkName&gt;&quot;</span>
+<div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>compute<span class="w"> </span>routes<span class="w"> </span>list<span class="w"> </span>--filter<span class="o">=</span><span class="s2">"network:&lt;networkName&gt;"</span>
 </code></pre></div>
 <p>Example output for the network <code>test-net</code>:
 <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">NAME                                             NETWORK   DEST_RANGE     NEXT_HOP                                                           PRIORITY</span>

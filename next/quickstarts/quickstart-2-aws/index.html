@@ -5786,7 +5786,7 @@ If you're working on a shared AWS account, please ensure that the k0rdent user i
 <h2 id="install-the-aws-cli">Install the AWS CLI<a class="headerlink" href="#install-the-aws-cli" title="Permanent link">#</a></h2>
 <p>We'll use the AWS CLI to create and set IAM permissions for the k0rdent user, so we'll install it on our management node:</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>unzip
-curl<span class="w"> </span><span class="s2">&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;awscliv2.zip&quot;</span><span class="w"> </span>
+curl<span class="w"> </span><span class="s2">"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">"awscliv2.zip"</span><span class="w"> </span>
 unzip<span class="w"> </span>awscliv2.zip<span class="w"> </span>
 sudo<span class="w"> </span>./aws/install
 </code></pre></div>
@@ -5810,12 +5810,12 @@ sudo<span class="w"> </span>install<span class="w"> </span>-o<span class="w"> </
 <p><div class="highlight"><pre><span></span><code><span class="w"> </span>aws<span class="w"> </span>iam<span class="w"> </span>create-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;User&quot;: {</span>
-<span class="go">        &quot;Path&quot;: &quot;/&quot;,</span>
-<span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
-<span class="go">        &quot;UserId&quot;: &quot;EXAMPLE_USER_ID&quot;,</span>
-<span class="go">        &quot;Arn&quot;: &quot;arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart&quot;,</span>
-<span class="go">        &quot;CreateDate&quot;: &quot;2025-01-18T08:15:27+00:00&quot;</span>
+<span class="go">    "User": {</span>
+<span class="go">        "Path": "/",</span>
+<span class="go">        "UserName": "k0rdentQuickstart",</span>
+<span class="go">        "UserId": "EXAMPLE_USER_ID",</span>
+<span class="go">        "Arn": "arn:aws:iam::FAKE_ARN_123:user/k0rdentQuickstart",</span>
+<span class="go">        "CreateDate": "2025-01-18T08:15:27+00:00"</span>
 <span class="go">    }</span>
 <span class="go">}</span>
 </code></pre></div></p>
@@ -5825,10 +5825,10 @@ sudo<span class="w"> </span>install<span class="w"> </span>-o<span class="w"> </
 <code>EC2-VPC Elastic IPs</code> quota per region is 5, so while you likely won't have issues with a first cluster, if you try to deplay a 
 second to the same region, you are likely to run into issues.  </p>
 <p>You can determine how many elastic IPs are available from the command line:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nv">LIMIT</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-account-attributes<span class="w"> </span>--attribute-names<span class="w"> </span>vpc-max-elastic-ips<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;AccountAttributes[0].AttributeValues[0].AttributeValue&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
-<span class="nv">USED</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-addresses<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Addresses[*].PublicIp&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-w<span class="k">)</span>
+<p><div class="highlight"><pre><span></span><code><span class="nv">LIMIT</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-account-attributes<span class="w"> </span>--attribute-names<span class="w"> </span>vpc-max-elastic-ips<span class="w"> </span>--query<span class="w"> </span><span class="s1">'AccountAttributes[0].AttributeValues[0].AttributeValue'</span><span class="w"> </span>--output<span class="w"> </span>text<span class="k">)</span>
+<span class="nv">USED</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-addresses<span class="w"> </span>--query<span class="w"> </span><span class="s1">'Addresses[*].PublicIp'</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-w<span class="k">)</span>
 <span class="nv">AVAILABLE</span><span class="o">=</span><span class="k">$((</span><span class="nv">LIMIT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">USED</span><span class="k">))</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Available Public IPs: </span><span class="nv">$AVAILABLE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Available Public IPs: </span><span class="nv">$AVAILABLE</span><span class="s2">"</span>
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">Available Public IPs: 5</span>
 </code></pre></div></p>
@@ -5843,22 +5843,22 @@ second to the same region, you are likely to run into issues.  </p>
 <span class="w">    </span>--service-code<span class="w"> </span>ec2
 </code></pre></div>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;RequestedQuotas&quot;: [</span>
+<span class="go">    "RequestedQuotas": [</span>
 <span class="go">        {</span>
-<span class="go">            &quot;Id&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
-<span class="go">            &quot;ServiceCode&quot;: &quot;ec2&quot;,</span>
-<span class="go">            &quot;ServiceName&quot;: &quot;Amazon Elastic Compute Cloud (Amazon EC2)&quot;,</span>
-<span class="go">            &quot;QuotaCode&quot;: &quot;L-0263D0A3&quot;,</span>
-<span class="go">            &quot;QuotaName&quot;: &quot;EC2-VPC Elastic IPs&quot;,</span>
-<span class="go">            &quot;DesiredValue&quot;: 20.0,</span>
-<span class="go">            &quot;Status&quot;: &quot;PENDING&quot;,</span>
-<span class="go">            &quot;Created&quot;: &quot;2025-02-09T02:27:01.573000-05:00&quot;,</span>
-<span class="go">            &quot;LastUpdated&quot;: &quot;2025-02-09T02:27:01.956000-05:00&quot;,</span>
-<span class="go">            &quot;Requester&quot;: &quot;{\&quot;accountId\&quot;:\&quot;EXAMPLE_ACCESS_KEY_ID\&quot;,\&quot;callerArn\&quot;:\&quot;arn:aws:iam::EXAMPLE_ACCESS_KEY_ID:user/nchase\&quot;}&quot;,</span>
-<span class="go">            &quot;QuotaArn&quot;: &quot;arn:aws:servicequotas:EXAMPLE_AWS_REGION:EXAMPLE_ACCESS_KEY_ID:ec2/L-0263D0A3&quot;,</span>
-<span class="go">            &quot;GlobalQuota&quot;: false,</span>
-<span class="go">            &quot;Unit&quot;: &quot;None&quot;,</span>
-<span class="go">            &quot;QuotaRequestedAtLevel&quot;: &quot;ACCOUNT&quot;</span>
+<span class="go">            "Id": "EXAMPLE_ACCESS_KEY_ID",</span>
+<span class="go">            "ServiceCode": "ec2",</span>
+<span class="go">            "ServiceName": "Amazon Elastic Compute Cloud (Amazon EC2)",</span>
+<span class="go">            "QuotaCode": "L-0263D0A3",</span>
+<span class="go">            "QuotaName": "EC2-VPC Elastic IPs",</span>
+<span class="go">            "DesiredValue": 20.0,</span>
+<span class="go">            "Status": "PENDING",</span>
+<span class="go">            "Created": "2025-02-09T02:27:01.573000-05:00",</span>
+<span class="go">            "LastUpdated": "2025-02-09T02:27:01.956000-05:00",</span>
+<span class="go">            "Requester": "{\"accountId\":\"EXAMPLE_ACCESS_KEY_ID\",\"callerArn\":\"arn:aws:iam::EXAMPLE_ACCESS_KEY_ID:user/nchase\"}",</span>
+<span class="go">            "QuotaArn": "arn:aws:servicequotas:EXAMPLE_AWS_REGION:EXAMPLE_ACCESS_KEY_ID:ec2/L-0263D0A3",</span>
+<span class="go">            "GlobalQuota": false,</span>
+<span class="go">            "Unit": "None",</span>
+<span class="go">            "QuotaRequestedAtLevel": "ACCOUNT"</span>
 <span class="go">        }</span>
 <span class="go">    ]</span>
 <span class="go">}</span>
@@ -5876,7 +5876,7 @@ second to the same region, you are likely to run into issues.  </p>
 <li><code>controllers-eks.cluster-api-provider-aws.sigs.k8s.io</code></li>
 </ul>
 <p>We use the AWS CLI to attach them. To do this, you will need to extract the Amazon Resource Name (ARN) for the newly-created user:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">AWS_ARN_ID</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>iam<span class="w"> </span>get-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;User.Arn&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/.*::([0-9]+):.*/\1/&#39;</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">AWS_ARN_ID</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>iam<span class="w"> </span>get-user<span class="w"> </span>--user-name<span class="w"> </span>k0rdentQuickstart<span class="w"> </span>--query<span class="w"> </span><span class="s1">'User.Arn'</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">'s/.*::([0-9]+):.*/\1/'</span><span class="k">)</span>
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$AWS_ARN_ID</span>
 </code></pre></div>
 <p>Assemble and execute the following commands to implement the required policies:</p>
@@ -5890,22 +5890,22 @@ aws<span class="w"> </span>iam<span class="w"> </span>attach-user-policy<span cl
 </code></pre></div>
 And you'll see output that looks like this (this is non-valid example text):</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;AttachedPolicies&quot;: [</span>
+<span class="go">    "AttachedPolicies": [</span>
 <span class="go">        {</span>
-<span class="go">            &quot;PolicyName&quot;: &quot;controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
+<span class="go">            "PolicyName": "controllers-eks.cluster-api-provider-aws.sigs.k8s.io",</span>
+<span class="go">            "PolicyArn": "arn:aws:iam::AWS_ARN_ID:policy/controllers-eks.cluster-api-provider-aws.sigs.k8s.io"</span>
 <span class="go">        },</span>
 <span class="go">        {</span>
-<span class="go">            &quot;PolicyName&quot;: &quot;controllers.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
+<span class="go">            "PolicyName": "controllers.cluster-api-provider-aws.sigs.k8s.io",</span>
+<span class="go">            "PolicyArn": "arn:aws:iam::AWS_ARN_ID:policy/controllers.cluster-api-provider-aws.sigs.k8s.io"</span>
 <span class="go">        },</span>
 <span class="go">        {</span>
-<span class="go">            &quot;PolicyName&quot;: &quot;control-plane.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
+<span class="go">            "PolicyName": "control-plane.cluster-api-provider-aws.sigs.k8s.io",</span>
+<span class="go">            "PolicyArn": "arn:aws:iam::AWS_ARN_ID:policy/control-plane.cluster-api-provider-aws.sigs.k8s.io"</span>
 <span class="go">        },</span>
 <span class="go">        {</span>
-<span class="go">            &quot;PolicyName&quot;: &quot;nodes.cluster-api-provider-aws.sigs.k8s.io&quot;,</span>
-<span class="go">            &quot;PolicyArn&quot;: &quot;arn:aws:iam::AWS_ARN_ID:policy/nodes.cluster-api-provider-aws.sigs.k8s.io&quot;</span>
+<span class="go">            "PolicyName": "nodes.cluster-api-provider-aws.sigs.k8s.io",</span>
+<span class="go">            "PolicyArn": "arn:aws:iam::AWS_ARN_ID:policy/nodes.cluster-api-provider-aws.sigs.k8s.io"</span>
 <span class="go">        }</span>
 <span class="go">    ]</span>
 <span class="go">}</span>
@@ -5916,12 +5916,12 @@ And you'll see output that looks like this (this is non-valid example text):</p>
 </code></pre></div>
 <p>You should see something like this. It's important to save these credentials securely somewhere other than the management node, since the management node may end up being ephemeral. Again, this is non-valid example text:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">{</span>
-<span class="go">    &quot;AccessKey&quot;: {</span>
-<span class="go">        &quot;UserName&quot;: &quot;k0rdentQuickstart&quot;,</span>
-<span class="go">        &quot;AccessKeyId&quot;: &quot;EXAMPLE_ACCESS_KEY_ID&quot;,</span>
-<span class="go">        &quot;Status&quot;: &quot;Active&quot;,</span>
-<span class="go">        &quot;SecretAccessKey&quot;: &quot;EXAMPLE_SECRET_ACCESS_KEY&quot;,</span>
-<span class="go">        &quot;CreateDate&quot;: &quot;2025-01-18T08:33:35+00:00&quot;</span>
+<span class="go">    "AccessKey": {</span>
+<span class="go">        "UserName": "k0rdentQuickstart",</span>
+<span class="go">        "AccessKeyId": "EXAMPLE_ACCESS_KEY_ID",</span>
+<span class="go">        "Status": "Active",</span>
+<span class="go">        "SecretAccessKey": "EXAMPLE_SECRET_ACCESS_KEY",</span>
+<span class="go">        "CreateDate": "2025-01-18T08:33:35+00:00"</span>
 <span class="go">    }</span>
 <span class="go">}</span>
 </code></pre></div>
@@ -5946,11 +5946,11 @@ The <code>Secret</code> name, in this case, needs to be exactly <code>aws-cluste
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
 <span class="nt">stringData</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">AccessKeyID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;EXAMPLE_ACCESS_KEY_ID&quot;</span>
-<span class="w">  </span><span class="nt">SecretAccessKey</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;EXAMPLE_SECRET_ACCESS_KEY&quot;</span>
+<span class="w">  </span><span class="nt">AccessKeyID</span><span class="p">:</span><span class="w"> </span><span class="s">"EXAMPLE_ACCESS_KEY_ID"</span>
+<span class="w">  </span><span class="nt">SecretAccessKey</span><span class="p">:</span><span class="w"> </span><span class="s">"EXAMPLE_SECRET_ACCESS_KEY"</span>
 </code></pre></div>
 <p>Remember: the Access Key ID and Secret Access Key are the ones you generated for the k0rdent user, <code>k0rdentQuickStart</code>.</p>
 <p>Apply this YAML to the management cluster as follows:</p>
@@ -5964,7 +5964,7 @@ The <code>Secret</code> name, in this case, needs to be exactly <code>aws-cluste
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">secretRef</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-secret</span>
 <span class="w">  </span><span class="nt">allowedNamespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
@@ -5981,7 +5981,7 @@ The <code>Secret</code> name, in this case, needs to be exactly <code>aws-cluste
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-cred</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Credential</span><span class="nv"> </span><span class="s">Example&quot;</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Credential</span><span class="nv"> </span><span class="s">Example"</span>
 <span class="w">  </span><span class="nt">identityRef</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">infrastructure.cluster.x-k8s.io/v1beta2</span>
 <span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWSClusterStaticIdentity</span>
@@ -6004,9 +6004,9 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>aws-clu
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-cluster-identity-resource-template</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kcm&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/component</span><span class="p">:</span><span class="w"> </span><span class="s">"kcm"</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">projectsveltos.io/template</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>Note that <code>ConfigMap</code> is empty. This is expected, we don't need to template any object inside child cluster(s), but we can use that object in the future if need arises.</p>
 <p>Now apply this YAML to your management cluster:</p>
@@ -6070,10 +6070,10 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>aws-clu
 </code></pre></div>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
 <p>Now you can retrieve the cluster's <code>kubeconfig</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-aws-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-aws-clusterdeployment1.kubeconfig
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-aws-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-aws-clusterdeployment1.kubeconfig
 </code></pre></div>
 <p>And you can use the <code>kubeconfig</code> to see what's running on the cluster:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-aws-clusterdeployment1.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-aws-clusterdeployment1.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 <h2 id="list-child-clusters">List child clusters<a class="headerlink" href="#list-child-clusters" title="Permanent link">#</a></h2>
 <p>To verify the presence of the child cluster, list the available <code>ClusterDeployment</code> objects:</p>
@@ -6088,7 +6088,7 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>aws-clu
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-aws-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>You'll see confirmation like this:</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-aws-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com "my-aws-clusterdeployment1" deleted</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Now that you've finished the k0rdent QuickStart, we have some suggestions for what to do next:</p>

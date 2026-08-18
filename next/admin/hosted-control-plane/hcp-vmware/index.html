@@ -5424,12 +5424,12 @@ parameters. For example:</p>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">vsphere</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vcenter.example.com</span>
-<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;00:00:00&quot;</span>
-<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DC&quot;</span>
-<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/datastore/DC&quot;</span>
-<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/host/vCluster/Resources/ResPool&quot;</span>
-<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/example&quot;</span>
-<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172.16.0.10&quot;</span>
+<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">"00:00:00"</span>
+<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">"DC"</span>
+<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/datastore/DC"</span>
+<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/host/vCluster/Resources/ResPool"</span>
+<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/vm/example"</span>
+<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">"172.16.0.10"</span>
 <span class="w">    </span><span class="nt">ssh</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
 <span class="w">      </span><span class="nt">publicKey</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -5437,15 +5437,15 @@ parameters. For example:</p>
 <span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="w">    </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
-<span class="w">    </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
-<span class="w">    </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+<span class="w">    </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/vm/template"</span>
+<span class="w">    </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/network/Net"</span>
 <span class="w">    </span><span class="nt">k0smotron</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">patches</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">patch</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">            </span><span class="no">metadata:</span>
 <span class="w">              </span><span class="no">annotations:</span>
-<span class="w">                </span><span class="no">kube-vip.io/loadbalancerIPs: &quot;172.16.0.10&quot;</span>
+<span class="w">                </span><span class="no">kube-vip.io/loadbalancerIPs: "172.16.0.10"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">merge</span>
 <span class="w">        </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane</span>
@@ -5459,7 +5459,7 @@ instead of the <code>k0smotron.patches</code> section. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">k0smotron</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">service</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">kube-vip.io/loadbalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172.16.0.10&quot;</span>
+<span class="w">      </span><span class="nt">kube-vip.io/loadbalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="s">"172.16.0.10"</span>
 </code></pre></div>
 </div>
 </li>

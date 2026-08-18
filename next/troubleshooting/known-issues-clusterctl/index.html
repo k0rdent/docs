@@ -5389,7 +5389,7 @@
 <p>When using <code>clusterctl</code> to work with child cluster objects, you may run into the following error:</p>
 <p><div class="highlight"><pre><span></span><code>clusterctl<span class="w"> </span>describe<span class="w"> </span>cluster<span class="w"> </span>kubevirt-demo
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">Error: this version of clusterctl could be used only with &quot;v1beta2&quot; management clusters, &quot;v1beta1&quot; detected</span>
+<div class="highlight"><pre><span></span><code><span class="go">Error: this version of clusterctl could be used only with "v1beta2" management clusters, "v1beta1" detected</span>
 </code></pre></div></p>
 <p>This error occurs because the current CAPI operator doesn't support CAPI v1.11 yet. To solve this problem, 
 install a version of <code>clusterctl</code> <strong>below</strong> 1.11, such as <a href="https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.10.5">Clusterctl v1.10.5</a>.</p>

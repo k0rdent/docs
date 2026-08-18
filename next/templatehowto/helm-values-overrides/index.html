@@ -5729,8 +5729,8 @@ only if anonymous authentication is explicitly configured.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contentFrom</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">secretRef</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Values.auth.configSecret.name  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default &quot;config&quot; .Values.auth.configSecret.key  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0644&quot;</span>
+<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default "config" .Values.auth.configSecret.key  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">        </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">"0644"</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.auth.configSecret.hash</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/k0s/auth/config-{{ .Values.auth.configSecret.hash }}.yaml</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- else</span><span class="w"> </span><span class="p p-Indicator">}}</span>
@@ -5743,7 +5743,7 @@ only if anonymous authentication is explicitly configured.</p>
 <span class="w">          </span><span class="nt">extraArgs</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.auth.configSecret.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.auth.configSecret.hash</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">            </span><span class="nt">authentication-config</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/lib/k0s/auth/config-{{</span><span class="nv"> </span><span class="s">.Values.auth.configSecret.hash</span><span class="nv"> </span><span class="s">}}.yaml&quot;</span>
+<span class="w">            </span><span class="nt">authentication-config</span><span class="p">:</span><span class="w"> </span><span class="s">"/var/lib/k0s/auth/config-{{</span><span class="nv"> </span><span class="s">.Values.auth.configSecret.hash</span><span class="nv"> </span><span class="s">}}.yaml"</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- else</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">            </span><span class="nt">authentication-config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/k0s/auth/config.yaml</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
@@ -5793,8 +5793,8 @@ only if anonymous authentication is explicitly configured.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">contentFrom</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">configMapRef</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Values.audit.policyRef.name  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default &quot;policy&quot; .Values.audit.policyRef.key  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0644&quot;</span>
+<span class="w">            </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">default "policy" .Values.audit.policyRef.key  | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<span class="w">        </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">"0644"</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.audit.policyRef.hash</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/k0s/audit/policy-{{ .Values.audit.policyRef.hash }}.yaml</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- else</span><span class="w"> </span><span class="p p-Indicator">}}</span>
@@ -5807,9 +5807,9 @@ only if anonymous authentication is explicitly configured.</p>
 <span class="w">          </span><span class="nt">extraArgs</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.audit.policyRef.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- if .Values.audit.policyRef.hash</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">            </span><span class="nt">audit-policy-file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/lib/k0s/audit/policy-{{</span><span class="nv"> </span><span class="s">.Values.audit.policyRef.hash</span><span class="nv"> </span><span class="s">}}.yaml&quot;</span>
+<span class="w">            </span><span class="nt">audit-policy-file</span><span class="p">:</span><span class="w"> </span><span class="s">"/var/lib/k0s/audit/policy-{{</span><span class="nv"> </span><span class="s">.Values.audit.policyRef.hash</span><span class="nv"> </span><span class="s">}}.yaml"</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- else</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">            </span><span class="nt">audit-policy-file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/lib/k0s/audit/policy.yaml&quot;</span>
+<span class="w">            </span><span class="nt">audit-policy-file</span><span class="p">:</span><span class="w"> </span><span class="s">"/var/lib/k0s/audit/policy.yaml"</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 </code></pre></div>

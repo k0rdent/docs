@@ -5438,9 +5438,9 @@ templates shipped with k0rdent.</p>
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.11.0</span>
 <span class="nt">status</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">capiContracts</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">v1alpha3</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">    </span><span class="nt">v1alpha4</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">    </span><span class="nt">v1beta1</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">v1alpha3</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">v1alpha4</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">v1beta1</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">chartRef</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-0-0-4</span>
@@ -5449,8 +5449,8 @@ templates shipped with k0rdent.</p>
 <span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">configSecret</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A Helm chart for Cluster API core components</span>
 <span class="w">  </span><span class="nt">observedGeneration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">valid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -5482,13 +5482,13 @@ templates shipped with k0rdent.</p>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">bastion</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">allowedCIDRBlocks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="nt">disableIngressRules</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t2.micro</span>
 <span class="w">    </span><span class="nt">clusterIdentity</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWSClusterStaticIdentity</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">    </span><span class="nt">clusterNetwork</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">pods</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">cidrBlocks</span><span class="p">:</span>
@@ -5497,35 +5497,35 @@ templates shipped with k0rdent.</p>
 <span class="w">        </span><span class="nt">cidrBlocks</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.96.0.0/12</span>
 <span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="nt">iamInstanceProfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane.cluster-api-provider-aws.sigs.k8s.io</span>
 <span class="w">      </span><span class="nt">imageLookup</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">        </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">amzn2-ami-hvm*-gp2</span>
-<span class="w">        </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;137112412989&quot;</span>
-<span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">        </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"137112412989"</span>
+<span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <span class="w">    </span><span class="nt">controlPlaneNumber</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">    </span><span class="nt">extensions</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">chartRepository</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">      </span><span class="nt">imageRepository</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">chartRepository</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">      </span><span class="nt">imageRepository</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">    </span><span class="nt">k0s</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.31.1+k0s.1</span>
 <span class="w">    </span><span class="nt">publicIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">    </span><span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">sshKeyName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">amiID</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="nt">iamInstanceProfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">control-plane.cluster-api-provider-aws.sigs.k8s.io</span>
 <span class="w">      </span><span class="nt">imageLookup</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">        </span><span class="nt">baseOS</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">amzn2-ami-hvm*-gp2</span>
-<span class="w">        </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;137112412989&quot;</span>
-<span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">        </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">"137112412989"</span>
+<span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <span class="w">    </span><span class="nt">workersNumber</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;An</span><span class="nv"> </span><span class="s">kcm</span><span class="nv"> </span><span class="s">template</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">deploy</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">k0s</span><span class="nv"> </span><span class="s">cluster</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">AWS</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">bootstrapped</span><span class="nv"> </span><span class="s">control</span>
-<span class="w">    </span><span class="s">plane</span><span class="nv"> </span><span class="s">nodes.</span><span class="nv"> </span><span class="s">&#39;</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'An</span><span class="nv"> </span><span class="s">kcm</span><span class="nv"> </span><span class="s">template</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">deploy</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">k0s</span><span class="nv"> </span><span class="s">cluster</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">AWS</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">bootstrapped</span><span class="nv"> </span><span class="s">control</span>
+<span class="w">    </span><span class="s">plane</span><span class="nv"> </span><span class="s">nodes.</span><span class="nv"> </span><span class="s">'</span>
 <span class="w">  </span><span class="nt">observedGeneration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">providerContracts</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">bootstrap-k0smotron</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1beta1</span>

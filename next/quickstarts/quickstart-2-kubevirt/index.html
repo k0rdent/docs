@@ -5666,7 +5666,7 @@ the following environment variables.</p>
 <span class="s">  name: $SECRET_NAME</span>
 <span class="s">  namespace: $CLUSTER_NAMESPACE</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/component: &quot;kcm&quot;</span>
+<span class="s">    k0rdent.mirantis.com/component: "kcm"</span>
 <span class="s">type: Opaque</span>
 <span class="s">EOF</span>
 </code></pre></div>
@@ -5714,9 +5714,9 @@ The <code>ConfigMap</code> name, in this case, needs to be exactly <code>$SECRET
 <span class="s">  name: $RESOURCE_TEMPLATE_NAME</span>
 <span class="s">  namespace: $CLUSTER_NAMESPACE</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/component: &quot;kcm&quot;</span>
+<span class="s">    k0rdent.mirantis.com/component: "kcm"</span>
 <span class="s">  annotations:</span>
-<span class="s">    projectsveltos.io/template: &quot;true&quot;</span>
+<span class="s">    projectsveltos.io/template: "true"</span>
 <span class="s">EOF</span>
 </code></pre></div>
 Note that the <code>ConfigMap</code> only contains metadata and no data fields. This is expected, as we do not need to template
@@ -5814,26 +5814,26 @@ customize the cluster configuration according to your requirements, including re
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>--watch
 </code></pre></div>
 <p>To verify that the cluster has been successfully provisioned, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)].status}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")].status}'</span>
 </code></pre></div>
 <p>If the cluster was provisioned, the output of this command will be:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="go">True</span>
 </code></pre></div>
 <p>If there is any error, check the readiness condition in more details:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 <h2 id="obtain-the-clusters-kubeconfig">Obtain the cluster's kubeconfig<a class="headerlink" href="#obtain-the-clusters-kubeconfig" title="Permanent link">#</a></h2>
 <p>Now you can retrieve the cluster's kubeconfig:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-kubevirt-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.value}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-kubevirt-clusterdeployment1.kubeconfig
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-kubevirt-clusterdeployment1-kubeconfig<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.value}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>my-kubevirt-clusterdeployment1.kubeconfig
 </code></pre></div>
 <p>And you can use the kubeconfig to see what's running on the cluster:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">&quot;my-kubevirt-clusterdeployment1.kubeconfig&quot;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="s2">"my-kubevirt-clusterdeployment1.kubeconfig"</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
 </code></pre></div>
 <h2 id="tear-down-the-child-cluster">Tear down the child cluster<a class="headerlink" href="#tear-down-the-child-cluster" title="Permanent link">#</a></h2>
 <p>To tear down the child cluster, delete the <code>ClusterDeployment</code> from the management cluster:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>ClusterDeployment<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
-<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com &quot;my-kubevirt-clusterdeployment1&quot; deleted</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="go">clusterdeployment.k0rdent.mirantis.com "my-kubevirt-clusterdeployment1" deleted</span>
 </code></pre></div></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
 <p>For troubleshooting KubeVirt cluster deployment issues, refer to the <a href="../../troubleshooting/known-issues-kubevirt/">Troubleshooting KubeVirt Clusters</a> guide.</p>

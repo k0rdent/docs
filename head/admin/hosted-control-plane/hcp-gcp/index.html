@@ -5416,10 +5416,10 @@ For a detailed list of parameters, refer to the <a href="../../../reference/temp
 <span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-hosted-cp-1-0-43</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcp-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PROJECT_NAME&quot;</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-east4&quot;</span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="s">"PROJECT_NAME"</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">"us-east4"</span>
 <span class="w">    </span><span class="nt">network</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"> </span><span class="c1"># Select your desired network name (select new network name to create or find it via `gcloud compute networks list --format=&quot;value(name)&quot;`)</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"> </span><span class="c1"># Select your desired network name (select new network name to create or find it via `gcloud compute networks list --format="value(name)"`)</span>
 <span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">n1-standard-2</span><span class="w"> </span><span class="c1"># Select your desired instance type (find it via `gcloud compute machine-types list | grep REGION`)</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20250213</span><span class="w"> </span><span class="c1"># Select image (find it via `gcloud compute images list --uri`)</span>

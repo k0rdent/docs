@@ -5396,8 +5396,8 @@ The issue is resolved in k0s versions <code>v1.32.6+k0s.0</code>, <code>v1.33.2+
 the registry uses a certificate signed by an unknown certificate authority, Helm extensions (e.g., CCM or CSI
 drivers) may fail to install.</p>
 <p>You may encounter an error similar to the following in the logs of the hosted cluster controller pods:</p>
-<div class="highlight"><pre><span></span><code>can<span class="s1">&#39;&#39;</span>t<span class="w"> </span>locate<span class="w"> </span>chart<span class="w"> </span><span class="sb">`</span>oci://172.19.125.101:5001/charts/vsphere-csi-driver-0.0.3<span class="sb">`</span>:
-failed<span class="w"> </span>to<span class="w"> </span><span class="k">do</span><span class="w"> </span>request:<span class="w"> </span>Head<span class="w"> </span><span class="s2">&quot;https://172.19.125.101:5001/v2/charts/vsphere-csi-driver/manifests/0.0.3&quot;</span>:
+<div class="highlight"><pre><span></span><code>can<span class="s1">''</span>t<span class="w"> </span>locate<span class="w"> </span>chart<span class="w"> </span><span class="sb">`</span>oci://172.19.125.101:5001/charts/vsphere-csi-driver-0.0.3<span class="sb">`</span>:
+failed<span class="w"> </span>to<span class="w"> </span><span class="k">do</span><span class="w"> </span>request:<span class="w"> </span>Head<span class="w"> </span><span class="s2">"https://172.19.125.101:5001/v2/charts/vsphere-csi-driver/manifests/0.0.3"</span>:
 tls:<span class="w"> </span>failed<span class="w"> </span>to<span class="w"> </span>verify<span class="w"> </span>certificate:<span class="w"> </span>x509:<span class="w"> </span>certificate<span class="w"> </span>signed<span class="w"> </span>by<span class="w"> </span>unknown<span class="w"> </span>authority
 </code></pre></div>
 <p>As a result, the Helm extension fails to install.</p>
@@ -5417,35 +5417,35 @@ StatefulSet. The secret with the registry CA should already be present in your s
 </ol>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>statefulset<span class="w"> </span>kmc-&lt;CLUSTER_DEPLOYMENT_NAME&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>&lt;CLUSTER_DEPLOYMENT_NAMESPACE&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[</span>
+<span class="w">  </span>--type<span class="o">=</span><span class="s1">'json'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[</span>
 <span class="s1">    {</span>
-<span class="s1">      &quot;op&quot;: &quot;add&quot;,</span>
-<span class="s1">      &quot;path&quot;: &quot;/spec/template/spec/volumes/-&quot;,</span>
-<span class="s1">      &quot;value&quot;: {</span>
-<span class="s1">        &quot;name&quot;: &quot;registry-ca&quot;,</span>
-<span class="s1">        &quot;secret&quot;: {</span>
-<span class="s1">          &quot;secretName&quot;: &quot;&lt;REGISTRY_SECRET_NAME&gt;&quot;,</span>
-<span class="s1">          &quot;items&quot;: [</span>
+<span class="s1">      "op": "add",</span>
+<span class="s1">      "path": "/spec/template/spec/volumes/-",</span>
+<span class="s1">      "value": {</span>
+<span class="s1">        "name": "registry-ca",</span>
+<span class="s1">        "secret": {</span>
+<span class="s1">          "secretName": "&lt;REGISTRY_SECRET_NAME&gt;",</span>
+<span class="s1">          "items": [</span>
 <span class="s1">            {</span>
-<span class="s1">              &quot;key&quot;: &quot;ca.crt&quot;,</span>
-<span class="s1">              &quot;path&quot;: &quot;registry-ca.pem&quot;</span>
+<span class="s1">              "key": "ca.crt",</span>
+<span class="s1">              "path": "registry-ca.pem"</span>
 <span class="s1">            }</span>
 <span class="s1">          ]</span>
 <span class="s1">        }</span>
 <span class="s1">      }</span>
 <span class="s1">    },</span>
 <span class="s1">    {</span>
-<span class="s1">      &quot;op&quot;: &quot;add&quot;,</span>
-<span class="s1">      &quot;path&quot;: &quot;/spec/template/spec/containers/0/volumeMounts/-&quot;,</span>
-<span class="s1">      &quot;value&quot;: {</span>
-<span class="s1">        &quot;name&quot;: &quot;registry-ca&quot;,</span>
-<span class="s1">        &quot;mountPath&quot;: &quot;/etc/ssl/certs/registry-ca.pem&quot;,</span>
-<span class="s1">        &quot;subPath&quot;: &quot;registry-ca.pem&quot;,</span>
-<span class="s1">        &quot;readOnly&quot;: true</span>
+<span class="s1">      "op": "add",</span>
+<span class="s1">      "path": "/spec/template/spec/containers/0/volumeMounts/-",</span>
+<span class="s1">      "value": {</span>
+<span class="s1">        "name": "registry-ca",</span>
+<span class="s1">        "mountPath": "/etc/ssl/certs/registry-ca.pem",</span>
+<span class="s1">        "subPath": "registry-ca.pem",</span>
+<span class="s1">        "readOnly": true</span>
 <span class="s1">      }</span>
 <span class="s1">    }</span>
-<span class="s1">  ]&#39;</span>
+<span class="s1">  ]'</span>
 </code></pre></div>
 <h1 id="kcm-installation-fails-with-custom-registry-using-redirects-tls-certificate-mismatch">KCM Installation Fails with Custom Registry Using Redirects: TLS Certificate Mismatch<a class="headerlink" href="#kcm-installation-fails-with-custom-registry-using-redirects-tls-certificate-mismatch" title="Permanent link">#</a></h1>
 <div class="admonition note">
@@ -5467,35 +5467,35 @@ a known Flux bug: <a href="https://github.com/fluxcd/flux2/issues/5477">certSecr
 by the <code>registryCertSecret</code> parameter. Then patch the <code>source-controller</code> Deployment:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>source-controller<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[</span>
+<span class="w">  </span>--type<span class="o">=</span><span class="s1">'json'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[</span>
 <span class="s1">    {</span>
-<span class="s1">      &quot;op&quot;: &quot;add&quot;,</span>
-<span class="s1">      &quot;path&quot;: &quot;/spec/template/spec/volumes/-&quot;,</span>
-<span class="s1">      &quot;value&quot;: {</span>
-<span class="s1">        &quot;name&quot;: &quot;registry-ca&quot;,</span>
-<span class="s1">        &quot;secret&quot;: {</span>
-<span class="s1">          &quot;secretName&quot;: &quot;&lt;REGISTRY_SECRET_NAME&gt;&quot;,</span>
-<span class="s1">          &quot;items&quot;: [</span>
+<span class="s1">      "op": "add",</span>
+<span class="s1">      "path": "/spec/template/spec/volumes/-",</span>
+<span class="s1">      "value": {</span>
+<span class="s1">        "name": "registry-ca",</span>
+<span class="s1">        "secret": {</span>
+<span class="s1">          "secretName": "&lt;REGISTRY_SECRET_NAME&gt;",</span>
+<span class="s1">          "items": [</span>
 <span class="s1">            {</span>
-<span class="s1">              &quot;key&quot;: &quot;ca.crt&quot;,</span>
-<span class="s1">              &quot;path&quot;: &quot;registry-ca.pem&quot;</span>
+<span class="s1">              "key": "ca.crt",</span>
+<span class="s1">              "path": "registry-ca.pem"</span>
 <span class="s1">            }</span>
 <span class="s1">          ]</span>
 <span class="s1">        }</span>
 <span class="s1">      }</span>
 <span class="s1">    },</span>
 <span class="s1">    {</span>
-<span class="s1">      &quot;op&quot;: &quot;add&quot;,</span>
-<span class="s1">      &quot;path&quot;: &quot;/spec/template/spec/containers/0/volumeMounts/-&quot;,</span>
-<span class="s1">      &quot;value&quot;: {</span>
-<span class="s1">        &quot;name&quot;: &quot;registry-ca&quot;,</span>
-<span class="s1">        &quot;mountPath&quot;: &quot;/etc/ssl/certs/registry-ca.pem&quot;,</span>
-<span class="s1">        &quot;subPath&quot;: &quot;registry-ca.pem&quot;,</span>
-<span class="s1">        &quot;readOnly&quot;: true</span>
+<span class="s1">      "op": "add",</span>
+<span class="s1">      "path": "/spec/template/spec/containers/0/volumeMounts/-",</span>
+<span class="s1">      "value": {</span>
+<span class="s1">        "name": "registry-ca",</span>
+<span class="s1">        "mountPath": "/etc/ssl/certs/registry-ca.pem",</span>
+<span class="s1">        "subPath": "registry-ca.pem",</span>
+<span class="s1">        "readOnly": true</span>
 <span class="s1">      }</span>
 <span class="s1">    }</span>
-<span class="s1">  ]&#39;</span>
+<span class="s1">  ]'</span>
 </code></pre></div>
 <ol>
 <li>Remove <code>certSecretRef</code> from the HelmRepository</li>
@@ -5504,7 +5504,7 @@ by the <code>registryCertSecret</code> parameter. Then patch the <code>source-co
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrepository<span class="w"> </span>kcm-templates<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/certSecretRef&quot;}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op": "remove", "path": "/spec/certSecretRef"}]'</span>
 </code></pre></div>
 
 

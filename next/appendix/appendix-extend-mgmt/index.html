@@ -5721,7 +5721,7 @@ This enables you to manage the list of providers to deploy and adjust the defaul
 <span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">templatesRepoURL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oci://ghcr.io/my-oci-registry-name/kcm/charts&quot;</span>
+<span class="w">          </span><span class="nt">templatesRepoURL</span><span class="p">:</span><span class="w"> </span><span class="s">"oci://ghcr.io/my-oci-registry-name/kcm/charts"</span>
 <span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-aws</span>
@@ -5735,7 +5735,7 @@ and a reduced list of providers.</p>
 <p>Specify <code>--create-management=false</code> controller argument and install k0rdent:
   If installing using <code>helm</code> add the following parameter to the <code>helm
   install</code> command:</p>
-<div class="highlight"><pre><span></span><code>--set<span class="o">=</span><span class="s2">&quot;controller.createManagement=false&quot;</span>
+<div class="highlight"><pre><span></span><code>--set<span class="o">=</span><span class="s2">"controller.createManagement=false"</span>
 </code></pre></div>
 </li>
 <li>
@@ -5808,7 +5808,7 @@ If you’re using a private registry signed by an unknown certificate authority,
 <span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">templatesRepoURL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;oci://ghcr.io/my-private-oci-registry-name/kcm/charts&quot;</span>
+<span class="w">          </span><span class="nt">templatesRepoURL</span><span class="p">:</span><span class="w"> </span><span class="s">"oci://ghcr.io/my-private-oci-registry-name/kcm/charts"</span>
 <span class="w">          </span><span class="nt">globalRegistry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/my-private-oci-registry-name</span>
 <span class="w">          </span><span class="nt">insecureRegistry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">          </span><span class="nt">registryCredsSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-private-oci-registry-creds</span>
@@ -5827,8 +5827,8 @@ Prior to K0rdent v0.3.0, the <code>templatesRepoURL</code> parameter was named <
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-private-oci-registry-creds</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">stringData</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my-user-123&quot;</span>
-<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my-password-123&quot;</span>
+<span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">"my-user-123"</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">"my-password-123"</span>
 </code></pre></div>
 <p>Example of a <code>Secret</code> with Registry Certificate:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -5851,7 +5851,7 @@ the following <code>HelmRepository</code> will be created:</p>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-private-oci-registry-name</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
@@ -6062,7 +6062,7 @@ other Deployment-level patch customizations.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">patch</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">          </span><span class="no">- op: add</span>
 <span class="w">            </span><span class="no">path: /spec/template/metadata/annotations/example.com~1custom-patch</span>
-<span class="w">            </span><span class="no">value: &quot;enabled&quot;</span>
+<span class="w">            </span><span class="no">value: "enabled"</span>
 <span class="w">        </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps</span>
 <span class="w">          </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -6080,7 +6080,7 @@ sub-provider):</p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">patch</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">            </span><span class="no">- op: add</span>
 <span class="w">              </span><span class="no">path: /spec/template/metadata/annotations/example.com~1infra-patch</span>
-<span class="w">              </span><span class="no">value: &quot;enabled&quot;</span>
+<span class="w">              </span><span class="no">value: "enabled"</span>
 <span class="w">          </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps</span>
 <span class="w">            </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -6091,7 +6091,7 @@ sub-provider):</p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">patch</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">            </span><span class="no">- op: add</span>
 <span class="w">              </span><span class="no">path: /spec/template/metadata/annotations/example.com~1bootstrap-patch</span>
-<span class="w">              </span><span class="no">value: &quot;enabled&quot;</span>
+<span class="w">              </span><span class="no">value: "enabled"</span>
 <span class="w">          </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps</span>
 <span class="w">            </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -6102,7 +6102,7 @@ sub-provider):</p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">patch</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">            </span><span class="no">- op: add</span>
 <span class="w">              </span><span class="no">path: /spec/template/metadata/annotations/example.com~1control-plane-patch</span>
-<span class="w">              </span><span class="no">value: &quot;enabled&quot;</span>
+<span class="w">              </span><span class="no">value: "enabled"</span>
 <span class="w">          </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps</span>
 <span class="w">            </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>

@@ -6131,22 +6131,22 @@ Check the k0rdent <a href="../../clusters/deploy-cluster/">cluster documentation
 </ol>
 <h3 id="backup-victoria-metrics">Backup Victoria Metrics<a class="headerlink" href="#backup-victoria-metrics" title="Permanent link">#</a></h3>
 <p>To backup all metrics data to a local file (<code>victoria-metrics-backup.gz</code>):</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_metrics_endpoint&gt;/api/v1/export?reduce_mem_usage<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;match[]={__name__!=&quot;&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'match[]={__name__!=""}'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&gt;<span class="w"> </span>victoria-metrics-backup.gz
 </code></pre></div>
 <p>To restore all metrics to a regional cluster from a local file run:</p>
 <p>Without Istio servicemesh:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/vminsert-cluster<span class="w"> </span><span class="m">8480</span>:8480<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="c1"># use kubeconfig of regional cluster to import data</span>
 
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-metrics-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://localhost:8480/insert/0/prometheus/api/v1/import
 </code></pre></div>
 <p>With Istio servicemesh:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-metrics-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://&lt;CLUSTER_NAME&gt;-vminsert:8480/insert/0/prometheus/api/v1/import
 </code></pre></div>
@@ -6167,10 +6167,10 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Cont
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--search.maxQueryDuration=24h</span>
 </code></pre></div>
 <p>To backup all logs data to a local file (<code>victoria-logs-backup.gz</code>):</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_logs_endpoint&gt;/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=*&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>victoria-logs-backup.gz
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=*'</span><span class="w"> </span>&gt;<span class="w"> </span>victoria-logs-backup.gz
 </code></pre></div>
 <ul>
 <li>This command fetches all logs from the old regional cluster and saves them as a gzip-compressed file.</li>
@@ -6180,13 +6180,13 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Cont
 <p>Without Istio servicemesh:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/kof-storage-victoria-logs-cluster-vlinsert<span class="w"> </span><span class="m">9481</span>:9481<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="c1"># use kubeconfig of regional cluster to import data</span>
 
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-logs-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://localhost:9481/insert/jsonline
 </code></pre></div>
 <p><em>N.B.</em> the default <code>write_logs_endpoint</code> ends with <code>/insert/opentelemetry/v1/logs</code>: replace it with <code>/insert/jsonline</code>.</p>
 <p>With Istio servicemesh:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-logs-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://&lt;CLUSTER_NAME&gt;-logs-insert:9481/insert/jsonline
 </code></pre></div>
@@ -6232,11 +6232,11 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 </code></pre></div></li>
 <li>
 <p><strong>Migrate metrics data</strong> by running the following command (replace placeholders as needed):
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_metrics_endpoint&gt;/api/v1/export?reduce_mem_usage<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;match[]={__name__!=&quot;&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'match[]={__name__!=""}'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://vminsert-cluster.kof:8480/insert/0/prometheus/api/v1/import
 </code></pre></div></p>
 <p>Check <a href="https://docs.victoriametrics.com/victoriametrics/url-examples/#apiv1export">VictoriaMetrics API</a> for more details.</p>
@@ -6247,11 +6247,11 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 </li>
 <li>
 <p><strong>Migrate logs data</strong> by running the following command (replace placeholders as needed):
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_logs_endpoint&gt;/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=*&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=*'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://kof-storage-victoria-logs-cluster-vlinsert.kof:9481/insert/jsonline
 </code></pre></div></p>
 <p>Check <a href="https://docs.victoriametrics.com/victorialogs/faq/#how-to-export-logs-from-victorialogs">VictoriaLogs FAQ</a> for more details.</p>
@@ -6280,8 +6280,8 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 <h2 id="upgrade-to-any-version">Upgrade to any version<a class="headerlink" href="#upgrade-to-any-version" title="Permanent link">#</a></h2>
 <ul>
 <li>Create a backup of each KOF chart values in each cluster, for example:
-    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=&quot;&quot;</span>
-<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=""</span>
+<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">  </span><span class="k">for</span><span class="w"> </span>namespace<span class="w"> </span><span class="k">in</span><span class="w"> </span>kof<span class="w"> </span>istio-system<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span>chart<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>list<span class="w"> </span>-qn<span class="w"> </span><span class="nv">$namespace</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">      </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span><span class="nv">$namespace</span><span class="w"> </span><span class="nv">$chart</span><span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
@@ -6358,7 +6358,7 @@ Otherwise <code>kof-regional</code> MCS may uninstall the storage, leading to th
     otherwise the <code>kof-collectors</code> on child clusters will keep reinstalling
     until the KOF upgrade. It shouldn't lead to data loss,
     but for a smoother experience run this command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;values&quot;:{&quot;collectors&quot;:{&quot;opentelemetry-kube-stack&quot;:{&quot;collectors&quot;:{&quot;target-allocator&quot;:{&quot;volumes&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;emptyDir&quot;:{}}],&quot;volumeMounts&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;mountPath&quot;:&quot;/tmp/fix&quot;}]},&quot;cluster&quot;:{&quot;volumes&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;emptyDir&quot;:{}}],&quot;volumeMounts&quot;:[{&quot;name&quot;:&quot;fix&quot;,&quot;mountPath&quot;:&quot;/tmp/fix&quot;}]}}}}}}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"values":{"collectors":{"opentelemetry-kube-stack":{"collectors":{"target-allocator":{"volumes":[{"name":"fix","emptyDir":{}}],"volumeMounts":[{"name":"fix","mountPath":"/tmp/fix"}]},"cluster":{"volumes":[{"name":"fix","emptyDir":{}}],"volumeMounts":[{"name":"fix","mountPath":"/tmp/fix"}]}}}}}}}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -6373,13 +6373,13 @@ Otherwise <code>kof-regional</code> MCS may uninstall the storage, leading to th
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="m">0</span>.6.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-json<span class="w"> </span><span class="s1">'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'</span>
 </code></pre></div>
 <p>Use this command to remove orphaned resources:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;ca-cert-propagation-&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"ca-cert-propagation-"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 </details>
 </li>
@@ -6388,20 +6388,20 @@ Otherwise <code>kof-regional</code> MCS may uninstall the storage, leading to th
 <summary>If you stored data <a href="../kof-storing/#from-management-to-management">from management to management</a></summary>
 <p>We're now using a different approach to store management data, which you can learn about <a href="../kof-storing/#from-management-to-management">here</a>. To seamlessly migrate to the new approach, follow these steps:</p>
 <p>Remove orphaned HelmReleases:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"suspend":true}}'</span>
 kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span>-n<span class="w"> </span>kof
 
-kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"suspend":true}}'</span>
 kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof
 </code></pre></div>
 <p>Run this command to modify the <code>kof-values.yaml</code>. You need to specify the <code>persistentVolume</code> size to be exactly the same as your current PV size.</p>
-<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.toManagementCluster.enabled = true |</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-logs-cluster&quot;.enabled = true |</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-logs-cluster&quot;.vlstorage.persistentVolume.size = &quot;10Gi&quot; |</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-traces-cluster&quot;.enabled = true |</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.storage.&quot;victoria-traces-cluster&quot;.vtstorage.persistentVolume.size = &quot;10Gi&quot;</span>
-<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">'</span>
+<span class="s1">  ."kof-child".values.fromManagement.toManagementCluster.enabled = true |</span>
+<span class="s1">  ."kof-child".values.fromManagement.storage."victoria-logs-cluster".enabled = true |</span>
+<span class="s1">  ."kof-child".values.fromManagement.storage."victoria-logs-cluster".vlstorage.persistentVolume.size = "10Gi" |</span>
+<span class="s1">  ."kof-child".values.fromManagement.storage."victoria-traces-cluster".enabled = true |</span>
+<span class="s1">  ."kof-child".values.fromManagement.storage."victoria-traces-cluster".vtstorage.persistentVolume.size = "10Gi"</span>
+<span class="s1">'</span><span class="w"> </span>kof-values.yaml
 </code></pre></div>
 </details>
 </li>
@@ -6410,13 +6410,13 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span cl
 <summary>If you stored data <a href="../kof-storing/#from-management-to-regional">from management to regional</a></summary>
 <p>We're now using a different approach to store management data, which you can learn about <a href="../kof-storing/#from-management-to-regional">here</a>. To seamlessly migrate to the new approach, follow these steps:</p>
 <p>Remove orphaned HelmRelease:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;:true}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"suspend":true}}'</span>
 kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>kof-collectors<span class="w"> </span>-n<span class="w"> </span>kof
 </code></pre></div>
 <p>Run this command to modify the <code>kof-values.yaml</code>. Change the <code>REGIONAL_CLUSTER_NAME</code> in this command to send data from management to the cluster you want.</p>
-<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
-<span class="s1">  .&quot;kof-child&quot;.values.fromManagement.toRegionalCluster.name = &lt;REGIONAL_CLUSTER_NAME&gt;</span>
-<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">'</span>
+<span class="s1">  ."kof-child".values.fromManagement.toRegionalCluster.name = &lt;REGIONAL_CLUSTER_NAME&gt;</span>
+<span class="s1">'</span><span class="w"> </span>kof-values.yaml
 </code></pre></div>
 </details>
 </li>
@@ -6432,11 +6432,11 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>helmrelease<span cl
 <li>
 <p>Run this command to remove the workaround added in step 2.
     Otherwise you may experience collector crashes:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>json<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;[</span>
-<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumes&quot;},</span>
-<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumeMounts&quot;},</span>
-<span class="s1">  {&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/values/collectors/opentelemetry-kube-stack/collectors/cluster&quot;}</span>
-<span class="s1">]&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-regional<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>--type<span class="o">=</span>json<span class="w"> </span>-p<span class="w"> </span><span class="s1">'[</span>
+<span class="s1">  {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumes"},</span>
+<span class="s1">  {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/target-allocator/volumeMounts"},</span>
+<span class="s1">  {"op":"remove","path":"/spec/values/collectors/opentelemetry-kube-stack/collectors/cluster"}</span>
+<span class="s1">]'</span>
 </code></pre></div>
 </li>
 <li>
@@ -6514,7 +6514,7 @@ helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </
 <span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div></p>
@@ -6526,7 +6526,7 @@ helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </
 <span class="w">        </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">              </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">            </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div></p>
@@ -6543,15 +6543,15 @@ If you have modified values for <code>victoria-metrics-operator</code> helm char
 <summary>Alternative: bash script that creates <code>kof-values.yaml</code> automatically</summary>
 <div class="highlight"><pre><span></span><code>touch<span class="w"> </span>kof-values.yaml
 <span class="k">for</span><span class="w"> </span>filename<span class="w"> </span><span class="k">in</span><span class="w"> </span>kof-*-values.bak<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span><span class="nv">component</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">filename</span><span class="p">%-values.bak</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="w">  </span>yq<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;.</span><span class="nv">$component</span><span class="s2">.values = load(\&quot;</span><span class="nv">$filename</span><span class="s2">\&quot;)&quot;</span><span class="w"> </span>kof-values.yaml
+<span class="w">  </span><span class="nv">component</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">filename</span><span class="p">%-values.bak</span><span class="si">}</span><span class="s2">"</span>
+<span class="w">  </span>yq<span class="w"> </span>-i<span class="w"> </span><span class="s2">".</span><span class="nv">$component</span><span class="s2">.values = load(\"</span><span class="nv">$filename</span><span class="s2">\")"</span><span class="w"> </span>kof-values.yaml
 <span class="k">done</span>
 
-yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
+yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">'</span>
 <span class="s1">  .victoria-metrics-operator.values = .kof-mothership.values.victoria-metrics-operator</span>
 <span class="s1">  | del(.kof-mothership.values.victoria-metrics-operator)</span>
 <span class="s1">  | del(.victoria-metrics-operator.values | select(. == null))</span>
-<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+<span class="s1">'</span><span class="w"> </span>kof-values.yaml
 </code></pre></div>
 </details>
 </li>
@@ -6560,11 +6560,11 @@ yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span
 </li>
 </ol>
 <p>Run the following command to enable automatic CRD upgrades for <code>victoria-metrics-operator</code> during the helm upgrade:</p>
-<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;</span>
-<span class="s1">  .&quot;kof-regional&quot;.values.storage.&quot;victoria-metrics-operator&quot;.crds.upgrade.enabled = true |</span>
-<span class="s1">  .&quot;kof-regional&quot;.values.storage.&quot;victoria-metrics-operator&quot;.crds.upgrade.forceConflicts = true |</span>
-<span class="s1">  .&quot;kof-regional&quot;.values.storage.&quot;victoria-metrics-operator&quot;.crds.upgrade.podLabels.&quot;sidecar.istio.io/inject&quot; = &quot;false&quot;</span>
-<span class="s1">&#39;</span><span class="w"> </span>kof-values.yaml
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">'</span>
+<span class="s1">  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.enabled = true |</span>
+<span class="s1">  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.forceConflicts = true |</span>
+<span class="s1">  ."kof-regional".values.storage."victoria-metrics-operator".crds.upgrade.podLabels."sidecar.istio.io/inject" = "false"</span>
+<span class="s1">'</span><span class="w"> </span>kof-values.yaml
 </code></pre></div>
 <ol>
 <li>
@@ -6598,10 +6598,10 @@ This section is for users of <strong>k0rdent-istio</strong> only.</p>
 <span class="w">    </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--version<span class="w"> </span><span class="m">0</span>.4.0<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--set-json<span class="w"> </span><span class="s1">&#39;gateway.resource.spec.servers[0]={&quot;port&quot;:{&quot;number&quot;:15443,&quot;name&quot;:&quot;tls&quot;,&quot;protocol&quot;:&quot;TLS&quot;},&quot;tls&quot;:{&quot;mode&quot;:&quot;AUTO_PASSTHROUGH&quot;},&quot;hosts&quot;:[&quot;{clusterName}-vmauth.kof.svc.cluster.local&quot;]}&#39;</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set-json<span class="w"> </span><span class="s1">'gateway.resource.spec.servers[0]={"port":{"number":15443,"name":"tls","protocol":"TLS"},"tls":{"mode":"AUTO_PASSTHROUGH"},"hosts":["{clusterName}-vmauth.kof.svc.cluster.local"]}'</span>
 </code></pre></div>
 <h2 id="upgrade-to-v170">Upgrade to v1.7.0<a class="headerlink" href="#upgrade-to-v170" title="Permanent link">#</a></h2>
 <p>Notice the big changes:</p>
@@ -6618,7 +6618,7 @@ This section is for users of <strong>k0rdent-istio</strong> only.</p>
 <span class="w">    </span><span class="nt">clusterProfiles</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-storage-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">create_secrets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-vmuser-credentials</span>
@@ -6635,7 +6635,7 @@ This section is for users of <strong>k0rdent-istio</strong> only.</p>
 <span class="w">      </span><span class="c1"># It is included here only as an example of how to create secret propagation</span>
 <span class="w">      </span><span class="nt">kof-storage-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-vmuser-credentials</span>
 
@@ -6656,7 +6656,7 @@ This section is for users of <strong>k0rdent-istio</strong> only.</p>
 <span class="w">    </span><span class="nt">mcs</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-storage-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-vmuser-credentials</span>
 </code></pre></div>
@@ -6714,25 +6714,25 @@ You must upgrade KCM to v1.6.0 before upgrading KOF.</p>
 <p>To uninstall Istio without uninstalling KOF, remove the Istio dependency from the Istio <code>MultiClusterService</code> resources using the following commands:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>mcs<span class="w"> </span>kof-istio-regional-cluster<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/dependsOn&quot;}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/dependsOn"}]'</span>
 
 kubectl<span class="w"> </span>patch<span class="w"> </span>mcs<span class="w"> </span>kof-istio-child-cluster<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/dependsOn&quot;}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/dependsOn"}]'</span>
 </code></pre></div>
 <h4 id="3-remove-annotations-from-the-kof-namespace-on-all-remote-clusters">3. Remove annotations from the KOF namespace on all remote clusters<a class="headerlink" href="#3-remove-annotations-from-the-kof-namespace-on-all-remote-clusters" title="Permanent link">#</a></h4>
 <p>Remove the annotations from the KOF namespace across all remote clusters to break the link with Sveltos resources and prevent the namespace from being uninstalled during the Istio upgrade.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>remote-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>patch<span class="w"> </span>namespace<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;{&quot;metadata&quot;:{&quot;annotations&quot;:null}}&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'{"metadata":{"annotations":null}}'</span>
 </code></pre></div>
 <h4 id="4-uninstall-old-istio-resources-on-the-management-cluster">4. Uninstall old Istio resources on the management cluster<a class="headerlink" href="#4-uninstall-old-istio-resources-on-the-management-cluster" title="Permanent link">#</a></h4>
 <p>Use the following commands to uninstall the old Istio charts on the <strong>management</strong> cluster:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio-base
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete<span class="w"> </span>
-kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;remote-secret-propagation-&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete<span class="w"> </span>
+kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"remote-secret-propagation-"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <h4 id="5-upgrade-kof">5. Upgrade KOF<a class="headerlink" href="#5-upgrade-kof" title="Permanent link">#</a></h4>
 <p>First upgrade the KOF operator using <code>--take-ownership</code> by following the instructions at the beginning of the <a href="./#upgrade-to-v160">Upgrade to v1.6.0 version</a> section. After that, upgrade the KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).</p>
@@ -6741,9 +6741,9 @@ kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span>
 </code></pre></div>
 <h4 id="7-restart-kof-pods">7. Restart KOF pods<a class="headerlink" href="#7-restart-kof-pods" title="Permanent link">#</a></h4>
 <p>Wait until Istio is fully installed on the management and remote clusters, then restart the KOF pods using the following command:</p>
@@ -6816,7 +6816,7 @@ To estimate how much storage you need for the backup, open the <a href="../kof-u
 <span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup</span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curlimages/curl:latest</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/bin/sleep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;infinity&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"/bin/sleep"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"infinity"</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/curl_user</span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup-volume</span>
@@ -6867,7 +6867,7 @@ helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>cert-manager
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <p>Once the cleanup of all regional and child clusters is complete,
 run <code>unset KUBECONFIG</code> to use the <strong>management</strong> cluster in the next steps.</p>
@@ -6875,7 +6875,7 @@ run <code>unset KUBECONFIG</code> to use the <strong>management</strong> cluster
 <p>Remove the old Istio release and related resources from the management cluster:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>un<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <h3 id="4-deploy-new-istio-release">4. Deploy New Istio Release<a class="headerlink" href="#4-deploy-new-istio-release" title="Permanent link">#</a></h3>
 <p>Install the new Istio release to the management cluster.</p>
@@ -6883,7 +6883,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio-base<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="nv">injectionNamespaces</span><span class="o">=</span><span class="s2">&quot;{kof}&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="nv">injectionNamespaces</span><span class="o">=</span><span class="s2">"{kof}"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0
 </code></pre></div>
 <p><strong>Notes:</strong></p>
@@ -6894,9 +6894,9 @@ kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </
 <h4 id="install-the-k0rdent-istio-chart">Install the <code>k0rdent-istio</code> Chart<a class="headerlink" href="#install-the-k0rdent-istio-chart" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0
 </code></pre></div>
 <h3 id="5-upgrade-the-kof-version">5. Upgrade the KOF Version<a class="headerlink" href="#5-upgrade-the-kof-version" title="Permanent link">#</a></h3>
