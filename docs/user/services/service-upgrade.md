@@ -111,6 +111,108 @@ spec:
     priority: 100
 ```
 
+## Extending the Upgrade Path for New Releases
+
+A `ServiceTemplateChain` only defines the upgrade paths known at the time it was created, and its spec is immutable, so you can't append a newly released `ServiceTemplate` to a chain that's already in use. Instead, create a new `ServiceTemplateChain` that starts from the currently deployed template and points to the new one, then switch the service over to that chain.
+
+The following example walks a service through two consecutive upgrades. It uses a `MultiClusterService` that deploys `ingress-nginx` to the management cluster itself, but the same steps apply to a `ClusterDeployment` or to any set of clusters matched by a `MultiClusterService`.
+
+Start with a chain that allows an upgrade from version 4.11.5 to 4.12.0:
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ServiceTemplateChain
+metadata:
+  name: ingress-nginx-4-11-5-chain
+  namespace: kcm-system
+spec:
+  supportedTemplates:
+    - name: ingress-nginx-4-11-5
+      availableUpgrades:
+        - name: ingress-nginx-4-12-0
+    - name: ingress-nginx-4-12-0
+```
+
+Then reference that chain from the service:
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: MultiClusterService
+metadata:
+  name: mcs1
+spec:
+  serviceSpec:
+    provider:
+      selfManagement: true
+    services:
+      - name: nginx
+        namespace: nginx
+        template: ingress-nginx-4-11-5
+        templateChain: ingress-nginx-4-11-5-chain
+```
+
+To perform the upgrade, change only the `template` field:
+
+```yaml
+    services:
+      - name: nginx
+        namespace: nginx
+        template: ingress-nginx-4-12-0 # <-- upgrade to 4.12.0
+        templateChain: ingress-nginx-4-11-5-chain
+```
+
+The upgrade rolls out without downtime: the new controller pod becomes ready before the previously running pod is terminated.
+
+Command:
+
+```bash
+kubectl -n nginx get pod -w
+```
+```console { .no-copy }
+NAME                                              READY   STATUS              RESTARTS   AGE
+nginx-ingress-nginx-controller-69b985bfb8-6dzx7   1/1     Running             0          2m15s
+nginx-ingress-nginx-admission-create-k9hpj        0/1     Pending             0          0s
+nginx-ingress-nginx-admission-create-k9hpj        0/1     ContainerCreating   0          0s
+nginx-ingress-nginx-admission-create-k9hpj        0/1     Completed           0          4s
+nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     Pending             0          0s
+nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     ContainerCreating   0          0s
+nginx-ingress-nginx-admission-patch-c76b8         0/1     Pending             0          0s
+nginx-ingress-nginx-admission-patch-c76b8         0/1     ContainerCreating   0          0s
+nginx-ingress-nginx-admission-patch-c76b8         0/1     Completed           0          2s
+nginx-ingress-nginx-controller-57b79899cd-x9572   0/1     Running             0          7s
+nginx-ingress-nginx-controller-57b79899cd-x9572   1/1     Running             0          18s
+nginx-ingress-nginx-controller-69b985bfb8-6dzx7   1/1     Terminating         0          3m4s
+nginx-ingress-nginx-controller-69b985bfb8-6dzx7   0/1     Completed           0          3m15s
+```
+
+The service is now running 4.12.0, and `ingress-nginx-4-11-5-chain` offers no further upgrades. When version 4.13.0 is released, create a new chain that starts from the currently deployed 4.12.0 template:
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: ServiceTemplateChain
+metadata:
+  name: ingress-nginx-4-12-0-chain
+  namespace: kcm-system
+spec:
+  supportedTemplates:
+    - name: ingress-nginx-4-12-0
+      availableUpgrades:
+        - name: ingress-nginx-4-13-0
+    - name: ingress-nginx-4-13-0
+```
+
+Then point the service at the new chain, leaving the `template` field unchanged:
+
+```yaml
+    services:
+      - name: nginx
+        namespace: nginx
+        template: ingress-nginx-4-12-0
+        templateChain: ingress-nginx-4-12-0-chain # <-- switch to the new chain
+```
+
+Because 4.12.0 is already deployed, switching the chain makes no changes on the cluster. It only makes the new upgrade path available, which you can confirm in `.status.servicesUpgradePaths`. From there, upgrade to 4.13.0 the same way as before, by setting `template: ingress-nginx-4-13-0`.
+
 ## Service Version Rollback
 
 In general, the process of rolling back a service to the previous version is the same as upgrading the service in the first place. You'll need to create a separate `ServiceTemplateChain`, which defines the downgrade path:
