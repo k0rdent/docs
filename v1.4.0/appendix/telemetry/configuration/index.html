@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.4.0/appendix/telemetry/configuration/">
+      
       
         <link rel="prev" href="../modes/">
       
@@ -4741,18 +4743,18 @@ shown in the <a href="../../appendix-extend-mgmt/#configuring-telemetry">Extende
 <span class="w">      </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostPath</span><span class="w">     </span><span class="c1"># pvc | existing | hostPath (default)</span>
 <span class="w">      </span><span class="c1"># For source: pvc (dynamic provisioning)</span>
 <span class="w">      </span><span class="nt">pvc</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">        </span><span class="c1"># default StorageClass if empty</span>
+<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">        </span><span class="c1"># default StorageClass if empty</span>
 <span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ReadWriteOnce</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
 <span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mi</span>
 <span class="w">        </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">      </span><span class="c1"># For source: existing (use pre-created PVC)</span>
-<span class="w">      </span><span class="nt">existingClaim</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="nt">existingClaim</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
 <span class="w">      </span><span class="c1"># For source: hostPath (static PV + matching PVC)</span>
 <span class="w">      </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">                    </span><span class="c1"># defaults to &lt;fullname&gt;-telemetry-data</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">                    </span><span class="c1"># defaults to &lt;fullname&gt;-telemetry-data</span>
 <span class="w">        </span><span class="nt">reclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span>
-<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;manual&quot;</span>
+<span class="w">        </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="s">"manual"</span>
 <span class="w">        </span><span class="nt">accessModes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ReadWriteOnce</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
 <span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200Mi</span>
@@ -4872,7 +4874,7 @@ in the pod, rotated daily.</p>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
 <span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubernetes.io/hostname</span>
 <span class="w">                </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
-<span class="w">                </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;worker-01&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">                </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"worker-01"</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>Chart creates a hostPath PV at <code>/var/lib/telemetry</code> and a matching PVC;
 prefer PVC-backed options in HA clusters.</p>

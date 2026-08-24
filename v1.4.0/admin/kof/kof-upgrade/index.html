@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.4.0/admin/kof/kof-upgrade/">
+      
       
         <link rel="prev" href="../kof-install/">
       
@@ -4612,8 +4614,8 @@
 <h2 id="upgrade-to-any-version">Upgrade to any version<a class="headerlink" href="#upgrade-to-any-version" title="Permanent link">#</a></h2>
 <ul>
 <li>Create a backup of each KOF chart values in each cluster, for example:
-    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=&quot;&quot;</span>
-<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=""</span>
+<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">  </span><span class="k">for</span><span class="w"> </span>namespace<span class="w"> </span><span class="k">in</span><span class="w"> </span>kof<span class="w"> </span>istio-system<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span>chart<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>list<span class="w"> </span>-qn<span class="w"> </span><span class="nv">$namespace</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">      </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span><span class="nv">$namespace</span><span class="w"> </span><span class="nv">$chart</span><span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>

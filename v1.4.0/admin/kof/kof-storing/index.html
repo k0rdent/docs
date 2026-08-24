@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.4.0/admin/kof/kof-storing/">
+      
       
         <link rel="prev" href="../kof-verification/">
       
@@ -4853,7 +4855,7 @@ Please use helm v3.</p>
 <span class="s">opencost:</span>
 <span class="s">  opencost:</span>
 <span class="s">    prometheus:</span>
-<span class="s">      existingSecretName: &quot;&quot;</span>
+<span class="s">      existingSecretName: ""</span>
 <span class="s">      external:</span>
 <span class="s">        url: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus</span>
 <span class="s">EOF</span>
@@ -4973,9 +4975,9 @@ Please use helm v3.</p>
 <span class="w">  </span>--limit<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
     Example of the output:
-    <div class="highlight"><pre><span></span><code>{&quot;events&quot;: [{
-  &quot;timestamp&quot;: 1744305535107,
-  &quot;message&quot;: &quot;{\&quot;body\&quot;:\&quot;10.244.0.1 - - [10/Apr/2025 17:18:55] \\\&quot;GET /-/ready HTTP/1.1 200 ...
+    <div class="highlight"><pre><span></span><code>{"events": [{
+  "timestamp": 1744305535107,
+  "message": "{\"body\":\"10.244.0.1 - - [10/Apr/2025 17:18:55] \\\"GET /-/ready HTTP/1.1 200 ...
 </code></pre></div></p>
 </li>
 </ol>
