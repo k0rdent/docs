@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.0.0/admin/kof/kof-install/">
+      
       
         <link rel="prev" href="../kof-architecture/">
       
@@ -3857,11 +3859,11 @@ kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="
 <li>
 <p>Create the <code>azure.json</code> text file containing <a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file">the service principal configuration data</a>:
     <div class="highlight"><pre><span></span><code>{
-  &quot;tenantId&quot;: &quot;&lt;EXAMPLE_TENANT_ID&gt;&quot;,
-  &quot;subscriptionId&quot;: &quot;&lt;EXAMPLE_SUBSCRIPTION_ID&gt;&quot;,
-  &quot;resourceGroup&quot;: &quot;&lt;EXAMPLE_RESOURCE_GROUP&gt;&quot;,
-  &quot;aadClientId&quot;: &quot;&lt;EXAMPLE_SP_APP_ID&gt;&quot;,
-  &quot;aadClientSecret&quot;: &quot;&lt;EXAMPLE_SP_PASSWORD&gt;&quot;
+  "tenantId": "&lt;EXAMPLE_TENANT_ID&gt;",
+  "subscriptionId": "&lt;EXAMPLE_SUBSCRIPTION_ID&gt;",
+  "resourceGroup": "&lt;EXAMPLE_RESOURCE_GROUP&gt;",
+  "aadClientId": "&lt;EXAMPLE_SP_APP_ID&gt;",
+  "aadClientSecret": "&lt;EXAMPLE_SP_PASSWORD&gt;"
 }
 </code></pre></div></p>
 </li>
@@ -3962,7 +3964,7 @@ Please use helm v3.</p>
 <span class="w">    </span><span class="nt">clusterProfiles</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div>
@@ -3971,7 +3973,7 @@ Please use helm v3.</p>
 <span class="w">    </span><span class="nt">clusterProfiles</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
 </code></pre></div>
@@ -4057,7 +4059,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="nv">REGIONAL_CLUSTER_NAME</span><span class="o">=</span>aws-<span class="nv">$REGION</span>
 <span class="nv">REGIONAL_DOMAIN</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>.kof.example.com
 <span class="nv">ADMIN_EMAIL</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>config<span class="w"> </span>user.email<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4076,7 +4078,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="s">  name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -4099,7 +4101,7 @@ and apply this example for AWS, or use it as a reference:</p>
 </code></pre></div>
 <p>For Azure:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>account<span class="w"> </span>show<span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">"</span>
 
 cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
@@ -4108,7 +4110,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -4135,10 +4137,10 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <p>If you've applied the <a href="#dns-auto-config">DNS auto-config</a> section,
     add it to the <code>.metadata.labels</code> in the <code>regional-cluster.yaml</code> file.</p>
 <p>For AWS, add:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>For Azure, add:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 </li>
 <li>
@@ -4146,7 +4148,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <ul>
 <li>
 <p>Replace this line:
-  <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+  <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
   with this line:
   <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/istio-role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">child</span>
@@ -4194,7 +4196,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <li>
 <p>If you need a custom http client configuration for <code>PromxyServerGroup</code> and <code>GrafanaDatasource</code>,
     add it to the <code>regional-cluster.yaml</code> file in the <code>.metadata.annotations</code>. For example:
-    <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-http-config</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{&quot;dial_timeout&quot;:</span><span class="nv"> </span><span class="s">&quot;10s&quot;,</span><span class="nv"> </span><span class="s">&quot;tls_config&quot;:</span><span class="nv"> </span><span class="s">{&quot;insecure_skip_verify&quot;:</span><span class="nv"> </span><span class="s">true}}&#39;</span>
+    <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-http-config</span><span class="p">:</span><span class="w"> </span><span class="s">'{"dial_timeout":</span><span class="nv"> </span><span class="s">"10s",</span><span class="nv"> </span><span class="s">"tls_config":</span><span class="nv"> </span><span class="s">{"insecure_skip_verify":</span><span class="nv"> </span><span class="s">true}}'</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4232,7 +4234,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <li>
 <p>Set your own value below, verifing <a href="#regional-cluster">the variables</a>:
     <div class="highlight"><pre><span></span><code><span class="nv">CHILD_CLUSTER_NAME</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-child1
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4251,7 +4253,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="s">  name: $CHILD_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -4271,7 +4273,7 @@ and apply this example for AWS, or use it as a reference:</p>
 </code></pre></div>
 <p>For Azure:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>account<span class="w"> </span>show<span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"AZURE_SUBSCRIPTION_ID=</span><span class="nv">$AZURE_SUBSCRIPTION_ID</span><span class="s2">"</span>
 
 cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
@@ -4280,7 +4282,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <span class="s">  name: $CHILD_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -4303,7 +4305,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <li>
 <p>If you've applied the <a href="#istio">Istio</a> section, update the <code>child-cluster.yaml</code> file:</p>
 <p>replace this line:
-<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/kof-storage-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 with this line:
 <div class="highlight"><pre><span></span><code><span class="nt">k0rdent.mirantis.com/istio-role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">child</span>

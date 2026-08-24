@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.0.0/admin/backup/restore/">
+      
       
         <link rel="prev" href="../whats-included/">
       
@@ -3821,7 +3823,7 @@ Please use helm v3.</p>
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
 <span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 </li>
 <li>
@@ -3839,7 +3841,7 @@ Please use helm v3.</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>kcm-velero<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>velero-deployment.yaml
 kubectl<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>deployment<span class="w"> </span>kcm-velero
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">deployment.apps &quot;kcm-velero&quot; deleted</span>
+<div class="highlight"><pre><span></span><code><span class="go">deployment.apps "kcm-velero" deleted</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -3849,7 +3851,7 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> 
 <span class="w">    </span><span class="nt">helm.sh/chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-9.1.2</span>
 <span class="w"> </span><span class="w w-Error"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-<span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1653&quot;</span>
+<span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"1653"</span>
 <span class="nn">...</span>
 </code></pre></div>
 </li>
@@ -3907,7 +3909,7 @@ automatically with the same <code>spec</code> as in the backup.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworks.network.azure.com</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworkssubnets.network.azure.com</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 <h3 id="vsphere-capv">vSphere (CAPV)<a class="headerlink" href="#vsphere-capv" title="Permanent link">#</a></h3>
 <p>The following resources should be excluded from the <code>Restore</code> object:</p>
@@ -3935,7 +3937,7 @@ of the <code>CAPV</code> provider.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 
 

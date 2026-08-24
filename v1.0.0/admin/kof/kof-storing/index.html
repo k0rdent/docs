@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.0.0/admin/kof/kof-storing/">
+      
       
         <link rel="prev" href="../kof-verification/">
       
@@ -3909,7 +3911,7 @@ Please use helm v3.</p>
 <span class="s">opencost:</span>
 <span class="s">  opencost:</span>
 <span class="s">    prometheus:</span>
-<span class="s">      existingSecretName: &quot;&quot;</span>
+<span class="s">      existingSecretName: ""</span>
 <span class="s">      external:</span>
 <span class="s">        url: http://$REGIONAL_CLUSTER_NAME-vmselect:8481/select/0/prometheus</span>
 <span class="s">EOF</span>
@@ -3953,7 +3955,7 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 </li>
 <li>
 <p>Create the <code>collectors-values.yaml</code> file:
-    <div class="highlight"><pre><span></span><code><span class="nv">COLLECTOR_CONFIG</span><span class="o">=</span><span class="s2">&quot;</span>
+    <div class="highlight"><pre><span></span><code><span class="nv">COLLECTOR_CONFIG</span><span class="o">=</span><span class="s2">"</span>
 <span class="s2">    env:</span>
 <span class="s2">      - name: AWS_ACCESS_KEY_ID</span>
 <span class="s2">        valueFrom:</span>
@@ -3969,16 +3971,16 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 <span class="s2">      awscloudwatchlogs:</span>
 <span class="s2">        region: us-east-2</span>
 <span class="s2">        log_group_name: management</span>
-<span class="s2">        log_stream_name: logs&quot;</span>
+<span class="s2">        log_stream_name: logs"</span>
 
 cat<span class="w"> </span>&gt;collectors-values.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">kof:</span>
 <span class="s">  logs:</span>
-<span class="s">    endpoint: &quot;&quot;</span>
+<span class="s">    endpoint: ""</span>
 <span class="s">  metrics:</span>
-<span class="s">    endpoint: &quot;&quot;</span>
+<span class="s">    endpoint: ""</span>
 <span class="s">  traces:</span>
-<span class="s">    endpoint: &quot;&quot;</span>
+<span class="s">    endpoint: ""</span>
 <span class="s">collectors:</span>
 <span class="s">  k8scluster:$COLLECTOR_CONFIG</span>
 <span class="s">    service:</span>
@@ -4032,9 +4034,9 @@ Please use helm v3.</p>
 <span class="w">  </span>--limit<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
     Example of the output:
-    <div class="highlight"><pre><span></span><code>{&quot;events&quot;: [{
-  &quot;timestamp&quot;: 1744305535107,
-  &quot;message&quot;: &quot;{\&quot;body\&quot;:\&quot;10.244.0.1 - - [10/Apr/2025 17:18:55] \\\&quot;GET /-/ready HTTP/1.1 200 ...
+    <div class="highlight"><pre><span></span><code>{"events": [{
+  "timestamp": 1744305535107,
+  "message": "{\"body\":\"10.244.0.1 - - [10/Apr/2025 17:18:55] \\\"GET /-/ready HTTP/1.1 200 ...
 </code></pre></div></p>
 </li>
 </ol>
