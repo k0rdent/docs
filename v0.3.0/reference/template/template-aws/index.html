@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v0.3.0/reference/template/template-aws/">
+      
       
         <link rel="prev" href="../template-byo/">
       
@@ -3773,19 +3775,19 @@ template found below in the
 <a href="#kcm-clusterdeployment-manifest-generation">kcm ClusterDeployment manifest generation</a>
 section.</p>
 <p><strong>VPC ID</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.network.vpc.id}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.network.vpc.id}}'</span>
 </code></pre></div>
 <p><strong>Subnet ID</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.network.subnets 0).resourceID}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .spec.network.subnets 0).resourceID}}'</span>
 </code></pre></div>
 <p><strong>Availability zone</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.network.subnets 0).availabilityZone}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .spec.network.subnets 0).availabilityZone}}'</span>
 </code></pre></div>
 <p><strong>Security group</strong>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.status.networkStatus.securityGroups.node.id}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.status.networkStatus.securityGroups.node.id}}'</span>
 </code></pre></div></p>
 <p><strong>AMI id</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awsmachinetemplate<span class="w"> </span>&lt;cluster-name&gt;-worker-mt<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.template.spec.ami.id}}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awsmachinetemplate<span class="w"> </span>&lt;cluster-name&gt;-worker-mt<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.template.spec.ami.id}}'</span>
 </code></pre></div>
 <p>If you want to use different VPCs/regions for your management or managed
 clusters you should setup additional connectivity rules like
@@ -3840,26 +3842,26 @@ named <code>clusterdeployment.yaml.tpl</code>:</p>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.network.vpc.id}}&quot;</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.region}}&quot;</span>
+<span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.network.vpc.id}}"</span>
+<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.region}}"</span>
 <span class="w">    </span><span class="nt">subnets</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- range $subnet</span><span class="w"> </span><span class="p p-Indicator">:</span><span class="nv">= .spec.network.subnets</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.resourceID</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">availabilityZone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.availabilityZone</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">$subnet.resourceID</span><span class="nv"> </span><span class="s">}}"</span>
+<span class="w">        </span><span class="nt">availabilityZone</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">$subnet.availabilityZone</span><span class="nv"> </span><span class="s">}}"</span>
 <span class="w">        </span><span class="nt">isPublic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">$subnet.isPublic</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- if $subnet.isPublic</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">natGatewayId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.natGatewayId</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">        </span><span class="nt">natGatewayId</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">$subnet.natGatewayId</span><span class="nv"> </span><span class="s">}}"</span>
 <span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.routeTableId</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">zoneType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.zoneType</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">$subnet.routeTableId</span><span class="nv"> </span><span class="s">}}"</span>
+<span class="w">        </span><span class="nt">zoneType</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">$subnet.zoneType</span><span class="nv"> </span><span class="s">}}"</span>
 <span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 <span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.large</span>
 <span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
 <span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{{.status.networkStatus.securityGroups.node.id}}&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{{.status.networkStatus.securityGroups.node.id}}"</span>
 </code></pre></div>
 <p>Then run the following command to create the <code>clusterdeployment.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl get awscluster cluster -o go-template=&quot;$(cat clusterdeployment.yaml.tpl)&quot; &gt; clusterdeployment.yaml
+<div class="highlight"><pre><span></span><code>kubectl get awscluster cluster -o go-template="$(cat clusterdeployment.yaml.tpl)" &gt; clusterdeployment.yaml
 </code></pre></div>
 <h2 id="deployment-tips">Deployment Tips<a class="headerlink" href="#deployment-tips" title="Permanent link">#</a></h2>
 <ul>
@@ -3868,7 +3870,7 @@ named <code>clusterdeployment.yaml.tpl</code>:</p>
 <li>For installing the kcm charts and templates from a custom repository, load
   the <code>kubeconfig</code> from the cluster and run the commands:</li>
 </ul>
-<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig IMG=&quot;ghcr.io/k0rdent/kcm/controller-ci:v0.0.1-179-ga5bdf29&quot; REGISTRY_REPO=&quot;oci://ghcr.io/k0rdent/kcm/charts-ci&quot; make dev-apply
+<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig IMG="ghcr.io/k0rdent/kcm/controller-ci:v0.0.1-179-ga5bdf29" REGISTRY_REPO="oci://ghcr.io/k0rdent/kcm/charts-ci" make dev-apply
 KUBECONFIG=kubeconfig make dev-templates
 </code></pre></div>
 <ul>
@@ -3876,7 +3878,7 @@ KUBECONFIG=kubeconfig make dev-templates
   <code>MachineDeployment</code> to scale up.  You can patch the <code>AWSCluster</code> kind using
   the command:</li>
 </ul>
-<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig kubectl patch AWSCluster &lt;hosted-cluster-name&gt; --type=merge --subresource status --patch &#39;status: {ready: true}&#39; -n kcm-system
+<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig kubectl patch AWSCluster &lt;hosted-cluster-name&gt; --type=merge --subresource status --patch 'status: {ready: true}' -n kcm-system
 </code></pre></div>
 <p>For additional information on why this is required <a href="https://docs.k0smotron.io/stable/capi-aws/#:~:text=As%20we%20are%20using%20self%2Dmanaged%20infrastructure%20we%20need%20to%20manually%20mark%20the%20infrastructure%20ready.%20This%20can%20be%20accomplished%20using%20the%20following%20command">click here</a>.</p>
 

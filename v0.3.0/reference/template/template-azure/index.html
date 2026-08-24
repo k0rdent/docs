@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v0.3.0/reference/template/template-azure/">
+      
       
         <link rel="prev" href="../template-aws/">
       
@@ -3611,7 +3613,7 @@ of the <code>ClusterDeployment</code> object.</p>
 <h2 id="vm-size">VM size<a class="headerlink" href="#vm-size" title="Permanent link">#</a></h2>
 <p>Azure supports various VM sizes which can be retrieved with the following
 command:</p>
-<div class="highlight"><pre><span></span><code>az<span class="w"> </span>vm<span class="w"> </span>list-sizes<span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;&lt;location&gt;&quot;</span><span class="w"> </span>-o<span class="w"> </span>table
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>vm<span class="w"> </span>list-sizes<span class="w"> </span>--location<span class="w"> </span><span class="s2">"&lt;location&gt;"</span><span class="w"> </span>-o<span class="w"> </span>table
 </code></pre></div>
 <p>Then desired VM size could be passed to the:</p>
 <ul>
@@ -3662,25 +3664,25 @@ below.</p>
 <p>If you deployed your Azure Kubernetes cluster using Cluster API Provider Azure
 (CAPZ) you can obtain all the necessary data with the commands below:</p>
 <p><strong>Location</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.location}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.location}}'</span>
 </code></pre></div>
 <p><strong>Subscription ID</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.subscriptionID}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.subscriptionID}}'</span>
 </code></pre></div>
 <p><strong>Resource group</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.resourceGroup}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.resourceGroup}}'</span>
 </code></pre></div>
 <p><strong>vnet name</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.networkSpec.vnet.name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{.spec.networkSpec.vnet.name}}'</span>
 </code></pre></div>
 <p><strong>Subnet name</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.networkSpec.subnets 1).name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .spec.networkSpec.subnets 1).name}}'</span>
 </code></pre></div>
 <p><strong>Route table name</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.networkSpec.subnets 1).routeTable.name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .spec.networkSpec.subnets 1).routeTable.name}}'</span>
 </code></pre></div>
 <p><strong>Security group name</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.networkSpec.subnets 1).securityGroup.name}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">'{{(index .spec.networkSpec.subnets 1).securityGroup.name}}'</span>
 </code></pre></div>
 <h2 id="kcm-clusterdeployment-manifest">kcm ClusterDeployment manifest<a class="headerlink" href="#kcm-clusterdeployment-manifest" title="Permanent link">#</a></h2>
 <p>With all the collected data your <code>ClusterDeployment</code> manifest will look similar to this:</p>
@@ -3693,7 +3695,7 @@ below.</p>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;westus&quot;</span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">"westus"</span>
 <span class="w">    </span><span class="nt">subscriptionID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SUBSCRIPTION_ID_SUBSCRIPTION_ID</span>
 <span class="w">    </span><span class="nt">vmSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_A4_v2</span>
 <span class="w">    </span><span class="nt">resourceGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mgmt-cluster</span>
@@ -3713,25 +3715,25 @@ below.</p>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-credential</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.location}}&quot;</span>
-<span class="w">    </span><span class="nt">subscriptionID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.subscriptionID}}&quot;</span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.location}}"</span>
+<span class="w">    </span><span class="nt">subscriptionID</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.subscriptionID}}"</span>
 <span class="w">    </span><span class="nt">vmSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_A4_v2</span>
-<span class="w">    </span><span class="nt">resourceGroup</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.resourceGroup}}&quot;</span>
+<span class="w">    </span><span class="nt">resourceGroup</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.resourceGroup}}"</span>
 <span class="w">    </span><span class="nt">network</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">vnetName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.networkSpec.vnet.name}}&quot;</span>
-<span class="w">      </span><span class="nt">nodeSubnetName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).name}}&quot;</span>
-<span class="w">      </span><span class="nt">routeTableName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).routeTable.name}}&quot;</span>
-<span class="w">      </span><span class="nt">securityGroupName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).securityGroup.name}}&quot;</span>
+<span class="w">      </span><span class="nt">vnetName</span><span class="p">:</span><span class="w"> </span><span class="s">"{{.spec.networkSpec.vnet.name}}"</span>
+<span class="w">      </span><span class="nt">nodeSubnetName</span><span class="p">:</span><span class="w"> </span><span class="s">"{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).name}}"</span>
+<span class="w">      </span><span class="nt">routeTableName</span><span class="p">:</span><span class="w"> </span><span class="s">"{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).routeTable.name}}"</span>
+<span class="w">      </span><span class="nt">securityGroupName</span><span class="p">:</span><span class="w"> </span><span class="s">"{{(index</span><span class="nv"> </span><span class="s">.spec.networkSpec.subnets</span><span class="nv"> </span><span class="s">1).securityGroup.name}}"</span>
 </code></pre></div>
 <p>Then you can render it using the command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;management-cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>template.yaml<span class="k">)</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>azurecluster<span class="w"> </span>&lt;management-cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">"</span><span class="k">$(</span>cat<span class="w"> </span>template.yaml<span class="k">)</span><span class="s2">"</span>
 </code></pre></div>
 <h2 id="cluster-creation">Cluster creation<a class="headerlink" href="#cluster-creation" title="Permanent link">#</a></h2>
 <p>After applying the <code>ClusterDeployment</code> object you must manually set the status of
 the <code>AzureCluster</code> object due to limitations in k0smotron (see
 <a href="https://github.com/k0sproject/k0smotron/issues/668">k0sproject/k0smotron#668</a>).</p>
 <p>Execute the following command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--subresource<span class="w"> </span>status<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;status: {ready: true}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--subresource<span class="w"> </span>status<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'status: {ready: true}'</span>
 </code></pre></div>
 <h2 id="important-notes-on-the-cluster-deletion">Important notes on the cluster deletion<a class="headerlink" href="#important-notes-on-the-cluster-deletion" title="Permanent link">#</a></h2>
 <p>Because of the aforementioned limitation you also need to take manual steps in
@@ -3740,7 +3742,7 @@ order to properly delete an Azurecluster.</p>
 <code>AzureCluster</code> object. This is needed to prevent it from being deleted instantly,
 which will cause cluster deletion to stuck indefinitely.</p>
 <p>To place a finalizer you can execute the following command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;metadata: {finalizers: [manual]}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>azurecluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'metadata: {finalizers: [manual]}'</span>
 </code></pre></div>
 <p>When the finalizer is placed you can remove the <code>ClusterDeployment</code> as usual. Check that
 all <code>AzureMachine</code> objects are deleted successfully, then remove the finalizer you've

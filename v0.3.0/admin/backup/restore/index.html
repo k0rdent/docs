@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v0.3.0/admin/backup/restore/">
+      
       
         <link rel="prev" href="../whats-included/">
       
@@ -3640,7 +3642,7 @@ to familiarize yourself with potential limitations of the Velero backup system.<
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
 <span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 </li>
 <li>
@@ -3685,7 +3687,7 @@ automatically with the same <code>spec</code> as in the backup.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworks.network.azure.com</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworkssubnets.network.azure.com</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 <h3 id="vsphere-capv">vSphere (CAPV)<a class="headerlink" href="#vsphere-capv" title="Permanent link">#</a></h3>
 <p>The following resources should be excluded from the <code>Restore</code> object:</p>
@@ -3713,7 +3715,7 @@ of the <code>CAPV</code> provider.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validatingwebhookconfiguration.admissionregistration.k8s.io</span>
 <span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'*'</span>
 </code></pre></div>
 
 
