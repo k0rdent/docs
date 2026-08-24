@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.6.0/admin/kof/kof-upgrade/">
+      
       
         <link rel="prev" href="../kof-kcm-region/">
       
@@ -5203,22 +5205,22 @@ Check the k0rdent <a href="../../clusters/deploy-cluster/">cluster documentation
 </ol>
 <h3 id="backup-victoria-metrics">Backup Victoria Metrics<a class="headerlink" href="#backup-victoria-metrics" title="Permanent link">#</a></h3>
 <p>To backup all metrics data to a local file (<code>victoria-metrics-backup.gz</code>):</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_metrics_endpoint&gt;/api/v1/export?reduce_mem_usage<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;match[]={__name__!=&quot;&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'match[]={__name__!=""}'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&gt;<span class="w"> </span>victoria-metrics-backup.gz
 </code></pre></div>
 <p>To restore all metrics to a regional cluster from a local file run:</p>
 <p>Without Istio servicemesh:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/vminsert-cluster<span class="w"> </span><span class="m">8480</span>:8480<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="c1"># use kubeconfig of regional cluster to import data</span>
 
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-metrics-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://localhost:8480/insert/0/prometheus/api/v1/import
 </code></pre></div>
 <p>With Istio servicemesh:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-metrics-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://&lt;CLUSTER_NAME&gt;-vminsert:8480/insert/0/prometheus/api/v1/import
 </code></pre></div>
@@ -5239,10 +5241,10 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Cont
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--search.maxQueryDuration=24h</span>
 </code></pre></div>
 <p>To backup all logs data to a local file (<code>victoria-logs-backup.gz</code>):</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_logs_endpoint&gt;/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=*&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>victoria-logs-backup.gz
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=*'</span><span class="w"> </span>&gt;<span class="w"> </span>victoria-logs-backup.gz
 </code></pre></div>
 <ul>
 <li>This command fetches all logs from the old regional cluster and saves them as a gzip-compressed file.</li>
@@ -5252,13 +5254,13 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Cont
 <p>Without Istio servicemesh:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/kof-storage-victoria-logs-cluster-vlinsert<span class="w"> </span><span class="m">9481</span>:9481<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="c1"># use kubeconfig of regional cluster to import data</span>
 
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-logs-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://localhost:9481/insert/jsonline
 </code></pre></div>
 <p><em>N.B.</em> the default <code>write_logs_endpoint</code> ends with <code>/insert/opentelemetry/v1/logs</code>: replace it with <code>/insert/jsonline</code>.</p>
 <p>With Istio servicemesh:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-T<span class="w"> </span>victoria-logs-backup.gz<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://&lt;CLUSTER_NAME&gt;-logs-insert:9481/insert/jsonline
 </code></pre></div>
@@ -5304,11 +5306,11 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 </code></pre></div></li>
 <li>
 <p><strong>Migrate metrics data</strong> by running the following command (replace placeholders as needed):
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_metrics_endpoint&gt;/api/v1/export?reduce_mem_usage<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;match[]={__name__!=&quot;&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'match[]={__name__!=""}'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://vminsert-cluster.kof:8480/insert/0/prometheus/api/v1/import
 </code></pre></div></p>
 <p>Check <a href="https://docs.victoriametrics.com/victoriametrics/url-examples/#apiv1export">VictoriaMetrics API</a> for more details.</p>
@@ -5319,11 +5321,11 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 </li>
 <li>
 <p><strong>Migrate logs data</strong> by running the following command (replace placeholders as needed):
-    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Accept-Encoding: gzip&#39;</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;&lt;username&gt;:&lt;password&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
+    <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Accept-Encoding: gzip'</span><span class="w"> </span>-sSN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"&lt;username&gt;:&lt;password&gt;"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>&lt;read_logs_endpoint&gt;/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=*&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Content-Encoding: gzip&#39;</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=*'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>pv<span class="w"> </span><span class="p">|</span><span class="w"> </span>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Encoding: gzip'</span><span class="w"> </span>-sSX<span class="w"> </span>POST<span class="w"> </span>-T<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://kof-storage-victoria-logs-cluster-vlinsert.kof:9481/insert/jsonline
 </code></pre></div></p>
 <p>Check <a href="https://docs.victoriametrics.com/victorialogs/faq/#how-to-export-logs-from-victorialogs">VictoriaLogs FAQ</a> for more details.</p>
@@ -5352,8 +5354,8 @@ apk<span class="w"> </span>add<span class="w"> </span>curl<span class="w"> </spa
 <h2 id="upgrade-to-any-version">Upgrade to any version<a class="headerlink" href="#upgrade-to-any-version" title="Permanent link">#</a></h2>
 <ul>
 <li>Create a backup of each KOF chart values in each cluster, for example:
-    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=&quot;&quot;</span>
-<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+    <div class="highlight"><pre><span></span><code><span class="c1"># Management cluster uses default KUBECONFIG=""</span>
+<span class="k">for</span><span class="w"> </span>cluster<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span>regional-kubeconfig<span class="w"> </span>child-kubeconfig<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">  </span><span class="k">for</span><span class="w"> </span>namespace<span class="w"> </span><span class="k">in</span><span class="w"> </span>kof<span class="w"> </span>istio-system<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span>chart<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>list<span class="w"> </span>-qn<span class="w"> </span><span class="nv">$namespace</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">      </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$cluster</span><span class="w"> </span>helm<span class="w"> </span>get<span class="w"> </span>values<span class="w"> </span>-n<span class="w"> </span><span class="nv">$namespace</span><span class="w"> </span><span class="nv">$chart</span><span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
@@ -5426,17 +5428,17 @@ You must upgrade KCM to v1.6.0 before upgrading KOF.</p>
 <p>To uninstall Istio without uninstalling KOF, remove the Istio dependency from the Istio <code>MultiClusterService</code> resources using the following commands:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>mcs<span class="w"> </span>kof-istio-regional-cluster<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/dependsOn&quot;}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/dependsOn"}]'</span>
 
 kubectl<span class="w"> </span>patch<span class="w"> </span>mcs<span class="w"> </span>kof-istio-child-cluster<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;:&quot;remove&quot;,&quot;path&quot;:&quot;/spec/dependsOn&quot;}]&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/dependsOn"}]'</span>
 </code></pre></div>
 <h4 id="3-remove-annotations-from-the-kof-namespace-on-all-remote-clusters">3. Remove annotations from the KOF namespace on all remote clusters<a class="headerlink" href="#3-remove-annotations-from-the-kof-namespace-on-all-remote-clusters" title="Permanent link">#</a></h4>
 <p>Remove the annotations from the KOF namespace across all remote clusters to break the link with Sveltos resources and prevent the namespace from being uninstalled during the Istio upgrade.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">KUBECONFIG</span><span class="o">=</span>remote-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>patch<span class="w"> </span>namespace<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="o">=</span><span class="s1">&#39;{&quot;metadata&quot;:{&quot;annotations&quot;:null}}&#39;</span>
+<span class="w">  </span>-p<span class="o">=</span><span class="s1">'{"metadata":{"annotations":null}}'</span>
 </code></pre></div>
 <h4 id="4-uninstall-old-istio-resources-on-the-management-cluster">4. Uninstall old Istio resources on the management cluster<a class="headerlink" href="#4-uninstall-old-istio-resources-on-the-management-cluster" title="Permanent link">#</a></h4>
 <p>Use the following commands to uninstall the old Istio charts on the <strong>management</strong> cluster:</p>
@@ -5448,8 +5450,8 @@ Please use helm v3.</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio-base
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete<span class="w"> </span>
-kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;remote-secret-propagation-&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete<span class="w"> </span>
+kubectl<span class="w"> </span>get<span class="w"> </span>mcs<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"remote-secret-propagation-"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-r<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <h4 id="5-upgrade-kof">5. Upgrade KOF<a class="headerlink" href="#5-upgrade-kof" title="Permanent link">#</a></h4>
 <p>First upgrade the KOF operator using <code>--take-ownership</code> by following the instructions at the beginning of the <a href="#upgrade-to-v160">Upgrade to v1.6.0 version</a> section. After that, upgrade the KOF components as usual (kof-mothership, kof-regional, kof-child, etc.).</p>
@@ -5463,9 +5465,9 @@ Please use helm v3.</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.2.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span>
 </code></pre></div>
 <h4 id="7-restart-kof-pods">7. Restart KOF pods<a class="headerlink" href="#7-restart-kof-pods" title="Permanent link">#</a></h4>
 <p>Wait until Istio is fully installed on the management and remote clusters, then restart the KOF pods using the following command:</p>
@@ -5538,7 +5540,7 @@ To estimate how much storage you need for the backup, open the <a href="../kof-u
 <span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup</span>
 <span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curlimages/curl:latest</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/bin/sleep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;infinity&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"/bin/sleep"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"infinity"</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">volumeMounts</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/curl_user</span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup-volume</span>
@@ -5594,7 +5596,7 @@ helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio
 helm<span class="w"> </span>uninstall<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>cert-manager
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <p>Once the cleanup of all regional and child clusters is complete,
 run <code>unset KUBECONFIG</code> to use the <strong>management</strong> cluster in the next steps.</p>
@@ -5602,7 +5604,7 @@ run <code>unset KUBECONFIG</code> to use the <strong>management</strong> cluster
 <p>Remove the old Istio release and related resources from the management cluster:</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>un<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio
 kubectl<span class="w"> </span>delete<span class="w"> </span>namespace<span class="w"> </span>istio-system<span class="w"> </span>--wait
-kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">&#39;istio.io&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
+kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>-o<span class="w"> </span>name<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>never<span class="w"> </span><span class="s1">'istio.io'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>kubectl<span class="w"> </span>delete
 </code></pre></div>
 <h3 id="4-deploy-new-istio-release">4. Deploy New Istio Release<a class="headerlink" href="#4-deploy-new-istio-release" title="Permanent link">#</a></h3>
 <p>Install the new Istio release to the management cluster.</p>
@@ -5615,7 +5617,7 @@ Please use helm v3.</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio-base<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="nv">injectionNamespaces</span><span class="o">=</span><span class="s2">&quot;{kof}&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="nv">injectionNamespaces</span><span class="o">=</span><span class="s2">"{kof}"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio-base<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0
 </code></pre></div>
 <p><strong>Notes:</strong></p>
@@ -5631,9 +5633,9 @@ Please use helm v3.</p>
 </div>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>k0rdent-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set<span class="w"> </span>cert-manager-service-template.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].name=otel-tracing&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].name=otel-tracing"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.port=4317"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"istiod.meshConfig.extensionProviders[0].opentelemetry.service=kof-collectors-daemon-collector.kof.svc.cluster.local"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/istio/charts/k0rdent-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">0</span>.1.0
 </code></pre></div>
 <h3 id="5-upgrade-the-kof-version">5. Upgrade the KOF Version<a class="headerlink" href="#5-upgrade-the-kof-version" title="Permanent link">#</a></h3>
