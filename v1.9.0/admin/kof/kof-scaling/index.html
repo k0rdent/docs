@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.9.0/admin/kof/kof-scaling/">
+      
       
         <link rel="prev" href="../kof-alerts/">
       
@@ -5248,7 +5250,7 @@
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>helmrelease<span class="w"> </span>kof-storage<span class="w"> </span><span class="se">\</span>
 -n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 --type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
--p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;suspend&quot;: true}}&#39;</span>
+-p<span class="w"> </span><span class="s1">'{"spec":{"suspend": true}}'</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -5263,7 +5265,7 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>statefulset<span cl
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pvc<span class="w"> </span>vlstorage-volume-kof-storage-victoria-logs-cluster-vlstorage-0<span class="w"> </span><span class="se">\</span>
 -n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 --type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
--p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;resources&quot;:{&quot;requests&quot;:{&quot;storage&quot;:&quot;&lt;new size&gt;&quot;}}}}&#39;</span>
+-p<span class="w"> </span><span class="s1">'{"spec":{"resources":{"requests":{"storage":"&lt;new size&gt;"}}}}'</span>
 </code></pre></div></p>
 </li>
 <li>

@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.9.0/admin/kof/kof-using/">
+      
       
         <link rel="prev" href="../kof-storing/">
       
@@ -5252,13 +5254,13 @@ Please check the <a href="./">Using KOF without Grafana</a> and <a href="../kof-
 <li>Explore the Alerts: <a href="http://127.0.0.1:8082/alerts">http://127.0.0.1:8082/alerts</a></li>
 <li>CLI queries for automation:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.cluster) | unique&#39;</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">'.data.result | map(.metric.cluster) | unique'</span>
 
 curl<span class="w"> </span>http://localhost:8082/api/v1/query?query<span class="o">=</span>up<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data.result | map(.metric.job) | unique&#39;</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">'.data.result | map(.metric.job) | unique'</span>
 
 curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=up{cluster=&quot;mothership&quot;, job=&quot;kof-collectors-opencost&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=up{cluster="mothership", job="kof-collectors-opencost"}'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div></li>
 </ul>
@@ -5293,15 +5295,15 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
 <li>Open <a href="http://127.0.0.1:9471/select/vmui/">http://127.0.0.1:9471/select/vmui/</a></li>
 <li>CLI query for automation:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div></li>
 </ul>
 </li>
 <li>Run inside of Istio mesh:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://<span class="nv">$REGIONAL_CLUSTER_NAME</span>-logs-select:9471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div></li>
 <li>Run without Istio and port-forwarding:
     <div class="highlight"><pre><span></span><code><span class="nv">VM_USER</span><span class="o">=</span><span class="k">$(</span>
@@ -5313,9 +5315,9 @@ curl<span class="w"> </span>http://localhost:8082/api/v1/query<span class="w"> <
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.data.password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
 <span class="k">)</span>
 curl<span class="w"> </span>https://vmauth.<span class="nv">$REGIONAL_DOMAIN</span>/vls/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-u<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VM_USER</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="nv">$VM_PASS</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-u<span class="w"> </span><span class="s2">"</span><span class="nv">$VM_USER</span><span class="s2">"</span>:<span class="s2">"</span><span class="nv">$VM_PASS</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div></li>
 </ul>
 <h2 id="traces">Traces<a class="headerlink" href="#traces" title="Permanent link">#</a></h2>
@@ -5334,8 +5336,8 @@ curl<span class="w"> </span>https://vmauth.<span class="nv">$REGIONAL_DOMAIN</sp
 <li>CLI queries for automation:<ul>
 <li><a href="https://docs.victoriametrics.com/victorialogs/querying/#http-api">LogSQL</a>:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/logsql/query<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;query=_time:1h&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;limit=10&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'query=_time:1h'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'limit=10'</span>
 </code></pre></div></li>
 <li><a href="https://docs.victoriametrics.com/victoriatraces/querying/#jaeger-http-api">Jaeger HTTP API</a>:
     <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://127.0.0.1:10471/select/jaeger/api/services

@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.9.0/admin/kof/kof-storing/">
+      
       
         <link rel="prev" href="../kof-verification/">
       
@@ -5318,7 +5320,7 @@ No additional steps are required here.</p>
 <span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--kubelet-insecure-tls"</span>
 <span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">env</span><span class="p">:</span>
@@ -5361,7 +5363,7 @@ No additional steps are required here.</p>
     <div class="highlight"><pre><span></span><code><span class="nv">VMUSER_CREDS_NAME</span><span class="o">=</span><span class="k">$(</span>
 <span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>vmuser-creds-admin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">' '</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>
 <span class="k">)</span>
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$VMUSER_CREDS_NAME</span>
 </code></pre></div></p>
@@ -5488,7 +5490,7 @@ No additional steps are required here.</p>
 <span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--kubelet-insecure-tls"</span>
 <span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">env</span><span class="p">:</span>
@@ -5531,7 +5533,7 @@ No additional steps are required here.</p>
     <div class="highlight"><pre><span></span><code><span class="nv">VMUSER_CREDS_NAME</span><span class="o">=</span><span class="k">$(</span>
 <span class="w">  </span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>vmuser-creds-admin<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">' '</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span>
 <span class="k">)</span>
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$VMUSER_CREDS_NAME</span>
 </code></pre></div></p>
@@ -5635,7 +5637,7 @@ No additional steps are required here.</p>
 <span class="w">    </span><span class="nt">metrics-server</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;--kubelet-insecure-tls&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"--kubelet-insecure-tls"</span>
 <span class="w">    </span><span class="nt">opentelemetry-kube-stack</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">defaultCRConfig</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">env</span><span class="p">:</span>
@@ -5768,9 +5770,9 @@ AWS_SECRET_ACCESS_KEY=REDACTED
 <span class="w">  </span>--limit<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
     Example of the output:
-    <div class="highlight"><pre><span></span><code>{&quot;events&quot;: [{
-  &quot;timestamp&quot;: 1744305535107,
-  &quot;message&quot;: &quot;{\&quot;body\&quot;:\&quot;10.244.0.1 - - [10/Apr/2025 17:18:55] \\\&quot;GET /-/ready HTTP/1.1 200 ...
+    <div class="highlight"><pre><span></span><code>{"events": [{
+  "timestamp": 1744305535107,
+  "message": "{\"body\":\"10.244.0.1 - - [10/Apr/2025 17:18:55] \\\"GET /-/ready HTTP/1.1 200 ...
 </code></pre></div></p>
 </li>
 </ol>
