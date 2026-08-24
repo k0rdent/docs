@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.7.0/reference/template/template-vsphere/">
+      
       
         <link rel="prev" href="../template-openstack/">
       
@@ -5294,7 +5296,7 @@ for successful cluster creation.</p>
 </tbody>
 </table>
 <p>To get the vSphere certificate thumbprint you can use the following command:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sw<span class="w"> </span>%<span class="o">{</span>certs<span class="o">}</span><span class="w"> </span>https://vcenter.example.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-sha256<span class="w"> </span>-fingerprint<span class="w"> </span>-noout<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39;=&#39;</span><span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-sw<span class="w"> </span>%<span class="o">{</span>certs<span class="o">}</span><span class="w"> </span>https://vcenter.example.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-sha256<span class="w"> </span>-fingerprint<span class="w"> </span>-noout<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">'='</span><span class="w"> </span><span class="s1">'{print $2}'</span>
 </code></pre></div>
 <p><a href="https://github.com/vmware/govmomi/blob/main/govc/README.md"><code>govc</code></a>, a vSphere CLI, can also help to discover proper values for some of the parameters:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># vsphere.datacenter</span>
@@ -5313,7 +5315,7 @@ govc<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>
 govc<span class="w"> </span>ls<span class="w"> </span>/*/network/*
 
 <span class="c1"># *.vmTemplate</span>
-govc<span class="w"> </span>vm.info<span class="w"> </span>-t<span class="w"> </span><span class="s1">&#39;*&#39;</span>
+govc<span class="w"> </span>vm.info<span class="w"> </span>-t<span class="w"> </span><span class="s1">'*'</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -5345,12 +5347,12 @@ Follow official <code>govc</code> installation instructions from <a href="https:
 <span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 <span class="w">    </span><span class="nt">vsphere</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vcenter.example.com</span>
-<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;00:00:00&quot;</span>
-<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DC&quot;</span>
-<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/datastore/DC&quot;</span>
-<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/host/vCluster/Resources/ResPool&quot;</span>
-<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/example&quot;</span>
-<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;VSPHERE_SERVER&gt;&quot;</span>
+<span class="w">      </span><span class="nt">thumbprint</span><span class="p">:</span><span class="w"> </span><span class="s">"00:00:00"</span>
+<span class="w">      </span><span class="nt">datacenter</span><span class="p">:</span><span class="w"> </span><span class="s">"DC"</span>
+<span class="w">      </span><span class="nt">datastore</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/datastore/DC"</span>
+<span class="w">      </span><span class="nt">resourcePool</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/host/vCluster/Resources/ResPool"</span>
+<span class="w">      </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/vm/example"</span>
+<span class="w">    </span><span class="nt">controlPlaneEndpointIP</span><span class="p">:</span><span class="w"> </span><span class="s">"&lt;VSPHERE_SERVER&gt;"</span>
 <span class="w">    </span><span class="nt">controlPlane</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">ssh</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
@@ -5359,8 +5361,8 @@ Follow official <code>govc</code> installation instructions from <a href="https:
 <span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
-<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
-<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/vm/template"</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/network/Net"</span>
 <span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">ssh</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu</span>
@@ -5369,8 +5371,8 @@ Follow official <code>govc</code> installation instructions from <a href="https:
 <span class="w">      </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="w">      </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
-<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/vm/template&quot;</span>
-<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/DC/network/Net&quot;</span>
+<span class="w">      </span><span class="nt">vmTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/vm/template"</span>
+<span class="w">      </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">"/DC/network/Net"</span>
 </code></pre></div>
 <p>Don't forget to replace placeholder values such as <code>VSPHERE_SERVER</code> with actual values for your environment.</p>
 <h2 id="ssh">SSH<a class="headerlink" href="#ssh" title="Permanent link">#</a></h2>
