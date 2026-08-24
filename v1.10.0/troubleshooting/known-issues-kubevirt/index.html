@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.10.0/troubleshooting/known-issues-kubevirt/">
+      
       
         <link rel="prev" href="../known-issues-remote/">
       
@@ -5423,12 +5425,12 @@
 <ol>
 <li>
 <p>Check the <code>ClusterDeployment</code> status condition on the management cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>clusterdeployment.k0rdent.mirantis.com<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 </li>
 <li>
 <p>Check the <code>KubevirtCluster</code> status condition on the management or regional cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>kubevirtcluster<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>kubevirtcluster<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 </li>
 <li>
@@ -5474,26 +5476,26 @@ private key from the secret created in the management or regional cluster:
 <p>When deploying the KubeVirt cluster, if the namespace where the <code>ClusterDeployment</code> has been created does not exist
 on the KubeVirt Infrastructure Cluster, the following misleading error may appear in the
 <code>cluster-api-provider-kubevirt</code> logs:</p>
-<div class="highlight"><pre><span></span><code>E0126<span class="w"> </span><span class="m">13</span>:41:19.622971<span class="w">       </span><span class="m">1</span><span class="w"> </span>controller.go:474<span class="o">]</span><span class="w"> </span><span class="s2">&quot;Reconciler error&quot;</span><span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="s2">&quot;failed to create load balancer: proto: integer overflow&quot;</span>
-<span class="nv">controller</span><span class="o">=</span><span class="s2">&quot;kubevirtcluster&quot;</span><span class="w"> </span><span class="nv">controllerGroup</span><span class="o">=</span><span class="s2">&quot;infrastructure.cluster.x-k8s.io&quot;</span><span class="w"> </span><span class="nv">controllerKind</span><span class="o">=</span><span class="s2">&quot;KubevirtCluster&quot;</span>
-<span class="nv">KubevirtCluster</span><span class="o">=</span><span class="s2">&quot;kcm-system/my-kubevirt-clusterdeployment1&quot;</span><span class="w"> </span><span class="nv">namespace</span><span class="o">=</span><span class="s2">&quot;kcm-system&quot;</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;my-kubevirt-clusterdeployment1&quot;</span>
-<span class="nv">reconcileID</span><span class="o">=</span><span class="s2">&quot;2074dadd-23e8-4d64-bf87-b7da2905f347&quot;</span>
+<div class="highlight"><pre><span></span><code>E0126<span class="w"> </span><span class="m">13</span>:41:19.622971<span class="w">       </span><span class="m">1</span><span class="w"> </span>controller.go:474<span class="o">]</span><span class="w"> </span><span class="s2">"Reconciler error"</span><span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="s2">"failed to create load balancer: proto: integer overflow"</span>
+<span class="nv">controller</span><span class="o">=</span><span class="s2">"kubevirtcluster"</span><span class="w"> </span><span class="nv">controllerGroup</span><span class="o">=</span><span class="s2">"infrastructure.cluster.x-k8s.io"</span><span class="w"> </span><span class="nv">controllerKind</span><span class="o">=</span><span class="s2">"KubevirtCluster"</span>
+<span class="nv">KubevirtCluster</span><span class="o">=</span><span class="s2">"kcm-system/my-kubevirt-clusterdeployment1"</span><span class="w"> </span><span class="nv">namespace</span><span class="o">=</span><span class="s2">"kcm-system"</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">"my-kubevirt-clusterdeployment1"</span>
+<span class="nv">reconcileID</span><span class="o">=</span><span class="s2">"2074dadd-23e8-4d64-bf87-b7da2905f347"</span>
 </code></pre></div>
 <p>The ClusterDeployment Ready condition will be:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.conditions[?(@.type==&quot;Ready&quot;)]}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clusterdeployment<span class="w"> </span>my-kubevirt-clusterdeployment1<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions[?(@.type=="Ready")]}'</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="o">{</span>
-<span class="w">  </span><span class="s2">&quot;lastTransitionTime&quot;</span>:<span class="w"> </span><span class="s2">&quot;2026-01-26T13:37:06Z&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;message&quot;</span>:<span class="w"> </span><span class="s2">&quot;* InfrastructureReady:</span>
+<span class="w">  </span><span class="s2">"lastTransitionTime"</span>:<span class="w"> </span><span class="s2">"2026-01-26T13:37:06Z"</span>,
+<span class="w">  </span><span class="s2">"message"</span>:<span class="w"> </span><span class="s2">"* InfrastructureReady:</span>
 <span class="s2">    * LoadBalancerAvailable: proto: integer overflow (0/1 conditions met)</span>
 <span class="s2">    * ControlPlaneInitialized: Control plane not yet initialized</span>
 <span class="s2">    * ControlPlaneAvailable: K0sControlPlane status.initialization.controlPlaneInitialized is false</span>
 <span class="s2">    * WorkersAvailable:</span>
 <span class="s2">      * MachineDeployment my-kubevirt-clusterdeployment1-md: 0 available replicas, at least 1 required (spec.strategy.rollout.maxUnavailable is 0, spec.replicas is 1)</span>
-<span class="s2">      * RemoteConnectionProbe: Remote connection not established yet&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;reason&quot;</span>:<span class="w"> </span><span class="s2">&quot;Failed&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;status&quot;</span>:<span class="w"> </span><span class="s2">&quot;False&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;type&quot;</span>:<span class="w"> </span><span class="s2">&quot;Ready&quot;</span>
+<span class="s2">      * RemoteConnectionProbe: Remote connection not established yet"</span>,
+<span class="w">  </span><span class="s2">"reason"</span>:<span class="w"> </span><span class="s2">"Failed"</span>,
+<span class="w">  </span><span class="s2">"status"</span>:<span class="w"> </span><span class="s2">"False"</span>,
+<span class="w">  </span><span class="s2">"type"</span>:<span class="w"> </span><span class="s2">"Ready"</span>
 <span class="o">}</span>
 </code></pre></div>
 <p><strong>Workaround</strong></p>
