@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v0.2.0/admin/kof/kof-install/">
+      
       
         <link rel="prev" href="../kof-architecture/">
       
@@ -3477,11 +3479,11 @@ kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="
 <li>
 <p>Create the <code>azure.json</code> text file containing <a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#configuration-file">the service principal configuration data</a>:
     <div class="highlight"><pre><span></span><code>{
-  &quot;tenantId&quot;: &quot;SP_TENANT_SP_TENANT&quot;,
-  &quot;subscriptionId&quot;: &quot;SUBSCRIPTION_ID_SUBSCRIPTION_ID&quot;,
-  &quot;resourceGroup&quot;: &quot;MyDnsResourceGroup&quot;,
-  &quot;aadClientId&quot;: &quot;SP_APP_ID_SP_APP_ID&quot;,
-  &quot;aadClientSecret&quot;: &quot;SP_PASSWORD_SP_PASSWORD&quot;
+  "tenantId": "SP_TENANT_SP_TENANT",
+  "subscriptionId": "SUBSCRIPTION_ID_SUBSCRIPTION_ID",
+  "resourceGroup": "MyDnsResourceGroup",
+  "aadClientId": "SP_APP_ID_SP_APP_ID",
+  "aadClientSecret": "SP_PASSWORD_SP_PASSWORD"
 }
 </code></pre></div></p>
 </li>
@@ -3531,7 +3533,7 @@ and apply this example, or use it as a reference:</p>
 <span class="w">    </span><span class="nt">clusterProfiles</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-aws-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-aws-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-aws-credentials</span>
 </code></pre></div>
@@ -3540,7 +3542,7 @@ and apply this example, or use it as a reference:</p>
 <span class="w">    </span><span class="nt">clusterProfiles</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">kof-azure-dns-secrets</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">          </span><span class="nt">k0rdent.mirantis.com/kof-azure-dns-secrets</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">        </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external-dns-azure-credentials</span>
 </code></pre></div>
@@ -3586,7 +3588,7 @@ and apply this example for AWS, or use it as a reference:</p>
     <div class="highlight"><pre><span></span><code><span class="nv">REGIONAL_CLUSTER_NAME</span><span class="o">=</span>cloud1-region1
 <span class="nv">REGIONAL_DOMAIN</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>.kof.example.com
 <span class="nv">ADMIN_EMAIL</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>config<span class="w"> </span>user.email<span class="k">)</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REGIONAL_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">, </span><span class="nv">$ADMIN_EMAIL</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -3605,8 +3607,8 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="s">  name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
-<span class="s">    k0rdent.mirantis.com/kof-aws-dns-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
+<span class="s">    k0rdent.mirantis.com/kof-aws-dns-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: regional</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -3656,8 +3658,8 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">      vmSize: Standard_A4_v2</span>
 <span class="s">    workersNumber: 3</span>
 <span class="s">    clusterLabels:</span>
-<span class="s">      k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
-<span class="s">      k0rdent.mirantis.com/kof-azure-dns-secrets: &quot;true&quot;</span>
+<span class="s">      k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
+<span class="s">      k0rdent.mirantis.com/kof-azure-dns-secrets: "true"</span>
 <span class="s">  serviceSpec:</span>
 <span class="s">    priority: 100</span>
 <span class="s">    services:</span>
@@ -3720,11 +3722,11 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">spec:</span>
 <span class="s">  cluster_name: $REGIONAL_CLUSTER_NAME</span>
 <span class="s">  targets:</span>
-<span class="s">    - &quot;vmauth.$REGIONAL_DOMAIN:443&quot;</span>
+<span class="s">    - "vmauth.$REGIONAL_DOMAIN:443"</span>
 <span class="s">  path_prefix: /vm/select/0/prometheus/</span>
 <span class="s">  scheme: https</span>
 <span class="s">  http_client:</span>
-<span class="s">    dial_timeout: &quot;5s&quot;</span>
+<span class="s">    dial_timeout: "5s"</span>
 <span class="s">    tls_config:</span>
 <span class="s">      insecure_skip_verify: true</span>
 <span class="s">    basic_auth:</span>
@@ -3741,12 +3743,12 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">  namespace: kof</span>
 <span class="s">spec:</span>
 <span class="s">  valuesFrom:</span>
-<span class="s">    - targetPath: &quot;basicAuthUser&quot;</span>
+<span class="s">    - targetPath: "basicAuthUser"</span>
 <span class="s">      valueFrom:</span>
 <span class="s">        secretKeyRef:</span>
 <span class="s">          key: username</span>
 <span class="s">          name: storage-vmuser-credentials</span>
-<span class="s">    - targetPath: &quot;secureJsonData.basicAuthPassword&quot;</span>
+<span class="s">    - targetPath: "secureJsonData.basicAuthPassword"</span>
 <span class="s">      valueFrom:</span>
 <span class="s">        secretKeyRef:</span>
 <span class="s">          key: password</span>
@@ -3756,7 +3758,7 @@ cat<span class="w"> </span>&gt;regional-cluster.yaml<span class="w"> </span><spa
 <span class="s">    url: https://vmauth.$REGIONAL_DOMAIN/vls</span>
 <span class="s">    access: proxy</span>
 <span class="s">    isDefault: false</span>
-<span class="s">    type: &quot;victoriametrics-logs-datasource&quot;</span>
+<span class="s">    type: "victoriametrics-logs-datasource"</span>
 <span class="s">    basicAuth: true</span>
 <span class="s">    basicAuthUser: \${username}</span>
 <span class="s">    secureJsonData:</span>
@@ -3827,7 +3829,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <li>
 <p>Set your own value below, verifing <a href="#regional-cluster">the variables</a>:
     <div class="highlight"><pre><span></span><code><span class="nv">CHILD_CLUSTER_NAME</span><span class="o">=</span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-child1
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CHILD_CLUSTER_NAME</span><span class="s2">, </span><span class="nv">$REGIONAL_DOMAIN</span><span class="s2">"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -3846,7 +3848,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <span class="s">  name: $CHILD_CLUSTER_NAME</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">  labels:</span>
-<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">    k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">    k0rdent.mirantis.com/kof-cluster-role: child</span>
 <span class="s">spec:</span>
 <span class="s">  template: $TEMPLATE</span>
@@ -3868,7 +3870,7 @@ and apply this example for AWS, or use it as a reference:</p>
 <p>For Azure:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">REGION</span><span class="o">=</span>AZURE_LOCATION
 <span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span>SUBSCRIPTION_ID_SUBSCRIPTION_ID
-<span class="nv">TEMPLATE</span><span class="o">=</span>azure-standalone-cp-<span class="o">{{</span><span class="w"> </span>no<span class="w"> </span>such<span class="w"> </span>element:<span class="w"> </span>super_collections.SuperDict<span class="w"> </span>object<span class="o">[</span><span class="s1">&#39;azureStandaloneCpCluster&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">}}</span>
+<span class="nv">TEMPLATE</span><span class="o">=</span>azure-standalone-cp-<span class="o">{{</span><span class="w"> </span>no<span class="w"> </span>such<span class="w"> </span>element:<span class="w"> </span>super_collections.SuperDict<span class="w"> </span>object<span class="o">[</span><span class="s1">'azureStandaloneCpCluster'</span><span class="o">]</span><span class="w"> </span><span class="o">}}</span>
 cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: k0rdent.mirantis.com/v1alpha1</span>
 <span class="s">kind: ClusterDeployment</span>
@@ -3878,7 +3880,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <span class="s">  labels:</span>
 <span class="s">    kof: collector</span>
 <span class="s">spec:</span>
-<span class="s">  template: azure-standalone-cp-{{ no such element: super_collections.SuperDict object[&#39;azureStandaloneCpCluster&#39;] }}</span>
+<span class="s">  template: azure-standalone-cp-{{ no such element: super_collections.SuperDict object['azureStandaloneCpCluster'] }}</span>
 <span class="s">  credential: azure-cluster-identity-cred</span>
 <span class="s">  config:</span>
 <span class="s">    clusterIdentity:</span>
@@ -3893,7 +3895,7 @@ cat<span class="w"> </span>&gt;child-cluster.yaml<span class="w"> </span><span c
 <span class="s">      vmSize: Standard_A4_v2</span>
 <span class="s">    workersNumber: 3</span>
 <span class="s">    clusterLabels:</span>
-<span class="s">      k0rdent.mirantis.com/kof-storage-secrets: &quot;true&quot;</span>
+<span class="s">      k0rdent.mirantis.com/kof-storage-secrets: "true"</span>
 <span class="s">  serviceSpec:</span>
 <span class="s">    priority: 100</span>
 <span class="s">    services:</span>
