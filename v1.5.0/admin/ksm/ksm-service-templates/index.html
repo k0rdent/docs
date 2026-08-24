@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.5.0/admin/ksm/ksm-service-templates/">
+      
       
         <link rel="prev" href="../ksm-built-in-provider/">
       
@@ -4706,7 +4708,7 @@ and use it to deploy an application to a k0rdent child cluster.</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-templates-repo</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">k0rdent.mirantis.com/managed</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">insecure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
@@ -4785,7 +4787,7 @@ To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>
 <span class="w">      </span><span class="nt">localSourceRef</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent-catalog</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./charts/ingress-nginx&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./charts/ingress-nginx"</span>
 </code></pre></div>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
    <code>my-target-namespace</code> namespace.  It references the existing <code>GitRepository</code> object called
@@ -4805,7 +4807,7 @@ To use FluxCD sources, <code>ServiceTemplate</code> must be defined using <code>
 <span class="w">        </span><span class="nt">bucket</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/path/to/charts</span>
 <span class="w">          </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m0s</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./ingress-nginx&quot;</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./ingress-nginx"</span>
 </code></pre></div>
 <p>In this case, we're creating a <code>ServiceTemplate</code> called <code>ingress-nginx-4.11.3</code> in the
    <code>my-target-namespace</code> namespace.  It defines the source of the Helm chart located in the
@@ -4826,7 +4828,7 @@ have the label <code>k0rdent.mirantis.com/managed: "true"</code>.</p>
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GitRepository</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-x</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./base&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./base"</span>
 </code></pre></div>
 <p>Aside from flux sources, local <code>ConfigMap</code> or <code>Secret</code> object can be used as a source of the kustomization manifests. The <code>ServiceTemplate</code> definition will not differ
 from one in above, except the <code>.spec.kustomize.localSourceRef.kind</code> which should be set to respective object type. However, to use <code>ConfigMap</code> or <code>Secret</code> as a source, they must
@@ -4848,7 +4850,7 @@ embed archive with kustomization. After the archive was created, this can be don
 <span class="w">          </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
 <span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./overlays"</span>
 </code></pre></div>
 <p>When <code>.spec.kustomize.remoteSourceSpec</code> is defined, the controller will create corresponding object.</p>
 <h3 id="creating-raw-resources-based-servicetemplate">Creating Raw-Resources-based ServiceTemplate<a class="headerlink" href="#creating-raw-resources-based-servicetemplate" title="Permanent link">#</a></h3>
@@ -4882,7 +4884,7 @@ and the resources' manifests to be deployed must be inlined in the source's <cod
 <span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project-cm</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">  </span><span class="c1"># will be ignored</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">  </span><span class="c1"># will be ignored</span>
 </code></pre></div>
 <p>Using the remote source for <code>ServiceTemplate</code> based on raw resources is similar to the kustomization-based template:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
@@ -4899,7 +4901,7 @@ and the resources' manifests to be deployed must be inlined in the source's <cod
 <span class="w">          </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
 <span class="w">        </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10m</span>
 <span class="w">    </span><span class="nt">deploymentType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remote</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./overlays&quot;</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">"./overlays"</span>
 </code></pre></div>
 <h3 id="deploying-application-with-servicetemplate">Deploying Application with ServiceTemplate<a class="headerlink" href="#deploying-application-with-servicetemplate" title="Permanent link">#</a></h3>
 <h4 id="create-a-servicetemplatechain">Create a <code>ServiceTemplateChain</code><a class="headerlink" href="#create-a-servicetemplatechain" title="Permanent link">#</a></h4>
@@ -4946,7 +4948,7 @@ when you create it, as in:</p>
 As you can see, you're simply referencing the template in the <code>.spec.serviceSpec.services[].template</code> field of the <code>ClusterDeployment</code>
 to tell k0rdent that you want this service to be part of this cluster.</p>
 <p>If you wanted to add this service to an existing cluster, you would simply patch the definition of the <code>ClusterDeployment</code>, as in:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment<span class="w"> </span>my-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>my-target-namespace<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;merge&#39;</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;serviceSpec&quot;:{&quot;services&quot;:[{&quot;template&quot;:&quot;project-ingress-nginx-4.11.3&quot;,&quot;name&quot;:&quot;ingress-nginx&quot;,&quot;namespace&quot;:&quot;my-target-namespace&quot;}]}}}&#39;</span>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterdeployment<span class="w"> </span>my-cluster-deployment<span class="w"> </span>-n<span class="w"> </span>my-target-namespace<span class="w"> </span>--type<span class="o">=</span><span class="s1">'merge'</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"serviceSpec":{"services":[{"template":"project-ingress-nginx-4.11.3","name":"ingress-nginx","namespace":"my-target-namespace"}]}}}'</span>
 </code></pre></div>
 For more information on creating and using <code>ServiceTemplate</code> objects, see the <a href="../../../user/services/">User Guide</a>.</p>
 

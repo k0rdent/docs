@@ -12,6 +12,8 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
+        <link rel="canonical" href="https://docs.k0rdent.io/v1.5.0/user/services/service-upgrade/">
+      
       
         <link rel="prev" href="../servicetemplate-parameters/">
       
@@ -4700,7 +4702,7 @@ The <code>ServiceTemplateChain</code> has immutable spec. You can't change it af
 <p>
 If no <code>templateChain</code> is specified for the service, the service cannot be upgraded because no path is availble.
 If you try to change the service template, in the logs, you'll see an error message such as:</p>
-<div class="highlight"><pre><span></span><code>service<span class="w"> </span>ingress-nginx/ingress-nginx<span class="w"> </span>can<span class="err">&#39;</span>t<span class="w"> </span>be<span class="w"> </span>upgraded<span class="w"> </span>from<span class="w"> </span>ingress-nginx-4-11-3<span class="w"> </span>to<span class="w"> </span>ingress-nginx-4-11-5
+<div class="highlight"><pre><span></span><code>service<span class="w"> </span>ingress-nginx/ingress-nginx<span class="w"> </span>can<span class="err">'</span>t<span class="w"> </span>be<span class="w"> </span>upgraded<span class="w"> </span>from<span class="w"> </span>ingress-nginx-4-11-3<span class="w"> </span>to<span class="w"> </span>ingress-nginx-4-11-5
 </code></pre></div>
 </div>
 <p>After the <code>ClusterDeployment</code> or <code>MultiClusterService</code> has been reconciled, you will see available upgrade paths for the service in the status:</p>
