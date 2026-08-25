@@ -91,7 +91,7 @@ Helm-based `ServiceTemplate` can be created in three ways:
         remoteSourceSpec:
           git:
             url: https://github.com/bar/foo.git
-            reference:
+            ref:
               branch: main
             interval: 10m
   ```
