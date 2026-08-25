@@ -19,6 +19,8 @@ be deployed as a complete application.
 
 Helm-based `ServiceTemplate` can be created in three ways:
 
+#### Helm-based Chart Spec ServiceTemplate
+
 - by defining Helm chart right in the template object
 
   ```yaml
@@ -40,6 +42,8 @@ Helm-based `ServiceTemplate` can be created in three ways:
 
   In this case the corresponding `HelmChart` object will be created by the controller.
 
+#### Helm-based Chart Ref ServiceTemplate
+
 - by referring the existing Helm chart
 
   ```yaml
@@ -54,6 +58,8 @@ Helm-based `ServiceTemplate` can be created in three ways:
         kind: HelmChart
         name: foo-chart
   ```
+
+#### Helm-based Local Source ServiceTemplate
 
 - by defining Helm chart source, which can be one of types provided by FluxCD:
 
@@ -78,6 +84,8 @@ Helm-based `ServiceTemplate` can be created in three ways:
         path: "./charts"
   ```
 
+#### Helm-based Remote Source ServiceTemplate
+
   ```yaml
   apiVersion: k0rdent.mirantis.com/v1beta1
   kind: ServiceTemplate
@@ -99,6 +107,8 @@ Helm-based `ServiceTemplate` can be created in three ways:
 ### Kustomize-based ServiceTemplate
 
 Kustomize-based `ServiceTemplate` can be created with either local or remote source:
+
+#### Kustomize-based Local Source ServiceTemplate
 
 - by using existing flux source object - `GitRepository`, `Bucket` or `OCIRepository` - or using existing `ConfigMap` or `Secret`
 
@@ -122,6 +132,8 @@ Kustomize-based `ServiceTemplate` can be created with either local or remote sou
   ```bash
   kubectl create configmap foo-bar --from-file=/path/to/kustomization/archive.tar.gz
   ```
+
+#### Kustomize-based Remote Source ServiceTemplate
 
 - by defining remote source right in the template object
 
