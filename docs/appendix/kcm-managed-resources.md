@@ -34,8 +34,8 @@ Created by the **Management controller** to deploy platform components.
 | Kind          | Name                                                    | Namespace             | Target Cluster | Condition                                                                                                                                                  |
 |---------------|---------------------------------------------------------|-----------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `HelmRelease` | `<componentName>` (e.g., `kcm`, `capi`, provider names) | System (`kcm-system`) | Management     | Always per component in `.spec.core` / `.spec.providers`                                                                                                   |
-| `Secret`      | `cld-registry-credentials`                              | System (`kcm-system`) | Management     | [Global registry with authentication credentials](appendix-extend-mgmt#configuring-a-custom-oci-registry-for-kcm-components) configured                    |
-| `Secret`      | `<componentName>-variables`                             | System (`kcm-system`) | Management     | Per provider component when [global registry with authentication](appendix-extend-mgmt#configuring-a-custom-oci-registry-for-kcm-components) is configured |
+| `Secret`      | `cld-registry-credentials`                              | System (`kcm-system`) | Management     | [Global registry with authentication credentials](appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components) configured                    |
+| `Secret`      | `<componentName>-variables`                             | System (`kcm-system`) | Management     | Per provider component when [global registry with authentication](appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components) is configured |
 
 ---
 
@@ -46,8 +46,8 @@ Created by the **Template controllers** (ClusterTemplate, ProviderTemplate, Serv
 | Kind             | Name                             | Namespace        | Target Cluster  | Condition                                                                                                                                                             |
 |------------------|----------------------------------|------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `HelmRepository` | `kcm-templates`                  | Same as Template | Management      | Always (default repository)                                                                                                                                           |
-| `Secret` (copy)  | Same as source credential secret | Same as Template | Management      | Default HelmRepository has [authentication credentials (`registryCredsSecret`) configured](appendix-extend-mgmt#configuring-a-custom-oci-registry-for-kcm-components) |
-| `Secret` (copy)  | Same as source credential secret | Same as Template | Management      | Default HelmRepository has [custom certificate (`registryCertSecret`) configured](appendix-extend-mgmt#configuring-a-custom-oci-registry-for-kcm-components)          |
+| `Secret` (copy)  | Same as source credential secret | Same as Template | Management      | Default HelmRepository has [authentication credentials (`registryCredsSecret`) configured](appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components) |
+| `Secret` (copy)  | Same as source credential secret | Same as Template | Management      | Default HelmRepository has [custom certificate (`registryCertSecret`) configured](appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components)          |
 | `HelmChart`      | `<templateName>`                 | Same as Template | Management      | Always                                                                                                                                                                |
 | `ConfigMap`      | `schema-{ct\|pt}-<templateName>` | Same as Template | Management      | Chart contains `values.schema.json`                                                                                                                                   |
 
@@ -72,8 +72,8 @@ Created by the **Region controller** to manage connectivity and distribute objec
 
 | Kind            | Name                                                    | Namespace             | Target Cluster  | Condition                                                                                                                                                     |
 |-----------------|---------------------------------------------------------|-----------------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Secret` (copy) | `<cdNamespace>.<cdName>-kubeconfig`                     | System (`kcm-system`) | Management      | ClusterDeployment is [referenced](../admin/regional-clusters/regional-cluster-registration#region-object-with-a-clusterdeployment-reference) in a Region spec |
-| `Secret` (copy) | Same as registry cert secret name (configured via flag) | System (`kcm-system`) | Regional        | [Registry certificate (`registryCertSecret`)](appendix-extend-mgmt#configuring-a-custom-oci-registry-for-kcm-components) is configured                        |
+| `Secret` (copy) | `<cdNamespace>.<cdName>-kubeconfig`                     | System (`kcm-system`) | Management      | ClusterDeployment is [referenced](../admin/regional-clusters/regional-cluster-registration.md#region-object-with-a-clusterdeployment-reference) in a Region spec |
+| `Secret` (copy) | Same as registry cert secret name (configured via flag) | System (`kcm-system`) | Regional        | [Registry certificate (`registryCertSecret`)](appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components) is configured                        |
 | `Secret` (copy) | Same as source proxy secret                             | System (`kcm-system`) | Regional        | [Proxy](proxy.md) is configured                                                                                                                               |
 
 ---
