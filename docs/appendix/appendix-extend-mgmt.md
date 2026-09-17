@@ -10,7 +10,6 @@ metadata:
   name: kcm
 spec:
   core:
-    capi: {}
     kcm: {}
   providers:
   - name: k0smotron
@@ -55,7 +54,6 @@ There are two options to override the default management configuration of {{{ do
           name: kcm
         spec:
           core:
-            capi: {}
             kcm:
               config:
                 controller:
