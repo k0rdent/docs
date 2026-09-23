@@ -5355,6 +5355,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#automated-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#test-environment" class="md-nav__link">
     <span class="md-ellipsis">
       Test environment
@@ -5403,6 +5412,33 @@
   <a href="#ai-inference" class="md-nav__link">
     <span class="md-ellipsis">
       AI inference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-inference-ingress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced inference ingress
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#high-performance-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      High performance networking
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaggregated-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disaggregated inference
     </span>
   </a>
   
@@ -5503,10 +5539,121 @@
 
 
 <h1 id="kubernetes-ai-conformance">Kubernetes AI conformance<a class="headerlink" href="#kubernetes-ai-conformance" title="Permanent link">#</a></h1>
-<p>This document summarizes how k0rdent satisfies the Kubernetes AI Conformance requirements for Kubernetes v1.35.
-It is a reviewer-facing evidence page built from captured test runs on k0rdent v1.9.0 with a child cluster running k0s v1.35.3+k0s.0.</p>
+<p>This document summarizes how k0rdent satisfies the <a href="https://github.com/cncf/k8s-ai-conformance">Kubernetes AI Conformance</a> requirements.
+It is the reviewer-facing evidence page for the k0rdent submissions, one section per requirement, with the anchors referenced from <code>PRODUCT.yaml</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Kubernetes</th>
+<th>k0rdent</th>
+<th>Child cluster</th>
+<th>Submission</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.36</td>
+<td>v1.11.0</td>
+<td>k0s v1.36.3+k0s</td>
+<td><a href="https://github.com/cncf/k8s-ai-conformance/tree/main/v1.36/k0rdent">cncf/k8s-ai-conformance v1.36/k0rdent</a></td>
+<td>Automated test suite run plus the documented demonstrations below</td>
+</tr>
+<tr>
+<td>v1.35</td>
+<td>v1.9.0</td>
+<td>k0s v1.35.3+k0s.0</td>
+<td><a href="https://github.com/cncf/k8s-ai-conformance/tree/main/v1.35/k0rdent">cncf/k8s-ai-conformance v1.35/k0rdent</a></td>
+<td>Documented demonstrations below</td>
+</tr>
+</tbody>
+</table>
+<p>Two kinds of evidence appear on this page:</p>
+<ul>
+<li><strong>Automated verification.</strong> Requirements covered by the upstream <a href="https://github.com/kubernetes-sigs/ai-conformance/tree/main/test">AI Conformance test suite</a> are verified by running that suite against a freshly provisioned k0rdent child cluster. The pipeline, its results and the exact versions are described under <a href="#automated-verification">Automated verification</a>. The test artifacts (<code>junit.xml</code>, <code>e2e.log</code>, <code>results.json</code>) are part of the CNCF submission.</li>
+<li><strong>Documented demonstrations.</strong> Requirements without an automated test are verified by the captured demonstrations in each section. These were run on k0rdent v1.9.0 with a k0s v1.35.3+k0s.0 child cluster; the requirement text for them is unchanged between the v1.35 and v1.36 checklists, and the components involved are installed the same way on both versions.</li>
+</ul>
+<h2 id="automated-verification">Automated verification<a class="headerlink" href="#automated-verification" title="Permanent link">#</a></h2>
+<p>The <a href="https://github.com/kubernetes-sigs/ai-conformance">kubernetes-sigs/ai-conformance</a> suite is run by the <a href="https://github.com/Mirantis/cncf-conformance">Mirantis/cncf-conformance</a> pipeline.
+A run creates a kind management cluster, installs k0rdent from its release Helm chart, deploys an Azure child cluster through a <code>ClusterDeployment</code> of the <code>azure-standalone-cp</code> template, installs the NVIDIA GPU Operator and Kueue on the child cluster, runs the suite, uploads the artifacts and destroys both clusters.
+Runs happen weekly against k0rdent <code>main</code> and on demand against a release; the submission uses a release run.</p>
+<p>Run used for the v1.36 submission: <a href="https://github.com/Mirantis/cncf-conformance/actions/runs/35820041560">Mirantis/cncf-conformance run 35820041560</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k0rdent</td>
+<td>v1.11.0 (<code>kcm</code> chart 1.11.0), cluster template <code>azure-standalone-cp-1-0-43</code></td>
+</tr>
+<tr>
+<td>Child cluster</td>
+<td>k0s v1.36.3+k0s (Kubernetes v1.36.3, containerd 2.3.3)</td>
+</tr>
+<tr>
+<td>Nodes</td>
+<td>one <code>Standard_A4_v2</code> control plane, one <code>Standard_NC4as_T4_v3</code> worker (NVIDIA T4), Ubuntu 22.04</td>
+</tr>
+<tr>
+<td>Accelerator stack</td>
+<td>NVIDIA GPU Operator v26.7.0, driver 595.91.07, device plugin allocation mode</td>
+</tr>
+<tr>
+<td>Gang scheduler</td>
+<td>Kueue v0.18.2 (<code>ResourceFlavor</code>, <code>ClusterQueue</code>, <code>LocalQueue</code>)</td>
+</tr>
+<tr>
+<td>Suite</td>
+<td>kubernetes-sigs/ai-conformance commit <code>da952539a75be3ceee8bbf82698c5f19c401cb2d</code></td>
+</tr>
+<tr>
+<td>Result</td>
+<td>126 tests, 0 failures, 1 skipped</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>go<span class="w"> </span>run<span class="w"> </span>gotest.tools/gotestsum@v1.13.0<span class="w"> </span>--junitfile<span class="w"> </span>junit.xml<span class="w"> </span>--jsonfile<span class="w"> </span>results.json<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>./test<span class="w"> </span>-v<span class="w"> </span>-timeout<span class="w"> </span>30m<span class="w"> </span>-kubeconfig<span class="w"> </span><span class="s2">"</span><span class="nv">$KUBECONFIG</span><span class="s2">"</span><span class="w"> </span>-accelerator-type<span class="o">=</span>nvidia<span class="w"> </span>-allocation-mode<span class="o">=</span>auto<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-gang-scheduler-namespace<span class="o">=</span>ai-conformance-gang-scheduling<span class="w"> </span>-gang-job-labels<span class="o">=</span>kueue.x-k8s.io/queue-name<span class="o">=</span>e2e-lq
+<span class="go">--- PASS: TestSecureAcceleratorAccess (124.42s)</span>
+<span class="go">--- PASS: TestGangScheduling (45.73s)</span>
+<span class="go">--- SKIP: TestAcceleratorClusterAutoscaling (0.00s)</span>
+<span class="go">DONE 126 tests, 1 skipped in 172.904s</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Requirement</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TestSecureAcceleratorAccess</code></td>
+<td><a href="#secure-accelerator-access">Secure accelerator access</a></td>
+<td>Passed</td>
+</tr>
+<tr>
+<td><code>TestGangScheduling</code></td>
+<td><a href="#gang-scheduling">Gang scheduling</a></td>
+<td>Passed</td>
+</tr>
+<tr>
+<td><code>TestAcceleratorClusterAutoscaling</code></td>
+<td><a href="#cluster-autoscaling">Cluster autoscaling</a></td>
+<td>Skipped: the test needs an autoscaled accelerator node pool, which the test cluster does not have. k0rdent does not bundle a cluster autoscaler; see the section for how it integrates with the upstream one</td>
+</tr>
+</tbody>
+</table>
+<p>The remaining tests in the suite are unit tests of the test harness itself and do not depend on the cluster.</p>
 <h2 id="test-environment">Test environment<a class="headerlink" href="#test-environment" title="Permanent link">#</a></h2>
-<p>The evidence below was captured against a k0rdent-managed child cluster on Azure:</p>
+<p>Automated verification ran on the cluster described in the table above.</p>
+<p>The documented demonstrations were captured against a k0rdent-managed child cluster on Azure:</p>
 <ul>
 <li>k0rdent (KCM) v1.9.0 on a kind management cluster</li>
 <li>Child cluster: 3× <code>Standard_A4_v2</code> control-plane VMs + 2× <code>Standard_NC4as_T4_v3</code> worker VMs (one NVIDIA Tesla T4 each)</li>
@@ -5514,7 +5661,8 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <li>Catalog-driven installs via <code>MultiClusterService</code> for GPU Operator, Envoy Gateway, Volcano, KubeRay; raw Helm for kube-prometheus-stack and dra-example-driver</li>
 </ul>
 <h2 id="dra-support">DRA support<a class="headerlink" href="#dra-support" title="Permanent link">#</a></h2>
-<p><strong>Requirement:</strong> Dynamic Resource Allocation APIs must be available and usable for accelerator allocation.</p>
+<p><strong>Requirement (v1.35 checklist only):</strong> Dynamic Resource Allocation APIs must be available and usable for accelerator allocation.
+This requirement was removed from the v1.36 checklist; the section is kept for the v1.35 submission.</p>
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
 <p>k0rdent's child cluster runs Kubernetes v1.35.3, where DRA is available at <code>resource.k8s.io/v1</code> and enabled by default. We validated the full DRA flow with the upstream <code>dra-example-driver</code> v0.2.1: each worker advertised eight simulated devices via a <code>ResourceSlice</code>, the scheduler allocated one to a Pod through a <code>ResourceClaimTemplate</code>, and the consuming container received the allocated device's metadata as environment variables.</p>
 <p>This shows not only that the API surface exists, but that the allocation path is functional end to end on a k0rdent-provisioned cluster.</p>
@@ -5545,7 +5693,9 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <h2 id="driver-runtime-management">Driver runtime management<a class="headerlink" href="#driver-runtime-management" title="Permanent link">#</a></h2>
 <p><strong>Requirement:</strong> The platform should support installation and management of accelerator drivers and runtime components.</p>
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
-<p>k0rdent supports NVIDIA driver and runtime management through the NVIDIA GPU Operator, installed via the k0rdent catalog <code>gpu-operator-26-3-1</code> ServiceTemplate as a <code>MultiClusterService</code> reconciled onto the child cluster. On the test cluster, the operator installed the NVIDIA driver, configured the NVIDIA runtime for containerd, and registered the <code>nvidia</code>, <code>nvidia-cdi</code>, and <code>nvidia-legacy</code> <code>RuntimeClass</code> resources. GPU-requesting Pods that opt into <code>runtimeClassName: nvidia</code> receive working CUDA access; the device plugin advertises <code>nvidia.com/gpu</code> capacity on each worker.</p>
+<p>k0rdent supports NVIDIA driver and runtime management through the NVIDIA GPU Operator, installed via the k0rdent catalog <code>gpu-operator-26-3-1</code> ServiceTemplate as a <code>MultiClusterService</code> reconciled onto the child cluster.
+In the automated run, GPU Operator v26.7.0 installed driver 595.91.07 on the k0s v1.36.3+k0s worker of the child cluster, configured the <code>nvidia</code> runtime in its containerd, and the operator's validator confirmed a working CUDA workload before the suite started.
+On the demonstration cluster, the operator installed the NVIDIA driver, configured the NVIDIA runtime for containerd, and registered the <code>nvidia</code>, <code>nvidia-cdi</code>, and <code>nvidia-legacy</code> <code>RuntimeClass</code> resources. GPU-requesting Pods that opt into <code>runtimeClassName: nvidia</code> receive working CUDA access; the device plugin advertises <code>nvidia.com/gpu</code> capacity on each worker.</p>
 <p>Minimal example:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ds/nvidia-driver-daemonset<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>driver_version<span class="w"> </span>--format<span class="o">=</span>csv,noheader
@@ -5569,7 +5719,7 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <h2 id="gpu-sharing">GPU sharing<a class="headerlink" href="#gpu-sharing" title="Permanent link">#</a></h2>
 <p><strong>Requirement:</strong> The platform should support mechanisms to share a single physical accelerator among multiple workloads.</p>
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
-<p>k0rdent supports GPU sharing through NVIDIA device plugin time-slicing, configured via a single <code>kubectl patch</code> against the GPU Operator's <code>ClusterPolicy</code>. On the test cluster, each Tesla T4 was reconfigured to advertise four schedulable <code>nvidia.com/gpu</code> replicas; cluster-wide capacity moved from <code>nvidia.com/gpu = 2</code> to <code>nvidia.com/gpu = 8</code>, and four GPU-requesting Pods ran concurrently on a single physical GPU, all reporting the same physical GPU UUID. T4 hardware does not support MIG, so time-slicing is the applicable sharing mechanism on this SKU. Sharing was reverted with a second `kubectl patch'.</p>
+<p>k0rdent supports GPU sharing through NVIDIA device plugin time-slicing, configured via a single <code>kubectl patch</code> against the GPU Operator's <code>ClusterPolicy</code>. On the demonstration cluster, each Tesla T4 was reconfigured to advertise four schedulable <code>nvidia.com/gpu</code> replicas; cluster-wide capacity moved from <code>nvidia.com/gpu = 2</code> to <code>nvidia.com/gpu = 8</code>, and four GPU-requesting Pods ran concurrently on a single physical GPU, all reporting the same physical GPU UUID. T4 hardware does not support MIG, so time-slicing is the applicable sharing mechanism on this SKU. Sharing was reverted with a second <code>kubectl patch</code>.</p>
 <p>Minimal example:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>&lt;worker&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.capacity.nvidia\.com/gpu}{"\n"}'</span>
 <span class="go">4</span>
@@ -5628,10 +5778,47 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <li><a href="https://gateway-api.sigs.k8s.io/">Gateway API</a></li>
 <li><a href="https://gateway.envoyproxy.io/">Envoy Gateway</a></li>
 </ul>
+<h2 id="advanced-inference-ingress">Advanced inference ingress<a class="headerlink" href="#advanced-inference-ingress" title="Permanent link">#</a></h2>
+<p><strong>Requirement:</strong> The platform should support an implementation of the Gateway API Inference Extension for model-aware routing.</p>
+<p><strong>Status on k0rdent:</strong> Not Implemented.</p>
+<p>k0rdent does not bundle a Gateway API Inference Extension implementation.
+Gateway implementations that support the Inference Extension can be installed on child clusters like any other Gateway API implementation, but that path was not demonstrated in this submission.</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://gateway-api-inference-extension.sigs.k8s.io/">Gateway API Inference Extension</a></li>
+</ul>
+<h2 id="high-performance-networking">High performance networking<a class="headerlink" href="#high-performance-networking" title="Permanent link">#</a></h2>
+<p><strong>Requirement:</strong> If high performance pod-to-pod communication is needed, the platform should expose specialized network resources, preferably through DRA.</p>
+<p><strong>Status on k0rdent:</strong> Not Implemented.</p>
+<p>k0rdent does not package RDMA, GPUDirect or multi-network components.
+These depend on host hardware and drivers outside this submission's evidence cluster and were not demonstrated in this submission.</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://github.com/kubernetes-sigs/dranet">DRANET</a></li>
+</ul>
+<h2 id="disaggregated-inference">Disaggregated inference<a class="headerlink" href="#disaggregated-inference" title="Permanent link">#</a></h2>
+<p><strong>Requirement:</strong> The platform should be able to install and run a disaggregated inference solution with separately scalable prefill and decode phases.</p>
+<p><strong>Status on k0rdent:</strong> Not Implemented.</p>
+<p>k0rdent does not bundle a disaggregated inference stack.
+Solutions such as llm-d or Dynamo can be installed on child clusters as ordinary workloads, but that path was not demonstrated in this submission.</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://llm-d.ai/">llm-d</a></li>
+</ul>
 <h2 id="gang-scheduling">Gang scheduling<a class="headerlink" href="#gang-scheduling" title="Permanent link">#</a></h2>
 <p><strong>Requirement:</strong> The platform must support all-or-nothing scheduling for distributed workloads.</p>
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
-<p>k0rdent supports gang scheduling with Volcano, installed via the k0rdent catalog <code>volcano-1-14-1</code> ServiceTemplate (this template was contributed to the catalog as part of the AI conformance work). We demonstrated both successful atomic placement and full refusal of an oversized gang: a two-task job was bound atomically and ran to completion, while a twelve-task job whose combined CPU demand exceeded the cluster was refused. Every Pod stayed <code>Pending</code> even though four of them would have fit individually. The PodGroup's <code>spec.minResources.cpu: 18</code> field captures the gang's resource demand as a first-class object, evaluated as a single unit.</p>
+<p>Automated verification: <code>TestGangScheduling</code> from the upstream suite passed on a k0rdent v1.11.0 child cluster (k0s v1.36.3+k0s) with Kueue v0.18.2 as the gang scheduler.
+The test submits a two-pod Job that fits and checks that both pods are bound together and complete, then submits a Job that cannot fit and checks that it stays suspended with zero bound pods for the whole observation window.</p>
+<div class="highlight"><pre><span></span><code><span class="go">=== RUN   TestGangScheduling/PositiveGangScheduling</span>
+<span class="go">    gang_scheduling_test.go:203:   Pod pos-job-727xz: schedulerName=default-scheduler, nodeName=conformance-k0rdent-35820041560-md-4kltn-vw5h7, phase=Succeeded</span>
+<span class="go">    gang_scheduling_test.go:203:   Pod pos-job-j2hcc: schedulerName=default-scheduler, nodeName=conformance-k0rdent-35820041560-md-4kltn-vw5h7, phase=Succeeded</span>
+<span class="go">    gang_scheduling_test.go:207: Positive job pos-job completed with 2 pods verified</span>
+<span class="go">=== RUN   TestGangScheduling/NegativeGangScheduling</span>
+<span class="go">    gang_scheduling_test.go:245: Negative job neg-job successfully remained suspended or pending with 0 bound pods throughout the 30s verification window.</span>
+<span class="go">--- PASS: TestGangScheduling (45.73s)</span>
+</code></pre></div>
+<p>Documented demonstration: k0rdent also supports gang scheduling with Volcano, installed via the k0rdent catalog <code>volcano-1-14-1</code> ServiceTemplate (this template was contributed to the catalog as part of the AI conformance work). We demonstrated both successful atomic placement and full refusal of an oversized gang: a two-task job was bound atomically and ran to completion, while a twelve-task job whose combined CPU demand exceeded the cluster was refused. Every Pod stayed <code>Pending</code> even though four of them would have fit individually. The PodGroup's <code>spec.minResources.cpu: 18</code> field captures the gang's resource demand as a first-class object, evaluated as a single unit.</p>
 <p>Minimal example:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>vcjob<span class="w"> </span>gang-demo
 <span class="go">NAME        STATUS      MINAVAILABLE</span>
@@ -5653,6 +5840,7 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 <p>Volcano explicitly identifies the four pods that would individually fit and refuses to bind any of them. That asymmetry is gang scheduling.</p>
 <p>Further reading:</p>
 <ul>
+<li><a href="https://kueue.sigs.k8s.io/">Kueue</a></li>
 <li><a href="https://volcano.sh/en/">Volcano</a></li>
 <li><a href="https://catalog.k0rdent.io/latest/apps/volcano/">Volcano Service Template</a></li>
 </ul>
@@ -5663,6 +5851,7 @@ It is a reviewer-facing evidence page built from captured test runs on k0rdent v
 k0rdent provisions clusters via Cluster API and renders standard CAPI <code>MachineDeployment</code> resources (<code>cluster.x-k8s.io/v1beta2</code>) for every worker pool, so the upstream Kubernetes Cluster Autoscaler with the CAPI provider (<code>--cloud-provider=clusterapi</code>) integrates without modification.
 Accelerator-aware scale-up is driven by pending Pods that request <code>nvidia.com/gpu</code> and by the GPU resources advertised through the NVIDIA device plugin, mounted on <code>MachineDeployment</code>-scoped node pools labelled accordingly.</p>
 <p>The same upstream chart is also available in the k0rdent catalog as <code>cluster-autoscaler-9-55-0</code> for one-step installation.</p>
+<p>The upstream suite's <code>TestAcceleratorClusterAutoscaling</code> is skipped in the automated run because the fixed test cluster has no autoscaled node pool to exercise.</p>
 <p>Reference configuration (CAPI provider):</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>autoscaler<span class="w"> </span>https://kubernetes.github.io/autoscaler
 helm<span class="w"> </span>install<span class="w"> </span>cluster-autoscaler<span class="w"> </span>autoscaler/cluster-autoscaler<span class="w"> </span><span class="se">\</span>
@@ -5744,7 +5933,18 @@ All four spec-named DCGM metrics: <code>DCGM_FI_DEV_GPU_UTIL</code>, <code>DCGM_
 <h2 id="secure-accelerator-access">Secure accelerator access<a class="headerlink" href="#secure-accelerator-access" title="Permanent link">#</a></h2>
 <p><strong>Requirement:</strong> Accelerator access must be isolated so that only authorized workloads can use the device.</p>
 <p><strong>Status on k0rdent:</strong> Implemented.</p>
-<p>k0rdent relies on the standard Kubernetes device plugin model for GPU isolation, mediated by the NVIDIA Device Plugin and the <code>nvidia</code> <code>RuntimeClass</code>. On the test cluster, a Pod without a GPU request and without <code>runtimeClassName: nvidia</code> had no access to NVIDIA tooling or device nodes (<code>nvidia-smi: not found</code>). When three Pods each requested one GPU on a two-GPU cluster, the scheduler admitted two (one per GPU worker) and kept the third <code>Pending</code> with <code>Insufficient nvidia.com/gpu</code>.</p>
+<p>k0rdent relies on the standard Kubernetes device plugin model for GPU isolation, mediated by the NVIDIA Device Plugin and the <code>nvidia</code> <code>RuntimeClass</code>.</p>
+<p>Automated verification: <code>TestSecureAcceleratorAccess</code> from the upstream suite passed on a k0rdent v1.11.0 child cluster (k0s v1.36.3+k0s) with the GPU Operator device plugin.
+The test runs a probe in three shapes: a Pod that requests one <code>nvidia.com/gpu</code> and must see exactly one device, a Pod without a request that must see none, and a two-container Pod where only the requesting container may see the device.</p>
+<div class="highlight"><pre><span></span><code><span class="go">=== RUN   TestSecureAcceleratorAccess</span>
+<span class="go">    util_test.go:273: Auto-detected allocation mode: device-plugin</span>
+<span class="go">    util_test.go:859: PASS: prober sees exactly 1 accelerator device(s).</span>
+<span class="go">    util_test.go:859: PASS: prober sees exactly 0 accelerator device(s).</span>
+<span class="go">    util_test.go:859: PASS: authorized sees exactly 1 accelerator device(s).</span>
+<span class="go">    util_test.go:859: PASS: unauthorized sees exactly 0 accelerator device(s).</span>
+<span class="go">--- PASS: TestSecureAcceleratorAccess (124.42s)</span>
+</code></pre></div>
+<p>Documented demonstration: on the demonstration cluster, a Pod without a GPU request and without <code>runtimeClassName: nvidia</code> had no access to NVIDIA tooling or device nodes (<code>nvidia-smi: not found</code>). When three Pods each requested one GPU on a two-GPU cluster, the scheduler admitted two (one per GPU worker) and kept the third <code>Pending</code> with <code>Insufficient nvidia.com/gpu</code>.</p>
 <p>Together, these checks show both isolation-by-default and capacity enforcement for accelerator access.</p>
 <p>Minimal example:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>no-gpu-request
