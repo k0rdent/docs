@@ -62,6 +62,11 @@ Similarly, the `AccessManagement` object must have properly configured `spec.acc
 > NOTE:  
 > Support for displaying all available Cluster Templates for updates in the `ClusterDeployment` status is planned.
 
+> NOTE:
+> By default, a k0s version change replaces the worker machines of k0s-based clusters. To update k0s on the existing
+> machines instead, enable the experimental
+> [Cluster API in-place updates](../../appendix/appendix-extend-mgmt.md#configuring-cluster-api-in-place-updates).
+
       <!-- TODO
       ## Scaling a Cluster 
       ## Upgrading a Single Standalone Cluster 

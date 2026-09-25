@@ -308,6 +308,130 @@ spec:
           EKSAllowAddRoles: true
 ```
 
+### Configuring Cluster API In-Place Updates
+
+> WARNING:
+> This feature is experimental in both Cluster API and k0smotron.
+
+<!-- TODO: put a proper version the feature is available starting with -->
+KCM can enable the Cluster API
+[in-place updates](https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240807-in-place-updates.md)
+mechanism. When it is enabled, a change of the k0s version (for example, after switching a `ClusterDeployment` to a
+`ClusterTemplate` with a newer k0s version) is applied to the existing machines by
+[k0s autopilot](https://docs.k0sproject.io/stable/autopilot/) instead of replacing them.
+
+This applies to k0s-based clusters managed by k0smotron:
+
+- Worker machines owned by a `MachineDeployment` are updated in place. Without this feature, a k0s version change
+  replaces worker machines.
+- Control plane machines of a `K0sControlPlane` with the `InPlace` update strategy (the default) are already updated in
+  place by k0smotron itself. With this feature enabled, k0smotron hands the update over to Cluster API instead.
+
+Only the k0s version is updated in place. Other changes, such as a new machine template or bootstrap configuration,
+still replace the machines. For details, see the k0smotron documentation on updating
+[control plane](https://docs.k0smotron.io/stable/update/update-capi-cluster/) and
+[worker](https://docs.k0smotron.io/stable/update/update-capi-cluster-workers/) nodes.
+
+The feature is *disabled* by default. To enable it, set the `enableInPlaceUpdates` KCM controller setting in the
+`Management` object:
+
+```yaml
+spec:
+  core:
+    kcm:
+      config:
+        controller:
+          enableInPlaceUpdates: true
+```
+
+Or, on the initial installation, add the following parameter to the `helm install` command:
+
+```bash
+--set="controller.enableInPlaceUpdates=true"
+```
+
+KCM passes the setting to the providers of the `Management` object and of every `Region` object, which results in
+the following:
+
+- The `cluster-api` core provider gets the `InPlaceUpdates` and `RuntimeSDK` feature gates enabled.
+- The `cluster-api-provider-k0sproject-k0smotron` provider gets the `InPlaceUpdates` feature gate of the control plane
+  provider enabled, and deploys the k0smotron in-place version update extension: the `k0smotron-extension-webhook`
+  `Deployment` in the system namespace and the `inplace-version-update-extensionconfig` `ExtensionConfig` that registers
+  it within Cluster API.
+
+Other providers ignore the setting.
+
+#### Overriding the setting per provider
+
+The `inPlaceUpdates.enabled` value in the provider configuration takes precedence over the KCM controller setting.
+Feature gates explicitly set under `manager.featureGates` of the `cluster-api` provider and
+`controlPlane.manager.featureGates` of the `cluster-api-provider-k0sproject-k0smotron` provider take precedence over
+both. The extension is deployed whenever the resulting `InPlaceUpdates` feature gate of the k0smotron control plane
+provider is enabled.
+
+For example, to enable in-place updates only for the providers of a specific `Region` while keeping the KCM controller
+setting disabled, configure both providers in the `Region` object:
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1beta1
+kind: Region
+metadata:
+  name: region1
+spec:
+  core:
+    capi:
+      config:
+        inPlaceUpdates:
+          enabled: true
+  providers:
+  - name: cluster-api-provider-k0sproject-k0smotron
+    config:
+      inPlaceUpdates:
+        enabled: true
+```
+
+The same configuration applies to the `Management` object. Conversely, set `inPlaceUpdates.enabled: false` to disable
+the feature for a provider while the KCM controller setting is enabled.
+
+#### Configuring the extension webhook server
+
+You can configure the extension webhook server under `inPlaceUpdates.extension` in the
+`cluster-api-provider-k0sproject-k0smotron` provider configuration:
+
+```yaml
+spec:
+  providers:
+  - name: cluster-api-provider-k0sproject-k0smotron
+    config:
+      inPlaceUpdates:
+        extension:
+          image:
+            repository: "" # defaults to <globalRegistry>/capi/k0smotron if globalRegistry is set, otherwise to quay.io/k0sproject/k0smotron
+            tag: "" # defaults to the k0smotron version of the provider
+            pullPolicy: IfNotPresent
+          replicas: 1
+          resources: {}
+          nodeSelector: {}
+          tolerations: []
+          affinity: {}
+```
+
+The extension webhook server uses the same image as the k0smotron providers, so no additional image needs to be
+mirrored to a private registry.
+
+#### Limitations
+
+- In-place updates must be enabled for both the `cluster-api` and the `cluster-api-provider-k0sproject-k0smotron`
+  providers. The installation or upgrade of the k0smotron provider fails if `spec.manager.featureGates` of the Cluster API
+  `CoreProvider` object lacks either of the `InPlaceUpdates` or `RuntimeSDK` feature gates. Feature gates enabled by other
+  means, such as provider `patches` or additional manager arguments, are not recognized and fail the check as well, so
+  enable them with `inPlaceUpdates.enabled` or `manager.featureGates` instead.
+- The `InPlaceUpdates` feature gate of the `cluster-api` provider requires the `RuntimeSDK` feature gate, since the
+  Cluster API core provider fails to start otherwise. Setting `manager.featureGates.InPlaceUpdates: true` without
+  `manager.featureGates.RuntimeSDK: true` fails the installation or upgrade of the `cluster-api` provider.
+- Disabling the feature removes the extension webhook server. Disable it only when no cluster uses the `InPlace` update
+  strategy and no cluster is being updated.
+
 ### Configuring the Sveltos Stuck Tokens Controller
 
 If a management cluster has some maintenance activity or hardware issue causing it to go down for more than ~30 minutes,
