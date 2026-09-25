@@ -4827,6 +4827,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuring-cluster-api-in-place-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Cluster API In-Place Updates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuring-the-sveltos-stuck-tokens-controller" class="md-nav__link">
     <span class="md-ellipsis">
       Configuring the Sveltos Stuck Tokens Controller
@@ -5573,6 +5582,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#configuring-cluster-api-in-place-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Cluster API In-Place Updates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#configuring-the-sveltos-stuck-tokens-controller" class="md-nav__link">
     <span class="md-ellipsis">
       Configuring the Sveltos Stuck Tokens Controller
@@ -5945,6 +5963,111 @@ follow the format defined by the <a href="https://pkg.go.dev/sigs.k8s.io/cluster
 <span class="w">          </span><span class="nt">EKSEnableIAM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">EKSAllowAddRoles</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
+<h3 id="configuring-cluster-api-in-place-updates">Configuring Cluster API In-Place Updates<a class="headerlink" href="#configuring-cluster-api-in-place-updates" title="Permanent link">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+This feature is experimental in both Cluster API and k0smotron.</p>
+</div>
+<a href="!-- TODO: put a proper version the feature is available starting with --"> put a proper version the feature is available starting with --</a>
+<p>KCM can enable the Cluster API
+<a href="https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240807-in-place-updates.md">in-place updates</a>
+mechanism. When it is enabled, a change of the k0s version (for example, after switching a <code>ClusterDeployment</code> to a
+<code>ClusterTemplate</code> with a newer k0s version) is applied to the existing machines by
+<a href="https://docs.k0sproject.io/stable/autopilot/">k0s autopilot</a> instead of replacing them.</p>
+<p>This applies to k0s-based clusters managed by k0smotron:</p>
+<ul>
+<li>Worker machines owned by a <code>MachineDeployment</code> are updated in place. Without this feature, a k0s version change
+  replaces worker machines.</li>
+<li>Control plane machines of a <code>K0sControlPlane</code> with the <code>InPlace</code> update strategy (the default) are already updated in
+  place by k0smotron itself. With this feature enabled, k0smotron hands the update over to Cluster API instead.</li>
+</ul>
+<p>Only the k0s version is updated in place. Other changes, such as a new machine template or bootstrap configuration,
+still replace the machines. For details, see the k0smotron documentation on updating
+<a href="https://docs.k0smotron.io/stable/update/update-capi-cluster/">control plane</a> and
+<a href="https://docs.k0smotron.io/stable/update/update-capi-cluster-workers/">worker</a> nodes.</p>
+<p>The feature is <em>disabled</em> by default. To enable it, set the <code>enableInPlaceUpdates</code> KCM controller setting in the
+<code>Management</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">enableInPlaceUpdates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<p>Or, on the initial installation, add the following parameter to the <code>helm install</code> command:</p>
+<div class="highlight"><pre><span></span><code>--set<span class="o">=</span><span class="s2">"controller.enableInPlaceUpdates=true"</span>
+</code></pre></div>
+<p>KCM passes the setting to the providers of the <code>Management</code> object and of every <code>Region</code> object, which results in
+the following:</p>
+<ul>
+<li>The <code>cluster-api</code> core provider gets the <code>InPlaceUpdates</code> and <code>RuntimeSDK</code> feature gates enabled.</li>
+<li>The <code>cluster-api-provider-k0sproject-k0smotron</code> provider gets the <code>InPlaceUpdates</code> feature gate of the control plane
+  provider enabled, and deploys the k0smotron in-place version update extension: the <code>k0smotron-extension-webhook</code>
+  <code>Deployment</code> in the system namespace and the <code>inplace-version-update-extensionconfig</code> <code>ExtensionConfig</code> that registers
+  it within Cluster API.</li>
+</ul>
+<p>Other providers ignore the setting.</p>
+<h4 id="overriding-the-setting-per-provider">Overriding the setting per provider<a class="headerlink" href="#overriding-the-setting-per-provider" title="Permanent link">#</a></h4>
+<p>The <code>inPlaceUpdates.enabled</code> value in the provider configuration takes precedence over the KCM controller setting.
+Feature gates explicitly set under <code>manager.featureGates</code> of the <code>cluster-api</code> provider and
+<code>controlPlane.manager.featureGates</code> of the <code>cluster-api-provider-k0sproject-k0smotron</code> provider take precedence over
+both. The extension is deployed whenever the resulting <code>InPlaceUpdates</code> feature gate of the k0smotron control plane
+provider is enabled.</p>
+<p>For example, to enable in-place updates only for the providers of a specific <code>Region</code> while keeping the KCM controller
+setting disabled, configure both providers in the <code>Region</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Region</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">region1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">capi</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">inPlaceUpdates</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-k0sproject-k0smotron</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">inPlaceUpdates</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<p>The same configuration applies to the <code>Management</code> object. Conversely, set <code>inPlaceUpdates.enabled: false</code> to disable
+the feature for a provider while the KCM controller setting is enabled.</p>
+<h4 id="configuring-the-extension-webhook-server">Configuring the extension webhook server<a class="headerlink" href="#configuring-the-extension-webhook-server" title="Permanent link">#</a></h4>
+<p>You can configure the extension webhook server under <code>inPlaceUpdates.extension</code> in the
+<code>cluster-api-provider-k0sproject-k0smotron</code> provider configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">providers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-k0sproject-k0smotron</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">inPlaceUpdates</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">extension</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># defaults to &lt;globalRegistry&gt;/capi/k0smotron if globalRegistry is set, otherwise to quay.io/k0sproject/k0smotron</span>
+<span class="w">            </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># defaults to the k0smotron version of the provider</span>
+<span class="w">            </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">          </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">          </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">          </span><span class="nt">nodeSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">          </span><span class="nt">tolerations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">          </span><span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</code></pre></div>
+<p>The extension webhook server uses the same image as the k0smotron providers, so no additional image needs to be
+mirrored to a private registry.</p>
+<h4 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">#</a></h4>
+<ul>
+<li>In-place updates must be enabled for both the <code>cluster-api</code> and the <code>cluster-api-provider-k0sproject-k0smotron</code>
+  providers. The installation or upgrade of the k0smotron provider fails if <code>spec.manager.featureGates</code> of the Cluster API
+  <code>CoreProvider</code> object lacks either of the <code>InPlaceUpdates</code> or <code>RuntimeSDK</code> feature gates. Feature gates enabled by other
+  means, such as provider <code>patches</code> or additional manager arguments, are not recognized and fail the check as well, so
+  enable them with <code>inPlaceUpdates.enabled</code> or <code>manager.featureGates</code> instead.</li>
+<li>The <code>InPlaceUpdates</code> feature gate of the <code>cluster-api</code> provider requires the <code>RuntimeSDK</code> feature gate, since the
+  Cluster API core provider fails to start otherwise. Setting <code>manager.featureGates.InPlaceUpdates: true</code> without
+  <code>manager.featureGates.RuntimeSDK: true</code> fails the installation or upgrade of the <code>cluster-api</code> provider.</li>
+<li>Disabling the feature removes the extension webhook server. Disable it only when no cluster uses the <code>InPlace</code> update
+  strategy and no cluster is being updated.</li>
+</ul>
 <h3 id="configuring-the-sveltos-stuck-tokens-controller">Configuring the Sveltos Stuck Tokens Controller<a class="headerlink" href="#configuring-the-sveltos-stuck-tokens-controller" title="Permanent link">#</a></h3>
 <p>If a management cluster has some maintenance activity or hardware issue causing it to go down for more than ~30 minutes,
 the token for the management <code>sveltoscluster</code> object expires. This leads to continuous errors and

@@ -5440,6 +5440,13 @@ You wouldn't be able to use this template to update a cluster that uses any othe
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Support for displaying all available Cluster Templates for updates in the <code>ClusterDeployment</code> status is planned.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+By default, a k0s version change replaces the worker machines of k0s-based clusters. To update k0s on the existing
+machines instead, enable the experimental
+<a href="../../../appendix/appendix-extend-mgmt/#configuring-cluster-api-in-place-updates">Cluster API in-place updates</a>.</p>
 <!-- TODO
   ## Scaling a Cluster 
   ## Upgrading a Single Standalone Cluster 
