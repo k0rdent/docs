@@ -5571,7 +5571,7 @@ templates shipped with k0rdent.</p>
 <p>Cluster and Service Templates can be delivered to target namespaces using the <code>AccessManagement</code>,
 <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> objects. The <code>AccessManagement</code> object contains the list of
 access rules to apply. Each access rule contains the namespaces' definition for delivering templates into and
-the template chains to deliver. Each <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> contains the supported templates
+the template chains to deliver, listed as <code>resources</code> entries of <code>kind: ClusterTemplateChain</code> or <code>kind: ServiceTemplateChain</code>. Each <code>ClusterTemplateChain</code> and <code>ServiceTemplateChain</code> contains the supported templates
 and the upgrade sequences for them.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -5606,9 +5606,18 @@ The KCM controller copies the specified in the <code>.spec.accessRules</code> fi
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targetNamespaces</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">list</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="w">    </span><span class="nt">clusterTemplateChains</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterTemplateChain</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The previous configuration format, which lists chain names in the <code>clusterTemplateChains</code> and
+<code>serviceTemplateChains</code> fields of an access rule, is deprecated but still supported for backward compatibility.
+For details, see <a href="../../admin/access/accessmanagement/#backward-compatibility">Access Management Resource</a>.</p>
+</div>
 </li>
 </ol>
 <p>The kcm controllers will deliver all the <code>ClusterTemplate</code> objects across the target namespaces.

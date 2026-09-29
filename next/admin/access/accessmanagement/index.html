@@ -2790,9 +2790,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#distributed-object-types" class="md-nav__link">
+  <a href="#distributed-objects" class="md-nav__link">
     <span class="md-ellipsis">
-      Distributed Object Types
+      Distributed Objects
     </span>
   </a>
   
@@ -2809,6 +2809,24 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backward Compatibility
+    </span>
+  </a>
   
 </li>
       
@@ -5458,9 +5476,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#distributed-object-types" class="md-nav__link">
+  <a href="#distributed-objects" class="md-nav__link">
     <span class="md-ellipsis">
-      Distributed Object Types
+      Distributed Objects
     </span>
   </a>
   
@@ -5477,6 +5495,24 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backward Compatibility
+    </span>
+  </a>
   
 </li>
       
@@ -5513,13 +5549,13 @@
 
 <h1 id="access-management-resource">Access Management Resource<a class="headerlink" href="#access-management-resource" title="Permanent link">#</a></h1>
 <p>k0rdent provides an <code>AccessManagement</code> resource (cluster-scoped, singleton) that enables
-controlled distribution of multiple object types (<code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code>,
-<code>ClusterAuthentication</code> and <code>ClusterAuditPolicy</code>) from the system namespace (default: <code>kcm-system</code>) across other
-namespaces in the management cluster. This resource is created automatically during the installation of
+controlled distribution of objects from the system namespace (default: <code>kcm-system</code>) across other namespaces in the
+management cluster. It supports the built-in k0rdent object types (<code>ClusterTemplateChain</code>,
+<code>ServiceTemplateChain</code>, <code>Credential</code>, <code>ClusterAuthentication</code>, <code>DataSource</code> and <code>ClusterAuditPolicy</code>) as well as any
+other namespaced Kind, including custom resources. This resource is created automatically during the installation of
 k0rdent.</p>
 <h2 id="supported-configuration-options">Supported Configuration Options<a class="headerlink" href="#supported-configuration-options" title="Permanent link">#</a></h2>
 <p>This section describes the fields available in <code>AccessManagement.spec</code> and how they control object distribution.</p>
-<p>The <code>AccessManagement</code> resource has a number of parameters you can adjust.</p>
 <ul>
 <li><code>spec.accessRules</code> – A list of access rules that define how specific objects are distributed.</li>
 </ul>
@@ -5535,24 +5571,51 @@ k0rdent.</p>
 <li><code>targetNamespaces.selector</code> – A structured label query to select namespaces (type: <code>metav1.LabelSelector</code>).</li>
 <li><code>targetNamespaces.list</code> – A list of namespaces to select (type: <code>[]string</code>).</li>
 </ul>
-<h3 id="distributed-object-types">Distributed Object Types<a class="headerlink" href="#distributed-object-types" title="Permanent link">#</a></h3>
+<h3 id="distributed-objects">Distributed Objects<a class="headerlink" href="#distributed-objects" title="Permanent link">#</a></h3>
 <ul>
-<li>
-<p><code>clusterTemplateChains</code> – The list of <code>ClusterTemplateChain</code> names whose <code>ClusterTemplates</code> are distributed to the selected namespaces.</p>
-</li>
-<li>
-<p><code>serviceTemplateChains</code> – The list of <code>ServiceTemplateChain</code> names whose <code>ServiceTemplates</code> are distributed to the selected namespaces.</p>
-</li>
-<li>
-<p><code>credentials</code> – The list of <code>Credential</code> names that are distributed to the selected namespaces.</p>
-</li>
-<li>
-<p><code>clusterAuthentications</code> – The list of <code>ClusterAuthentication</code> names that are distributed to the selected namespaces.</p>
-</li>
-<li>
-<p><code>clusterAuditPolicies</code> – The list of <code>ClusterAuditPolicy</code> names that are distributed to the selected namespaces.</p>
-</li>
+<li><code>resources</code> – A list of resource rules. Each entry selects a set of objects of a given Kind in the system
+  namespace to distribute to the namespaces selected by <code>targetNamespaces</code>.</li>
 </ul>
+<p>Each resource rule supports the following fields:</p>
+<ul>
+<li><code>kind</code> (required) – The Kind of the objects to distribute. Any namespaced Kind is accepted, whether it is a
+  built-in k0rdent Kind or a custom resource. Cluster-scoped Kinds are skipped and
+  reported in the <code>AccessManagement</code> status, because only namespaced objects can be distributed.</li>
+<li><code>apiGroup</code> – The API group of the Kind, for example <code>k0rdent.mirantis.com</code> or the API group of a custom resource.
+  You can omit it for the built-in Kinds (<code>ClusterTemplateChain</code>, <code>ServiceTemplateChain</code>, <code>Credential</code>,
+  <code>ClusterAuthentication</code>, <code>DataSource</code> and <code>ClusterAuditPolicy</code>), in which case it defaults to <code>k0rdent.mirantis.com</code>.
+  For any other Kind, an omitted <code>apiGroup</code> means the core (empty) API group, for example for <code>ConfigMap</code>.</li>
+</ul>
+<p>You may specify only one of the following mutually exclusive object selectors. If none of them is set, all objects of
+the given Kind in the system namespace are distributed.</p>
+<ul>
+<li><code>names</code> – An explicit list of object names in the system namespace (type: <code>[]string</code>).</li>
+<li><code>selector</code> – A structured label query to select objects in the system namespace (type: <code>metav1.LabelSelector</code>).</li>
+<li><code>stringSelector</code> – A label query in string form to select objects in the system namespace (type: <code>string</code>).</li>
+</ul>
+<p>Depending on the Kind, distribution works as follows:</p>
+<ul>
+<li><code>ClusterTemplateChain</code> / <code>ServiceTemplateChain</code> – The chain is distributed, and so are all the <code>ClusterTemplate</code>
+  or <code>ServiceTemplate</code> objects it references.</li>
+<li><code>Credential</code> – The <code>Credential</code> and all referenced <code>Identity</code> resources (used for authentication) are distributed.</li>
+<li><code>ClusterAuthentication</code> – The <code>ClusterAuthentication</code> and its referenced CA secret are distributed.</li>
+<li>Any other Kind – The object is copied as is to the target namespaces.</li>
+</ul>
+<p>Distributed copies are labeled with <code>k0rdent.mirantis.com/managed: "true"</code>. When an object stops matching an access
+rule, or a target namespace is no longer selected, the corresponding copy is removed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The KCM controller manages the RBAC permissions needed to distribute the referenced Kinds automatically. It
+maintains a dedicated <code>ClusterRole</code> that grants access only to the Kinds currently referenced in
+<code>spec.accessRules</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Changes to source objects of the referenced Kinds are picked up periodically, so it may take up to a couple of
+minutes for them to be propagated to the target namespaces.</p>
+</div>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AccessManagement</span>
@@ -5566,19 +5629,36 @@ k0rdent.</p>
 <span class="w">      </span><span class="nt">list</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace1</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace2</span>
-<span class="w">    </span><span class="nt">clusterTemplateChains</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ct-chain1</span>
-<span class="w">    </span><span class="nt">serviceTemplateChains</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">st-chain1</span>
-<span class="w">    </span><span class="nt">credentials</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cred1</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterTemplateChain</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ct-chain1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplateChain</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">st-chain1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cred1</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targetNamespaces</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">list</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace3</span>
-<span class="w">    </span><span class="nt">clusterAuthentications</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth1</span>
-<span class="w">    </span><span class="nt">clusterAuditPolicies</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audit-policy1</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterAuthentication</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auth1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterAuditPolicy</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audit-policy1</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targetNamespaces</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">stringSelector</span><span class="p">:</span><span class="w"> </span><span class="s">"team=dev"</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataSource</span>
+<span class="w">      </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">env</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="w">      </span><span class="nt">stringSelector</span><span class="p">:</span><span class="w"> </span><span class="s">"shared=true"</span>
 </code></pre></div>
 <p>Based on the configuration above, the following objects are distributed:</p>
 <ol>
@@ -5587,7 +5667,95 @@ k0rdent.</p>
 <li>The <code>Credential</code> <code>cred1</code> and all referenced <code>Identity</code> resources (used for authentication) are distributed to <code>namespace1</code> and <code>namespace2</code>.</li>
 <li>The <code>ClusterAuthentication</code> <code>auth1</code> and its referenced CA secret are distributed to <code>namespace3</code>.</li>
 <li>The <code>ClusterAuditPolicy</code> <code>audit-policy1</code> is distributed to <code>namespace3</code>.</li>
+<li>All <code>DataSource</code> objects labeled with <code>env: dev</code> are distributed to all namespaces labeled with <code>team=dev</code>.</li>
+<li>All <code>ConfigMap</code> objects labeled with <code>shared=true</code> are distributed to all namespaces labeled with <code>team=dev</code>.</li>
 </ol>
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">#</a></h2>
+<p>The <code>AccessManagement</code> status reports the result of the last reconciliation:</p>
+<ul>
+<li><code>status.current</code> – The applied access rules configuration.</li>
+<li><code>status.error</code> – The aggregate error that occurred during the reconciliation, if any.</li>
+<li><code>status.resources</code> – The outcome for each distinct Kind referenced in <code>spec.accessRules</code>. Each entry contains
+  <code>apiGroup</code>, <code>kind</code> and, if the Kind failed to be processed, an <code>error</code> message (for example, when the referenced
+  object is not found or the Kind is cluster-scoped).</li>
+</ul>
+<p>To check the status, run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>accessmanagement<span class="w"> </span>kcm<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status}'</span>
+</code></pre></div>
+<h2 id="backward-compatibility">Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permanent link">#</a></h2>
+<p>Before k0rdent v1.12.0, each distributable object type had its own dedicated field in the
+access rule. These fields are deprecated in favor of <code>resources</code>, but are still supported for backward compatibility,
+so existing <code>AccessManagement</code> configurations keep working without any changes:</p>
+<table>
+<thead>
+<tr>
+<th>Deprecated field</th>
+<th>Equivalent <code>resources</code> entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clusterTemplateChains</code></td>
+<td><code>kind: ClusterTemplateChain</code> with <code>names</code></td>
+</tr>
+<tr>
+<td><code>serviceTemplateChains</code></td>
+<td><code>kind: ServiceTemplateChain</code> with <code>names</code></td>
+</tr>
+<tr>
+<td><code>credentials</code></td>
+<td><code>kind: Credential</code> with <code>names</code></td>
+</tr>
+<tr>
+<td><code>clusterAuthentications</code></td>
+<td><code>kind: ClusterAuthentication</code> with <code>names</code></td>
+</tr>
+<tr>
+<td><code>dataSources</code></td>
+<td><code>kind: DataSource</code> with <code>names</code></td>
+</tr>
+<tr>
+<td><code>clusterAuditPolicies</code></td>
+<td><code>kind: ClusterAuditPolicy</code> with <code>names</code></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the following access rule in the previous format:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessRules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targetNamespaces</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace1</span>
+<span class="w">    </span><span class="nt">clusterTemplateChains</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ct-chain1</span>
+<span class="w">    </span><span class="nt">credentials</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cred1</span>
+</code></pre></div>
+<p>is equivalent to:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessRules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targetNamespaces</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">list</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace1</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterTemplateChain</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ct-chain1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential</span>
+<span class="w">      </span><span class="nt">names</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cred1</span>
+</code></pre></div>
+<p>When you create or update an <code>AccessManagement</code> object that uses the deprecated fields, the admission webhook
+automatically converts them into equivalent <code>resources</code> entries and clears the deprecated fields. If the webhook is
+disabled, the controller still honors the deprecated fields of any access rule that has no <code>resources</code> set.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+The deprecated fields will be removed in a future API version. Use <code>resources</code> for new configurations and
+avoid mixing the deprecated fields with <code>resources</code> in the same access rule.</p>
+</div>
 <p>For more details, see:</p>
 <ul>
 <li><a href="../credentials/credentials-propagation/#the-credential-distribution-system">Credential Distribution System</a></li>

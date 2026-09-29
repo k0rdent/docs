@@ -5539,9 +5539,10 @@ ensure that reality matches the definition. We can say that k0rdent is GitOps-co
 The <code>Management</code> object represents the k0rdent management cluster as a whole.
 The management cluster Day-2 operations (such as <a href="upgrade/">upgrade</a>) are  executed by manipulating the <code>Release</code> and <code>Management</code> objects.</li>
 <li><code>kcm-controller-manager</code> generates an empty <code>AccessManagement</code> object. <code>AccessManagement</code> defines
-<a href="access/accessmanagement/">access rules</a> for <code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code> and
-<code>ClusterAuthentication</code> propagation across user namespaces. Further, the <code>AccessManagement</code> might be edited and used
-along with admin-created <code>ClusterTemplateChain</code>, <code>ServiceTemplateChain</code>, <code>Credential</code> and <code>ClusterAuthentication</code> objects.</li>
+<a href="access/accessmanagement/">access rules</a> for <code>ClusterTemplate</code>, <code>ServiceTemplate</code>, <code>Credential</code>,
+<code>ClusterAuthentication</code> and other objects propagation across user namespaces. Further, the <code>AccessManagement</code> might be
+edited and used along with admin-created <code>ClusterTemplateChain</code>, <code>ServiceTemplateChain</code>, <code>Credential</code>,
+<code>ClusterAuthentication</code> or any other namespaced objects.</li>
 </ol>
 <p>This Administration Guide provides information on:</p>
 <ul>

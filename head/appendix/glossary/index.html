@@ -6044,12 +6044,13 @@
 <h2 id="accessmanagement-crd">AccessManagement (CRD)<a class="headerlink" href="#accessmanagement-crd" title="Permanent link">#</a></h2>
 <p>A Custom Resource Definition (CRD) in k0rdent used to define and manage access controls. 
 It typically includes specifications for <code>AccessRule</code> and <code>TargetNamespace</code> objects to control the 
-distribution of resources such as <code>ClusterTemplate</code>, <code>ServiceTemplate</code>, and <code>Credential</code> objects to 
-specific namespaces within managed clusters.</p>
+distribution of resources such as <code>ClusterTemplate</code>, <code>ServiceTemplate</code>, and <code>Credential</code> objects, as well as
+objects of any other namespaced Kind, to specific namespaces within the management cluster.</p>
 <h2 id="accessrules">AccessRules<a class="headerlink" href="#accessrules" title="Permanent link">#</a></h2>
 <p>A component within the <code>AccessManagement</code> CRD that specifies which k0rdent 
-resources (such as <code>ClusterTemplateChain</code>, <code>Credential</code>, and <code>ServiceTemplateChain</code> objects) are to be 
-distributed to a defined set of <code>TargetNamespaces</code>.</p>
+resources (such as <code>ClusterTemplateChain</code>, <code>Credential</code>, and <code>ServiceTemplateChain</code> objects, or objects of any other
+namespaced Kind) are to be distributed to a defined set of <code>TargetNamespaces</code>. The objects to distribute are listed
+in the <code>resources</code> field of each access rule.</p>
 <h2 id="cluster-api-capi">Cluster API (CAPI)<a class="headerlink" href="#cluster-api-capi" title="Permanent link">#</a></h2>
 <p>CAPI is a Kubernetes project that provides a declarative way to manage the lifecycle of 
 Kubernetes clusters. It abstracts the underlying infrastructure, allowing users to 
