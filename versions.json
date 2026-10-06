@@ -13,5 +13,10 @@
       "latest",
       "stable"
     ]
+  },
+  {
+    "version": "v1.11.0",
+    "title": "v1.11.0",
+    "aliases": []
   }
 ]
