@@ -147,6 +147,7 @@ The `.spec.serviceSpec.provider.config` field accepts provider-specific configur
 | `templateResourceRefs`   | array   | `[]`                           | Resources to collect from management cluster for templating                                |
 | `policyRefs`             | array   | `[]`                           | ConfigMaps/Secrets/Flux Sources with Kubernetes resources                                  |
 | `patches`                | array   | `[]`                           | Kustomize inline patches to apply to all resources                                         |
+| `patchesFrom`            | array   | `[]`                           | References to ConfigMaps/Secrets containing additional Kustomize inline patches (supports Go templates) |
 
 **Example:**
 ```yaml
@@ -170,9 +171,47 @@ serviceSpec:
             - op: add
               path: /metadata/labels/environment
               value: production
+      patchesFrom:
+        - kind: ConfigMap
+          name: my-app-patches
   services:
     - template: my-app-1-0-0
       name: my-app
+```
+
+### PatchesFrom Structure
+
+The `patchesFrom` field allows referencing ConfigMaps or Secrets that contain additional Kustomize inline patches:
+
+```yaml
+patchesFrom:
+  - kind: ConfigMap  # or Secret
+    name: my-app-patches
+```
+
+**Fields:**
+- `kind` (required): Either `ConfigMap` or `Secret`
+- `name` (required): Name of the ConfigMap or Secret
+- `namespace` (optional): Namespace of the referenced resource. Defaults to the cluster's namespace for `MultiClusterService`
+- `optional` (optional): If `true`, a missing resource is ignored instead of failing reconciliation (default: `false`)
+
+Each entry in the referenced ConfigMap or Secret `data` holds a single patch, in the same structured format used by `patches` above. Values can be static or leverage Go templates, which are instantiated using resources within the management cluster (`Cluster` and `templateResourceRefs`) before deployment.
+
+**Example:**
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-app-patches
+  namespace: my-namespace
+data:
+  environment-label: |-
+    target:
+      kind: Deployment
+    patch: |-
+      - op: add
+        path: /metadata/labels/environment
+        value: production
 ```
 
 ## Deprecated Parameters (Legacy)

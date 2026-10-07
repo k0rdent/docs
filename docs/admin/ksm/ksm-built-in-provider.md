@@ -116,6 +116,13 @@ spec:
       # Within the Patch Spec you can use templating.
       # REF: [github.com/projectsveltos/libsveltos/api/v1beta1.Patch]
       patches: []
+      # "patchesFrom" references ConfigMap/Secret instances. Within the ConfigMap or Secret data,
+      # it is possible to store additional Kustomize inline patches applied for all resources on this profile.
+      # These values can be static or leverage Go templates for dynamic customization.
+      # When expressed as templates, the values are filled in using information from
+      # resources within the management cluster before deployment (Cluster and TemplateResourceRefs)
+      # REF: [github.com/projectsveltos/addon-controller/api/v1beta1.ValueFrom]
+      patchesFrom: []
       # "driftExclusions" is a list of configuration drift exclusions to be applied when syncMode is
       # set to ContinuousWithDriftDetection. Each exclusion specifies JSON6902 paths to ignore
       # when evaluating drift, optionally targeting specific resources and features.
