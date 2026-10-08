@@ -174,6 +174,7 @@ serviceSpec:
       patchesFrom:
         - kind: ConfigMap
           name: my-app-patches
+          namespace: my-namespace
   services:
     - template: my-app-1-0-0
       name: my-app
@@ -193,7 +194,6 @@ patchesFrom:
 - `kind` (required): Either `ConfigMap` or `Secret`
 - `name` (required): Name of the ConfigMap or Secret
 - `namespace` (optional): Namespace of the referenced resource. Defaults to the cluster's namespace for `MultiClusterService`
-- `optional` (optional): If `true`, a missing resource is ignored instead of failing reconciliation (default: `false`)
 
 Each entry in the referenced ConfigMap or Secret `data` holds a single patch, in the same structured format used by `patches` above. Values can be static or leverage Go templates, which are instantiated using resources within the management cluster (`Cluster` and `templateResourceRefs`) before deployment.
 
