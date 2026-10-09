@@ -3928,6 +3928,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#patchesfrom-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      PatchesFrom Structure
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5543,6 +5552,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#patchesfrom-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      PatchesFrom Structure
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5836,6 +5854,12 @@ The following fields are <strong>deprecated</strong> and should be configured in
 <td><code>[]</code></td>
 <td>Kustomize inline patches to apply to all resources</td>
 </tr>
+<tr>
+<td><code>patchesFrom</code></td>
+<td>array</td>
+<td><code>[]</code></td>
+<td>References to ConfigMaps/Secrets containing additional Kustomize inline patches (supports Go templates)</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Example:</strong>
@@ -5859,9 +5883,39 @@ The following fields are <strong>deprecated</strong> and should be configured in
 <span class="w">            </span><span class="no">- op: add</span>
 <span class="w">              </span><span class="no">path: /metadata/labels/environment</span>
 <span class="w">              </span><span class="no">value: production</span>
+<span class="w">      </span><span class="nt">patchesFrom</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-patches</span>
+<span class="w">          </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-namespace</span>
 <span class="w">  </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-1-0-0</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app</span>
+</code></pre></div></p>
+<h3 id="patchesfrom-structure">PatchesFrom Structure<a class="headerlink" href="#patchesfrom-structure" title="Permanent link">#</a></h3>
+<p>The <code>patchesFrom</code> field allows referencing ConfigMaps or Secrets that contain additional Kustomize inline patches:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">patchesFrom</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span><span class="w">  </span><span class="c1"># or Secret</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-patches</span>
+</code></pre></div>
+<p><strong>Fields:</strong>
+- <code>kind</code> (required): Either <code>ConfigMap</code> or <code>Secret</code>
+- <code>name</code> (required): Name of the ConfigMap or Secret
+- <code>namespace</code> (optional): Namespace of the referenced resource. Defaults to the cluster's namespace for <code>MultiClusterService</code></p>
+<p>Each entry in the referenced ConfigMap or Secret <code>data</code> holds a single patch, in the same structured format used by <code>patches</code> above. Values can be static or leverage Go templates, which are instantiated using resources within the management cluster (<code>Cluster</code> and <code>templateResourceRefs</code>) before deployment.</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-app-patches</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-namespace</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">environment-label</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">    </span><span class="no">target:</span>
+<span class="w">      </span><span class="no">kind: Deployment</span>
+<span class="w">    </span><span class="no">patch: |-</span>
+<span class="w">      </span><span class="no">- op: add</span>
+<span class="w">        </span><span class="no">path: /metadata/labels/environment</span>
+<span class="w">        </span><span class="no">value: production</span>
 </code></pre></div></p>
 <h2 id="deprecated-parameters-legacy">Deprecated Parameters (Legacy)<a class="headerlink" href="#deprecated-parameters-legacy" title="Permanent link">#</a></h2>
 <p>The following parameters are still supported but deprecated. Use <code>.spec.serviceSpec.provider.config</code> instead:</p>

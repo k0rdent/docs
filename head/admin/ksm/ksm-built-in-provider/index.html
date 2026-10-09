@@ -5593,6 +5593,13 @@ For instance built-in adapter which relies on ProjectSveltos API, supports the f
 <span class="w">      </span><span class="c1"># Within the Patch Spec you can use templating.</span>
 <span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/libsveltos/api/v1beta1.Patch]</span>
 <span class="w">      </span><span class="nt">patches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">      </span><span class="c1"># "patchesFrom" references ConfigMap/Secret instances. Within the ConfigMap or Secret data,</span>
+<span class="w">      </span><span class="c1"># it is possible to store additional Kustomize inline patches applied for all resources on this profile.</span>
+<span class="w">      </span><span class="c1"># These values can be static or leverage Go templates for dynamic customization.</span>
+<span class="w">      </span><span class="c1"># When expressed as templates, the values are filled in using information from</span>
+<span class="w">      </span><span class="c1"># resources within the management cluster before deployment (Cluster and TemplateResourceRefs)</span>
+<span class="w">      </span><span class="c1"># REF: [github.com/projectsveltos/addon-controller/api/v1beta1.ValueFrom]</span>
+<span class="w">      </span><span class="nt">patchesFrom</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
 <span class="w">      </span><span class="c1"># "driftExclusions" is a list of configuration drift exclusions to be applied when syncMode is</span>
 <span class="w">      </span><span class="c1"># set to ContinuousWithDriftDetection. Each exclusion specifies JSON6902 paths to ignore</span>
 <span class="w">      </span><span class="c1"># when evaluating drift, optionally targeting specific resources and features.</span>
