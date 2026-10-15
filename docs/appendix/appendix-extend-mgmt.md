@@ -313,8 +313,7 @@ spec:
 > WARNING:
 > This feature is experimental in both Cluster API and k0smotron.
 
-<!-- TODO: put a proper version the feature is available starting with -->
-KCM can enable the Cluster API
+Starting `v1.13.0` {{{ docsVersionInfo.k0rdentName }}} can enable the Cluster API
 [in-place updates](https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240807-in-place-updates.md)
 mechanism. When it is enabled, a change of the k0s version (for example, after switching a `ClusterDeployment` to a
 `ClusterTemplate` with a newer k0s version) is applied to the existing machines by
