@@ -137,7 +137,7 @@ The result of the sync is reported in the `RBACPolicyReady` condition of the `Cl
 | Status    | Reason                       | Meaning                                                                  |
 |-----------|------------------------------|--------------------------------------------------------------------------|
 | `True`    | `Succeeded`                  | All bindings of the referenced `RBACPolicy` generation are applied.     |
-| `Unknown` | `Progressing`                | The child cluster kubeconfig is not available yet.                       |
+| `Unknown` | `Progressing`                | The child cluster kubeconfig is not available yet, or the control plane of the child cluster is not initialized yet. |
 | `False`   | `RBACPolicyPartiallyApplied` | Some bindings failed to apply. Others may already be in effect.          |
 | `False`   | `RBACPolicyNotFound`         | The referenced `RBACPolicy` does not exist. Previously granted objects are revoked. |
 | `False`   | `Failed`                     | The `RBACPolicy` is invalid or cannot be read.                           |

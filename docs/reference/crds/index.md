@@ -38,6 +38,8 @@ Resource Types:
 
 - [ProviderTemplate](#providertemplate)
 
+- [RBACPolicy](#rbacpolicy)
+
 - [Region](#region)
 
 - [Release](#release)
@@ -93,14 +95,14 @@ AccessManagement is the Schema for the AccessManagements API
         <td><b><a href="#accessmanagementspec">spec</a></b></td>
         <td>object</td>
         <td>
-          AccessManagementSpec defines the desired state of AccessManagement<br/>
+          spec defines the desired state<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#accessmanagementstatus">status</a></b></td>
         <td>object</td>
         <td>
-          AccessManagementStatus defines the observed state of AccessManagement<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -112,7 +114,7 @@ AccessManagement is the Schema for the AccessManagements API
 
 
 
-AccessManagementSpec defines the desired state of AccessManagement
+spec defines the desired state
 
 <table>
     <thead>
@@ -127,7 +129,7 @@ AccessManagementSpec defines the desired state of AccessManagement
         <td><b><a href="#accessmanagementspecaccessrulesindex">accessRules</a></b></td>
         <td>[]object</td>
         <td>
-          AccessRules is the list of access rules. Each AccessRule enforces
+          accessRules is the list of access rules. Each AccessRule enforces
 objects distribution to the TargetNamespaces.<br/>
         </td>
         <td>false</td>
@@ -153,53 +155,250 @@ Templates and Credentials distribution to the TargetNamespaces
         </tr>
     </thead>
     <tbody><tr>
+        <td><b>clusterAuditPolicies</b></td>
+        <td>[]string</td>
+        <td>
+          clusterAuditPolicies is the list of [ClusterAuditPolicy] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterAuditPolicy instead. Populating this field is
+still accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>clusterAuthentications</b></td>
         <td>[]string</td>
         <td>
-          ClusterAuthentications is the list of [ClusterAuthentication] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          clusterAuthentications is the list of [ClusterAuthentication] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterAuthentication instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>clusterTemplateChains</b></td>
         <td>[]string</td>
         <td>
-          ClusterTemplateChains is the list of [ClusterTemplateChain] names whose ClusterTemplates
-will be distributed to all namespaces specified in TargetNamespaces.<br/>
+          clusterTemplateChains is the list of [ClusterTemplateChain] names whose ClusterTemplates
+will be distributed to all namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterTemplateChain instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>credentials</b></td>
         <td>[]string</td>
         <td>
-          Credentials is the list of [Credential] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          credentials is the list of [Credential] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: Credential instead. Populating this field is still
+accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dataSources</b></td>
         <td>[]string</td>
         <td>
-          DataSources is the list of [DataSource] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          dataSources is the list of [DataSource] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: DataSource instead. Populating this field is still
+accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#accessmanagementspecaccessrulesindexresourcesindex">resources</a></b></td>
+        <td>[]object</td>
+        <td>
+          resources is the generic list of resource rules. Each entry selects a set of objects of
+a given Kind (built-in or a custom/third-party CRD) to distribute into the namespaces
+matched by TargetNamespaces. Supersedes ClusterTemplateChains, ServiceTemplateChains,
+Credentials, ClusterAuthentications, DataSources and ClusterAuditPolicies below: any of
+those still populated are automatically translated into equivalent entries here.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>serviceTemplateChains</b></td>
         <td>[]string</td>
         <td>
-          ServiceTemplateChains is the list of [ServiceTemplateChain] names whose ServiceTemplates
-will be distributed to all namespaces specified in TargetNamespaces.<br/>
+          serviceTemplateChains is the list of [ServiceTemplateChain] names whose ServiceTemplates
+will be distributed to all namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ServiceTemplateChain instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#accessmanagementspecaccessrulesindextargetnamespaces">targetNamespaces</a></b></td>
         <td>object</td>
         <td>
-          TargetNamespaces defines the namespaces where selected objects will be distributed.
-Templates and Credentials will be distributed to all namespaces if unset.<br/>
+          targetNamespaces defines the namespaces where selected objects will be distributed.
+Templates and Credentials will be distributed to all namespaces if unset.
+The KCM system namespace is always excluded, since it is the namespace objects are
+read from; naming it explicitly has no effect.<br/>
           <br/>
-            <i>Validations</i>:<li>((has(self.stringSelector) ? 1 : 0) + (has(self.selector) ? 1 : 0) + (has(self.list) ? 1 : 0)) <= 1: only one of spec.targetNamespaces.selector or spec.targetNamespaces.stringSelector or spec.targetNamespaces.list can be specified</li>
+            <i>Validations</i>:<li>((has(self.stringSelector) ? 1 : 0) + (has(self.selector) ? 1 : 0) + (has(self.list) ? 1 : 0)) <= 1: only one of list, selector, stringSelector can be specified</li>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.spec.accessRules[index].resources[index]
+<sup><sup>[↩ Parent](#accessmanagementspecaccessrulesindex)</sup></sup>
+
+
+
+ResourceRule selects a set of objects of a given Kind to distribute into the namespaces
+matched by the enclosing AccessRule's TargetNamespaces. Same convention as TargetNamespaces:
+when none of Names, Selector or StringSelector is set, every object of Kind in the KCM system
+namespace is distributed. Matching objects are always read from the KCM system namespace.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>kind</b></td>
+        <td>string</td>
+        <td>
+          kind of the referenced objects. Not restricted to an enum: any namespaced Kind the
+controller has permission to read/write may be referenced, including custom CRDs.
+Cluster-scoped Kinds are rejected, since AccessManagement only ever distributes
+namespaced objects.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>apiGroup</b></td>
+        <td>string</td>
+        <td>
+          apiGroup of the referenced Kind, e.g. "k0rdent.mirantis.com" or a custom CRD's API group.
+Defaults to "k0rdent.mirantis.com" when omitted and Kind is one of the built-in Kinds
+(ClusterTemplate, ClusterTemplateChain, ServiceTemplateChain, Credential, ClusterAuthentication,
+DataSource, ClusterAuditPolicy, RBACPolicy), covering them without requiring users to spell it out. For any other
+Kind, an omitted APIGroup means the core (empty) API group, the same convention used
+elsewhere in Kubernetes (e.g. RBAC PolicyRule.APIGroups).<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>names</b></td>
+        <td>[]string</td>
+        <td>
+          names is an explicit list of object names in the system namespace.
+Mutually exclusive with Selector and StringSelector.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#accessmanagementspecaccessrulesindexresourcesindexselector">selector</a></b></td>
+        <td>object</td>
+        <td>
+          selector selects objects in the system namespace by label.
+Mutually exclusive with Names and StringSelector.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>stringSelector</b></td>
+        <td>string</td>
+        <td>
+          stringSelector is a label query in string form.
+Mutually exclusive with Names and Selector.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.spec.accessRules[index].resources[index].selector
+<sup><sup>[↩ Parent](#accessmanagementspecaccessrulesindexresourcesindex)</sup></sup>
+
+
+
+selector selects objects in the system namespace by label.
+Mutually exclusive with Names and StringSelector.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b><a href="#accessmanagementspecaccessrulesindexresourcesindexselectormatchexpressionsindex">matchExpressions</a></b></td>
+        <td>[]object</td>
+        <td>
+          matchExpressions is a list of label selector requirements. The requirements are ANDed.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>matchLabels</b></td>
+        <td>map[string]string</td>
+        <td>
+          matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+map is equivalent to an element of matchExpressions, whose key field is "key", the
+operator is "In", and the values array contains only "value". The requirements are ANDed.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.spec.accessRules[index].resources[index].selector.matchExpressions[index]
+<sup><sup>[↩ Parent](#accessmanagementspecaccessrulesindexresourcesindexselector)</sup></sup>
+
+
+
+A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>key</b></td>
+        <td>string</td>
+        <td>
+          key is the label key that the selector applies to.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>operator</b></td>
+        <td>string</td>
+        <td>
+          operator represents a key's relationship to a set of values.
+Valid operators are In, NotIn, Exists and DoesNotExist.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>values</b></td>
+        <td>[]string</td>
+        <td>
+          values is an array of string values. If the operator is In or NotIn,
+the values array must be non-empty. If the operator is Exists or DoesNotExist,
+the values array must be empty. This array is replaced during a strategic
+merge patch.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -211,8 +410,10 @@ Templates and Credentials will be distributed to all namespaces if unset.<br/>
 
 
 
-TargetNamespaces defines the namespaces where selected objects will be distributed.
+targetNamespaces defines the namespaces where selected objects will be distributed.
 Templates and Credentials will be distributed to all namespaces if unset.
+The KCM system namespace is always excluded, since it is the namespace objects are
+read from; naming it explicitly has no effect.
 
 <table>
     <thead>
@@ -227,24 +428,24 @@ Templates and Credentials will be distributed to all namespaces if unset.
         <td><b>list</b></td>
         <td>[]string</td>
         <td>
-          List is the list of namespaces to select.
-Mutually exclusive with StringSelector and Selector.<br/>
+          list is the list of object/namespace names to select.
+Mutually exclusive with Selector and StringSelector.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#accessmanagementspecaccessrulesindextargetnamespacesselector">selector</a></b></td>
         <td>object</td>
         <td>
-          Selector is a structured label query to select namespaces.
-Mutually exclusive with StringSelector and List.<br/>
+          selector is a structured label query to select objects/namespaces.
+Mutually exclusive with List and StringSelector.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>stringSelector</b></td>
         <td>string</td>
         <td>
-          StringSelector is a label query to select namespaces.
-Mutually exclusive with Selector and List.<br/>
+          stringSelector is a label query in string form to select objects/namespaces.
+Mutually exclusive with List and Selector.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -256,8 +457,8 @@ Mutually exclusive with Selector and List.<br/>
 
 
 
-Selector is a structured label query to select namespaces.
-Mutually exclusive with StringSelector and List.
+selector is a structured label query to select objects/namespaces.
+Mutually exclusive with List and StringSelector.
 
 <table>
     <thead>
@@ -339,7 +540,7 @@ merge patch.<br/>
 
 
 
-AccessManagementStatus defines the observed state of AccessManagement
+status describes the observed state
 
 <table>
     <thead>
@@ -354,23 +555,36 @@ AccessManagementStatus defines the observed state of AccessManagement
         <td><b><a href="#accessmanagementstatuscurrentindex">current</a></b></td>
         <td>[]object</td>
         <td>
-          Current reflects the applied access rules configuration.<br/>
+          current reflects the applied access rules configuration.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error is the error message occurred during the reconciliation (if any)<br/>
+          error is the aggregate error message occurred during the reconciliation (if any).
+See Resources for a per-Kind breakdown.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#accessmanagementstatusresourcesindex">resources</a></b></td>
+        <td>[]object</td>
+        <td>
+          resources reports the resolution outcome for each distinct Kind referenced across all
+AccessRules during the last reconciliation. A generic multi-Kind mechanism can fail
+per-Kind (bad selector matched nothing, target Kind rejected as cluster-scoped,
+RBAC/discovery not ready for a Kind) independently of the others, so those failures are
+reported individually here in addition to the aggregate Error above.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -395,53 +609,250 @@ Templates and Credentials distribution to the TargetNamespaces
         </tr>
     </thead>
     <tbody><tr>
+        <td><b>clusterAuditPolicies</b></td>
+        <td>[]string</td>
+        <td>
+          clusterAuditPolicies is the list of [ClusterAuditPolicy] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterAuditPolicy instead. Populating this field is
+still accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>clusterAuthentications</b></td>
         <td>[]string</td>
         <td>
-          ClusterAuthentications is the list of [ClusterAuthentication] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          clusterAuthentications is the list of [ClusterAuthentication] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterAuthentication instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>clusterTemplateChains</b></td>
         <td>[]string</td>
         <td>
-          ClusterTemplateChains is the list of [ClusterTemplateChain] names whose ClusterTemplates
-will be distributed to all namespaces specified in TargetNamespaces.<br/>
+          clusterTemplateChains is the list of [ClusterTemplateChain] names whose ClusterTemplates
+will be distributed to all namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ClusterTemplateChain instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>credentials</b></td>
         <td>[]string</td>
         <td>
-          Credentials is the list of [Credential] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          credentials is the list of [Credential] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: Credential instead. Populating this field is still
+accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dataSources</b></td>
         <td>[]string</td>
         <td>
-          DataSources is the list of [DataSource] names that will be distributed to all the
-namespaces specified in TargetNamespaces.<br/>
+          dataSources is the list of [DataSource] names that will be distributed to all the
+namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: DataSource instead. Populating this field is still
+accepted; it is automatically translated into an equivalent entry in Resources by a
+mutating webhook on write. Will be removed in a future API version.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#accessmanagementstatuscurrentindexresourcesindex">resources</a></b></td>
+        <td>[]object</td>
+        <td>
+          resources is the generic list of resource rules. Each entry selects a set of objects of
+a given Kind (built-in or a custom/third-party CRD) to distribute into the namespaces
+matched by TargetNamespaces. Supersedes ClusterTemplateChains, ServiceTemplateChains,
+Credentials, ClusterAuthentications, DataSources and ClusterAuditPolicies below: any of
+those still populated are automatically translated into equivalent entries here.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>serviceTemplateChains</b></td>
         <td>[]string</td>
         <td>
-          ServiceTemplateChains is the list of [ServiceTemplateChain] names whose ServiceTemplates
-will be distributed to all namespaces specified in TargetNamespaces.<br/>
+          serviceTemplateChains is the list of [ServiceTemplateChain] names whose ServiceTemplates
+will be distributed to all namespaces specified in TargetNamespaces.
+
+Deprecated: use Resources with kind: ServiceTemplateChain instead. Populating this field
+is still accepted; it is automatically translated into an equivalent entry in Resources
+by a mutating webhook on write. Will be removed in a future API version.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#accessmanagementstatuscurrentindextargetnamespaces">targetNamespaces</a></b></td>
         <td>object</td>
         <td>
-          TargetNamespaces defines the namespaces where selected objects will be distributed.
-Templates and Credentials will be distributed to all namespaces if unset.<br/>
+          targetNamespaces defines the namespaces where selected objects will be distributed.
+Templates and Credentials will be distributed to all namespaces if unset.
+The KCM system namespace is always excluded, since it is the namespace objects are
+read from; naming it explicitly has no effect.<br/>
           <br/>
-            <i>Validations</i>:<li>((has(self.stringSelector) ? 1 : 0) + (has(self.selector) ? 1 : 0) + (has(self.list) ? 1 : 0)) <= 1: only one of spec.targetNamespaces.selector or spec.targetNamespaces.stringSelector or spec.targetNamespaces.list can be specified</li>
+            <i>Validations</i>:<li>((has(self.stringSelector) ? 1 : 0) + (has(self.selector) ? 1 : 0) + (has(self.list) ? 1 : 0)) <= 1: only one of list, selector, stringSelector can be specified</li>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.status.current[index].resources[index]
+<sup><sup>[↩ Parent](#accessmanagementstatuscurrentindex)</sup></sup>
+
+
+
+ResourceRule selects a set of objects of a given Kind to distribute into the namespaces
+matched by the enclosing AccessRule's TargetNamespaces. Same convention as TargetNamespaces:
+when none of Names, Selector or StringSelector is set, every object of Kind in the KCM system
+namespace is distributed. Matching objects are always read from the KCM system namespace.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>kind</b></td>
+        <td>string</td>
+        <td>
+          kind of the referenced objects. Not restricted to an enum: any namespaced Kind the
+controller has permission to read/write may be referenced, including custom CRDs.
+Cluster-scoped Kinds are rejected, since AccessManagement only ever distributes
+namespaced objects.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>apiGroup</b></td>
+        <td>string</td>
+        <td>
+          apiGroup of the referenced Kind, e.g. "k0rdent.mirantis.com" or a custom CRD's API group.
+Defaults to "k0rdent.mirantis.com" when omitted and Kind is one of the built-in Kinds
+(ClusterTemplate, ClusterTemplateChain, ServiceTemplateChain, Credential, ClusterAuthentication,
+DataSource, ClusterAuditPolicy, RBACPolicy), covering them without requiring users to spell it out. For any other
+Kind, an omitted APIGroup means the core (empty) API group, the same convention used
+elsewhere in Kubernetes (e.g. RBAC PolicyRule.APIGroups).<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>names</b></td>
+        <td>[]string</td>
+        <td>
+          names is an explicit list of object names in the system namespace.
+Mutually exclusive with Selector and StringSelector.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#accessmanagementstatuscurrentindexresourcesindexselector">selector</a></b></td>
+        <td>object</td>
+        <td>
+          selector selects objects in the system namespace by label.
+Mutually exclusive with Names and StringSelector.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>stringSelector</b></td>
+        <td>string</td>
+        <td>
+          stringSelector is a label query in string form.
+Mutually exclusive with Names and Selector.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.status.current[index].resources[index].selector
+<sup><sup>[↩ Parent](#accessmanagementstatuscurrentindexresourcesindex)</sup></sup>
+
+
+
+selector selects objects in the system namespace by label.
+Mutually exclusive with Names and StringSelector.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b><a href="#accessmanagementstatuscurrentindexresourcesindexselectormatchexpressionsindex">matchExpressions</a></b></td>
+        <td>[]object</td>
+        <td>
+          matchExpressions is a list of label selector requirements. The requirements are ANDed.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>matchLabels</b></td>
+        <td>map[string]string</td>
+        <td>
+          matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+map is equivalent to an element of matchExpressions, whose key field is "key", the
+operator is "In", and the values array contains only "value". The requirements are ANDed.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### AccessManagement.status.current[index].resources[index].selector.matchExpressions[index]
+<sup><sup>[↩ Parent](#accessmanagementstatuscurrentindexresourcesindexselector)</sup></sup>
+
+
+
+A label selector requirement is a selector that contains values, a key, and an operator that
+relates the key and values.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>key</b></td>
+        <td>string</td>
+        <td>
+          key is the label key that the selector applies to.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>operator</b></td>
+        <td>string</td>
+        <td>
+          operator represents a key's relationship to a set of values.
+Valid operators are In, NotIn, Exists and DoesNotExist.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>values</b></td>
+        <td>[]string</td>
+        <td>
+          values is an array of string values. If the operator is In or NotIn,
+the values array must be non-empty. If the operator is Exists or DoesNotExist,
+the values array must be empty. This array is replaced during a strategic
+merge patch.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -453,8 +864,10 @@ Templates and Credentials will be distributed to all namespaces if unset.<br/>
 
 
 
-TargetNamespaces defines the namespaces where selected objects will be distributed.
+targetNamespaces defines the namespaces where selected objects will be distributed.
 Templates and Credentials will be distributed to all namespaces if unset.
+The KCM system namespace is always excluded, since it is the namespace objects are
+read from; naming it explicitly has no effect.
 
 <table>
     <thead>
@@ -469,24 +882,24 @@ Templates and Credentials will be distributed to all namespaces if unset.
         <td><b>list</b></td>
         <td>[]string</td>
         <td>
-          List is the list of namespaces to select.
-Mutually exclusive with StringSelector and Selector.<br/>
+          list is the list of object/namespace names to select.
+Mutually exclusive with Selector and StringSelector.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#accessmanagementstatuscurrentindextargetnamespacesselector">selector</a></b></td>
         <td>object</td>
         <td>
-          Selector is a structured label query to select namespaces.
-Mutually exclusive with StringSelector and List.<br/>
+          selector is a structured label query to select objects/namespaces.
+Mutually exclusive with List and StringSelector.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>stringSelector</b></td>
         <td>string</td>
         <td>
-          StringSelector is a label query to select namespaces.
-Mutually exclusive with Selector and List.<br/>
+          stringSelector is a label query in string form to select objects/namespaces.
+Mutually exclusive with List and Selector.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -498,8 +911,8 @@ Mutually exclusive with Selector and List.<br/>
 
 
 
-Selector is a structured label query to select namespaces.
-Mutually exclusive with StringSelector and List.
+selector is a structured label query to select objects/namespaces.
+Mutually exclusive with List and StringSelector.
 
 <table>
     <thead>
@@ -575,6 +988,49 @@ merge patch.<br/>
       </tr></tbody>
 </table>
 
+
+### AccessManagement.status.resources[index]
+<sup><sup>[↩ Parent](#accessmanagementstatus)</sup></sup>
+
+
+
+ResourceKindStatus reports the outcome of resolving/distributing objects of a single Kind
+referenced by one or more ResourceRules across the AccessManagement's AccessRules.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>kind</b></td>
+        <td>string</td>
+        <td>
+          kind this status entry applies to.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>apiGroup</b></td>
+        <td>string</td>
+        <td>
+          apiGroup of the Kind this status entry applies to.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>error</b></td>
+        <td>string</td>
+        <td>
+          error is the error message occurred while resolving/distributing objects of this Kind, if any.
+An empty Error means this Kind was processed successfully as of ObservedGeneration.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
 ## ClusterAuditPolicy
 <sup><sup>[↩ Parent](#k0rdentmirantiscomv1beta1 )</sup></sup>
 
@@ -615,7 +1071,7 @@ ClusterAuditPolicy is the Schema for the clusterauditpolicies API
         <td><b><a href="#clusterauditpolicyspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterAuditPolicySpec defines the desired state of ClusterAuditPolicy<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li>
         </td>
@@ -629,7 +1085,7 @@ ClusterAuditPolicy is the Schema for the clusterauditpolicies API
 
 
 
-ClusterAuditPolicySpec defines the desired state of ClusterAuditPolicy
+spec defines the desired state
 
 <table>
     <thead>
@@ -644,7 +1100,7 @@ ClusterAuditPolicySpec defines the desired state of ClusterAuditPolicy
         <td><b><a href="#clusterauditpolicyspecpolicy">policy</a></b></td>
         <td>object</td>
         <td>
-          Policy contains the full content of a kubernetes [Policy] object used to configure auditing.<br/>
+          policy contains the full content of a kubernetes [Policy] object used to configure auditing.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -656,7 +1112,7 @@ ClusterAuditPolicySpec defines the desired state of ClusterAuditPolicy
 
 
 
-Policy contains the full content of a kubernetes [Policy] object used to configure auditing.
+policy contains the full content of a kubernetes [Policy] object used to configure auditing.
 
 <table>
     <thead>
@@ -671,7 +1127,7 @@ Policy contains the full content of a kubernetes [Policy] object used to configu
         <td><b><a href="#clusterauditpolicyspecpolicyrulesindex">rules</a></b></td>
         <td>[]object</td>
         <td>
-          Rules specify the audit Level a request should be recorded at.
+          rules specify the audit Level a request should be recorded at.
 A request may match multiple rules, in which case the FIRST matching rule is used.
 The default audit level is None, but can be overridden by a catch-all rule at the end of the list.
 PolicyRules are strictly ordered.<br/>
@@ -681,7 +1137,7 @@ PolicyRules are strictly ordered.<br/>
         <td><b>omitManagedFields</b></td>
         <td>boolean</td>
         <td>
-          OmitManagedFields indicates whether to omit the managed fields of the request
+          omitManagedFields indicates whether to omit the managed fields of the request
 and response bodies from being written to the API audit log.
 This is used as a global default - a value of 'true' will omit the managed fileds,
 otherwise the managed fields will be included in the API audit log.
@@ -693,7 +1149,7 @@ in a rule will override the global default.<br/>
         <td><b>omitStages</b></td>
         <td>[]string</td>
         <td>
-          OmitStages is a list of stages for which no events are created. Note that this can also
+          omitStages is a list of stages for which no events are created. Note that this can also
 be specified per rule in which case the union of both are omitted.<br/>
         </td>
         <td>false</td>
@@ -900,9 +1356,9 @@ ClusterAuthentication is the Schema for the cluster authentication configuration
         <td><b><a href="#clusterauthenticationspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterAuthenticationSpec defines the desired state of ClusterAuthentication<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr></tbody>
 </table>
 
@@ -912,7 +1368,7 @@ ClusterAuthentication is the Schema for the cluster authentication configuration
 
 
 
-ClusterAuthenticationSpec defines the desired state of ClusterAuthentication
+spec defines the desired state
 
 <table>
     <thead>
@@ -927,17 +1383,17 @@ ClusterAuthenticationSpec defines the desired state of ClusterAuthentication
         <td><b><a href="#clusterauthenticationspecauthenticationconfiguration">authenticationConfiguration</a></b></td>
         <td>object</td>
         <td>
-          AuthenticationConfiguration contains the full content of an [AuthenticationConfiguration] object,
+          authenticationConfiguration contains the full content of an [AuthenticationConfiguration] object,
 which defines how the API server should perform request authentication.
 
 For more details, see: https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#clusterauthenticationspeccasecret">caSecret</a></b></td>
         <td>object</td>
         <td>
-          CASecret is the reference to the secret containing the CA certificates used to validate the connection
+          caSecret is the reference to the secret containing the CA certificates used to validate the connection
 to the issuers endpoints.<br/>
         </td>
         <td>false</td>
@@ -950,7 +1406,7 @@ to the issuers endpoints.<br/>
 
 
 
-AuthenticationConfiguration contains the full content of an [AuthenticationConfiguration] object,
+authenticationConfiguration contains the full content of an [AuthenticationConfiguration] object,
 which defines how the API server should perform request authentication.
 
 For more details, see: https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration
@@ -993,7 +1449,7 @@ The minimum valid JWT payload must contain the following claims:
         <td><b><a href="#clusterauthenticationspecauthenticationconfigurationanonymous">anonymous</a></b></td>
         <td>object</td>
         <td>
-          If present --anonymous-auth must not be set<br/>
+          anonymous configures anonymous authentication; when present, --anonymous-auth must not be set<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -1599,7 +2055,7 @@ message is a literal string.<br/>
 
 
 
-If present --anonymous-auth must not be set
+anonymous configures anonymous authentication; when present, --anonymous-auth must not be set
 
 <table>
     <thead>
@@ -1662,7 +2118,7 @@ should be enabled.
 
 
 
-CASecret is the reference to the secret containing the CA certificates used to validate the connection
+caSecret is the reference to the secret containing the CA certificates used to validate the connection
 to the issuers endpoints.
 
 <table>
@@ -1678,7 +2134,7 @@ to the issuers endpoints.
         <td><b>key</b></td>
         <td>string</td>
         <td>
-          Key is the name of the key for the given Secret reference where the value is stored.<br/>
+          key is the name of the key for the given Secret reference where the value is stored.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -1738,14 +2194,14 @@ ClusterDataSource is the Schema for the clusterdatasources API
         <td><b><a href="#clusterdatasourcespec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterDataSourceSpec defines the desired state of ClusterDataSource<br/>
+          spec defines the desired state<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#clusterdatasourcestatus">status</a></b></td>
         <td>object</td>
         <td>
-          ClusterDataSourceStatus defines the observed state of ClusterDataSource<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -1757,7 +2213,7 @@ ClusterDataSource is the Schema for the clusterdatasources API
 
 
 
-ClusterDataSourceSpec defines the desired state of ClusterDataSource
+spec defines the desired state
 
 <table>
     <thead>
@@ -1772,7 +2228,7 @@ ClusterDataSourceSpec defines the desired state of ClusterDataSource
         <td><b>dataSource</b></td>
         <td>string</td>
         <td>
-          DataSource references the [DataSource] object (in the same namespace) that provides database connection
+          dataSource references the [DataSource] object (in the same namespace) that provides database connection
 information and credentials.<br/>
         </td>
         <td>true</td>
@@ -1780,7 +2236,7 @@ information and credentials.<br/>
         <td><b>schema</b></td>
         <td>string</td>
         <td>
-          Schema is the name of the database for the Cluster. This value is immutable.
+          schema is the name of the database for the Cluster. This value is immutable.
 The value defaults to the namespace and name of the [ClusterDeployment] with some short random suffix.<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: changing the schema is not supported</li>
@@ -1795,7 +2251,7 @@ The value defaults to the namespace and name of the [ClusterDeployment] with som
 
 
 
-ClusterDataSourceStatus defines the observed state of ClusterDataSource
+status describes the observed state
 
 <table>
     <thead>
@@ -1807,17 +2263,10 @@ ClusterDataSourceStatus defines the observed state of ClusterDataSource
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>ready</b></td>
-        <td>boolean</td>
-        <td>
-          Ready indicates whether the object is fully initialized and operational.<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b>caSecret</b></td>
         <td>string</td>
         <td>
-          CASecret is the name of the Secret containing the CA certificate used to establish a TLS-secured
+          caSecret is the name of the Secret containing the CA certificate used to establish a TLS-secured
 connection to the datastore, if applicable.<br/>
         </td>
         <td>false</td>
@@ -1825,14 +2274,14 @@ connection to the datastore, if applicable.<br/>
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error contains a description of any errors that occurred, if applicable. It is omitted if no errors are present.<br/>
+          error contains a description of any errors that occurred, if applicable. It is omitted if no errors are present.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>kineDataSourceSecret</b></td>
         <td>string</td>
         <td>
-          KineDataSourceSecret is the name of the Secret containing credentials for the Kine datastore connection.
+          kineDataSourceSecret is the name of the Secret containing credentials for the Kine datastore connection.
 Created and managed by the controller.<br/>
         </td>
         <td>false</td>
@@ -1840,9 +2289,19 @@ Created and managed by the controller.<br/>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the latest source generation observed by the controller.<br/>
+          observedGeneration is the latest source generation observed by the controller.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>ready</b></td>
+        <td>boolean</td>
+        <td>
+          ready indicates whether the object is fully initialized and operational.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -1888,14 +2347,14 @@ ClusterDeployment is the Schema for the ClusterDeployments API
         <td><b><a href="#clusterdeploymentspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterDeploymentSpec defines the desired state of ClusterDeployment<br/>
+          spec defines the desired state<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ClusterDeploymentStatus defines the observed state of ClusterDeployment<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -1907,7 +2366,7 @@ ClusterDeployment is the Schema for the ClusterDeployments API
 
 
 
-ClusterDeploymentSpec defines the desired state of ClusterDeployment
+spec defines the desired state
 
 <table>
     <thead>
@@ -1922,14 +2381,14 @@ ClusterDeploymentSpec defines the desired state of ClusterDeployment
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is a reference to a Template object located in the same namespace.<br/>
+          template is a reference to a Template object located in the same namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>auditPolicy</b></td>
         <td>string</td>
         <td>
-          AuditPolicy is the name reference to the related [ClusterAuditPolicy] object located in the same namespace
+          auditPolicy is the name reference to the related [ClusterAuditPolicy] object located in the same namespace
 containing audit policy configuration.<br/>
         </td>
         <td>false</td>
@@ -1937,7 +2396,7 @@ containing audit policy configuration.<br/>
         <td><b>cleanupOnDeletion</b></td>
         <td>boolean</td>
         <td>
-          CleanupOnDeletion specifies whether potentially orphaned Services and PVCs
+          cleanupOnDeletion specifies whether potentially orphaned Services and PVCs
 should be removed during the object deletion.
 This is a best-effort cleanup, if there is no possibility to acquire
 a managed cluster's kubeconfig, the cleanup will NOT happen.<br/>
@@ -1947,14 +2406,14 @@ a managed cluster's kubeconfig, the cleanup will NOT happen.<br/>
         <td><b>clusterAuth</b></td>
         <td>string</td>
         <td>
-          Name reference to the related [ClusterAuthentication] object.<br/>
+          clusterAuth is the name of the related [ClusterAuthentication] object<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for template customization.
+          config allows to provide parameters for template customization.
 If no Config provided, the field will be populated with the default values for
 the template and DryRun will be enabled.<br/>
         </td>
@@ -1963,28 +2422,28 @@ the template and DryRun will be enabled.<br/>
         <td><b>credential</b></td>
         <td>string</td>
         <td>
-          Name reference to the related [Credential] object located in the same namespace.<br/>
+          credential is the name of the related [Credential] object in the same namespace<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dataSource</b></td>
         <td>string</td>
         <td>
-          DataSource is the name reference to the related [DataSource] object located in the same namespace.<br/>
+          dataSource is the name reference to the related [DataSource] object located in the same namespace.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dryRun</b></td>
         <td>boolean</td>
         <td>
-          DryRun specifies whether the template should be applied after validation or only validated.<br/>
+          dryRun specifies whether the template should be applied after validation or only validated.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecipamclaim">ipamClaim</a></b></td>
         <td>object</td>
         <td>
-          IPAMClaim defines IP Address Management (IPAM) requirements for the cluster.
+          ipamClaim defines IP Address Management (IPAM) requirements for the cluster.
 It can either reference an existing IPAM claim or specify an inline claim.<br/>
         </td>
         <td>false</td>
@@ -1992,17 +2451,25 @@ It can either reference an existing IPAM claim or specify an inline claim.<br/>
         <td><b>propagateCredentials</b></td>
         <td>boolean</td>
         <td>
-          PropagateCredentials indicates whether credentials should be propagated
+          propagateCredentials indicates whether credentials should be propagated
 for use by CCM (Cloud Controller Manager).<br/>
           <br/>
             <i>Default</i>: true<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>rbacPolicy</b></td>
+        <td>string</td>
+        <td>
+          rbacPolicy string is the name reference to the related [RBACPolicy] object located in the same namespace
+containing RBAC policy configuration.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespec">serviceSpec</a></b></td>
         <td>object</td>
         <td>
-          ServiceSpec is spec related to deployment of services.<br/>
+          serviceSpec is spec related to deployment of services.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2014,7 +2481,7 @@ for use by CCM (Cloud Controller Manager).<br/>
 
 
 
-IPAMClaim defines IP Address Management (IPAM) requirements for the cluster.
+ipamClaim defines IP Address Management (IPAM) requirements for the cluster.
 It can either reference an existing IPAM claim or specify an inline claim.
 
 <table>
@@ -2030,14 +2497,14 @@ It can either reference an existing IPAM claim or specify an inline claim.
         <td><b>ref</b></td>
         <td>string</td>
         <td>
-          ClusterIPAMClaimRef is the name of an existing ClusterIPAMClaim resource to use.<br/>
+          ref is the name of an existing ClusterIPAMClaim resource to use.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecipamclaimspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterIPAMClaimSpec defines the inline IPAM claim specification if no reference is provided.
+          spec defines the inline IPAM claim specification if no reference is provided.
 This allows for dynamic IP address allocation during cluster provisioning.<br/>
         </td>
         <td>false</td>
@@ -2050,7 +2517,7 @@ This allows for dynamic IP address allocation during cluster provisioning.<br/>
 
 
 
-ClusterIPAMClaimSpec defines the inline IPAM claim specification if no reference is provided.
+spec defines the inline IPAM claim specification if no reference is provided.
 This allows for dynamic IP address allocation during cluster provisioning.
 
 <table>
@@ -2066,7 +2533,7 @@ This allows for dynamic IP address allocation during cluster provisioning.
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider is the name of the provider that this claim will be consumed by<br/>
+          provider is the name of the provider that this claim will be consumed by<br/>
           <br/>
             <i>Enum</i>: in-cluster, ipam-infoblox<br/>
         </td>
@@ -2075,7 +2542,7 @@ This allows for dynamic IP address allocation during cluster provisioning.
         <td><b>cluster</b></td>
         <td>string</td>
         <td>
-          Cluster is the reference to the [ClusterDeployment] that this claim is for<br/>
+          cluster is the reference to the [ClusterDeployment] that this claim is for<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Cluster reference is immutable once set</li>
         </td>
@@ -2084,7 +2551,7 @@ This allows for dynamic IP address allocation during cluster provisioning.
         <td><b>clusterIPAMRef</b></td>
         <td>string</td>
         <td>
-          ClusterIPAMRef is the reference to the [ClusterIPAM] resource that this claim is for<br/>
+          clusterIPAMRef is the reference to the [ClusterIPAM] resource that this claim is for<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: ClusterIPAM reference is immutable once set</li>
         </td>
@@ -2093,21 +2560,21 @@ This allows for dynamic IP address allocation during cluster provisioning.
         <td><b><a href="#clusterdeploymentspecipamclaimspecclusternetwork">clusterNetwork</a></b></td>
         <td>object</td>
         <td>
-          ClusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself<br/>
+          clusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecipamclaimspecexternalnetwork">externalNetwork</a></b></td>
         <td>object</td>
         <td>
-          ExternalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers<br/>
+          externalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecipamclaimspecnodenetwork">nodeNetwork</a></b></td>
         <td>object</td>
         <td>
-          NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes<br/>
+          nodeNetwork defines the allocation requisitioning ip addresses for cluster nodes<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2119,7 +2586,7 @@ This allows for dynamic IP address allocation during cluster provisioning.
 
 
 
-ClusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself
+clusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself
 
 <table>
     <thead>
@@ -2134,28 +2601,31 @@ ClusterNetwork defines the allocation for requisitioning ip addresses for use by
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2167,7 +2637,7 @@ ClusterNetwork defines the allocation for requisitioning ip addresses for use by
 
 
 
-ExternalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers
+externalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers
 
 <table>
     <thead>
@@ -2182,28 +2652,31 @@ ExternalNetwork defines the allocation for requisitioning ip addresses for use b
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2215,7 +2688,7 @@ ExternalNetwork defines the allocation for requisitioning ip addresses for use b
 
 
 
-NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
+nodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
 
 <table>
     <thead>
@@ -2230,28 +2703,31 @@ NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2263,7 +2739,7 @@ NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
 
 
 
-ServiceSpec is spec related to deployment of services.
+serviceSpec is spec related to deployment of services.
 
 <table>
     <thead>
@@ -2278,18 +2754,16 @@ ServiceSpec is spec related to deployment of services.
         <td><b>continueOnError</b></td>
         <td>boolean</td>
         <td>
-          ContinueOnError specifies if the services deployment should continue if an error occurs.
+          continueOnError specifies if the services deployment should continue if an error occurs.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecdriftexclusionsindex">driftExclusions</a></b></td>
         <td>[]object</td>
         <td>
-          DriftExclusions specifies specific configurations of resources to ignore for drift detection.
+          driftExclusions specifies specific configurations of resources to ignore for drift detection.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -2298,7 +2772,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#clusterdeploymentspecservicespecdriftignoreindex">driftIgnore</a></b></td>
         <td>[]object</td>
         <td>
-          DriftIgnore specifies resources to ignore for drift detection.
+          driftIgnore specifies resources to ignore for drift detection.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -2307,7 +2781,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#clusterdeploymentspecservicespecpolicyrefsindex">policyRefs</a></b></td>
         <td>[]object</td>
         <td>
-          PolicyRefs references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources
+          policyRefs references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources
 that need to be deployed in the target clusters.
 The values contained in those resources can be static or leverage Go templates for dynamic customization.
 When expressed as templates, the values are filled in using information from
@@ -2320,7 +2794,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b>priority</b></td>
         <td>integer</td>
         <td>
-          Priority sets the priority for the services defined in this spec.
+          priority sets the priority for the services defined in this spec.
 Higher value means higher priority and lower means lower.
 In case of conflict with another object managing the service,
 the one with higher priority will get to deploy its services.
@@ -2337,14 +2811,14 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#clusterdeploymentspecservicespecprovider">provider</a></b></td>
         <td>object</td>
         <td>
-          Provider is the definition of the provider to use to deploy services.<br/>
+          provider is the definition of the provider to use to deploy services.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>reload</b></td>
         <td>boolean</td>
         <td>
-          Reload instances via rolling upgrade when a ConfigMap/Secret mounted as volume is modified.
+          reload instances via rolling upgrade when a ConfigMap/Secret mounted as volume is modified.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -2353,7 +2827,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#clusterdeploymentspecservicespecservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services is a list of services created via ServiceTemplates
+          services is a list of services created via ServiceTemplates
 that could be installed on the target cluster.<br/>
         </td>
         <td>false</td>
@@ -2361,21 +2835,19 @@ that could be installed on the target cluster.<br/>
         <td><b>stopOnConflict</b></td>
         <td>boolean</td>
         <td>
-          StopOnConflict specifies what to do in case of a conflict.
+          stopOnConflict specifies what to do in case of a conflict.
 E.g. If another object is already managing a service.
 By default the remaining services will be deployed even if conflict is detected.
 If set to true, the deployment will stop after encountering the first conflict.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>syncMode</b></td>
         <td>enum</td>
         <td>
-          SyncMode specifies how services are synced in the target cluster.
+          syncMode specifies how services are synced in the target cluster.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
           <br/>
@@ -2387,7 +2859,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#clusterdeploymentspecservicespectemplateresourcerefsindex">templateResourceRefs</a></b></td>
         <td>[]object</td>
         <td>
-          TemplateResourceRefs is a list of resources to collect from the management cluster,
+          templateResourceRefs is a list of resources to collect from the management cluster,
 the values from which can be used in templates.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
@@ -2619,6 +3091,21 @@ into the management cluster (local) or the managed cluster (remote)<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>force</b></td>
+        <td>boolean</td>
+        <td>
+          Force indicates whether Sveltos should delete and recreate a resource defined in this
+PolicyRef when an update is rejected with an error that only a delete+recreate can
+resolve (eg an invalid combination of fields, or a field enforced as immutable).
+By default, such errors are surfaced instead of recreating the resource.
+This applies to every resource produced by this PolicyRef. To force just one
+resource, regardless of this field's value, annotate that resource with
+projectsveltos.io/forceRecreate instead.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
@@ -2668,14 +3155,17 @@ and Sveltos will continue processing other PolicyRefs.<br/>
         <td>
           Path to the directory containing the YAML files.
 Defaults to 'None', which translates to the root path of the SourceRef.
-Used only for GitRepository;OCIRepository;Bucket<br/>
+Used only for GitRepository;OCIRepository;Bucket
+This value can be static or leverage Go templates for dynamic customization.
+When expressed as a template, it is filled in using information from
+resources within the management cluster before deployment (Cluster and TemplateResourceRefs)<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecpolicyrefsindexremoteurl">remoteURL</a></b></td>
         <td>object</td>
         <td>
-          RemoteURL configures fetching content from an HTTP/HTTPS endpoint.
+          RemoteURL configures fetching content from an HTTP/HTTPS endpoint or an OCI registry.
 When set, Kind/Name/Namespace must be omitted.<br/>
         </td>
         <td>false</td>
@@ -2719,7 +3209,7 @@ Higher Tier values represent lower priority. The default Tier value is 100.<br/>
 
 
 
-RemoteURL configures fetching content from an HTTP/HTTPS endpoint.
+RemoteURL configures fetching content from an HTTP/HTTPS endpoint or an OCI registry.
 When set, Kind/Name/Namespace must be omitted.
 
 <table>
@@ -2735,17 +3225,48 @@ When set, Kind/Name/Namespace must be omitted.
         <td><b>url</b></td>
         <td>string</td>
         <td>
-          URL is an HTTP/HTTPS endpoint serving raw YAML/JSON/KYAML content.
+          URL is the remote source serving raw YAML/JSON content.
 Sveltos fetches the content on every reconciliation and redeploys if the
-content hash has changed.<br/>
+content hash has changed.
+Supported schemes:
+  "http://" or "https://" — HTTP/HTTPS endpoint returning a raw YAML/JSON
+                            document, a gzip-compressed document, an
+                            uncompressed tar, or a gzip-compressed tar of
+                            .yaml/.yml/.json files
+  "oci://"                — OCI registry artifact whose layers are accepted
+                            in the same shapes: raw YAML/JSON, gzip-compressed
+                            YAML/JSON, uncompressed tar, or gzip-compressed tar
+URL can be expressed as a template and instantiated using any cluster field,
+so a single profile can fetch different content for each matching cluster,
+e.g. "oci://registry.example/space/app-{{ .Cluster.metadata.name }}:latest".<br/>
         </td>
         <td>true</td>
+      </tr><tr>
+        <td><b>insecureSkipTLSVerify</b></td>
+        <td>boolean</td>
+        <td>
+          InsecureSkipTLSVerify controls server certificate verification.
+Ignored if the referenced SecretRef provides a "caFile".<br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
       </tr><tr>
         <td><b>interval</b></td>
         <td>string</td>
         <td>
-          Interval defines how often Sveltos re-fetches the URL to detect changes.
+          Interval defines how often Sveltos re-fetches the source to detect changes.
 Defaults to 5 minutes.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>plainHTTP</b></td>
+        <td>boolean</td>
+        <td>
+          PlainHTTP indicates to use insecure HTTP connections when URL uses the
+"oci://" scheme. Ignored for "http://"/"https://" URLs.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -2753,9 +3274,12 @@ Defaults to 5 minutes.<br/>
         <td>object</td>
         <td>
           SecretRef references a Secret in the management cluster containing optional
-credentials for fetching the URL. Supported Secret keys:
+credentials for fetching the source. Both Name and Namespace must be set,
+allowing the Secret to live in any namespace (e.g. projectsveltos) so that
+a single Secret can be shared across clusters without replication.
+Supported Secret keys:
   "token"              — Bearer token (Authorization: Bearer <token>)
-  "username"+"password" — HTTP Basic Auth
+  "username"+"password" — HTTP Basic Auth or OCI registry basic auth
   "caFile"             — PEM-encoded CA certificate for TLS verification<br/>
         </td>
         <td>false</td>
@@ -2763,7 +3287,7 @@ credentials for fetching the URL. Supported Secret keys:
         <td><b>template</b></td>
         <td>boolean</td>
         <td>
-          Template indicates that the content served at URL is a Go template that
+          Template indicates that the fetched content is a Go template that
 must be instantiated using cluster fields and templateResourceRefs values
 before deployment. Equivalent to the projectsveltos.io/template annotation
 on a ConfigMap or Secret.<br/>
@@ -2779,9 +3303,12 @@ on a ConfigMap or Secret.<br/>
 
 
 SecretRef references a Secret in the management cluster containing optional
-credentials for fetching the URL. Supported Secret keys:
+credentials for fetching the source. Both Name and Namespace must be set,
+allowing the Secret to live in any namespace (e.g. projectsveltos) so that
+a single Secret can be shared across clusters without replication.
+Supported Secret keys:
   "token"              — Bearer token (Authorization: Bearer <token>)
-  "username"+"password" — HTTP Basic Auth
+  "username"+"password" — HTTP Basic Auth or OCI registry basic auth
   "caFile"             — PEM-encoded CA certificate for TLS verification
 
 <table>
@@ -2797,13 +3324,14 @@ credentials for fetching the URL. Supported Secret keys:
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the referent.
-This field is effectively required, but due to backwards compatibility is
-allowed to be empty. Instances of this type with an empty value here are
-almost certainly wrong.
-More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names<br/>
-          <br/>
-            <i>Default</i>: <br/>
+          name is unique within a namespace to reference a secret resource.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>namespace</b></td>
+        <td>string</td>
+        <td>
+          namespace defines the space within which the secret name must be unique.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2815,7 +3343,7 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
 
 
 
-Provider is the definition of the provider to use to deploy services.
+provider is the definition of the provider to use to deploy services.
 
 <table>
     <thead>
@@ -2830,14 +3358,14 @@ Provider is the definition of the provider to use to deploy services.
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config is the provider-specific configuration applied to the produced objects.<br/>
+          config is the provider-specific configuration applied to the produced objects.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the [StateManagementProvider] object.<br/>
+          name is the name of the [StateManagementProvider] object.<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Provider name is immutable once set</li>
         </td>
@@ -2846,7 +3374,7 @@ Provider is the definition of the provider to use to deploy services.
         <td><b>selfManagement</b></td>
         <td>boolean</td>
         <td>
-          SelfManagement flag defines whether resources must be deployed to the management cluster itself.
+          selfManagement flag defines whether resources must be deployed to the management cluster itself.
 This field is ignored if set for ClusterDeployment.<br/>
         </td>
         <td>false</td>
@@ -2874,35 +3402,35 @@ Service represents a Service to be deployed.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the chart release.<br/>
+          name is the chart release.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is a reference to a Template object located in the same namespace.<br/>
+          template is a reference to a Template object located in the same namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexdependsonindex">dependsOn</a></b></td>
         <td>[]object</td>
         <td>
-          DependsOn specifies a list of other services that this service depends on.<br/>
+          dependsOn specifies a list of other services that this service depends on.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disable</b></td>
         <td>boolean</td>
         <td>
-          Disable can be set to disable handling of this service.<br/>
+          disable can be set to disable handling of this service.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>helmAction</b></td>
         <td>enum</td>
         <td>
-          HelmChartAction specifies action on an helm chart<br/>
+          helmAction specifies the action to take on a Helm chart<br/>
           <br/>
             <i>Enum</i>: Install, Uninstall<br/>
         </td>
@@ -2911,14 +3439,14 @@ Service represents a Service to be deployed.
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexhelmoptions">helmOptions</a></b></td>
         <td>object</td>
         <td>
-          HelmOptions are the options to be passed to the provider for helm installation or updates<br/>
+          helmOptions are the options to be passed to the provider for helm installation or updates<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace the release will be installed in.
+          namespace is the namespace the release will be installed in.
 It will default to "default" if not provided.<br/>
           <br/>
             <i>Default</i>: default<br/>
@@ -2928,7 +3456,7 @@ It will default to "default" if not provided.<br/>
         <td><b>templateChain</b></td>
         <td>string</td>
         <td>
-          TemplateChain defines the ServiceTemplateChain object that will be used to deploy the service
+          templateChain defines the ServiceTemplateChain object that will be used to deploy the service
 along with desired ServiceTemplate version.<br/>
         </td>
         <td>false</td>
@@ -2936,7 +3464,7 @@ along with desired ServiceTemplate version.<br/>
         <td><b>values</b></td>
         <td>string</td>
         <td>
-          Values is the helm values to be passed to the chart used by the template.
+          values is the helm values to be passed to the chart used by the template.
 The string type is used in order to allow for templating.<br/>
         </td>
         <td>false</td>
@@ -2944,14 +3472,14 @@ The string type is used in order to allow for templating.<br/>
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexvaluesfromindex">valuesFrom</a></b></td>
         <td>[]object</td>
         <td>
-          ValuesFrom can reference a ConfigMap or Secret containing helm values.<br/>
+          valuesFrom can reference a ConfigMap or Secret containing helm values.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the service template.<br/>
+          version is the version of the service template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2978,14 +3506,14 @@ ServiceDependsOn identifies a service by its release name and namespace.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the release name on target cluster.<br/>
+          name is the release name on target cluster.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the release namespace on target cluster.<br/>
+          namespace is the release namespace on target cluster.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -2997,7 +3525,7 @@ ServiceDependsOn identifies a service by its release name and namespace.
 
 
 
-HelmOptions are the options to be passed to the provider for helm installation or updates
+helmOptions are the options to be passed to the provider for helm installation or updates
 
 <table>
     <thead>
@@ -3012,7 +3540,7 @@ HelmOptions are the options to be passed to the provider for helm installation o
         <td><b>atomic</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process deletes the installation/upgrades on failure.
+          atomic deletes the installation or upgrade on failure when set.
 The --wait flag will be set automatically if --atomic is used<br/>
         </td>
         <td>false</td>
@@ -3020,70 +3548,74 @@ The --wait flag will be set automatically if --atomic is used<br/>
         <td><b>createNamespace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.createNamespace instead.<br/>
+          createNamespace controls whether to create the release namespace
+
+Deprecated: use .installOptions.createNamespace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dependencyUpdate</b></td>
         <td>boolean</td>
         <td>
-          update dependencies if they are missing before installing the chart<br/>
+          dependencyUpdate updates dependencies if they are missing before installing the chart<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description is the description of an helm operation<br/>
+          description is the description of a Helm operation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableHooks</b></td>
         <td>boolean</td>
         <td>
-          prevent hooks from running during install/upgrade/uninstall<br/>
+          disableHooks prevents hooks from running during install, upgrade, or uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableOpenAPIValidation</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema<br/>
+          disableOpenAPIValidation skips validation of rendered templates against the Kubernetes OpenAPI schema<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>enableClientCache</b></td>
         <td>boolean</td>
         <td>
-          EnableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
+          enableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexhelmoptionsinstalloptions">installOptions</a></b></td>
         <td>object</td>
         <td>
-          InstallOptions are options specific to helm install<br/>
+          installOptions are options specific to helm install<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>labels</b></td>
         <td>map[string]string</td>
         <td>
-          Labels that would be added to release metadata.<br/>
+          labels that would be added to release metadata.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.replace instead.<br/>
+          replace controls whether an existing release name can be reused
+
+Deprecated: use .installOptions.replace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>skipCRDs</b></td>
         <td>boolean</td>
         <td>
-          SkipCRDs controls whether CRDs should be installed during install/upgrade operation.
+          skipCRDs controls whether CRDs should be installed during install/upgrade operation.
 By default, CRDs are installed if not already present.<br/>
         </td>
         <td>false</td>
@@ -3091,35 +3623,35 @@ By default, CRDs are installed if not already present.<br/>
         <td><b>skipSchemaValidation</b></td>
         <td>boolean</td>
         <td>
-          SkipSchemaValidation determines if JSON schema validation is disabled.<br/>
+          skipSchemaValidation determines if JSON schema validation is disabled.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>timeout</b></td>
         <td>string</td>
         <td>
-          time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)<br/>
+          timeout is the time to wait for an individual Kubernetes operation such as a hook Job<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexhelmoptionsuninstalloptions">uninstallOptions</a></b></td>
         <td>object</td>
         <td>
-          UninstallOptions are options specific to helm uninstall<br/>
+          uninstallOptions are options specific to helm uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentspecservicespecservicesindexhelmoptionsupgradeoptions">upgradeOptions</a></b></td>
         <td>object</td>
         <td>
-          UpgradeOptions are options specific to helm upgrade<br/>
+          upgradeOptions are options specific to helm upgrade<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>wait</b></td>
         <td>boolean</td>
         <td>
-          if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
+          wait blocks until all Pods, PVCs, Services, and the minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
 are in a ready state before marking the release as successful. It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -3127,7 +3659,7 @@ are in a ready state before marking the release as successful. It will wait for 
         <td><b>waitForJobs</b></td>
         <td>boolean</td>
         <td>
-          if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful.
+          waitForJobs blocks until all Jobs complete before marking the release as successful when --wait is enabled.
 It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -3140,7 +3672,7 @@ It will wait for as long as --timeout<br/>
 
 
 
-InstallOptions are options specific to helm install
+installOptions are options specific to helm install
 
 <table>
     <thead>
@@ -3173,6 +3705,23 @@ Default to false<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>recoverAfterConsecutiveFailures</b></td>
+        <td>integer</td>
+        <td>
+          RecoverAfterConsecutiveFailures is the number of consecutive install failures for this
+chart after which Sveltos uninstalls any existing release under this name before
+retrying, to clear potentially stale Helm release history that would otherwise keep
+blocking every subsequent install attempt. This only ever runs when there is no
+currently deployed release to protect: a release that is deployed, or mid-upgrade, or
+failed while already existing, is always retried through helm upgrade instead, never
+through this. It only applies to a release that was never successfully installed, or
+was already cleanly uninstalled.
+Default to 5<br/>
+          <br/>
+            <i>Default</i>: 5<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
@@ -3200,7 +3749,7 @@ and take ownership of the existing resources<br/>
 
 
 
-UninstallOptions are options specific to helm uninstall
+uninstallOptions are options specific to helm uninstall
 
 <table>
     <thead>
@@ -3250,7 +3799,7 @@ using the helm history command.<br/>
 
 
 
-UpgradeOptions are options specific to helm upgrade
+upgradeOptions are options specific to helm upgrade
 
 <table>
     <thead>
@@ -3399,7 +3948,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the source.<br/>
+          kind is the kind of the source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret<br/>
         </td>
@@ -3408,7 +3957,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the source.<br/>
+          name is the name of the source.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -3576,7 +4125,7 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
 
 
 
-ClusterDeploymentStatus defines the observed state of ClusterDeployment
+status describes the observed state
 
 <table>
     <thead>
@@ -3591,7 +4140,7 @@ ClusterDeploymentStatus defines the observed state of ClusterDeployment
         <td><b>availableUpgrades</b></td>
         <td>[]string</td>
         <td>
-          AvailableUpgrades is the list of ClusterTemplate names to which
+          availableUpgrades is the list of ClusterTemplate names to which
 this cluster can be upgraded. It can be an empty array, which means no upgrades are
 available.<br/>
         </td>
@@ -3600,14 +4149,14 @@ available.<br/>
         <td><b><a href="#clusterdeploymentstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions contains details for the current state of the ClusterDeployment.<br/>
+          conditions contains details for the current state of the ClusterDeployment.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>k8sVersion</b></td>
         <td>string</td>
         <td>
-          Currently compatible exact Kubernetes version of the cluster. Being set only if
+          k8sVersion is the currently compatible exact Kubernetes version of the cluster. Being set only if
 provided by the corresponding ClusterTemplate.<br/>
         </td>
         <td>false</td>
@@ -3615,30 +4164,43 @@ provided by the corresponding ClusterTemplate.<br/>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>rbacPolicyGrant</b></td>
+        <td>enum</td>
+        <td>
+          rbacPolicyGrant reports whether ClusterRoles and ClusterRoleBindings derived from the
+[RBACPolicy] named by spec.rbacPolicy may be live in this ClusterDeployment's child cluster.
+Empty means none are: either nothing was ever applied there, or everything that was has
+since been revoked. See [RBACPolicyGrantState].<br/>
+          <br/>
+            <i>Enum</i>: Granted<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>region</b></td>
         <td>string</td>
         <td>
-          Region shows the region the [ClusterDeployment] targets.<br/>
+          region shows the region the [ClusterDeployment] targets.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentstatusservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services contains details for the state of services.<br/>
+          services contains details for the state of services.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentstatusservicesupgradepathsindex">servicesUpgradePaths</a></b></td>
         <td>[]object</td>
         <td>
-          ServicesUpgradePaths contains details for the state of services upgrade paths.<br/>
+          servicesUpgradePaths contains details for the state of services upgrade paths.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -3742,7 +4304,7 @@ ServiceState is the state of a Service
         <td><b>lastStateTransitionTime</b></td>
         <td>string</td>
         <td>
-          LastStateTransitionTime is the time the State was last transitioned<br/>
+          lastStateTransitionTime is the time the State was last transitioned<br/>
           <br/>
             <i>Format</i>: date-time<br/>
         </td>
@@ -3751,21 +4313,21 @@ ServiceState is the state of a Service
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Service<br/>
+          name is the name of the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the Service<br/>
+          namespace is the namespace of the Service. Empty value means default namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>state</b></td>
         <td>enum</td>
         <td>
-          State is the state of the Service<br/>
+          state is the state of the Service<br/>
           <br/>
             <i>Enum</i>: Deployed, Provisioning, Failed, Pending, Deleting, Deleted<br/>
         </td>
@@ -3774,14 +4336,14 @@ ServiceState is the state of a Service
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the ServiceTemplate used to deploy the Service<br/>
+          template is the name of the ServiceTemplate used to deploy the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>type</b></td>
         <td>enum</td>
         <td>
-          Type is the type of the deployment method for the Service<br/>
+          type is the type of the deployment method for the Service<br/>
           <br/>
             <i>Enum</i>: Helm, Kustomize, Resource<br/>
         </td>
@@ -3790,21 +4352,32 @@ ServiceState is the state of a Service
         <td><b><a href="#clusterdeploymentstatusservicesindexconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions is a list of conditions for the Service<br/>
+          conditions is a list of conditions for the Service<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>failureMessage</b></td>
         <td>string</td>
         <td>
-          FailureMessage is the reason why the Service failed to deploy<br/>
+          failureMessage is the reason why the Service failed to deploy<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>lastDeployedHash</b></td>
+        <td>string</td>
+        <td>
+          lastDeployedHash is the verifier's fingerprint of the provider-side
+configuration this service was most recently confirmed Deployed at.
+Used to recognise that a progressing state reported by the provider is
+transient noise from an unrelated apply (rather than a real change to
+this service) and to promote back to Deployed safely.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Service<br/>
+          version is the version of the Service<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -3908,28 +4481,28 @@ ServiceUpgradePaths contains details for the state of service upgrade paths.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the service.<br/>
+          name is the name of the service.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the service.<br/>
+          namespace is the namespace of the service.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the current service template.<br/>
+          template is the name of the current service template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentstatusservicesupgradepathsindexavailableupgradesindex">availableUpgrades</a></b></td>
         <td>[]object</td>
         <td>
-          AvailableUpgrades contains details for the state of available upgrades.<br/>
+          availableUpgrades contains details for the state of available upgrades.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -3956,14 +4529,16 @@ UpgradePath contains details for the state of service upgrade paths.
         <td><b>upgradePaths</b></td>
         <td>[]string</td>
         <td>
-          Deprecated: use Versions to define versions that service can be upgraded to.<br/>
+          upgradePaths contains versions that the service can be upgraded to
+
+Deprecated: use Versions to define versions that service can be upgraded to.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusterdeploymentstatusservicesupgradepathsindexavailableupgradesindexversionsindex">versions</a></b></td>
         <td>[]object</td>
         <td>
-          Versions contains the list of versions that service can be upgraded to.<br/>
+          versions contains the list of versions that service can be upgraded to.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -3990,14 +4565,14 @@ AvailableUpgrade is the definition of the available upgrade for the Template
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template to which the upgrade is available.<br/>
+          name is the name of the Template to which the upgrade is available.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Template to which the upgrade is available.<br/>
+          version is the version of the Template to which the upgrade is available.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4043,14 +4618,14 @@ ClusterIPAMClaim is the Schema for the clusteripamclaims API
         <td><b><a href="#clusteripamclaimspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#clusteripamclaimstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ClusterIPAMClaimStatus defines the observed state of ClusterIPAMClaim<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4062,7 +4637,7 @@ ClusterIPAMClaim is the Schema for the clusteripamclaims API
 
 
 
-ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
+spec defines the desired state
 
 <table>
     <thead>
@@ -4077,7 +4652,7 @@ ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider is the name of the provider that this claim will be consumed by<br/>
+          provider is the name of the provider that this claim will be consumed by<br/>
           <br/>
             <i>Enum</i>: in-cluster, ipam-infoblox<br/>
         </td>
@@ -4086,7 +4661,7 @@ ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
         <td><b>cluster</b></td>
         <td>string</td>
         <td>
-          Cluster is the reference to the [ClusterDeployment] that this claim is for<br/>
+          cluster is the reference to the [ClusterDeployment] that this claim is for<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Cluster reference is immutable once set</li>
         </td>
@@ -4095,7 +4670,7 @@ ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
         <td><b>clusterIPAMRef</b></td>
         <td>string</td>
         <td>
-          ClusterIPAMRef is the reference to the [ClusterIPAM] resource that this claim is for<br/>
+          clusterIPAMRef is the reference to the [ClusterIPAM] resource that this claim is for<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: ClusterIPAM reference is immutable once set</li>
         </td>
@@ -4104,21 +4679,21 @@ ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
         <td><b><a href="#clusteripamclaimspecclusternetwork">clusterNetwork</a></b></td>
         <td>object</td>
         <td>
-          ClusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself<br/>
+          clusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusteripamclaimspecexternalnetwork">externalNetwork</a></b></td>
         <td>object</td>
         <td>
-          ExternalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers<br/>
+          externalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clusteripamclaimspecnodenetwork">nodeNetwork</a></b></td>
         <td>object</td>
         <td>
-          NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes<br/>
+          nodeNetwork defines the allocation requisitioning ip addresses for cluster nodes<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4130,7 +4705,7 @@ ClusterIPAMClaimSpec defines the desired state of ClusterIPAMClaim
 
 
 
-ClusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself
+clusterNetwork defines the allocation for requisitioning ip addresses for use by the k8s cluster itself
 
 <table>
     <thead>
@@ -4145,28 +4720,31 @@ ClusterNetwork defines the allocation for requisitioning ip addresses for use by
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4178,7 +4756,7 @@ ClusterNetwork defines the allocation for requisitioning ip addresses for use by
 
 
 
-ExternalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers
+externalNetwork defines the allocation for requisitioning ip addresses for use by services such as load balancers
 
 <table>
     <thead>
@@ -4193,28 +4771,31 @@ ExternalNetwork defines the allocation for requisitioning ip addresses for use b
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4226,7 +4807,7 @@ ExternalNetwork defines the allocation for requisitioning ip addresses for use b
 
 
 
-NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
+nodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
 
 <table>
     <thead>
@@ -4241,28 +4822,31 @@ NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
         <td><b>cidr</b></td>
         <td>string</td>
         <td>
-          CIDR notation of the allocated address space<br/>
+          cidr notation of the allocated address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>gateway</b></td>
         <td>string</td>
         <td>
-          Gateway to be used for the address space<br/>
+          gateway to be used for the address space<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ipAddresses</b></td>
         <td>[]string</td>
         <td>
-          IPAddresses to be allocated<br/>
+          ipAddresses to be allocated<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>prefix</b></td>
         <td>integer</td>
         <td>
-          Prefix is the network prefix to use.<br/>
+          prefix is the network prefix to use.<br/>
+          <br/>
+            <i>Minimum</i>: 0<br/>
+            <i>Maximum</i>: 128<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4274,7 +4858,7 @@ NodeNetwork defines the allocation requisitioning ip addresses for cluster nodes
 
 
 
-ClusterIPAMClaimStatus defines the observed state of ClusterIPAMClaim
+status describes the observed state
 
 <table>
     <thead>
@@ -4289,16 +4873,16 @@ ClusterIPAMClaimStatus defines the observed state of ClusterIPAMClaim
         <td><b>bound</b></td>
         <td>boolean</td>
         <td>
-          Bound is a flag to indicate that the claim is bound because all ip addresses are allocated<br/>
+          bound is a flag to indicate that the claim is bound because all ip addresses are allocated<br/>
           <br/>
             <i>Default</i>: false<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#clusteripamclaimstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions contains details for the current state of the [ClusterIPAMClaim]<br/>
+          conditions contains details for the current state of the [ClusterIPAMClaim]<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4421,14 +5005,14 @@ ClusterIPAM is the Schema for the clusteripams API
         <td><b><a href="#clusteripamspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterIPAMSpec defines the desired state of ClusterIPAM<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#clusteripamstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ClusterIPAMStatus defines the observed state of ClusterIPAM<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4440,7 +5024,7 @@ ClusterIPAM is the Schema for the clusteripams API
 
 
 
-ClusterIPAMSpec defines the desired state of ClusterIPAM
+spec defines the desired state
 
 <table>
     <thead>
@@ -4452,21 +5036,21 @@ ClusterIPAMSpec defines the desired state of ClusterIPAM
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>clusterIPAMClaimRef</b></td>
-        <td>string</td>
-        <td>
-          ClusterIPAMClaimRef is a reference to the [ClusterIPAMClaim] that this [ClusterIPAM] is bound to.<br/>
-          <br/>
-            <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Claim reference is immutable once set</li>
-        </td>
-        <td>false</td>
-      </tr><tr>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          The provider that this claim will be consumed by<br/>
+          provider identifies the provider that will consume this claim<br/>
           <br/>
             <i>Enum</i>: in-cluster, ipam-infoblox<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>clusterIPAMClaimRef</b></td>
+        <td>string</td>
+        <td>
+          clusterIPAMClaimRef is a reference to the [ClusterIPAMClaim] that this [ClusterIPAM] is bound to.<br/>
+          <br/>
+            <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Claim reference is immutable once set</li>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4478,7 +5062,7 @@ ClusterIPAMSpec defines the desired state of ClusterIPAM
 
 
 
-ClusterIPAMStatus defines the observed state of ClusterIPAM
+status describes the observed state
 
 <table>
     <thead>
@@ -4493,7 +5077,7 @@ ClusterIPAMStatus defines the observed state of ClusterIPAM
         <td><b>phase</b></td>
         <td>enum</td>
         <td>
-          Phase is the current phase of the ClusterIPAM.<br/>
+          phase is the current phase of the ClusterIPAM.<br/>
           <br/>
             <i>Enum</i>: Pending, Bound<br/>
         </td>
@@ -4502,7 +5086,7 @@ ClusterIPAMStatus defines the observed state of ClusterIPAM
         <td><b><a href="#clusteripamstatusproviderdataindex">providerData</a></b></td>
         <td>[]object</td>
         <td>
-          ProviderData is the provider specific data produced for the ClusterIPAM.
+          providerData is the provider specific data produced for the ClusterIPAM.
 This field is represented as a list, because it will store multiple entries
 for different networks - nodes, cluster (pods, services), external - for
 the same provider.<br/>
@@ -4517,7 +5101,7 @@ the same provider.<br/>
 
 
 
-
+ClusterIPAMProviderData is the data of IPAM Provider.
 
 <table>
     <thead>
@@ -4532,21 +5116,21 @@ the same provider.<br/>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Data is the IPAM provider specific data<br/>
+          config contains the IPAM provider-specific data<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the IPAM provider data<br/>
+          name of the IPAM provider data<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ready</b></td>
         <td>boolean</td>
         <td>
-          Ready indicates that the IPAM provider data is ready<br/>
+          ready indicates that the IPAM provider data is ready<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4592,7 +5176,7 @@ ClusterTemplateChain is the Schema for the clustertemplatechains API
         <td><b><a href="#clustertemplatechainspec">spec</a></b></td>
         <td>object</td>
         <td>
-          TemplateChainSpec defines the desired state of *TemplateChain<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li>
         </td>
@@ -4601,7 +5185,7 @@ ClusterTemplateChain is the Schema for the clustertemplatechains API
         <td><b><a href="#clustertemplatechainstatus">status</a></b></td>
         <td>object</td>
         <td>
-          TemplateChainStatus defines the observed state of *TemplateChain<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4613,7 +5197,7 @@ ClusterTemplateChain is the Schema for the clustertemplatechains API
 
 
 
-TemplateChainSpec defines the desired state of *TemplateChain
+spec defines the desired state
 
 <table>
     <thead>
@@ -4628,7 +5212,7 @@ TemplateChainSpec defines the desired state of *TemplateChain
         <td><b><a href="#clustertemplatechainspecsupportedtemplatesindex">supportedTemplates</a></b></td>
         <td>[]object</td>
         <td>
-          SupportedTemplates is the list of supported Templates definitions and all available upgrade sequences for it.<br/>
+          supportedTemplates is the list of supported Templates definitions and all available upgrade sequences for it.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4655,14 +5239,14 @@ SupportedTemplate is the supported Template definition and all available upgrade
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template.<br/>
+          name is the name of the Template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#clustertemplatechainspecsupportedtemplatesindexavailableupgradesindex">availableUpgrades</a></b></td>
         <td>[]object</td>
         <td>
-          AvailableUpgrades is the list of available upgrades for the specified Template.<br/>
+          availableUpgrades is the list of available upgrades for the specified Template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4689,14 +5273,14 @@ AvailableUpgrade is the definition of the available upgrade for the Template
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template to which the upgrade is available.<br/>
+          name is the name of the Template to which the upgrade is available.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Template to which the upgrade is available.<br/>
+          version is the version of the Template to which the upgrade is available.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4708,7 +5292,7 @@ AvailableUpgrade is the definition of the available upgrade for the Template
 
 
 
-TemplateChainStatus defines the observed state of *TemplateChain
+status describes the observed state
 
 <table>
     <thead>
@@ -4723,15 +5307,17 @@ TemplateChainStatus defines the observed state of *TemplateChain
         <td><b>valid</b></td>
         <td>boolean</td>
         <td>
-          Valid indicates whether the chain is valid and can be considered when calculating available
+          valid indicates whether the chain is valid and can be considered when calculating available
 upgrade paths.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>validationError</b></td>
         <td>string</td>
         <td>
-          ValidationError provides information regarding issues encountered during templatechain validation.<br/>
+          validationError provides information regarding issues encountered during templatechain validation.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4777,16 +5363,16 @@ ClusterTemplate is the Schema for the clustertemplates API
         <td><b><a href="#clustertemplatespec">spec</a></b></td>
         <td>object</td>
         <td>
-          ClusterTemplateSpec defines the desired state of ClusterTemplate<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li><li>!has(self.helm.chartSource): .spec.helm.chartSource is not supported for ClusterTemplates</li>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#clustertemplatestatus">status</a></b></td>
         <td>object</td>
         <td>
-          ClusterTemplateStatus defines the observed state of ClusterTemplate<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -4798,7 +5384,7 @@ ClusterTemplate is the Schema for the clustertemplates API
 
 
 
-ClusterTemplateSpec defines the desired state of ClusterTemplate
+spec defines the desired state
 
 <table>
     <thead>
@@ -4813,7 +5399,7 @@ ClusterTemplateSpec defines the desired state of ClusterTemplate
         <td><b><a href="#clustertemplatespechelm">helm</a></b></td>
         <td>object</td>
         <td>
-          HelmSpec references a Helm chart representing the KCM template<br/>
+          helm defines the Helm chart backing the template<br/>
           <br/>
             <i>Validations</i>:<li>(has(self.chartSpec) ? (!has(self.chartSource) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartSource) ? (!has(self.chartSpec) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartRef) ? (!has(self.chartSpec) && !has(self.chartSource)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>has(self.chartSpec) || has(self.chartRef) || has(self.chartSource): one of chartSpec, chartRef or chartSource must be set</li>
         </td>
@@ -4822,14 +5408,14 @@ ClusterTemplateSpec defines the desired state of ClusterTemplate
         <td><b>k8sVersion</b></td>
         <td>string</td>
         <td>
-          Kubernetes exact version in the SemVer format provided by this ClusterTemplate.<br/>
+          k8sVersion is the exact Kubernetes version in SemVer format provided by this ClusterTemplate.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>providerContracts</b></td>
         <td>map[string]string</td>
         <td>
-          Holds key-value pairs with compatibility [contract versions],
+          providerContracts holds key-value pairs with compatibility [contract versions],
 where the key is the name of the provider,
 and the value is the provider contract version
 required to be supported by the provider.
@@ -4841,7 +5427,7 @@ required to be supported by the provider.
         <td><b>providers</b></td>
         <td>[]string</td>
         <td>
-          Providers represent required CAPI providers.
+          providers represent required CAPI providers.
 Should be set if not present in the Helm chart metadata.<br/>
         </td>
         <td>false</td>
@@ -4854,7 +5440,7 @@ Should be set if not present in the Helm chart metadata.<br/>
 
 
 
-HelmSpec references a Helm chart representing the KCM template
+helm defines the Helm chart backing the template
 
 <table>
     <thead>
@@ -4869,7 +5455,7 @@ HelmSpec references a Helm chart representing the KCM template
         <td><b><a href="#clustertemplatespechelmchartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -4877,7 +5463,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#clustertemplatespechelmchartsource">chartSource</a></b></td>
         <td>object</td>
         <td>
-          ChartSource is a source of a Helm chart representing the template.<br/>
+          chartSource is a source of a Helm chart representing the template.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.localSourceRef) ? (self.localSourceRef.kind != 'Secret' && self.localSourceRef.kind != 'ConfigMap'): true: Secret and ConfigMap are not supported as Helm chart sources</li><li>has(self.localSourceRef) ? !has(self.remoteSourceSpec): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.remoteSourceSpec) ? !has(self.localSourceRef): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.localSourceRef) || has(self.remoteSourceSpec): One of LocalSource or RemoteSource must be specified.</li>
         </td>
@@ -4886,7 +5472,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#clustertemplatespechelmchartspec">chartSpec</a></b></td>
         <td>object</td>
         <td>
-          ChartSpec defines the desired state of the HelmChart to be created by the controller<br/>
+          chartSpec defines the desired state of the HelmChart to be created by the controller<br/>
           <br/>
             <i>Validations</i>:<li>!has(self.verify) || self.sourceRef.kind == 'HelmRepository': spec.verify is only supported when spec.sourceRef.kind is 'HelmRepository'</li>
         </td>
@@ -4900,7 +5486,7 @@ Helm chart representing the template.<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -4952,7 +5538,7 @@ resource object that contains the reference.<br/>
 
 
 
-ChartSource is a source of a Helm chart representing the template.
+chartSource is a source of a Helm chart representing the template.
 
 <table>
     <thead>
@@ -4967,32 +5553,32 @@ ChartSource is a source of a Helm chart representing the template.
         <td><b>deploymentType</b></td>
         <td>enum</td>
         <td>
-          DeploymentType is the type of the deployment. This field is ignored,
+          deploymentType is the type of the deployment. This field is ignored,
 when ResourceSpec is used as part of Helm chart configuration.<br/>
           <br/>
             <i>Enum</i>: Local, Remote<br/>
             <i>Default</i>: Remote<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#clustertemplatespechelmchartsourcelocalsourceref">localSourceRef</a></b></td>
         <td>object</td>
         <td>
-          LocalSourceRef is the local source of the kustomize manifest.<br/>
+          localSourceRef is the local source of the kustomize manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>path</b></td>
         <td>string</td>
         <td>
-          Path to the directory containing the resource manifest.<br/>
+          path to the directory containing the resource manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clustertemplatespechelmchartsourceremotesourcespec">remoteSourceSpec</a></b></td>
         <td>object</td>
         <td>
-          RemoteSourceSpec is the remote source of the kustomize manifest.<br/>
+          remoteSourceSpec is the remote source of the kustomize manifest.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.git) ? (!has(self.bucket) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.bucket) ? (!has(self.git) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.oci) ? (!has(self.git) && !has(self.bucket)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.git) || has(self.bucket) || has(self.oci): One of Git, Bucket or OCI must be specified.</li>
         </td>
@@ -5006,7 +5592,7 @@ when ResourceSpec is used as part of Helm chart configuration.<br/>
 
 
 
-LocalSourceRef is the local source of the kustomize manifest.
+localSourceRef is the local source of the kustomize manifest.
 
 <table>
     <thead>
@@ -5021,7 +5607,7 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the local source.<br/>
+          kind is the kind of the local source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret, GitRepository, Bucket, OCIRepository<br/>
         </td>
@@ -5030,14 +5616,14 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the local source.<br/>
+          name is the name of the local source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the local source. Cross-namespace references
+          namespace is the namespace of the local source. Cross-namespace references
 are only allowed when the Kind is one of [github.com/fluxcd/source-controller/api/v1.GitRepository],
 [github.com/fluxcd/source-controller/api/v1.Bucket] or [github.com/fluxcd/source-controller/api/v1.OCIRepository].
 If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
@@ -5052,7 +5638,7 @@ If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
 
 
 
-RemoteSourceSpec is the remote source of the kustomize manifest.
+remoteSourceSpec is the remote source of the kustomize manifest.
 
 <table>
     <thead>
@@ -5067,7 +5653,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#clustertemplatespechelmchartsourceremotesourcespecbucket">bucket</a></b></td>
         <td>object</td>
         <td>
-          Bucket is the definition of bucket source.<br/>
+          bucket is the definition of bucket source.<br/>
           <br/>
             <i>Validations</i>:<li>self.provider == 'aws' || self.provider == 'generic' || !has(self.sts): STS configuration is only supported for the 'aws' and 'generic' Bucket providers</li><li>self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws': 'aws' is the only supported STS provider for the 'aws' Bucket provider</li><li>self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap': 'ldap' is the only supported STS provider for the 'generic' Bucket provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef): spec.sts.secretRef is not required for the 'aws' STS provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef): spec.sts.certSecretRef is not required for the 'aws' STS provider</li><li>self.provider != 'generic' || !has(self.serviceAccountName): ServiceAccountName is not supported for the 'generic' Bucket provider</li><li>!has(self.secretRef) || !has(self.serviceAccountName): cannot set both .spec.secretRef and .spec.serviceAccountName</li>
         </td>
@@ -5076,16 +5662,16 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#clustertemplatespechelmchartsourceremotesourcespecgit">git</a></b></td>
         <td>object</td>
         <td>
-          Git is the definition of git repository source.<br/>
+          git is the definition of git repository source.<br/>
           <br/>
-            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && self.provider == 'azure'): serviceAccountName can only be set when provider is 'azure'</li>
+            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && (self.provider == 'azure' || self.provider == 'aws')): serviceAccountName can only be set when provider is 'azure' or 'aws'</li>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#clustertemplatespechelmchartsourceremotesourcespecoci">oci</a></b></td>
         <td>object</td>
         <td>
-          OCI is the definition of OCI repository source.<br/>
+          oci is the definition of OCI repository source.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -5097,7 +5683,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
 
 
 
-Bucket is the definition of bucket source.
+bucket is the definition of bucket source.
 
 <table>
     <thead>
@@ -5491,7 +6077,7 @@ and `password` and is supported only for the `ldap` provider.
 
 
 
-Git is the definition of git repository source.
+git is the definition of git repository source.
 
 <table>
     <thead>
@@ -5539,10 +6125,10 @@ should be included in the Artifact produced for this GitRepository.<br/>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider used for authentication, can be 'azure', 'github', 'generic'.
+          Provider used for authentication, can be 'aws', 'azure', 'github', 'generic'.
 When not specified, defaults to 'generic'.<br/>
           <br/>
-            <i>Enum</i>: generic, azure, github<br/>
+            <i>Enum</i>: generic, aws, azure, github<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -5586,7 +6172,7 @@ and 'known_hosts' fields.<br/>
         <td>string</td>
         <td>
           ServiceAccountName is the name of the Kubernetes ServiceAccount used to
-authenticate to the GitRepository. This field is only supported for 'azure' provider.<br/>
+authenticate to the GitRepository. This field is only supported for 'azure' and 'aws' providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -5844,7 +6430,8 @@ signature(s).
         <td>object</td>
         <td>
           SecretRef specifies the Secret containing the public keys of trusted Git
-authors.<br/>
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -5871,7 +6458,8 @@ the commit that the HEAD of the Git repository points to. The variant
 
 
 SecretRef specifies the Secret containing the public keys of trusted Git
-authors.
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.
 
 <table>
     <thead>
@@ -5898,7 +6486,7 @@ authors.
 
 
 
-OCI is the definition of OCI repository source.
+oci is the definition of OCI repository source.
 
 <table>
     <thead>
@@ -6276,6 +6864,16 @@ specified matchers match against the identity.<br/>
 trusted public keys.<br/>
         </td>
         <td>false</td>
+      </tr><tr>
+        <td><b><a href="#clustertemplatespechelmchartsourceremotesourcespecociverifytrustedrootsecretref">trustedRootSecretRef</a></b></td>
+        <td>object</td>
+        <td>
+          TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -6347,12 +6945,42 @@ trusted public keys.
 </table>
 
 
+### ClusterTemplate.spec.helm.chartSource.remoteSourceSpec.oci.verify.trustedRootSecretRef
+<sup><sup>[↩ Parent](#clustertemplatespechelmchartsourceremotesourcespecociverify)</sup></sup>
+
+
+
+TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          Name of the referent.<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
 ### ClusterTemplate.spec.helm.chartSpec
 <sup><sup>[↩ Parent](#clustertemplatespechelm)</sup></sup>
 
 
 
-ChartSpec defines the desired state of the HelmChart to be created by the controller
+chartSpec defines the desired state of the HelmChart to be created by the controller
 
 <table>
     <thead>
@@ -6620,7 +7248,7 @@ trusted public keys.
 
 
 
-ClusterTemplateStatus defines the observed state of ClusterTemplate
+status describes the observed state
 
 <table>
     <thead>
@@ -6632,17 +7260,10 @@ ClusterTemplateStatus defines the observed state of ClusterTemplate
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>valid</b></td>
-        <td>boolean</td>
-        <td>
-          Valid indicates whether the template passed validation or not.<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b><a href="#clustertemplatestatuschartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -6650,14 +7271,14 @@ Helm chart representing the template.<br/>
         <td><b>chartVersion</b></td>
         <td>string</td>
         <td>
-          ChartVersion represents the version of the Helm Chart associated with this template.<br/>
+          chartVersion represents the version of the Helm Chart associated with this template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config demonstrates available parameters for template customization,
+          config demonstrates available parameters for template customization,
 that can be used when creating ClusterDeployment objects.<br/>
         </td>
         <td>false</td>
@@ -6665,30 +7286,31 @@ that can be used when creating ClusterDeployment objects.<br/>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description contains information about the template.<br/>
+          description contains information about the template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>k8sVersion</b></td>
         <td>string</td>
         <td>
-          Kubernetes exact version in the SemVer format provided by this ClusterTemplate.<br/>
+          k8sVersion is the exact Kubernetes version in SemVer format provided by this ClusterTemplate.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>providerContracts</b></td>
         <td>map[string]string</td>
         <td>
-          Holds key-value pairs with compatibility [contract versions],
+          providerContracts holds key-value pairs with compatibility [contract versions],
 where the key is the name of the provider,
 and the value is the provider contract version
 required to be supported by the provider.
@@ -6700,24 +7322,31 @@ required to be supported by the provider.
         <td><b>providers</b></td>
         <td>[]string</td>
         <td>
-          Providers represent required CAPI providers.<br/>
+          providers represent required CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>schemaConfigMapName</b></td>
         <td>string</td>
         <td>
-          SchemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
+          schemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
 
 The ConfigMap's namespace is either in the system namespace for [ProviderTemplate]
 or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>valid</b></td>
+        <td>boolean</td>
+        <td>
+          valid indicates whether the template passed validation or not.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>validationError</b></td>
         <td>string</td>
         <td>
-          ValidationError provides information regarding issues encountered during template validation.<br/>
+          validationError provides information regarding issues encountered during template validation.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -6729,7 +7358,7 @@ or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -6815,14 +7444,14 @@ Credential is the Schema for the credentials API
         <td><b><a href="#credentialspec">spec</a></b></td>
         <td>object</td>
         <td>
-          CredentialSpec defines the desired state of Credential<br/>
+          spec defines the desired state<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#credentialstatus">status</a></b></td>
         <td>object</td>
         <td>
-          CredentialStatus defines the observed state of Credential<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -6834,7 +7463,7 @@ Credential is the Schema for the credentials API
 
 
 
-CredentialSpec defines the desired state of Credential
+spec defines the desired state
 
 <table>
     <thead>
@@ -6849,21 +7478,21 @@ CredentialSpec defines the desired state of Credential
         <td><b><a href="#credentialspecidentityref">identityRef</a></b></td>
         <td>object</td>
         <td>
-          Reference to the Credential Identity<br/>
+          identityRef references the Credential identity<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description of the [Credential] object<br/>
+          description of the [Credential] object<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>region</b></td>
         <td>string</td>
         <td>
-          Region specifies the region where [ClusterDeployment] resources using
+          region specifies the region where [ClusterDeployment] resources using
 this [Credential] will be deployed<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Region is immutable</li>
@@ -6878,7 +7507,7 @@ this [Credential] will be deployed<br/>
 
 
 
-Reference to the Credential Identity
+identityRef references the Credential identity
 
 <table>
     <thead>
@@ -6958,7 +7587,7 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
 
 
 
-CredentialStatus defines the observed state of Credential
+status describes the observed state
 
 <table>
     <thead>
@@ -6970,19 +7599,19 @@ CredentialStatus defines the observed state of Credential
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>ready</b></td>
-        <td>boolean</td>
-        <td>
-          Ready holds the readiness of [Credential].<br/>
-          <br/>
-            <i>Default</i>: false<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b><a href="#credentialstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions contains details for the current state of the [Credential].<br/>
+          conditions contains details for the current state of the [Credential].<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>ready</b></td>
+        <td>boolean</td>
+        <td>
+          ready holds the readiness of [Credential].<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -7105,7 +7734,7 @@ DataSource is the Schema for the datasources API
         <td><b><a href="#datasourcespec">spec</a></b></td>
         <td>object</td>
         <td>
-          DataSourceSpec defines the desired state of DataSource<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: changing the spec is not supported, create a new object</li>
         </td>
@@ -7119,7 +7748,7 @@ DataSource is the Schema for the datasources API
 
 
 
-DataSourceSpec defines the desired state of DataSource
+spec defines the desired state
 
 <table>
     <thead>
@@ -7134,7 +7763,7 @@ DataSourceSpec defines the desired state of DataSource
         <td><b><a href="#datasourcespecauth">auth</a></b></td>
         <td>object</td>
         <td>
-          Auth specifies the authentication configuration for accessing the data source.
+          auth specifies the authentication configuration for accessing the data source.
 This field contains credentials required to establish
 a secure connection to the external data source.<br/>
         </td>
@@ -7143,7 +7772,7 @@ a secure connection to the external data source.<br/>
         <td><b>endpoints</b></td>
         <td>[]string</td>
         <td>
-          Endpoints contains one or more host/port pairs that clients should use to connect to the data source.
+          endpoints contains one or more host/port pairs that clients should use to connect to the data source.
 
 Only IP:port or FQDN:port, no schema and/or parameters are required.<br/>
         </td>
@@ -7152,7 +7781,7 @@ Only IP:port or FQDN:port, no schema and/or parameters are required.<br/>
         <td><b>type</b></td>
         <td>enum</td>
         <td>
-          Type specifies the database type to connect to the data source.<br/>
+          type specifies the database type to connect to the data source.<br/>
           <br/>
             <i>Enum</i>: postgresql<br/>
         </td>
@@ -7161,7 +7790,7 @@ Only IP:port or FQDN:port, no schema and/or parameters are required.<br/>
         <td><b><a href="#datasourcespeccertificateauthority">certificateAuthority</a></b></td>
         <td>object</td>
         <td>
-          CertificateAuthority optionally specifies the reference to a Secret containing
+          certificateAuthority optionally specifies the reference to a Secret containing
 the certificate authority (CA) certificate used to verify the data source's
 server certificate during TLS handshake.<br/>
         </td>
@@ -7175,7 +7804,7 @@ server certificate during TLS handshake.<br/>
 
 
 
-Auth specifies the authentication configuration for accessing the data source.
+auth specifies the authentication configuration for accessing the data source.
 This field contains credentials required to establish
 a secure connection to the external data source.
 
@@ -7192,7 +7821,7 @@ a secure connection to the external data source.
         <td><b><a href="#datasourcespecauthpassword">password</a></b></td>
         <td>object</td>
         <td>
-          Password is a reference to a secret key containing the password credential
+          password is a reference to a secret key containing the password credential
 used for data source authentication.<br/>
         </td>
         <td>true</td>
@@ -7200,7 +7829,7 @@ used for data source authentication.<br/>
         <td><b><a href="#datasourcespecauthusername">username</a></b></td>
         <td>object</td>
         <td>
-          Username is a reference to a secret key containing the username credential
+          username is a reference to a secret key containing the username credential
 used for data source authentication.<br/>
         </td>
         <td>true</td>
@@ -7213,7 +7842,7 @@ used for data source authentication.<br/>
 
 
 
-Password is a reference to a secret key containing the password credential
+password is a reference to a secret key containing the password credential
 used for data source authentication.
 
 <table>
@@ -7229,7 +7858,7 @@ used for data source authentication.
         <td><b>key</b></td>
         <td>string</td>
         <td>
-          Key is the name of the key for the given Secret reference where the value is stored.<br/>
+          key is the name of the key for the given Secret reference where the value is stored.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -7255,7 +7884,7 @@ used for data source authentication.
 
 
 
-Username is a reference to a secret key containing the username credential
+username is a reference to a secret key containing the username credential
 used for data source authentication.
 
 <table>
@@ -7271,7 +7900,7 @@ used for data source authentication.
         <td><b>key</b></td>
         <td>string</td>
         <td>
-          Key is the name of the key for the given Secret reference where the value is stored.<br/>
+          key is the name of the key for the given Secret reference where the value is stored.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -7297,7 +7926,7 @@ used for data source authentication.
 
 
 
-CertificateAuthority optionally specifies the reference to a Secret containing
+certificateAuthority optionally specifies the reference to a Secret containing
 the certificate authority (CA) certificate used to verify the data source's
 server certificate during TLS handshake.
 
@@ -7314,7 +7943,7 @@ server certificate during TLS handshake.
         <td><b>key</b></td>
         <td>string</td>
         <td>
-          Key is the name of the key for the given Secret reference where the value is stored.<br/>
+          key is the name of the key for the given Secret reference where the value is stored.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -7374,14 +8003,14 @@ ManagementBackup is the Schema for the managementbackups API
         <td><b><a href="#managementbackupspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ManagementBackupSpec defines the desired state of [ManagementBackup].<br/>
+          spec defines the desired state<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#managementbackupstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ManagementBackupStatus defines the observed state of [ManagementBackup].<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -7393,7 +8022,7 @@ ManagementBackup is the Schema for the managementbackups API
 
 
 
-ManagementBackupSpec defines the desired state of [ManagementBackup].
+spec defines the desired state
 
 <table>
     <thead>
@@ -7408,7 +8037,7 @@ ManagementBackupSpec defines the desired state of [ManagementBackup].
         <td><b>performOnManagementUpgrade</b></td>
         <td>boolean</td>
         <td>
-          PerformOnManagementUpgrade indicates that a single [ManagementBackup]
+          performOnManagementUpgrade indicates that a single [ManagementBackup]
 should be created and stored in the [ManagementBackup] storage location if not default
 before the [Management] release upgrade.<br/>
         </td>
@@ -7417,7 +8046,7 @@ before the [Management] release upgrade.<br/>
         <td><b>schedule</b></td>
         <td>string</td>
         <td>
-          Schedule is a Cron expression defining when to run the scheduled [ManagementBackup].
+          schedule is a Cron expression defining when to run the scheduled [ManagementBackup].
 If not set, the object is considered to be run only once.<br/>
         </td>
         <td>false</td>
@@ -7425,7 +8054,7 @@ If not set, the object is considered to be run only once.<br/>
         <td><b>storageLocation</b></td>
         <td>string</td>
         <td>
-          StorageLocation is the name of a [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.StorageLocation]
+          storageLocation is the name of a [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.StorageLocation]
 where the backup should be stored.<br/>
         </td>
         <td>false</td>
@@ -7438,7 +8067,7 @@ where the backup should be stored.<br/>
 
 
 
-ManagementBackupStatus defines the observed state of [ManagementBackup].
+status describes the observed state
 
 <table>
     <thead>
@@ -7453,28 +8082,28 @@ ManagementBackupStatus defines the observed state of [ManagementBackup].
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error stores messages in case of failed backup creation.<br/>
+          error stores messages in case of failed backup creation.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#managementbackupstatuslastbackup">lastBackup</a></b></td>
         <td>object</td>
         <td>
-          Most recently [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] that has been created.<br/>
+          lastBackup is the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>lastBackupName</b></td>
         <td>string</td>
         <td>
-          Name of most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
+          lastBackupName is the name of the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>lastBackupTime</b></td>
         <td>string</td>
         <td>
-          Time of the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
+          lastBackupTime is the creation time of the most recent [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
           <br/>
             <i>Format</i>: date-time<br/>
         </td>
@@ -7483,7 +8112,7 @@ ManagementBackupStatus defines the observed state of [ManagementBackup].
         <td><b>nextAttempt</b></td>
         <td>string</td>
         <td>
-          NextAttempt indicates the time when the next backup will be created.
+          nextAttempt indicates the time when the next backup will be created.
 Always absent for a single [ManagementBackup].<br/>
           <br/>
             <i>Format</i>: date-time<br/>
@@ -7493,7 +8122,7 @@ Always absent for a single [ManagementBackup].<br/>
         <td><b>region</b></td>
         <td>string</td>
         <td>
-          Region reflects the name of a region for which
+          region reflects the name of a region for which
 the [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] has been created.<br/>
         </td>
         <td>false</td>
@@ -7501,7 +8130,7 @@ the [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] has been created.
         <td><b><a href="#managementbackupstatusregionsindex">regions</a></b></td>
         <td>[]object</td>
         <td>
-          RegionsLastBackups denotes the status of the last backups in the corresponding regions.<br/>
+          regions contains the status of the last backups in the corresponding regions.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -7513,7 +8142,7 @@ the [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] has been created.
 
 
 
-Most recently [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] that has been created.
+lastBackup is the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].
 
 <table>
     <thead>
@@ -7794,28 +8423,28 @@ ManagementBackupSingleStatus defines the observed state of a single entry of [Ma
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error stores messages in case of failed backup creation.<br/>
+          error stores messages in case of failed backup creation.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#managementbackupstatusregionsindexlastbackup">lastBackup</a></b></td>
         <td>object</td>
         <td>
-          Most recently [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] that has been created.<br/>
+          lastBackup is the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>lastBackupName</b></td>
         <td>string</td>
         <td>
-          Name of most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
+          lastBackupName is the name of the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>lastBackupTime</b></td>
         <td>string</td>
         <td>
-          Time of the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
+          lastBackupTime is the creation time of the most recent [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].<br/>
           <br/>
             <i>Format</i>: date-time<br/>
         </td>
@@ -7824,7 +8453,7 @@ ManagementBackupSingleStatus defines the observed state of a single entry of [Ma
         <td><b>nextAttempt</b></td>
         <td>string</td>
         <td>
-          NextAttempt indicates the time when the next backup will be created.
+          nextAttempt indicates the time when the next backup will be created.
 Always absent for a single [ManagementBackup].<br/>
           <br/>
             <i>Format</i>: date-time<br/>
@@ -7834,7 +8463,7 @@ Always absent for a single [ManagementBackup].<br/>
         <td><b>region</b></td>
         <td>string</td>
         <td>
-          Region reflects the name of a region for which
+          region reflects the name of a region for which
 the [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] has been created.<br/>
         </td>
         <td>false</td>
@@ -7847,7 +8476,7 @@ the [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] has been created.
 
 
 
-Most recently [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup] that has been created.
+lastBackup is the most recently created [github.com/vmware-tanzu/velero/pkg/apis/velero/v1.Backup].
 
 <table>
     <thead>
@@ -8147,14 +8776,14 @@ Management is the Schema for the managements API
         <td><b><a href="#managementspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ManagementSpec defines the desired state of Management<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#managementstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ManagementStatus defines the observed state of Management<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8166,7 +8795,7 @@ Management is the Schema for the managements API
 
 
 
-ManagementSpec defines the desired state of Management
+spec defines the desired state
 
 <table>
     <thead>
@@ -8181,14 +8810,22 @@ ManagementSpec defines the desired state of Management
         <td><b>release</b></td>
         <td>string</td>
         <td>
-          Release references the Release object.<br/>
+          release references the Release object.<br/>
         </td>
         <td>true</td>
+      </tr><tr>
+        <td><b><a href="#managementspeccleanup">cleanup</a></b></td>
+        <td>object</td>
+        <td>
+          cleanup configures CRD removal behaviour when the Management object is deleted.
+CRD deletion is issued without waiting for it to complete (fire-and-forget).<br/>
+        </td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#managementspeccore">core</a></b></td>
         <td>object</td>
         <td>
-          Core holds the core components that are mandatory.
+          core holds the core components that are mandatory.
 If not specified, will be populated with the default values.<br/>
         </td>
         <td>false</td>
@@ -8196,7 +8833,45 @@ If not specified, will be populated with the default values.<br/>
         <td><b><a href="#managementspecprovidersindex">providers</a></b></td>
         <td>[]object</td>
         <td>
-          Providers is the list of enabled CAPI providers.<br/>
+          providers is the list of enabled CAPI providers.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### Management.spec.cleanup
+<sup><sup>[↩ Parent](#managementspec)</sup></sup>
+
+
+
+cleanup configures CRD removal behaviour when the Management object is deleted.
+CRD deletion is issued without waiting for it to complete (fire-and-forget).
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>capiProviderCRDs</b></td>
+        <td>boolean</td>
+        <td>
+          capiProviderCRDs indicates whether CRDs installed by the CAPI operator should be removed on
+Management deletion. Note: this removes all CAPI provider CRDs on the cluster,
+including any that were not installed by k0rdent.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>k0rdentCRDs</b></td>
+        <td>boolean</td>
+        <td>
+          k0rdentCRDs indicates whether k0rdent-owned CRDs should be removed when a Management is deleted.
+Note: this removes the Management CRD itself as part of the sweep.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8208,7 +8883,7 @@ If not specified, will be populated with the default values.<br/>
 
 
 
-Core holds the core components that are mandatory.
+core holds the core components that are mandatory.
 If not specified, will be populated with the default values.
 
 <table>
@@ -8224,14 +8899,14 @@ If not specified, will be populated with the default values.
         <td><b><a href="#managementspeccorecapi">capi</a></b></td>
         <td>object</td>
         <td>
-          CAPI represents the core Cluster API component and references the Cluster API template.<br/>
+          capi represents the core Cluster API component and references the Cluster API template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#managementspeccorekcm">kcm</a></b></td>
         <td>object</td>
         <td>
-          KCM represents the core KCM component and references the KCM template.<br/>
+          kcm represents the core KCM component and references the KCM template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8243,7 +8918,7 @@ If not specified, will be populated with the default values.
 
 
 
-CAPI represents the core Cluster API component and references the Cluster API template.
+capi represents the core Cluster API component and references the Cluster API template.
 
 <table>
     <thead>
@@ -8258,7 +8933,7 @@ CAPI represents the core Cluster API component and references the Cluster API te
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -8267,7 +8942,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -8280,7 +8955,7 @@ If not specified, will be taken from the Release object.<br/>
 
 
 
-KCM represents the core KCM component and references the KCM template.
+kcm represents the core KCM component and references the KCM template.
 
 <table>
     <thead>
@@ -8295,7 +8970,7 @@ KCM represents the core KCM component and references the KCM template.
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -8304,7 +8979,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -8332,14 +9007,14 @@ If not specified, will be taken from the Release object.<br/>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the provider.<br/>
+          name of the provider.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -8348,7 +9023,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -8361,7 +9036,7 @@ If not specified, will be taken from the Release object.<br/>
 
 
 
-ManagementStatus defines the observed state of Management
+status describes the observed state
 
 <table>
     <thead>
@@ -8376,21 +9051,21 @@ ManagementStatus defines the observed state of Management
         <td><b>availableProviders</b></td>
         <td>[]string</td>
         <td>
-          AvailableProviders holds all available CAPI providers.<br/>
+          availableProviders holds all available CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>backupName</b></td>
         <td>string</td>
         <td>
-          BackupName is a name of the management cluster scheduled backup.<br/>
+          backupName is a name of the management cluster scheduled backup.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>capiContracts</b></td>
         <td>map[string]map[string]string</td>
         <td>
-          For each CAPI provider name holds its compatibility [contract versions]
+          capiContracts holds compatibility [contract versions] for each CAPI provider
 in a key-value pairs, where the key is the core CAPI contract version,
 and the value is an underscore-delimited (_) list of provider contract versions
 supported by the core CAPI.
@@ -8402,30 +9077,31 @@ supported by the core CAPI.
         <td><b><a href="#managementstatuscomponentskey">components</a></b></td>
         <td>map[string]object</td>
         <td>
-          Components indicates the status of installed KCM components and CAPI providers.<br/>
+          components indicates the status of installed KCM components and CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#managementstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions represents the observations of a Management's current state.<br/>
+          conditions represents the observations of a Management's current state.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>release</b></td>
         <td>string</td>
         <td>
-          Release indicates the current Release object.<br/>
+          release indicates the current Release object.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8452,28 +9128,28 @@ ComponentStatus is the status of Management component installation
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error stores as error message in case of failed installation<br/>
+          error stores as error message in case of failed installation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>exposedProviders</b></td>
         <td>[]string</td>
         <td>
-          ExposedProviders is a list of CAPI providers this component exposes<br/>
+          exposedProviders is a list of CAPI providers this component exposes<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>success</b></td>
         <td>boolean</td>
         <td>
-          Success represents if a component installation was successful<br/>
+          success represents if a component installation was successful<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.<br/>
+          template is the name of the Template associated with this component.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8596,14 +9272,14 @@ MultiClusterService is the Schema for the multiclusterservices API
         <td><b><a href="#multiclusterservicespec">spec</a></b></td>
         <td>object</td>
         <td>
-          MultiClusterServiceSpec defines the desired state of MultiClusterService<br/>
+          spec defines the desired state<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatus">status</a></b></td>
         <td>object</td>
         <td>
-          MultiClusterServiceStatus defines the observed state of MultiClusterService.<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8615,7 +9291,7 @@ MultiClusterService is the Schema for the multiclusterservices API
 
 
 
-MultiClusterServiceSpec defines the desired state of MultiClusterService
+spec defines the desired state
 
 <table>
     <thead>
@@ -8630,35 +9306,33 @@ MultiClusterServiceSpec defines the desired state of MultiClusterService
         <td><b><a href="#multiclusterservicespecclusterselector">clusterSelector</a></b></td>
         <td>object</td>
         <td>
-          ClusterSelector identifies target clusters to manage services on.<br/>
+          clusterSelector identifies target clusters to manage services on.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dependsOn</b></td>
         <td>[]string</td>
         <td>
-          DependsOn is a list of other MultiClusterServices this one depends on.<br/>
+          dependsOn is a list of other MultiClusterServices this one depends on.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>keepServicesOnSelectorMismatch</b></td>
         <td>boolean</td>
         <td>
-          KeepServicesOnSelectorMismatch indicates whether ServiceSets owned by
+          keepServicesOnSelectorMismatch indicates whether ServiceSets owned by
 this MultiClusterService should be preserved on clusters whose labels
 no longer match ClusterSelector, including the case where
 ClusterSelector is cleared. When true, services already deployed on
 such clusters keep running, enabling per-cluster opt-in rollouts driven
 by selector changes.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespec">serviceSpec</a></b></td>
         <td>object</td>
         <td>
-          ServiceSpec is spec related to deployment of services.<br/>
+          serviceSpec is spec related to deployment of services.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -8670,7 +9344,7 @@ by selector changes.<br/>
 
 
 
-ClusterSelector identifies target clusters to manage services on.
+clusterSelector identifies target clusters to manage services on.
 
 <table>
     <thead>
@@ -8752,7 +9426,7 @@ merge patch.<br/>
 
 
 
-ServiceSpec is spec related to deployment of services.
+serviceSpec is spec related to deployment of services.
 
 <table>
     <thead>
@@ -8767,18 +9441,16 @@ ServiceSpec is spec related to deployment of services.
         <td><b>continueOnError</b></td>
         <td>boolean</td>
         <td>
-          ContinueOnError specifies if the services deployment should continue if an error occurs.
+          continueOnError specifies if the services deployment should continue if an error occurs.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecdriftexclusionsindex">driftExclusions</a></b></td>
         <td>[]object</td>
         <td>
-          DriftExclusions specifies specific configurations of resources to ignore for drift detection.
+          driftExclusions specifies specific configurations of resources to ignore for drift detection.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -8787,7 +9459,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#multiclusterservicespecservicespecdriftignoreindex">driftIgnore</a></b></td>
         <td>[]object</td>
         <td>
-          DriftIgnore specifies resources to ignore for drift detection.
+          driftIgnore specifies resources to ignore for drift detection.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -8796,7 +9468,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#multiclusterservicespecservicespecpolicyrefsindex">policyRefs</a></b></td>
         <td>[]object</td>
         <td>
-          PolicyRefs references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources
+          policyRefs references all the ConfigMaps/Secrets/Flux Sources containing kubernetes resources
 that need to be deployed in the target clusters.
 The values contained in those resources can be static or leverage Go templates for dynamic customization.
 When expressed as templates, the values are filled in using information from
@@ -8809,7 +9481,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b>priority</b></td>
         <td>integer</td>
         <td>
-          Priority sets the priority for the services defined in this spec.
+          priority sets the priority for the services defined in this spec.
 Higher value means higher priority and lower means lower.
 In case of conflict with another object managing the service,
 the one with higher priority will get to deploy its services.
@@ -8826,14 +9498,14 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#multiclusterservicespecservicespecprovider">provider</a></b></td>
         <td>object</td>
         <td>
-          Provider is the definition of the provider to use to deploy services.<br/>
+          provider is the definition of the provider to use to deploy services.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>reload</b></td>
         <td>boolean</td>
         <td>
-          Reload instances via rolling upgrade when a ConfigMap/Secret mounted as volume is modified.
+          reload instances via rolling upgrade when a ConfigMap/Secret mounted as volume is modified.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
         </td>
@@ -8842,7 +9514,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#multiclusterservicespecservicespecservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services is a list of services created via ServiceTemplates
+          services is a list of services created via ServiceTemplates
 that could be installed on the target cluster.<br/>
         </td>
         <td>false</td>
@@ -8850,21 +9522,19 @@ that could be installed on the target cluster.<br/>
         <td><b>stopOnConflict</b></td>
         <td>boolean</td>
         <td>
-          StopOnConflict specifies what to do in case of a conflict.
+          stopOnConflict specifies what to do in case of a conflict.
 E.g. If another object is already managing a service.
 By default the remaining services will be deployed even if conflict is detected.
 If set to true, the deployment will stop after encountering the first conflict.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>syncMode</b></td>
         <td>enum</td>
         <td>
-          SyncMode specifies how services are synced in the target cluster.
+          syncMode specifies how services are synced in the target cluster.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
           <br/>
@@ -8876,7 +9546,7 @@ Deprecated: use .provider.config field to define provider-specific configuration
         <td><b><a href="#multiclusterservicespecservicespectemplateresourcerefsindex">templateResourceRefs</a></b></td>
         <td>[]object</td>
         <td>
-          TemplateResourceRefs is a list of resources to collect from the management cluster,
+          templateResourceRefs is a list of resources to collect from the management cluster,
 the values from which can be used in templates.
 
 Deprecated: use .provider.config field to define provider-specific configuration.<br/>
@@ -9108,6 +9778,21 @@ into the management cluster (local) or the managed cluster (remote)<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>force</b></td>
+        <td>boolean</td>
+        <td>
+          Force indicates whether Sveltos should delete and recreate a resource defined in this
+PolicyRef when an update is rejected with an error that only a delete+recreate can
+resolve (eg an invalid combination of fields, or a field enforced as immutable).
+By default, such errors are surfaced instead of recreating the resource.
+This applies to every resource produced by this PolicyRef. To force just one
+resource, regardless of this field's value, annotate that resource with
+projectsveltos.io/forceRecreate instead.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
@@ -9157,14 +9842,17 @@ and Sveltos will continue processing other PolicyRefs.<br/>
         <td>
           Path to the directory containing the YAML files.
 Defaults to 'None', which translates to the root path of the SourceRef.
-Used only for GitRepository;OCIRepository;Bucket<br/>
+Used only for GitRepository;OCIRepository;Bucket
+This value can be static or leverage Go templates for dynamic customization.
+When expressed as a template, it is filled in using information from
+resources within the management cluster before deployment (Cluster and TemplateResourceRefs)<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecpolicyrefsindexremoteurl">remoteURL</a></b></td>
         <td>object</td>
         <td>
-          RemoteURL configures fetching content from an HTTP/HTTPS endpoint.
+          RemoteURL configures fetching content from an HTTP/HTTPS endpoint or an OCI registry.
 When set, Kind/Name/Namespace must be omitted.<br/>
         </td>
         <td>false</td>
@@ -9208,7 +9896,7 @@ Higher Tier values represent lower priority. The default Tier value is 100.<br/>
 
 
 
-RemoteURL configures fetching content from an HTTP/HTTPS endpoint.
+RemoteURL configures fetching content from an HTTP/HTTPS endpoint or an OCI registry.
 When set, Kind/Name/Namespace must be omitted.
 
 <table>
@@ -9224,17 +9912,48 @@ When set, Kind/Name/Namespace must be omitted.
         <td><b>url</b></td>
         <td>string</td>
         <td>
-          URL is an HTTP/HTTPS endpoint serving raw YAML/JSON/KYAML content.
+          URL is the remote source serving raw YAML/JSON content.
 Sveltos fetches the content on every reconciliation and redeploys if the
-content hash has changed.<br/>
+content hash has changed.
+Supported schemes:
+  "http://" or "https://" — HTTP/HTTPS endpoint returning a raw YAML/JSON
+                            document, a gzip-compressed document, an
+                            uncompressed tar, or a gzip-compressed tar of
+                            .yaml/.yml/.json files
+  "oci://"                — OCI registry artifact whose layers are accepted
+                            in the same shapes: raw YAML/JSON, gzip-compressed
+                            YAML/JSON, uncompressed tar, or gzip-compressed tar
+URL can be expressed as a template and instantiated using any cluster field,
+so a single profile can fetch different content for each matching cluster,
+e.g. "oci://registry.example/space/app-{{ .Cluster.metadata.name }}:latest".<br/>
         </td>
         <td>true</td>
+      </tr><tr>
+        <td><b>insecureSkipTLSVerify</b></td>
+        <td>boolean</td>
+        <td>
+          InsecureSkipTLSVerify controls server certificate verification.
+Ignored if the referenced SecretRef provides a "caFile".<br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
       </tr><tr>
         <td><b>interval</b></td>
         <td>string</td>
         <td>
-          Interval defines how often Sveltos re-fetches the URL to detect changes.
+          Interval defines how often Sveltos re-fetches the source to detect changes.
 Defaults to 5 minutes.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>plainHTTP</b></td>
+        <td>boolean</td>
+        <td>
+          PlainHTTP indicates to use insecure HTTP connections when URL uses the
+"oci://" scheme. Ignored for "http://"/"https://" URLs.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -9242,9 +9961,12 @@ Defaults to 5 minutes.<br/>
         <td>object</td>
         <td>
           SecretRef references a Secret in the management cluster containing optional
-credentials for fetching the URL. Supported Secret keys:
+credentials for fetching the source. Both Name and Namespace must be set,
+allowing the Secret to live in any namespace (e.g. projectsveltos) so that
+a single Secret can be shared across clusters without replication.
+Supported Secret keys:
   "token"              — Bearer token (Authorization: Bearer <token>)
-  "username"+"password" — HTTP Basic Auth
+  "username"+"password" — HTTP Basic Auth or OCI registry basic auth
   "caFile"             — PEM-encoded CA certificate for TLS verification<br/>
         </td>
         <td>false</td>
@@ -9252,7 +9974,7 @@ credentials for fetching the URL. Supported Secret keys:
         <td><b>template</b></td>
         <td>boolean</td>
         <td>
-          Template indicates that the content served at URL is a Go template that
+          Template indicates that the fetched content is a Go template that
 must be instantiated using cluster fields and templateResourceRefs values
 before deployment. Equivalent to the projectsveltos.io/template annotation
 on a ConfigMap or Secret.<br/>
@@ -9268,9 +9990,12 @@ on a ConfigMap or Secret.<br/>
 
 
 SecretRef references a Secret in the management cluster containing optional
-credentials for fetching the URL. Supported Secret keys:
+credentials for fetching the source. Both Name and Namespace must be set,
+allowing the Secret to live in any namespace (e.g. projectsveltos) so that
+a single Secret can be shared across clusters without replication.
+Supported Secret keys:
   "token"              — Bearer token (Authorization: Bearer <token>)
-  "username"+"password" — HTTP Basic Auth
+  "username"+"password" — HTTP Basic Auth or OCI registry basic auth
   "caFile"             — PEM-encoded CA certificate for TLS verification
 
 <table>
@@ -9286,13 +10011,14 @@ credentials for fetching the URL. Supported Secret keys:
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the referent.
-This field is effectively required, but due to backwards compatibility is
-allowed to be empty. Instances of this type with an empty value here are
-almost certainly wrong.
-More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names<br/>
-          <br/>
-            <i>Default</i>: <br/>
+          name is unique within a namespace to reference a secret resource.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>namespace</b></td>
+        <td>string</td>
+        <td>
+          namespace defines the space within which the secret name must be unique.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -9304,7 +10030,7 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
 
 
 
-Provider is the definition of the provider to use to deploy services.
+provider is the definition of the provider to use to deploy services.
 
 <table>
     <thead>
@@ -9319,14 +10045,14 @@ Provider is the definition of the provider to use to deploy services.
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config is the provider-specific configuration applied to the produced objects.<br/>
+          config is the provider-specific configuration applied to the produced objects.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the [StateManagementProvider] object.<br/>
+          name is the name of the [StateManagementProvider] object.<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Provider name is immutable once set</li>
         </td>
@@ -9335,7 +10061,7 @@ Provider is the definition of the provider to use to deploy services.
         <td><b>selfManagement</b></td>
         <td>boolean</td>
         <td>
-          SelfManagement flag defines whether resources must be deployed to the management cluster itself.
+          selfManagement flag defines whether resources must be deployed to the management cluster itself.
 This field is ignored if set for ClusterDeployment.<br/>
         </td>
         <td>false</td>
@@ -9363,35 +10089,35 @@ Service represents a Service to be deployed.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the chart release.<br/>
+          name is the chart release.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is a reference to a Template object located in the same namespace.<br/>
+          template is a reference to a Template object located in the same namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecservicesindexdependsonindex">dependsOn</a></b></td>
         <td>[]object</td>
         <td>
-          DependsOn specifies a list of other services that this service depends on.<br/>
+          dependsOn specifies a list of other services that this service depends on.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disable</b></td>
         <td>boolean</td>
         <td>
-          Disable can be set to disable handling of this service.<br/>
+          disable can be set to disable handling of this service.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>helmAction</b></td>
         <td>enum</td>
         <td>
-          HelmChartAction specifies action on an helm chart<br/>
+          helmAction specifies the action to take on a Helm chart<br/>
           <br/>
             <i>Enum</i>: Install, Uninstall<br/>
         </td>
@@ -9400,14 +10126,14 @@ Service represents a Service to be deployed.
         <td><b><a href="#multiclusterservicespecservicespecservicesindexhelmoptions">helmOptions</a></b></td>
         <td>object</td>
         <td>
-          HelmOptions are the options to be passed to the provider for helm installation or updates<br/>
+          helmOptions are the options to be passed to the provider for helm installation or updates<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace the release will be installed in.
+          namespace is the namespace the release will be installed in.
 It will default to "default" if not provided.<br/>
           <br/>
             <i>Default</i>: default<br/>
@@ -9417,7 +10143,7 @@ It will default to "default" if not provided.<br/>
         <td><b>templateChain</b></td>
         <td>string</td>
         <td>
-          TemplateChain defines the ServiceTemplateChain object that will be used to deploy the service
+          templateChain defines the ServiceTemplateChain object that will be used to deploy the service
 along with desired ServiceTemplate version.<br/>
         </td>
         <td>false</td>
@@ -9425,7 +10151,7 @@ along with desired ServiceTemplate version.<br/>
         <td><b>values</b></td>
         <td>string</td>
         <td>
-          Values is the helm values to be passed to the chart used by the template.
+          values is the helm values to be passed to the chart used by the template.
 The string type is used in order to allow for templating.<br/>
         </td>
         <td>false</td>
@@ -9433,14 +10159,14 @@ The string type is used in order to allow for templating.<br/>
         <td><b><a href="#multiclusterservicespecservicespecservicesindexvaluesfromindex">valuesFrom</a></b></td>
         <td>[]object</td>
         <td>
-          ValuesFrom can reference a ConfigMap or Secret containing helm values.<br/>
+          valuesFrom can reference a ConfigMap or Secret containing helm values.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the service template.<br/>
+          version is the version of the service template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -9467,14 +10193,14 @@ ServiceDependsOn identifies a service by its release name and namespace.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the release name on target cluster.<br/>
+          name is the release name on target cluster.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the release namespace on target cluster.<br/>
+          namespace is the release namespace on target cluster.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -9486,7 +10212,7 @@ ServiceDependsOn identifies a service by its release name and namespace.
 
 
 
-HelmOptions are the options to be passed to the provider for helm installation or updates
+helmOptions are the options to be passed to the provider for helm installation or updates
 
 <table>
     <thead>
@@ -9501,7 +10227,7 @@ HelmOptions are the options to be passed to the provider for helm installation o
         <td><b>atomic</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process deletes the installation/upgrades on failure.
+          atomic deletes the installation or upgrade on failure when set.
 The --wait flag will be set automatically if --atomic is used<br/>
         </td>
         <td>false</td>
@@ -9509,70 +10235,74 @@ The --wait flag will be set automatically if --atomic is used<br/>
         <td><b>createNamespace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.createNamespace instead.<br/>
+          createNamespace controls whether to create the release namespace
+
+Deprecated: use .installOptions.createNamespace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dependencyUpdate</b></td>
         <td>boolean</td>
         <td>
-          update dependencies if they are missing before installing the chart<br/>
+          dependencyUpdate updates dependencies if they are missing before installing the chart<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description is the description of an helm operation<br/>
+          description is the description of a Helm operation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableHooks</b></td>
         <td>boolean</td>
         <td>
-          prevent hooks from running during install/upgrade/uninstall<br/>
+          disableHooks prevents hooks from running during install, upgrade, or uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableOpenAPIValidation</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema<br/>
+          disableOpenAPIValidation skips validation of rendered templates against the Kubernetes OpenAPI schema<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>enableClientCache</b></td>
         <td>boolean</td>
         <td>
-          EnableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
+          enableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecservicesindexhelmoptionsinstalloptions">installOptions</a></b></td>
         <td>object</td>
         <td>
-          InstallOptions are options specific to helm install<br/>
+          installOptions are options specific to helm install<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>labels</b></td>
         <td>map[string]string</td>
         <td>
-          Labels that would be added to release metadata.<br/>
+          labels that would be added to release metadata.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.replace instead.<br/>
+          replace controls whether an existing release name can be reused
+
+Deprecated: use .installOptions.replace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>skipCRDs</b></td>
         <td>boolean</td>
         <td>
-          SkipCRDs controls whether CRDs should be installed during install/upgrade operation.
+          skipCRDs controls whether CRDs should be installed during install/upgrade operation.
 By default, CRDs are installed if not already present.<br/>
         </td>
         <td>false</td>
@@ -9580,35 +10310,35 @@ By default, CRDs are installed if not already present.<br/>
         <td><b>skipSchemaValidation</b></td>
         <td>boolean</td>
         <td>
-          SkipSchemaValidation determines if JSON schema validation is disabled.<br/>
+          skipSchemaValidation determines if JSON schema validation is disabled.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>timeout</b></td>
         <td>string</td>
         <td>
-          time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)<br/>
+          timeout is the time to wait for an individual Kubernetes operation such as a hook Job<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecservicesindexhelmoptionsuninstalloptions">uninstallOptions</a></b></td>
         <td>object</td>
         <td>
-          UninstallOptions are options specific to helm uninstall<br/>
+          uninstallOptions are options specific to helm uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicespecservicespecservicesindexhelmoptionsupgradeoptions">upgradeOptions</a></b></td>
         <td>object</td>
         <td>
-          UpgradeOptions are options specific to helm upgrade<br/>
+          upgradeOptions are options specific to helm upgrade<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>wait</b></td>
         <td>boolean</td>
         <td>
-          if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
+          wait blocks until all Pods, PVCs, Services, and the minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
 are in a ready state before marking the release as successful. It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -9616,7 +10346,7 @@ are in a ready state before marking the release as successful. It will wait for 
         <td><b>waitForJobs</b></td>
         <td>boolean</td>
         <td>
-          if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful.
+          waitForJobs blocks until all Jobs complete before marking the release as successful when --wait is enabled.
 It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -9629,7 +10359,7 @@ It will wait for as long as --timeout<br/>
 
 
 
-InstallOptions are options specific to helm install
+installOptions are options specific to helm install
 
 <table>
     <thead>
@@ -9662,6 +10392,23 @@ Default to false<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>recoverAfterConsecutiveFailures</b></td>
+        <td>integer</td>
+        <td>
+          RecoverAfterConsecutiveFailures is the number of consecutive install failures for this
+chart after which Sveltos uninstalls any existing release under this name before
+retrying, to clear potentially stale Helm release history that would otherwise keep
+blocking every subsequent install attempt. This only ever runs when there is no
+currently deployed release to protect: a release that is deployed, or mid-upgrade, or
+failed while already existing, is always retried through helm upgrade instead, never
+through this. It only applies to a release that was never successfully installed, or
+was already cleanly uninstalled.
+Default to 5<br/>
+          <br/>
+            <i>Default</i>: 5<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
@@ -9689,7 +10436,7 @@ and take ownership of the existing resources<br/>
 
 
 
-UninstallOptions are options specific to helm uninstall
+uninstallOptions are options specific to helm uninstall
 
 <table>
     <thead>
@@ -9739,7 +10486,7 @@ using the helm history command.<br/>
 
 
 
-UpgradeOptions are options specific to helm upgrade
+upgradeOptions are options specific to helm upgrade
 
 <table>
     <thead>
@@ -9888,7 +10635,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the source.<br/>
+          kind is the kind of the source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret<br/>
         </td>
@@ -9897,7 +10644,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the source.<br/>
+          name is the name of the source.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -10065,7 +10812,7 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
 
 
 
-MultiClusterServiceStatus defines the observed state of MultiClusterService.
+status describes the observed state
 
 <table>
     <thead>
@@ -10080,37 +10827,38 @@ MultiClusterServiceStatus defines the observed state of MultiClusterService.
         <td><b><a href="#multiclusterservicestatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions contains details for the current state of the MultiClusterService.<br/>
+          conditions contains details for the current state of the MultiClusterService.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatusmatchingclustersindex">matchingClusters</a></b></td>
         <td>[]object</td>
         <td>
-          MatchingClusters contains a list of clusters matching MultiClusterService selector<br/>
+          matchingClusters contains a list of clusters matching MultiClusterService selector<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatusservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services contains details for the state of services.<br/>
+          services contains details for the state of services.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatusservicesupgradepathsindex">servicesUpgradePaths</a></b></td>
         <td>[]object</td>
         <td>
-          ServicesUpgradePaths contains details for the state of services upgrade paths.<br/>
+          servicesUpgradePaths contains details for the state of services upgrade paths.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10199,7 +10947,7 @@ with respect to the current state of the instance.<br/>
 
 
 
-
+MatchingCluster is a cluster matching the given selector.
 
 <table>
     <thead>
@@ -10211,28 +10959,17 @@ with respect to the current state of the instance.<br/>
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>deployed</b></td>
-        <td>boolean</td>
-        <td>
-          Deployed indicates whether all services were successfully deployed.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
-        <td><b>regional</b></td>
-        <td>boolean</td>
-        <td>
-          Regional indicates whether given cluster is regional.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b>apiVersion</b></td>
         <td>string</td>
         <td>
           API version of the referent.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>deployed</b></td>
+        <td>boolean</td>
+        <td>
+          deployed indicates whether all services were successfully deployed.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -10260,9 +10997,16 @@ More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-
         <td><b>lastTransitionTime</b></td>
         <td>string</td>
         <td>
-          LastTransitionTime reflects when Deployed state was changed last time.<br/>
+          lastTransitionTime reflects when Deployed state was changed last time.<br/>
           <br/>
             <i>Format</i>: date-time<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>message</b></td>
+        <td>string</td>
+        <td>
+          message is a human-readable explanation of Reason.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -10279,6 +11023,23 @@ More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/nam
         <td>
           Namespace of the referent.
 More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>reason</b></td>
+        <td>string</td>
+        <td>
+          reason is a brief machine-readable explanation for why services are not yet
+Deployed on this cluster, e.g. MultiClusterServiceDependencyNotReady when this
+MultiClusterService is waiting for a MultiClusterService it depends on to finish
+deploying its services here.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>regional</b></td>
+        <td>boolean</td>
+        <td>
+          regional indicates whether given cluster is regional.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -10321,7 +11082,7 @@ ServiceState is the state of a Service
         <td><b>lastStateTransitionTime</b></td>
         <td>string</td>
         <td>
-          LastStateTransitionTime is the time the State was last transitioned<br/>
+          lastStateTransitionTime is the time the State was last transitioned<br/>
           <br/>
             <i>Format</i>: date-time<br/>
         </td>
@@ -10330,21 +11091,21 @@ ServiceState is the state of a Service
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Service<br/>
+          name is the name of the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the Service<br/>
+          namespace is the namespace of the Service. Empty value means default namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>state</b></td>
         <td>enum</td>
         <td>
-          State is the state of the Service<br/>
+          state is the state of the Service<br/>
           <br/>
             <i>Enum</i>: Deployed, Provisioning, Failed, Pending, Deleting, Deleted<br/>
         </td>
@@ -10353,14 +11114,14 @@ ServiceState is the state of a Service
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the ServiceTemplate used to deploy the Service<br/>
+          template is the name of the ServiceTemplate used to deploy the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>type</b></td>
         <td>enum</td>
         <td>
-          Type is the type of the deployment method for the Service<br/>
+          type is the type of the deployment method for the Service<br/>
           <br/>
             <i>Enum</i>: Helm, Kustomize, Resource<br/>
         </td>
@@ -10369,21 +11130,32 @@ ServiceState is the state of a Service
         <td><b><a href="#multiclusterservicestatusservicesindexconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions is a list of conditions for the Service<br/>
+          conditions is a list of conditions for the Service<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>failureMessage</b></td>
         <td>string</td>
         <td>
-          FailureMessage is the reason why the Service failed to deploy<br/>
+          failureMessage is the reason why the Service failed to deploy<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>lastDeployedHash</b></td>
+        <td>string</td>
+        <td>
+          lastDeployedHash is the verifier's fingerprint of the provider-side
+configuration this service was most recently confirmed Deployed at.
+Used to recognise that a progressing state reported by the provider is
+transient noise from an unrelated apply (rather than a real change to
+this service) and to promote back to Deployed safely.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Service<br/>
+          version is the version of the Service<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10487,28 +11259,28 @@ ServiceUpgradePaths contains details for the state of service upgrade paths.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the service.<br/>
+          name is the name of the service.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the service.<br/>
+          namespace is the namespace of the service.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the current service template.<br/>
+          template is the name of the current service template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatusservicesupgradepathsindexavailableupgradesindex">availableUpgrades</a></b></td>
         <td>[]object</td>
         <td>
-          AvailableUpgrades contains details for the state of available upgrades.<br/>
+          availableUpgrades contains details for the state of available upgrades.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10535,14 +11307,16 @@ UpgradePath contains details for the state of service upgrade paths.
         <td><b>upgradePaths</b></td>
         <td>[]string</td>
         <td>
-          Deprecated: use Versions to define versions that service can be upgraded to.<br/>
+          upgradePaths contains versions that the service can be upgraded to
+
+Deprecated: use Versions to define versions that service can be upgraded to.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#multiclusterservicestatusservicesupgradepathsindexavailableupgradesindexversionsindex">versions</a></b></td>
         <td>[]object</td>
         <td>
-          Versions contains the list of versions that service can be upgraded to.<br/>
+          versions contains the list of versions that service can be upgraded to.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10569,14 +11343,14 @@ AvailableUpgrade is the definition of the available upgrade for the Template
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template to which the upgrade is available.<br/>
+          name is the name of the Template to which the upgrade is available.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Template to which the upgrade is available.<br/>
+          version is the version of the Template to which the upgrade is available.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10622,16 +11396,16 @@ ProviderTemplate is the Schema for the providertemplates API
         <td><b><a href="#providertemplatespec">spec</a></b></td>
         <td>object</td>
         <td>
-          ProviderTemplateSpec defines the desired state of ProviderTemplate<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li><li>!has(self.helm.chartSource): .spec.helm.chartSource is not supported for ProviderTemplates</li>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#providertemplatestatus">status</a></b></td>
         <td>object</td>
         <td>
-          ProviderTemplateStatus defines the observed state of ProviderTemplate<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10643,7 +11417,7 @@ ProviderTemplate is the Schema for the providertemplates API
 
 
 
-ProviderTemplateSpec defines the desired state of ProviderTemplate
+spec defines the desired state
 
 <table>
     <thead>
@@ -10658,19 +11432,14 @@ ProviderTemplateSpec defines the desired state of ProviderTemplate
         <td><b>capiContracts</b></td>
         <td>map[string]string</td>
         <td>
-          Holds key-value pairs with compatibility [contract versions],
-where the key is the core CAPI contract version,
-and the value is an underscore-delimited (_) list of provider contract versions
-supported by the core CAPI.
-
-[contract versions]: https://cluster-api.sigs.k8s.io/developer/providers/contracts<br/>
+          capiContracts contains the supported Cluster API contracts<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#providertemplatespechelm">helm</a></b></td>
         <td>object</td>
         <td>
-          HelmSpec references a Helm chart representing the KCM template<br/>
+          helm defines the Helm chart backing the template<br/>
           <br/>
             <i>Validations</i>:<li>(has(self.chartSpec) ? (!has(self.chartSource) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartSource) ? (!has(self.chartSpec) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartRef) ? (!has(self.chartSpec) && !has(self.chartSource)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>has(self.chartSpec) || has(self.chartRef) || has(self.chartSource): one of chartSpec, chartRef or chartSource must be set</li>
         </td>
@@ -10679,7 +11448,7 @@ supported by the core CAPI.
         <td><b>providers</b></td>
         <td>[]string</td>
         <td>
-          Providers represent exposed CAPI providers.
+          providers represent exposed CAPI providers.
 Should be set if not present in the Helm chart metadata.<br/>
         </td>
         <td>false</td>
@@ -10692,7 +11461,7 @@ Should be set if not present in the Helm chart metadata.<br/>
 
 
 
-HelmSpec references a Helm chart representing the KCM template
+helm defines the Helm chart backing the template
 
 <table>
     <thead>
@@ -10707,7 +11476,7 @@ HelmSpec references a Helm chart representing the KCM template
         <td><b><a href="#providertemplatespechelmchartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -10715,7 +11484,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#providertemplatespechelmchartsource">chartSource</a></b></td>
         <td>object</td>
         <td>
-          ChartSource is a source of a Helm chart representing the template.<br/>
+          chartSource is a source of a Helm chart representing the template.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.localSourceRef) ? (self.localSourceRef.kind != 'Secret' && self.localSourceRef.kind != 'ConfigMap'): true: Secret and ConfigMap are not supported as Helm chart sources</li><li>has(self.localSourceRef) ? !has(self.remoteSourceSpec): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.remoteSourceSpec) ? !has(self.localSourceRef): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.localSourceRef) || has(self.remoteSourceSpec): One of LocalSource or RemoteSource must be specified.</li>
         </td>
@@ -10724,7 +11493,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#providertemplatespechelmchartspec">chartSpec</a></b></td>
         <td>object</td>
         <td>
-          ChartSpec defines the desired state of the HelmChart to be created by the controller<br/>
+          chartSpec defines the desired state of the HelmChart to be created by the controller<br/>
           <br/>
             <i>Validations</i>:<li>!has(self.verify) || self.sourceRef.kind == 'HelmRepository': spec.verify is only supported when spec.sourceRef.kind is 'HelmRepository'</li>
         </td>
@@ -10738,7 +11507,7 @@ Helm chart representing the template.<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -10790,7 +11559,7 @@ resource object that contains the reference.<br/>
 
 
 
-ChartSource is a source of a Helm chart representing the template.
+chartSource is a source of a Helm chart representing the template.
 
 <table>
     <thead>
@@ -10805,32 +11574,32 @@ ChartSource is a source of a Helm chart representing the template.
         <td><b>deploymentType</b></td>
         <td>enum</td>
         <td>
-          DeploymentType is the type of the deployment. This field is ignored,
+          deploymentType is the type of the deployment. This field is ignored,
 when ResourceSpec is used as part of Helm chart configuration.<br/>
           <br/>
             <i>Enum</i>: Local, Remote<br/>
             <i>Default</i>: Remote<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#providertemplatespechelmchartsourcelocalsourceref">localSourceRef</a></b></td>
         <td>object</td>
         <td>
-          LocalSourceRef is the local source of the kustomize manifest.<br/>
+          localSourceRef is the local source of the kustomize manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>path</b></td>
         <td>string</td>
         <td>
-          Path to the directory containing the resource manifest.<br/>
+          path to the directory containing the resource manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#providertemplatespechelmchartsourceremotesourcespec">remoteSourceSpec</a></b></td>
         <td>object</td>
         <td>
-          RemoteSourceSpec is the remote source of the kustomize manifest.<br/>
+          remoteSourceSpec is the remote source of the kustomize manifest.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.git) ? (!has(self.bucket) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.bucket) ? (!has(self.git) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.oci) ? (!has(self.git) && !has(self.bucket)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.git) || has(self.bucket) || has(self.oci): One of Git, Bucket or OCI must be specified.</li>
         </td>
@@ -10844,7 +11613,7 @@ when ResourceSpec is used as part of Helm chart configuration.<br/>
 
 
 
-LocalSourceRef is the local source of the kustomize manifest.
+localSourceRef is the local source of the kustomize manifest.
 
 <table>
     <thead>
@@ -10859,7 +11628,7 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the local source.<br/>
+          kind is the kind of the local source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret, GitRepository, Bucket, OCIRepository<br/>
         </td>
@@ -10868,14 +11637,14 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the local source.<br/>
+          name is the name of the local source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the local source. Cross-namespace references
+          namespace is the namespace of the local source. Cross-namespace references
 are only allowed when the Kind is one of [github.com/fluxcd/source-controller/api/v1.GitRepository],
 [github.com/fluxcd/source-controller/api/v1.Bucket] or [github.com/fluxcd/source-controller/api/v1.OCIRepository].
 If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
@@ -10890,7 +11659,7 @@ If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
 
 
 
-RemoteSourceSpec is the remote source of the kustomize manifest.
+remoteSourceSpec is the remote source of the kustomize manifest.
 
 <table>
     <thead>
@@ -10905,7 +11674,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#providertemplatespechelmchartsourceremotesourcespecbucket">bucket</a></b></td>
         <td>object</td>
         <td>
-          Bucket is the definition of bucket source.<br/>
+          bucket is the definition of bucket source.<br/>
           <br/>
             <i>Validations</i>:<li>self.provider == 'aws' || self.provider == 'generic' || !has(self.sts): STS configuration is only supported for the 'aws' and 'generic' Bucket providers</li><li>self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws': 'aws' is the only supported STS provider for the 'aws' Bucket provider</li><li>self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap': 'ldap' is the only supported STS provider for the 'generic' Bucket provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef): spec.sts.secretRef is not required for the 'aws' STS provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef): spec.sts.certSecretRef is not required for the 'aws' STS provider</li><li>self.provider != 'generic' || !has(self.serviceAccountName): ServiceAccountName is not supported for the 'generic' Bucket provider</li><li>!has(self.secretRef) || !has(self.serviceAccountName): cannot set both .spec.secretRef and .spec.serviceAccountName</li>
         </td>
@@ -10914,16 +11683,16 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#providertemplatespechelmchartsourceremotesourcespecgit">git</a></b></td>
         <td>object</td>
         <td>
-          Git is the definition of git repository source.<br/>
+          git is the definition of git repository source.<br/>
           <br/>
-            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && self.provider == 'azure'): serviceAccountName can only be set when provider is 'azure'</li>
+            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && (self.provider == 'azure' || self.provider == 'aws')): serviceAccountName can only be set when provider is 'azure' or 'aws'</li>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#providertemplatespechelmchartsourceremotesourcespecoci">oci</a></b></td>
         <td>object</td>
         <td>
-          OCI is the definition of OCI repository source.<br/>
+          oci is the definition of OCI repository source.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -10935,7 +11704,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
 
 
 
-Bucket is the definition of bucket source.
+bucket is the definition of bucket source.
 
 <table>
     <thead>
@@ -11329,7 +12098,7 @@ and `password` and is supported only for the `ldap` provider.
 
 
 
-Git is the definition of git repository source.
+git is the definition of git repository source.
 
 <table>
     <thead>
@@ -11377,10 +12146,10 @@ should be included in the Artifact produced for this GitRepository.<br/>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider used for authentication, can be 'azure', 'github', 'generic'.
+          Provider used for authentication, can be 'aws', 'azure', 'github', 'generic'.
 When not specified, defaults to 'generic'.<br/>
           <br/>
-            <i>Enum</i>: generic, azure, github<br/>
+            <i>Enum</i>: generic, aws, azure, github<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -11424,7 +12193,7 @@ and 'known_hosts' fields.<br/>
         <td>string</td>
         <td>
           ServiceAccountName is the name of the Kubernetes ServiceAccount used to
-authenticate to the GitRepository. This field is only supported for 'azure' provider.<br/>
+authenticate to the GitRepository. This field is only supported for 'azure' and 'aws' providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -11682,7 +12451,8 @@ signature(s).
         <td>object</td>
         <td>
           SecretRef specifies the Secret containing the public keys of trusted Git
-authors.<br/>
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -11709,7 +12479,8 @@ the commit that the HEAD of the Git repository points to. The variant
 
 
 SecretRef specifies the Secret containing the public keys of trusted Git
-authors.
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.
 
 <table>
     <thead>
@@ -11736,7 +12507,7 @@ authors.
 
 
 
-OCI is the definition of OCI repository source.
+oci is the definition of OCI repository source.
 
 <table>
     <thead>
@@ -12114,6 +12885,16 @@ specified matchers match against the identity.<br/>
 trusted public keys.<br/>
         </td>
         <td>false</td>
+      </tr><tr>
+        <td><b><a href="#providertemplatespechelmchartsourceremotesourcespecociverifytrustedrootsecretref">trustedRootSecretRef</a></b></td>
+        <td>object</td>
+        <td>
+          TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -12185,12 +12966,42 @@ trusted public keys.
 </table>
 
 
+### ProviderTemplate.spec.helm.chartSource.remoteSourceSpec.oci.verify.trustedRootSecretRef
+<sup><sup>[↩ Parent](#providertemplatespechelmchartsourceremotesourcespecociverify)</sup></sup>
+
+
+
+TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          Name of the referent.<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
 ### ProviderTemplate.spec.helm.chartSpec
 <sup><sup>[↩ Parent](#providertemplatespechelm)</sup></sup>
 
 
 
-ChartSpec defines the desired state of the HelmChart to be created by the controller
+chartSpec defines the desired state of the HelmChart to be created by the controller
 
 <table>
     <thead>
@@ -12458,7 +13269,7 @@ trusted public keys.
 
 
 
-ProviderTemplateStatus defines the observed state of ProviderTemplate
+status describes the observed state
 
 <table>
     <thead>
@@ -12470,29 +13281,17 @@ ProviderTemplateStatus defines the observed state of ProviderTemplate
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>valid</b></td>
-        <td>boolean</td>
-        <td>
-          Valid indicates whether the template passed validation or not.<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b>capiContracts</b></td>
         <td>map[string]string</td>
         <td>
-          Holds key-value pairs with compatibility [contract versions],
-where the key is the core CAPI contract version,
-and the value is an underscore-delimited (_) list of provider contract versions
-supported by the core CAPI.
-
-[contract versions]: https://cluster-api.sigs.k8s.io/developer/providers/contracts<br/>
+          capiContracts contains the discovered Cluster API contracts<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#providertemplatestatuschartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -12500,14 +13299,14 @@ Helm chart representing the template.<br/>
         <td><b>chartVersion</b></td>
         <td>string</td>
         <td>
-          ChartVersion represents the version of the Helm Chart associated with this template.<br/>
+          chartVersion represents the version of the Helm Chart associated with this template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config demonstrates available parameters for template customization,
+          config demonstrates available parameters for template customization,
 that can be used when creating ClusterDeployment objects.<br/>
         </td>
         <td>false</td>
@@ -12515,40 +13314,48 @@ that can be used when creating ClusterDeployment objects.<br/>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description contains information about the template.<br/>
+          description contains information about the template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>providers</b></td>
         <td>[]string</td>
         <td>
-          Providers represent exposed CAPI providers.<br/>
+          providers represent exposed CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>schemaConfigMapName</b></td>
         <td>string</td>
         <td>
-          SchemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
+          schemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
 
 The ConfigMap's namespace is either in the system namespace for [ProviderTemplate]
 or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>valid</b></td>
+        <td>boolean</td>
+        <td>
+          valid indicates whether the template passed validation or not.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>validationError</b></td>
         <td>string</td>
         <td>
-          ValidationError provides information regarding issues encountered during template validation.<br/>
+          validationError provides information regarding issues encountered during template validation.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -12560,7 +13367,7 @@ or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -12606,6 +13413,251 @@ resource object that contains the reference.<br/>
       </tr></tbody>
 </table>
 
+## RBACPolicy
+<sup><sup>[↩ Parent](#k0rdentmirantiscomv1beta1 )</sup></sup>
+
+
+
+
+
+
+RBACPolicy is the Schema for the rbacpolicies API.
+
+It is a role catalog: any number of [ClusterDeployment] objects in the same namespace opt in by
+setting spec.rbacPolicy to its name. For each entry in spec.bindings, the RBAC operator
+creates/updates a "k0rdent-<name>" ClusterRoleBinding in each referencing ClusterDeployment's
+child cluster, using the kubeconfig generated by Cluster API.
+
+Scope: cluster-scoped grants only. A binding always produces a ClusterRoleBinding, and may create or update
+a ClusterRole when rules are supplied. There is currently no way to express a namespaced grant ("project X gets
+edit in namespace Y") — no Role, no RoleBinding, no binding a subject to a Role — and no ServiceAccount
+subjects. Bind a cluster-wide role instead, or manage namespaced RBAC through a service.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+      <td><b>apiVersion</b></td>
+      <td>string</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
+      <td>true</td>
+      </tr>
+      <tr>
+      <td><b>kind</b></td>
+      <td>string</td>
+      <td>RBACPolicy</td>
+      <td>true</td>
+      </tr>
+      <tr>
+      <td><b><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#objectmeta-v1-meta">metadata</a></b></td>
+      <td>object</td>
+      <td>Refer to the Kubernetes API documentation for the fields of the `metadata` field.</td>
+      <td>true</td>
+      </tr><tr>
+        <td><b><a href="#rbacpolicyspec">spec</a></b></td>
+        <td>object</td>
+        <td>
+          spec defines the desired state of the RBACPolicy<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
+### RBACPolicy.spec
+<sup><sup>[↩ Parent](#rbacpolicy)</sup></sup>
+
+
+
+spec defines the desired state of the RBACPolicy
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b><a href="#rbacpolicyspecbindingsindex">bindings</a></b></td>
+        <td>[]object</td>
+        <td>
+          bindings is the role catalog: each entry maps one ClusterRole to a set of subjects,
+materialized as a ClusterRoleBinding in the child cluster of each referencing ClusterDeployment.<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
+### RBACPolicy.spec.bindings[index]
+<sup><sup>[↩ Parent](#rbacpolicyspec)</sup></sup>
+
+
+
+RBACPolicyBinding maps a single Kubernetes ClusterRole to the exact set of ClusterRoleBinding
+subjects that should be bound to it in the targeted child cluster.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>clusterRole</b></td>
+        <td>string</td>
+        <td>
+          clusterRole is the name of the Kubernetes ClusterRole that Name is bound to in the child
+cluster. It may be a built-in ClusterRole (e.g. "admin", "edit", "view") or a custom one,
+either already present in the child cluster or defined inline via Rules.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          name identifies this binding within the policy (for example "compute-admin"). It is used to
+name the generated ClusterRoleBinding ("k0rdent-<name>").<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b><a href="#rbacpolicyspecbindingsindexsubjectsindex">subjects</a></b></td>
+        <td>[]object</td>
+        <td>
+          subjects is the ClusterRoleBinding subject list for this binding. See RBACPolicySubject.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b><a href="#rbacpolicyspecbindingsindexrulesindex">rules</a></b></td>
+        <td>[]object</td>
+        <td>
+          rules optionally supplies the PolicyRules for the ClusterRole named by ClusterRole, for the case
+where that ClusterRole does not already exist in the child cluster (e.g. a custom role). When
+set, the operator creates/updates that ClusterRole (with these rules) alongside the
+ClusterRoleBinding. Leave unset to bind to a ClusterRole that is expected to already exist
+(e.g. a built-in role) — the operator never modifies a ClusterRole it did not create.
+
+Arbitrary PolicyRules are accepted, wildcards included, and are applied through Cluster API's
+admin kubeconfig, so the in-cluster escalate/bind protections do not apply: creating an
+RBACPolicy is by design as privileged as owning the child clusters it reaches.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### RBACPolicy.spec.bindings[index].subjects[index]
+<sup><sup>[↩ Parent](#rbacpolicyspecbindingsindex)</sup></sup>
+
+
+
+RBACPolicySubject names one ClusterRoleBinding subject.
+
+RBACPolicy makes no assumption about how (or whether) the child cluster's authentication is
+configured: Name is written verbatim by the author to match whatever that specific setup
+actually asserts (a ClusterAuthentication's JWT claim mapping, some other identity provider, or
+none at all) — for example "k0rdent:project:project-2:compute-admin".
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>kind</b></td>
+        <td>enum</td>
+        <td>
+          kind is the Kubernetes RBAC subject kind: "User" or "Group". ServiceAccount subjects are
+deliberately not supported, see the RBACPolicy doc comment.<br/>
+          <br/>
+            <i>Enum</i>: User, Group<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          name is the exact subject name (see the RBACPolicySubject doc comment).<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
+### RBACPolicy.spec.bindings[index].rules[index]
+<sup><sup>[↩ Parent](#rbacpolicyspecbindingsindex)</sup></sup>
+
+
+
+PolicyRule holds information that describes a policy rule, but does not contain information
+about who the rule applies to or which namespace the rule applies to.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>verbs</b></td>
+        <td>[]string</td>
+        <td>
+          verbs is a list of Verbs that apply to ALL the ResourceKinds contained in this rule. '*' represents all verbs.<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>apiGroups</b></td>
+        <td>[]string</td>
+        <td>
+          apiGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of
+the enumerated resources in any API group will be allowed. "" represents the core API group and "*" represents all API groups.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>nonResourceURLs</b></td>
+        <td>[]string</td>
+        <td>
+          nonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path
+Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding.
+Rules can either apply to API resources (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>resourceNames</b></td>
+        <td>[]string</td>
+        <td>
+          resourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>resources</b></td>
+        <td>[]string</td>
+        <td>
+          resources is a list of resources this rule applies to. '*' represents all resources.<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
 ## Region
 <sup><sup>[↩ Parent](#k0rdentmirantiscomv1beta1 )</sup></sup>
 
@@ -12646,7 +13698,7 @@ Region is the Schema for the regions API
         <td><b><a href="#regionspec">spec</a></b></td>
         <td>object</td>
         <td>
-          RegionSpec defines the desired state of Region<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>has(self.kubeConfig) != has(self.clusterDeployment): exactly one of kubeConfig or clusterDeployment must be set</li>
         </td>
@@ -12655,7 +13707,7 @@ Region is the Schema for the regions API
         <td><b><a href="#regionstatus">status</a></b></td>
         <td>object</td>
         <td>
-          RegionStatus defines the observed state of Region<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -12667,7 +13719,7 @@ Region is the Schema for the regions API
 
 
 
-RegionSpec defines the desired state of Region
+spec defines the desired state
 
 <table>
     <thead>
@@ -12682,7 +13734,7 @@ RegionSpec defines the desired state of Region
         <td><b><a href="#regionspecclusterdeployment">clusterDeployment</a></b></td>
         <td>object</td>
         <td>
-          ClusterDeployment is the reference to the existing ClusterDeployment object
+          clusterDeployment is the reference to the existing ClusterDeployment object
 to be onboarded as a regional cluster.<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: clusterDeployment is immutable</li>
@@ -12692,7 +13744,7 @@ to be onboarded as a regional cluster.<br/>
         <td><b><a href="#regionspeccore">core</a></b></td>
         <td>object</td>
         <td>
-          Core holds the core components that are mandatory.
+          core holds the core components that are mandatory.
 If not specified, will be populated with the default values.<br/>
         </td>
         <td>false</td>
@@ -12700,7 +13752,7 @@ If not specified, will be populated with the default values.<br/>
         <td><b><a href="#regionspeckubeconfig">kubeConfig</a></b></td>
         <td>object</td>
         <td>
-          KubeConfig references the Secret containing the kubeconfig
+          kubeConfig references the Secret containing the kubeconfig
 of the cluster being onboarded as a regional cluster.
 The Secret must reside in the system namespace.<br/>
           <br/>
@@ -12711,7 +13763,7 @@ The Secret must reside in the system namespace.<br/>
         <td><b><a href="#regionspecprovidersindex">providers</a></b></td>
         <td>[]object</td>
         <td>
-          Providers is the list of enabled CAPI providers.<br/>
+          providers is the list of enabled CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -12723,7 +13775,7 @@ The Secret must reside in the system namespace.<br/>
 
 
 
-ClusterDeployment is the reference to the existing ClusterDeployment object
+clusterDeployment is the reference to the existing ClusterDeployment object
 to be onboarded as a regional cluster.
 
 <table>
@@ -12739,14 +13791,14 @@ to be onboarded as a regional cluster.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          <br/>
+          name identifies the ClusterDeployment<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          <br/>
+          namespace identifies the ClusterDeployment namespace<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -12758,7 +13810,7 @@ to be onboarded as a regional cluster.
 
 
 
-Core holds the core components that are mandatory.
+core holds the core components that are mandatory.
 If not specified, will be populated with the default values.
 
 <table>
@@ -12774,14 +13826,14 @@ If not specified, will be populated with the default values.
         <td><b><a href="#regionspeccorecapi">capi</a></b></td>
         <td>object</td>
         <td>
-          CAPI represents the core Cluster API component and references the Cluster API template.<br/>
+          capi represents the core Cluster API component and references the Cluster API template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#regionspeccorekcm">kcm</a></b></td>
         <td>object</td>
         <td>
-          KCM represents the core KCM component and references the KCM template.<br/>
+          kcm represents the core KCM component and references the KCM template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -12793,7 +13845,7 @@ If not specified, will be populated with the default values.
 
 
 
-CAPI represents the core Cluster API component and references the Cluster API template.
+capi represents the core Cluster API component and references the Cluster API template.
 
 <table>
     <thead>
@@ -12808,7 +13860,7 @@ CAPI represents the core Cluster API component and references the Cluster API te
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -12817,7 +13869,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -12830,7 +13882,7 @@ If not specified, will be taken from the Release object.<br/>
 
 
 
-KCM represents the core KCM component and references the KCM template.
+kcm represents the core KCM component and references the KCM template.
 
 <table>
     <thead>
@@ -12845,7 +13897,7 @@ KCM represents the core KCM component and references the KCM template.
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -12854,7 +13906,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -12867,7 +13919,7 @@ If not specified, will be taken from the Release object.<br/>
 
 
 
-KubeConfig references the Secret containing the kubeconfig
+kubeConfig references the Secret containing the kubeconfig
 of the cluster being onboarded as a regional cluster.
 The Secret must reside in the system namespace.
 
@@ -12918,14 +13970,14 @@ The Secret must reside in the system namespace.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the provider.<br/>
+          name of the provider.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config allows to provide parameters for management component customization.
+          config allows to provide parameters for management component customization.
 If no Config provided, the field will be populated with the default
 values for the template.<br/>
         </td>
@@ -12934,7 +13986,7 @@ values for the template.<br/>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.
+          template is the name of the Template associated with this component.
 If not specified, will be taken from the Release object.<br/>
         </td>
         <td>false</td>
@@ -12947,7 +13999,7 @@ If not specified, will be taken from the Release object.<br/>
 
 
 
-RegionStatus defines the observed state of Region
+status describes the observed state
 
 <table>
     <thead>
@@ -12962,14 +14014,14 @@ RegionStatus defines the observed state of Region
         <td><b>availableProviders</b></td>
         <td>[]string</td>
         <td>
-          AvailableProviders holds all available CAPI providers.<br/>
+          availableProviders holds all available CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>capiContracts</b></td>
         <td>map[string]map[string]string</td>
         <td>
-          For each CAPI provider name holds its compatibility [contract versions]
+          capiContracts holds compatibility [contract versions] for each CAPI provider
 in a key-value pairs, where the key is the core CAPI contract version,
 and the value is an underscore-delimited (_) list of provider contract versions
 supported by the core CAPI.
@@ -12981,23 +14033,24 @@ supported by the core CAPI.
         <td><b><a href="#regionstatuscomponentskey">components</a></b></td>
         <td>map[string]object</td>
         <td>
-          Components indicates the status of installed KCM components and CAPI providers.<br/>
+          components indicates the status of installed KCM components and CAPI providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#regionstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions represents the observations of a Region's current state.<br/>
+          conditions represents the observations of a Region's current state.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13024,28 +14077,28 @@ ComponentStatus is the status of Management component installation
         <td><b>error</b></td>
         <td>string</td>
         <td>
-          Error stores as error message in case of failed installation<br/>
+          error stores as error message in case of failed installation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>exposedProviders</b></td>
         <td>[]string</td>
         <td>
-          ExposedProviders is a list of CAPI providers this component exposes<br/>
+          exposedProviders is a list of CAPI providers this component exposes<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>success</b></td>
         <td>boolean</td>
         <td>
-          Success represents if a component installation was successful<br/>
+          success represents if a component installation was successful<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the Template associated with this component.<br/>
+          template is the name of the Template associated with this component.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13168,14 +14221,14 @@ Release is the Schema for the releases API
         <td><b><a href="#releasespec">spec</a></b></td>
         <td>object</td>
         <td>
-          ReleaseSpec defines the desired state of Release<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#releasestatus">status</a></b></td>
         <td>object</td>
         <td>
-          ReleaseStatus defines the observed state of Release<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13187,7 +14240,7 @@ Release is the Schema for the releases API
 
 
 
-ReleaseSpec defines the desired state of Release
+spec defines the desired state
 
 <table>
     <thead>
@@ -13202,35 +14255,35 @@ ReleaseSpec defines the desired state of Release
         <td><b><a href="#releasespeccapi">capi</a></b></td>
         <td>object</td>
         <td>
-          CAPI references the Cluster API template.<br/>
+          capi references the Cluster API template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#releasespeckcm">kcm</a></b></td>
         <td>object</td>
         <td>
-          KCM references the KCM template.<br/>
+          kcm references the KCM template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version of the KCM Release in the semver format.<br/>
+          version of the KCM Release in the semver format.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#releasespecprovidersindex">providers</a></b></td>
         <td>[]object</td>
         <td>
-          Providers contains a list of Providers associated with the Release.<br/>
+          providers contains a list of Providers associated with the Release.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#releasespecregional">regional</a></b></td>
         <td>object</td>
         <td>
-          Regional references the KCM regional template.<br/>
+          regional references the KCM regional template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13242,7 +14295,7 @@ ReleaseSpec defines the desired state of Release
 
 
 
-CAPI references the Cluster API template.
+capi references the Cluster API template.
 
 <table>
     <thead>
@@ -13257,7 +14310,7 @@ CAPI references the Cluster API template.
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template references the Template associated with the provider.<br/>
+          template references the Template associated with the provider.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -13269,7 +14322,7 @@ CAPI references the Cluster API template.
 
 
 
-KCM references the KCM template.
+kcm references the KCM template.
 
 <table>
     <thead>
@@ -13284,7 +14337,7 @@ KCM references the KCM template.
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template references the Template associated with the provider.<br/>
+          template references the Template associated with the provider.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -13311,14 +14364,14 @@ KCM references the KCM template.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name of the provider.<br/>
+          name of the provider.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template references the Template associated with the provider.<br/>
+          template references the Template associated with the provider.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -13330,7 +14383,7 @@ KCM references the KCM template.
 
 
 
-Regional references the KCM regional template.
+regional references the KCM regional template.
 
 <table>
     <thead>
@@ -13345,7 +14398,7 @@ Regional references the KCM regional template.
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template references the Template associated with the provider.<br/>
+          template references the Template associated with the provider.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -13357,7 +14410,7 @@ Regional references the KCM regional template.
 
 
 
-ReleaseStatus defines the observed state of Release
+status describes the observed state
 
 <table>
     <thead>
@@ -13372,23 +14425,26 @@ ReleaseStatus defines the observed state of Release
         <td><b><a href="#releasestatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions contains details for the current state of the Release<br/>
+          conditions contains details for the current state of the Release<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>ready</b></td>
         <td>boolean</td>
         <td>
-          Ready indicates whether KCM is ready to be upgraded to this Release.<br/>
+          ready indicates whether KCM is ready to be upgraded to this Release.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13511,14 +14567,14 @@ ServiceSet is the Schema for the servicesets API
         <td><b><a href="#servicesetspec">spec</a></b></td>
         <td>object</td>
         <td>
-          ServiceSetSpec defines the desired state of ServiceSet<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#servicesetstatus">status</a></b></td>
         <td>object</td>
         <td>
-          ServiceSetStatus defines the observed state of ServiceSet<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13530,7 +14586,7 @@ ServiceSet is the Schema for the servicesets API
 
 
 
-ServiceSetSpec defines the desired state of ServiceSet
+spec defines the desired state
 
 <table>
     <thead>
@@ -13545,28 +14601,28 @@ ServiceSetSpec defines the desired state of ServiceSet
         <td><b>cluster</b></td>
         <td>string</td>
         <td>
-          Cluster is the name of the ClusterDeployment<br/>
+          cluster is the name of the ClusterDeployment. Empty value means self-managed cluster.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#servicesetspecprovider">provider</a></b></td>
         <td>object</td>
         <td>
-          Provider is the definition of the provider to use to deploy services defined in the ServiceSet.<br/>
+          provider is the definition of the provider to use to deploy services defined in the ServiceSet.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>multiClusterService</b></td>
         <td>string</td>
         <td>
-          MultiClusterService is the name of the MultiClusterService<br/>
+          multiClusterService is the name of the MultiClusterService<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetspecservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services is the list of services to deploy.<br/>
+          services is the list of services to deploy.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13578,7 +14634,7 @@ ServiceSetSpec defines the desired state of ServiceSet
 
 
 
-Provider is the definition of the provider to use to deploy services defined in the ServiceSet.
+provider is the definition of the provider to use to deploy services defined in the ServiceSet.
 
 <table>
     <thead>
@@ -13593,14 +14649,14 @@ Provider is the definition of the provider to use to deploy services defined in 
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config is the provider-specific configuration applied to the produced objects.<br/>
+          config is the provider-specific configuration applied to the produced objects.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the [StateManagementProvider] object.<br/>
+          name is the name of the [StateManagementProvider] object.<br/>
           <br/>
             <i>Validations</i>:<li>oldSelf == '' || self == oldSelf: Provider name is immutable once set</li>
         </td>
@@ -13609,7 +14665,7 @@ Provider is the definition of the provider to use to deploy services defined in 
         <td><b>selfManagement</b></td>
         <td>boolean</td>
         <td>
-          SelfManagement flag defines whether resources must be deployed to the management cluster itself.
+          selfManagement flag defines whether resources must be deployed to the management cluster itself.
 This field is ignored if set for ClusterDeployment.<br/>
         </td>
         <td>false</td>
@@ -13637,7 +14693,7 @@ This field is ignored if set for ClusterDeployment.<br/>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the service. If the ServiceTemplate is backed by Helm chart,
+          name is the name of the service. If the ServiceTemplate is backed by Helm chart,
 then the name is the name of the Helm release.<br/>
         </td>
         <td>true</td>
@@ -13645,22 +14701,23 @@ then the name is the name of the Helm release.<br/>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace where the service is deployed. If the ServiceTemplate
-is backed by Helm chart, then the namespace is the namespace where the Helm release is deployed.<br/>
+          namespace is the namespace where the service is deployed. If the ServiceTemplate
+is backed by Helm chart, then the namespace is the namespace where the Helm release is deployed.
+Empty value means default namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the ServiceTemplate to use to deploy the service.<br/>
+          template is the name of the ServiceTemplate to use to deploy the service.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>helmAction</b></td>
         <td>enum</td>
         <td>
-          HelmChartAction specifies action on an helm chart<br/>
+          helmAction specifies the action on a Helm chart<br/>
           <br/>
             <i>Enum</i>: Install, Uninstall<br/>
         </td>
@@ -13669,28 +14726,28 @@ is backed by Helm chart, then the namespace is the namespace where the Helm rele
         <td><b><a href="#servicesetspecservicesindexhelmoptions">helmOptions</a></b></td>
         <td>object</td>
         <td>
-          HelmOptions are the options to be passed to the provider for helm installation or updates<br/>
+          helmOptions are the options to be passed to the provider for helm installation or updates<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>values</b></td>
         <td>string</td>
         <td>
-          Values is the values to pass to the ServiceTemplate.<br/>
+          values is the values to pass to the ServiceTemplate.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetspecservicesindexvaluesfromindex">valuesFrom</a></b></td>
         <td>[]object</td>
         <td>
-          ValuesFrom is the list of sources of the values to pass to the ServiceTemplate.<br/>
+          valuesFrom is the list of sources of the values to pass to the ServiceTemplate.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the service.<br/>
+          version is the version of the service.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -13702,7 +14759,7 @@ is backed by Helm chart, then the namespace is the namespace where the Helm rele
 
 
 
-HelmOptions are the options to be passed to the provider for helm installation or updates
+helmOptions are the options to be passed to the provider for helm installation or updates
 
 <table>
     <thead>
@@ -13717,7 +14774,7 @@ HelmOptions are the options to be passed to the provider for helm installation o
         <td><b>atomic</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process deletes the installation/upgrades on failure.
+          atomic deletes the installation or upgrade on failure when set.
 The --wait flag will be set automatically if --atomic is used<br/>
         </td>
         <td>false</td>
@@ -13725,70 +14782,74 @@ The --wait flag will be set automatically if --atomic is used<br/>
         <td><b>createNamespace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.createNamespace instead.<br/>
+          createNamespace controls whether to create the release namespace
+
+Deprecated: use .installOptions.createNamespace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dependencyUpdate</b></td>
         <td>boolean</td>
         <td>
-          update dependencies if they are missing before installing the chart<br/>
+          dependencyUpdate updates dependencies if they are missing before installing the chart<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description is the description of an helm operation<br/>
+          description is the description of a Helm operation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableHooks</b></td>
         <td>boolean</td>
         <td>
-          prevent hooks from running during install/upgrade/uninstall<br/>
+          disableHooks prevents hooks from running during install, upgrade, or uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableOpenAPIValidation</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema<br/>
+          disableOpenAPIValidation skips validation of rendered templates against the Kubernetes OpenAPI schema<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>enableClientCache</b></td>
         <td>boolean</td>
         <td>
-          EnableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
+          enableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetspecservicesindexhelmoptionsinstalloptions">installOptions</a></b></td>
         <td>object</td>
         <td>
-          InstallOptions are options specific to helm install<br/>
+          installOptions are options specific to helm install<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>labels</b></td>
         <td>map[string]string</td>
         <td>
-          Labels that would be added to release metadata.<br/>
+          labels that would be added to release metadata.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.replace instead.<br/>
+          replace controls whether an existing release name can be reused
+
+Deprecated: use .installOptions.replace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>skipCRDs</b></td>
         <td>boolean</td>
         <td>
-          SkipCRDs controls whether CRDs should be installed during install/upgrade operation.
+          skipCRDs controls whether CRDs should be installed during install/upgrade operation.
 By default, CRDs are installed if not already present.<br/>
         </td>
         <td>false</td>
@@ -13796,35 +14857,35 @@ By default, CRDs are installed if not already present.<br/>
         <td><b>skipSchemaValidation</b></td>
         <td>boolean</td>
         <td>
-          SkipSchemaValidation determines if JSON schema validation is disabled.<br/>
+          skipSchemaValidation determines if JSON schema validation is disabled.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>timeout</b></td>
         <td>string</td>
         <td>
-          time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)<br/>
+          timeout is the time to wait for an individual Kubernetes operation such as a hook Job<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetspecservicesindexhelmoptionsuninstalloptions">uninstallOptions</a></b></td>
         <td>object</td>
         <td>
-          UninstallOptions are options specific to helm uninstall<br/>
+          uninstallOptions are options specific to helm uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetspecservicesindexhelmoptionsupgradeoptions">upgradeOptions</a></b></td>
         <td>object</td>
         <td>
-          UpgradeOptions are options specific to helm upgrade<br/>
+          upgradeOptions are options specific to helm upgrade<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>wait</b></td>
         <td>boolean</td>
         <td>
-          if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
+          wait blocks until all Pods, PVCs, Services, and the minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
 are in a ready state before marking the release as successful. It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -13832,7 +14893,7 @@ are in a ready state before marking the release as successful. It will wait for 
         <td><b>waitForJobs</b></td>
         <td>boolean</td>
         <td>
-          if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful.
+          waitForJobs blocks until all Jobs complete before marking the release as successful when --wait is enabled.
 It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -13845,7 +14906,7 @@ It will wait for as long as --timeout<br/>
 
 
 
-InstallOptions are options specific to helm install
+installOptions are options specific to helm install
 
 <table>
     <thead>
@@ -13878,6 +14939,23 @@ Default to false<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>recoverAfterConsecutiveFailures</b></td>
+        <td>integer</td>
+        <td>
+          RecoverAfterConsecutiveFailures is the number of consecutive install failures for this
+chart after which Sveltos uninstalls any existing release under this name before
+retrying, to clear potentially stale Helm release history that would otherwise keep
+blocking every subsequent install attempt. This only ever runs when there is no
+currently deployed release to protect: a release that is deployed, or mid-upgrade, or
+failed while already existing, is always retried through helm upgrade instead, never
+through this. It only applies to a release that was never successfully installed, or
+was already cleanly uninstalled.
+Default to 5<br/>
+          <br/>
+            <i>Default</i>: 5<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
@@ -13905,7 +14983,7 @@ and take ownership of the existing resources<br/>
 
 
 
-UninstallOptions are options specific to helm uninstall
+uninstallOptions are options specific to helm uninstall
 
 <table>
     <thead>
@@ -13955,7 +15033,7 @@ using the helm history command.<br/>
 
 
 
-UpgradeOptions are options specific to helm upgrade
+upgradeOptions are options specific to helm upgrade
 
 <table>
     <thead>
@@ -14104,7 +15182,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the source.<br/>
+          kind is the kind of the source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret<br/>
         </td>
@@ -14113,7 +15191,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the source.<br/>
+          name is the name of the source.<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -14125,7 +15203,7 @@ can be a ConfigMap or a Secret located in the same namespace as the ServiceSet.
 
 
 
-ServiceSetStatus defines the observed state of ServiceSet
+status describes the observed state
 
 <table>
     <thead>
@@ -14137,40 +15215,38 @@ ServiceSetStatus defines the observed state of ServiceSet
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>deployed</b></td>
-        <td>boolean</td>
-        <td>
-          Deployed indicates whether all services were successfully deployed<br/>
-          <br/>
-            <i>Default</i>: false<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b><a href="#servicesetstatuscluster">cluster</a></b></td>
         <td>object</td>
         <td>
-          Cluster contains [k8s.io/api/core/v1.ObjectReference] to the cluster object.<br/>
+          cluster contains [k8s.io/api/core/v1.ObjectReference] to the cluster object.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions is a list of conditions for the ServiceSet<br/>
+          conditions is a list of conditions for the ServiceSet<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>deployed</b></td>
+        <td>boolean</td>
+        <td>
+          deployed indicates whether all services were successfully deployed<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetstatusprovider">provider</a></b></td>
         <td>object</td>
         <td>
-          Provider is the state of the provider<br/>
+          provider is the state of the provider<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicesetstatusservicesindex">services</a></b></td>
         <td>[]object</td>
         <td>
-          Services is a list of Service states in the ServiceSet<br/>
+          services is a list of Service states in the ServiceSet<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14182,7 +15258,7 @@ ServiceSetStatus defines the observed state of ServiceSet
 
 
 
-Cluster contains [k8s.io/api/core/v1.ObjectReference] to the cluster object.
+cluster contains [k8s.io/api/core/v1.ObjectReference] to the cluster object.
 
 <table>
     <thead>
@@ -14339,7 +15415,7 @@ with respect to the current state of the instance.<br/>
 
 
 
-Provider is the state of the provider
+provider is the state of the provider
 
 <table>
     <thead>
@@ -14354,14 +15430,14 @@ Provider is the state of the provider
         <td><b>ready</b></td>
         <td>boolean</td>
         <td>
-          Ready is true if the provider is ready<br/>
+          ready is true if the provider is ready<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>suspended</b></td>
         <td>boolean</td>
         <td>
-          Suspended is true if the provider is suspended<br/>
+          suspended is true if the provider is suspended<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14388,7 +15464,7 @@ ServiceState is the state of a Service
         <td><b>lastStateTransitionTime</b></td>
         <td>string</td>
         <td>
-          LastStateTransitionTime is the time the State was last transitioned<br/>
+          lastStateTransitionTime is the time the State was last transitioned<br/>
           <br/>
             <i>Format</i>: date-time<br/>
         </td>
@@ -14397,21 +15473,21 @@ ServiceState is the state of a Service
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Service<br/>
+          name is the name of the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the Service<br/>
+          namespace is the namespace of the Service. Empty value means default namespace.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>state</b></td>
         <td>enum</td>
         <td>
-          State is the state of the Service<br/>
+          state is the state of the Service<br/>
           <br/>
             <i>Enum</i>: Deployed, Provisioning, Failed, Pending, Deleting, Deleted<br/>
         </td>
@@ -14420,14 +15496,14 @@ ServiceState is the state of a Service
         <td><b>template</b></td>
         <td>string</td>
         <td>
-          Template is the name of the ServiceTemplate used to deploy the Service<br/>
+          template is the name of the ServiceTemplate used to deploy the Service<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>type</b></td>
         <td>enum</td>
         <td>
-          Type is the type of the deployment method for the Service<br/>
+          type is the type of the deployment method for the Service<br/>
           <br/>
             <i>Enum</i>: Helm, Kustomize, Resource<br/>
         </td>
@@ -14436,21 +15512,32 @@ ServiceState is the state of a Service
         <td><b><a href="#servicesetstatusservicesindexconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions is a list of conditions for the Service<br/>
+          conditions is a list of conditions for the Service<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>failureMessage</b></td>
         <td>string</td>
         <td>
-          FailureMessage is the reason why the Service failed to deploy<br/>
+          failureMessage is the reason why the Service failed to deploy<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>lastDeployedHash</b></td>
+        <td>string</td>
+        <td>
+          lastDeployedHash is the verifier's fingerprint of the provider-side
+configuration this service was most recently confirmed Deployed at.
+Used to recognise that a progressing state reported by the provider is
+transient noise from an unrelated apply (rather than a real change to
+this service) and to promote back to Deployed safely.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Service<br/>
+          version is the version of the Service<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14573,7 +15660,7 @@ ServiceTemplateChain is the Schema for the servicetemplatechains API
         <td><b><a href="#servicetemplatechainspec">spec</a></b></td>
         <td>object</td>
         <td>
-          TemplateChainSpec defines the desired state of *TemplateChain<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li>
         </td>
@@ -14582,7 +15669,7 @@ ServiceTemplateChain is the Schema for the servicetemplatechains API
         <td><b><a href="#servicetemplatechainstatus">status</a></b></td>
         <td>object</td>
         <td>
-          TemplateChainStatus defines the observed state of *TemplateChain<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14594,7 +15681,7 @@ ServiceTemplateChain is the Schema for the servicetemplatechains API
 
 
 
-TemplateChainSpec defines the desired state of *TemplateChain
+spec defines the desired state
 
 <table>
     <thead>
@@ -14609,7 +15696,7 @@ TemplateChainSpec defines the desired state of *TemplateChain
         <td><b><a href="#servicetemplatechainspecsupportedtemplatesindex">supportedTemplates</a></b></td>
         <td>[]object</td>
         <td>
-          SupportedTemplates is the list of supported Templates definitions and all available upgrade sequences for it.<br/>
+          supportedTemplates is the list of supported Templates definitions and all available upgrade sequences for it.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14636,14 +15723,14 @@ SupportedTemplate is the supported Template definition and all available upgrade
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template.<br/>
+          name is the name of the Template.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#servicetemplatechainspecsupportedtemplatesindexavailableupgradesindex">availableUpgrades</a></b></td>
         <td>[]object</td>
         <td>
-          AvailableUpgrades is the list of available upgrades for the specified Template.<br/>
+          availableUpgrades is the list of available upgrades for the specified Template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14670,14 +15757,14 @@ AvailableUpgrade is the definition of the available upgrade for the Template
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the Template to which the upgrade is available.<br/>
+          name is the name of the Template to which the upgrade is available.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the version of the Template to which the upgrade is available.<br/>
+          version is the version of the Template to which the upgrade is available.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14689,7 +15776,7 @@ AvailableUpgrade is the definition of the available upgrade for the Template
 
 
 
-TemplateChainStatus defines the observed state of *TemplateChain
+status describes the observed state
 
 <table>
     <thead>
@@ -14704,15 +15791,17 @@ TemplateChainStatus defines the observed state of *TemplateChain
         <td><b>valid</b></td>
         <td>boolean</td>
         <td>
-          Valid indicates whether the chain is valid and can be considered when calculating available
+          valid indicates whether the chain is valid and can be considered when calculating available
 upgrade paths.<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>validationError</b></td>
         <td>string</td>
         <td>
-          ValidationError provides information regarding issues encountered during templatechain validation.<br/>
+          validationError provides information regarding issues encountered during templatechain validation.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14758,16 +15847,16 @@ ServiceTemplate is the Schema for the servicetemplates API
         <td><b><a href="#servicetemplatespec">spec</a></b></td>
         <td>object</td>
         <td>
-          ServiceTemplateSpec defines the desired state of ServiceTemplate<br/>
+          spec defines the desired state<br/>
           <br/>
             <i>Validations</i>:<li>self == oldSelf: Spec is immutable</li><li>has(self.helm) ? (!has(self.kustomize) && !has(self.resources)): true: Helm, Kustomize and Resources are mutually exclusive.</li><li>has(self.kustomize) ? (!has(self.helm) && !has(self.resources)): true: Helm, Kustomize and Resources are mutually exclusive.</li><li>has(self.resources) ? (!has(self.kustomize) && !has(self.helm)): true: Helm, Kustomize and Resources are mutually exclusive.</li><li>has(self.helm) || has(self.kustomize) || has(self.resources): One of Helm, Kustomize, or Resources must be specified.</li>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#servicetemplatestatus">status</a></b></td>
         <td>object</td>
         <td>
-          ServiceTemplateStatus defines the observed state of ServiceTemplate<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14779,7 +15868,7 @@ ServiceTemplate is the Schema for the servicetemplates API
 
 
 
-ServiceTemplateSpec defines the desired state of ServiceTemplate
+spec defines the desired state
 
 <table>
     <thead>
@@ -14794,7 +15883,7 @@ ServiceTemplateSpec defines the desired state of ServiceTemplate
         <td><b><a href="#servicetemplatespechelm">helm</a></b></td>
         <td>object</td>
         <td>
-          Helm contains the Helm chart information for the template.<br/>
+          helm contains the Helm chart information for the template.<br/>
           <br/>
             <i>Validations</i>:<li>(has(self.chartSpec) ? (!has(self.chartSource) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartSource) ? (!has(self.chartSpec) && !has(self.chartRef)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>(has(self.chartRef) ? (!has(self.chartSpec) && !has(self.chartSource)): true): chartSpec, chartSource and chartRef are mutually exclusive</li><li>has(self.chartSpec) || has(self.chartRef) || has(self.chartSource): one of chartSpec, chartRef or chartSource must be set</li>
         </td>
@@ -14803,21 +15892,21 @@ ServiceTemplateSpec defines the desired state of ServiceTemplate
         <td><b><a href="#servicetemplatespechelmoptions">helmOptions</a></b></td>
         <td>object</td>
         <td>
-          HelmOptions are the global options to use when installing or updating the helm chart.<br/>
+          helmOptions are the global options to use when installing or updating the helm chart.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>k8sConstraint</b></td>
         <td>string</td>
         <td>
-          Constraint describing compatible K8S versions of the cluster set in the SemVer format.<br/>
+          k8sConstraint describes compatible Kubernetes versions of the cluster in SemVer format.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespeckustomize">kustomize</a></b></td>
         <td>object</td>
         <td>
-          Kustomize contains the Kustomize configuration for the template.<br/>
+          kustomize contains the Kustomize configuration for the template.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.localSourceRef) ? !has(self.remoteSourceSpec): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.remoteSourceSpec) ? !has(self.localSourceRef): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.localSourceRef) || has(self.remoteSourceSpec): One of LocalSource or RemoteSource must be specified.</li>
         </td>
@@ -14826,7 +15915,7 @@ ServiceTemplateSpec defines the desired state of ServiceTemplate
         <td><b><a href="#servicetemplatespecresources">resources</a></b></td>
         <td>object</td>
         <td>
-          Resources contains the resource configuration for the template.<br/>
+          resources contains the resource configuration for the template.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.localSourceRef) ? !has(self.remoteSourceSpec): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.remoteSourceSpec) ? !has(self.localSourceRef): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.localSourceRef) || has(self.remoteSourceSpec): One of LocalSource or RemoteSource must be specified.</li>
         </td>
@@ -14835,7 +15924,7 @@ ServiceTemplateSpec defines the desired state of ServiceTemplate
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the semantic version of the application backed by template.<br/>
+          version is the semantic version of the application backed by template.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -14847,7 +15936,7 @@ ServiceTemplateSpec defines the desired state of ServiceTemplate
 
 
 
-Helm contains the Helm chart information for the template.
+helm contains the Helm chart information for the template.
 
 <table>
     <thead>
@@ -14862,7 +15951,7 @@ Helm contains the Helm chart information for the template.
         <td><b><a href="#servicetemplatespechelmchartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -14870,7 +15959,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#servicetemplatespechelmchartsource">chartSource</a></b></td>
         <td>object</td>
         <td>
-          ChartSource is a source of a Helm chart representing the template.<br/>
+          chartSource is a source of a Helm chart representing the template.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.localSourceRef) ? (self.localSourceRef.kind != 'Secret' && self.localSourceRef.kind != 'ConfigMap'): true: Secret and ConfigMap are not supported as Helm chart sources</li><li>has(self.localSourceRef) ? !has(self.remoteSourceSpec): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.remoteSourceSpec) ? !has(self.localSourceRef): true: LocalSource and RemoteSource are mutually exclusive.</li><li>has(self.localSourceRef) || has(self.remoteSourceSpec): One of LocalSource or RemoteSource must be specified.</li>
         </td>
@@ -14879,7 +15968,7 @@ Helm chart representing the template.<br/>
         <td><b><a href="#servicetemplatespechelmchartspec">chartSpec</a></b></td>
         <td>object</td>
         <td>
-          ChartSpec defines the desired state of the HelmChart to be created by the controller<br/>
+          chartSpec defines the desired state of the HelmChart to be created by the controller<br/>
           <br/>
             <i>Validations</i>:<li>!has(self.verify) || self.sourceRef.kind == 'HelmRepository': spec.verify is only supported when spec.sourceRef.kind is 'HelmRepository'</li>
         </td>
@@ -14893,7 +15982,7 @@ Helm chart representing the template.<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -14945,7 +16034,7 @@ resource object that contains the reference.<br/>
 
 
 
-ChartSource is a source of a Helm chart representing the template.
+chartSource is a source of a Helm chart representing the template.
 
 <table>
     <thead>
@@ -14960,32 +16049,32 @@ ChartSource is a source of a Helm chart representing the template.
         <td><b>deploymentType</b></td>
         <td>enum</td>
         <td>
-          DeploymentType is the type of the deployment. This field is ignored,
+          deploymentType is the type of the deployment. This field is ignored,
 when ResourceSpec is used as part of Helm chart configuration.<br/>
           <br/>
             <i>Enum</i>: Local, Remote<br/>
             <i>Default</i>: Remote<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmchartsourcelocalsourceref">localSourceRef</a></b></td>
         <td>object</td>
         <td>
-          LocalSourceRef is the local source of the kustomize manifest.<br/>
+          localSourceRef is the local source of the kustomize manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>path</b></td>
         <td>string</td>
         <td>
-          Path to the directory containing the resource manifest.<br/>
+          path to the directory containing the resource manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmchartsourceremotesourcespec">remoteSourceSpec</a></b></td>
         <td>object</td>
         <td>
-          RemoteSourceSpec is the remote source of the kustomize manifest.<br/>
+          remoteSourceSpec is the remote source of the kustomize manifest.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.git) ? (!has(self.bucket) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.bucket) ? (!has(self.git) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.oci) ? (!has(self.git) && !has(self.bucket)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.git) || has(self.bucket) || has(self.oci): One of Git, Bucket or OCI must be specified.</li>
         </td>
@@ -14999,7 +16088,7 @@ when ResourceSpec is used as part of Helm chart configuration.<br/>
 
 
 
-LocalSourceRef is the local source of the kustomize manifest.
+localSourceRef is the local source of the kustomize manifest.
 
 <table>
     <thead>
@@ -15014,7 +16103,7 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the local source.<br/>
+          kind is the kind of the local source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret, GitRepository, Bucket, OCIRepository<br/>
         </td>
@@ -15023,14 +16112,14 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the local source.<br/>
+          name is the name of the local source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the local source. Cross-namespace references
+          namespace is the namespace of the local source. Cross-namespace references
 are only allowed when the Kind is one of [github.com/fluxcd/source-controller/api/v1.GitRepository],
 [github.com/fluxcd/source-controller/api/v1.Bucket] or [github.com/fluxcd/source-controller/api/v1.OCIRepository].
 If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
@@ -15045,7 +16134,7 @@ If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
 
 
 
-RemoteSourceSpec is the remote source of the kustomize manifest.
+remoteSourceSpec is the remote source of the kustomize manifest.
 
 <table>
     <thead>
@@ -15060,7 +16149,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespechelmchartsourceremotesourcespecbucket">bucket</a></b></td>
         <td>object</td>
         <td>
-          Bucket is the definition of bucket source.<br/>
+          bucket is the definition of bucket source.<br/>
           <br/>
             <i>Validations</i>:<li>self.provider == 'aws' || self.provider == 'generic' || !has(self.sts): STS configuration is only supported for the 'aws' and 'generic' Bucket providers</li><li>self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws': 'aws' is the only supported STS provider for the 'aws' Bucket provider</li><li>self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap': 'ldap' is the only supported STS provider for the 'generic' Bucket provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef): spec.sts.secretRef is not required for the 'aws' STS provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef): spec.sts.certSecretRef is not required for the 'aws' STS provider</li><li>self.provider != 'generic' || !has(self.serviceAccountName): ServiceAccountName is not supported for the 'generic' Bucket provider</li><li>!has(self.secretRef) || !has(self.serviceAccountName): cannot set both .spec.secretRef and .spec.serviceAccountName</li>
         </td>
@@ -15069,16 +16158,16 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespechelmchartsourceremotesourcespecgit">git</a></b></td>
         <td>object</td>
         <td>
-          Git is the definition of git repository source.<br/>
+          git is the definition of git repository source.<br/>
           <br/>
-            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && self.provider == 'azure'): serviceAccountName can only be set when provider is 'azure'</li>
+            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && (self.provider == 'azure' || self.provider == 'aws')): serviceAccountName can only be set when provider is 'azure' or 'aws'</li>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmchartsourceremotesourcespecoci">oci</a></b></td>
         <td>object</td>
         <td>
-          OCI is the definition of OCI repository source.<br/>
+          oci is the definition of OCI repository source.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -15090,7 +16179,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
 
 
 
-Bucket is the definition of bucket source.
+bucket is the definition of bucket source.
 
 <table>
     <thead>
@@ -15484,7 +16573,7 @@ and `password` and is supported only for the `ldap` provider.
 
 
 
-Git is the definition of git repository source.
+git is the definition of git repository source.
 
 <table>
     <thead>
@@ -15532,10 +16621,10 @@ should be included in the Artifact produced for this GitRepository.<br/>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider used for authentication, can be 'azure', 'github', 'generic'.
+          Provider used for authentication, can be 'aws', 'azure', 'github', 'generic'.
 When not specified, defaults to 'generic'.<br/>
           <br/>
-            <i>Enum</i>: generic, azure, github<br/>
+            <i>Enum</i>: generic, aws, azure, github<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -15579,7 +16668,7 @@ and 'known_hosts' fields.<br/>
         <td>string</td>
         <td>
           ServiceAccountName is the name of the Kubernetes ServiceAccount used to
-authenticate to the GitRepository. This field is only supported for 'azure' provider.<br/>
+authenticate to the GitRepository. This field is only supported for 'azure' and 'aws' providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -15837,7 +16926,8 @@ signature(s).
         <td>object</td>
         <td>
           SecretRef specifies the Secret containing the public keys of trusted Git
-authors.<br/>
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -15864,7 +16954,8 @@ the commit that the HEAD of the Git repository points to. The variant
 
 
 SecretRef specifies the Secret containing the public keys of trusted Git
-authors.
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.
 
 <table>
     <thead>
@@ -15891,7 +16982,7 @@ authors.
 
 
 
-OCI is the definition of OCI repository source.
+oci is the definition of OCI repository source.
 
 <table>
     <thead>
@@ -16269,6 +17360,16 @@ specified matchers match against the identity.<br/>
 trusted public keys.<br/>
         </td>
         <td>false</td>
+      </tr><tr>
+        <td><b><a href="#servicetemplatespechelmchartsourceremotesourcespecociverifytrustedrootsecretref">trustedRootSecretRef</a></b></td>
+        <td>object</td>
+        <td>
+          TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -16340,12 +17441,42 @@ trusted public keys.
 </table>
 
 
+### ServiceTemplate.spec.helm.chartSource.remoteSourceSpec.oci.verify.trustedRootSecretRef
+<sup><sup>[↩ Parent](#servicetemplatespechelmchartsourceremotesourcespecociverify)</sup></sup>
+
+
+
+TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          Name of the referent.<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
 ### ServiceTemplate.spec.helm.chartSpec
 <sup><sup>[↩ Parent](#servicetemplatespechelm)</sup></sup>
 
 
 
-ChartSpec defines the desired state of the HelmChart to be created by the controller
+chartSpec defines the desired state of the HelmChart to be created by the controller
 
 <table>
     <thead>
@@ -16613,7 +17744,7 @@ trusted public keys.
 
 
 
-HelmOptions are the global options to use when installing or updating the helm chart.
+helmOptions are the global options to use when installing or updating the helm chart.
 
 <table>
     <thead>
@@ -16628,7 +17759,7 @@ HelmOptions are the global options to use when installing or updating the helm c
         <td><b>atomic</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process deletes the installation/upgrades on failure.
+          atomic deletes the installation or upgrade on failure when set.
 The --wait flag will be set automatically if --atomic is used<br/>
         </td>
         <td>false</td>
@@ -16636,70 +17767,74 @@ The --wait flag will be set automatically if --atomic is used<br/>
         <td><b>createNamespace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.createNamespace instead.<br/>
+          createNamespace controls whether to create the release namespace
+
+Deprecated: use .installOptions.createNamespace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>dependencyUpdate</b></td>
         <td>boolean</td>
         <td>
-          update dependencies if they are missing before installing the chart<br/>
+          dependencyUpdate updates dependencies if they are missing before installing the chart<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description is the description of an helm operation<br/>
+          description is the description of a Helm operation<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableHooks</b></td>
         <td>boolean</td>
         <td>
-          prevent hooks from running during install/upgrade/uninstall<br/>
+          disableHooks prevents hooks from running during install, upgrade, or uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>disableOpenAPIValidation</b></td>
         <td>boolean</td>
         <td>
-          if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema<br/>
+          disableOpenAPIValidation skips validation of rendered templates against the Kubernetes OpenAPI schema<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>enableClientCache</b></td>
         <td>boolean</td>
         <td>
-          EnableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
+          enableClientCache is a flag to enable Helm client cache. If it is not specified, it will be set to false.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmoptionsinstalloptions">installOptions</a></b></td>
         <td>object</td>
         <td>
-          InstallOptions are options specific to helm install<br/>
+          installOptions are options specific to helm install<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>labels</b></td>
         <td>map[string]string</td>
         <td>
-          Labels that would be added to release metadata.<br/>
+          labels that would be added to release metadata.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
-          Deprecated: use .installOptions.replace instead.<br/>
+          replace controls whether an existing release name can be reused
+
+Deprecated: use .installOptions.replace instead.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>skipCRDs</b></td>
         <td>boolean</td>
         <td>
-          SkipCRDs controls whether CRDs should be installed during install/upgrade operation.
+          skipCRDs controls whether CRDs should be installed during install/upgrade operation.
 By default, CRDs are installed if not already present.<br/>
         </td>
         <td>false</td>
@@ -16707,35 +17842,35 @@ By default, CRDs are installed if not already present.<br/>
         <td><b>skipSchemaValidation</b></td>
         <td>boolean</td>
         <td>
-          SkipSchemaValidation determines if JSON schema validation is disabled.<br/>
+          skipSchemaValidation determines if JSON schema validation is disabled.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>timeout</b></td>
         <td>string</td>
         <td>
-          time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)<br/>
+          timeout is the time to wait for an individual Kubernetes operation such as a hook Job<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmoptionsuninstalloptions">uninstallOptions</a></b></td>
         <td>object</td>
         <td>
-          UninstallOptions are options specific to helm uninstall<br/>
+          uninstallOptions are options specific to helm uninstall<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespechelmoptionsupgradeoptions">upgradeOptions</a></b></td>
         <td>object</td>
         <td>
-          UpgradeOptions are options specific to helm upgrade<br/>
+          upgradeOptions are options specific to helm upgrade<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>wait</b></td>
         <td>boolean</td>
         <td>
-          if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
+          wait blocks until all Pods, PVCs, Services, and the minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet
 are in a ready state before marking the release as successful. It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -16743,7 +17878,7 @@ are in a ready state before marking the release as successful. It will wait for 
         <td><b>waitForJobs</b></td>
         <td>boolean</td>
         <td>
-          if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful.
+          waitForJobs blocks until all Jobs complete before marking the release as successful when --wait is enabled.
 It will wait for as long as --timeout<br/>
         </td>
         <td>false</td>
@@ -16756,7 +17891,7 @@ It will wait for as long as --timeout<br/>
 
 
 
-InstallOptions are options specific to helm install
+installOptions are options specific to helm install
 
 <table>
     <thead>
@@ -16789,6 +17924,23 @@ Default to false<br/>
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b>recoverAfterConsecutiveFailures</b></td>
+        <td>integer</td>
+        <td>
+          RecoverAfterConsecutiveFailures is the number of consecutive install failures for this
+chart after which Sveltos uninstalls any existing release under this name before
+retrying, to clear potentially stale Helm release history that would otherwise keep
+blocking every subsequent install attempt. This only ever runs when there is no
+currently deployed release to protect: a release that is deployed, or mid-upgrade, or
+failed while already existing, is always retried through helm upgrade instead, never
+through this. It only applies to a release that was never successfully installed, or
+was already cleanly uninstalled.
+Default to 5<br/>
+          <br/>
+            <i>Default</i>: 5<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>replace</b></td>
         <td>boolean</td>
         <td>
@@ -16816,7 +17968,7 @@ and take ownership of the existing resources<br/>
 
 
 
-UninstallOptions are options specific to helm uninstall
+uninstallOptions are options specific to helm uninstall
 
 <table>
     <thead>
@@ -16866,7 +18018,7 @@ using the helm history command.<br/>
 
 
 
-UpgradeOptions are options specific to helm upgrade
+upgradeOptions are options specific to helm upgrade
 
 <table>
     <thead>
@@ -16999,7 +18151,7 @@ https://helm.sh/docs/chart_best_practices/custom_resource_definitions/<br/>
 
 
 
-Kustomize contains the Kustomize configuration for the template.
+kustomize contains the Kustomize configuration for the template.
 
 <table>
     <thead>
@@ -17014,32 +18166,32 @@ Kustomize contains the Kustomize configuration for the template.
         <td><b>deploymentType</b></td>
         <td>enum</td>
         <td>
-          DeploymentType is the type of the deployment. This field is ignored,
+          deploymentType is the type of the deployment. This field is ignored,
 when ResourceSpec is used as part of Helm chart configuration.<br/>
           <br/>
             <i>Enum</i>: Local, Remote<br/>
             <i>Default</i>: Remote<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespeckustomizelocalsourceref">localSourceRef</a></b></td>
         <td>object</td>
         <td>
-          LocalSourceRef is the local source of the kustomize manifest.<br/>
+          localSourceRef is the local source of the kustomize manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>path</b></td>
         <td>string</td>
         <td>
-          Path to the directory containing the resource manifest.<br/>
+          path to the directory containing the resource manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespeckustomizeremotesourcespec">remoteSourceSpec</a></b></td>
         <td>object</td>
         <td>
-          RemoteSourceSpec is the remote source of the kustomize manifest.<br/>
+          remoteSourceSpec is the remote source of the kustomize manifest.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.git) ? (!has(self.bucket) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.bucket) ? (!has(self.git) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.oci) ? (!has(self.git) && !has(self.bucket)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.git) || has(self.bucket) || has(self.oci): One of Git, Bucket or OCI must be specified.</li>
         </td>
@@ -17053,7 +18205,7 @@ when ResourceSpec is used as part of Helm chart configuration.<br/>
 
 
 
-LocalSourceRef is the local source of the kustomize manifest.
+localSourceRef is the local source of the kustomize manifest.
 
 <table>
     <thead>
@@ -17068,7 +18220,7 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the local source.<br/>
+          kind is the kind of the local source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret, GitRepository, Bucket, OCIRepository<br/>
         </td>
@@ -17077,14 +18229,14 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the local source.<br/>
+          name is the name of the local source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the local source. Cross-namespace references
+          namespace is the namespace of the local source. Cross-namespace references
 are only allowed when the Kind is one of [github.com/fluxcd/source-controller/api/v1.GitRepository],
 [github.com/fluxcd/source-controller/api/v1.Bucket] or [github.com/fluxcd/source-controller/api/v1.OCIRepository].
 If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
@@ -17099,7 +18251,7 @@ If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
 
 
 
-RemoteSourceSpec is the remote source of the kustomize manifest.
+remoteSourceSpec is the remote source of the kustomize manifest.
 
 <table>
     <thead>
@@ -17114,7 +18266,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespeckustomizeremotesourcespecbucket">bucket</a></b></td>
         <td>object</td>
         <td>
-          Bucket is the definition of bucket source.<br/>
+          bucket is the definition of bucket source.<br/>
           <br/>
             <i>Validations</i>:<li>self.provider == 'aws' || self.provider == 'generic' || !has(self.sts): STS configuration is only supported for the 'aws' and 'generic' Bucket providers</li><li>self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws': 'aws' is the only supported STS provider for the 'aws' Bucket provider</li><li>self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap': 'ldap' is the only supported STS provider for the 'generic' Bucket provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef): spec.sts.secretRef is not required for the 'aws' STS provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef): spec.sts.certSecretRef is not required for the 'aws' STS provider</li><li>self.provider != 'generic' || !has(self.serviceAccountName): ServiceAccountName is not supported for the 'generic' Bucket provider</li><li>!has(self.secretRef) || !has(self.serviceAccountName): cannot set both .spec.secretRef and .spec.serviceAccountName</li>
         </td>
@@ -17123,16 +18275,16 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespeckustomizeremotesourcespecgit">git</a></b></td>
         <td>object</td>
         <td>
-          Git is the definition of git repository source.<br/>
+          git is the definition of git repository source.<br/>
           <br/>
-            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && self.provider == 'azure'): serviceAccountName can only be set when provider is 'azure'</li>
+            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && (self.provider == 'azure' || self.provider == 'aws')): serviceAccountName can only be set when provider is 'azure' or 'aws'</li>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespeckustomizeremotesourcespecoci">oci</a></b></td>
         <td>object</td>
         <td>
-          OCI is the definition of OCI repository source.<br/>
+          oci is the definition of OCI repository source.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -17144,7 +18296,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
 
 
 
-Bucket is the definition of bucket source.
+bucket is the definition of bucket source.
 
 <table>
     <thead>
@@ -17538,7 +18690,7 @@ and `password` and is supported only for the `ldap` provider.
 
 
 
-Git is the definition of git repository source.
+git is the definition of git repository source.
 
 <table>
     <thead>
@@ -17586,10 +18738,10 @@ should be included in the Artifact produced for this GitRepository.<br/>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider used for authentication, can be 'azure', 'github', 'generic'.
+          Provider used for authentication, can be 'aws', 'azure', 'github', 'generic'.
 When not specified, defaults to 'generic'.<br/>
           <br/>
-            <i>Enum</i>: generic, azure, github<br/>
+            <i>Enum</i>: generic, aws, azure, github<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -17633,7 +18785,7 @@ and 'known_hosts' fields.<br/>
         <td>string</td>
         <td>
           ServiceAccountName is the name of the Kubernetes ServiceAccount used to
-authenticate to the GitRepository. This field is only supported for 'azure' provider.<br/>
+authenticate to the GitRepository. This field is only supported for 'azure' and 'aws' providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -17891,7 +19043,8 @@ signature(s).
         <td>object</td>
         <td>
           SecretRef specifies the Secret containing the public keys of trusted Git
-authors.<br/>
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -17918,7 +19071,8 @@ the commit that the HEAD of the Git repository points to. The variant
 
 
 SecretRef specifies the Secret containing the public keys of trusted Git
-authors.
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.
 
 <table>
     <thead>
@@ -17945,7 +19099,7 @@ authors.
 
 
 
-OCI is the definition of OCI repository source.
+oci is the definition of OCI repository source.
 
 <table>
     <thead>
@@ -18323,6 +19477,16 @@ specified matchers match against the identity.<br/>
 trusted public keys.<br/>
         </td>
         <td>false</td>
+      </tr><tr>
+        <td><b><a href="#servicetemplatespeckustomizeremotesourcespecociverifytrustedrootsecretref">trustedRootSecretRef</a></b></td>
+        <td>object</td>
+        <td>
+          TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -18394,12 +19558,42 @@ trusted public keys.
 </table>
 
 
+### ServiceTemplate.spec.kustomize.remoteSourceSpec.oci.verify.trustedRootSecretRef
+<sup><sup>[↩ Parent](#servicetemplatespeckustomizeremotesourcespecociverify)</sup></sup>
+
+
+
+TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          Name of the referent.<br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+
 ### ServiceTemplate.spec.resources
 <sup><sup>[↩ Parent](#servicetemplatespec)</sup></sup>
 
 
 
-Resources contains the resource configuration for the template.
+resources contains the resource configuration for the template.
 
 <table>
     <thead>
@@ -18414,32 +19608,32 @@ Resources contains the resource configuration for the template.
         <td><b>deploymentType</b></td>
         <td>enum</td>
         <td>
-          DeploymentType is the type of the deployment. This field is ignored,
+          deploymentType is the type of the deployment. This field is ignored,
 when ResourceSpec is used as part of Helm chart configuration.<br/>
           <br/>
             <i>Enum</i>: Local, Remote<br/>
             <i>Default</i>: Remote<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespecresourceslocalsourceref">localSourceRef</a></b></td>
         <td>object</td>
         <td>
-          LocalSourceRef is the local source of the kustomize manifest.<br/>
+          localSourceRef is the local source of the kustomize manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>path</b></td>
         <td>string</td>
         <td>
-          Path to the directory containing the resource manifest.<br/>
+          path to the directory containing the resource manifest.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespecresourcesremotesourcespec">remoteSourceSpec</a></b></td>
         <td>object</td>
         <td>
-          RemoteSourceSpec is the remote source of the kustomize manifest.<br/>
+          remoteSourceSpec is the remote source of the kustomize manifest.<br/>
           <br/>
             <i>Validations</i>:<li>has(self.git) ? (!has(self.bucket) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.bucket) ? (!has(self.git) && !has(self.oci)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.oci) ? (!has(self.git) && !has(self.bucket)) : true: Git, Bucket and OCI are mutually exclusive.</li><li>has(self.git) || has(self.bucket) || has(self.oci): One of Git, Bucket or OCI must be specified.</li>
         </td>
@@ -18453,7 +19647,7 @@ when ResourceSpec is used as part of Helm chart configuration.<br/>
 
 
 
-LocalSourceRef is the local source of the kustomize manifest.
+localSourceRef is the local source of the kustomize manifest.
 
 <table>
     <thead>
@@ -18468,7 +19662,7 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>kind</b></td>
         <td>enum</td>
         <td>
-          Kind is the kind of the local source.<br/>
+          kind is the kind of the local source.<br/>
           <br/>
             <i>Enum</i>: ConfigMap, Secret, GitRepository, Bucket, OCIRepository<br/>
         </td>
@@ -18477,14 +19671,14 @@ LocalSourceRef is the local source of the kustomize manifest.
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the local source.<br/>
+          name is the name of the local source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the local source. Cross-namespace references
+          namespace is the namespace of the local source. Cross-namespace references
 are only allowed when the Kind is one of [github.com/fluxcd/source-controller/api/v1.GitRepository],
 [github.com/fluxcd/source-controller/api/v1.Bucket] or [github.com/fluxcd/source-controller/api/v1.OCIRepository].
 If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
@@ -18499,7 +19693,7 @@ If the Kind is ConfigMap or Secret, the namespace will be ignored.<br/>
 
 
 
-RemoteSourceSpec is the remote source of the kustomize manifest.
+remoteSourceSpec is the remote source of the kustomize manifest.
 
 <table>
     <thead>
@@ -18514,7 +19708,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespecresourcesremotesourcespecbucket">bucket</a></b></td>
         <td>object</td>
         <td>
-          Bucket is the definition of bucket source.<br/>
+          bucket is the definition of bucket source.<br/>
           <br/>
             <i>Validations</i>:<li>self.provider == 'aws' || self.provider == 'generic' || !has(self.sts): STS configuration is only supported for the 'aws' and 'generic' Bucket providers</li><li>self.provider != 'aws' || !has(self.sts) || self.sts.provider == 'aws': 'aws' is the only supported STS provider for the 'aws' Bucket provider</li><li>self.provider != 'generic' || !has(self.sts) || self.sts.provider == 'ldap': 'ldap' is the only supported STS provider for the 'generic' Bucket provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.secretRef): spec.sts.secretRef is not required for the 'aws' STS provider</li><li>!has(self.sts) || self.sts.provider != 'aws' || !has(self.sts.certSecretRef): spec.sts.certSecretRef is not required for the 'aws' STS provider</li><li>self.provider != 'generic' || !has(self.serviceAccountName): ServiceAccountName is not supported for the 'generic' Bucket provider</li><li>!has(self.secretRef) || !has(self.serviceAccountName): cannot set both .spec.secretRef and .spec.serviceAccountName</li>
         </td>
@@ -18523,16 +19717,16 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
         <td><b><a href="#servicetemplatespecresourcesremotesourcespecgit">git</a></b></td>
         <td>object</td>
         <td>
-          Git is the definition of git repository source.<br/>
+          git is the definition of git repository source.<br/>
           <br/>
-            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && self.provider == 'azure'): serviceAccountName can only be set when provider is 'azure'</li>
+            <i>Validations</i>:<li>!has(self.serviceAccountName) || (has(self.provider) && (self.provider == 'azure' || self.provider == 'aws')): serviceAccountName can only be set when provider is 'azure' or 'aws'</li>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatespecresourcesremotesourcespecoci">oci</a></b></td>
         <td>object</td>
         <td>
-          OCI is the definition of OCI repository source.<br/>
+          oci is the definition of OCI repository source.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -18544,7 +19738,7 @@ RemoteSourceSpec is the remote source of the kustomize manifest.
 
 
 
-Bucket is the definition of bucket source.
+bucket is the definition of bucket source.
 
 <table>
     <thead>
@@ -18938,7 +20132,7 @@ and `password` and is supported only for the `ldap` provider.
 
 
 
-Git is the definition of git repository source.
+git is the definition of git repository source.
 
 <table>
     <thead>
@@ -18986,10 +20180,10 @@ should be included in the Artifact produced for this GitRepository.<br/>
         <td><b>provider</b></td>
         <td>enum</td>
         <td>
-          Provider used for authentication, can be 'azure', 'github', 'generic'.
+          Provider used for authentication, can be 'aws', 'azure', 'github', 'generic'.
 When not specified, defaults to 'generic'.<br/>
           <br/>
-            <i>Enum</i>: generic, azure, github<br/>
+            <i>Enum</i>: generic, aws, azure, github<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -19033,7 +20227,7 @@ and 'known_hosts' fields.<br/>
         <td>string</td>
         <td>
           ServiceAccountName is the name of the Kubernetes ServiceAccount used to
-authenticate to the GitRepository. This field is only supported for 'azure' provider.<br/>
+authenticate to the GitRepository. This field is only supported for 'azure' and 'aws' providers.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -19291,7 +20485,8 @@ signature(s).
         <td>object</td>
         <td>
           SecretRef specifies the Secret containing the public keys of trusted Git
-authors.<br/>
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.<br/>
         </td>
         <td>true</td>
       </tr><tr>
@@ -19318,7 +20513,8 @@ the commit that the HEAD of the Git repository points to. The variant
 
 
 SecretRef specifies the Secret containing the public keys of trusted Git
-authors.
+authors. PGP public keys must be stored under keys with the .asc suffix,
+and SSH public keys must be stored under keys with the .sshpub suffix.
 
 <table>
     <thead>
@@ -19345,7 +20541,7 @@ authors.
 
 
 
-OCI is the definition of OCI repository source.
+oci is the definition of OCI repository source.
 
 <table>
     <thead>
@@ -19723,6 +20919,16 @@ specified matchers match against the identity.<br/>
 trusted public keys.<br/>
         </td>
         <td>false</td>
+      </tr><tr>
+        <td><b><a href="#servicetemplatespecresourcesremotesourcespecociverifytrustedrootsecretref">trustedRootSecretRef</a></b></td>
+        <td>object</td>
+        <td>
+          TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -19794,12 +21000,15 @@ trusted public keys.
 </table>
 
 
-### ServiceTemplate.status
-<sup><sup>[↩ Parent](#servicetemplate)</sup></sup>
+### ServiceTemplate.spec.resources.remoteSourceSpec.oci.verify.trustedRootSecretRef
+<sup><sup>[↩ Parent](#servicetemplatespecresourcesremotesourcespecociverify)</sup></sup>
 
 
 
-ServiceTemplateStatus defines the observed state of ServiceTemplate
+TrustedRootSecretRef specifies the Kubernetes Secret containing a
+Sigstore trusted_root.json file. This enables verification against
+self-hosted Sigstore infrastructure (custom Fulcio CA, self-hosted
+Rekor instance). The Secret must contain a key named "trusted_root.json".
 
 <table>
     <thead>
@@ -19811,17 +21020,37 @@ ServiceTemplateStatus defines the observed state of ServiceTemplate
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>valid</b></td>
-        <td>boolean</td>
+        <td><b>name</b></td>
+        <td>string</td>
         <td>
-          Valid indicates whether the template passed validation or not.<br/>
+          Name of the referent.<br/>
         </td>
         <td>true</td>
-      </tr><tr>
+      </tr></tbody>
+</table>
+
+
+### ServiceTemplate.status
+<sup><sup>[↩ Parent](#servicetemplate)</sup></sup>
+
+
+
+status describes the observed state
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
         <td><b><a href="#servicetemplatestatuschartref">chartRef</a></b></td>
         <td>object</td>
         <td>
-          ChartRef is a reference to a source controller resource containing the
+          chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.<br/>
         </td>
         <td>false</td>
@@ -19829,14 +21058,14 @@ Helm chart representing the template.<br/>
         <td><b>chartVersion</b></td>
         <td>string</td>
         <td>
-          ChartVersion represents the version of the Helm Chart associated with this template.<br/>
+          chartVersion represents the version of the Helm Chart associated with this template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>config</b></td>
         <td>JSON</td>
         <td>
-          Config demonstrates available parameters for template customization,
+          config demonstrates available parameters for template customization,
 that can be used when creating ClusterDeployment objects.<br/>
         </td>
         <td>false</td>
@@ -19844,30 +21073,31 @@ that can be used when creating ClusterDeployment objects.<br/>
         <td><b>description</b></td>
         <td>string</td>
         <td>
-          Description contains information about the template.<br/>
+          description contains information about the template.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>k8sConstraint</b></td>
         <td>string</td>
         <td>
-          Constraint describing compatible K8S versions of the cluster set in the SemVer format.<br/>
+          k8sConstraint describes compatible Kubernetes versions of the cluster in SemVer format.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the last observed generation.<br/>
+          observedGeneration is the last observed generation.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>schemaConfigMapName</b></td>
         <td>string</td>
         <td>
-          SchemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
+          schemaConfigMapName specifies the name of the ConfigMap that contains the JSON Schema definition for Helm Chart validation.
 
 The ConfigMap's namespace is either in the system namespace for [ProviderTemplate]
 or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
@@ -19877,14 +21107,21 @@ or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
         <td><b><a href="#servicetemplatestatussourcestatus">sourceStatus</a></b></td>
         <td>object</td>
         <td>
-          SourceStatus reflects the status of the source.<br/>
+          sourceStatus reflects the status of the source.<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>valid</b></td>
+        <td>boolean</td>
+        <td>
+          valid indicates whether the template passed validation or not.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>validationError</b></td>
         <td>string</td>
         <td>
-          ValidationError provides information regarding issues encountered during template validation.<br/>
+          validationError provides information regarding issues encountered during template validation.<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -19896,7 +21133,7 @@ or is inherited from either a [ClusterTemplate] or a [ServiceTemplate].<br/>
 
 
 
-ChartRef is a reference to a source controller resource containing the
+chartRef is a reference to a source controller resource containing the
 Helm chart representing the template.
 
 <table>
@@ -19948,7 +21185,7 @@ resource object that contains the reference.<br/>
 
 
 
-SourceStatus reflects the status of the source.
+sourceStatus reflects the status of the source.
 
 <table>
     <thead>
@@ -19963,44 +21200,45 @@ SourceStatus reflects the status of the source.
         <td><b>kind</b></td>
         <td>string</td>
         <td>
-          Kind is the kind of the remote source.<br/>
+          kind is the kind of the remote source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the remote source.<br/>
+          name is the name of the remote source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the remote source.<br/>
+          namespace is the namespace of the remote source.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b><a href="#servicetemplatestatussourcestatusartifact">artifact</a></b></td>
         <td>object</td>
         <td>
-          Artifact is the artifact that was generated from the template source.<br/>
+          artifact is the artifact that was generated from the template source.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#servicetemplatestatussourcestatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions reflects the conditions of the remote source object.<br/>
+          conditions reflects the conditions of the remote source object.<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>observedGeneration</b></td>
         <td>integer</td>
         <td>
-          ObservedGeneration is the latest source generation observed by the controller.<br/>
+          observedGeneration is the latest source generation observed by the controller.<br/>
           <br/>
             <i>Format</i>: int64<br/>
+            <i>Minimum</i>: 1<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -20012,7 +21250,7 @@ SourceStatus reflects the status of the source.
 
 
 
-Artifact is the artifact that was generated from the template source.
+artifact is the artifact that was generated from the template source.
 
 <table>
     <thead>
@@ -20202,14 +21440,14 @@ StateManagementProvider is the Schema for the statemanagementproviders API
         <td><b><a href="#statemanagementproviderspec">spec</a></b></td>
         <td>object</td>
         <td>
-          StateManagementProviderSpec defines the desired state of StateManagementProvider<br/>
+          spec defines the desired state<br/>
         </td>
-        <td>false</td>
+        <td>true</td>
       </tr><tr>
         <td><b><a href="#statemanagementproviderstatus">status</a></b></td>
         <td>object</td>
         <td>
-          StateManagementProviderStatus defines the observed state of StateManagementProvider<br/>
+          status describes the observed state<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -20221,7 +21459,7 @@ StateManagementProvider is the Schema for the statemanagementproviders API
 
 
 
-StateManagementProviderSpec defines the desired state of StateManagementProvider
+spec defines the desired state
 
 <table>
     <thead>
@@ -20236,7 +21474,7 @@ StateManagementProviderSpec defines the desired state of StateManagementProvider
         <td><b><a href="#statemanagementproviderspecadapter">adapter</a></b></td>
         <td>object</td>
         <td>
-          Adapter is an operator with translates the k0rdent API objects into provider-specific API objects.
+          adapter is an operator that translates the k0rdent API objects into provider-specific API objects.
 It is represented as a reference to operator object<br/>
         </td>
         <td>true</td>
@@ -20244,7 +21482,7 @@ It is represented as a reference to operator object<br/>
         <td><b><a href="#statemanagementproviderspecprovisionerindex">provisioner</a></b></td>
         <td>[]object</td>
         <td>
-          Provisioner is a set of resources required for the provider to operate. These resources
+          provisioner is a set of resources required for the provider to operate. These resources
 reconcile provider-specific API objects. It is represented as a list of references to
 provider's objects<br/>
         </td>
@@ -20253,7 +21491,7 @@ provider's objects<br/>
         <td><b><a href="#statemanagementproviderspecprovisionercrdsindex">provisionerCRDs</a></b></td>
         <td>[]object</td>
         <td>
-          ProvisionerCRDs is a set of references to provider-specific CustomResourceDefinition objects,
+          provisionerCRDs is a set of references to provider-specific CustomResourceDefinition objects,
 which are required for the provider to operate.<br/>
         </td>
         <td>true</td>
@@ -20261,19 +21499,17 @@ which are required for the provider to operate.<br/>
         <td><b><a href="#statemanagementproviderspecselector">selector</a></b></td>
         <td>object</td>
         <td>
-          Selector is label selector to be used to filter the [ServiceSet] objects to be reconciled.<br/>
+          selector is label selector to be used to filter the [ServiceSet] objects to be reconciled.<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>suspend</b></td>
         <td>boolean</td>
         <td>
-          Suspend suspends the StateManagementProvider. Suspending a StateManagementProvider
+          suspend suspends the StateManagementProvider. Suspending a StateManagementProvider
 will prevent the adapter from reconciling any resources.<br/>
-          <br/>
-            <i>Default</i>: false<br/>
         </td>
-        <td>true</td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
@@ -20283,7 +21519,7 @@ will prevent the adapter from reconciling any resources.<br/>
 
 
 
-Adapter is an operator with translates the k0rdent API objects into provider-specific API objects.
+adapter is an operator that translates the k0rdent API objects into provider-specific API objects.
 It is represented as a reference to operator object
 
 <table>
@@ -20299,35 +21535,35 @@ It is represented as a reference to operator object
         <td><b>apiVersion</b></td>
         <td>string</td>
         <td>
-          APIVersion is the API version of the resource<br/>
+          apiVersion is the API version of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>kind</b></td>
         <td>string</td>
         <td>
-          Kind is the kind of the resource<br/>
+          kind is the kind of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the resource<br/>
+          name is the name of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the resource<br/>
+          namespace is the namespace of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>readinessRule</b></td>
         <td>string</td>
         <td>
-          ReadinessRule is a CEL expression that evaluates to true when the resource is ready<br/>
+          readinessRule is a CEL expression that evaluates to true when the resource is ready<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -20354,35 +21590,35 @@ ResourceReference is a cross-namespace reference to a resource
         <td><b>apiVersion</b></td>
         <td>string</td>
         <td>
-          APIVersion is the API version of the resource<br/>
+          apiVersion is the API version of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>kind</b></td>
         <td>string</td>
         <td>
-          Kind is the kind of the resource<br/>
+          kind is the kind of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          Name is the name of the resource<br/>
+          name is the name of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
-          Namespace is the namespace of the resource<br/>
+          namespace is the namespace of the resource<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>readinessRule</b></td>
         <td>string</td>
         <td>
-          ReadinessRule is a CEL expression that evaluates to true when the resource is ready<br/>
+          readinessRule is a CEL expression that evaluates to true when the resource is ready<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -20409,21 +21645,21 @@ ProvisionerCRD is a GVRs for a custom resource reconciled by provisioners
         <td><b>group</b></td>
         <td>string</td>
         <td>
-          Group is the API group of the resources<br/>
+          group is the API group of the resources<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>resources</b></td>
         <td>[]string</td>
         <td>
-          Resources is the list of resources under given APIVersion<br/>
+          resources is the list of resources under given APIVersion<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>version</b></td>
         <td>string</td>
         <td>
-          Version is the API version of the resources<br/>
+          version is the API version of the resources<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -20435,7 +21671,7 @@ ProvisionerCRD is a GVRs for a custom resource reconciled by provisioners
 
 
 
-Selector is label selector to be used to filter the [ServiceSet] objects to be reconciled.
+selector is label selector to be used to filter the [ServiceSet] objects to be reconciled.
 
 <table>
     <thead>
@@ -20517,7 +21753,7 @@ merge patch.<br/>
 
 
 
-StateManagementProviderStatus defines the observed state of StateManagementProvider
+status describes the observed state
 
 <table>
     <thead>
@@ -20529,17 +21765,19 @@ StateManagementProviderStatus defines the observed state of StateManagementProvi
         </tr>
     </thead>
     <tbody><tr>
-        <td><b>ready</b></td>
-        <td>boolean</td>
-        <td>
-          Ready is true if the state management provider is valid<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b><a href="#statemanagementproviderstatusconditionsindex">conditions</a></b></td>
         <td>[]object</td>
         <td>
-          Conditions is a list of conditions for the state management provider<br/>
+          conditions is a list of conditions for the state management provider<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>ready</b></td>
+        <td>boolean</td>
+        <td>
+          ready is true if the state management provider is valid<br/>
+          <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr></tbody>

@@ -418,6 +418,53 @@ spec:
 The extension webhook server uses the same image as the k0smotron providers, so no additional image needs to be
 mirrored to a private registry.
 
+#### Combining in-place version updates with the delete-first strategy
+
+The k0smotron control plane provider has an experimental `InPlaceVersionWithDeleteFirst` feature gate. With it
+enabled, k0s version-only changes of a `K0sControlPlane` are applied in place, while other changes that require
+replacing the control plane machines follow the `RecreateDeleteFirst` strategy, which deletes an old machine before
+creating a new one. This applies whichever of the `InPlace` or `RecreateDeleteFirst` update strategies the
+`K0sControlPlane` uses. For details, see the
+[k0smotron documentation](https://docs.k0smotron.io/stable/update/update-capi-cluster/).
+
+The feature gate is *disabled* by default. To enable it, set the `enableInPlaceVersionWithDeleteFirst` KCM controller
+setting in the `Management` object:
+
+```yaml
+spec:
+  core:
+    kcm:
+      config:
+        controller:
+          enableInPlaceVersionWithDeleteFirst: true
+```
+
+Or, on the initial installation, add the following parameter to the `helm install` command:
+
+```bash
+--set="controller.enableInPlaceVersionWithDeleteFirst=true"
+```
+
+KCM passes the setting to the providers of the `Management` object and of every `Region` object. Only the
+`cluster-api-provider-k0sproject-k0smotron` provider uses it, enabling the `InPlaceVersionWithDeleteFirst` feature gate
+of its control plane provider. The setting is independent of `enableInPlaceUpdates`, and both feature gates can be
+enabled together.
+
+To override the KCM controller setting for a specific provider, set the `inPlaceVersionWithDeleteFirst.enabled` value
+in the `cluster-api-provider-k0sproject-k0smotron` provider configuration of the `Management` or `Region` object:
+
+```yaml
+spec:
+  providers:
+  - name: cluster-api-provider-k0sproject-k0smotron
+    config:
+      inPlaceVersionWithDeleteFirst:
+        enabled: true
+```
+
+As with `inPlaceUpdates`, feature gates explicitly set under `controlPlane.manager.featureGates` of the provider take
+precedence over both settings.
+
 #### Limitations
 
 - In-place updates must be enabled for both the `cluster-api` and the `cluster-api-provider-k0sproject-k0smotron`

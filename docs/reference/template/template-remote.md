@@ -31,6 +31,12 @@ To deploy a cluster using {{{ docsVersionInfo.k0rdentName}}} on any SSH accessib
 * `k0smotron.service.type` (string): This parameter defines the type of service for the Kubernetes API server: `"ClusterIP"`, `"NodePort"`, or `"LoadBalancer"`.
 * `k0smotron.service.apiPort` (number): This parameter defines the port for accessing the Kubernetes API server. Example: `30443`.
 * `k0smotron.service.konnectivityPort` (number): This parameter indicates the port for the Konnectivity service. Example: `30132`.
+* `k0smotron.externalAddress` (string): The address (IP address or DNS name, without a scheme or port) on which the
+  control plane is advertised. Worker machines join the cluster through this address, it is added to the API server
+  certificate SANs, and it becomes the control plane endpoint of the cluster, including in the generated kubeconfig.
+  If empty (default), k0smotron detects the address from the service: the `LoadBalancer` ingress address, or a node
+  address for `NodePort`. Set it when the detected address is not reachable by clients, for example, when the
+  management cluster is behind NAT or reachable only through a floating IP. Example: `"cp.example.com"`.
 
 ### Etcd encryption at rest for remote template
 
@@ -44,6 +50,8 @@ To deploy a cluster using {{{ docsVersionInfo.k0rdentName}}} on any SSH accessib
 * `k0s.arch` (string): Defines K0s Arch in its download URL. Available if [global.k0sURL](../../appendix/appendix-extend-mgmt.md#configuring-a-global-k0s-url)
    is set. Possible values: `"amd64"` (default), `"arm64"`, `"arm"`.
 * `k0s.api.extraArgs`: Additional arguments to pass to the Kubernetes API server. Example: `{"--some-arg": "value"}`.
+* `k0s.api.sans` (array of strings): Extra Subject Alternative Names (IP addresses or DNS names) for the Kubernetes API
+  server certificate, in addition to the ones k0smotron generates. Values must be unique. Example: `["203.0.113.10"]`.
 * `k0s.network`: Network settings for the k0s cluster. Example: `{"dns": "8.8.8.8"}`.
 * `k0s.extensions.helm.repositories` (array of objects): Helm repositories to add during the cluster setup. Example: `[{ "name": "repo1", "url": "https://charts.repo1.com" }]`.
 * `k0s.extensions.helm.charts` (array of objects): Helm charts to be installed during bootstrap. Example: `[{ "name": "chart1", "namespace": "kube-system", "chartname": "repo1/chart1" }]`.

@@ -160,6 +160,12 @@ Follow these steps to deploy a standalone Kubernetes cluster tailored to your sp
 
     The output shows the current status and any errors.
 
+    While the Cluster API cluster is being provisioned, the `Ready` condition of the `ClusterDeployment` has the
+    `Progressing` reason and shows the message of the not-ready Cluster API condition, for example
+    `InfrastructureReady: OpenStackCluster status.initialization.provisioned is false`. There is no provisioning
+    timeout: the `ClusterDeployment` stays `Progressing` for as long as the provider needs to provision the cluster,
+    so check the provider logs if provisioning does not move forward.
+
 8. Monitor Provisioning
 
     {{{ docsVersionInfo.k0rdentName }}} will now start provisioning resources (for example, VMs and networks) and setting up the cluster. To monitor this process, run:
