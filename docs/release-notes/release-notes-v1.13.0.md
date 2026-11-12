@@ -84,9 +84,12 @@ use your own timeout instead.
 
 ### Helm Options of Services
 
-The `helmOptions.atomic: true` option is no longer enforced for the Projectsveltos profiles created for services. The
-workaround is not needed since Projectsveltos v1.14.0 fixed unintended service reinstallation after a failed upgrade.
-Set `atomic: true` explicitly in `helmOptions` if you rely on the rollback on failure.
+Previously, KCM always enabled the Helm `atomic` option for services, regardless of their `helmOptions`, as a
+workaround for unintended service reinstallation after a failed upgrade. Projectsveltos v1.14.0 fixed that issue, so
+the workaround is removed, and `helmOptions` of services are now passed to Projectsveltos as is. As a result, `atomic`
+is disabled unless you set it, and a failed install or upgrade is no longer rolled back automatically. To keep the
+previous behavior, set `atomic: true` in the `helmOptions` of the `ServiceTemplate` or of the service in
+`.spec.serviceSpec.services[].helmOptions`.
 
 ### Installation Retries of KCM Components
 
