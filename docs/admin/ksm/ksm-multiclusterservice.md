@@ -195,6 +195,17 @@ In this example, for all matching clusters, `ingress-nginx` and `postgres-operat
 
 Both `dependsOn` between services within a `ClusterDeployment`/`MultiClusterService` and sequential upgrades through a `ServiceTemplateChain` gate on the service reaching `state == Deployed`. That state reflects the verifier's confirmation that the workload is actually healthy on the child cluster, not merely that Sveltos accepted the release. Dependent services and next chain steps advance only after the current service is verified. See [Service State Verification](ksm-service-state-verification.md) for the mechanics.
 
+On upgrades, `dependsOn` also gates on versions, both within a single `ClusterDeployment`/`MultiClusterService` and across `MultiClusterService` objects. A service satisfies its dependents only when all of the following are true:
+
+- The service is `Deployed`.
+- The deployed version matches the version in the `ServiceSet` spec, meaning no upgrade of the service is in progress.
+- The version in the `ServiceSet` spec is the version requested by the `ClusterDeployment`/`MultiClusterService`, meaning no further upgrade step is queued.
+- All services it depends on, directly or transitively, satisfy the same conditions.
+
+As a result, a dependent service is not upgraded until the services it depends on have been upgraded, even if an intermediate service in the dependency chain has no version change. Services that become eligible in the same reconciliation are applied in dependency order. When a `MultiClusterService` is blocked by another `MultiClusterService`, its status names the services that are still behind together with their current and desired versions, for example, `keycloak (2/3 services deployed): cfg-keycloak 1.2.0 -> 1.2.1`.
+
+When a `MultiClusterService` whose services form a `dependsOn` chain is deleted, the services are uninstalled in the reverse of the installation order, so a chart that provides CRDs is removed only after the charts that use them.
+
 ### Keeping Services on Selector Mismatch
 
 By default, when a cluster's labels no longer match a `MultiClusterService`'s `clusterSelector` (or the selector is cleared), the services previously deployed on that cluster by this MCS are removed.

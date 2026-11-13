@@ -2,7 +2,7 @@
 
 {{{ docsVersionInfo.k0rdentName }}} provides an `AccessManagement` resource (cluster-scoped, singleton) that enables
 controlled distribution of objects from the system namespace (default: `kcm-system`) across other namespaces in the
-management cluster. It supports the built-in {{{ docsVersionInfo.k0rdentName }}} object types (`ClusterTemplateChain`,
+management cluster. It supports the built-in {{{ docsVersionInfo.k0rdentName }}} object types (`ClusterTemplate`, `ClusterTemplateChain`,
 `ServiceTemplateChain`, `Credential`, `ClusterAuthentication`, `DataSource`, `ClusterAuditPolicy` and `RBACPolicy`) as
 well as any other namespaced Kind, including custom resources. This resource is created automatically during the
 installation of {{{ docsVersionInfo.k0rdentName }}}.
@@ -37,8 +37,8 @@ Each resource rule supports the following fields:
   built-in {{{ docsVersionInfo.k0rdentName }}} Kind or a custom resource. Cluster-scoped Kinds are skipped and
   reported in the `AccessManagement` status, because only namespaced objects can be distributed.
 * `apiGroup` – The API group of the Kind, for example `k0rdent.mirantis.com` or the API group of a custom resource.
-  You can omit it for the built-in Kinds (`ClusterTemplateChain`, `ServiceTemplateChain`, `Credential`,
-  `ClusterAuthentication`, `DataSource`, `ClusterAuditPolicy` and `RBACPolicy`), in which case it defaults to
+  You can omit it for the built-in Kinds (`ClusterTemplate`, `ClusterTemplateChain`, `ServiceTemplateChain`,
+  `Credential`, `ClusterAuthentication`, `DataSource`, `ClusterAuditPolicy` and `RBACPolicy`), in which case it defaults to
   `k0rdent.mirantis.com`.
   For any other Kind, an omitted `apiGroup` means the core (empty) API group, for example for `ConfigMap`.
 
@@ -53,12 +53,29 @@ Depending on the Kind, distribution works as follows:
 
 * `ClusterTemplateChain` / `ServiceTemplateChain` – The chain is distributed, and so are all the `ClusterTemplate`
   or `ServiceTemplate` objects it references.
+* `ClusterTemplate` – The `ClusterTemplate` is distributed without the chart source of its own: the copy references
+  the `HelmChart` the source `ClusterTemplate` has been reconciled into (`spec.helm.chartRef`), the same way as copies
+  distributed by a `ClusterTemplateChain`. The source `ClusterTemplate` must be valid. Until it is, the distribution
+  fails and is retried, and the error is reported in the `AccessManagement` status.
 * `Credential` – The `Credential` and all referenced `Identity` resources (used for authentication) are distributed.
 * `ClusterAuthentication` – The `ClusterAuthentication` and its referenced CA secret are distributed.
 * Any other Kind – The object is copied as is to the target namespaces.
 
-Distributed copies are labeled with `k0rdent.mirantis.com/managed: "true"`. When an object stops matching an access
-rule, or a target namespace is no longer selected, the corresponding copy is removed.
+Distributed copies are labeled with `k0rdent.mirantis.com/managed: "true"` and have an owner reference to the
+`AccessManagement` object. When an object stops matching an access rule, or a target namespace is no longer selected,
+the corresponding copy is removed. If the copy has other owners as well, for example a `ClusterTemplate` that a
+`ClusterTemplateChain` also distributes to the same namespace, only the owner reference to the `AccessManagement`
+object is removed, and the copy is kept for its other owners.
+
+Deleting the `AccessManagement` object, for example as part of the `Management` object deletion, removes all the
+copies it distributed through the Kubernetes garbage collection. Copies distributed by previous versions of
+{{{ docsVersionInfo.k0rdentName }}} are adopted, and the owner reference is added to them on the next reconciliation.
+
+> NOTE:
+> A `ClusterTemplate` in the system namespace that owns a `HelmChart` cannot be deleted while other `ClusterTemplate`
+> objects, such as copies distributed by an `AccessManagement` or a `ClusterTemplateChain`, reference that chart.
+> Deleting the source would leave the copies, and the clusters deployed from them, referencing a chart that no longer
+> exists. Stop distributing the template and wait for the copies to be removed before deleting it.
 
 > NOTE:
 > The KCM controller manages the RBAC permissions needed to distribute the referenced Kinds automatically. It
@@ -104,6 +121,9 @@ spec:
     - kind: ClusterAuditPolicy
       names:
       - audit-policy1
+    - kind: ClusterTemplate
+      names:
+      - aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}
   - targetNamespaces:
       stringSelector: "team=dev"
     resources:
@@ -123,8 +143,9 @@ Based on the configuration above, the following objects are distributed:
 3. The `Credential` `cred1` and all referenced `Identity` resources (used for authentication) are distributed to `namespace1` and `namespace2`.
 4. The `ClusterAuthentication` `auth1` and its referenced CA secret are distributed to `namespace3`.
 5. The `ClusterAuditPolicy` `audit-policy1` is distributed to `namespace3`.
-6. All `DataSource` objects labeled with `env: dev` are distributed to all namespaces labeled with `team=dev`.
-7. All `ConfigMap` objects labeled with `shared=true` are distributed to all namespaces labeled with `team=dev`.
+6. The `ClusterTemplate` `aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}` is distributed to `namespace3`.
+7. All `DataSource` objects labeled with `env: dev` are distributed to all namespaces labeled with `team=dev`.
+8. All `ConfigMap` objects labeled with `shared=true` are distributed to all namespaces labeled with `team=dev`.
 
 ## Status
 
